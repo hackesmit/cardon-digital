@@ -7,6 +7,7 @@ import Mark from "./Mark";
 type NavCopy = {
   work: string;
   services: string;
+  lab: string;
   about: string;
   contact: string;
   cta: string;
@@ -17,6 +18,7 @@ const EN: NavCopy = {
   home: "/",
   work: "Work",
   services: "Services",
+  lab: "Lab",
   about: "About",
   contact: "Contact",
   cta: "Get the diagnostic",
@@ -26,6 +28,7 @@ const ES: NavCopy = {
   home: "/es",
   work: "Trabajo",
   services: "Servicios",
+  lab: "Lab",
   about: "Nosotros",
   contact: "Contacto",
   cta: "Solicitar diagnostico",
@@ -39,6 +42,7 @@ export default function Nav({ lang = "en" }: { lang?: "en" | "es" }) {
   const links = [
     { href: `${p}/work`, label: c.work },
     { href: `${p}/services`, label: c.services },
+    { href: `${p}/lab`, label: c.lab },
     { href: `${p}/about`, label: c.about },
     { href: `${p}/contact`, label: c.contact },
   ];

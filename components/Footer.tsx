@@ -32,6 +32,9 @@ export default function Footer({ lang = "en" }: { lang?: "en" | "es" }) {
               <Link href={`${p}/services`} className="hover:text-sand">
                 {es ? "Servicios" : "Services"}
               </Link>
+              <Link href={`${p}/lab`} className="hover:text-sand">
+                Lab
+              </Link>
               <Link href={`${p}/about`} className="hover:text-sand">
                 {es ? "Nosotros" : "About"}
               </Link>
