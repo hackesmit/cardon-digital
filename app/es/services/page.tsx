@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -25,7 +25,7 @@ const builds = [
   },
   {
     name: "Sprint de automatización",
-    detail: "3-5 flujos n8n en producción en 2-3 semanas, con línea base medida de horas antes y después.",
+    detail: "3-5 flujos en producción en 2-3 semanas, con línea base medida antes y después. Entrenamiento del equipo y entrega incluidos.",
   },
   {
     name: "Dashboard / herramienta interna",
@@ -85,10 +85,11 @@ export default function ServicesEs() {
                 Operación continua del sistema: administración de Google Ads,
                 medición de conversiones, una mejora de automatización cada
                 mes, mantenimiento del sitio y un reporte mensual en lenguaje
-                claro con números reales.
+                claro con números reales. Tu equipo queda entrenado en cada
+                flujo que entregamos.
               </p>
               <p className="mt-4 font-mono text-xs uppercase tracking-wide text-clay">
-                Cinco lugares. Un solo operador senior.
+                Cinco lugares. Pequeños por diseño.
               </p>
               <Link
                 href="/es/contact"

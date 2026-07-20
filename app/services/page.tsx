@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -28,7 +28,7 @@ const builds = [
   {
     name: "Automation sprint",
     from: "from $3,000",
-    detail: "3-5 production n8n workflows in 2-3 weeks, with a measured before-and-after baseline.",
+    detail: "3-5 production workflows in 2-3 weeks, with a measured before-and-after baseline. Team training and handoff included.",
   },
   {
     name: "Dashboard / internal tool",
@@ -107,10 +107,11 @@ export default function Services() {
                     Ongoing ownership of the system: Google Ads management,
                     conversion tracking, one automation improvement every
                     month, site care, and a monthly report in plain language
-                    with real numbers.
+                    with real numbers. Your team gets trained on every workflow
+                    we ship.
                   </p>
                   <p className="mt-4 font-mono text-xs uppercase tracking-wide text-clay">
-                    Five client slots. One senior operator.
+                    Five client slots. Small by design.
                   </p>
                 </div>
                 <div className="flex flex-col justify-between lg:col-span-4">

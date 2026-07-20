@@ -1,15 +1,15 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import RibField from "@/components/RibField";
+import RibFieldGL from "@/components/RibFieldGL";
 
 const cases = [
   {
     slug: "monte-xanic",
     client: "Monte Xanic",
     sector: "Winery, Valle de Guadalupe",
-    result: "Analytics dashboard with a harvest prediction model, plus the automations that run around it.",
+    result: "A 1-hour financial workflow now runs itself in 2 minutes, refreshed through the day. Plus a harvest prediction model.",
     tag: "Data + Automation",
     featured: true,
   },
@@ -69,9 +69,9 @@ const system = [
   {
     n: "03",
     name: "Operations",
-    what: "Automation that never drops a lead.",
+    what: "Custom workflows your team actually runs.",
     detail:
-      "Follow-up, reporting, and back-office workflows that run while you sleep. The unglamorous plumbing where AI actually pays off.",
+      "Follow-up, reporting, and back-office automation built for your stack, integrated end to end, with your team trained to own it. Not another subscription.",
   },
 ];
 
@@ -84,27 +84,28 @@ export default function Home() {
         <section className="relative overflow-hidden pt-32 sm:pt-40">
           <div className="mx-auto max-w-site px-5 sm:px-8">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">
-              Baja California / EN + ES / One operator
+              Baja California / EN + ES / Custom systems
             </p>
             <h1 className="mt-6 font-display text-[11vw] font-extrabold leading-[0.98] tracking-tight sm:text-[7.5vw] lg:text-[6.2vw]">
               <span className="hero-line">
                 <span style={{ animationDelay: "0.05s" }}>Your ads, your site,</span>
               </span>
               <span className="hero-line">
-                <span style={{ animationDelay: "0.15s" }}>your automations.</span>
+                <span style={{ animationDelay: "0.15s" }}>your operations.</span>
               </span>
               <span className="hero-line text-cardon">
-                <span style={{ animationDelay: "0.25s" }}>One senior operator.</span>
+                <span style={{ animationDelay: "0.25s" }}>One living system.</span>
               </span>
               <span className="hero-line text-clay">
-                <span style={{ animationDelay: "0.35s" }}>No agency layers.</span>
+                <span style={{ animationDelay: "0.35s" }}>Not another SaaS.</span>
               </span>
             </h1>
             <div className="mt-10 flex max-w-2xl flex-col gap-8 pb-6 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-md text-lg leading-relaxed text-ink/75">
-                Cardon Digital builds and runs the whole growth system: campaigns
-                that bring demand, a site that converts it, and automation that
-                never drops a lead.
+                We build the custom systems your company runs on: workflows
+                designed, integrated into how you already work, and your team
+                trained to own them. Ads bring demand, the site converts it,
+                operations never drop a lead.
               </p>
               <div className="flex shrink-0 flex-col gap-3">
                 <Link
@@ -123,7 +124,7 @@ export default function Home() {
             </div>
           </div>
           <div className="h-40 w-full sm:h-56">
-            <RibField />
+            <RibFieldGL />
           </div>
         </section>
 
@@ -134,7 +135,7 @@ export default function Home() {
               <p>10 US ad accounts audited and optimized</p>
             </Reveal>
             <Reveal delay={80}>
-              <p>6 named clients across 2 countries</p>
+              <p>A 1-hour financial workflow, now 2 minutes, live all day</p>
             </Reveal>
             <Reveal delay={160}>
               <p>Both languages written natively, not translated</p>
@@ -151,39 +152,44 @@ export default function Home() {
                   <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">
                     The problem
                   </p>
+                  <span className="sd-draw mt-3 block h-px w-12 bg-clay" />
                 </Reveal>
               </div>
               <div className="lg:col-span-9">
                 <Reveal>
                   <h2 className="font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                    Most small-business marketing runs on numbers that lie.
+                    Most companies steer with numbers that lie and reports that
+                    arrive too late.
                   </h2>
                 </Reveal>
                 <div className="mt-12 grid gap-8 sm:grid-cols-3">
                   <Reveal delay={0}>
                     <div className="rule pt-5">
-                      <p className="font-mono text-sm text-clay">3x</p>
+                      <p className="font-mono text-sm text-clay">Inflated counts</p>
                       <p className="mt-2 text-sm leading-relaxed text-ink/70">
-                        A lead counted three times looks like growth. It is one
-                        customer and three receipts.
+                        The same lead counted across forms, calls, and CRM
+                        stages. Growth on the dashboard, one customer in
+                        reality.
                       </p>
                     </div>
                   </Reveal>
                   <Reveal delay={100}>
                     <div className="rule pt-5">
-                      <p className="font-mono text-sm text-clay">4.6x</p>
+                      <p className="font-mono text-sm text-clay">Stale reports</p>
                       <p className="mt-2 text-sm leading-relaxed text-ink/70">
-                        A return on ad spend that was really a CRM pipeline
-                        ratio. Nobody had checked what the number counted.
+                        When the numbers take an hour of manual work, decisions
+                        run on last week. Live data changes what you can act on
+                        today.
                       </p>
                     </div>
                   </Reveal>
                   <Reveal delay={200}>
                     <div className="rule pt-5">
-                      <p className="font-mono text-sm text-clay">95%</p>
+                      <p className="font-mono text-sm text-clay">Stalled pilots</p>
                       <p className="mt-2 text-sm leading-relaxed text-ink/70">
-                        of AI pilots never touch the P&amp;L. They die on
-                        integration, not intelligence.
+                        New tools that never plug into the real workflow, and
+                        teams never trained to run them. That is where most AI
+                        projects die.
                       </p>
                     </div>
                   </Reveal>
@@ -192,7 +198,8 @@ export default function Home() {
                   <p className="mt-12 max-w-xl text-lg leading-relaxed">
                     Everything Cardon builds starts the same way:{" "}
                     <span className="font-semibold text-cardon">
-                      make the numbers true, then compound from there.
+                      make the numbers true and make them live, then compound
+                      from there.
                     </span>
                   </p>
                 </Reveal>
@@ -210,6 +217,7 @@ export default function Home() {
                   <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">
                     The system
                   </p>
+                  <span className="sd-draw mt-3 block h-px w-12 bg-clay" />
                 </Reveal>
               </div>
               <div className="lg:col-span-9">
@@ -305,6 +313,7 @@ export default function Home() {
                   <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">
                     Method
                   </p>
+                  <span className="sd-draw mt-3 block h-px w-12 bg-clay" />
                   <h2 className="mt-4 font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
                     Built to hold water.
                   </h2>
@@ -322,8 +331,8 @@ export default function Home() {
                     ["Measurement first", "Tracking gets audited before anything is optimized. If the data lies, everything downstream lies."],
                     ["Evidence-cited findings", "Every recommendation carries the query, the export, or the screenshot behind it, and a dollar figure."],
                     ["Flat fees, never percent of spend", "Your budget growing should not be my raise. The incentive conflict is the industry default; refusing it is the feature."],
-                    ["No lock-in", "Month to month. Accountability beats contracts."],
-                    ["Five client slots", "One senior operator does the work. Scarcity is not a marketing trick, it is a calendar."],
+                    ["No lock-in, no dependency", "Month to month. We train your team to run what we build, and you keep the keys."],
+                    ["Five client slots", "Small by design: senior hands on every system. Scarcity is a calendar, not a marketing trick."],
                   ].map(([title, body], i) => (
                     <Reveal key={title} delay={i * 60}>
                       <div className="rule flex flex-col gap-2 py-6 sm:flex-row sm:gap-10">
@@ -353,8 +362,8 @@ export default function Home() {
             <Reveal>
               <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-center">
                 <p className="max-w-2xl font-display text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
-                  I am Daniel. I build in Baja California and work on both sides
-                  of the border, in both languages.
+                  Built in Baja California. Working on both sides of the
+                  border, in both languages.
                 </p>
                 <Link
                   href="/about"

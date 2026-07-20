@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Archivo, Fragment_Mono } from "next/font/google";
+import { ViewTransitions } from "next-view-transitions";
+import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
@@ -27,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s - Cardon Digital",
   },
   description:
-    "Your ads, your site, your automations. One senior operator, no agency layers. Google Ads, web builds, and automation for US and Mexican businesses, in English and Spanish.",
+    "Your ads, your site, your operations: one living system, not another SaaS. Custom workflows, Google Ads, and web builds for US and Mexican businesses, in English and Spanish.",
   alternates: {
     canonical: "/",
     languages: { "en-US": "/", "es-MX": "/es" },
@@ -63,19 +65,22 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="grain font-body">
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        {children}
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+        <body className="grain font-body">
+          <script
+            dangerouslySetInnerHTML={{
+              __html: "document.documentElement.classList.add('js')",
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+          <SmoothScroll />
+          {children}
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

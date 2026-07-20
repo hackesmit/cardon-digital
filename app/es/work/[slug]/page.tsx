@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { notFound } from "next/navigation";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -41,6 +41,17 @@ export default function CasePageEs({ params }: { params: { slug: string } }) {
             {c.client.es}
           </h1>
           <p className="mt-3 font-mono text-sm text-haze">{c.sector.es}</p>
+
+          {c.image && (
+            <div className="sd-rise mt-10 border border-ink/15 bg-dune p-2 sm:p-3">
+              <img
+                src={c.image.src}
+                alt={c.image.alt.es}
+                loading="lazy"
+                className="h-auto w-full"
+              />
+            </div>
+          )}
 
           <div className="mt-12 grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">

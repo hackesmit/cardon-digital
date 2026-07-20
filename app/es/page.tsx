@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import RibField from "@/components/RibField";
+import RibFieldGL from "@/components/RibFieldGL";
 
 export const metadata: Metadata = {
   title: "Cardon Digital - Sistemas de crecimiento que retienen el agua",
   description:
-    "Tus anuncios, tu sitio, tus automatizaciones. Un solo operador senior, sin capas de agencia. Google Ads, desarrollo web y automatización para negocios de México y Estados Unidos.",
+    "Tus anuncios, tu sitio, tus operaciones: un sistema vivo, no otro SaaS. Flujos a la medida, Google Ads y desarrollo web para negocios de México y Estados Unidos.",
   alternates: {
     canonical: "/es",
     languages: { "en-US": "/", "es-MX": "/es" },
@@ -21,7 +21,7 @@ const casos = [
     client: "Monte Xanic",
     sector: "Vinícola, Valle de Guadalupe",
     result:
-      "Dashboard de analítica con modelo de predicción de cosecha, más las automatizaciones que lo rodean.",
+      "Un flujo financiero de 1 hora ahora corre solo en 2 minutos, varias veces al día. Más un modelo de predicción de cosecha.",
     tag: "Datos + Automatización",
   },
   {
@@ -59,9 +59,9 @@ const sistema = [
   {
     n: "03",
     name: "Operación",
-    what: "Automatización que no deja caer ningún prospecto.",
+    what: "Flujos a la medida que tu equipo sí opera.",
     detail:
-      "Seguimiento, reportes y flujos de trabajo que corren mientras duermes. La plomería donde la IA sí paga.",
+      "Seguimiento, reportes y automatización de back-office construidos para tu stack, integrados de punta a punta y con tu equipo entrenado. No otra suscripción.",
   },
 ];
 
@@ -73,27 +73,28 @@ export default function HomeEs() {
         <section className="relative overflow-hidden pt-32 sm:pt-40">
           <div className="mx-auto max-w-site px-5 sm:px-8">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">
-              Baja California / ES + EN / Un solo operador
+              Baja California / ES + EN / Sistemas a la medida
             </p>
             <h1 className="mt-6 font-display text-[11vw] font-extrabold leading-[0.98] tracking-tight sm:text-[7.5vw] lg:text-[6.2vw]">
               <span className="hero-line">
                 <span style={{ animationDelay: "0.05s" }}>Tus anuncios, tu sitio,</span>
               </span>
               <span className="hero-line">
-                <span style={{ animationDelay: "0.15s" }}>tus automatizaciones.</span>
+                <span style={{ animationDelay: "0.15s" }}>tus operaciones.</span>
               </span>
               <span className="hero-line text-cardon">
-                <span style={{ animationDelay: "0.25s" }}>Un operador senior.</span>
+                <span style={{ animationDelay: "0.25s" }}>Un sistema vivo.</span>
               </span>
               <span className="hero-line text-clay">
-                <span style={{ animationDelay: "0.35s" }}>Sin capas de agencia.</span>
+                <span style={{ animationDelay: "0.35s" }}>No otro SaaS.</span>
               </span>
             </h1>
             <div className="mt-10 flex max-w-2xl flex-col gap-8 pb-6 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-md text-lg leading-relaxed text-ink/75">
-                Cardon Digital construye y opera el sistema completo: campañas
-                que traen demanda, un sitio que la convierte y automatización
-                que no deja caer ningún prospecto.
+                Construimos los sistemas sobre los que corre tu empresa: flujos
+                diseñados a la medida, integrados a tu forma de trabajar y con
+                tu equipo entrenado para operarlos. Los anuncios traen demanda,
+                el sitio la convierte, las operaciones no dejan caer nada.
               </p>
               <div className="flex shrink-0 flex-col gap-3">
                 <Link
@@ -112,7 +113,7 @@ export default function HomeEs() {
             </div>
           </div>
           <div className="h-40 w-full sm:h-56">
-            <RibField />
+            <RibFieldGL />
           </div>
         </section>
 
@@ -122,7 +123,7 @@ export default function HomeEs() {
               <p>10 cuentas de Google Ads auditadas en EUA</p>
             </Reveal>
             <Reveal delay={80}>
-              <p>6 clientes con nombre en 2 países</p>
+              <p>Un flujo financiero de 1 hora, ahora 2 minutos, vivo todo el día</p>
             </Reveal>
             <Reveal delay={160}>
               <p>Los dos idiomas se escriben nativo, no se traducen</p>
@@ -143,15 +144,16 @@ export default function HomeEs() {
               <div className="lg:col-span-9">
                 <Reveal>
                   <h2 className="font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-                    La mayoría del marketing PyME corre sobre números que
-                    mienten.
+                    La mayoría de las empresas navegan con números que mienten
+                    y reportes que llegan tarde.
                   </h2>
                 </Reveal>
                 <Reveal delay={150}>
                   <p className="mt-10 max-w-xl text-lg leading-relaxed">
                     Todo lo que Cardon construye empieza igual:{" "}
                     <span className="font-semibold text-cardon">
-                      hacer que los números digan la verdad, y de ahí crecer.
+                      hacer que los números digan la verdad y lleguen a tiempo,
+                      y de ahí crecer.
                     </span>
                   </p>
                 </Reveal>

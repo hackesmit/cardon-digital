@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -8,7 +8,7 @@ import Mark from "@/components/Mark";
 export const metadata: Metadata = {
   title: "Nosotros - Cardon Digital",
   description:
-    "Cardon Digital es Daniel: un operador senior en Baja California construyendo sistemas de crecimiento para negocios de México y Estados Unidos.",
+    "Cardon Digital es un estudio de Baja California que construye los sistemas sobre los que corren las empresas: anuncios, sitios y automatización, integrados y con el equipo entrenado.",
   alternates: {
     canonical: "/es/about",
     languages: { "en-US": "/about", "es-MX": "/es/about" },
@@ -23,23 +23,25 @@ export default function AboutEs() {
         <div className="mx-auto max-w-site px-5 pb-24 sm:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">Nosotros</p>
           <h1 className="mt-4 max-w-4xl font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-            Un operador, los dos lados de la frontera.
+            Hecho en Baja. Los dos lados de la frontera.
           </h1>
 
           <div className="mt-16 grid gap-14 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <Reveal>
                 <p className="text-lg leading-relaxed text-ink/80">
-                  Soy Daniel. Construyo y opero sistemas de crecimiento desde
-                  Baja California: Google Ads con medición forense, sitios y
-                  e-commerce que cumplen lo que el anuncio promete, y
-                  automatización que no deja caer ningún prospecto.
+                  Cardon construye los sistemas sobre los que corren las
+                  empresas: Google Ads con medición forense, sitios y
+                  e-commerce que cumplen lo que el anuncio promete, y flujos
+                  integrados a la forma en que tu equipo ya trabaja. No te
+                  vendemos otra suscripción; construimos la tuya.
                 </p>
                 <p className="mt-6 leading-relaxed text-ink/75">
                   El historial reciente: diez cuentas de Google Ads auditadas y
                   optimizadas junto a una agencia estadounidense, la plataforma
-                  de analítica con modelo de predicción de cosecha para Monte
-                  Xanic, el e-commerce completo de Encanto.MX, sitios para
+                  de operación vinícola de Monte Xanic donde un flujo
+                  financiero de 1 hora hoy corre solo en 2 minutos varias veces
+                  al día, el e-commerce completo de Encanto.MX, sitios para
                   BrighterHire y Activated Ministries, y el sistema de
                   logística de una constructora.
                 </p>
@@ -48,6 +50,13 @@ export default function AboutEs() {
                   sitio se escribió en inglés; este lado se escribió en
                   español. Así se construyen también tus campañas: keyword
                   research y copy nativos por mercado, nunca traducción.
+                </p>
+                <p className="mt-6 leading-relaxed text-ink/75">
+                  Operamos en el filo de las herramientas de IA y las tratamos
+                  como el trabajo lo merece: cada recomendación generada por IA
+                  se verifica contra datos reales antes de enviarse, y tu
+                  equipo queda entrenado para operar lo que construimos. Cardon
+                  es dirigido por Daniel, su fundador.
                 </p>
               </Reveal>
             </div>
