@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s - Cardon Digital",
   },
   description:
-    "Your ads, your site, your operations: one living system, not another SaaS. Custom workflows, Google Ads, and web builds for US and Mexican businesses, in English and Spanish.",
+    "The growth systems practice for owner-run businesses in the US and Mexico: ads, site, and operations built and run as one system your team ends up owning. Not another agency, not another SaaS.",
   alternates: {
     canonical: "/",
     languages: { "en-US": "/", "es-MX": "/es" },

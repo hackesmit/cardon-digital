@@ -91,10 +91,11 @@ export default function HomeEs() {
             </h1>
             <div className="mt-10 flex max-w-2xl flex-col gap-8 pb-6 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-md text-lg leading-relaxed text-ink/75">
-                Construimos los sistemas sobre los que corre tu empresa: flujos
-                diseñados a la medida, integrados a tu forma de trabajar y con
-                tu equipo entrenado para operarlos. Los anuncios traen demanda,
-                el sitio la convierte, las operaciones no dejan caer nada.
+                Cardon es la práctica de sistemas de crecimiento para empresas
+                dirigidas por sus dueños, en México y Estados Unidos. Primero
+                hacemos que tus números digan la verdad; luego construimos y
+                operamos los anuncios, el sitio y los flujos que crecen sobre
+                ellos. Tu equipo se queda con todo.
               </p>
               <div className="flex shrink-0 flex-col gap-3">
                 <Link
@@ -123,7 +124,7 @@ export default function HomeEs() {
               <p>10 cuentas de Google Ads auditadas en EUA</p>
             </Reveal>
             <Reveal delay={80}>
-              <p>Un flujo financiero de 1 hora, ahora 2 minutos, vivo todo el día</p>
+              <p>El flujo financiero de Monte Xanic: de 1 hora a 2 minutos, vivo todo el día</p>
             </Reveal>
             <Reveal delay={160}>
               <p>Los dos idiomas se escriben nativo, no se traducen</p>

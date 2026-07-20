@@ -45,13 +45,22 @@ export default function Services() {
         <div className="mx-auto max-w-site px-5 pb-24 sm:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">Services</p>
           <h1 className="mt-4 max-w-4xl font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-            One system, priced so the incentives point at you.
+            One system, one price. No percent of spend, no hourly, no lock-in.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/75">
-            Flat fees, fixed scopes, month to month. Never a percentage of ad
-            spend, never hourly, never a performance guarantee that pretends
-            the world is predictable.
+            Flat fees, fixed scopes, month to month. If our fee rose with your
+            ad spend, we would profit from recommending more spend. It does
+            not, so the only way we win is if the system performs.
           </p>
+
+          <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-y border-ink/10 py-5 font-mono text-xs uppercase tracking-wide text-haze">
+            <span className="text-ink/80">The Cardon Method</span>
+            <span><span className="text-cardon">01</span> Make the numbers true</span>
+            <span><span className="text-cardon">02</span> Stop the waste</span>
+            <span><span className="text-cardon">03</span> Build the system</span>
+            <span><span className="text-cardon">04</span> Train your team</span>
+            <span><span className="text-cardon">05</span> Compound</span>
+          </div>
 
           {/* Diagnostic */}
           <Reveal>
@@ -65,11 +74,15 @@ export default function Services() {
                     Growth Diagnostic
                   </h2>
                   <p className="mt-5 max-w-lg leading-relaxed text-ink/75">
-                    Ten business days across your ads, your tracking, your site,
-                    and your workflows. You get a written memo: what your
-                    numbers actually count, where the spend leaks, what to
-                    automate first, and a 30-day priority plan. No retainer
-                    required; the memo is yours.
+                    Every engagement starts here, because prescribing before
+                    diagnosing is malpractice. Ten business days across your
+                    ads, tracking, site, and workflows. You get a written memo:
+                    what your numbers actually count, where the spend leaks
+                    with dollar figures on it, what to automate first, and a
+                    30-day priority plan. Paid upfront, no retainer required;
+                    the memo is yours and you can hand it to any competent
+                    operator. Sometimes the honest finding is that you do not
+                    need us yet. You will hear that too.
                   </p>
                 </div>
                 <div className="flex flex-col justify-between lg:col-span-4">
@@ -117,10 +130,11 @@ export default function Services() {
                 <div className="flex flex-col justify-between lg:col-span-4">
                   <div>
                     <p className="font-display text-5xl font-extrabold tracking-tight text-cardon">
-                      $1,500<span className="text-2xl text-haze">/mo</span>
+                      <span className="text-2xl text-haze">from </span>$1,500
+                      <span className="text-2xl text-haze">/mo</span>
                     </p>
                     <p className="mt-2 font-mono text-xs uppercase tracking-wide text-haze">
-                      Core. Standard at $2,500/mo for larger systems.
+                      Scoped to your system after the diagnostic.
                     </p>
                     <p className="mt-4 text-sm leading-relaxed text-ink/70">
                       Month to month. Flat fee at every spend level.

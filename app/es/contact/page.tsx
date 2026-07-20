@@ -28,9 +28,14 @@ export default function ContactEs() {
             <div className="lg:col-span-6">
               <Reveal>
                 <p className="text-lg leading-relaxed text-ink/75">
-                  Un correo basta para empezar. Dime qué vendes, dónde te
-                  anuncias y qué se siente raro. Recibes una respuesta directa
-                  sobre si el diagnóstico tiene sentido para tu negocio.
+                  Un correo basta para empezar. Dinos qué vendes, dónde te
+                  anuncias y de qué número dudas. Recibes una respuesta
+                  directa sobre si el diagnóstico tiene sentido para tu
+                  negocio.
+                </p>
+                <p className="mt-4 leading-relaxed text-ink/75">
+                  Y si tus números aguantan, el memo lo dice y ahí termina el
+                  trabajo.
                 </p>
                 <a
                   href="mailto:hello@cardondigital.com?subject=Diagn%C3%B3stico%20de%20Crecimiento"
