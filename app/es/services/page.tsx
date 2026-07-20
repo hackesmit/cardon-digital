@@ -41,13 +41,24 @@ export default function ServicesEs() {
         <div className="mx-auto max-w-site px-5 pb-24 sm:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">Servicios</p>
           <h1 className="mt-4 max-w-4xl font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-            Un solo sistema, con incentivos que apuntan hacia ti.
+            Un sistema, un precio. Sin porcentaje de inversión, sin horas, sin
+            ataduras.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink/75">
-            Tarifas fijas, alcances fijos, mes a mes. Nunca porcentaje de tu
-            inversión publicitaria, nunca por hora. Cotización personalizada
-            para México.
+            Tarifas fijas, alcances fijos, mes a mes. Si nuestra tarifa
+            creciera con tu inversión publicitaria, ganaríamos recomendando
+            más inversión. No es así: solo ganamos si el sistema funciona.
+            Cotización personalizada para México.
           </p>
+
+          <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-y border-ink/10 py-5 font-mono text-xs uppercase tracking-wide text-haze">
+            <span className="text-ink/80">El Método Cardon</span>
+            <span><span className="text-cardon">01</span> Números que digan la verdad</span>
+            <span><span className="text-cardon">02</span> Frenar el desperdicio</span>
+            <span><span className="text-cardon">03</span> Construir el sistema</span>
+            <span><span className="text-cardon">04</span> Entrenar a tu equipo</span>
+            <span><span className="text-cardon">05</span> Crecer sobre eso</span>
+          </div>
 
           <Reveal>
             <section className="mt-20 bg-dune p-8 sm:p-12">
@@ -58,11 +69,15 @@ export default function ServicesEs() {
                 Diagnóstico de Crecimiento
               </h2>
               <p className="mt-5 max-w-lg leading-relaxed text-ink/75">
-                Diez días hábiles sobre tus anuncios, tu medición, tu sitio y
-                tus flujos. Recibes un memo escrito: qué cuentan realmente tus
-                números, dónde se fuga la inversión, qué automatizar primero y
-                un plan de prioridades a 30 días. El memo es tuyo, con o sin
-                retención.
+                Todo empieza aquí, porque recetar sin diagnosticar es mala
+                práctica. Diez días hábiles sobre tus anuncios, tu medición,
+                tu sitio y tus flujos. Recibes un memo escrito: qué cuentan
+                realmente tus números, dónde se fuga la inversión con cifras
+                en pesos y dólares, qué automatizar primero y un plan de
+                prioridades a 30 días. Se paga por adelantado y el memo es
+                tuyo, con o sin retención; puedes entregárselo a cualquier
+                operador competente. A veces el hallazgo honesto es que
+                todavía no nos necesitas. Eso también lo vas a escuchar.
               </p>
               <Link
                 href="/es/contact"

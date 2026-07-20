@@ -29,9 +29,13 @@ export default function Contact() {
               <Reveal>
                 <p className="text-lg leading-relaxed text-ink/75">
                   One email is enough to start. Say what you sell, where you
-                  advertise, and what feels off. You will get a straight answer
-                  about whether the diagnostic makes sense for you, in English
-                  or Spanish.
+                  advertise, and which number you doubt. You will get a
+                  straight answer about whether the diagnostic makes sense for
+                  you, in English or Spanish.
+                </p>
+                <p className="mt-4 leading-relaxed text-ink/75">
+                  And if the numbers hold up, the memo says so, and the
+                  engagement ends there.
                 </p>
                 <a
                   href="mailto:hello@cardondigital.com?subject=Growth%20Diagnostic"
@@ -41,6 +45,10 @@ export default function Contact() {
                 </a>
                 <p className="mt-6 font-mono text-xs uppercase tracking-wide text-haze">
                   Baja California / Remote / EN + ES
+                </p>
+                <p className="mt-3 max-w-md font-mono text-xs leading-relaxed text-haze">
+                  Built for businesses spending $2,000-50,000 a month on ads.
+                  Below that, start with a site or automation build instead.
                 </p>
               </Reveal>
             </div>

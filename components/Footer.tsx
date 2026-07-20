@@ -18,8 +18,8 @@ export default function Footer({ lang = "en" }: { lang?: "en" | "es" }) {
             </div>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-sand/60">
               {es
-                ? "Sistemas de crecimiento construidos para retener el agua. Baja California, Mexico."
-                : "Growth systems built to hold water. Baja California, Mexico."}
+                ? "Sistemas de crecimiento que siguen corriendo cuando nos vamos. Baja California, México."
+                : "Growth systems that still run after we leave. Baja California, Mexico."}
             </p>
           </div>
 

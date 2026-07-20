@@ -102,10 +102,10 @@ export default function Home() {
             </h1>
             <div className="mt-10 flex max-w-2xl flex-col gap-8 pb-6 sm:flex-row sm:items-end sm:justify-between">
               <p className="max-w-md text-lg leading-relaxed text-ink/75">
-                We build the custom systems your company runs on: workflows
-                designed, integrated into how you already work, and your team
-                trained to own them. Ads bring demand, the site converts it,
-                operations never drop a lead.
+                Cardon is the growth systems practice for owner-run businesses
+                in the US and Mexico. We make your numbers true, then build
+                and run the ads, site, and workflows that compound on them.
+                Your team owns it all when we leave.
               </p>
               <div className="flex shrink-0 flex-col gap-3">
                 <Link
@@ -135,7 +135,7 @@ export default function Home() {
               <p>10 US ad accounts audited and optimized</p>
             </Reveal>
             <Reveal delay={80}>
-              <p>A 1-hour financial workflow, now 2 minutes, live all day</p>
+              <p>Monte Xanic's 1-hour financial workflow now runs in 2 minutes, live all day</p>
             </Reveal>
             <Reveal delay={160}>
               <p>Both languages written natively, not translated</p>
