@@ -144,6 +144,156 @@ html.lenis body {
   }
 }
 
+/* ---------- Lab demos ---------- */
+
+/* Reading-progress bar tied to document scroll, no JS */
+@supports (animation-timeline: scroll()) {
+  .lab-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 70;
+    height: 3px;
+    background: var(--clay);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: labProgress linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes labProgress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+@supports (animation-timeline: view()) {
+  /* Layered parallax: each layer reads its own --par depth */
+  .lab-par {
+    animation: labPar linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes labPar {
+    from {
+      transform: translateY(calc(-1 * var(--par, 20%)));
+    }
+    to {
+      transform: translateY(var(--par, 20%));
+    }
+  }
+
+  /* Image wiped in by scroll position via clip-path */
+  .lab-clip {
+    animation: labClip cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 55%;
+  }
+  @keyframes labClip {
+    from {
+      clip-path: inset(6% 86% 6% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  /* SVG stroke draw; paths carry pathLength=1 */
+  .lab-draw path {
+    stroke-dasharray: 1;
+    animation: labDraw linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 55%;
+  }
+  .lab-draw path:nth-of-type(2) {
+    animation-range: entry 15% cover 65%;
+  }
+  .lab-draw path:nth-of-type(3) {
+    animation-range: entry 30% cover 75%;
+  }
+  .lab-draw path:nth-of-type(4) {
+    animation-range: entry 45% cover 85%;
+  }
+  @keyframes labDraw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}
+
+/* Marquee: track holds two copies of the content, loops half its width */
+.lab-marquee {
+  overflow: hidden;
+}
+.lab-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: labMarquee 26s linear infinite;
+}
+.lab-marquee:hover .lab-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes labMarquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Cursor spotlight: position vars set from JS, all paint in CSS */
+.lab-spot {
+  --mx: 50%;
+  --my: 45%;
+  background:
+    radial-gradient(
+      360px circle at var(--mx) var(--my),
+      rgba(217, 161, 59, 0.16),
+      transparent 70%
+    ),
+    var(--night);
+}
+.lab-spot-text {
+  background: radial-gradient(
+    260px circle at var(--mx) var(--my),
+    rgba(239, 230, 211, 0.96),
+    rgba(239, 230, 211, 0.14) 72%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 3D tilt card */
+.lab-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.lab-tilt.tilting {
+  transition: transform 0.06s linear;
+}
+.lab-tilt-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--gx, 50%) var(--gy, 20%),
+    rgba(239, 230, 211, 0.35),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lab-tilt.tilting .lab-tilt-glare {
+  opacity: 1;
+}
+
 /* Focus visibility */
 a:focus-visible,
 button:focus-visible {
@@ -167,5 +317,22 @@ button:focus-visible {
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none !important;
+  }
+  .lab-par,
+  .lab-clip,
+  .lab-draw path,
+  .lab-marquee-track,
+  .lab-tilt {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+  .lab-progress {
+    display: none;
+  }
+  .lab-spot-text {
+    background: none;
+    color: var(--sand);
   }
 }
