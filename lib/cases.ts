@@ -6,6 +6,7 @@ export type CaseStudy = {
   summary: { en: string; es: string };
   body: { en: string[]; es: string[] };
   status?: { en: string; es: string };
+  image?: { src: string; alt: { en: string; es: string } };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -18,22 +19,29 @@ export const caseStudies: CaseStudy[] = [
       es: "Vinícola, Valle de Guadalupe, Baja California",
     },
     summary: {
-      en: "A century-old craft, run on numbers that hold water: analytics dashboard, harvest prediction model, and the automations around them.",
-      es: "Un oficio centenario, operado sobre números que retienen el agua: dashboard de analítica, modelo de predicción de cosecha y las automatizaciones alrededor.",
+      en: "A 1-hour financial workflow cut to 2 automated minutes, refreshed through the day. Plus a ripening dashboard and a harvest prediction model.",
+      es: "Un flujo financiero de 1 hora reducido a 2 minutos automáticos, actualizado durante el día. Más un dashboard de maduración y un modelo de predicción de cosecha.",
     },
     body: {
       en: [
-        "Monte Xanic is one of Mexico's defining wineries. The work here spans most of their digital operation: a winery analytics dashboard, a prediction model that supports harvest decisions, workflow automation built on n8n, and additional websites.",
-        "Winemaking punishes bad data harder than most businesses: you get one harvest a year. The dashboard puts operational data in one place; the prediction model turns it into decisions with a date on them.",
-        "The automations do the unglamorous work: moving data between systems, keeping reports current, removing the manual steps where things used to fall through.",
-        "Detailed results and screenshots are being prepared with the client for publication.",
+        "Monte Xanic is one of Mexico's defining wineries. The work spans most of their digital operation: a ripening and phenolics dashboard tracking 714 samples across 89 lots and 9 varietals, a prediction model that supports harvest decisions, financial workflow automation, and additional websites.",
+        "The clearest number: their financial reporting used to take an hour of manual work every time it ran. It now runs automatically in about two minutes, several times a day. Information that used to arrive stale is live and actionable; decisions stopped waiting for the report.",
+        "Winemaking punishes bad data harder than most businesses: you get one harvest a year. The dashboard puts Brix, pH, acidity, and anthocyanin curves in one place; the prediction model turns them into decisions with a date on them.",
+        "The automations do the unglamorous work: moving data between systems, keeping reports current, removing the manual steps where things used to fall through. The team was trained to run all of it.",
       ],
       es: [
-        "Monte Xanic es una de las vinícolas que definen al vino mexicano. El trabajo abarca la mayor parte de su operación digital: dashboard de analítica, un modelo de predicción que apoya decisiones de cosecha, automatización de flujos con n8n y sitios adicionales.",
-        "La vinicultura castiga los datos malos más que casi cualquier negocio: hay una sola cosecha al año. El dashboard concentra la operación en un solo lugar; el modelo la convierte en decisiones con fecha.",
-        "Las automatizaciones hacen el trabajo sin gloria: mover datos entre sistemas, mantener reportes al día, eliminar los pasos manuales donde antes se caían las cosas.",
-        "Resultados detallados y capturas se están preparando con el cliente para publicación.",
+        "Monte Xanic es una de las vinícolas que definen al vino mexicano. El trabajo abarca la mayor parte de su operación digital: un dashboard de maduración y fenólicos que sigue 714 muestras en 89 lotes y 9 varietales, un modelo de predicción para decisiones de cosecha, automatización del flujo financiero y sitios adicionales.",
+        "El número más claro: su reporte financiero tomaba una hora de trabajo manual cada vez. Hoy corre solo en unos dos minutos, varias veces al día. La información que llegaba rancia ahora está viva y es accionable; las decisiones dejaron de esperar al reporte.",
+        "La vinicultura castiga los datos malos más que casi cualquier negocio: hay una sola cosecha al año. El dashboard concentra Brix, pH, acidez y antocianinas en un solo lugar; el modelo los convierte en decisiones con fecha.",
+        "Las automatizaciones hacen el trabajo sin gloria: mover datos entre sistemas, mantener reportes al día, eliminar pasos manuales. El equipo quedó entrenado para operarlo todo.",
       ],
+    },
+    image: {
+      src: "/work/monte-xanic.png",
+      alt: {
+        en: "Monte Xanic ripening and phenolics dashboard: 714 samples, 89 lots, 9 varietals, Brix and anthocyanin curves",
+        es: "Dashboard de maduración y fenólicos de Monte Xanic: 714 muestras, 89 lotes, 9 varietales, curvas de Brix y antocianinas",
+      },
     },
   },
   {
@@ -85,6 +93,13 @@ export const caseStudies: CaseStudy[] = [
       ],
     },
     status: { en: "Launching soon", es: "Próximo a lanzar" },
+    image: {
+      src: "/work/encanto.png",
+      alt: {
+        en: "En'kanto wines page with watercolor label artwork",
+        es: "Página de vinos de En'kanto con arte de acuarela en las etiquetas",
+      },
+    },
   },
   {
     slug: "brighterhire",
@@ -98,6 +113,13 @@ export const caseStudies: CaseStudy[] = [
     body: {
       en: ["Design portfolio website. Full case study in preparation."],
       es: ["Sitio portafolio de diseño. Caso completo en preparación."],
+    },
+    image: {
+      src: "/work/brighterhire.png",
+      alt: {
+        en: "BrighterHire recruiting site: build your dream team without the headaches",
+        es: "Sitio de reclutamiento BrighterHire",
+      },
     },
   },
   {

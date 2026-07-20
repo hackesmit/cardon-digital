@@ -82,23 +82,66 @@ body {
   animation: riseIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Rib field bars */
-.rib {
-  transform-origin: bottom center;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.5s ease;
-  will-change: transform;
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-@keyframes ribGrow {
-  from {
-    transform: scaleY(0);
-  }
+/* View Transitions: quiet crossfade with a small vertical drift */
+@keyframes vt-out {
   to {
-    transform: scaleY(var(--h, 1));
+    opacity: 0;
+    transform: translateY(-10px);
   }
 }
-.rib-enter {
-  animation: ribGrow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+::view-transition-old(root) {
+  animation: vt-out 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-in 0.42s 0.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Scroll-driven animations, progressive enhancement */
+@supports (animation-timeline: view()) {
+  .sd-rise {
+    animation: sdRise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 75%;
+  }
+  @keyframes sdRise {
+    from {
+      opacity: 0;
+      transform: translateY(46px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .sd-draw {
+    transform-origin: left center;
+    animation: sdDraw linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 35%;
+  }
+  @keyframes sdDraw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
 }
 
 /* Focus visibility */
@@ -114,17 +157,15 @@ button:focus-visible {
   }
   .reveal,
   .hero-line > span,
-  .rib-enter,
-  .rib {
+  .sd-rise,
+  .sd-draw {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
-    transform: scaleY(var(--h, 1)) !important;
-  }
-  .reveal {
     transform: none !important;
   }
-  .hero-line > span {
-    transform: none !important;
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }

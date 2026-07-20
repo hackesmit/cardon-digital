@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Mark from "./Mark";
 
 export default function Footer({ lang = "en" }: { lang?: "en" | "es" }) {
@@ -11,7 +11,7 @@ export default function Footer({ lang = "en" }: { lang?: "en" | "es" }) {
         <div className="grid gap-12 md:grid-cols-3">
           <div>
             <div className="flex items-center gap-3">
-              <Mark className="h-5 w-auto text-sand" />
+              <Mark className="h-5 w-auto" dark="#EFE6D3" light="#8A7B64" />
               <span className="font-display text-[15px] font-bold tracking-tight">
                 Cardon Digital
               </span>

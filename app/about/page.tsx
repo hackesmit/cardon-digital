@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -8,7 +8,7 @@ import Mark from "@/components/Mark";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Cardon Digital is Daniel: one senior operator in Baja California building growth systems for US and Mexican businesses, in English and Spanish.",
+    "Cardon Digital is a Baja California studio building the custom systems companies run on: ads, sites, and automation, integrated and trained into your team.",
   alternates: {
     canonical: "/about",
     languages: { "en-US": "/about", "es-MX": "/es/about" },
@@ -23,25 +23,27 @@ export default function About() {
         <div className="mx-auto max-w-site px-5 pb-24 sm:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">About</p>
           <h1 className="mt-4 max-w-4xl font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-            One operator, both sides of the border.
+            Built in Baja. Working on both sides of the border.
           </h1>
 
           <div className="mt-16 grid gap-14 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <Reveal>
                 <p className="text-lg leading-relaxed text-ink/80">
-                  I am Daniel. I build and run growth systems from Baja
-                  California: Google Ads with forensic measurement, websites
-                  and e-commerce that keep the ad's promise, and automation
-                  that never drops a lead.
+                  Cardon builds the custom systems companies actually run on:
+                  Google Ads with forensic measurement, websites and e-commerce
+                  that keep the ad's promise, and workflows integrated into the
+                  way your team already works. We do not sell you another
+                  subscription; we build yours.
                 </p>
                 <p className="mt-6 leading-relaxed text-ink/75">
                   The recent record: ten US Google Ads accounts audited and
-                  optimized alongside a US agency, a winery analytics platform
-                  with a harvest prediction model for Monte Xanic, a full
-                  e-commerce build for Encanto.MX, sites for BrighterHire and
-                  Activated Ministries, and the logistics system a construction
-                  company runs on.
+                  optimized alongside a US agency, a winery operations platform
+                  for Monte Xanic where a 1-hour financial workflow now runs
+                  itself in 2 minutes through the day, a full e-commerce build
+                  for Encanto.MX, sites for BrighterHire and Activated
+                  Ministries, and the logistics system a construction company
+                  runs on.
                 </p>
                 <p className="mt-6 leading-relaxed text-ink/75">
                   Both languages are native here. The English side of this site
@@ -51,10 +53,12 @@ export default function About() {
                   translation.
                 </p>
                 <p className="mt-6 leading-relaxed text-ink/75">
-                  I work with heavy AI leverage and treat it the way the work
-                  deserves: every AI-generated recommendation gets verified
-                  against real data before it ships. The tools are fast; the
-                  judgment is the service.
+                  We operate on the cutting edge of AI tooling and treat it the
+                  way the work deserves: every AI-generated recommendation gets
+                  verified against real data before it ships, and your team
+                  gets trained to run what we build. The tools are fast; the
+                  judgment is the service. Cardon is led by Daniel, its
+                  founder.
                 </p>
               </Reveal>
             </div>

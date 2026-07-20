@@ -21,7 +21,7 @@ export default function Contact() {
         <div className="mx-auto max-w-site px-5 pb-24 sm:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">Contact</p>
           <h1 className="mt-4 max-w-3xl font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-            Tell me what the numbers say. I will tell you if they are true.
+            Tell us what the numbers say. We will tell you if they are true.
           </h1>
 
           <div className="mt-16 grid gap-12 lg:grid-cols-12">
@@ -63,7 +63,7 @@ export default function Contact() {
                     </li>
                     <li className="flex gap-4">
                       <span className="font-mono text-cardon">03</span>
-                      You act on it with me or without me. The memo is yours.
+                      You act on it with us or without us. The memo is yours.
                     </li>
                   </ol>
                 </div>

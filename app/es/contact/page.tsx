@@ -21,7 +21,7 @@ export default function ContactEs() {
         <div className="mx-auto max-w-site px-5 pb-24 sm:px-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-haze">Contacto</p>
           <h1 className="mt-4 max-w-3xl font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-            Cuéntame qué dicen tus números. Yo te digo si es verdad.
+            Cuéntanos qué dicen tus números. Te decimos si es verdad.
           </h1>
 
           <div className="mt-16 grid gap-12 lg:grid-cols-12">
@@ -62,7 +62,8 @@ export default function ContactEs() {
                     </li>
                     <li className="flex gap-4">
                       <span className="font-mono text-cardon">03</span>
-                      Actúas sobre él conmigo o sin mí. El memo es tuyo.
+                      Actúas sobre él con nosotros o sin nosotros. El memo es
+                      tuyo.
                     </li>
                   </ol>
                 </div>
