@@ -1,0 +1,17 @@
+/* Coming-soon holding page, scoped under .pg-soon */
+.pg-soon{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.pg-soon .soon-wrap{max-width:640px;padding:40px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
+.pg-soon .soon-mark{width:52px;height:52px;stroke:var(--primary);}
+.pg-soon .soon-mark .ring{fill:none;stroke:var(--secondary);}
+.pg-soon .soon-mark .dot{fill:var(--primary);stroke:none;}
+.pg-soon h1{font-size:clamp(2rem,6vw,3rem);letter-spacing:-0.02em;margin:4px 0 0;}
+.pg-soon h1 span{color:var(--muted);font-weight:600;}
+.pg-soon .soon-line{color:var(--text-dim);font-size:1.08rem;line-height:1.55;margin:0;}
+.pg-soon .soon-sub{color:var(--muted);font-size:0.92rem;margin:10px 0 0;}
+.pg-soon .soon-cta{
+  font-family:var(--mono);font-size:0.98rem;color:var(--primary);
+  border:1px solid var(--line);border-radius:999px;padding:10px 22px;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.pg-soon .soon-cta:hover{border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);}
+.pg-soon .soon-brandline{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-top:18px;}
