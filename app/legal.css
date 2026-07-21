@@ -1,0 +1,15 @@
+/* Shared styles for the legal pages (privacy, terms). Scoped under .pg-legal. */
+.pg-legal{position:relative;z-index:1;}
+.pg-legal .legal-wrap{max-width:760px;margin:0 auto;padding:clamp(90px,12vw,150px) 22px clamp(60px,8vw,100px);}
+.pg-legal .eyebrow{margin-bottom:14px;}
+.pg-legal h1{font-size:clamp(1.9rem,4.4vw,2.9rem);letter-spacing:-0.02em;line-height:1.12;margin:0 0 10px;}
+.pg-legal .legal-meta{font-family:var(--mono);font-size:0.78rem;color:var(--muted);letter-spacing:0.04em;margin-bottom:34px;}
+.pg-legal h2{font-size:clamp(1.15rem,2.2vw,1.4rem);letter-spacing:-0.01em;margin:38px 0 10px;}
+.pg-legal p,.pg-legal li{color:var(--text-dim);font-size:0.99rem;line-height:1.65;}
+.pg-legal p{margin:0 0 14px;}
+.pg-legal ul{margin:0 0 14px;padding-left:22px;}
+.pg-legal li{margin-bottom:7px;}
+.pg-legal b{color:var(--text);font-weight:600;}
+.pg-legal a{color:var(--primary);text-decoration:underline;text-underline-offset:3px;}
+.pg-legal .legal-note{border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb, var(--panel) 70%, transparent);padding:16px 18px;margin:26px 0;}
+.pg-legal .legal-note p{margin:0;}
