@@ -1,0 +1,16 @@
+/* Home-page-specific CSS that is NOT already in the shared globals layer.
+   Every section class (hero, value, split visuals, sectors map, diagnostic)
+   already lives in globals.css; the only rule the source home concept defines
+   that globals does not is the hero canvas sizing. Scoped under .pg-home (the
+   <main> root class) so nothing can leak into other routes. */
+
+.pg-home {
+  position: relative;
+  z-index: 1;
+}
+
+.pg-home #heroCanvas {
+  display: block;
+  width: 100%;
+  height: clamp(360px, 44vw, 520px);
+}
