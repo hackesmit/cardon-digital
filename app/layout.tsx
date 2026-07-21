@@ -1,86 +1,68 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Archivo, Fragment_Mono } from "next/font/google";
-import { ViewTransitions } from "next-view-transitions";
-import SmoothScroll from "@/components/SmoothScroll";
+import ContourField from "@/components/site/ContourField";
+import Nav from "@/components/site/Nav";
+import Footer from "@/components/site/Footer";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
-  subsets: ["latin"],
-  variable: "--font-display",
-  weight: ["400", "600", "700", "800"],
-});
-
-const body = Archivo({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "600"],
-});
-
-const mono = Fragment_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: "400",
-});
+// Pre-paint script: apply the stored mode before first paint so there is no
+// flash, and flag the document as JS-enabled so reveal-on-scroll can hide.
+const modeScript =
+  '(function(){try{var m=localStorage.getItem("cardon-mode");if(m==="light"||m==="dark"){document.documentElement.setAttribute("data-mode",m);}}catch(e){}document.documentElement.classList.add("js");})();';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://cardondigital.com"),
   title: {
-    default: "Cardon Digital - Growth systems built to hold water",
-    template: "%s - Cardon Digital",
+    default: "Cardon Digital | Growth systems built to hold water",
+    template: "%s | Cardon Digital",
   },
   description:
-    "The growth systems practice for owner-run businesses in the US and Mexico: ads, site, and operations built and run as one system your team ends up owning. Not another agency, not another SaaS.",
-  alternates: {
-    canonical: "/",
-    languages: { "en-US": "/", "es-MX": "/es" },
-  },
+    "Ads, website, and operations wired into one connected system your team ends up owning. Bilingual growth systems for owner-run businesses in the US and Mexico.",
   openGraph: {
-    title: "Cardon Digital",
-    description:
-      "One senior operator. The whole growth system: ads, site, automation.",
     type: "website",
+    url: "https://cardondigital.com",
+    siteName: "Cardon Digital",
+    title: "Cardon Digital | Growth systems built to hold water",
+    description:
+      "Ads, website, and operations wired into one connected system your team ends up owning. Bilingual growth systems for owner-run businesses in the US and Mexico.",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Cardon Digital, one living system",
+      },
+    ],
     locale: "en_US",
-    alternateLocale: "es_MX",
   },
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: "Cardon Digital",
-  description:
-    "Growth systems for small business: Google Ads, web development, and automation. One senior operator serving the US and Mexico in English and Spanish.",
-  url: "https://cardondigital.com",
-  areaServed: ["United States", "Mexico"],
-  knowsLanguage: ["en", "es"],
-  founder: { "@type": "Person", name: "Daniel" },
-  address: {
-    "@type": "PostalAddress",
-    addressRegion: "Baja California",
-    addressCountry: "MX",
+  twitter: {
+    card: "summary_large_image",
+    title: "Cardon Digital | Growth systems built to hold water",
+    description:
+      "Ads, website, and operations wired into one connected system your team ends up owning. Bilingual growth systems for owner-run businesses in the US and Mexico.",
+    images: ["/og.png"],
   },
+  robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ViewTransitions>
-      <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-        <body className="grain font-body">
-          <script
-            dangerouslySetInnerHTML={{
-              __html: "document.documentElement.classList.add('js')",
-            }}
-          />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
-          <SmoothScroll />
-          {children}
-        </body>
-      </html>
-    </ViewTransitions>
+    <html lang="en" data-mode="dark" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: modeScript }} />
+      </head>
+      <body>
+        <a className="sr-only" href="#main">
+          Skip to content
+        </a>
+        <ContourField />
+        <Nav />
+        {children}
+        <Footer />
+      </body>
+    </html>
   );
 }
