@@ -34,7 +34,7 @@ export default function HiringPage() {
             <div className="hero-actions">
               <a
                 className="cta"
-                href="mailto:hello@cardondigital.com?subject=Growth%20Diagnostic"
+                href="mailto:daniel@cardondigital.com?subject=Growth%20Diagnostic"
               >
                 Get the free Growth Diagnostic
               </a>
@@ -275,7 +275,7 @@ export default function HiringPage() {
                 <div className="diag-actions">
                   <a
                     className="cta cta-lg"
-                    href="mailto:hello@cardondigital.com?subject=Growth%20Diagnostic"
+                    href="mailto:daniel@cardondigital.com?subject=Growth%20Diagnostic"
                   >
                     Get the free Growth Diagnostic
                   </a>
