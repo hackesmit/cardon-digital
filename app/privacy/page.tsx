@@ -79,7 +79,7 @@ export default function PrivacyPage() {
 
         <h2>Contact</h2>
         <p>
-          <a href="mailto:hello@cardondigital.com">hello@cardondigital.com</a>
+          <a href="mailto:daniel@cardondigital.com">daniel@cardondigital.com</a>
         </p>
 
         <div className="legal-note">

@@ -71,7 +71,7 @@ export default function TermsPage() {
         <p>
           We may update these terms; the effective date above changes when we do. Questions:
           {" "}
-          <a href="mailto:hello@cardondigital.com">hello@cardondigital.com</a>.
+          <a href="mailto:daniel@cardondigital.com">daniel@cardondigital.com</a>.
         </p>
       </div>
     </main>
