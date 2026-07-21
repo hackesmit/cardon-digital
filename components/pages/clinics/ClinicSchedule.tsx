@@ -743,7 +743,7 @@ export default function ClinicSchedule() {
           const ch = CHIPS[k];
           const st = chipState(ch);
           if (!st || st.docked) continue;
-          if (st.confirmProg >= 0) drawPing(G.gateX, G.mY, st.confirmProg);
+          if (st.confirmProg >= 0) drawPing(G!.gateX, G!.mY, st.confirmProg);
           drawChip(st.x, st.y, ch.channel, ch.glyph);
         }
         /* gentle fade at the loop seam so the reset is never jarring */
