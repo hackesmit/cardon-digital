@@ -1,0 +1,156 @@
+/* ============================ WINERY PAGE ============================
+   Page-scoped styles under the .pg-winery root on <main>. The shared layer
+   (globals.css) already provides the header, hero base, sections, kicker,
+   diagnostic, footer, and reveal, so those are not repeated here. This file
+   adds only the winery-specific pieces: the wine sector accent tokens, the
+   vine-rows signature visual, the capability grid, and the Monte Xanic proof
+   card. A single wine accent is layered on the agave theme, tuned per mode so
+   it reads as wine (not pink) on the dark ground and stays saturated on cream. */
+
+.pg-winery{
+  --wine:#7A2233;
+  --wine-bright:#CF6178;
+  --wine-ink:#F6E4E8;
+  --wine-faint: color-mix(in srgb, var(--wine-bright) 16%, transparent);
+  --wine-line: color-mix(in srgb, var(--wine-bright) 42%, transparent);
+}
+:root[data-mode="light"] .pg-winery{
+  --wine-bright:#8A2333;
+  --wine-ink:#FBEEF0;
+}
+
+/* ---- hero: fidelity overrides on the shared hero classes ---- */
+.pg-winery .hero-copy{max-width:780px;}
+.pg-winery .hero-sub{max-width:62ch;}
+
+/* the stage tag sits above the visual and never blocks pointer input */
+.pg-winery .stage-tag{z-index:4;pointer-events:none;}
+.pg-winery .stage-tag .midword{color:var(--muted);}
+.pg-winery .stage-caption{z-index:4;pointer-events:none;}
+
+/* ---- signature visual: canvas + interactive vine rows ---- */
+.pg-winery .vine-canvas{display:block;width:100%;height:clamp(380px,46vw,540px);}
+
+/* cursor spotlight on framed surfaces: lit only while hovering, zero cost otherwise */
+.pg-winery .spot{position:relative;}
+.pg-winery .spot::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(230px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--primary) 12%, transparent), transparent 72%);
+}
+.pg-winery .spot:hover::after{opacity:1;}
+
+.pg-winery .vine-overlay{position:absolute;inset:0;z-index:3;}
+.pg-winery .vine-row{
+  position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;
+  border-radius:9px;transition:background .25s ease;
+}
+.pg-winery .vine-row:hover,.pg-winery .vine-row:focus-visible{background:color-mix(in srgb, var(--primary) 5%, transparent);}
+.pg-winery .row-plate{
+  position:absolute;top:50%;right:6px;transform:translateY(-50%) translateX(6px);
+  width:max-content;max-width:190px;
+  display:flex;flex-direction:column;gap:2px;pointer-events:none;
+  background:color-mix(in srgb, var(--panel) 88%, transparent);
+  border:1px solid var(--wine-line);border-radius:8px;padding:6px 10px;
+  opacity:0;transition:opacity .22s ease, transform .22s ease;
+  box-shadow:0 0 0 1px var(--wine-faint);
+}
+.pg-winery .vine-row:hover .row-plate,.pg-winery .vine-row:focus-visible .row-plate{opacity:1;transform:translateY(-50%) translateX(0);}
+.pg-winery .row-name{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--text);line-height:1.25;overflow-wrap:break-word;}
+.pg-winery .row-detail{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.02em;color:var(--wine-bright);line-height:1.25;overflow-wrap:break-word;}
+
+/* the wine kicker variant (gold and clay already live in globals) */
+.pg-winery .kicker.wine{color:var(--wine-bright);}
+.pg-winery .kicker.wine::before{background:var(--wine-bright);border-radius:50%;}
+
+/* ---- capability grid ---- */
+.pg-winery .cap-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);
+}
+.pg-winery .cap-card{
+  position:relative;min-width:0;overflow:hidden;
+  border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 62%, transparent), color-mix(in srgb, var(--ground) 22%, transparent));
+  padding:clamp(20px,2.4vw,26px);
+  display:flex;flex-direction:column;gap:12px;
+  transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.pg-winery .cap-card:hover{border-color:var(--primary-dim);transform:translateY(-3px);box-shadow:var(--shadow);}
+.pg-winery .cap-card:focus-within{border-color:var(--primary-dim);}
+.pg-winery .cap-top{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:2;}
+.pg-winery .cap-glyph{width:34px;height:34px;flex-shrink:0;color:var(--primary);}
+.pg-winery .cap-card.accent-gold .cap-glyph{color:var(--secondary);}
+.pg-winery .cap-card.accent-wine .cap-glyph{color:var(--wine-bright);}
+.pg-winery .cap-num{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;}
+.pg-winery .cap-card h3{font-size:1.16rem;letter-spacing:-0.02em;line-height:1.16;position:relative;z-index:2;}
+.pg-winery .cap-body{color:var(--text-dim);font-size:0.95rem;position:relative;z-index:2;}
+.pg-winery .cap-note{
+  margin-top:auto;padding-top:12px;border-top:1px solid var(--line-soft);position:relative;z-index:2;
+  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--muted);
+}
+.pg-winery .cap-note b{color:var(--primary);font-weight:600;}
+.pg-winery .cap-card.accent-gold .cap-note b{color:var(--secondary);}
+.pg-winery .cap-card.accent-wine .cap-note b{color:var(--wine-bright);}
+
+/* ---- proof: the case study artifact ---- */
+.pg-winery .proof{overflow:hidden;}
+.pg-winery .proof-card{
+  position:relative;overflow:hidden;
+  border:1px solid var(--wine-line);border-radius:22px;
+  background:
+    radial-gradient(620px 320px at 88% -10%, var(--wine-faint), transparent 60%),
+    linear-gradient(150deg, color-mix(in srgb, var(--wine) 12%, var(--panel-2)) 0%, var(--panel-2) 60%);
+  padding:clamp(28px,4vw,54px);
+  display:grid;grid-template-columns:1.25fr 0.75fr;gap:clamp(26px,4vw,48px);align-items:center;
+  box-shadow:var(--shadow);
+}
+.pg-winery .proof-lead{position:relative;z-index:2;min-width:0;}
+.pg-winery .proof-lead h2{margin-bottom:16px;}
+.pg-winery .proof-desc{color:var(--text-dim);max-width:48ch;font-size:1.04rem;}
+.pg-winery .proof-desc b{color:var(--text);font-weight:600;}
+.pg-winery .proof-actions{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+.pg-winery .btn-proof{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--wine);color:var(--wine-ink);font-weight:600;
+  border:1px solid var(--wine);border-radius:999px;
+  padding:12px 22px;font-size:0.98rem;
+  transition:background .2s ease, transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.pg-winery .btn-proof::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wine-ink);opacity:0.85;}
+.pg-winery .btn-proof:hover{background:var(--wine-bright);border-color:var(--wine-bright);box-shadow:0 0 0 4px var(--wine-faint);}
+.pg-winery .btn-proof:active{transform:translateY(1px);}
+.pg-winery .proof-meta{margin-top:14px;font-family:var(--mono);font-size:0.76rem;letter-spacing:0.04em;color:var(--muted);}
+
+/* the artifact: a sealed label medallion */
+.pg-winery .proof-art{position:relative;z-index:2;display:flex;justify-content:center;min-width:0;}
+.pg-winery .seal{
+  position:relative;width:min(100%,220px);aspect-ratio:1;border-radius:50%;
+  border:1px solid var(--wine-line);
+  background:
+    radial-gradient(120px 120px at 50% 34%, var(--wine-faint), transparent 70%),
+    color-mix(in srgb, var(--panel) 78%, transparent);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;
+  box-shadow:inset 0 0 0 6px color-mix(in srgb, var(--wine-bright) 10%, transparent);
+}
+.pg-winery .seal-mark{width:40px;height:40px;}
+.pg-winery .seal-mark .bm-line{stroke:var(--wine-bright);}
+.pg-winery .seal-mark .bm-ring{stroke:var(--wine-bright);}
+.pg-winery .seal-mark .bm-dot{fill:var(--secondary);}
+.pg-winery .seal-label{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--wine-bright);}
+.pg-winery .seal-sub{font-family:var(--mono);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);}
+.pg-winery .seal-ring{
+  position:absolute;inset:12px;border-radius:50%;border:1px dashed var(--wine-line);opacity:0.55;
+}
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width:900px){
+  .pg-winery .cap-grid{grid-template-columns:repeat(2,1fr);}
+  .pg-winery .proof-card{grid-template-columns:1fr;}
+  .pg-winery .proof-art{order:-1;}
+}
+@media (max-width:640px){
+  .pg-winery .cap-grid{grid-template-columns:1fr;gap:16px;}
+}
+@media (max-width:400px){
+  .pg-winery .row-plate{max-width:150px;}
+}

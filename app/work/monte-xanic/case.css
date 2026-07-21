@@ -1,0 +1,261 @@
+/* ============================ MONTE XANIC CASE STUDY (page-scoped) ============================
+   Page-specific styles for the Monte Xanic case study. Scoped under .pg-case so
+   they never leak into the shared layer. The shared agave classes (hero, section,
+   kicker, split, vis-frame, diagnostic, footer, reveal) live in globals.css and are
+   NOT duplicated here. This file adds only what the case study needs on top: the
+   wine sector accent, the section prose, the two static diagrams, the play-once
+   prediction and finance diagrams, the signature vineyard section map, the berry
+   to bottle strip, and the result callouts / outcome. */
+
+.pg-case{
+  position:relative;
+  z-index:1;
+  /* sector accent: deep wine, plus a text-aware legible variant that lightens on
+     dark grounds and deepens on light grounds. Derived from the shared --text /
+     --panel tokens so it recolors with the mode toggle. */
+  --wine:#7A2233;
+  --wine-accent: color-mix(in srgb, var(--wine) 58%, var(--text) 42%);
+  --wine-soft: color-mix(in srgb, var(--wine) 68%, var(--panel) 32%);
+  --wine-faint: color-mix(in srgb, var(--wine) 20%, transparent);
+}
+
+/* ---- wine accents layered onto the shared type scale ---- */
+.pg-case .eyebrow{color:var(--wine-accent);}
+.pg-case .eyebrow::before{background:var(--wine-accent);}
+.pg-case .hero-copy{max-width:820px;}
+.pg-case .hero-sub{max-width:62ch;}
+.pg-case h1 .wine{color:var(--wine-accent);}
+.pg-case h2 .wine{color:var(--wine-accent);}
+.pg-case h2 .accent{color:var(--primary);}
+.pg-case .kicker.wine{color:var(--wine-accent);}
+.pg-case .kicker.wine::before{background:var(--wine-accent);border-radius:50%;}
+.pg-case .section-head{max-width:66ch;}
+.pg-case .section-sub{max-width:58ch;}
+.pg-case .split-copy .note b.w{color:var(--wine-accent);}
+.pg-case .rule-top{border-top:1px solid var(--line-soft);}
+
+.pg-case .prose{max-width:64ch;color:var(--text-dim);font-size:clamp(1.02rem,1.35vw,1.16rem);}
+.pg-case .prose p + p{margin-top:16px;}
+.pg-case .prose b{color:var(--text);font-weight:600;}
+
+/* keep the cursor spotlight on the signature vineyard stage (a plain .vine-stage,
+   not a .vis-frame, so globals does not cover it) */
+.pg-case .vine-stage::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(230px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--primary) 12%, transparent), transparent 72%);
+}
+.pg-case .vine-stage:hover::after{opacity:1;}
+
+/* ============================ STATIC DIAGRAMS (dashboard, custom maps) ======= */
+.pg-case .mini-svg{display:block;width:100%;height:auto;}
+.pg-case .d-card{fill:var(--card);stroke:var(--line);stroke-width:1.2;}
+.pg-case .d-panel{fill:var(--panel);stroke:var(--line);stroke-width:1.3;}
+.pg-case .d-line{stroke:var(--line);}
+.pg-case .d-muted{fill:var(--muted);}
+.pg-case .d-dim{fill:var(--text-dim);}
+.pg-case .d-ink{fill:var(--text);}
+.pg-case .d-primary{fill:var(--primary);}
+.pg-case .d-secondary{fill:var(--secondary);}
+.pg-case .d-wine{fill:var(--wine-accent);}
+.pg-case .d-conn{fill:none;stroke:var(--primary-dim);stroke-width:1.4;stroke-linecap:round;}
+.pg-case .d-conn-wine{fill:none;stroke:var(--wine-accent);stroke-width:1.6;stroke-linecap:round;}
+.pg-case .d-track{fill:var(--line-soft);}
+.pg-case .d-stroke-muted{stroke:var(--muted);fill:none;}
+.pg-case .d-stroke-primary{stroke:var(--primary);fill:none;}
+.pg-case .d-lab{font-family:var(--mono);fill:var(--muted);}
+.pg-case .d-val{font-family:var(--mono);fill:var(--text);}
+.pg-case .d-plot{fill:color-mix(in srgb, var(--primary) 23%, transparent);stroke:color-mix(in srgb, var(--primary) 45%, transparent);stroke-width:1.4;stroke-linejoin:round;}
+.pg-case .d-plot-dim{fill:color-mix(in srgb, var(--primary) 19%, transparent);stroke:color-mix(in srgb, var(--primary) 40%, transparent);stroke-width:1.4;stroke-linejoin:round;}
+.pg-case .d-plot-wine{fill:var(--wine-faint);stroke:var(--wine-accent);stroke-width:1.6;stroke-linejoin:round;}
+.pg-case .live-pill{fill:none;stroke:var(--primary-dim);stroke-width:1.2;}
+@keyframes livePulse{0%,100%{opacity:.35;}50%{opacity:1;}}
+.pg-case .live-dot{fill:var(--primary);animation:livePulse 2.6s ease-in-out infinite;}
+
+/* ---- prediction diagram: play-once draw-on ---- */
+.pg-case .pred-curve{fill:none;stroke:var(--primary);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:660;stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease;}
+.pg-case .pred-target{stroke:var(--secondary);stroke-width:1.6;stroke-dasharray:5 5;}
+.pg-case .pred-proj{fill:none;stroke:var(--wine-accent);stroke-width:2;stroke-dasharray:4 5;opacity:1;transition:opacity .7s ease .9s;}
+.pg-case .pred-mark{opacity:1;transition:opacity .6s ease .9s, transform .6s cubic-bezier(.2,1.4,.3,1) .9s;transform-box:fill-box;transform-origin:center;}
+.pg-case .pred-mark-ring{fill:none;stroke:var(--wine-accent);stroke-width:2;}
+.pg-case .pred-mark-core{fill:var(--wine-accent);}
+.pg-case .pred-lab{font-family:var(--mono);fill:var(--muted);}
+.pg-case .pred-lab-w{font-family:var(--mono);fill:var(--wine-accent);}
+.pg-case .pred-vis[data-anim="pre"] .pred-curve{stroke-dashoffset:660;}
+.pg-case .pred-vis[data-anim="pre"] .pred-proj{opacity:0;}
+.pg-case .pred-vis[data-anim="pre"] .pred-mark{opacity:0;transform:scale(0.7);}
+
+/* ---- finance diagram: play-once compress (this chapter appears only here) ---- */
+.pg-case .fin-track{fill:var(--line-soft);}
+.pg-case .fin-bar{fill:var(--primary);transform-box:fill-box;transform-origin:left center;transition:transform 1.7s cubic-bezier(.4,0,.15,1);}
+.pg-case .fin-lab-manual,.pg-case .fin-lab-auto{font-family:var(--mono);transition:opacity .6s ease;}
+.pg-case .fin-lab-manual{fill:var(--muted);}
+.pg-case .fin-lab-auto{fill:var(--primary);}
+.pg-case .fin-time-long,.pg-case .fin-time-short{font-family:var(--mono);transition:opacity .6s ease;}
+.pg-case .fin-time-long{fill:var(--secondary);}
+.pg-case .fin-time-short{fill:var(--primary);}
+.pg-case .fin-badge{transition:opacity .6s ease .95s, transform .6s ease .95s;transform-box:fill-box;transform-origin:center;}
+.pg-case .fin-badge-box{fill:none;stroke:var(--primary);stroke-width:1.4;}
+.pg-case .fin-badge-text{fill:var(--primary);font-family:var(--mono);}
+.pg-case .fin-foot{fill:var(--muted);font-family:var(--mono);}
+.pg-case .fin-tick{stroke:var(--line);stroke-width:2;stroke-linecap:round;}
+.pg-case .fin-vis .fin-bar{transform:scaleX(0.055);}
+.pg-case .fin-vis .fin-lab-manual{opacity:0;}
+.pg-case .fin-vis .fin-lab-auto{opacity:1;}
+.pg-case .fin-vis .fin-time-long{opacity:0;}
+.pg-case .fin-vis .fin-time-short{opacity:1;}
+.pg-case .fin-vis .fin-badge{opacity:1;transform:none;}
+.pg-case .fin-vis[data-anim="pre"] .fin-bar{transform:scaleX(1);}
+.pg-case .fin-vis[data-anim="pre"] .fin-lab-manual{opacity:1;}
+.pg-case .fin-vis[data-anim="pre"] .fin-lab-auto{opacity:0;}
+.pg-case .fin-vis[data-anim="pre"] .fin-time-long{opacity:1;}
+.pg-case .fin-vis[data-anim="pre"] .fin-time-short{opacity:0;}
+.pg-case .fin-vis[data-anim="pre"] .fin-badge{opacity:0;transform:translateY(6px);}
+
+/* ============================ SIGNATURE: VINEYARD SECTION MAP ============ */
+.pg-case .vine-showcase{margin-top:clamp(26px,4vw,44px);}
+.pg-case .vine-stage{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  background:
+    radial-gradient(760px 460px at 50% 40%, var(--primary-faint), transparent 64%),
+    radial-gradient(520px 380px at 84% 112%, var(--wine-faint), transparent 62%),
+    linear-gradient(180deg, color-mix(in srgb, var(--panel) 55%, transparent), color-mix(in srgb, var(--ground) 30%, transparent));
+  box-shadow:var(--shadow);
+  aspect-ratio:1000/560;
+}
+.pg-case .vine-base{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.pg-case .vine-plots{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.pg-case .plot{cursor:default;}
+.pg-case .plot-fill{
+  fill:color-mix(in srgb, var(--primary) 26%, transparent);
+  stroke:color-mix(in srgb, var(--primary) 50%, transparent);
+  stroke-width:1.4;stroke-linejoin:round;
+  transition:fill .3s ease, stroke .3s ease, filter .2s ease;
+}
+.pg-case .plot:hover .plot-fill, .pg-case .plot.active .plot-fill{filter:brightness(1.14) saturate(1.05);stroke-width:2.2;}
+.pg-case .plot:focus{outline:none;}
+.pg-case .plot:focus-visible{outline:2px solid var(--primary);outline-offset:-1px;}
+.pg-case .plot:focus-visible .plot-fill{stroke:var(--text);stroke-width:2.4;}
+
+.pg-case .vine-overlay{position:absolute;inset:0;pointer-events:none;z-index:5;}
+.pg-case .plot-key{
+  position:absolute;transform:translate(-50%,-50%);
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.06em;
+  color:var(--muted);white-space:nowrap;text-shadow:0 1px 2px rgba(0,0,0,0.35);
+}
+.pg-case .vine-marker{
+  position:absolute;transform:translate(-50%,-92%);width:20px;height:24px;
+  color:var(--wine-accent);opacity:0;transition:opacity .8s ease, transform .5s cubic-bezier(.2,1.4,.3,1);
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+.pg-case .vine-marker svg{display:block;width:100%;height:100%;overflow:visible;}
+.pg-case .vine-marker.on{opacity:0.94;transform:translate(-50%,-100%);}
+
+.pg-case .vine-plate{
+  position:absolute;z-index:7;min-width:152px;max-width:216px;pointer-events:none;
+  background:color-mix(in srgb, var(--panel) 92%, transparent);
+  border:1px solid var(--line);border-left:3px solid var(--wine-accent);
+  border-radius:9px;padding:8px 11px;
+  display:flex;flex-direction:column;gap:2px;
+  opacity:0;transform:translate(-50%,0);transition:opacity .18s ease;
+  box-shadow:var(--shadow);
+}
+.pg-case .vine-plate.show{opacity:1;}
+.pg-case .vp-name{font-family:var(--mono);font-size:0.74rem;letter-spacing:0.03em;color:var(--text);line-height:1.3;}
+.pg-case .vp-status{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.02em;color:var(--text-dim);line-height:1.3;}
+.pg-case .vp-action{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--wine-accent);line-height:1.4;margin-top:2px;}
+
+.pg-case .vine-legend{
+  position:absolute;top:14px;left:16px;z-index:6;max-width:64%;
+  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;
+}
+.pg-case .vine-honest{
+  position:absolute;bottom:12px;right:16px;z-index:6;max-width:70%;text-align:right;
+  font-family:var(--mono);font-size:0.64rem;letter-spacing:0.05em;color:var(--muted);
+}
+.pg-case .vine-fallback{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:24px;text-align:center;color:var(--text-dim);font-size:0.95rem;
+}
+
+.pg-case .season-scrub{
+  margin-top:16px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;
+  font-family:var(--mono);
+}
+.pg-case .ss-lab{font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+.pg-case .ss-end{font-size:0.64rem;letter-spacing:0.08em;color:var(--muted);white-space:nowrap;}
+.pg-case .season-range{
+  -webkit-appearance:none;appearance:none;flex:1 1 200px;min-width:140px;height:22px;background:transparent;cursor:pointer;margin:0;
+}
+.pg-case .season-range:focus{outline:none;}
+.pg-case .season-range::-webkit-slider-runnable-track{height:5px;border-radius:5px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--primary) 62%, transparent), var(--wine-accent));}
+.pg-case .season-range::-moz-range-track{height:5px;border-radius:5px;
+  background:linear-gradient(90deg, color-mix(in srgb, var(--primary) 62%, transparent), var(--wine-accent));}
+.pg-case .season-range::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;margin-top:-7px;width:18px;height:18px;border-radius:50%;
+  background:var(--panel);border:2px solid var(--wine-accent);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--wine) 24%, transparent);
+  transition:transform .12s ease;
+}
+.pg-case .season-range::-moz-range-thumb{
+  width:16px;height:16px;border-radius:50%;background:var(--panel);border:2px solid var(--wine-accent);
+  box-shadow:0 0 0 3px color-mix(in srgb, var(--wine) 24%, transparent);
+}
+.pg-case .season-range:hover::-webkit-slider-thumb{transform:scale(1.1);}
+.pg-case .season-range:focus-visible::-webkit-slider-thumb{outline:2px solid var(--primary);outline-offset:2px;}
+.pg-case .season-range:focus-visible::-moz-range-thumb{outline:2px solid var(--primary);outline-offset:2px;}
+
+/* ============================ BERRY TO BOTTLE STRIP ============================ */
+.pg-case .b2b-stage{padding:10px 8px;}
+.pg-case .b2b-note{
+  position:absolute;bottom:10px;right:16px;z-index:2;
+  font-family:var(--mono);font-size:0.64rem;letter-spacing:0.05em;color:var(--muted);
+}
+.pg-case .b2b-svg{display:block;width:100%;height:auto;}
+.pg-case .b2b-track{stroke:var(--line);stroke-width:3;stroke-linecap:round;}
+.pg-case .b2b-prog{stroke:var(--wine-accent);stroke-width:3;stroke-linecap:round;}
+.pg-case .b2b-node{fill:var(--panel);stroke:var(--line);stroke-width:1.6;transition:stroke .4s ease, fill .4s ease;}
+.pg-case .b2b-station.reached .b2b-node{stroke:var(--wine-accent);fill:var(--wine-faint);}
+.pg-case .b2b-ico{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s ease;}
+.pg-case .b2b-ico-fill{fill:var(--muted);stroke:none;transition:fill .4s ease;}
+.pg-case .b2b-station.reached .b2b-ico{stroke:var(--wine-accent);}
+.pg-case .b2b-station.reached .b2b-ico-fill{fill:var(--wine-accent);}
+.pg-case .b2b-lab{font-family:var(--mono);font-size:15px;fill:var(--text-dim);letter-spacing:0.04em;transition:fill .4s ease;}
+.pg-case .b2b-station.reached .b2b-lab{fill:var(--text);}
+.pg-case .b2b-halo{fill:var(--wine-faint);}
+.pg-case .b2b-dot{fill:var(--wine-accent);}
+
+/* ============================ RESULT CALLOUTS ============================ */
+.pg-case .results{padding:clamp(48px,6vw,84px) 0;}
+.pg-case .callouts{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.4vw,26px);margin-top:clamp(24px,3vw,38px);}
+.pg-case .callout{
+  position:relative;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(180deg, var(--scrim), transparent);
+  padding:clamp(22px,2.6vw,30px);display:flex;flex-direction:column;gap:12px;min-width:0;
+  transition:border-color .25s ease, transform .2s ease;
+}
+.pg-case .callout:hover{border-color:var(--wine-accent);transform:translateY(-2px);}
+.pg-case .callout::before{content:"";position:absolute;left:0;top:22px;bottom:22px;width:3px;border-radius:3px;background:var(--wine-accent);opacity:0.7;}
+.pg-case .callout-idx{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
+.pg-case .callout-lead{font-size:clamp(1.2rem,2vw,1.6rem);font-weight:600;letter-spacing:-0.02em;line-height:1.14;color:var(--text);}
+.pg-case .callout-body{color:var(--text-dim);font-size:0.96rem;}
+
+/* ============================ OUTCOME ============================ */
+.pg-case .outcome{padding:clamp(40px,5vw,72px) 0;}
+.pg-case .outcome-inner{max-width:70ch;}
+.pg-case .outcome-inner h2{margin-bottom:18px;}
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width:640px){
+  .pg-case .callouts{grid-template-columns:1fr;}
+  .pg-case .vine-stage{aspect-ratio:auto;min-height:380px;}
+  .pg-case .plot-key{font-size:0.6rem;}
+}
+@media (max-width:400px){
+  .pg-case .vine-plate{max-width:170px;}
+}
