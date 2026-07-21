@@ -142,10 +142,21 @@ export default function SectorMap() {
       }
     }
 
+    /* survey sites have no canvas flow, but their dashed SVG routes still light
+       via the shared .lit class, matching the approved page */
+    const SURVEY_ROUTES: Record<string, string> = {
+      restaurants: "route-restaurants",
+      clinics: "route-clinics",
+    };
+
     function setActive(key: string | null) {
       for (let i = 0; i < keys.length; i++) {
         const el = stage!.querySelector("#" + ROUTES[keys[i]].id);
         if (el) el.classList.toggle("lit", key === keys[i]);
+      }
+      for (const sk in SURVEY_ROUTES) {
+        const el = stage!.querySelector("#" + SURVEY_ROUTES[sk]);
+        if (el) el.classList.toggle("lit", key === sk);
       }
       active = key && ROUTES[key] ? key : null;
       ambient.aL = 0;
