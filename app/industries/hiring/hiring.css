@@ -1,0 +1,223 @@
+/* ============================ HIRING / HR PAGE ============================
+   Page-specific layer scoped under .pg-hiring. Shared chrome (hero, value
+   strip, section heads, diagnostic, footer) comes from globals.css; this file
+   adds only the sector accent token, the signature pipeline stage spotlight
+   and gate readouts, and the capability cards. Class names match the source
+   page so the ported markup styles cleanly. */
+
+/* Sector accent: sage. Canonical on dark grounds; a deeper sage on light
+   grounds so it holds contrast across both modes. Defined at :root because the
+   pipeline canvas reads --sage from document.documentElement. This CSS is only
+   loaded on the hiring route, so the :root declaration does not leak to other
+   pages. */
+:root { --sage: #5E9E86; }
+:root[data-mode="light"] { --sage: #3F7C64; }
+
+/* ---- signature pipeline stage ---- */
+.pg-hiring #pipeCanvas {
+  display: block;
+  width: 100%;
+  height: clamp(380px, 46vw, 540px);
+}
+
+/* cursor spotlight on the signature visual, tinted with the sector accent.
+   --mx / --my are set on pointermove by the SpotlightFrames helper. */
+.pg-hiring .stage-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--sage) 16%, transparent), transparent 72%);
+}
+.pg-hiring .stage-frame:hover::after { opacity: 1; }
+
+/* ---- gate hotspots overlaid on the pipeline (hover/focus readout) ---- */
+.pg-hiring .gate-hotspot {
+  position: absolute;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 46%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+.pg-hiring .gate-hotspot:focus-visible {
+  outline: 2px solid var(--sage);
+  outline-offset: 0;
+  border-radius: 8px;
+}
+.pg-hiring .gate-label {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: color-mix(in srgb, var(--panel) 93%, transparent);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--sage);
+  border-radius: 8px;
+  padding: 7px 11px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+.pg-hiring .gate-hotspot:hover .gate-label,
+.pg-hiring .gate-hotspot:focus-visible .gate-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  border-color: var(--primary-dim);
+  border-left-color: var(--sage);
+}
+.pg-hiring .gate-name {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+.pg-hiring .gate-note {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--text-dim);
+}
+.pg-hiring .gate-hotspot[data-gate="0"] .gate-label {
+  left: 0;
+  transform: translateX(0) translateY(4px);
+}
+.pg-hiring .gate-hotspot[data-gate="0"]:hover .gate-label,
+.pg-hiring .gate-hotspot[data-gate="0"]:focus-visible .gate-label {
+  transform: translateX(0) translateY(0);
+}
+.pg-hiring .gate-hotspot[data-gate="3"] .gate-label {
+  left: auto;
+  right: 0;
+  transform: translateX(0) translateY(4px);
+}
+.pg-hiring .gate-hotspot[data-gate="3"]:hover .gate-label,
+.pg-hiring .gate-hotspot[data-gate="3"]:focus-visible .gate-label {
+  transform: translateX(0) translateY(0);
+}
+
+/* ============================ CAPABILITIES ============================ */
+.pg-hiring .cap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.3vw, 24px);
+}
+.pg-hiring .cap-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--scrim), transparent);
+  padding: clamp(20px, 2.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  min-width: 0;
+  overflow: hidden;
+  transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+.pg-hiring .cap-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--sage));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.pg-hiring .cap-card:hover,
+.pg-hiring .cap-card:focus-within {
+  border-color: var(--primary-dim);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 54px -40px rgba(0, 0, 0, 0.85);
+}
+.pg-hiring .cap-card:hover::before,
+.pg-hiring .cap-card:focus-within::before {
+  transform: scaleX(1);
+}
+.pg-hiring .cap-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pg-hiring .cap-idx {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.pg-hiring .cap-glyph {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  color: var(--sage);
+}
+.pg-hiring .cap-glyph svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.pg-hiring .cap-card h3 {
+  font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.pg-hiring .cap-body {
+  color: var(--text-dim);
+  font-size: 0.97rem;
+}
+.pg-hiring .cap-wide {
+  grid-column: 1 / -1;
+}
+.pg-hiring .cap-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+.pg-hiring .cap-chip {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pg-hiring .cap-chip::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+.pg-hiring .cap-foot {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  margin-top: 2px;
+}
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width: 760px) {
+  .pg-hiring .cap-grid { grid-template-columns: 1fr; }
+}
