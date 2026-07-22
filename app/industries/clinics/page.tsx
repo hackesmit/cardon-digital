@@ -7,7 +7,7 @@ import "./clinics.css";
 export const metadata: Metadata = {
   title: "Clinic growth systems",
   description:
-    "Bilingual patient acquisition with measurement checked first, one inquiry pipeline instead of scattered channels, and scheduling that quietly reduces no-shows for border clinics.",
+    "A problem-led growth system for border health clinics: one bilingual intake pipeline, reminders that cut no-shows, and click-to-procedure measurement built first, so you defend and recapture cross-border patient flow in a down market.",
   alternates: { canonical: "/industries/clinics" },
 };
 
@@ -20,39 +20,42 @@ export default function ClinicsPage() {
       <section className="hero" aria-label="Introduction">
         <div className="container">
           <div className="hero-copy">
-            <p className="eyebrow">New terrain / Clinics</p>
+            <p className="eyebrow">Border health clinics</p>
             <h1>
-              Patients from both sides of the border,
+              Cross-border patient flow is down.
               <br />
-              <span className="accent">one calm schedule.</span>
+              <span className="accent">Defend your share, and recapture it.</span>
             </h1>
 
-            <div className="survey-marker">
-              <span className="survey-badge">
+            <div className="terrain-marker">
+              <span className="terrain-badge">
                 <span className="dot" aria-hidden="true" />
-                Surveying this terrain
+                First campaign / New terrain
               </span>
-              <span className="survey-note">
-                These are systems we <b>would</b> build for clinics, leaning on
-                patterns proven in the domains we have already built for. Nothing
-                here is a claim of clinics we have run.
+              <span className="terrain-note">
+                We have not run a clinic yet. We have surveyed this terrain
+                closely, and every system below is one we have already built in
+                another domain, pointed here. <b>Honest about the first,
+                confident about the second.</b>
               </span>
             </div>
 
             <p className="hero-sub">
-              Dental, medical, and specialty clinics in Baja California take
-              patients from two worlds at once: US patients crossing the border
-              for care, and local patients from down the street. We would wire
-              the ads, the inquiries, and the calendar into one system your front
-              desk reads and runs in both languages.{" "}
-              <b>Make the schedule true, then keep it full.</b>
+              Dental, medical, and specialty clinics in Tijuana, Los Algodones,
+              and Mexicali take patients from two worlds at once: US patients
+              crossing the border for care, and locals from down the street. In
+              2025 that cross-border flow contracted hard. We wire the ads, the
+              inquiries, and the calendar into one system your front desk reads
+              and runs in both languages, so you keep the patients you already
+              earn and take back the ones you are paying to lose.{" "}
+              <b>Measure the leak, then close it.</b>
             </p>
             <div className="hero-actions">
               <a className="cta" href="#diagnostic">
                 Get the free Growth Diagnostic
               </a>
-              <a className="btn-ghost" href="#build">
-                See what we would build
+              <a className="btn-ghost" href="#problems">
+                See the problems we found
               </a>
             </div>
             <p className="brandline">Built to hold water</p>
@@ -63,87 +66,254 @@ export default function ClinicsPage() {
         </div>
       </section>
 
-      {/* ============================ WHAT WE WOULD BUILD ============================ */}
-      <section className="section" id="build" aria-labelledby="build-title">
+      {/* ============================ PROBLEMS ON THE BORDER ============================ */}
+      <section className="section" id="problems" aria-labelledby="problems-title">
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <span className="kicker oasis">What we would build here</span>
-              <h2 id="build-title">
-                Four systems, each borrowed from terrain we know.
-              </h2>
+              <span className="kicker oasis">What we found on the border</span>
+              <h2 id="problems-title">The problems we found on the border.</h2>
               <p className="section-sub">
-                We have not run a clinic. We have built the parts a clinic needs,
-                in domains next door, and this is how they would come together
-                here. <b>Proven patterns, pointed at a new terrain.</b>
+                Documented patterns across the border health sector, in plain
+                language. <b>The problems you already live with are the ones we
+                are built to solve.</b>
               </p>
             </div>
           </Reveal>
 
           <Reveal>
+            <div className="prob-list">
+              <article className="prob-item">
+                <span className="prob-rank">01</span>
+                <div className="prob-body">
+                  <h3 className="prob-h">Inquiries scattered, replies too slow.</h3>
+                  <p className="prob-p">
+                    Patients reach out on WhatsApp, web forms, and phone calls,
+                    and the messages land in three different places with no single
+                    line to work from. Speed is the whole game. An inquiry
+                    answered within a minute converts around{" "}
+                    <b>seven times better</b> than one answered an hour later, and
+                    the gap between a typical inquiry-to-booking rate and an
+                    optimized one is patients you already paid to reach, lost to a
+                    slow reply.
+                  </p>
+                  <div className="prob-stats">
+                    <span className="prob-stat">
+                      <b>~7x</b>
+                      <span>reply in a minute vs an hour</span>
+                    </span>
+                    <span className="prob-stat">
+                      <b>~3% to 5-15%</b>
+                      <span>inquiry to booking, typical vs optimized</span>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <article className="prob-item">
+                <span className="prob-rank">02</span>
+                <div className="prob-body">
+                  <h3 className="prob-h">No-shows, amplified by the border.</h3>
+                  <p className="prob-p">
+                    A booked appointment is not a kept one. Border waits and
+                    document checks can turn a short visit into most of a day, and
+                    a thin reminder cadence lets confirmed patients quietly fall
+                    off the calendar. Every no-show is a slot that earns nothing
+                    and a patient who may not rebook.
+                  </p>
+                </div>
+              </article>
+
+              <article className="prob-item">
+                <span className="prob-rank">03</span>
+                <div className="prob-body">
+                  <h3 className="prob-h">Trust, at a distance.</h3>
+                  <p className="prob-p">
+                    A US patient is committing thousands of dollars and a border
+                    crossing to a clinic they found online, sight unseen. That
+                    leap is the hardest part of the sale, and it is why so many
+                    patients hand it to a middleman who vouches for the clinic on
+                    their behalf.
+                  </p>
+                </div>
+              </article>
+
+              <article className="prob-item">
+                <span className="prob-rank">04</span>
+                <div className="prob-body">
+                  <h3 className="prob-h">The facilitator toll.</h3>
+                  <p className="prob-p">
+                    To reach those patients, many clinics pay facilitators{" "}
+                    <b>ten to fifteen percent</b> of the procedure value. On a
+                    six thousand dollar case that is roughly{" "}
+                    <b>seven hundred and twenty dollars</b> paid away, per patient,
+                    for demand you could be reaching directly. The facilitator is
+                    really selling trust and reach, and both can be built and
+                    owned.
+                  </p>
+                  <div className="prob-stats">
+                    <span className="prob-stat">
+                      <b>10-15%</b>
+                      <span>of procedure value, per patient</span>
+                    </span>
+                    <span className="prob-stat">
+                      <b>~$720</b>
+                      <span>paid away on a $6,000 case</span>
+                    </span>
+                  </div>
+                </div>
+              </article>
+
+              <article className="prob-item">
+                <span className="prob-rank">05</span>
+                <div className="prob-body">
+                  <h3 className="prob-h">Advertising you are allowed to run.</h3>
+                  <p className="prob-p">
+                    Medical advertising is genuinely constrained. COFEPRIS
+                    regulates every medical ad in Mexico, down to organic social
+                    posts, and Google gates healthcare advertising on its own
+                    terms. Campaigns that ignore either regime get pulled or
+                    fined, campaigns built for both keep running. Here, compliance
+                    is not fine print, it is whether the ads run at all.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <p className="prob-foot mono">
+              Figures from industry studies and Baja health-sector reporting,
+              2024 to 2026.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ WHAT WE BUILD ============================ */}
+      <section className="section" id="build" aria-labelledby="build-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker oasis">What we build</span>
+              <h2 id="build-title">One system, mapped to each problem.</h2>
+              <p className="section-sub">
+                We have not run a clinic, but every part below is a system we have
+                already built in another domain. This is how they come together
+                here, pointed at the problems above.{" "}
+                <b>Proven patterns, aimed at a new terrain.</b>
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <article className="build-feature">
+              <span className="build-tag">
+                <span className="dot" aria-hidden="true" />
+                Build first / Flagship
+              </span>
+              <h3 className="build-h">
+                The measurement spine: know which inquiry became which patient.
+              </h3>
+              <p className="build-p">
+                Click-to-WhatsApp source tracking, a lightweight CRM, and a
+                booking log that ties an inquiry all the way to a completed
+                procedure. It is the first thing we build, because it is what
+                makes every later decision measurable: which channel earns
+                patients, what a real conversion rate is, and how much of the
+                facilitator toll you recaptured. Nothing else is priced on
+                performance until this exists and both sides trust the numbers it
+                produces.
+              </p>
+              <p className="build-borrow">
+                Answers problem 04, and the blind spot under every other{" "}
+                <b>number on this page</b>.
+              </p>
+            </article>
+          </Reveal>
+
+          <Reveal>
             <div className="build-grid">
               <article className="build-card">
-                <span className="build-num">01 / Demand</span>
-                <h3 className="build-h">
-                  Bilingual patient acquisition, measured before it is optimized.
-                </h3>
+                <span className="build-num">01 / Intake</span>
+                <h3 className="build-h">One intake pipeline, one bilingual concierge.</h3>
                 <p className="build-p">
-                  Google Ads run in English and Spanish for patients on both sides
-                  of the border, with the measurement checked first so every later
-                  decision rests on something true. Priced in proportion to
-                  performance: a percent of ad spend, or a percent of the
-                  treatment revenue the ads bring in.
+                  Every channel, WhatsApp, form, call, and DM, lands in one place,
+                  worked by a named bilingual concierge flow that replies in
+                  minutes, in the patient&apos;s own language. No inquiry sits
+                  unread, no message falls between inboxes.
                 </p>
                 <p className="build-borrow">
-                  Borrowed from <b>our demand work</b>.
+                  Answers <b>problem 01 / scattered inquiries, slow replies</b>.
                 </p>
               </article>
 
               <article className="build-card">
-                <span className="build-num">02 / Intake</span>
-                <h3 className="build-h">One inquiry pipeline, not four inboxes.</h3>
+                <span className="build-num">02 / Calendar</span>
+                <h3 className="build-h">
+                  Reminders and confirmations that hold the week.
+                </h3>
                 <p className="build-p">
-                  WhatsApp, phone calls, web forms, and DMs stop being four places
-                  to miss a message and become one intake line the front desk
-                  reads and answers from, in the patient&apos;s language, with
-                  nothing slipping between channels.
+                  Booking, confirmation, and reminder messages become workflows
+                  that run on their own and quietly cut no-shows, so the week your
+                  front desk trusts stays full without anyone chasing it by hand.
                 </p>
                 <p className="build-borrow">
-                  Borrowed from <b>the hiring pipeline</b>.
+                  Answers <b>problem 02 / no-shows at the border</b>.
                 </p>
               </article>
 
               <article className="build-card">
-                <span className="build-num">03 / Scheduling</span>
-                <h3 className="build-h">
-                  Scheduling and reminders that run themselves.
-                </h3>
+                <span className="build-num">03 / Trust</span>
+                <h3 className="build-h">Trust infrastructure, owned by you.</h3>
                 <p className="build-p">
-                  Booking, confirmations, and reminder messages become workflows
-                  that run on their own and quietly reduce no-shows, so the week
-                  the front desk trusts stays full without anyone chasing it by
-                  hand.
+                  Verified reviews, transparent pricing pages, written warranties,
+                  and real social proof, the credibility a patient at a distance
+                  needs before they cross. This is buying back what the
+                  facilitator was really selling, and keeping it.
                 </p>
                 <p className="build-borrow">
-                  A pattern we <b>generalize from operations work</b>.
+                  Answers <b>problem 03 / trust at a distance</b>.
                 </p>
               </article>
 
               <article className="build-card">
-                <span className="build-num">04 / Journey</span>
-                <h3 className="build-h">
-                  One patient journey, first inquiry to follow-up.
-                </h3>
+                <span className="build-num">04 / Compliance</span>
+                <h3 className="build-h">Compliant campaigns that keep running.</h3>
                 <p className="build-p">
-                  A single view that follows a patient from first inquiry to
-                  treatment plan to follow-up, so nothing is lost between the
-                  front desk, the operatory, and the callback, and the whole path
-                  stays visible in one place.
+                  Google and Meta campaigns built COFEPRIS-clean and inside
+                  Google&apos;s healthcare rules from the first draft, at the
+                  cutting edge of what the platforms allow. Ads that are built to
+                  run, not to be pulled.
                 </p>
                 <p className="build-borrow">
-                  Borrowed from <b>berry-to-bottle traceability</b>.
+                  Answers <b>problem 05 / compliant advertising</b>.
                 </p>
               </article>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="scope-note">
+              <span className="scope-label">One line on scope</span>
+              This offer is the marketing and funnel surface only: ads,
+              inquiries, tracking, reminders, and trust. It does{" "}
+              <b>not</b> touch patient records or clinical data. That work carries
+              its own legal weight and is out of scope here by design.
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="pricing-note">
+              <span className="pricing-label">How we price</span>
+              <p className="pricing-body">
+                Advertising is priced as a <b>percent of ad spend, with a
+                floor</b>, never as a percent of your sales. Performance pricing
+                on patient revenue only becomes available once the measurement
+                spine is built and both sides trust what it reports. We do not put
+                a share of your revenue on the table before we can prove,
+                together, what the ads actually brought in.
+              </p>
             </div>
           </Reveal>
         </div>
@@ -218,12 +388,11 @@ export default function ClinicsPage() {
                 <span className="kicker clay">Start here</span>
                 <h2 id="diag-title">The Growth Diagnostic</h2>
                 <p className="diag-desc">
-                  Clinics are terrain we are surveying next, and a free diagnostic
-                  is exactly how a new engagement here starts. Ten business days
-                  looking at how patients find you, how they reach you, and how
-                  they land on your calendar, as one system. You get a written
-                  memo, not a sales deck: what is true, what is leaking, and what
-                  to build first.
+                  Ten business days instrumenting your actual inquiry pipeline:
+                  response times, where inquiries leak between channels, real
+                  conversion, and your no-show rate. You get a written memo with
+                  hard numbers, not a sales deck: what is true, what is leaking,
+                  and what to build first. Measure the leak, then decide.
                 </p>
                 <div className="diag-actions">
                   <a
@@ -243,21 +412,22 @@ export default function ClinicsPage() {
                   <span className="spec-dot" />
                   <span>
                     <b>Day 1.</b> A working session on how patients find you,
-                    book, and show up.
+                    reach you, and land on your calendar.
                   </span>
                 </div>
                 <div className="spec">
                   <span className="spec-dot" />
                   <span>
-                    <b>Days 2 to 9.</b> We map your channels, your measurement,
-                    and your no-show pattern.
+                    <b>Days 2 to 9.</b> We instrument the pipeline: response
+                    times, channel leakage, conversion, and no-shows, on your real
+                    inquiries.
                   </span>
                 </div>
                 <div className="spec">
                   <span className="spec-dot" />
                   <span>
-                    <b>Day 10.</b> The memo lands: what is true, what is leaking,
-                    what to build first.
+                    <b>Day 10.</b> The memo lands: hard numbers on what is true,
+                    what is leaking, and what to build first.
                   </span>
                 </div>
                 <div className="spec">
