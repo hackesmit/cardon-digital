@@ -165,8 +165,9 @@
 /* ============================ RESPONSIVE ============================ */
 @media (max-width:640px){
   .pg-enkanto .callouts{grid-template-columns:1fr;}
-  .pg-enkanto .shop-stage{aspect-ratio:auto;min-height:420px;}
+  .pg-enkanto .tl-stage{aspect-ratio:auto;min-height:420px;}
 }
 @media (max-width:400px){
-  .pg-enkanto .shop-plate{max-width:180px;}
+  .pg-enkanto .tl-plate{max-width:180px;}
+  .pg-enkanto .tl-honest{max-width:52%;}
 }

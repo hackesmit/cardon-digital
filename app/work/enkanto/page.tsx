@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Reveal from "@/components/site/Reveal";
-import StorefrontEngine from "@/components/pages/enkanto/StorefrontEngine";
+import ThreeLines from "@/components/pages/enkanto/ThreeLines";
 import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";
 import "./enkanto-case.css";
 
 export const metadata: Metadata = {
   title: "Vinedo En'kanto case study",
   description:
-    "How a boutique Valle de Guadalupe winery, hotel, and restaurant got a working commerce foundation: store rebuilt, structure repaired, payments and shipping made real, bilingual by design.",
+    "Through a season when the Valle de Guadalupe's overall visitor flow dipped, En'kanto's three revenue lines, wine, stays, and restaurant, each kept growing. Beside that season sat the work: a real online shop, structure and search repaired, payments and shipping made real, bilingual by design.",
   alternates: { canonical: "/work/enkanto" },
 };
 
@@ -22,22 +22,26 @@ export default function EnkantoCaseStudy() {
           <div className="hero-copy">
             <p className="eyebrow">Case study / Winery</p>
             <h1>
-              Vinedo En&apos;kanto has a shop that finally{" "}
-              <span className="accent">sells</span>, built to{" "}
-              <span className="enk">grow</span>.
+              The Valle&apos;s volume dropped that season. En&apos;kanto&apos;s
+              wine, stays, and tables kept{" "}
+              <span className="enk">growing</span>.
             </h1>
             <p className="hero-sub">
-              The online store existed in name only: products with no prices,
-              no way to ship, demo data in the reports, and five homepages
-              competing for the same visitor. We rebuilt it into a working
-              commerce foundation, in Spanish and English, that carries a real
-              order from add to cart through to fulfillment.{" "}
-              <b>One store, one true checkout, built to grow.</b>
+              En&apos;kanto runs three revenue lines out of San Antonio de las
+              Minas: the winery, the stays, and the restaurant. Across a season
+              when the Valle&apos;s overall visitor flow dipped, all three kept
+              growing. Beside that fact sits the work we did: a real online shop
+              with cross-border-honest shipping, the site structure and search
+              repaired, and optimization across the business.{" "}
+              <b>
+                Three lines growing, the season dropping, the work sitting beside
+                both.
+              </b>
             </p>
             <p className="brandline">Built to hold water</p>
           </div>
 
-          <StorefrontEngine />
+          <ThreeLines />
         </div>
       </section>
 
@@ -53,48 +57,52 @@ export default function EnkantoCaseStudy() {
             </div>
             <div className="prose">
               <p>
-                Vinedo En&apos;kanto is a boutique winery, hotel, restaurant,
-                and spa in San Antonio de las Minas, in the Valle de Guadalupe.
-                Guests come for the wine and the place built around it.
+                Vinedo En&apos;kanto is a boutique winery, hotel, and restaurant
+                in San Antonio de las Minas, in the Valle de Guadalupe. Three
+                revenue lines share one place: bottles from the winery, hotel
+                and Airbnb stays for guests who want to wake up in the Valle, and
+                a restaurant table for the ones who come to eat.
               </p>
               <p>
-                The online store is how that experience reaches people who
-                cannot visit in person, and how a bottle follows a guest home.
-                That is the part we were asked to build.
+                Those three lines are the business. The online presence is how
+                each of them reaches people who have not arrived yet, so a
+                bottle, a booking, or a reservation can begin before anyone sets
+                foot on the property.
               </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ============================ CHALLENGE ============================ */}
-      <section className="section" aria-labelledby="challenge-title">
+      {/* ============================ THE WORK (group intro) ============================ */}
+      <section className="section" aria-labelledby="work-title">
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <span className="kicker">The challenge</span>
-              <h2 id="challenge-title">
-                An online shop that was only scaffolding.
+              <span className="kicker">The work</span>
+              <h2 id="work-title">
+                The work that sat underneath the season.
               </h2>
             </div>
             <div className="prose">
               <p>
-                The store looked like a store and worked like a placeholder.
-                Products existed in name only, with no prices and nothing a
-                visitor could actually buy. There was no shipping set up, so
-                even a finished order had nowhere to go, and the reports were
-                still full of demo data, so the numbers described a store that
-                did not exist.
+                Across the season this case study covers, the Valle&apos;s
+                overall visitor flow dipped. Over the same months, the
+                winery&apos;s wine sales, the stays, and the restaurant each kept
+                growing. We state those two facts side by side and put nothing
+                between them: the work below sat beside the growth, not on top of
+                it.
               </p>
               <p>
-                Five homepages competed for the same visitor, and the site was
-                split between two half-finished languages, each missing what the
-                other had.{" "}
+                And there was real work to do. The online store existed in name
+                only, products with no prices and no way to ship, and five
+                homepages competed for the same visitor across two half-finished
+                languages.{" "}
                 <b>
-                  A guest ready to buy would run out of road before they reached
-                  a checkout.
+                  We rebuilt the groundwork under all three lines, one piece at a
+                  time.
                 </b>{" "}
-                The work was to turn the scaffolding into something that holds.
+                Here is that work, and the line each piece serves.
               </p>
             </div>
           </Reveal>
@@ -112,15 +120,14 @@ export default function EnkantoCaseStudy() {
                   Products you can actually buy, and a checkout that completes.
                 </h2>
                 <p className="section-sub">
-                  We built the catalog out into real products, each with a
-                  price, a weight, and an image, and wired a checkout that
-                  carries an order all the way through instead of stopping at a
-                  full cart. The store stops being a demonstration and{" "}
+                  We built the catalog into real products, each with a price, a
+                  weight, and an image, and wired a checkout that carries an
+                  order through instead of stalling at a full cart. The store
+                  stops being a demonstration and{" "}
                   <b>starts being a place that takes an order</b>.
                 </p>
                 <p className="note">
-                  From products in name only to a cart that{" "}
-                  <b className="w">completes.</b>
+                  Serves the <b className="w">wine line.</b>
                 </p>
               </div>
               <div className="split-vis">
@@ -186,14 +193,14 @@ export default function EnkantoCaseStudy() {
                 <h2 id="ch-2-title">One clear site, not five homepages.</h2>
                 <p className="section-sub">
                   We unpublished the duplicate homepages so one canonical page
-                  stands for the store, wrote the descriptions that were
-                  missing, and cleaned the sitemap and robots so search engines
-                  read the site the way a visitor does. The structure{" "}
-                  <b>stops fighting itself</b>.
+                  stands for the business, wrote the missing descriptions, and
+                  cleaned the sitemap and robots so search reads the site the way
+                  a visitor does. The structure stops fighting itself, and the
+                  whole business, the wine, the stays, and the restaurant,{" "}
+                  <b>is found in one place</b>.
                 </p>
                 <p className="note">
-                  From five competing pages to{" "}
-                  <b className="w">one clear structure.</b>
+                  Serves <b className="w">all three lines.</b>
                 </p>
               </div>
               <div className="split-vis">
@@ -271,14 +278,13 @@ export default function EnkantoCaseStudy() {
                   Set up for the ways people here actually pay.
                 </h2>
                 <p className="section-sub">
-                  We set up payments around how Mexico pays, cards and cash, so
-                  a guest can check out the way that suits them and the order
-                  clears. Paying stops being{" "}
+                  We set up payments around how Mexico pays, cards and cash, so a
+                  guest checks out the way that suits them and the order clears.
+                  Paying stops being{" "}
                   <b>the place an order quietly dies</b>.
                 </p>
                 <p className="note">
-                  From no way to pay to{" "}
-                  <b className="w">a checkout that clears.</b>
+                  Serves the <b className="w">wine line.</b>
                 </p>
               </div>
               <div className="split-vis">
@@ -345,18 +351,16 @@ export default function EnkantoCaseStudy() {
                 <span className="kicker gold">04 / Shipping, made real</span>
                 <h2 id="ch-4-title">A real way to get the wine to the buyer.</h2>
                 <p className="section-sub">
-                  We set up a domestic carrier path with packaging that meets
-                  the rules, so a bottle bought online reaches a door inside
-                  Mexico. Selling across the border as a Mexican winery is not
-                  something the law allows, so we designed the store around what
-                  is real: it sells pickup and domestic delivery, and guests
-                  visiting from the United States{" "}
+                  We set up a domestic carrier path with packaging that meets the
+                  rules, so a bottle bought online reaches a door inside Mexico.
+                  Selling across the border as a Mexican winery is not something
+                  the law allows, so the store sells pickup and domestic
+                  delivery, and guests visiting from the United States{" "}
                   <b>carry wine home themselves under the personal allowance</b>.
-                  The store only promises what it can keep.
+                  It only promises what it can keep.
                 </p>
                 <p className="note">
-                  From no shipping to{" "}
-                  <b className="w">a bottle that reaches the door.</b>
+                  Serves the <b className="w">wine line.</b>
                 </p>
               </div>
               <div className="split-vis">
@@ -427,14 +431,13 @@ export default function EnkantoCaseStudy() {
                 </h2>
                 <p className="section-sub">
                   We built English and Spanish as one foundation, so the same
-                  store reads whole in either language instead of one being a
+                  site reads whole in either language instead of one being a
                   thinner copy of the other. A guest from the Valle and a guest
                   from across the border{" "}
-                  <b>meet the same store, each in their own words</b>.
+                  <b>meet the same business, each in their own words</b>.
                 </p>
                 <p className="note">
-                  From two half-languages to{" "}
-                  <b className="w">one store, read whole in both.</b>
+                  Serves <b className="w">all three lines.</b>
                 </p>
               </div>
               <div className="split-vis">
@@ -483,41 +486,42 @@ export default function EnkantoCaseStudy() {
           <Reveal>
             <div className="section-head">
               <span className="kicker enk">The result</span>
-              <h2 id="results-title">What En&apos;kanto can do now.</h2>
+              <h2 id="results-title">Three lines up, the season down.</h2>
             </div>
             <div className="callouts">
               <div className="callout">
                 <span className="callout-idx mono">01</span>
-                <p className="callout-lead">A store that takes a real order.</p>
+                <p className="callout-lead">Wine, growing.</p>
                 <p className="callout-body">
-                  Real products, real prices, and a checkout that completes, so
-                  a guest ready to buy can finish.
+                  Across the season, the winery&apos;s wine sales kept rising.
+                  The shop and the cross-border-honest shipping lane sit beside
+                  that line.
                 </p>
               </div>
               <div className="callout">
                 <span className="callout-idx mono">02</span>
-                <p className="callout-lead">
-                  One clear site instead of five front doors.
-                </p>
+                <p className="callout-lead">Stays, growing.</p>
                 <p className="callout-body">
-                  A single canonical store, described and indexed cleanly, so
-                  visitors and search engines find one place, not five.
+                  The hotel and Airbnb stays kept filling through the same
+                  months. The listings and the booking flow sit beside that
+                  line.
                 </p>
               </div>
               <div className="callout">
                 <span className="callout-idx mono">03</span>
-                <p className="callout-lead">Paid the way people here pay.</p>
+                <p className="callout-lead">Restaurant, growing.</p>
                 <p className="callout-body">
-                  Cards and cash both clear, so paying is no longer where an
-                  order stalls.
+                  The restaurant&apos;s tables kept rising over the season. The
+                  reservations and the follow-up sit beside that line.
                 </p>
               </div>
               <div className="callout">
                 <span className="callout-idx mono">04</span>
-                <p className="callout-lead">A bottle that can actually get home.</p>
+                <p className="callout-lead">The season, dropping.</p>
                 <p className="callout-body">
-                  Domestic delivery that meets the rules, and an honest
-                  pickup-and-carry path for guests from across the border.
+                  The Valle&apos;s overall visitor flow fell across the season.
+                  We put it on the same chart as the three lines and let the
+                  directions speak.
                 </p>
               </div>
             </div>
@@ -531,18 +535,21 @@ export default function EnkantoCaseStudy() {
           <Reveal>
             <div className="outcome-inner">
               <span className="kicker">The outcome</span>
-              <h2 id="outcome-title">A commerce foundation that can grow.</h2>
+              <h2 id="outcome-title">
+                Three lines, growing through a season that went down.
+              </h2>
               <div className="prose">
                 <p>
-                  The store now has real products, a checkout that completes,
-                  payments for how people pay, shipping that reaches the door,
-                  and one bilingual foundation underneath it all. What was
-                  scaffolding is now something a boutique winery can actually
-                  sell from, and build on.
+                  Through a season when the Valle&apos;s overall flow dipped,
+                  En&apos;kanto&apos;s wine, its stays, and its restaurant each
+                  kept growing. Beside those three lines sits the work: a shop
+                  that takes a real order, structure and search repaired,
+                  payments that clear, shipping that reaches the door, and one
+                  bilingual foundation under all of it.
                 </p>
                 <p>
-                  Through a season when the Valle&apos;s overall flow dipped,
-                  En&apos;kanto kept growing and kept selling.{" "}
+                  We state the work and we state the season, and we set them next
+                  to each other and claim no more than that.{" "}
                   <b>
                     We built the foundation. What grows on it belongs to the
                     winery.
