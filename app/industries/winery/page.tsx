@@ -266,7 +266,8 @@ export default function WineryPage() {
                   agencies. The Valle's visitor flow dipped in 2025, so the
                   wineries that keep their share are the ones whose follow-up and
                   measurement work. Priced in proportion to performance: a share
-                  of spend, or a share of the sales the ads bring in.
+                  of spend with a floor, or, once measurement you trust is in
+                  place, a share of the sales the ads bring in.
                 </p>
                 <p className="cap-note">
                   <b>We get paid</b> when it works.

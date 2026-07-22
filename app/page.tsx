@@ -58,8 +58,9 @@ export default function Home() {
               <span className="cool">a share of what the ads produce.</span>
             </p>
             <p className="value-body">
-              A percent of spend, or of the sales that come in from the ads. When
-              results grow, we earn it. When they do not, we feel it too.
+              A percent of spend, with a floor; a share of the sales the ads
+              bring in once measurement you trust is in place. When results grow,
+              we earn it. When they do not, we feel it too.
             </p>
           </div>
           <div className="value-item">
@@ -98,8 +99,9 @@ export default function Home() {
               <p className="section-sub">
                 We run Google Ads with the rigor of the most sophisticated
                 agencies, at the cutting edge of what the platforms can do, and{" "}
-                <b>priced in proportion to performance</b>: a percent of ad spend,
-                or a percent of the sales the ads bring in. Before anyone tunes a
+                <b>priced in proportion to performance</b>: a percent of ad spend
+                with a floor, or, once measurement you trust is in place, a
+                percent of the sales the ads bring in. Before anyone tunes a
                 campaign, we check whether the numbers coming in are real, so every
                 decision after that rests on something true. Offline conversions,
                 call and chat tracking, structured testing with kill rules: the
@@ -107,8 +109,8 @@ export default function Home() {
                 sized for owner-run businesses.
               </p>
               <p className="note">
-                Pricing: <b>a share of spend or of ad-driven sales.</b> We get paid
-                when it works.
+                Pricing: <b>a share of spend, with a floor; results-based once
+                measurement is proven.</b> We get paid when it works.
               </p>
             </div>
             <div className="split-vis">

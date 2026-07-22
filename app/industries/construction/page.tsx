@@ -215,8 +215,9 @@ export default function ConstructionPage() {
               </p>
               <p className="cap-note">
                 Pricing:{" "}
-                <b>a share of ad spend, or of the sales the ads bring in.</b> We get
-                paid when it works.
+                <b>a share of ad spend with a floor, or of the sales the ads bring
+                in once measurement you trust is in place.</b> We get paid when it
+                works.
               </p>
             </article>
           </div>

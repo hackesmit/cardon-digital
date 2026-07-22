@@ -230,9 +230,9 @@ export default function ClinicsPage() {
                 <span className="build-num">03 / Trust</span>
                 <h3 className="build-h">Trust infrastructure, owned by you.</h3>
                 <p className="build-p">
-                  Verified reviews, transparent pricing pages, written warranties,
-                  and real social proof, the credibility a patient at a distance
-                  needs before they commit. This is buying back what the
+                  Verified reviews, transparent pricing pages, clear written
+                  patient policies, and real social proof, the credibility a
+                  patient at a distance needs before they commit. This is buying back what the
                   middleman was really selling, and keeping it.
                 </p>
                 <p className="build-borrow">
@@ -244,10 +244,10 @@ export default function ClinicsPage() {
                 <span className="build-num">04 / Compliance</span>
                 <h3 className="build-h">Compliant campaigns that keep running.</h3>
                 <p className="build-p">
-                  Google and Meta campaigns built COFEPRIS-clean and inside
-                  Google&apos;s healthcare rules from the first draft, at the
-                  cutting edge of what the platforms allow. Ads that are built to
-                  run, not to be pulled.
+                  Google and Meta campaigns designed against COFEPRIS rules and
+                  the platforms&apos; healthcare policies from the first draft, at
+                  the cutting edge of what the platforms allow. Campaigns designed
+                  to keep running.
                 </p>
                 <p className="build-borrow">
                   Answers <b>problem 05 / compliant advertising</b>.
@@ -259,10 +259,11 @@ export default function ClinicsPage() {
           <Reveal>
             <div className="scope-note">
               <span className="scope-label">One line on scope</span>
-              This offer is the marketing and funnel surface only: ads,
-              inquiries, tracking, reminders, and trust. It does{" "}
-              <b>not</b> touch patient records or clinical data. That work carries
-              its own legal weight and is out of scope here by design.
+              This offer is the marketing and funnel surface: ads, inquiries,
+              tracking, reminders, and trust. Clinical records stay{" "}
+              <b>out of scope by design</b>, and any access to inquiry or booking
+              information is minimized and governed by a written data agreement
+              before work begins.
             </div>
           </Reveal>
 
@@ -271,11 +272,9 @@ export default function ClinicsPage() {
               <span className="pricing-label">How we price</span>
               <p className="pricing-body">
                 Advertising is priced as a <b>percent of ad spend, with a
-                floor</b>, never as a percent of your sales. Performance pricing
-                on patient revenue only becomes available once the measurement
-                spine is built and both sides trust what it reports. We do not put
-                a share of your revenue on the table before we can prove,
-                together, what the ads actually brought in.
+                floor</b>, never as a percent of your patient revenue. Builds are
+                scoped and priced after the diagnostic, agreed up front. Clean
+                numbers, no stake in your procedures.
               </p>
             </div>
           </Reveal>
@@ -382,8 +381,8 @@ export default function ClinicsPage() {
                   <span className="spec-dot" />
                   <span>
                     <b>Days 2 to 9.</b> We instrument the pipeline: response
-                    times, channel leakage, conversion, and no-shows, on your real
-                    inquiries.
+                    times, channel leakage, conversion, and no-shows, measured on
+                    de-identified numbers from your real flow.
                   </span>
                 </div>
                 <div className="spec">

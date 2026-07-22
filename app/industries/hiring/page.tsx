@@ -211,8 +211,9 @@ export default function HiringPage() {
                   We source in English and Spanish, across the US and Mexico, written
                   natively rather than translated after the fact. We confirm the
                   measurement is real before anyone optimizes, and the ad work is
-                  priced in proportion to performance: a share of spend, or of the
-                  results it drives.
+                  priced in proportion to performance: a share of spend with a
+                  floor, or, once measurement you trust is in place, a share of
+                  the results it drives.
                 </p>
               </div>
 
