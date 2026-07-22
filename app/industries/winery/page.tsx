@@ -368,6 +368,9 @@ export default function WineryPage() {
                   <Link className="btn-proof" href="/work/monte-xanic">
                     Read the Monte Xanic case study
                   </Link>
+                  <Link className="btn-proof" href="/work/enkanto">
+                    And the commerce side: the En&apos;kanto case study
+                  </Link>
                 </div>
                 <p className="proof-meta">
                   One winery, one connected view, run by the people who grow the
