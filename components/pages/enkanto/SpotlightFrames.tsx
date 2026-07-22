@@ -5,13 +5,13 @@ import { useEffect } from "react";
 /**
  * Attaches the cursor-follow spotlight handler to every framed visual on the
  * En'kanto case study. On pointermove it writes --mx / --my (in px, relative to
- * the frame) so the .vis-frame::after and .shop-stage::after radial highlight
+ * the frame) so the .vis-frame::after and .tl-stage::after radial highlight
  * tracks the cursor. Effect-only: renders nothing.
  */
 export default function SpotlightFrames() {
   useEffect(() => {
     const frames = Array.prototype.slice.call(
-      document.querySelectorAll(".pg-enkanto .vis-frame, .pg-enkanto .shop-stage")
+      document.querySelectorAll(".pg-enkanto .vis-frame, .pg-enkanto .tl-stage")
     ) as HTMLElement[];
 
     const handlers: Array<{
