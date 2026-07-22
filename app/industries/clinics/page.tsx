@@ -7,7 +7,7 @@ import "./clinics.css";
 export const metadata: Metadata = {
   title: "Clinic growth systems",
   description:
-    "A problem-led growth system for border health clinics: one bilingual intake pipeline, reminders that cut no-shows, and click-to-procedure measurement built first, so you defend and recapture cross-border patient flow in a down market.",
+    "A growth system for clinics: one bilingual intake pipeline, reminders that cut no-shows, and click-to-procedure measurement built first, so you defend your share of patient flow and recapture the rest.",
   alternates: { canonical: "/industries/clinics" },
 };
 
@@ -20,42 +20,27 @@ export default function ClinicsPage() {
       <section className="hero" aria-label="Introduction">
         <div className="container">
           <div className="hero-copy">
-            <p className="eyebrow">Border health clinics</p>
+            <p className="eyebrow">Industries / Clinics</p>
             <h1>
-              Cross-border patient flow is down.
+              Patient flow is down.
               <br />
               <span className="accent">Defend your share, and recapture it.</span>
             </h1>
 
-            <div className="terrain-marker">
-              <span className="terrain-badge">
-                <span className="dot" aria-hidden="true" />
-                First campaign / New terrain
-              </span>
-              <span className="terrain-note">
-                We have not run a clinic yet. We have surveyed this terrain
-                closely, and every system below is one we have already built in
-                another domain, pointed here. <b>Honest about the first,
-                confident about the second.</b>
-              </span>
-            </div>
-
             <p className="hero-sub">
-              Dental, medical, and specialty clinics in Tijuana, Los Algodones,
-              and Mexicali take patients from two worlds at once: US patients
-              crossing the border for care, and locals from down the street. In
-              2025 that cross-border flow contracted hard. We wire the ads, the
-              inquiries, and the calendar into one system your front desk reads
-              and runs in both languages, so you keep the patients you already
-              earn and take back the ones you are paying to lose.{" "}
-              <b>Measure the leak, then close it.</b>
+              Dental, medical, and specialty clinics take patients from two
+              worlds at once: patients traveling for care, and locals from down
+              the street. We wire the ads, the inquiries, and the calendar into
+              one system your front desk reads and runs in both languages, so you
+              keep the patients you already earn and take back the ones you are
+              paying to lose. <b>Measure the leak, then close it.</b>
             </p>
             <div className="hero-actions">
               <a className="cta" href="#diagnostic">
                 Get the free Growth Diagnostic
               </a>
               <a className="btn-ghost" href="#problems">
-                See the problems we found
+                See the problems we solve
               </a>
             </div>
             <p className="brandline">Built to hold water</p>
@@ -66,17 +51,16 @@ export default function ClinicsPage() {
         </div>
       </section>
 
-      {/* ============================ PROBLEMS ON THE BORDER ============================ */}
+      {/* ============================ THE PROBLEMS ============================ */}
       <section className="section" id="problems" aria-labelledby="problems-title">
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <span className="kicker oasis">What we found on the border</span>
-              <h2 id="problems-title">The problems we found on the border.</h2>
+              <span className="kicker oasis">The problems</span>
+              <h2 id="problems-title">The problems we solve.</h2>
               <p className="section-sub">
-                Documented patterns across the border health sector, in plain
-                language. <b>The problems you already live with are the ones we
-                are built to solve.</b>
+                In plain language. <b>The problems you already live with are the
+                ones we are built to solve.</b>
               </p>
             </div>
           </Reveal>
@@ -113,10 +97,10 @@ export default function ClinicsPage() {
               <article className="prob-item">
                 <span className="prob-rank">02</span>
                 <div className="prob-body">
-                  <h3 className="prob-h">No-shows, amplified by the border.</h3>
+                  <h3 className="prob-h">No-shows, amplified by distance.</h3>
                   <p className="prob-p">
-                    A booked appointment is not a kept one. Border waits and
-                    document checks can turn a short visit into most of a day, and
+                    A booked appointment is not a kept one. Travel time and
+                    border waits can turn a short visit into most of a day, and
                     a thin reminder cadence lets confirmed patients quietly fall
                     off the calendar. Every no-show is a slot that earns nothing
                     and a patient who may not rebook.
@@ -129,11 +113,10 @@ export default function ClinicsPage() {
                 <div className="prob-body">
                   <h3 className="prob-h">Trust, at a distance.</h3>
                   <p className="prob-p">
-                    A US patient is committing thousands of dollars and a border
-                    crossing to a clinic they found online, sight unseen. That
-                    leap is the hardest part of the sale, and it is why so many
-                    patients hand it to a middleman who vouches for the clinic on
-                    their behalf.
+                    A patient is committing thousands of dollars and a long trip
+                    to a clinic they found online, sight unseen. That leap is the
+                    hardest part of the sale, and it is why so many patients hand
+                    it to a middleman who vouches for the clinic on their behalf.
                   </p>
                 </div>
               </article>
@@ -141,26 +124,13 @@ export default function ClinicsPage() {
               <article className="prob-item">
                 <span className="prob-rank">04</span>
                 <div className="prob-body">
-                  <h3 className="prob-h">The facilitator toll.</h3>
+                  <h3 className="prob-h">The middleman toll.</h3>
                   <p className="prob-p">
-                    To reach those patients, many clinics pay facilitators{" "}
-                    <b>ten to fifteen percent</b> of the procedure value. On a
-                    six thousand dollar case that is roughly{" "}
-                    <b>seven hundred and twenty dollars</b> paid away, per patient,
-                    for demand you could be reaching directly. The facilitator is
-                    really selling trust and reach, and both can be built and
-                    owned.
+                    If patients reach you through platforms and facilitators, a
+                    cut of every case leaves with them, paid for demand you could
+                    be reaching directly. What the middleman is really selling is
+                    trust and reach. <b>Both can be built, and owned by you.</b>
                   </p>
-                  <div className="prob-stats">
-                    <span className="prob-stat">
-                      <b>10-15%</b>
-                      <span>of procedure value, per patient</span>
-                    </span>
-                    <span className="prob-stat">
-                      <b>~$720</b>
-                      <span>paid away on a $6,000 case</span>
-                    </span>
-                  </div>
                 </div>
               </article>
 
@@ -181,12 +151,6 @@ export default function ClinicsPage() {
             </div>
           </Reveal>
 
-          <Reveal>
-            <p className="prob-foot mono">
-              Figures from industry studies and Baja health-sector reporting,
-              2024 to 2026.
-            </p>
-          </Reveal>
         </div>
       </section>
 
@@ -198,10 +162,9 @@ export default function ClinicsPage() {
               <span className="kicker oasis">What we build</span>
               <h2 id="build-title">One system, mapped to each problem.</h2>
               <p className="section-sub">
-                We have not run a clinic, but every part below is a system we have
-                already built in another domain. This is how they come together
-                here, pointed at the problems above.{" "}
-                <b>Proven patterns, aimed at a new terrain.</b>
+                Five systems, one job: a week your front desk trusts. Each one is
+                aimed at a problem above, and together they read as{" "}
+                <b>one system your team ends up owning.</b>
               </p>
             </div>
           </Reveal>
@@ -221,7 +184,7 @@ export default function ClinicsPage() {
                 procedure. It is the first thing we build, because it is what
                 makes every later decision measurable: which channel earns
                 patients, what a real conversion rate is, and how much of the
-                facilitator toll you recaptured. Nothing else is priced on
+                middleman toll you took back. Nothing else is priced on
                 performance until this exists and both sides trust the numbers it
                 produces.
               </p>
@@ -259,7 +222,7 @@ export default function ClinicsPage() {
                   front desk trusts stays full without anyone chasing it by hand.
                 </p>
                 <p className="build-borrow">
-                  Answers <b>problem 02 / no-shows at the border</b>.
+                  Answers <b>problem 02 / no-shows</b>.
                 </p>
               </article>
 
@@ -269,8 +232,8 @@ export default function ClinicsPage() {
                 <p className="build-p">
                   Verified reviews, transparent pricing pages, written warranties,
                   and real social proof, the credibility a patient at a distance
-                  needs before they cross. This is buying back what the
-                  facilitator was really selling, and keeping it.
+                  needs before they commit. This is buying back what the
+                  middleman was really selling, and keeping it.
                 </p>
                 <p className="build-borrow">
                   Answers <b>problem 03 / trust at a distance</b>.
@@ -327,9 +290,9 @@ export default function ClinicsPage() {
               className="section-head"
               style={{ marginBottom: "clamp(22px,3vw,34px)" }}
             >
-              <span className="kicker gold">Why us for this terrain</span>
+              <span className="kicker gold">Why us</span>
               <h2 id="why-title">
-                The border and both languages are the job, not an add-on.
+                Two markets and two languages are the job, not an add-on.
               </h2>
             </div>
           </Reveal>

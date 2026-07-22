@@ -336,16 +336,16 @@ export default function Home() {
             <p className="section-sub">
               These are the domains we have built for and understand end to end.
               Every station on the map is part of the same terrain. The winery
-              valley and the border clinics carry our first campaign; the other
-              dashed site is terrain we are surveying next.
+              valley and the clinics are the terrain in focus; the other dashed
+              site is terrain we are surveying next.
             </p>
           </div>
 
           <SectorMap />
 
           <p className="sectors-foot mono">
-            Three stations built, two terrains ahead. First campaign:{" "}
-            <b>the winery valley and the border clinics.</b>
+            Three stations built, two terrains ahead. In focus:{" "}
+            <b>the winery valley and the clinics.</b>
           </p>
         </div>
       </section>
