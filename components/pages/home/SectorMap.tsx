@@ -399,6 +399,18 @@ export default function SectorMap() {
       </Link>
 
       <Link
+        className="map-case"
+        href="/work/enkanto"
+        style={{ left: "33%", top: "72%" }}
+        aria-label="Read the Vinedo En'kanto case study, the commerce side."
+      >
+        <span className="dot" aria-hidden="true" />
+        <span>
+          Case study: <b>En&apos;kanto</b>
+        </span>
+      </Link>
+
+      <Link
         className="map-marker survey"
         id="mk-restaurants"
         href="/industries/restaurants"
