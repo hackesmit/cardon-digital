@@ -235,7 +235,9 @@ export default function Home() {
                 day, <b>integrated end to end</b>, trained into the business, and
                 yours to keep. Underneath them all sits one data warehouse:
                 every channel, file, and system combined into clean, organized
-                fields that feed everything you see. Separate parts,
+                fields that feed everything you see. Where it helps, we add an
+                assistant trained on your own data, so you can ask your business a
+                question and get an answer from your numbers. Separate parts,
                 spreadsheets, dashboards, and forms become one working board with
                 no per-seat subscription to babysit.
               </p>
@@ -328,6 +330,106 @@ export default function Home() {
               </PlayOnceVis>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ============================ COMPARE ============================ */}
+      <section className="section compare" id="compare" aria-labelledby="compare-title">
+        <div className="container">
+          <div className="section-head">
+            <span className="kicker">Cardon vs the usual stack</span>
+            <h2 id="compare-title">Not another subscription.</h2>
+            <p className="section-sub">
+              Most software rents you a seat and shapes your operation around
+              itself; we build the system around how you already work, prove your
+              numbers, and hand your team the keys.
+            </p>
+          </div>
+
+          <div className="cmp">
+            <div className="cmp-head" aria-hidden="true">
+              <span />
+              <span className="cmp-h cardon">Cardon</span>
+              <span className="cmp-h usual">The usual stack</span>
+            </div>
+
+            <div className="cmp-row">
+              <span className="cmp-dim">Ownership</span>
+              <div className="cmp-cell cmp-cardon">
+                <span className="cmp-tag">Cardon</span>
+                <p>You own the system, keys and all.</p>
+              </div>
+              <div className="cmp-cell cmp-usual">
+                <span className="cmp-tag">The usual stack</span>
+                <p>You rent it forever.</p>
+              </div>
+            </div>
+
+            <div className="cmp-row">
+              <span className="cmp-dim">Fit</span>
+              <div className="cmp-cell cmp-cardon">
+                <span className="cmp-tag">Cardon</span>
+                <p>Built around how your operation already works.</p>
+              </div>
+              <div className="cmp-cell cmp-usual">
+                <span className="cmp-tag">The usual stack</span>
+                <p>Your operation bent around the tool.</p>
+              </div>
+            </div>
+
+            <div className="cmp-row">
+              <span className="cmp-dim">Data</span>
+              <div className="cmp-cell cmp-cardon">
+                <span className="cmp-tag">Cardon</span>
+                <p>One warehouse of your numbers, and it is yours.</p>
+              </div>
+              <div className="cmp-cell cmp-usual">
+                <span className="cmp-tag">The usual stack</span>
+                <p>Scattered across ten apps that do not talk.</p>
+              </div>
+            </div>
+
+            <div className="cmp-row">
+              <span className="cmp-dim">People</span>
+              <div className="cmp-cell cmp-cardon">
+                <span className="cmp-tag">Cardon</span>
+                <p>Senior hands on five accounts, who know yours.</p>
+              </div>
+              <div className="cmp-cell cmp-usual">
+                <span className="cmp-tag">The usual stack</span>
+                <p>A ticket queue and a new name each time.</p>
+              </div>
+            </div>
+
+            <div className="cmp-row">
+              <span className="cmp-dim">Price shape</span>
+              <div className="cmp-cell cmp-cardon">
+                <span className="cmp-tag">Cardon</span>
+                <p>Build once, care optional, ads priced on performance.</p>
+              </div>
+              <div className="cmp-cell cmp-usual">
+                <span className="cmp-tag">The usual stack</span>
+                <p>Per-seat fees, every month, forever.</p>
+              </div>
+            </div>
+
+            <div className="cmp-row">
+              <span className="cmp-dim">Intelligence</span>
+              <div className="cmp-cell cmp-cardon">
+                <span className="cmp-tag">Cardon</span>
+                <p>An assistant trained on your own data.</p>
+              </div>
+              <div className="cmp-cell cmp-usual">
+                <span className="cmp-tag">The usual stack</span>
+                <p>Generic features built for everyone.</p>
+              </div>
+            </div>
+          </div>
+
+          <p className="cmp-foot">
+            Want to see which side your current stack is on? The{" "}
+            <a href="#diagnostic">free Growth Diagnostic</a> shows you.
+          </p>
         </div>
       </section>
 
