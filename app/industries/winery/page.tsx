@@ -311,9 +311,8 @@ export default function WineryPage() {
                 <p>
                   Over 90 percent of club signups happen in person, in the
                   tasting room, and follow-up within about 48 hours converts
-                  best. Personalized offers have lifted average order value by
-                  roughly half in industry studies.{" "}
-                  <b>Most small wineries follow up late, or never.</b>
+                  best. Personal, timely offers lift order sizes by as much as
+                  half. <b>Most small wineries follow up late, or never.</b>
                 </p>
               </li>
 
@@ -340,8 +339,7 @@ export default function WineryPage() {
               </li>
             </ol>
             <p className="leak-foot">
-              Club, follow-up, and order-value figures reflect published
-              wine-industry studies; your own numbers come out of the diagnostic.
+              Your own numbers come out of the diagnostic.
             </p>
           </Reveal>
         </div>
