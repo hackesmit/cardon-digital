@@ -22,24 +22,24 @@
 .pg-clinics h1 .accent{ color:var(--oasis-bright); }
 .pg-clinics .hero-sub{ max-width:62ch; }
 
-/* honest new-terrain marker */
-.pg-clinics .survey-marker{
+/* honest first-campaign / new-terrain marker */
+.pg-clinics .terrain-marker{
   margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;
-  max-width:74ch;
+  max-width:78ch;
 }
-.pg-clinics .survey-badge{
+.pg-clinics .terrain-badge{
   display:inline-flex;align-items:center;gap:9px;flex-shrink:0;
   font-family:var(--mono);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;
   color:var(--oasis-bright);
   border:1px solid var(--oasis-line);border-radius:999px;padding:6px 13px;
   background:color-mix(in srgb, var(--oasis) 9%, transparent);
 }
-.pg-clinics .survey-badge .dot{
+.pg-clinics .terrain-badge .dot{
   width:8px;height:8px;border-radius:50%;background:var(--oasis);
   box-shadow:0 0 0 4px var(--oasis-faint);
 }
-.pg-clinics .survey-note{font-family:var(--mono);font-size:0.8rem;letter-spacing:0.02em;color:var(--muted);min-width:0;}
-.pg-clinics .survey-note b{color:var(--text-dim);font-weight:600;}
+.pg-clinics .terrain-note{font-family:var(--mono);font-size:0.8rem;letter-spacing:0.02em;color:var(--muted);min-width:0;}
+.pg-clinics .terrain-note b{color:var(--text-dim);font-weight:600;}
 
 /* ---- signature visual frame ---- */
 /* cursor spotlight on the signature frame: lit only while hovering. The pointer
@@ -113,8 +113,85 @@
 .pg-clinics .why-lead .cool{color:var(--oasis-bright);}
 .pg-clinics .why-body{color:var(--text-dim);font-size:0.96rem;max-width:36ch;}
 
+/* ---- problems we found on the border: ranked list ---- */
+.pg-clinics .prob-list{display:flex;flex-direction:column;gap:clamp(14px,2vw,20px);}
+.pg-clinics .prob-item{
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2.4vw,26px);
+  border:1px solid var(--line);border-radius:16px;
+  padding:clamp(18px,2.4vw,28px);
+  background:linear-gradient(180deg, var(--scrim), transparent);
+  transition:border-color .2s ease;min-width:0;
+}
+.pg-clinics .prob-item:hover{border-color:var(--oasis-dim);}
+.pg-clinics .prob-rank{
+  font-family:var(--mono);font-size:clamp(1.05rem,2.4vw,1.5rem);font-weight:600;
+  color:var(--oasis-bright);line-height:1;letter-spacing:0.02em;padding-top:3px;
+}
+.pg-clinics .prob-body{min-width:0;display:flex;flex-direction:column;gap:9px;}
+.pg-clinics .prob-h{font-size:clamp(1.08rem,1.7vw,1.3rem);font-weight:600;letter-spacing:-0.015em;color:var(--text);line-height:1.22;}
+.pg-clinics .prob-p{color:var(--text-dim);font-size:0.98rem;}
+.pg-clinics .prob-p b{color:var(--text);font-weight:600;}
+.pg-clinics .prob-stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;}
+.pg-clinics .prob-stat{
+  display:inline-flex;align-items:baseline;gap:7px;
+  border:1px solid var(--oasis-line);border-radius:999px;padding:5px 12px;
+  background:color-mix(in srgb, var(--oasis) 8%, transparent);
+}
+.pg-clinics .prob-stat b{font-family:var(--mono);font-size:0.9rem;color:var(--oasis-bright);font-weight:600;letter-spacing:0.01em;}
+.pg-clinics .prob-stat span{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;color:var(--muted);text-transform:uppercase;}
+.pg-clinics .prob-foot{margin-top:clamp(16px,2vw,22px);font-family:var(--mono);font-size:0.74rem;letter-spacing:0.04em;color:var(--muted);}
+
+/* ---- what we build: flagship feature + supporting grid ---- */
+.pg-clinics .build-feature{
+  border:1px solid var(--oasis-line);border-radius:18px;
+  padding:clamp(22px,3vw,34px);
+  background:
+    radial-gradient(600px 300px at 88% -30%, var(--oasis-faint), transparent 60%),
+    linear-gradient(180deg, var(--scrim), transparent);
+  display:flex;flex-direction:column;gap:12px;min-width:0;
+  margin-bottom:clamp(18px,2.4vw,26px);
+}
+.pg-clinics .build-tag{
+  display:inline-flex;align-items:center;gap:9px;align-self:flex-start;
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--oasis-bright);
+  border:1px solid var(--oasis-line);border-radius:999px;padding:5px 12px;
+  background:color-mix(in srgb, var(--oasis) 9%, transparent);
+}
+.pg-clinics .build-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--oasis);box-shadow:0 0 0 4px var(--oasis-faint);}
+.pg-clinics .build-feature .build-h{font-size:clamp(1.24rem,2vw,1.56rem);}
+.pg-clinics .build-feature .build-p{font-size:1.02rem;max-width:72ch;}
+
+/* ---- scope note + pricing note ---- */
+.pg-clinics .scope-note{
+  margin-top:clamp(20px,2.6vw,30px);
+  border:1px solid var(--line);border-left:3px solid var(--oasis-dim);
+  border-radius:12px;padding:clamp(14px,1.8vw,20px) clamp(16px,2vw,22px);
+  background:color-mix(in srgb, var(--panel) 40%, transparent);
+  color:var(--text-dim);font-size:0.96rem;min-width:0;
+}
+.pg-clinics .scope-note b{color:var(--text);font-weight:600;}
+.pg-clinics .scope-label{
+  display:block;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:6px;
+}
+.pg-clinics .pricing-note{
+  margin-top:clamp(16px,2vw,22px);
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(14px,2vw,24px);align-items:start;
+  border:1px solid var(--oasis-line);border-radius:16px;
+  padding:clamp(18px,2.4vw,28px);
+  background:linear-gradient(180deg, color-mix(in srgb, var(--oasis) 6%, transparent), transparent);
+  min-width:0;
+}
+.pg-clinics .pricing-label{
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--oasis-bright);white-space:nowrap;padding-top:3px;
+}
+.pg-clinics .pricing-body{min-width:0;color:var(--text-dim);font-size:1rem;}
+.pg-clinics .pricing-body b{color:var(--text);font-weight:600;}
+
 /* ---- diagnostic override ---- */
-.pg-clinics .diag-desc{max-width:50ch;}
+.pg-clinics .diag-desc{max-width:52ch;}
 
 /* ---- responsive (clinics-specific) ---- */
 @media (max-width:720px){
@@ -122,6 +199,9 @@
 }
 @media (max-width:640px){
   .pg-clinics .why-grid{grid-template-columns:1fr;gap:24px;}
+}
+@media (max-width:560px){
+  .pg-clinics .pricing-note{grid-template-columns:1fr;gap:8px;}
 }
 @media (max-width:400px){
   .pg-clinics .cal-plate{max-width:150px;}
