@@ -101,7 +101,10 @@ export default function Home() {
                 <b>priced in proportion to performance</b>: a percent of ad spend,
                 or a percent of the sales the ads bring in. Before anyone tunes a
                 campaign, we check whether the numbers coming in are real, so every
-                decision after that rests on something true.
+                decision after that rests on something true. Offline conversions,
+                call and chat tracking, structured testing with kill rules: the
+                same measurement discipline the biggest performance shops run,
+                sized for owner-run businesses.
               </p>
               <p className="note">
                 Pricing: <b>a share of spend or of ad-driven sales.</b> We get paid
@@ -332,16 +335,17 @@ export default function Home() {
             <h2 id="sectors-title">The terrains we know.</h2>
             <p className="section-sub">
               These are the domains we have built for and understand end to end.
-              Every station on the map is part of the same terrain, and the dashed
-              sites are the terrain we are surveying next.
+              Every station on the map is part of the same terrain. The winery
+              valley and the border clinics carry our first campaign; the other
+              dashed site is terrain we are surveying next.
             </p>
           </div>
 
           <SectorMap />
 
           <p className="sectors-foot mono">
-            Three stations built, two sites being surveyed.{" "}
-            <b>Domains we have built for,</b> and the terrain we are walking next.
+            Three stations built, two terrains ahead. First campaign:{" "}
+            <b>the winery valley and the border clinics.</b>
           </p>
         </div>
       </section>
