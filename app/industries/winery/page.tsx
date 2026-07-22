@@ -263,14 +263,86 @@ export default function WineryPage() {
                 <p className="cap-body">
                   Bilingual ads for your tasting room, your wine club, and direct
                   to consumer, run with the rigor of the most sophisticated
-                  agencies. Priced in proportion to performance: a share of spend,
-                  or a share of the sales the ads bring in.
+                  agencies. The Valle's visitor flow dipped in 2025, so the
+                  wineries that keep their share are the ones whose follow-up and
+                  measurement work. Priced in proportion to performance: a share
+                  of spend, or a share of the sales the ads bring in.
                 </p>
                 <p className="cap-note">
                   <b>We get paid</b> when it works.
                 </p>
               </article>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ WHAT IS LEAKING ============================ */}
+      <section className="section leak" id="leak" aria-labelledby="leak-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker wine">The gap</span>
+              <h2 id="leak-title">What is actually leaking.</h2>
+              <p className="section-sub">
+                Owner-run wineries rarely lose on the wine. They lose in the
+                seams between the systems, where revenue goes uncounted and
+                unfollowed.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <ol className="leak-grid">
+              <li className="leak-item spot">
+                <span className="leak-num">01 / Production truth</span>
+                <h3>The season lives in three places at once.</h3>
+                <p>
+                  Weights, samples, and tank moves sit in a legacy system, a
+                  stack of spreadsheets, and a cellar notebook, and none of them
+                  agree. <b>This is the exact knot we untied at Monte Xanic:</b>{" "}
+                  one live view instead of three versions of the same harvest.
+                </p>
+              </li>
+
+              <li className="leak-item spot">
+                <span className="leak-num">02 / Follow-up</span>
+                <h3>The visit is the last the guest hears from you.</h3>
+                <p>
+                  Over 90 percent of club signups happen in person, in the
+                  tasting room, and follow-up within about 48 hours converts
+                  best. Personalized offers have lifted average order value by
+                  roughly half in industry studies.{" "}
+                  <b>Most small wineries follow up late, or never.</b>
+                </p>
+              </li>
+
+              <li className="leak-item spot">
+                <span className="leak-num">03 / Rented fragments</span>
+                <h3>Four subscriptions that never talk.</h3>
+                <p>
+                  Production tools, a club platform, and a commerce plugin each
+                  bill every month and still do not speak to each other.{" "}
+                  <b>Nobody holds production, DTC, and finance in one view,</b> so
+                  the numbers get reconciled by hand, or not at all.
+                </p>
+              </li>
+
+              <li className="leak-item spot">
+                <span className="leak-num">04 / The real bottleneck</span>
+                <h3>Demand is not the problem.</h3>
+                <p>
+                  The smallest wineries are the ones growing direct sales while
+                  big-winery DTC shrinks. <b>Demand is not the bottleneck.</b> The
+                  gap between the tasting room and a system that follows the guest
+                  home is, and it is one you can close.
+                </p>
+              </li>
+            </ol>
+            <p className="leak-foot">
+              Club, follow-up, and order-value figures reflect published
+              wine-industry studies; your own numbers come out of the diagnostic.
+            </p>
           </Reveal>
         </div>
       </section>

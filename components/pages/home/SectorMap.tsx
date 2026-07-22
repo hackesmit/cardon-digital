@@ -380,6 +380,7 @@ export default function SectorMap() {
       >
         <MarkerCore full />
         <span className="marker-label">
+          <span className="marker-focus">First campaign</span>
           <span className="marker-name">Winery / Valle de Guadalupe</span>
           <span className="marker-detail">harvest and finances, one view</span>
         </span>
@@ -420,12 +421,13 @@ export default function SectorMap() {
         data-sector="clinics"
         data-route="route-clinics"
         style={{ left: "72%", top: "62%" }}
-        aria-label="Clinics and border health. Terrain we are surveying next. Open the clinics page."
+        aria-label="Clinics and border health. First campaign focus: defend and recapture patient flow. Open the clinics page."
       >
         <MarkerCore full={false} />
         <span className="marker-label">
+          <span className="marker-focus">First campaign</span>
           <span className="marker-name">Clinics / Border health</span>
-          <span className="marker-detail">surveying this terrain</span>
+          <span className="marker-detail">defend and recapture patient flow</span>
         </span>
       </Link>
 

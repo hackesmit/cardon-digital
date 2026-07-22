@@ -92,6 +92,33 @@
 .pg-winery .cap-card.accent-gold .cap-note b{color:var(--secondary);}
 .pg-winery .cap-card.accent-wine .cap-note b{color:var(--wine-bright);}
 
+/* ---- what is leaking: the gap list ---- */
+.pg-winery .leak-grid{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.2vw,24px);
+}
+.pg-winery .leak-item{
+  position:relative;min-width:0;overflow:hidden;
+  border:1px solid var(--line);border-left:2px solid var(--wine-line);
+  border-radius:14px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 54%, transparent), color-mix(in srgb, var(--ground) 20%, transparent));
+  padding:clamp(20px,2.4vw,26px);
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .25s ease, transform .25s ease;
+}
+.pg-winery .leak-item:hover{border-left-color:var(--wine-bright);transform:translateY(-2px);}
+.pg-winery .leak-num{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--wine-bright);position:relative;z-index:2;
+}
+.pg-winery .leak-item h3{font-size:1.08rem;letter-spacing:-0.02em;line-height:1.18;position:relative;z-index:2;}
+.pg-winery .leak-item p{color:var(--text-dim);font-size:0.95rem;position:relative;z-index:2;}
+.pg-winery .leak-item p b{color:var(--text);font-weight:600;}
+.pg-winery .leak-foot{
+  margin-top:clamp(18px,2vw,24px);max-width:74ch;
+  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--muted);line-height:1.5;
+}
+
 /* ---- proof: the case study artifact ---- */
 .pg-winery .proof{overflow:hidden;}
 .pg-winery .proof-card{
@@ -150,6 +177,7 @@
 }
 @media (max-width:640px){
   .pg-winery .cap-grid{grid-template-columns:1fr;gap:16px;}
+  .pg-winery .leak-grid{grid-template-columns:1fr;gap:14px;}
 }
 @media (max-width:400px){
   .pg-winery .row-plate{max-width:150px;}

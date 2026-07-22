@@ -414,6 +414,12 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   border:1px solid var(--line);border-radius:8px;padding:6px 10px;
   transition:border-color .2s ease, box-shadow .2s ease;
 }
+.marker-focus{
+  align-self:flex-start;
+  font-family:var(--mono);font-size:0.56rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--energy);border:1px solid color-mix(in srgb, var(--energy) 45%, transparent);
+  border-radius:4px;padding:1px 5px;margin-bottom:2px;
+}
 .marker-name{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--text);line-height:1.25;overflow-wrap:break-word;}
 .marker-detail{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.02em;color:var(--primary);line-height:1.25;overflow-wrap:break-word;}
 .map-marker:hover .marker-label,.map-marker:focus-visible .marker-label{border-color:var(--primary-dim);box-shadow:0 0 0 1px var(--primary-faint);}
