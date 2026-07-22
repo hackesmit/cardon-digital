@@ -53,6 +53,20 @@ export default function WineryPage() {
         </div>
       </section>
 
+      {/* ============================ PHOTO SLOT (placeholder) ============================ */}
+      <section className="photo-slot" aria-hidden="true">
+        <div className="container">
+          <figure className="photoband">
+            {/* Drop a real photo in later by replacing the CSS-composed fill with an image, e.g.:
+                <img className="photoband-img" src="/media/valle-vineyard.jpg" alt="Vineyard rows in the Valle de Guadalupe at dusk" /> */}
+            <div className="photoband-fill" />
+            <figcaption className="photoband-cap mono">
+              photo slot: Valle vineyard imagery
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* ============================ CAPABILITIES ============================ */}
       <section className="section" id="services" aria-labelledby="cap-title">
         <div className="container">
