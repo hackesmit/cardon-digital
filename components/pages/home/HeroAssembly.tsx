@@ -104,11 +104,11 @@ export default function HeroAssembly() {
       | "fillStart"
       | "pulseSpawned"
     >> = [
-      { name: "ventas.xlsx", tag: "XLSX", kind: "sheet", side: -1, row: 0, sx: 0.1, sy: 0.18, rot: -8 },
+      { name: "sales.xlsx", tag: "XLSX", kind: "sheet", side: -1, row: 0, sx: 0.1, sy: 0.18, rot: -8 },
       { name: "leads.csv", tag: "CSV", kind: "csv", side: 1, row: 1, sx: 0.88, sy: 0.14, rot: 7 },
-      { name: "gastos.xlsx", tag: "XLSX", kind: "sheet", side: -1, row: 2, sx: 0.16, sy: 0.84, rot: 6 },
+      { name: "expenses.xlsx", tag: "XLSX", kind: "sheet", side: -1, row: 2, sx: 0.16, sy: 0.84, rot: 6 },
       { name: "invoice.pdf", tag: "PDF", kind: "pdf", side: 1, row: 3, sx: 0.86, sy: 0.82, rot: -7 },
-      { name: "recibo", tag: "RECEIPT", kind: "receipt", side: -1, row: 4, sx: 0.07, sy: 0.52, rot: 5 },
+      { name: "receipt", tag: "RECEIPT", kind: "receipt", side: -1, row: 4, sx: 0.07, sy: 0.52, rot: 5 },
       { name: "whatsapp", tag: "MSG", kind: "chat", side: 1, row: 5, sx: 0.92, sy: 0.5, rot: -6 },
     ];
     const EMPTY: Trace = makeTrace([
@@ -128,12 +128,12 @@ export default function HeroAssembly() {
       pulseSpawned: false,
     }));
     const ROWS: Row[] = [
-      { k: "VENTAS", v: "al dia", frac: 0.72, col: "primary" },
-      { k: "LEADS", v: "listo", frac: 0.55, col: "secondary" },
-      { k: "GASTOS", v: "cuadran", frac: 0.4, col: "primary" },
-      { k: "COBROS", v: "3 hoy", frac: 0.48, col: "secondary" },
-      { k: "MARGEN", v: "34%", frac: 0.34, col: "primary" },
-      { k: "CIERRE", v: "al dia", frac: 0.62, col: "secondary" },
+      { k: "SALES", v: "live", frac: 0.72, col: "primary" },
+      { k: "LEADS", v: "ready", frac: 0.55, col: "secondary" },
+      { k: "EXPENSES", v: "matched", frac: 0.4, col: "primary" },
+      { k: "PAYMENTS", v: "3 today", frac: 0.48, col: "secondary" },
+      { k: "MARGIN", v: "34%", frac: 0.34, col: "primary" },
+      { k: "CLOSE", v: "current", frac: 0.62, col: "secondary" },
     ];
     const rowLatched: boolean[] = [false, false, false, false, false, false];
 
@@ -388,7 +388,7 @@ export default function HeroAssembly() {
       c.textAlign = "right";
       c.fillStyle = PAL.muted;
       c.font = "600 9px " + MONO;
-      c.fillText("RESUMEN", g.pX + g.pW - 14, g.pY + 22);
+      c.fillText("SUMMARY", g.pX + g.pW - 14, g.pY + 22);
       c.textAlign = "left";
       c.strokeStyle = PAL.line;
       c.lineWidth = 1;

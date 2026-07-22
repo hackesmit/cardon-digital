@@ -241,6 +241,13 @@ export default function Home() {
                 spreadsheets, dashboards, and forms become one working board with
                 no per-seat subscription to babysit.
               </p>
+              <p className="section-sub">
+                The build is a <b>scoped fixed fee</b>, agreed before work starts.
+                After handoff, most owners keep a monthly <b>care retainer</b>:
+                corrections, refinements, and the changes that shape the system
+                around how your team actually uses it. Pause it whenever you
+                want; everything keeps running and stays yours.
+              </p>
               <p className="note">
                 Model: <b>trained in and owned,</b> not another subscription.
               </p>
@@ -405,7 +412,7 @@ export default function Home() {
               <span className="cmp-dim">Price shape</span>
               <div className="cmp-cell cmp-cardon">
                 <span className="cmp-tag">Cardon</span>
-                <p>Build once, care optional, ads priced on performance.</p>
+                <p>A scoped build, a care retainer if you want it, ads paid on performance.</p>
               </div>
               <div className="cmp-cell cmp-usual">
                 <span className="cmp-tag">The usual stack</span>

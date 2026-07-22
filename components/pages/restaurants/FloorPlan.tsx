@@ -453,7 +453,7 @@ export default function FloorPlan() {
       ctx.textAlign = "left";
       ctx.textBaseline = "middle";
       ctx.fillStyle = PAL.muted;
-      ctx.fillText("ENTRADA", G.roomX0 + 6, G.door.y + G.unit * 1.35);
+      ctx.fillText("ENTRANCE", G.roomX0 + 6, G.door.y + G.unit * 1.35);
     };
 
     const drawClock = (t: number) => {
