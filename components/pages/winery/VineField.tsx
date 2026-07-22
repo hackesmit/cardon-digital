@@ -691,7 +691,7 @@ export default function VineField() {
       ctx.textAlign = "right";
       ctx.font = "600 9px " + MONO;
       ctx.fillStyle = full ? PAL.primary : PAL.muted;
-      ctx.fillText(full ? "AL DIA" : "EN LINEA", W - 10, 21);
+      ctx.fillText(full ? "CURRENT" : "LIVE", W - 10, 21);
       ctx.textAlign = "center";
       ctx.font = "600 10px " + MONO;
       ctx.fillStyle = PAL.muted;

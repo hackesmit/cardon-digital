@@ -273,8 +273,10 @@ export default function ClinicsPage() {
               <p className="pricing-body">
                 Advertising is priced as a <b>percent of ad spend, with a
                 floor</b>, never as a percent of your patient revenue. Builds are
-                scoped and priced after the diagnostic, agreed up front. Clean
-                numbers, no stake in your procedures.
+                scoped and priced after the diagnostic, agreed up front. Most
+                clinics then keep a care retainer for corrections and refinements
+                as the team settles in; pause it anytime, the system keeps
+                working. Clean numbers, no stake in your procedures.
               </p>
             </div>
           </Reveal>
