@@ -233,9 +233,11 @@ export default function Home() {
               <p className="section-sub">
                 We build custom workflows and internal tools your team uses every
                 day, <b>integrated end to end</b>, trained into the business, and
-                yours to keep. Separate parts, spreadsheets, dashboards, and forms,
-                get placed and wired into one working board with no per-seat
-                subscription to babysit.
+                yours to keep. Underneath them all sits one data warehouse:
+                every channel, file, and system combined into clean, organized
+                fields that feed everything you see. Separate parts,
+                spreadsheets, dashboards, and forms become one working board with
+                no per-seat subscription to babysit.
               </p>
               <p className="note">
                 Model: <b>trained in and owned,</b> not another subscription.
