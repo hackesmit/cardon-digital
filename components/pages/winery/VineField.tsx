@@ -553,16 +553,34 @@ export default function VineField() {
       const c = ctx;
 
       const bottlePath = () => {
+        const neckBotY = bTop + neckH;
+        // handle length for the shoulder cubics; keeps the curve tangent to the
+        // straight neck (vertical) at the top and to the straight body side
+        // (vertical) at the bottom, so the shoulder reads as a smooth S.
+        const sh = shoulderH * 0.55;
+        // small lip: a subtle collar that flares out just below the capsule and
+        // rejoins the neck. Top stays flush at nlx/nrx so the cap still fits and
+        // the overall bounding box is unchanged.
+        const lipOut = nw * 0.14;
+        const lipTop = bTop + neckH * 0.16;
+        const lipMid = bTop + neckH * 0.3;
+        const lipBot = bTop + neckH * 0.46;
         c.beginPath();
         c.moveTo(nlx, bTop);
-        c.lineTo(nlx, bTop + neckH);
-        c.quadraticCurveTo(nlx, bodyTop - shoulderH * 0.4, blx, bodyTop);
+        c.lineTo(nlx, lipTop);
+        c.quadraticCurveTo(nlx - lipOut, lipTop, nlx - lipOut, lipMid);
+        c.quadraticCurveTo(nlx - lipOut, lipBot, nlx, lipBot);
+        c.lineTo(nlx, neckBotY);
+        c.bezierCurveTo(nlx, neckBotY + sh, blx, bodyTop - sh, blx, bodyTop);
         c.lineTo(blx, bodyBot - bw * 0.16);
         c.quadraticCurveTo(blx, bodyBot, bcx - bw * 0.28, bodyBot);
         c.lineTo(bcx + bw * 0.28, bodyBot);
         c.quadraticCurveTo(brx, bodyBot, brx, bodyBot - bw * 0.16);
         c.lineTo(brx, bodyTop);
-        c.quadraticCurveTo(nrx, bodyTop - shoulderH * 0.4, nrx, bTop + neckH);
+        c.bezierCurveTo(brx, bodyTop - sh, nrx, neckBotY + sh, nrx, neckBotY);
+        c.lineTo(nrx, lipBot);
+        c.quadraticCurveTo(nrx + lipOut, lipBot, nrx + lipOut, lipMid);
+        c.quadraticCurveTo(nrx + lipOut, lipTop, nrx, lipTop);
         c.lineTo(nrx, bTop);
         c.closePath();
       };

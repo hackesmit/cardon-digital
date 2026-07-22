@@ -14,3 +14,144 @@
   width: 100%;
   height: clamp(360px, 44vw, 520px);
 }
+
+/* ============================ COMPARE: CARDON VS THE USUAL STACK ============================
+   Page-scoped comparison block. The section/kicker/section-sub/container
+   scaffolding is shared from globals; only the two-column comparison grid is
+   new. Two tinted columns (Cardon subtly primary-tinted, the usual stack
+   neutral), one dimension per row. On narrow screens each row stacks into its
+   own card with per-cell tags. */
+.pg-home .cmp {
+  margin-top: clamp(26px, 3.4vw, 42px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vw, 14px);
+}
+.pg-home .cmp-head {
+  display: grid;
+  grid-template-columns: minmax(104px, 0.62fr) 1fr 1fr;
+  gap: clamp(10px, 1.4vw, 16px);
+  align-items: end;
+  padding: 0 clamp(12px, 1.4vw, 18px);
+}
+.pg-home .cmp-h {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.pg-home .cmp-h.cardon {
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.pg-home .cmp-h.cardon::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+.pg-home .cmp-h.usual {
+  color: var(--muted);
+}
+.pg-home .cmp-row {
+  display: grid;
+  grid-template-columns: minmax(104px, 0.62fr) 1fr 1fr;
+  gap: clamp(10px, 1.4vw, 16px);
+  align-items: stretch;
+}
+.pg-home .cmp-dim {
+  display: flex;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  padding: 6px clamp(12px, 1.4vw, 18px);
+}
+.pg-home .cmp-cell {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: clamp(13px, 1.5vw, 17px) clamp(14px, 1.6vw, 18px);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pg-home .cmp-cardon {
+  border-color: var(--primary-dim);
+  background: linear-gradient(
+    180deg,
+    var(--primary-faint),
+    color-mix(in srgb, var(--panel) 70%, transparent)
+  );
+}
+.pg-home .cmp-usual {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 40%, transparent),
+    color-mix(in srgb, var(--ground) 24%, transparent)
+  );
+}
+.pg-home .cmp-cell p {
+  color: var(--text-dim);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+.pg-home .cmp-cardon p {
+  color: var(--text);
+}
+.pg-home .cmp-tag {
+  display: none;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-home .cmp-cardon .cmp-tag {
+  color: var(--primary);
+}
+.pg-home .cmp-foot {
+  margin-top: clamp(20px, 2.4vw, 30px);
+  font-size: 1rem;
+  color: var(--text-dim);
+}
+.pg-home .cmp-foot a {
+  color: var(--primary);
+  border-bottom: 1px solid var(--primary-dim);
+  padding-bottom: 1px;
+  transition: border-color 0.2s ease;
+}
+.pg-home .cmp-foot a:hover {
+  border-color: var(--primary);
+}
+
+@media (max-width: 640px) {
+  .pg-home .cmp-head {
+    display: none;
+  }
+  .pg-home .cmp-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: clamp(12px, 3vw, 16px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--scrim), transparent);
+  }
+  .pg-home .cmp-dim {
+    padding: 0 0 2px;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pg-home .cmp-cell {
+    border-radius: 10px;
+  }
+  .pg-home .cmp-tag {
+    display: block;
+  }
+}
