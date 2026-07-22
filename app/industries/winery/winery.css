@@ -169,6 +169,40 @@
   position:absolute;inset:12px;border-radius:50%;border:1px dashed var(--wine-line);opacity:0.55;
 }
 
+/* ---- photo slot (placeholder band; swap the fill background for an <img> later) ----
+   A CSS-composed placeholder in a duotone agave treatment: layered radial and
+   linear gradients for depth, plus two fine repeating gradients for grain. When
+   a real photo arrives, drop an <img class="photoband-img"> into the figure and
+   remove the fill; the frame, ratio, and caption stay. */
+.pg-winery .photo-slot{padding:clamp(10px,2vw,20px) 0 0;}
+.pg-winery .photoband{
+  position:relative;margin:0;overflow:hidden;
+  border:1px solid var(--line);border-radius:20px;
+  aspect-ratio:16 / 7;box-shadow:var(--shadow);
+}
+.pg-winery .photoband-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.pg-winery .photoband-fill{
+  position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(115deg, color-mix(in srgb, var(--text) 4%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(24deg, color-mix(in srgb, var(--ground) 10%, transparent) 0 1px, transparent 1px 4px),
+    radial-gradient(120% 140% at 18% 12%, color-mix(in srgb, var(--primary) 46%, transparent), transparent 60%),
+    radial-gradient(120% 120% at 88% 92%, color-mix(in srgb, var(--secondary) 34%, transparent), transparent 62%),
+    linear-gradient(150deg, color-mix(in srgb, var(--primary) 30%, var(--ground)) 0%, var(--panel-2) 52%, color-mix(in srgb, var(--ground) 88%, var(--secondary)) 100%);
+}
+.pg-winery .photoband-fill::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(140% 120% at 50% 40%, transparent 52%, color-mix(in srgb, var(--ground) 62%, transparent) 100%);
+}
+.pg-winery .photoband-cap{
+  position:absolute;left:16px;bottom:14px;z-index:2;
+  display:inline-flex;align-items:center;gap:8px;
+  background:color-mix(in srgb, var(--panel) 78%, transparent);
+  border:1px solid var(--line);border-radius:999px;padding:5px 12px;
+  font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .photoband-cap::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--secondary);flex-shrink:0;}
+
 /* ============================ RESPONSIVE ============================ */
 @media (max-width:900px){
   .pg-winery .cap-grid{grid-template-columns:repeat(2,1fr);}
