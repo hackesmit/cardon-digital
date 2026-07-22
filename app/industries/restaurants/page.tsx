@@ -27,19 +27,10 @@ export default function RestaurantsPage() {
               <span className="accent">readable before it arrives.</span>
             </h1>
 
-            <div className="honest-note">
-              <span className="honest-pill mono">Surveying this terrain</span>
-              <span className="honest-line">
-                We have not run a restaurant yet. This is the system we{" "}
-                <b>would</b> build here, drawn from patterns already proven in the
-                domains we have built for.
-              </span>
-            </div>
-
             <p className="hero-sub">
               A full room is not a surprise. It is a pattern that shows up in the
               reservations, the covers, and the pace of a service well before the
-              kitchen feels it. We would wire your floor, your menu, and your team
+              kitchen feels it. We wire your floor, your menu, and your team
               into one live view, so the rush is something your staff can see
               coming, not something that lands on them.{" "}
               <b>Read the evening while there is still time to shape it.</b>
@@ -50,7 +41,7 @@ export default function RestaurantsPage() {
                 Get the free Growth Diagnostic
               </a>
               <a className="btn-ghost" href="#build">
-                See what we would build
+                See what we build
               </a>
             </div>
             <p className="brandline">Built to hold water</p>
@@ -67,14 +58,14 @@ export default function RestaurantsPage() {
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <span className="kicker terra">What we would build</span>
+              <span className="kicker terra">What we build</span>
               <h2 id="build-title">
                 Five systems, each one already proven somewhere else.
               </h2>
               <p className="section-sub">
-                We would not learn hospitality on your floor. Every piece below
-                leans on a pattern we already run in a domain we have built for,
-                adapted to a dining room. <b>Same rigor, new terrain.</b>
+                We do not learn on your floor. Every piece below leans on a
+                pattern we already run in a domain we have built for, adapted to
+                a dining room. <b>Same rigor, same system.</b>
               </p>
             </div>
           </Reveal>
@@ -119,7 +110,7 @@ export default function RestaurantsPage() {
                 <h3>Staffing rhythms matched to demand instead of habit.</h3>
                 <p className="build-body">
                   Cover a Tuesday like a Tuesday and a wine-country Saturday like a
-                  Saturday. We would build the roster around the shape of demand
+                  Saturday. We build the roster around the shape of demand
                   the reservations and history already show, so the floor is
                   staffed for the night that is actually coming.
                 </p>
@@ -136,7 +127,8 @@ export default function RestaurantsPage() {
                   Guests from both sides of the line, in English and Spanish,
                   written natively rather than translated after the fact. The ads
                   that fill your tables are priced in proportion to performance: a
-                  share of spend, or of the sales the ads bring in. We get paid
+                  share of spend with a floor, or, once measurement you trust is
+                  in place, a share of the sales the ads bring in. We get paid
                   when the room fills.
                 </p>
                 <p className="build-borrow">
@@ -169,13 +161,13 @@ export default function RestaurantsPage() {
         <div className="container">
           <Reveal>
             <div className="section-head">
-              <span className="kicker gold">Why us for this terrain</span>
+              <span className="kicker gold">Why us</span>
               <h2 id="why-title">
-                New to restaurants. Not new to this ground.
+                We already work this ground every day.
               </h2>
               <p className="section-sub">
-                Hospitality is a new terrain for us, but the room it lives in is
-                one we already work in every day.
+                The wine country, the border, and the owners who run rooms on
+                both: this is the terrain we operate in daily.
               </p>
             </div>
           </Reveal>
@@ -252,7 +244,7 @@ export default function RestaurantsPage() {
                     floor actually runs, as one system.
                   </b>{" "}
                   You get a written memo, not a sales deck, telling you what is
-                  true, what is broken, and what would be worth building first.
+                  true, what is broken, and what to build first.
                 </p>
                 <div className="diag-actions">
                   <a
