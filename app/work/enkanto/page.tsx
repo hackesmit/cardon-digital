@@ -74,6 +74,20 @@ export default function EnkantoCaseStudy() {
         </div>
       </section>
 
+      {/* ============================ PHOTO SLOT (placeholder) ============================ */}
+      <section className="photo-slot" aria-hidden="true">
+        <div className="container">
+          <figure className="photoband">
+            {/* Drop a real photo in later by replacing the CSS-composed fill with an image, e.g.:
+                <img className="photoband-img" src="/media/enkanto-valle.jpg" alt="En'kanto in San Antonio de las Minas" /> */}
+            <div className="photoband-fill" />
+            <figcaption className="photoband-cap mono">
+              photo slot: Valle property imagery
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* ============================ THE WORK (group intro) ============================ */}
       <section className="section" aria-labelledby="work-title">
         <div className="container">
