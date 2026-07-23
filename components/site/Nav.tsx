@@ -4,18 +4,29 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-const links = [
+const linksBefore = [
   { href: "/work/monte-xanic", label: "Work" },
   { href: "/#services", label: "Services" },
-  { href: "/#sectors", label: "Industries" },
+];
+const linksAfter = [
   { href: "/#about", label: "About" },
   { href: "/#diagnostic", label: "Contact" },
+];
+const industryLinks = [
+  { href: "/#sectors", label: "All industries" },
+  { href: "/industries/winery", label: "Wineries" },
+  { href: "/industries/construction", label: "Construction" },
+  { href: "/industries/hiring", label: "Hiring" },
+  { href: "/industries/restaurants", label: "Restaurants" },
+  { href: "/industries/clinics", label: "Clinics" },
 ];
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [indOpen, setIndOpen] = useState(false);
   const [mode, setMode] = useState<"dark" | "light">("dark");
   const toggleBtn = useRef<HTMLButtonElement | null>(null);
+  const dropRef = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
     const cur =
@@ -27,14 +38,30 @@ export default function Nav() {
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape" && open) {
+      if (e.key !== "Escape") return;
+      if (indOpen) {
+        setIndOpen(false);
+        return;
+      }
+      if (open) {
         setOpen(false);
         toggleBtn.current?.focus();
       }
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, indOpen]);
+
+  useEffect(() => {
+    if (!indOpen) return;
+    function onDown(e: PointerEvent) {
+      if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
+        setIndOpen(false);
+      }
+    }
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [indOpen]);
 
   useEffect(() => {
     if (!open) return;
@@ -131,7 +158,69 @@ export default function Nav() {
             )}
           <div className={"nav-menu" + (open ? " open" : "")} id="nav-menu">
             <ul className="nav-list">
-              {links.map((l) => (
+              {linksBefore.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={() => setOpen(false)}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+              <li
+                className={"has-drop" + (indOpen ? " drop-open" : "")}
+                ref={dropRef}
+                onMouseEnter={() => setIndOpen(true)}
+                onMouseLeave={() => setIndOpen(false)}
+              >
+                <button
+                  className="drop-trigger"
+                  type="button"
+                  aria-expanded={indOpen ? "true" : "false"}
+                  aria-controls="industries-menu"
+                  onClick={() => setIndOpen((v) => !v)}
+                >
+                  Industries
+                  <svg
+                    className="drop-caret"
+                    viewBox="0 0 10 6"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      d="M1 1 L5 5 L9 1"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <Link
+                  className="drop-mobile-label"
+                  href="/#sectors"
+                  onClick={() => setOpen(false)}
+                >
+                  Industries
+                </Link>
+                <div className="nav-drop" id="industries-menu">
+                  <ul className="nav-drop-panel">
+                    {industryLinks.map((l) => (
+                      <li key={l.href}>
+                        <Link
+                          href={l.href}
+                          onClick={() => {
+                            setIndOpen(false);
+                            setOpen(false);
+                          }}
+                        >
+                          {l.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+              {linksAfter.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} onClick={() => setOpen(false)}>
                     {l.label}
