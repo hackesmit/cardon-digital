@@ -395,6 +395,9 @@ export default function VineField() {
     const INTRO = 0.5;
     const FILL = 12.5;
     let fillLevel = 0;
+    // Cork slide progress: 0 while the bottle is open (filling), eases to 1
+    // once the fill completes and the cork slides into the mouth.
+    let corkT = 0;
 
     const layout = () => {
       compact = W < COMPACT_W;
@@ -661,13 +664,16 @@ export default function VineField() {
       const bw = g.bw;
       const bh = g.bh;
       const bTop = g.bTop;
-      // Compact runs a longer neck on the slender body (a phone-height bottle
-      // reads squat with the desktop neck ratio); desktop keeps its approved
-      // proportions untouched.
-      const nw = bw * (compact ? 0.32 : 0.34);
-      const neckH = bh * (compact ? 0.28 : 0.17);
-      const shoulderH = bh * 0.12;
-      const bodyTop = bTop + neckH + shoulderH;
+      // Proportions traced from Daniel's reference silhouette
+      // (Wine-bottle.svg): neck about a quarter of the height and a quarter of
+      // the body width, a LONG sloping shoulder (~19% of height), a slight
+      // lip band at the mouth, rounded base corners. Shared by both modes.
+      const nw = bw * 0.26;
+      const lipH = Math.max(3, bh * 0.014);
+      const lipOut = Math.max(1.5, nw * 0.1);
+      const neckH = bh * 0.235;
+      const shoulderH = bh * 0.19;
+      const bodyTop = bTop + lipH + neckH + shoulderH;
       const bodyBot = bTop + bh;
       const blx = bcx - bw / 2;
       const brx = bcx + bw / 2;
@@ -676,15 +682,17 @@ export default function VineField() {
       const c = ctx;
 
       const bottlePath = () => {
-        const neckBotY = bTop + neckH;
-        // handle length for the shoulder cubics; keeps the curve tangent to the
-        // straight neck (vertical) at the top and to the straight body side
-        // (vertical) at the bottom, so the shoulder reads as a smooth S. The
-        // neck is a clean straight tube: the foil capsule (drawn separately)
-        // now carries the lip where it meets the glass.
+        const lipBotY = bTop + lipH;
+        const neckBotY = lipBotY + neckH;
+        // Shoulder handles: tangent to the vertical neck at the top and the
+        // vertical body side at the bottom; the tall shoulderH from the
+        // reference gives the long sloping profile. The mouth carries a small
+        // lip band flaring just past the neck line, per the reference.
         const sh = shoulderH * 0.55;
         c.beginPath();
-        c.moveTo(nlx, bTop);
+        c.moveTo(nlx - lipOut, bTop);
+        c.lineTo(nlx - lipOut, lipBotY);
+        c.lineTo(nlx, lipBotY);
         c.lineTo(nlx, neckBotY);
         c.bezierCurveTo(nlx, neckBotY + sh, blx, bodyTop - sh, blx, bodyTop);
         c.lineTo(blx, bodyBot - bw * 0.16);
@@ -693,7 +701,9 @@ export default function VineField() {
         c.quadraticCurveTo(brx, bodyBot, brx, bodyBot - bw * 0.16);
         c.lineTo(brx, bodyTop);
         c.bezierCurveTo(brx, bodyTop - sh, nrx, neckBotY + sh, nrx, neckBotY);
-        c.lineTo(nrx, bTop);
+        c.lineTo(nrx, lipBotY);
+        c.lineTo(nrx + lipOut, lipBotY);
+        c.lineTo(nrx + lipOut, bTop);
         c.closePath();
       };
 
@@ -755,66 +765,32 @@ export default function VineField() {
       c.lineTo(blx + 4, bodyBot - bw * 0.2);
       c.stroke();
 
-      // Foil capsule over the neck: a proper Bordeaux capsule, meaningfully
-      // tall (roughly 2.5x the old cap), with a small skirt lip where the foil
-      // meets the glass. Shared by both the compact and desktop drawings.
-      const deepGold = rgba(mix(PAL.secondaryRgb, BLACK, 0.42), 1);
-      const capH = Math.max(22, neckH * 0.78);
-      const capTop = bTop - 1;
-      const capBot = bTop + capH;
-      const capOver = nw * 0.14;
-      const capL = bcx - nw / 2 - capOver;
-      const capR = bcx + nw / 2 + capOver;
-      const capCrown = Math.min(4, nw * 0.22);
-      const skirtH = Math.max(3, capH * 0.16);
-      const skirtTop = capBot - skirtH;
-      const capLip = nw * 0.1;
-      const capsulePath = () => {
-        c.beginPath();
-        c.moveTo(capL, capTop + capCrown);
-        c.quadraticCurveTo(capL, capTop, capL + capCrown, capTop);
-        c.lineTo(capR - capCrown, capTop);
-        c.quadraticCurveTo(capR, capTop, capR, capTop + capCrown);
-        c.lineTo(capR, skirtTop);
-        c.lineTo(capR + capLip, capBot - skirtH * 0.4);
-        c.lineTo(capR + capLip, capBot);
-        c.lineTo(capL - capLip, capBot);
-        c.lineTo(capL - capLip, capBot - skirtH * 0.4);
-        c.lineTo(capL, skirtTop);
-        c.closePath();
-      };
-      capsulePath();
-      const capGrd = c.createLinearGradient(capL - capLip, 0, capR + capLip, 0);
-      capGrd.addColorStop(0, deepGold);
-      capGrd.addColorStop(0.34, PAL.secondaryBright);
-      capGrd.addColorStop(0.56, PAL.secondary);
-      capGrd.addColorStop(1, deepGold);
-      c.fillStyle = capGrd;
-      c.fill();
-      capsulePath();
-      c.strokeStyle = deepGold;
-      c.lineWidth = 1;
-      c.stroke();
-      // the lip ridge where the skirt begins (foil meeting glass)
-      c.strokeStyle = deepGold;
-      c.lineWidth = 1.2;
-      c.beginPath();
-      c.moveTo(capL - capLip * 0.3, skirtTop);
-      c.lineTo(capR + capLip * 0.3, skirtTop);
-      c.stroke();
-      // soft vertical sheen so the foil reads as metal, clipped to the capsule
-      c.save();
-      capsulePath();
-      c.clip();
-      c.globalAlpha = 0.5;
-      c.strokeStyle = PAL.secondaryBright;
-      c.lineWidth = Math.max(1.4, nw * 0.1);
-      c.beginPath();
-      c.moveTo(bcx - nw * 0.16, capTop + 2);
-      c.lineTo(bcx - nw * 0.16, skirtTop - 1);
-      c.stroke();
-      c.globalAlpha = 1;
-      c.restore();
+      // No closure while the bottle fills: an open bottle is the honest state.
+      // Once full, a cork slides into the mouth: a plain cylinder with
+      // slightly rounded corners, NARROWER than the neck (the glass has
+      // thickness), no bevel, no flare.
+      if (corkT > 0.001) {
+        const e = easeInOut(clamp01(corkT));
+        const cw = nw * 0.68;
+        const ch = Math.max(12, neckH * 0.32);
+        const seatedTop = bTop + 1.5;
+        const hoverTop = bTop - ch * 2.6;
+        const top = hoverTop + (seatedTop - hoverTop) * e;
+        const cl = bcx - cw / 2;
+        const corkBody = PAL.dark
+          ? rgba(mix(mix(PAL.secondaryRgb, WHITE, 0.3), PAL.groundRgb, 0.12), 1)
+          : rgba(mix(PAL.secondaryRgb, WHITE, 0.18), 1);
+        const corkEdge = rgba(mix(PAL.secondaryRgb, BLACK, 0.35), 1);
+        c.save();
+        c.globalAlpha = Math.min(1, corkT * 2.5);
+        rr(c, cl, top, cw, ch, Math.min(3, cw * 0.14));
+        c.fillStyle = corkBody;
+        c.fill();
+        c.strokeStyle = corkEdge;
+        c.lineWidth = 1;
+        c.stroke();
+        c.restore();
+      }
 
       const labW = bw * 0.84;
       const labH = bh * 0.2;
@@ -911,6 +887,7 @@ export default function VineField() {
 
     const resolvedStatic = () => {
       fillLevel = 1;
+      corkT = 1;
       for (let i = 0; i < rows.length; i++) {
         rows[i].latched = true;
         rows[i].heads = [rows[i].line.len * 0.5];
@@ -947,6 +924,8 @@ export default function VineField() {
 
       const fp = clamp01((T - INTRO) / FILL);
       fillLevel = easeInOut(fp);
+      if (fillLevel > 0.97) corkT = Math.min(1, corkT + dt / 0.9);
+      else corkT = 0;
       for (let i = 0; i < rows.length; i++) rows[i].latched = fp >= rows[i].latch;
 
       spawnHeads(dt);
@@ -968,6 +947,7 @@ export default function VineField() {
       if (running || !canRun()) return;
       T = 0;
       fillLevel = 0;
+      corkT = 0;
       ripples = [];
       for (let i = 0; i < rows.length; i++) {
         rows[i].latched = false;
