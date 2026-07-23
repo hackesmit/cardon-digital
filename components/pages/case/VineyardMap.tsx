@@ -18,18 +18,22 @@ import { useEffect, useRef } from "react";
  */
 
 type RGB = [number, number, number];
-type Plot = { k: string; n: string; ready: number; pts: number[][] };
+type Plot = { k: string; n: string; ready: number; water: number; pts: number[][] };
 
+/* Each section carries an illustrative, section-fixed water reading (0-100). As
+   accumulated heat drives ripeness, the section scores quality against Monte
+   Xanic's own standard from more than one aspect: accumulated heat, that water
+   reading, and the ripeness sample. Not client data. */
 const PLOTS: Plot[] = [
-  { k: "A1", n: "Section A1", ready: 0.5, pts: [[180, 168], [392, 150], [398, 272], [168, 285]] },
-  { k: "A2", n: "Section A2", ready: 0.7, pts: [[392, 150], [612, 152], [618, 268], [398, 272]] },
-  { k: "A3", n: "Section A3", ready: 0.9, pts: [[612, 152], [824, 175], [838, 286], [618, 268]] },
-  { k: "B1", n: "Section B1", ready: 0.36, pts: [[168, 285], [398, 272], [405, 378], [182, 388]] },
-  { k: "B2", n: "Section B2", ready: 0.56, pts: [[398, 272], [618, 268], [612, 372], [405, 378]] },
-  { k: "B3", n: "Section B3", ready: 0.8, pts: [[618, 268], [838, 286], [828, 392], [612, 372]] },
-  { k: "C1", n: "Section C1", ready: 0.28, pts: [[182, 388], [405, 378], [410, 486], [200, 470]] },
-  { k: "C2", n: "Section C2", ready: 0.44, pts: [[405, 378], [612, 372], [600, 484], [410, 486]] },
-  { k: "C3", n: "Section C3", ready: 0.62, pts: [[612, 372], [828, 392], [812, 470], [600, 484]] },
+  { k: "A1", n: "Section A1", ready: 0.5, water: 58, pts: [[180, 168], [392, 150], [398, 272], [168, 285]] },
+  { k: "A2", n: "Section A2", ready: 0.7, water: 62, pts: [[392, 150], [612, 152], [618, 268], [398, 272]] },
+  { k: "A3", n: "Section A3", ready: 0.9, water: 69, pts: [[612, 152], [824, 175], [838, 286], [618, 268]] },
+  { k: "B1", n: "Section B1", ready: 0.36, water: 47, pts: [[168, 285], [398, 272], [405, 378], [182, 388]] },
+  { k: "B2", n: "Section B2", ready: 0.56, water: 54, pts: [[398, 272], [618, 268], [612, 372], [405, 378]] },
+  { k: "B3", n: "Section B3", ready: 0.8, water: 66, pts: [[618, 268], [838, 286], [828, 392], [612, 372]] },
+  { k: "C1", n: "Section C1", ready: 0.28, water: 44, pts: [[182, 388], [405, 378], [410, 486], [200, 470]] },
+  { k: "C2", n: "Section C2", ready: 0.44, water: 51, pts: [[405, 378], [612, 372], [600, 484], [410, 486]] },
+  { k: "C3", n: "Section C3", ready: 0.62, water: 63, pts: [[612, 372], [828, 392], [812, 470], [600, 484]] },
 ];
 
 const VBW = 1000;
@@ -48,6 +52,17 @@ function centroidOf(pts: number[][]) {
 }
 
 const CENTROIDS = PLOTS.map((p) => centroidOf(p.pts));
+
+/* Flag anchor: pushed off the centered label toward the section's upper-right
+   corner (top-right vertex is pts[1]) so a raised harvest flag never collides
+   with the centered section label at any width or scrub position. */
+const FLAG_ANCHORS = PLOTS.map((p, i) => {
+  const c = CENTROIDS[i];
+  const tr = p.pts[1];
+  const fx = c.x + (tr[0] - c.x) * 0.62;
+  const fy = c.y + (tr[1] - c.y) * 0.62;
+  return { px: (fx / VBW) * 100, py: (fy / VBH) * 100 };
+});
 
 function pathD(pts: number[][]) {
   return (
@@ -76,9 +91,10 @@ export default function VineyardMap() {
     if (!stage || !plate) return;
 
     const vpName = plate.querySelector(".vp-name");
+    const vpAspects = plate.querySelector(".vp-aspects");
     const vpStatus = plate.querySelector(".vp-status");
     const vpAction = plate.querySelector(".vp-action");
-    if (!vpName || !vpStatus || !vpAction) return;
+    if (!vpName || !vpAspects || !vpStatus || !vpAction) return;
 
     const root = document.documentElement;
     const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -142,12 +158,20 @@ export default function VineyardMap() {
 
     const ripeness = (p: Plot) => smooth(p.ready - RAMP, p.ready, s);
 
-    const statusFor = (p: Plot): [string, string] => {
-      if (s >= p.ready) return ["at target", "harvest"];
+    const STANDARD = 90;
+    /* Each section scores quality against Monte Xanic's own standard from more
+       than one aspect: accumulated heat (relative to this section's target),
+       the section water reading, and the ripeness sample. Illustrative. */
+    const readFor = (p: Plot) => {
       const r = ripeness(p);
-      if (r >= 0.66) return ["readiness approaching", "hold"];
-      if (r >= 0.3) return ["developing", "hold"];
-      return ["cool, early", "hold"];
+      const heat = Math.round(clamp01(s / p.ready) * 100);
+      const sample = Math.round(r * 100);
+      const water = p.water;
+      const quality = Math.round(0.45 * heat + 0.4 * sample + 0.15 * water);
+      const aspects = "heat " + heat + " / water " + water + " / sample " + sample;
+      const score = "quality " + quality + " vs standard " + STANDARD;
+      const action = s >= p.ready ? "meets standard, harvest" : "below standard, hold";
+      return { aspects, score, action };
     };
 
     const positionPlate = (key: string) => {
@@ -156,10 +180,11 @@ export default function VineyardMap() {
         plate.classList.remove("show");
         return;
       }
-      const st = statusFor(p);
+      const rd = readFor(p);
       vpName.textContent = p.n;
-      vpStatus.textContent = st[0];
-      vpAction.textContent = st[1];
+      vpAspects.textContent = rd.aspects;
+      vpStatus.textContent = rd.score;
+      vpAction.textContent = rd.action;
       const rect = stage.getBoundingClientRect();
       const c = centroids[key];
       const px = (c.x / VBW) * rect.width;
@@ -356,7 +381,12 @@ export default function VineyardMap() {
   return (
     <div className="vine-showcase">
       <div className="vine-stage" id="vineStage" ref={stageRef}>
-        <span className="vine-legend mono">Vineyard sections / live readiness</span>
+        <div className="vine-legend mono">
+          <span className="vine-legend-main">Vineyard sections / quality vs standard</span>
+          <span className="vine-legend-sub">
+            color = quality scored against Monte Xanic&apos;s standard
+          </span>
+        </div>
         <span className="vine-honest mono">illustrative view, not client data</span>
 
         <svg
@@ -422,7 +452,7 @@ export default function VineyardMap() {
               ref={(el) => {
                 markerEls.current[p.k] = el;
               }}
-              style={{ left: CENTROIDS[i].px + "%", top: CENTROIDS[i].py + "%" }}
+              style={{ left: FLAG_ANCHORS[i].px + "%", top: FLAG_ANCHORS[i].py + "%" }}
             >
               <svg viewBox="0 0 24 28">
                 <line
@@ -443,23 +473,25 @@ export default function VineyardMap() {
 
         <div className="vine-plate" id="vinePlate" ref={plateRef} aria-hidden="true">
           <span className="vp-name">Section</span>
-          <span className="vp-status">status</span>
+          <span className="vp-aspects mono">heat / water / sample</span>
+          <span className="vp-status">quality vs standard</span>
           <span className="vp-action">hold</span>
         </div>
 
         <noscript>
           <div className="vine-fallback">
-            A stylized map of nine vineyard sections. Through the season each
-            section warms from cool green to deep wine as it approaches Monte
-            Xanic&apos;s readiness standard, and takes a harvest marker when it
-            crosses it.
+            A stylized map of nine vineyard sections. As accumulated heat rises
+            through the season, each section scores quality against Monte
+            Xanic&apos;s own standard from heat, water, and ripeness sample, and
+            warms from cool green to deep wine, taking a harvest marker when it
+            meets the standard.
           </div>
         </noscript>
       </div>
 
       <div className="season-scrub">
-        <span className="ss-lab mono">Season</span>
-        <span className="ss-end mono">cool</span>
+        <span className="ss-lab mono">Season, accumulated heat</span>
+        <span className="ss-end mono">early</span>
         <input
           id="seasonRange"
           className="season-range"
@@ -468,9 +500,9 @@ export default function VineyardMap() {
           max="1000"
           defaultValue="0"
           ref={rangeRef}
-          aria-label="Season progress. Drag to move through the season and watch each section ripen."
+          aria-label="Accumulated heat through the season. Drag to accumulate heat and watch each section score quality against Monte Xanic's standard."
         />
-        <span className="ss-end mono">ready</span>
+        <span className="ss-end mono">harvest</span>
       </div>
     </div>
   );

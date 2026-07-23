@@ -266,6 +266,26 @@ export default function FloorPlan() {
     let last = 0;
     let cycT = 0;
     let compact = false;
+    let tagH = 30; /* measured height of the stage-tag, drives clock clearance */
+
+    const clampN = (v: number, a: number, b: number) =>
+      v < a ? a : v > b ? b : v;
+
+    /* Vertical layout as pixel bands derived from the measured width, so the
+       frame height fits the composition at every width (no fixed tall box, no
+       letterbox). One source of truth: the same math sets the canvas height and
+       positions the room + covers band. */
+    const bands = () => {
+      const clockY = tagH + 26; /* axis sits below the tag + its hour labels */
+      const roomY0 = clockY + 36; /* gap holds the playhead time label */
+      const roomH = clampN(W * 0.25, 188, 280);
+      const roomY1 = roomY0 + roomH;
+      const loadTop = roomY1 + 34; /* clear gap between room and covers labels */
+      const covH = clampN(W * 0.13, 118, 150);
+      const loadBase = loadTop + covH;
+      const height = Math.round(loadBase + 34); /* clears the bottom caption */
+      return { clockY, roomY0, roomY1, loadTop, loadBase, height };
+    };
 
     let G: Geo = {
       x0: 0,
@@ -282,24 +302,27 @@ export default function FloorPlan() {
     };
 
     const layout = () => {
+      const b = bands();
       G.x0 = W * 0.075;
       G.x1 = W * 0.94; /* shared time axis for clock strip + load line */
-      /* portrait phones: drop the clock strip below the frame tag and start the
-         room a little lower so the time axis never sits under the tag. */
-      G.clockY = H * (compact ? 0.15 : 0.085);
+      G.clockY = b.clockY;
       G.roomX0 = W * 0.045;
       G.roomX1 = W * 0.955;
-      G.roomY0 = H * (compact ? 0.205 : 0.15);
-      G.roomY1 = H * 0.665;
-      G.loadTop = H * 0.74;
-      G.loadBase = H * 0.955;
-      G.door = { x: W * 0.075, y: H * 0.62 };
+      G.roomY0 = b.roomY0;
+      G.roomY1 = b.roomY1;
+      G.loadTop = b.loadTop;
+      G.loadBase = b.loadBase;
+      const roomH = G.roomY1 - G.roomY0;
+      G.door = { x: W * 0.075, y: G.roomY0 + roomH * 0.84 };
       G.unit = Math.max(12, Math.min(29, W * 0.027));
       for (let i = 0; i < TABLES.length; i++) {
         const T = TABLES[i];
         const u = G.unit;
         T.x = T.fx * W;
-        T.y = T.fy * H;
+        /* map each table's canvas-fraction fy (0.245 to 0.57) into the room
+           band so tables always sit inside the room at every height */
+        const ry = clampN(0.16 + 2.154 * (T.fy - 0.245), 0.08, 0.9);
+        T.y = G.roomY0 + ry * roomH;
         if (T.shape === "round") {
           T.r = u * 0.72;
           T.hw = T.r;
@@ -456,7 +479,13 @@ export default function FloorPlan() {
       ctx.textAlign = "left";
       ctx.textBaseline = "middle";
       ctx.fillStyle = PAL.muted;
-      ctx.fillText("ENTRANCE", G.roomX0 + 6, G.door.y + G.unit * 1.35);
+      /* keep the label inside the room so it never crowds the covers-band label
+         below, even when the table unit grows on wide screens */
+      ctx.fillText(
+        "ENTRANCE",
+        G.roomX0 + 6,
+        Math.min(G.door.y + G.unit * 0.7 + 12, G.roomY1 - 16)
+      );
     };
 
     const drawClock = (t: number) => {
@@ -466,21 +495,24 @@ export default function FloorPlan() {
       line(ctx, G.x0, G.clockY, G.x1, G.clockY);
       ctx.font = "600 " + (compact ? 10 : 9) + "px " + MONO;
       ctx.textBaseline = "alphabetic";
+      /* label every hour when they fit, else every other, so labels never
+         collide (independent of the composition, so nothing changes near the
+         handoff width) */
+      const dense = (G.x1 - G.x0) / 6 >= 52;
       for (let h = 0; h <= 6; h++) {
         const m = h * 60;
         const x = timeX(m);
         ctx.strokeStyle = PAL.lineSoft;
         ctx.lineWidth = 1.4;
         line(ctx, x, G.clockY - 4, x, G.clockY + 4);
-        /* narrow screens: keep every hour tick but label only every other hour
-           (17, 19, 21, 23) so the labels never collide */
-        if (!compact || h % 2 === 0) {
+        if (dense || h % 2 === 0) {
           ctx.fillStyle = PAL.muted;
           ctx.textAlign = "center";
           ctx.fillText(17 + h + ":00", x, G.clockY - 10);
         }
       }
-      /* playhead */
+      /* playhead: dot on the axis, connector down to the room, time label placed
+         BELOW the axis so it can never collide with the frame tag above */
       const px = timeX(t);
       ctx.fillStyle = PAL.accent;
       ctx.beginPath();
@@ -491,9 +523,10 @@ export default function FloorPlan() {
       line(ctx, px, G.clockY + 5, px, G.roomY0 - 4);
       ctx.font = "600 11px " + MONO;
       ctx.fillStyle = PAL.accentBright;
-      const near = px > G.x1 - 40;
+      const near = px > G.x1 - 44;
       ctx.textAlign = near ? "right" : "left";
-      ctx.fillText(clockLabel(t), near ? px - 6 : px + 6, G.clockY - 22);
+      ctx.textBaseline = "alphabetic";
+      ctx.fillText(clockLabel(t), near ? px - 7 : px + 7, G.clockY + 16);
     };
 
     const drawChips = (t: number) => {
@@ -544,7 +577,8 @@ export default function FloorPlan() {
 
     const drawLoad = (t: number) => {
       const n = Math.max(0, Math.min(SERVICE, Math.floor(t)));
-      /* label + baseline */
+      const plotTop = covY(peakV);
+      /* label */
       ctx.font = "600 " + (compact ? 10 : 9) + "px " + MONO;
       ctx.textBaseline = "alphabetic";
       ctx.textAlign = "left";
@@ -552,6 +586,36 @@ export default function FloorPlan() {
       ctx.fillText("COVERS OVER THE EVENING", G.x0, G.loadTop - 8);
       ctx.textAlign = "right";
       ctx.fillText("ILLUSTRATIVE", G.x1, G.loadTop - 8);
+
+      /* designed presence from t0: faint horizontal gridlines, hour ticks tying
+         the band to the timeline, a ghost of the full evening curve, and its
+         endpoints. The band reads as a chart even before the covers accumulate,
+         so it never looks like an empty reserved region. */
+      ctx.strokeStyle = PAL.lineSoft;
+      ctx.lineWidth = 1;
+      for (let gth = 1; gth <= 2; gth++) {
+        const gy = covY((peakV * gth) / 3);
+        line(ctx, G.x0, gy, G.x1, gy);
+      }
+      for (let h = 0; h <= 6; h++) {
+        const gx = timeX(h * 60);
+        line(ctx, gx, G.loadBase, gx, G.loadBase - (G.loadBase - plotTop) * 0.16);
+      }
+      ctx.strokeStyle = rgba(PAL.accentRgb, 0.17);
+      ctx.lineWidth = 1.4;
+      ctx.beginPath();
+      ctx.moveTo(timeX(0), covY(COV[0]));
+      for (let k = 4; k <= SERVICE; k += 4) ctx.lineTo(timeX(k), covY(COV[k]));
+      ctx.stroke();
+      ctx.fillStyle = rgba(PAL.accentRgb, 0.26);
+      ctx.beginPath();
+      ctx.arc(timeX(0), covY(COV[0]), 2.4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(timeX(SERVICE), covY(COV[SERVICE]), 2.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      /* baseline */
       ctx.strokeStyle = PAL.line;
       ctx.lineWidth = 1;
       ctx.textAlign = "left";
@@ -611,8 +675,9 @@ export default function FloorPlan() {
           ctx.arc(timeX(peakT), covY(peakV), 3.4, 0, Math.PI * 2);
           ctx.fill();
         }
-        /* the calm label, placed in the gap above the load band, never clipped */
-        const ly = Math.min(topY - 10, G.roomY1 + (G.loadTop - G.roomY1) * 0.5);
+        /* the calm label, kept inside the plot just above the peak marker and
+           below the COVERS label row, so it never clips or collides */
+        const ly = Math.max(G.loadTop + 12, topY - 4);
         ctx.font = "600 11px " + MONO;
         ctx.fillStyle = PAL.accentBright;
         const leftAnchor = rx < W * 0.5;
@@ -709,13 +774,29 @@ export default function FloorPlan() {
       }
     };
 
+    /* keep the accessible table readouts aligned with the drawn tables at every
+       width and height (positions come from the same geometry the canvas uses,
+       so hotspots never drift, including near the composition handoff) */
+    const btns = frameEl.querySelectorAll<HTMLElement>(".table-btn");
+    const positionReadouts = () => {
+      for (let i = 0; i < TABLES.length && i < btns.length; i++) {
+        btns[i].style.left = ((TABLES[i].x / W) * 100).toFixed(2) + "%";
+        btns[i].style.top = ((TABLES[i].y / H) * 100).toFixed(2) + "%";
+      }
+    };
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
-      H = Math.max(1, Math.round(rect.height));
       compact = W < 520;
+      const tagEl = frameEl.querySelector<HTMLElement>(".stage-tag");
+      tagH = tagEl ? tagEl.offsetTop + tagEl.offsetHeight : 30;
+      /* the composition sets its own height so the frame always fits it */
+      H = bands().height;
+      canvas.style.height = H + "px";
       ctx = fitCanvas(canvas, W, H);
       layout();
+      positionReadouts();
       if (reduced() || !running) resolved();
     };
 

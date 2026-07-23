@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SitePlanVisual from "@/components/pages/construction/SitePlanVisual";
+import FleetMap from "@/components/pages/construction/FleetMap";
 import SpotlightFrames from "@/components/pages/construction/SpotlightFrames";
 import "./construction.css";
 
@@ -96,6 +97,30 @@ export default function ConstructionPage() {
               Built around how you already run, handed over to your people, with
               no per-seat subscription to babysit.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ FLEET TRACKING ============================ */}
+      <section className="section fleet" id="fleet" aria-labelledby="fleet-title">
+        <div className="container">
+          <div className="split fleet-split">
+            <div className="split-copy">
+              <span className="kicker">Fleet and logistics</span>
+              <h2 id="fleet-title">Every vehicle on one map.</h2>
+              <p className="fleet-lead">
+                Every vehicle runs on one map, so the office sees where each one
+                is without a single phone call. When a truck reaches a site, its
+                arrival logs itself the moment it crosses the geofence. The board
+                fills on its own, and the day stops running on chase calls.
+              </p>
+              <p className="note">
+                <b>Arrivals log themselves.</b> The office stops phoning around.
+              </p>
+            </div>
+            <div className="split-vis">
+              <FleetMap />
+            </div>
           </div>
         </div>
       </section>

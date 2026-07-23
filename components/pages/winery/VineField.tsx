@@ -72,13 +72,11 @@ export default function VineField() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
-  const captionRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
     const overlay = overlayRef.current;
-    const caption = captionRef.current;
     if (!stage || !canvas || !canvas.getContext) return;
     let ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -377,7 +375,11 @@ export default function VineField() {
     let onscreen = false;
     let last = 0;
     let T = 0;
-    // compact portrait composition below this measured canvas width
+    // Single source of truth: the measured canvas width decides the composition.
+    // The supporting CSS (canvas height, stage-tag) keys off the viewport width
+    // at which the container crosses this measured threshold, so JS and CSS never
+    // disagree across the range (no dead band, one caption at every width).
+    const COMPACT_W = 560;
     let compact = false;
 
     const ROWN = 7;
@@ -395,15 +397,17 @@ export default function VineField() {
     let fillLevel = 0;
 
     const layout = () => {
-      compact = W < 520;
+      compact = W < COMPACT_W;
 
       if (compact) {
         // Portrait recomposition: a field of vine rows across the top funnels
         // its readings down into one collection node, then a vertical channel
         // drops into a large centered bottle that fills as rows report. Reads
-        // top to bottom on a phone held upright.
+        // top to bottom on a phone held upright. The bottle scales with the
+        // measured width so the composition never reads sparse or stretched as
+        // it approaches the handoff (no near-tablet phone layout).
         const RN = 5;
-        const bw = Math.min(Math.max(W * 0.32, 92), 132);
+        const bw = Math.min(Math.max(W * 0.3, 96), 180);
         const bh = Math.min(H * 0.4, 250);
         const bcx = W * 0.5;
         const bTop = H * 0.52;
@@ -670,20 +674,12 @@ export default function VineField() {
         const neckBotY = bTop + neckH;
         // handle length for the shoulder cubics; keeps the curve tangent to the
         // straight neck (vertical) at the top and to the straight body side
-        // (vertical) at the bottom, so the shoulder reads as a smooth S.
+        // (vertical) at the bottom, so the shoulder reads as a smooth S. The
+        // neck is a clean straight tube: the foil capsule (drawn separately)
+        // now carries the lip where it meets the glass.
         const sh = shoulderH * 0.55;
-        // small lip: a subtle collar that flares out just below the capsule and
-        // rejoins the neck. Top stays flush at nlx/nrx so the cap still fits and
-        // the overall bounding box is unchanged.
-        const lipOut = nw * 0.14;
-        const lipTop = bTop + neckH * 0.16;
-        const lipMid = bTop + neckH * 0.3;
-        const lipBot = bTop + neckH * 0.46;
         c.beginPath();
         c.moveTo(nlx, bTop);
-        c.lineTo(nlx, lipTop);
-        c.quadraticCurveTo(nlx - lipOut, lipTop, nlx - lipOut, lipMid);
-        c.quadraticCurveTo(nlx - lipOut, lipBot, nlx, lipBot);
         c.lineTo(nlx, neckBotY);
         c.bezierCurveTo(nlx, neckBotY + sh, blx, bodyTop - sh, blx, bodyTop);
         c.lineTo(blx, bodyBot - bw * 0.16);
@@ -692,9 +688,6 @@ export default function VineField() {
         c.quadraticCurveTo(brx, bodyBot, brx, bodyBot - bw * 0.16);
         c.lineTo(brx, bodyTop);
         c.bezierCurveTo(brx, bodyTop - sh, nrx, neckBotY + sh, nrx, neckBotY);
-        c.lineTo(nrx, lipBot);
-        c.quadraticCurveTo(nrx + lipOut, lipBot, nrx + lipOut, lipMid);
-        c.quadraticCurveTo(nrx + lipOut, lipTop, nrx, lipTop);
         c.lineTo(nrx, bTop);
         c.closePath();
       };
@@ -757,11 +750,66 @@ export default function VineField() {
       c.lineTo(blx + 4, bodyBot - bw * 0.2);
       c.stroke();
 
-      rr(c, nlx, bTop - 8, nw, 10, 2);
-      c.fillStyle = PAL.secondary;
-      c.globalAlpha = 0.9;
+      // Foil capsule over the neck: a proper Bordeaux capsule, meaningfully
+      // tall (roughly 2.5x the old cap), with a small skirt lip where the foil
+      // meets the glass. Shared by both the compact and desktop drawings.
+      const deepGold = rgba(mix(PAL.secondaryRgb, BLACK, 0.42), 1);
+      const capH = Math.max(22, neckH * 0.78);
+      const capTop = bTop - 1;
+      const capBot = bTop + capH;
+      const capOver = nw * 0.14;
+      const capL = bcx - nw / 2 - capOver;
+      const capR = bcx + nw / 2 + capOver;
+      const capCrown = Math.min(4, nw * 0.22);
+      const skirtH = Math.max(3, capH * 0.16);
+      const skirtTop = capBot - skirtH;
+      const capLip = nw * 0.1;
+      const capsulePath = () => {
+        c.beginPath();
+        c.moveTo(capL, capTop + capCrown);
+        c.quadraticCurveTo(capL, capTop, capL + capCrown, capTop);
+        c.lineTo(capR - capCrown, capTop);
+        c.quadraticCurveTo(capR, capTop, capR, capTop + capCrown);
+        c.lineTo(capR, skirtTop);
+        c.lineTo(capR + capLip, capBot - skirtH * 0.4);
+        c.lineTo(capR + capLip, capBot);
+        c.lineTo(capL - capLip, capBot);
+        c.lineTo(capL - capLip, capBot - skirtH * 0.4);
+        c.lineTo(capL, skirtTop);
+        c.closePath();
+      };
+      capsulePath();
+      const capGrd = c.createLinearGradient(capL - capLip, 0, capR + capLip, 0);
+      capGrd.addColorStop(0, deepGold);
+      capGrd.addColorStop(0.34, PAL.secondaryBright);
+      capGrd.addColorStop(0.56, PAL.secondary);
+      capGrd.addColorStop(1, deepGold);
+      c.fillStyle = capGrd;
       c.fill();
+      capsulePath();
+      c.strokeStyle = deepGold;
+      c.lineWidth = 1;
+      c.stroke();
+      // the lip ridge where the skirt begins (foil meeting glass)
+      c.strokeStyle = deepGold;
+      c.lineWidth = 1.2;
+      c.beginPath();
+      c.moveTo(capL - capLip * 0.3, skirtTop);
+      c.lineTo(capR + capLip * 0.3, skirtTop);
+      c.stroke();
+      // soft vertical sheen so the foil reads as metal, clipped to the capsule
+      c.save();
+      capsulePath();
+      c.clip();
+      c.globalAlpha = 0.5;
+      c.strokeStyle = PAL.secondaryBright;
+      c.lineWidth = Math.max(1.4, nw * 0.1);
+      c.beginPath();
+      c.moveTo(bcx - nw * 0.16, capTop + 2);
+      c.lineTo(bcx - nw * 0.16, skirtTop - 1);
+      c.stroke();
       c.globalAlpha = 1;
+      c.restore();
 
       const labW = bw * 0.84;
       const labH = bh * 0.2;
@@ -850,15 +898,10 @@ export default function VineField() {
       const full = fillLevel > 0.97;
       drawBottle();
       drawActive();
+      // The single caption is drawn in-canvas under the bottle by
+      // drawPanelChrome, so there is exactly one caption at every width (no
+      // separate HTML overlay caption that could disagree with the canvas).
       drawPanelChrome(full);
-
-      if (caption) {
-        caption.textContent = reduced()
-          ? "one view"
-          : full
-          ? "one view"
-          : "reporting";
-      }
     };
 
     const resolvedStatic = () => {
@@ -1048,9 +1091,6 @@ export default function VineField() {
         <span className="before">every row</span>{" "}
         <span className="midword">reports into</span>{" "}
         <span className="after">one view</span>
-      </span>
-      <span className="stage-caption mono" ref={captionRef}>
-        reporting
       </span>
       <canvas className="vine-canvas" ref={canvasRef} aria-hidden="true" />
       <div className="vine-overlay" ref={overlayRef} aria-hidden="false">

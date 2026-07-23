@@ -14,6 +14,10 @@
 :root[data-mode="light"] { --sage: #3F7C64; }
 
 /* ---- signature pipeline stage ---- */
+/* Height is authoritative from PipelineStage.tsx (set inline per measured width:
+   468-560px portrait when the vertical compact composition is active, 380-540px
+   landscape otherwise). These CSS rules are only the pre-hydration fallback, kept
+   aligned to the JS threshold below so there is no width where they disagree. */
 .pg-hiring #pipeCanvas {
   display: block;
   width: 100%;
@@ -223,9 +227,9 @@
 }
 
 /* Portrait phones: the pipeline canvas switches to a purpose-built vertical
-   composition (see PipelineStage.tsx, compact branch). Give it a taller,
-   phone-shaped canvas so the stacked spine, gates, and roster have room. The
-   JS compact breakpoint (measured width < 520) matches this viewport bound. */
-@media (max-width: 568px) {
+   composition (see PipelineStage.tsx, compact branch). The JS compact breakpoint
+   is measured width < 520, which for this full-width canvas is viewport < ~569.5;
+   this query is aligned to that boundary so the fallback never disagrees with JS. */
+@media (max-width: 569px) {
   .pg-hiring #pipeCanvas { height: clamp(468px, 128vw, 560px); }
 }

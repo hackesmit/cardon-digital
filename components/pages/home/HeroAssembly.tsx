@@ -95,7 +95,7 @@ export default function HeroAssembly() {
     // Two card columns feed a central spine that plugs into a full-width panel
     // below. Set from the measured canvas width in resize(); geometry branches
     // in layout(). compactInit (viewport-based) only sizes the intro timing.
-    const compactInit = window.matchMedia("(max-width: 600px)").matches;
+    const compactInit = canvas.getBoundingClientRect().width < 780;
     let compact = false;
     let spineX = 0;
     let spineTop = 0;
@@ -638,10 +638,24 @@ export default function HeroAssembly() {
     }
 
     function resize() {
-      const rect = canvas!.getBoundingClientRect();
+      let rect = canvas!.getBoundingClientRect();
+      W = Math.max(1, Math.round(rect.width));
+      // Compact (portrait, two card columns feeding a panel) serves the whole
+      // one-column range up to ~780 measured; above that the scattered desktop
+      // cards are wide enough that name and tag chip never collide. The compact
+      // canvas needs a tall box, set here from the measured width so it is a
+      // single source of truth; desktop keeps the approved CSS height (no inline
+      // override) so the wide layout is unchanged.
+      compact = W < 780;
+      if (compact) {
+        canvas!.style.height =
+          Math.round(Math.min(560, Math.max(430, W * 0.9))) + "px";
+      } else {
+        canvas!.style.height = "";
+      }
+      rect = canvas!.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
       H = Math.max(1, Math.round(rect.height));
-      compact = W < 560;
       ctx = fitCanvas(canvas!, W, H);
       layout();
       draw();

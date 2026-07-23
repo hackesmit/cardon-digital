@@ -26,12 +26,16 @@ type Conf = { LANE_Y: number[]; PLACED_X: number; CHIPS: ChipPlace[] };
 const DESKTOP_CONF: Conf = {
   LANE_Y: [92, 142, 192, 242, 292],
   PLACED_X: 492,
+  // scatter centers sit inside the plan body (x ~76-270, y ~80-326 once the
+  // chip half-size is added) so no chip ever overlaps the SITE PLAN / SCHEDULE
+  // headers or the stage tag at the top, and none is clipped at an edge. They
+  // read as a staggered pile of orders on the plan that fly into the lanes.
   CHIPS: [
-    { scatter: [150, 34], rot: -7 },
-    { scatter: [335, 26], rot: 6 },
-    { scatter: [452, 352], rot: 5 },
-    { scatter: [175, 356], rot: -6 },
-    { scatter: [442, 30], rot: 8 },
+    { scatter: [150, 100], rot: -6 },
+    { scatter: [196, 152], rot: 6 },
+    { scatter: [150, 206], rot: -5 },
+    { scatter: [196, 258], rot: 7 },
+    { scatter: [152, 306], rot: -7 },
   ],
 };
 

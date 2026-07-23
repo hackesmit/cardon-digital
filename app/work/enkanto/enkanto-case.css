@@ -84,7 +84,11 @@
     radial-gradient(560px 400px at 88% 82%, var(--enk-faint), transparent 62%),
     linear-gradient(180deg, color-mix(in srgb, var(--panel) 55%, transparent), color-mix(in srgb, var(--ground) 30%, transparent));
   box-shadow:var(--shadow);
-  aspect-ratio:1000/560;
+  /* width-driven height the fluid plot fills at every width: taller and more
+     portrait on a phone, landscape on desktop, never a fixed aspect that leaves
+     a dead band under the chart */
+  aspect-ratio:auto;
+  height:clamp(380px, 78vw, 620px);
 }
 /* cursor spotlight, matched to the shared frame */
 .pg-enkanto .tl-stage::after{
@@ -199,15 +203,10 @@
 /* ============================ RESPONSIVE ============================ */
 @media (max-width:640px){
   .pg-enkanto .callouts{grid-template-columns:1fr;}
-  .pg-enkanto .tl-stage{aspect-ratio:auto;min-height:420px;}
   /* photoband gains height in portrait so the imagery has presence */
   .pg-enkanto .photoband{aspect-ratio:3 / 2;}
-}
-/* ThreeLines portrait mode: taller stage that the mobile canvas layout fills,
-   and compact tap targets sized to the line ends (matches the JS breakpoint) */
-@media (max-width:519.98px){
-  .pg-enkanto .tl-stage{min-height:452px;}
-  .pg-enkanto .tl-hot{width:124px;height:50px;min-width:50px;min-height:50px;}
+  /* compact tap targets sized to the line ends at narrow widths */
+  .pg-enkanto .tl-hot{width:120px;height:48px;min-width:48px;min-height:48px;}
 }
 @media (max-width:400px){
   .pg-enkanto .tl-plate{max-width:180px;}

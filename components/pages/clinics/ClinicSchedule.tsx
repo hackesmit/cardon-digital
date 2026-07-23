@@ -265,6 +265,8 @@ export default function ClinicSchedule() {
       c.closePath();
     };
     const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+    const clampN = (v: number, a: number, b: number) =>
+      v < a ? a : v > b ? b : v;
     const easeInOut = (t: number) => {
       t = clamp01(t);
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -877,8 +879,17 @@ export default function ClinicSchedule() {
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
-      H = Math.max(1, Math.round(rect.height));
       compact = W < 520;
+      /* Height is authoritative here, set from the measured width: a portrait box
+         for the vertical compact composition (emitters on top, week grid below),
+         a wider landscape box otherwise. Single source of truth, so no CSS media
+         query can disagree with the JS composition threshold. */
+      H = Math.round(
+        compact
+          ? clampN(W + 165, 478, 568)
+          : clampN(W * 0.48 + 24, 360, 540)
+      );
+      canvas.style.height = H + "px";
       ctx = fitCanvas(canvas, W, H);
       layout();
       if (reduced()) render(true);

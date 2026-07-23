@@ -15,11 +15,13 @@
   height: clamp(360px, 44vw, 520px);
 }
 /* Portrait hero: the compact canvas composition (two card columns feeding a
-   central spine into a full-width panel) is designed tall, not letterboxed.
-   Kept in step with the compact geometry breakpoint (measured width < 560). */
-@media (max-width: 600px) {
+   central spine into a full-width panel) is designed tall, not letterboxed, and
+   serves the whole one-column range (measured width < 780, i.e. viewport up to
+   ~828). This is the pre-hydration fallback; on mount the component sets the
+   exact compact height from the measured width (single source of truth). */
+@media (max-width: 827px) {
   .pg-home #heroCanvas {
-    height: clamp(432px, 122vw, 500px);
+    height: clamp(432px, 78vw, 560px);
   }
   /* the compact panel already carries the "One system" title, so the status
      caption is redundant here and would overlap the last lane; hide it */
@@ -269,8 +271,8 @@
 .pg-home .sl-cases {
   display: flex;
   flex-wrap: wrap;
+  align-content: start;
   gap: 8px;
-  margin: 2px 0 4px 54px;
 }
 .pg-home .sl-case {
   display: inline-flex;
@@ -303,7 +305,12 @@
   font-weight: 600;
 }
 
-@media (max-width: 600px) {
+/* The geographic map only stops colliding once its stage is about 812px wide
+   (measured), which happens at roughly a 860px viewport. Switch to the station
+   list below 900 (the same breakpoint the split reflows at) so no width ever
+   shows overlapping station cards, with a comfortable margin above the collision
+   point. Above 900 the map has room and reads cleanly. */
+@media (max-width: 899px) {
   .pg-home .map-stage {
     display: none;
   }
@@ -312,6 +319,19 @@
     flex-direction: column;
     gap: 10px;
     margin-top: clamp(22px, 5vw, 32px);
+  }
+}
+/* Between roughly a phone and the map threshold the single column would stretch,
+   so the cards flow into two even columns. */
+.pg-home .sl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+}
+@media (min-width: 560px) and (max-width: 899px) {
+  .pg-home .sl-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -359,22 +379,30 @@
   }
 }
 
-/* ============================ OPS COMPRESSION: mobile twin ============================
-   The desktop ops SVG (viewBox 520 wide) shrinks its text below the legible
-   floor in a phone column. A portrait twin (viewBox 360x300, larger type) is
-   swapped in on narrow screens; the JS drives both, CSS shows one. */
-.pg-home .ops-svg-m {
-  display: none;
-}
+/* ============================ OPS COMPRESSION ============================
+   One responsive SVG: its viewBox is the measured container width by the
+   composition height (set from JS in a ResizeObserver), so it fits its content
+   at every width with no letterbox and no twin/CSS handoff to disagree with.
+   Only the phone-width padding trim lives here. */
 @media (max-width: 600px) {
-  .pg-home .ops-svg-d {
-    display: none;
-  }
-  .pg-home .ops-svg-m {
-    display: block;
-  }
   .pg-home .ops-vis {
     padding: 18px 16px 18px;
+  }
+}
+
+/* ============================ SPLIT VISUAL WIDTH CAP (1-column band) ============================
+   In one-column layout (viewport <= 900) the split visuals would stretch to the
+   full container (up to ~850px), ballooning the fixed-aspect SVGs into wide
+   letterboxed banners. Present them centered at their design size instead, so the
+   whole 620-900 band reads as one intentional composition. Above 900 the split is
+   two columns and each visual is already ~390-490px, so the cap never bites. */
+@media (max-width: 900px) {
+  .pg-home .demand-vis,
+  .pg-home .ops-vis,
+  .pg-home .tools-vis {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
