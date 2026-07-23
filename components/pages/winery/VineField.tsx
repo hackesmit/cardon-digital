@@ -5,14 +5,20 @@ import { useEffect, useRef } from "react";
 type RGB = [number, number, number];
 type Pt = { x: number; y: number };
 type Trace = { pts: Pt[]; cum: number[]; len: number };
-type Row = {
-  line: Trace;
-  report: Trace;
-  endY: number;
-  latch: number;
+type SourceKind = "notebook" | "sheet" | "legacy";
+type Source = {
+  kind: SourceKind;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  rot: number;
+  feed: Trace;
+  trace: Trace;
+  start: number;
+  end: number;
   heads: number[];
   spawn: number;
-  latched: boolean;
 };
 type Geom = {
   xL: number;
@@ -27,11 +33,13 @@ type Geom = {
 
 
 /**
- * Signature visual: a field of parallel vine-row lines (following the contours)
- * each carrying a slow stream of readings toward one collection channel that
- * feeds a live panel, a bottle that fills as rows report. Hover or focus lights
- * that row's full path into the panel and raises its readout plate. Every row
- * reports, one place reads.
+ * Signature visual, the was-to-now absorption scene: the old records appear as
+ * physical objects (field notebooks, spreadsheet cards, an unnamed legacy
+ * terminal window) scattered where they used to live. One by one their
+ * contents stream out along a channel into one collection node and down into
+ * a bottle that fills as sources are absorbed; each emptied source fades away
+ * until only the clean channel, the full bottle, and the NOW ledger remain,
+ * and a cork slides in. Scattered records, wired into one view.
  *
  * Ported from the approved winery concept: rAF loop, DPR cap 2,
  * IntersectionObserver plus visibilitychange pausing, prefers-reduced-motion
@@ -350,12 +358,56 @@ export default function VineField() {
     const COMPACT_W = 560;
     let compact = false;
 
-    const ROWN = 7;
-    const rowFrac: number[] = [];
-    for (let ri = 0; ri < ROWN; ri++) rowFrac.push(0.15 + (0.7 * ri) / (ROWN - 1));
 
     let geom: Geom | null = null;
-    let rows: Row[] = [];
+    let sources: Source[] = [];
+    let fpNow = 0;
+    let ledgerY = 0;
+    // consume plan: kind, then per-mode fractional placement set in layout()
+    const SRC_PLAN: Array<{ kind: SourceKind; start: number; end: number }> = [
+      { kind: "notebook", start: 0.03, end: 0.27 },
+      { kind: "sheet", start: 0.19, end: 0.43 },
+      { kind: "legacy", start: 0.35, end: 0.59 },
+      { kind: "notebook", start: 0.51, end: 0.75 },
+      { kind: "sheet", start: 0.67, end: 0.87 },
+    ];
+    const SRC_DIMS: Record<SourceKind, [number, number]> = {
+      notebook: [0.82, 1.0],
+      sheet: [1.06, 0.72],
+      legacy: [1.16, 0.8],
+    };
+    const buildSource = (
+      i: number,
+      cx: number,
+      cy: number,
+      rot: number,
+      u: number,
+      port: Pt,
+      elbow: Pt,
+      CN: Pt,
+      neck: Pt
+    ): Source => {
+      const plan = SRC_PLAN[i];
+      const [fw, fh] = SRC_DIMS[plan.kind];
+      const feed = makeTrace(dedupe([port, elbow, { x: CN.x, y: CN.y }]));
+      const trace = makeTrace(
+        dedupe([port, elbow, { x: CN.x, y: CN.y }, { x: neck.x, y: neck.y }])
+      );
+      return {
+        kind: plan.kind,
+        x: cx,
+        y: cy,
+        w: u * fw,
+        h: u * fh,
+        rot,
+        feed,
+        trace,
+        start: plan.start,
+        end: plan.end,
+        heads: [],
+        spawn: 0.3 + i * 0.25,
+      };
+    };
     let ripples: { t: number }[] = [];
 
     const INTRO = 0.5;
@@ -374,13 +426,10 @@ export default function VineField() {
       compact = W < COMPACT_W;
 
       if (compact) {
-        // Portrait recomposition: a field of vine rows across the top funnels
-        // its readings down into one collection node, then a vertical channel
-        // drops into a large centered bottle that fills as rows report. Reads
-        // top to bottom on a phone held upright. The bottle scales with the
-        // measured width so the composition never reads sparse or stretched as
-        // it approaches the handoff (no near-tablet phone layout).
-        const RN = 5;
+        // Portrait recomposition: the scattered sources sit in the top field
+        // and their contents funnel down into one collection node, then a
+        // vertical channel drops into a large centered bottle. Reads top to
+        // bottom on a phone held upright.
         // Wine proportions: the body width derives from the height budget at
         // roughly 3:1 so the bottle reads Bordeaux-slender, never a squat jar.
         const bh = Math.min(H * 0.42, 260);
@@ -393,37 +442,29 @@ export default function VineField() {
         const xR = W * 0.8;
         geom = { xL, xC: CN.x, bcx, bw, bh, bTop, CN, neck };
 
-        rows = [];
-        const rowsTop = H * 0.16;
-        const rowsBot = H * 0.375;
-        const samples = 40;
-        for (let i = 0; i < RN; i++) {
-          const yf = rowsTop + (rowsBot - rowsTop) * (i / (RN - 1));
-          const linePts: Pt[] = [];
-          for (let j = 0; j <= samples; j++) {
-            const xf = j / samples;
-            const x = xL + (xR - xL) * xf;
-            const wob =
-              4.5 * Math.sin(xf * 4.4 + i * 0.5) +
-              2.6 * Math.sin(xf * 2.2 - 0.4 + i * 0.3);
-            linePts.push({ x, y: yf + wob });
-          }
-          const line = makeTrace(dedupe(linePts));
-          const reportPts = linePts.concat([
-            { x: CN.x, y: CN.y },
-            { x: neck.x, y: neck.y },
-          ]);
-          const report = makeTrace(dedupe(reportPts));
-          rows.push({
-            line,
-            report,
-            endY: yf,
-            latch: 0.1 + 0.82 * (i / (RN - 1)),
-            heads: [],
-            spawn: 0.6 + i * 0.42,
-            latched: false,
-          });
+        const u = Math.min(96, Math.max(74, W * 0.24));
+        const fieldTop = H * 0.155;
+        const fieldBot = H * 0.36;
+        const fy = (f: number) => fieldTop + (fieldBot - fieldTop) * f;
+        const spots: Array<[number, number, number]> = [
+          [W * 0.26, fy(0.16), -5],
+          [W * 0.73, fy(0.06), 4],
+          [W * 0.48, fy(0.5), -2],
+          [W * 0.79, fy(0.86), 6],
+          [W * 0.21, fy(0.84), 3],
+        ];
+        sources = [];
+        for (let i = 0; i < SRC_PLAN.length; i++) {
+          const [sx, sy, rot] = spots[i];
+          const [fw2, fh2] = SRC_DIMS[SRC_PLAN[i].kind];
+          const port: Pt = { x: sx, y: sy + (u * fh2) / 2 + 2 };
+          const elbow: Pt = {
+            x: (port.x + CN.x) / 2,
+            y: Math.max(port.y + 12, CN.y - 26),
+          };
+          sources.push(buildSource(i, sx, sy, rot, u, port, elbow, CN, neck));
         }
+        ledgerY = (fieldBot + CN.y) / 2 - 4;
         return;
       }
 
@@ -440,140 +481,218 @@ export default function VineField() {
 
       geom = { xL, xC, bcx, bw, bh, bTop, CN, neck };
 
-      rows = [];
-      const samples = 46;
-      for (let i = 0; i < ROWN; i++) {
-        const linePts: Pt[] = [];
-        for (let j = 0; j <= samples; j++) {
-          const xf = j / samples;
-          const x = xL + (xC - xL) * xf;
-          const yf =
-            rowFrac[i] +
-            0.034 * Math.sin(xf * 5.4 + i * 0.22) * 0.6 +
-            0.034 * Math.sin(xf * 3.0 - 0.5 + i * 0.14) * 0.4;
-          const y = yf * H;
-          linePts.push({ x, y });
-        }
-        const rowEndY = linePts[linePts.length - 1].y;
-        const line = makeTrace(dedupe(linePts));
-        const reportPts = linePts.concat([
-          { x: xC, y: CN.y },
-          { x: neck.x, y: neck.y },
-        ]);
-        const report = makeTrace(dedupe(reportPts));
-        rows.push({
-          line,
-          report,
-          endY: rowEndY,
-          latch: rowFrac[i] * 0 + (0.12 + 0.8 * (i / (ROWN - 1))),
-          heads: [],
-          spawn: 0.6 + i * 0.42,
-          latched: false,
-        });
+      const fw = xC - 30 - xL;
+      const u = Math.min(122, Math.max(96, fw * 0.2));
+      const spots: Array<[number, number, number]> = [
+        [xL + fw * 0.16, H * 0.21, -5],
+        [xL + fw * 0.56, H * 0.16, 3],
+        [xL + fw * 0.32, H * 0.5, -2],
+        [xL + fw * 0.74, H * 0.44, 5],
+        [xL + fw * 0.26, H * 0.78, 2],
+      ];
+      sources = [];
+      for (let i = 0; i < SRC_PLAN.length; i++) {
+        const [sx, sy, rot] = spots[i];
+        const [fw2] = SRC_DIMS[SRC_PLAN[i].kind];
+        const port: Pt = { x: sx + (u * fw2) / 2 + 2, y: sy };
+        const elbow: Pt = {
+          x: port.x + (CN.x - port.x) * 0.55,
+          y: port.y + (CN.y - port.y) * 0.6,
+        };
+        sources.push(buildSource(i, sx, sy, rot, u, port, elbow, CN, neck));
       }
+      ledgerY = H - 16;
     };
 
+
+    const srcAlpha = (sc: Source): number => {
+      if (fpNow < sc.start) return 1;
+      if (fpNow < sc.end)
+        return 1 - 0.55 * easeInOut((fpNow - sc.start) / (sc.end - sc.start));
+      return Math.max(0, 0.45 * (1 - (fpNow - sc.end) / 0.1));
+    };
 
     const drawSpine = () => {
       if (!ctx || !geom) return;
       const g = geom;
-      if (compact) {
-        // faint feeders from each row end converging into the collection node
+      // feeders: each surviving source's channel into the collection node
+      for (let i = 0; i < sources.length; i++) {
+        const a = srcAlpha(sources[i]);
+        if (a <= 0.02) continue;
+        ctx.globalAlpha = Math.min(1, a + 0.15);
         ctx.strokeStyle = PAL.lineSoft;
         ctx.lineWidth = 1;
         ctx.lineCap = "round";
-        for (let i = 0; i < rows.length; i++) {
-          const e = rows[i].line.pts[rows[i].line.pts.length - 1];
-          ctx.beginPath();
-          ctx.moveTo(e.x, e.y);
-          ctx.lineTo(g.CN.x, g.CN.y);
-          ctx.stroke();
-        }
-        // vertical collection channel: node down to the bottle neck
-        ctx.strokeStyle = PAL.line;
-        ctx.lineWidth = 1.4;
-        ctx.beginPath();
-        ctx.moveTo(g.CN.x, g.CN.y);
-        ctx.lineTo(g.neck.x, g.neck.y);
-        ctx.stroke();
-        const pulseC = reduced()
-          ? 0.5
-          : 0.45 + 0.3 * Math.sin(performance.now() / 900);
-        ctx.globalAlpha = 0.5 + pulseC * 0.4;
-        ctx.fillStyle = PAL.primaryFaint;
-        ctx.beginPath();
-        ctx.arc(g.CN.x, g.CN.y, 9, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.strokeStyle = PAL.primaryDim;
-        ctx.lineWidth = 1.3;
-        ctx.beginPath();
-        ctx.arc(g.CN.x, g.CN.y, 5.5, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.fillStyle = PAL.primary;
-        ctx.beginPath();
-        ctx.arc(g.CN.x, g.CN.y, 2.2, 0, Math.PI * 2);
-        ctx.fill();
-        return;
+        strokeTrace(ctx, sources[i].feed);
       }
+      ctx.globalAlpha = 1;
+      // collection channel: node down to the bottle neck
       ctx.strokeStyle = PAL.line;
-      ctx.lineWidth = 1.4;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(g.xC, rowFrac[0] * H);
-      ctx.lineTo(g.xC, rowFrac[ROWN - 1] * H);
-      ctx.stroke();
-      ctx.strokeStyle = PAL.lineSoft;
       ctx.lineWidth = 1.4;
       ctx.beginPath();
       ctx.moveTo(g.CN.x, g.CN.y);
       ctx.lineTo(g.neck.x, g.neck.y);
       ctx.stroke();
-      const pulse = reduced()
+      const pulseC = reduced()
         ? 0.5
         : 0.45 + 0.3 * Math.sin(performance.now() / 900);
-      ctx.globalAlpha = 0.5 + pulse * 0.4;
+      ctx.globalAlpha = 0.5 + pulseC * 0.4;
       ctx.fillStyle = PAL.primaryFaint;
       ctx.beginPath();
-      ctx.arc(g.CN.x, g.CN.y, 8, 0, Math.PI * 2);
+      ctx.arc(g.CN.x, g.CN.y, compact ? 9 : 8, 0, Math.PI * 2);
       ctx.fill();
       ctx.globalAlpha = 1;
       ctx.strokeStyle = PAL.primaryDim;
       ctx.lineWidth = 1.3;
       ctx.beginPath();
-      ctx.arc(g.CN.x, g.CN.y, 5, 0, Math.PI * 2);
+      ctx.arc(g.CN.x, g.CN.y, compact ? 5.5 : 5, 0, Math.PI * 2);
       ctx.stroke();
       ctx.fillStyle = PAL.primary;
       ctx.beginPath();
-      ctx.arc(g.CN.x, g.CN.y, 2, 0, Math.PI * 2);
+      ctx.arc(g.CN.x, g.CN.y, compact ? 2.2 : 2, 0, Math.PI * 2);
       ctx.fill();
     };
 
-    const drawRows = () => {
+    const LEGACY_DASH = [0.82, 0.55, 0.7, 0.42, 0.66];
+    const drawSources = () => {
       if (!ctx) return;
-      for (let i = 0; i < rows.length; i++) {
-        const r = rows[i];
-        ctx.strokeStyle = r.latched ? PAL.primaryDim : PAL.line;
-        ctx.lineWidth = r.latched ? 1.7 : 1.3;
-        strokeTrace(ctx, r.line);
-        const e = r.line.pts[r.line.pts.length - 1];
-        ctx.fillStyle = r.latched ? PAL.secondary : PAL.faint;
-        ctx.beginPath();
-        ctx.arc(e.x, e.y, r.latched ? 2.6 : 1.8, 0, Math.PI * 2);
-        ctx.fill();
+      const c = ctx;
+      for (let i = 0; i < sources.length; i++) {
+        const sc = sources[i];
+        const a = srcAlpha(sc);
+        if (a <= 0.02) continue;
+        const remain =
+          1 - clamp01((fpNow - sc.start) / (sc.end - sc.start));
+        c.save();
+        c.globalAlpha = a;
+        c.translate(sc.x, sc.y);
+        c.rotate((sc.rot * Math.PI) / 180);
+        const w = sc.w;
+        const h = sc.h;
+        const x0 = -w / 2;
+        const y0 = -h / 2;
+        if (sc.kind === "legacy") {
+          // unnamed terminal window: darker screen, title dots, green rows
+          rr(c, x0, y0, w, h, 6);
+          c.fillStyle = rgba(mix(PAL.panelRgb, BLACK, 0.35), 1);
+          c.fill();
+          c.strokeStyle = PAL.line;
+          c.lineWidth = 1.2;
+          c.stroke();
+          c.strokeStyle = PAL.lineSoft;
+          c.lineWidth = 1;
+          c.beginPath();
+          c.moveTo(x0 + 2, y0 + 13);
+          c.lineTo(x0 + w - 2, y0 + 13);
+          c.stroke();
+          c.fillStyle = PAL.energy;
+          c.beginPath();
+          c.arc(x0 + 8, y0 + 6.5, 2, 0, Math.PI * 2);
+          c.fill();
+          c.fillStyle = PAL.secondary;
+          c.beginPath();
+          c.arc(x0 + 15, y0 + 6.5, 2, 0, Math.PI * 2);
+          c.fill();
+          const n = LEGACY_DASH.length;
+          const rows2 = Math.ceil(n * remain);
+          const innerW = w - 18;
+          for (let r2 = 0; r2 < rows2; r2++) {
+            const ly = y0 + 21 + r2 * ((h - 28) / (n - 1));
+            c.strokeStyle = PAL.primaryDim;
+            c.lineWidth = 1.6;
+            c.beginPath();
+            c.moveTo(x0 + 9, ly);
+            c.lineTo(x0 + 9 + innerW * LEGACY_DASH[r2], ly);
+            c.stroke();
+          }
+        } else if (sc.kind === "sheet") {
+          // spreadsheet card: header band plus grid cells that empty out
+          rr(c, x0, y0, w, h, 6);
+          c.fillStyle = PAL.card;
+          c.fill();
+          c.strokeStyle = PAL.line;
+          c.lineWidth = 1.2;
+          c.stroke();
+          c.fillStyle = PAL.primaryFaint;
+          rr(c, x0 + 1, y0 + 1, w - 2, 9, 5);
+          c.fill();
+          const cols = 3;
+          const rows2 = 3;
+          const gx0 = x0 + 6;
+          const gy0 = y0 + 15;
+          const gw = w - 12;
+          const gh = h - 22;
+          c.strokeStyle = PAL.lineSoft;
+          c.lineWidth = 1;
+          for (let cc = 1; cc < cols; cc++) {
+            c.beginPath();
+            c.moveTo(gx0 + (gw / cols) * cc, gy0);
+            c.lineTo(gx0 + (gw / cols) * cc, gy0 + gh);
+            c.stroke();
+          }
+          for (let rr2 = 1; rr2 < rows2; rr2++) {
+            c.beginPath();
+            c.moveTo(gx0, gy0 + (gh / rows2) * rr2);
+            c.lineTo(gx0 + gw, gy0 + (gh / rows2) * rr2);
+            c.stroke();
+          }
+          const cells = cols * rows2;
+          const filled = Math.ceil(cells * remain);
+          c.fillStyle = rgba(PAL.secondaryRgb, 0.55);
+          for (let k = 0; k < filled; k++) {
+            const cc = k % cols;
+            const rr2 = Math.floor(k / cols);
+            const cw = gw / cols;
+            const chh = gh / rows2;
+            c.fillRect(
+              gx0 + cc * cw + 3,
+              gy0 + rr2 * chh + chh / 2 - 1.2,
+              cw - 9,
+              2.4
+            );
+          }
+        } else {
+          // field notebook: spiral rings on the left, ruled lines that empty
+          rr(c, x0, y0, w, h, 6);
+          c.fillStyle = PAL.card;
+          c.fill();
+          c.strokeStyle = PAL.line;
+          c.lineWidth = 1.2;
+          c.stroke();
+          const ringN = 4;
+          for (let k = 0; k < ringN; k++) {
+            const ry = y0 + h * 0.18 + (h * 0.64 * k) / (ringN - 1);
+            c.strokeStyle = PAL.faint;
+            c.lineWidth = 1.2;
+            c.beginPath();
+            c.arc(x0 + 7, ry, 2.6, 0, Math.PI * 2);
+            c.stroke();
+          }
+          const n = 5;
+          const lines = Math.ceil(n * remain);
+          for (let k = 0; k < lines; k++) {
+            const ly = y0 + h * 0.2 + (h * 0.6 * k) / (n - 1);
+            c.strokeStyle = k === 0 ? rgba(PAL.textRgb, 0.5) : PAL.faint;
+            c.lineWidth = 1.4;
+            c.beginPath();
+            c.moveTo(x0 + 15, ly);
+            c.lineTo(x0 + w - 9 - (k % 2) * w * 0.14, ly);
+            c.stroke();
+          }
+        }
+        c.restore();
       }
     };
 
     const drawStreams = () => {
       if (!ctx) return;
-      for (let i = 0; i < rows.length; i++) {
-        const r = rows[i];
-        for (let h = 0; h < r.heads.length; h++) {
-          drawFlow(ctx, r.report, r.heads[h], PAL.primarySoft, PAL.secondaryBright);
+      for (let i = 0; i < sources.length; i++) {
+        const sc = sources[i];
+        for (let h = 0; h < sc.heads.length; h++) {
+          drawFlow(ctx, sc.trace, sc.heads[h], PAL.primarySoft, PAL.secondaryBright);
         }
       }
     };
-
 
     const drawBottle = () => {
       if (!ctx || !geom) return;
@@ -826,11 +945,9 @@ export default function VineField() {
         let x0: number;
         let cy: number;
         if (compact) {
-          // centered in the quiet band between the row field and the node
-          let rowsBot = 0;
-          for (let i = 0; i < rows.length; i++) rowsBot = Math.max(rowsBot, rows[i].endY);
+          // centered in the quiet band between the source field and the node
           x0 = W * 0.5 - chipW / 2;
-          cy = (rowsBot + g.CN.y - 14) / 2 + 4;
+          cy = ledgerY;
         } else {
           // quiet bottom-left strip under the row field
           x0 = g.xL;
@@ -862,7 +979,7 @@ export default function VineField() {
       ctx.lineCap = "round";
 
       drawSpine();
-      drawRows();
+      drawSources();
       drawStreams();
       const full = fillLevel > 0.97;
       drawBottle();
@@ -876,25 +993,24 @@ export default function VineField() {
     const resolvedStatic = () => {
       fillLevel = 1;
       corkT = 1;
-      for (let i = 0; i < rows.length; i++) {
-        rows[i].latched = true;
-        rows[i].heads = [rows[i].line.len * 0.5];
-      }
+      fpNow = 1;
+      for (let i = 0; i < sources.length; i++) sources[i].heads = [];
       draw();
     };
 
     const spawnHeads = (dt: number) => {
-      for (let i = 0; i < rows.length; i++) {
-        const r = rows[i];
-        r.spawn -= dt;
-        if (r.spawn <= 0 && r.heads.length < 2) {
-          r.heads.push(0);
-          r.spawn = 3.0 + Math.random() * 2.2;
+      for (let i = 0; i < sources.length; i++) {
+        const sc = sources[i];
+        const inWindow = fpNow >= sc.start && fpNow < sc.end + 0.03;
+        sc.spawn -= dt;
+        if (inWindow && sc.spawn <= 0 && sc.heads.length < 3) {
+          sc.heads.push(0);
+          sc.spawn = 0.55 + Math.random() * 0.5;
         }
-        for (let h = r.heads.length - 1; h >= 0; h--) {
-          r.heads[h] += (r.report.len / 6.8) * dt;
-          if (r.heads[h] >= r.report.len) {
-            r.heads.splice(h, 1);
+        for (let h = sc.heads.length - 1; h >= 0; h--) {
+          sc.heads[h] += (sc.trace.len / 2.6) * dt;
+          if (sc.heads[h] >= sc.trace.len) {
+            sc.heads.splice(h, 1);
             if (ripples.length < 4) ripples.push({ t: 0 });
           }
         }
@@ -911,10 +1027,10 @@ export default function VineField() {
       T += dt;
 
       const fp = clamp01((T - INTRO) / FILL);
+      fpNow = fp;
       fillLevel = easeInOut(fp);
       if (fillLevel > 0.97) corkT = Math.min(1, corkT + dt / 0.9);
       else corkT = 0;
-      for (let i = 0; i < rows.length; i++) rows[i].latched = fp >= rows[i].latch;
 
       spawnHeads(dt);
       for (let rp = ripples.length - 1; rp >= 0; rp--) {
@@ -932,10 +1048,10 @@ export default function VineField() {
       fillLevel = 0;
       corkT = 0;
       ripples = [];
-      for (let i = 0; i < rows.length; i++) {
-        rows[i].latched = false;
-        rows[i].heads = [];
-        rows[i].spawn = 0.6 + i * 0.42;
+      fpNow = 0;
+      for (let i = 0; i < sources.length; i++) {
+        sources[i].heads = [];
+        sources[i].spawn = 0.3 + i * 0.25;
       }
       running = true;
       last = performance.now();
@@ -1021,21 +1137,21 @@ export default function VineField() {
   return (
     <div className="stage-frame spot" ref={stageRef}>
       <span className="stage-tag mono">
-        <span className="before">every row</span>{" "}
-        <span className="midword">reports into</span>{" "}
+        <span className="before">scattered records</span>{" "}
+        <span className="midword">wired into</span>{" "}
         <span className="after">one view</span>
       </span>
       <canvas
         className="vine-canvas"
         ref={canvasRef}
         role="img"
-        aria-label="Vine rows stream their readings into one collection channel that fills a single bottle. A small ledger alternates between the old records, notebooks, spreadsheets, and a legacy system, and the new state: one view, freshly synced."
+        aria-label="Scattered old records, field notebooks, spreadsheet cards, and a legacy terminal window, stream their contents one by one into a single collection channel that fills a wine bottle. Each emptied source fades away; a ledger flips from the old scattered state to one live view, and a cork slides into the full bottle."
       />
       <noscript>
         <div className="stage-fallback">
-          A field of vine rows, each following the land, streams its readings into
-          one collection channel that fills a single cellar view. Every row
-          reports; one place reads.
+          Notebooks, spreadsheets, and a legacy system stream their contents into
+          one collection channel that fills a single cellar view. Scattered
+          records, wired into one view.
         </div>
       </noscript>
     </div>
