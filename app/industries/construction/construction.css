@@ -80,7 +80,7 @@
 .pg-construction .sp-desktop {
   height: auto;
   aspect-ratio: 600 / 380;
-  max-height: 600px;
+  max-height: 680px;
 }
 /* two purpose-made compositions live in one component; show exactly one so the
    hidden svg never intersects and never runs its rAF loop */
