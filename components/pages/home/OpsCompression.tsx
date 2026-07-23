@@ -45,6 +45,10 @@ export default function OpsCompression() {
     }
     const svgEl = svg;
     const cleanNodes = cleanN;
+    const timeLong = timeL;
+    const timeShort = timeS;
+    const nodeEls = Array.from(cleanNodes.querySelectorAll("circle"));
+    const nodeR = [4, 3.4, 4];
 
     const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     const reduced = () => reduceMQ.matches;
@@ -63,6 +67,19 @@ export default function OpsCompression() {
     let barMinW = 0;
     let lastP = 0;
     let lastFo = 1;
+    // morphing line geometry: apply() rebuilds the shared path each frame with
+    // the jag amplitude eased toward zero, so the tangle physically straightens
+    // (a morph) while the gold and teal layers crossfade on the SAME shape (a
+    // color transition, not two drawings).
+    let mLeft = 18;
+    let mInner = 424;
+    const mMid = 56;
+    const mAmp = 22;
+    const FPTS: number[][] = [
+      [0.0, 0.2], [0.09, 0.2], [0.09, -0.95], [0.22, -0.95], [0.31, 0.7],
+      [0.31, 1.0], [0.46, 1.0], [0.58, -0.55], [0.71, -0.55], [0.8, 0.65],
+      [0.9, 0.65], [1.0, -0.15],
+    ];
 
     function layout() {
       const rect = svgEl.getBoundingClientRect();
@@ -73,30 +90,13 @@ export default function OpsCompression() {
       const innerW = right - left;
       const wide = W >= 430;
 
-      // line-morph region (top): tangled manual pass resolving to one clean line
-      const lineMid = 56;
-      const amp = 22;
-      const fpts: number[][] = [
-        [0.0, 0.2], [0.09, 0.2], [0.09, -0.95], [0.22, -0.95], [0.31, 0.7],
-        [0.31, 1.0], [0.46, 1.0], [0.58, -0.55], [0.71, -0.55], [0.8, 0.65],
-        [0.9, 0.65], [1.0, -0.15],
-      ];
-      let d = "";
-      for (let i = 0; i < fpts.length; i++) {
-        const x = left + fpts[i][0] * innerW;
-        const y = lineMid + fpts[i][1] * amp;
-        d += (i === 0 ? "M" : "L") + x.toFixed(1) + " " + y.toFixed(1) + " ";
-      }
-      set(tangle, "d", d.trim());
-      set(clean, "x1", left.toFixed(1));
-      set(clean, "y1", lineMid.toFixed(1));
-      set(clean, "x2", right.toFixed(1));
-      set(clean, "y2", lineMid.toFixed(1));
-      const nodes = cleanNodes.querySelectorAll("circle");
+      // line-morph region (top): apply() draws the path; store its extents
+      mLeft = left;
+      mInner = innerW;
       const nx = [left, (left + right) / 2, right];
-      for (let i = 0; i < nodes.length; i++) {
-        nodes[i].setAttribute("cx", nx[i].toFixed(1));
-        nodes[i].setAttribute("cy", lineMid.toFixed(1));
+      for (let i = 0; i < nodeEls.length; i++) {
+        nodeEls[i].setAttribute("cx", nx[i].toFixed(1));
+        nodeEls[i].setAttribute("cy", mMid.toFixed(1));
       }
 
       // label + time row
@@ -164,14 +164,39 @@ export default function OpsCompression() {
       const w = (barMaxW + (barMinW - barMaxW) * e).toFixed(1);
       set(bar, "width", w);
       set(barG, "width", w);
-      set(tangle, "opacity", (1 - clamp01((p - 0.05) / 0.5)).toFixed(3));
-      set(clean, "opacity", clamp01((p - 0.35) / 0.4).toFixed(3));
-      set(cleanN, "opacity", clamp01((p - 0.5) / 0.32).toFixed(3));
-      set(barG, "opacity", (1 - clamp01((p - 0.2) / 0.5)).toFixed(3));
-      set(labM, "opacity", (1 - clamp01((p - 0.1) / 0.35)).toFixed(3));
+
+      // the tangle straightens: one shared path, jag amplitude eased to zero
+      const flat = 1 - e;
+      let d = "";
+      for (let i = 0; i < FPTS.length; i++) {
+        const x = mLeft + FPTS[i][0] * mInner;
+        const y = mMid + FPTS[i][1] * mAmp * flat;
+        d += (i === 0 ? "M" : "L") + x.toFixed(1) + " " + y.toFixed(1) + " ";
+      }
+      d = d.trim();
+      set(tangle, "d", d);
+      set(clean, "d", d);
+      set(tangle, "opacity", (1 - e).toFixed(3));
+      set(clean, "opacity", e.toFixed(3));
+
+      // nodes grow in on the settled line instead of fading
+      const nr = clamp01((p - 0.72) / 0.28);
+      for (let i = 0; i < nodeEls.length; i++) {
+        nodeEls[i].setAttribute("r", (nodeR[i] * nr).toFixed(2));
+      }
+
+      set(barG, "opacity", (1 - e).toFixed(3));
+      set(labM, "opacity", (1 - clamp01((p - 0.35) / 0.3)).toFixed(3));
       set(labA, "opacity", clamp01((p - 0.55) / 0.3).toFixed(3));
-      set(timeL, "opacity", (1 - clamp01((p - 0.15) / 0.3)).toFixed(3));
-      set(timeS, "opacity", clamp01((p - 0.6) / 0.3).toFixed(3));
+
+      // the hour counts down to two minutes as the bar compresses
+      const minutes = Math.max(2, Math.round(60 - 58 * e));
+      const timeText = minutes >= 60 ? "1 hr" : minutes + " min";
+      if (timeLong.textContent !== timeText) timeLong.textContent = timeText;
+      if (timeShort.textContent !== timeText) timeShort.textContent = timeText;
+      set(timeL, "opacity", (1 - e).toFixed(3));
+      set(timeS, "opacity", e.toFixed(3));
+
       svgEl.style.opacity = fo.toFixed(3);
     }
 
@@ -312,15 +337,14 @@ export default function OpsCompression() {
           d="M18 56 L442 56"
           opacity="0"
         />
-        <line
+        <path
           className="ov-clean"
           id="opsClean"
-          x1="18"
-          y1="56"
-          x2="442"
-          y2="56"
+          fill="none"
           strokeWidth="2.6"
           strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M18 56 L442 56"
           opacity="1"
         />
         <g className="ov-clean-fill" id="opsCleanNodes" opacity="1">
@@ -361,7 +385,7 @@ export default function OpsCompression() {
           fontWeight="600"
           opacity="0"
         >
-          1 hr
+          2 min
         </text>
         <text
           className="ov-time-short mono"
