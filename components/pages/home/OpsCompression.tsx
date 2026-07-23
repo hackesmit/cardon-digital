@@ -43,6 +43,8 @@ export default function OpsCompression() {
     ) {
       return;
     }
+    const svgEl = svg;
+    const cleanNodes = cleanN;
 
     const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     const reduced = () => reduceMQ.matches;
@@ -63,7 +65,7 @@ export default function OpsCompression() {
     let lastFo = 1;
 
     function layout() {
-      const rect = svg.getBoundingClientRect();
+      const rect = svgEl.getBoundingClientRect();
       W = Math.max(220, Math.round(rect.width));
       const m = Math.round(Math.min(24, Math.max(10, W * 0.04)));
       const left = m;
@@ -90,7 +92,7 @@ export default function OpsCompression() {
       set(clean, "y1", lineMid.toFixed(1));
       set(clean, "x2", right.toFixed(1));
       set(clean, "y2", lineMid.toFixed(1));
-      const nodes = cleanN.querySelectorAll("circle");
+      const nodes = cleanNodes.querySelectorAll("circle");
       const nx = [left, (left + right) / 2, right];
       for (let i = 0; i < nodes.length; i++) {
         nodes[i].setAttribute("cx", nx[i].toFixed(1));
@@ -152,7 +154,7 @@ export default function OpsCompression() {
         set(foot, "text-anchor", "start");
         vbh = badgeY + badgeH + 24 + 10;
       }
-      svg.setAttribute("viewBox", "0 0 " + W + " " + vbh);
+      svgEl.setAttribute("viewBox", "0 0 " + W + " " + vbh);
     }
 
     function apply(p: number, fo: number) {
@@ -170,7 +172,7 @@ export default function OpsCompression() {
       set(labA, "opacity", clamp01((p - 0.55) / 0.3).toFixed(3));
       set(timeL, "opacity", (1 - clamp01((p - 0.15) / 0.3)).toFixed(3));
       set(timeS, "opacity", clamp01((p - 0.6) / 0.3).toFixed(3));
-      svg.style.opacity = fo.toFixed(3);
+      svgEl.style.opacity = fo.toFixed(3);
     }
 
     const resolved = () => apply(1, 1);
@@ -240,7 +242,7 @@ export default function OpsCompression() {
       layout();
       if (!running) apply(reduced() ? 1 : lastP, reduced() ? 1 : lastFo);
     };
-    if ("ResizeObserver" in window) {
+    if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver(() => {
         window.clearTimeout(rt);
         rt = window.setTimeout(relayout, 120);
