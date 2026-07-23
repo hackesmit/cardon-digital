@@ -331,7 +331,7 @@ export default function HeroAssembly() {
         c.strokeStyle = PAL.primarySoft;
         c.lineWidth = 1;
         c.stroke();
-        rr(c, left + (right - left) * 0.26, top + 20, (right - left) * 0.72, 12, 6);
+        rr(c, left + (right - left) * 0.26, Math.min(top + 20, h - 20), (right - left) * 0.72, 12, 6);
         c.fillStyle = PAL.line;
         c.fill();
       } else if (kind === "receipt") {
