@@ -671,7 +671,9 @@ export default function VineField() {
       const nw = bw * 0.26;
       const lipH = Math.max(3, bh * 0.014);
       const lipOut = Math.max(1.5, nw * 0.1);
-      const neckH = bh * 0.235;
+      // Desktop's bottle box is taller-than-reference (about 4.5:1 vs 3.3:1),
+      // so the reference neck ratio reads too long there; compact keeps it.
+      const neckH = bh * (compact ? 0.235 : 0.195);
       const shoulderH = bh * 0.19;
       const bodyTop = bTop + lipH + neckH + shoulderH;
       const bodyBot = bTop + bh;
