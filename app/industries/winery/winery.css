@@ -212,6 +212,20 @@
 @media (max-width:640px){
   .pg-winery .cap-grid{grid-template-columns:1fr;gap:16px;}
   .pg-winery .leak-grid{grid-template-columns:1fr;gap:14px;}
+  /* portrait-appropriate photo slot: a tall panel rather than a thin band */
+  .pg-winery .photoband{aspect-ratio:4 / 5;border-radius:18px;}
+  .pg-winery .photoband-cap{left:12px;bottom:12px;letter-spacing:0.1em;}
+}
+/* ---- hero visual: portrait compact composition (see VineField compact mode) ---- */
+@media (max-width:520px){
+  .pg-winery .vine-canvas{height:clamp(430px,120vw,540px);}
+  .pg-winery .stage-tag{
+    top:12px;left:12px;max-width:66%;line-height:1.55;gap:0 6px;
+    background:color-mix(in srgb, var(--ground) 52%, transparent);
+    border-radius:9px;padding:6px 10px;
+  }
+  /* the single status caption is drawn in-canvas under the bottle in compact */
+  .pg-winery .stage-caption{display:none;}
 }
 @media (max-width:400px){
   .pg-winery .row-plate{max-width:150px;}

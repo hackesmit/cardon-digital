@@ -13,10 +13,12 @@ import { clamp01, easeInOut } from "./canvasKit";
 export default function OpsCompression() {
   const visRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const svgMRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     const vis = visRef.current;
     const svg = svgRef.current;
+    const svgM = svgMRef.current;
     if (!vis || !svg) return;
 
     const barP = svg.querySelector("#opsBarPrimary");
@@ -35,6 +37,20 @@ export default function OpsCompression() {
     ) {
       return;
     }
+    // Mobile-composition twins (taller viewBox, larger type). Bound alongside
+    // the desktop set and driven by the same loop; CSS displays exactly one, so
+    // writing both each frame is cheap (the hidden one skips layout/paint).
+    const q = (id: string) => (svgM ? svgM.querySelector(id) : null);
+    const barPm = q("#opsBarPrimaryM");
+    const barGm = q("#opsBarGoldM");
+    const tangleM = q("#opsTangleM");
+    const cleanM = q("#opsCleanM");
+    const cleanNm = q("#opsCleanNodesM");
+    const labMm = q("#opsLabManualM");
+    const labAm = q("#opsLabAutoM");
+    const timeLm = q("#opsTimeLongM");
+    const timeSm = q("#opsTimeShortM");
+    const badgeM = q("#opsBadgeM");
 
     const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
     const reduced = () => reduceMQ.matches;
@@ -42,6 +58,8 @@ export default function OpsCompression() {
 
     const BAR_MAX = 452;
     const BAR_MIN = 40;
+    const BAR_MAX_M = 312;
+    const BAR_MIN_M = 44;
     const LONG = 0.7;
     const COMPRESS = 5.4;
     const HOLD = 2.8;
@@ -53,24 +71,51 @@ export default function OpsCompression() {
     let last = 0;
     let tt = 0;
 
+    function set(el: Element | null, attr: string, val: string) {
+      if (el) el.setAttribute(attr, val);
+    }
+
     function apply(p: number, fo: number) {
       const e = easeInOut(p);
       const w = BAR_MAX + (BAR_MIN - BAR_MAX) * e;
       barP!.setAttribute("width", w.toFixed(1));
       barG!.setAttribute("width", w.toFixed(1));
-      barG!.setAttribute("opacity", (1 - clamp01((p - 0.3) / 0.4)).toFixed(3));
-      tangle!.setAttribute("opacity", (1 - clamp01((p - 0.15) / 0.35)).toFixed(3));
-      const cl = clamp01((p - 0.42) / 0.34);
-      clean!.setAttribute("opacity", cl.toFixed(3));
-      cleanN!.setAttribute("opacity", clamp01((p - 0.5) / 0.3).toFixed(3));
-      labM!.setAttribute("opacity", (1 - clamp01((p - 0.2) / 0.2)).toFixed(3));
-      labA!.setAttribute("opacity", clamp01((p - 0.6) / 0.25).toFixed(3));
-      timeL!.setAttribute("opacity", (1 - clamp01((p - 0.25) / 0.2)).toFixed(3));
-      timeS!.setAttribute("opacity", clamp01((p - 0.65) / 0.2).toFixed(3));
+      const wm = (BAR_MAX_M + (BAR_MIN_M - BAR_MAX_M) * e).toFixed(1);
+      set(barPm, "width", wm);
+      set(barGm, "width", wm);
+      const gOp = (1 - clamp01((p - 0.3) / 0.4)).toFixed(3);
+      const tOp = (1 - clamp01((p - 0.15) / 0.35)).toFixed(3);
+      const cl = clamp01((p - 0.42) / 0.34).toFixed(3);
+      const cnOp = clamp01((p - 0.5) / 0.3).toFixed(3);
+      const lmOp = (1 - clamp01((p - 0.2) / 0.2)).toFixed(3);
+      const laOp = clamp01((p - 0.6) / 0.25).toFixed(3);
+      const tlOp = (1 - clamp01((p - 0.25) / 0.2)).toFixed(3);
+      const tsOp = clamp01((p - 0.65) / 0.2).toFixed(3);
       const bp = clamp01((p - 0.78) / 0.22);
-      badge!.setAttribute("opacity", bp.toFixed(3));
-      badge!.setAttribute("transform", "translate(0," + ((1 - bp) * 6).toFixed(2) + ")");
+      const bpOp = bp.toFixed(3);
+      const bpTr = "translate(0," + ((1 - bp) * 6).toFixed(2) + ")";
+      barG!.setAttribute("opacity", gOp);
+      tangle!.setAttribute("opacity", tOp);
+      clean!.setAttribute("opacity", cl);
+      cleanN!.setAttribute("opacity", cnOp);
+      labM!.setAttribute("opacity", lmOp);
+      labA!.setAttribute("opacity", laOp);
+      timeL!.setAttribute("opacity", tlOp);
+      timeS!.setAttribute("opacity", tsOp);
+      badge!.setAttribute("opacity", bpOp);
+      badge!.setAttribute("transform", bpTr);
+      set(barGm, "opacity", gOp);
+      set(tangleM, "opacity", tOp);
+      set(cleanM, "opacity", cl);
+      set(cleanNm, "opacity", cnOp);
+      set(labMm, "opacity", lmOp);
+      set(labAm, "opacity", laOp);
+      set(timeLm, "opacity", tlOp);
+      set(timeSm, "opacity", tsOp);
+      set(badgeM, "opacity", bpOp);
+      set(badgeM, "transform", bpTr);
       svg!.style.opacity = fo.toFixed(3);
+      if (svgM) svgM.style.opacity = fo.toFixed(3);
     }
 
     const resolved = () => apply(1, 1);
@@ -155,7 +200,7 @@ export default function OpsCompression() {
     <div className="vis-frame ops-vis" ref={visRef}>
       <span className="vis-tag">an hour, compressed to two minutes</span>
       <svg
-        className="ops-svg"
+        className="ops-svg ops-svg-d"
         ref={svgRef}
         viewBox="0 0 520 250"
         role="img"
@@ -273,6 +318,129 @@ export default function OpsCompression() {
           textAnchor="end"
           fontSize="11"
           letterSpacing="1"
+        >
+          REFRESHED THROUGH THE DAY
+        </text>
+      </svg>
+
+      <svg
+        className="ops-svg ops-svg-m"
+        ref={svgMRef}
+        viewBox="0 0 360 300"
+        role="img"
+        aria-label="A long tangled hour of manual work compresses into one short clean two minute automated pass, a 97 percent reduction."
+      >
+        <g
+          className="ov-tangle"
+          id="opsTangleM"
+          fill="none"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0"
+        >
+          <path d="M24 72 L 58 72 L 58 44 L 104 44 L 134 80 L 134 102 L 190 102 L 232 60 L 280 60 L 308 94 L 336 78" />
+          <circle cx="24" cy="72" r="4.4" />
+          <circle cx="134" cy="80" r="3.6" />
+          <circle cx="232" cy="60" r="3.6" />
+          <circle cx="308" cy="94" r="3.6" />
+          <circle cx="336" cy="78" r="4.4" />
+        </g>
+        <g
+          className="ov-clean"
+          id="opsCleanM"
+          fill="none"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          opacity="1"
+        >
+          <line x1="24" y1="80" x2="336" y2="80" />
+        </g>
+        <g className="ov-clean-fill" id="opsCleanNodesM" opacity="1">
+          <circle cx="24" cy="80" r="4.4" />
+          <circle cx="180" cy="80" r="3.6" />
+          <circle cx="336" cy="80" r="4.4" />
+        </g>
+
+        <text
+          className="ov-lab-manual mono"
+          id="opsLabManualM"
+          x="24"
+          y="150"
+          fontSize="16"
+          letterSpacing="1.2"
+          opacity="0"
+        >
+          MANUAL, EVERY WEEK
+        </text>
+        <text
+          className="ov-lab-auto mono"
+          id="opsLabAutoM"
+          x="24"
+          y="150"
+          fontSize="16"
+          letterSpacing="1.2"
+          opacity="1"
+        >
+          AUTOMATED, RUNS ITSELF
+        </text>
+        <rect className="ov-track" x="24" y="164" width="312" height="22" rx="11" />
+        <rect
+          className="ov-bar-primary"
+          id="opsBarPrimaryM"
+          x="24"
+          y="164"
+          width="44"
+          height="22"
+          rx="11"
+        />
+        <rect
+          className="ov-bar-gold"
+          id="opsBarGoldM"
+          x="24"
+          y="164"
+          width="44"
+          height="22"
+          rx="11"
+          opacity="0"
+        />
+        <text
+          className="ov-time-long mono"
+          id="opsTimeLongM"
+          x="336"
+          y="150"
+          textAnchor="end"
+          fontSize="20"
+          fontWeight="600"
+          opacity="0"
+        >
+          1 hr
+        </text>
+        <text
+          className="ov-time-short mono"
+          id="opsTimeShortM"
+          x="336"
+          y="150"
+          textAnchor="end"
+          fontSize="20"
+          fontWeight="600"
+          opacity="1"
+        >
+          2 min
+        </text>
+
+        <g id="opsBadgeM" opacity="1">
+          <rect className="ov-badge-box" x="24" y="214" width="196" height="44" rx="10" />
+          <text className="ov-badge-text mono" x="42" y="243" fontSize="18" fontWeight="600">
+            97% less time
+          </text>
+        </g>
+        <text
+          className="ov-foot mono"
+          x="24"
+          y="288"
+          fontSize="14"
+          letterSpacing="0.8"
         >
           REFRESHED THROUGH THE DAY
         </text>

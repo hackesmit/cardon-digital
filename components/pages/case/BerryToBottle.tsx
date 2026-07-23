@@ -1,15 +1,43 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
- * Berry to bottle strip: a single wine dot travels the one continuous thread
- * through four stations (berry, tank, barrel, bottle), lighting each as it is
- * reached, then loops. Paused off-screen (IntersectionObserver), on hidden tab
- * (visibilitychange), and resolved to the finished state under reduced motion.
- * rAF is throttled to ~25fps to match the source.
+ * Berry to bottle strip. On wide screens a single wine dot travels one
+ * continuous horizontal thread through four stations (berry, tank, barrel,
+ * bottle), lighting each as it is reached, then loops. On narrow portrait
+ * screens (< 520px measured) a purpose-made VERTICAL variant mounts instead:
+ * the same thread runs top to bottom with large station names and icons, so
+ * the chain reads the way a phone is held. Exactly one variant mounts and runs
+ * a single rAF loop at a time (the wrapper swaps them via matchMedia).
+ *
+ * Both variants keep the source contracts: paused off-screen
+ * (IntersectionObserver), on hidden tab (visibilitychange), resolved to the
+ * finished state under reduced motion, rAF throttled to ~25fps, and the mode
+ * flip restyles for free because every color comes from a CSS token class.
  */
+
+const MOBILE_MQ = "(max-width: 519.98px)";
+
 export default function BerryToBottle() {
+  // SSR + first client render is the desktop variant, so hydration matches.
+  // The component sits well below the fold, so the one-time swap to the mobile
+  // variant on a phone happens long before it scrolls into view (no flash).
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_MQ);
+    const on = () => setMobile(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  return mobile ? <BerryToBottleMobile /> : <BerryToBottleDesktop />;
+}
+
+/* ============================ DESKTOP (horizontal thread) ============================ */
+function BerryToBottleDesktop() {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const dotRef = useRef<SVGCircleElement | null>(null);
   const haloRef = useRef<SVGCircleElement | null>(null);
@@ -203,6 +231,215 @@ export default function BerryToBottle() {
 
         <circle className="b2b-halo" id="b2bHalo" ref={haloRef} cx="140" cy="150" r="12" />
         <circle className="b2b-dot" id="b2bDot" ref={dotRef} cx="140" cy="150" r="5" />
+      </svg>
+      <noscript>
+        <div className="vine-fallback">
+          Berry, tank, barrel, bottle: the wine is tracked as one continuous
+          thread from the vine to the finished bottle.
+        </div>
+      </noscript>
+    </div>
+  );
+}
+
+/* ============================ MOBILE (vertical thread) ============================
+   Portrait composition designed for a phone: a single rail runs top to bottom,
+   the wine dot descends it, and each station lights as it is reached. Icons and
+   station names sit to the right of the rail at phone-legible sizes. The taller-
+   than-wide viewBox fills the frame, so there is no dead letterbox space. */
+function BerryToBottleMobile() {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const dotRef = useRef<SVGCircleElement | null>(null);
+  const haloRef = useRef<SVGCircleElement | null>(null);
+  const progRef = useRef<SVGLineElement | null>(null);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const dot = dotRef.current;
+    const halo = haloRef.current;
+    const prog = progRef.current;
+    if (!wrap || !dot || !halo || !prog) return;
+
+    const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reduced = () => reduceMQ.matches;
+    let docVisible = !document.hidden;
+
+    const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+
+    const Y0 = 96;
+    const Y1 = 480;
+    const SPAN = Y1 - Y0;
+    const stationY = [96, 224, 352, 480];
+    const sEls = Array.prototype.slice.call(
+      wrap.querySelectorAll(".b2b-station")
+    ) as SVGGElement[];
+
+    const TRIP = 13;
+    const HOLDB = 2.4;
+    const CYC = TRIP + HOLDB;
+
+    let raf = 0;
+    let running = false;
+    let onscreen = false;
+    let last = 0;
+    let clock = 0;
+
+    const setU = (u: number) => {
+      const y = Y0 + SPAN * clamp01(u);
+      dot.setAttribute("cy", y.toFixed(1));
+      halo.setAttribute("cy", y.toFixed(1));
+      prog.setAttribute("y2", y.toFixed(1));
+      for (let i = 0; i < sEls.length; i++) {
+        if (sEls[i]) sEls[i].classList.toggle("reached", y >= stationY[i] - 1);
+      }
+    };
+
+    const frame = (now: number) => {
+      if (!running) return;
+      raf = requestAnimationFrame(frame);
+      if (now - last < 40) return;
+      let dt = (now - last) / 1000;
+      last = now;
+      if (dt > 0.06) dt = 0.06;
+      clock += dt;
+      if (clock > CYC) clock -= CYC;
+      const u = clock < TRIP ? clock / TRIP : 1;
+      setU(u);
+    };
+    const canRun = () => !reduced() && docVisible && onscreen;
+    const start = () => {
+      if (running || !canRun()) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    const stop = () => {
+      running = false;
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+
+    let io: IntersectionObserver | null = null;
+    if (reduced()) {
+      setU(1);
+    } else if ("IntersectionObserver" in window) {
+      io = new IntersectionObserver(
+        (en) => {
+          onscreen = en[0].isIntersecting;
+          if (onscreen && docVisible) start();
+          else stop();
+        },
+        { threshold: 0.2 }
+      );
+      io.observe(wrap);
+      setU(0);
+    } else {
+      onscreen = true;
+      setU(0);
+      start();
+    }
+
+    const onVisibility = () => {
+      docVisible = !document.hidden;
+      if (docVisible && onscreen) start();
+      else stop();
+    };
+    const onReduceChange = () => {
+      if (reduced()) {
+        stop();
+        setU(1);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    reduceMQ.addEventListener("change", onReduceChange);
+
+    return () => {
+      stop();
+      if (io) io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      reduceMQ.removeEventListener("change", onReduceChange);
+    };
+  }, []);
+
+  return (
+    <div
+      className="vine-stage b2b-stage b2b-stage-m vis-frame"
+      id="b2bStage"
+      ref={wrapRef}
+      style={{ aspectRatio: "auto" }}
+    >
+      <span className="b2b-note mono">field to bottle, one continuous thread</span>
+      <svg
+        className="b2b-svg"
+        viewBox="0 0 320 540"
+        role="img"
+        aria-label="A continuous thread runs top to bottom through four stations, berry, tank, barrel, and bottle, with wine travelling along it."
+      >
+        <line className="b2b-track" x1="58" y1="96" x2="58" y2="480" />
+        <line
+          className="b2b-prog"
+          ref={progRef}
+          x1="58"
+          y1="96"
+          x2="58"
+          y2="96"
+        />
+
+        <g className="b2b-station" id="b2b-m-0">
+          <circle className="b2b-node" cx="58" cy="96" r="12" />
+          <g transform="translate(104,96) scale(1.2) translate(0,-7)">
+            <circle className="b2b-ico-fill" cx="-7" cy="4" r="6" />
+            <circle className="b2b-ico-fill" cx="6" cy="2" r="6" />
+            <circle className="b2b-ico-fill" cx="-1" cy="14" r="6" />
+            <path className="b2b-ico" d="M0 -8 L4 -16" />
+          </g>
+          <text className="b2b-lab b2b-lab-m" x="150" y="96" dominantBaseline="middle">
+            Berry
+          </text>
+        </g>
+
+        <g className="b2b-station" id="b2b-m-1">
+          <circle className="b2b-node" cx="58" cy="224" r="12" />
+          <g transform="translate(104,224) scale(1.2) translate(0,-15)">
+            <ellipse className="b2b-ico" cx="0" cy="0" rx="14" ry="5" />
+            <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
+            <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
+          </g>
+          <text className="b2b-lab b2b-lab-m" x="150" y="224" dominantBaseline="middle">
+            Tank
+          </text>
+        </g>
+
+        <g className="b2b-station" id="b2b-m-2">
+          <circle className="b2b-node" cx="58" cy="352" r="12" />
+          <g transform="translate(104,352) scale(1.2) translate(0,-11)">
+            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="12" />
+            <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
+            <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
+          </g>
+          <text className="b2b-lab b2b-lab-m" x="150" y="352" dominantBaseline="middle">
+            Barrel
+          </text>
+        </g>
+
+        <g className="b2b-station" id="b2b-m-3">
+          <circle className="b2b-node" cx="58" cy="480" r="12" />
+          <g transform="translate(104,480) scale(1.2) translate(0,-17)">
+            <path
+              className="b2b-ico"
+              d="M-4 -6 L-4 4 C-9 8, -9 14, -9 20 L-9 40 L9 40 L9 20 C9 14, 9 8, 4 4 L4 -6 Z"
+            />
+            <line className="b2b-ico" x1="-4" y1="-6" x2="4" y2="-6" />
+          </g>
+          <text className="b2b-lab b2b-lab-m" x="150" y="480" dominantBaseline="middle">
+            Bottle
+          </text>
+        </g>
+
+        <circle className="b2b-halo" ref={haloRef} cx="58" cy="96" r="16" />
+        <circle className="b2b-dot" ref={dotRef} cx="58" cy="96" r="6.5" />
       </svg>
       <noscript>
         <div className="vine-fallback">

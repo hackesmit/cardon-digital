@@ -227,6 +227,9 @@
 .pg-case .b2b-station.reached .b2b-ico-fill{fill:var(--wine-accent);}
 .pg-case .b2b-lab{font-family:var(--mono);font-size:15px;fill:var(--text-dim);letter-spacing:0.04em;transition:fill .4s ease;}
 .pg-case .b2b-station.reached .b2b-lab{fill:var(--text);}
+/* mobile vertical thread: phone-legible station names (~25px CSS at 360) */
+.pg-case .b2b-lab-m{font-size:26px;letter-spacing:0.02em;}
+.pg-case .b2b-stage-m{padding:14px 10px;}
 .pg-case .b2b-halo{fill:var(--wine-faint);}
 .pg-case .b2b-dot{fill:var(--wine-accent);}
 
@@ -255,6 +258,9 @@
   .pg-case .callouts{grid-template-columns:1fr;}
   .pg-case .vine-stage{aspect-ratio:auto;min-height:380px;}
   .pg-case .plot-key{font-size:0.6rem;}
+  /* keep the season scrub on one line (cool / slider / ready) at phone widths */
+  .pg-case .season-scrub{gap:10px;}
+  .pg-case .season-range{flex-basis:150px;min-width:104px;}
 }
 @media (max-width:400px){
   .pg-case .vine-plate{max-width:170px;}

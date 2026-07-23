@@ -221,3 +221,11 @@
 @media (max-width: 760px) {
   .pg-hiring .cap-grid { grid-template-columns: 1fr; }
 }
+
+/* Portrait phones: the pipeline canvas switches to a purpose-built vertical
+   composition (see PipelineStage.tsx, compact branch). Give it a taller,
+   phone-shaped canvas so the stacked spine, gates, and roster have room. The
+   JS compact breakpoint (measured width < 520) matches this viewport bound. */
+@media (max-width: 568px) {
+  .pg-hiring #pipeCanvas { height: clamp(468px, 128vw, 560px); }
+}

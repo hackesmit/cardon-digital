@@ -200,6 +200,14 @@
 @media (max-width:640px){
   .pg-enkanto .callouts{grid-template-columns:1fr;}
   .pg-enkanto .tl-stage{aspect-ratio:auto;min-height:420px;}
+  /* photoband gains height in portrait so the imagery has presence */
+  .pg-enkanto .photoband{aspect-ratio:3 / 2;}
+}
+/* ThreeLines portrait mode: taller stage that the mobile canvas layout fills,
+   and compact tap targets sized to the line ends (matches the JS breakpoint) */
+@media (max-width:519.98px){
+  .pg-enkanto .tl-stage{min-height:452px;}
+  .pg-enkanto .tl-hot{width:124px;height:50px;min-width:50px;min-height:50px;}
 }
 @media (max-width:400px){
   .pg-enkanto .tl-plate{max-width:180px;}

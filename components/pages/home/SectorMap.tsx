@@ -298,6 +298,7 @@ export default function SectorMap() {
   }, []);
 
   return (
+    <>
     <div className="map-stage" ref={stageRef}>
       <span className="map-legend mono">
         Survey of terrains: three stations, two survey sites
@@ -475,5 +476,113 @@ export default function SectorMap() {
         </span>
       </Link>
     </div>
+
+    {/* Portrait-native version of the map: the geographic canvas does not
+        translate to a phone (labels collide), so on narrow screens we present
+        the same stations and case studies as a clean vertical list. Exactly one
+        of map-stage / sector-list is displayed at a time (CSS), so there is no
+        duplicate content in the accessibility tree and no hidden canvas loop
+        (the hidden map-stage never intersects, so its rAF never starts). */}
+    <div className="sector-list" aria-label="Terrains we know">
+      <span className="sl-hub mono" aria-hidden="true">
+        <svg viewBox="0 0 26 26" focusable="false">
+          <line className="bm-line" x1="13" y1="20" x2="6" y2="8" strokeWidth="1.2" opacity="0.75" />
+          <line className="bm-line" x1="13" y1="20" x2="20" y2="8" strokeWidth="1.2" opacity="0.75" />
+          <line className="bm-line" x1="6" y1="8" x2="20" y2="8" strokeWidth="1.2" opacity="0.55" />
+          <circle className="bm-ring" cx="6" cy="8" r="3" strokeWidth="1.4" />
+          <circle className="bm-ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
+          <circle className="bm-dot" cx="13" cy="20" r="3.4" />
+        </svg>
+        One system
+      </span>
+
+      <span className="sl-head mono">Stations built</span>
+
+      <Link
+        className="sector-card focus"
+        href="/industries/winery"
+        aria-label="Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page."
+      >
+        <span className="sc-mark">
+          <MarkerCore full />
+        </span>
+        <span className="sc-body">
+          <span className="sc-badge">Focus terrain</span>
+          <span className="sc-name">Winery / Valle de Guadalupe</span>
+          <span className="sc-detail">harvest and finances, one view</span>
+        </span>
+      </Link>
+
+      <div className="sl-cases">
+        <Link className="sl-case" href="/work/monte-xanic" aria-label="Read the Monte Xanic case study, from berry to bottle.">
+          <span className="dot" aria-hidden="true" />
+          <span>Case study: <b>Monte Xanic</b></span>
+        </Link>
+        <Link className="sl-case" href="/work/enkanto" aria-label="Read the Vinedo En'kanto case study, the commerce side.">
+          <span className="dot" aria-hidden="true" />
+          <span>Case study: <b>En&apos;kanto</b></span>
+        </Link>
+      </div>
+
+      <Link
+        className="sector-card"
+        href="/industries/construction"
+        aria-label="Construction and Logistics. Field to office, one system. Open the logistics page."
+      >
+        <span className="sc-mark">
+          <MarkerCore full />
+        </span>
+        <span className="sc-body">
+          <span className="sc-name">Construction / Logistics</span>
+          <span className="sc-detail">field to office, one system</span>
+        </span>
+      </Link>
+
+      <Link
+        className="sector-card"
+        href="/industries/hiring"
+        aria-label="Hiring and HR. From first click to hire. Open the hiring page."
+      >
+        <span className="sc-mark">
+          <MarkerCore full />
+        </span>
+        <span className="sc-body">
+          <span className="sc-name">Hiring / HR</span>
+          <span className="sc-detail">from first click to hire</span>
+        </span>
+      </Link>
+
+      <span className="sl-head mono">Survey sites</span>
+
+      <Link
+        className="sector-card survey"
+        href="/industries/clinics"
+        aria-label="Clinics and healthcare. Focus terrain: defend and recapture patient flow. Open the clinics page."
+      >
+        <span className="sc-mark">
+          <MarkerCore full={false} />
+        </span>
+        <span className="sc-body">
+          <span className="sc-badge">Focus terrain</span>
+          <span className="sc-name">Clinics / Healthcare</span>
+          <span className="sc-detail">defend and recapture patient flow</span>
+        </span>
+      </Link>
+
+      <Link
+        className="sector-card survey"
+        href="/industries/restaurants"
+        aria-label="Restaurants and hospitality. Terrain we are surveying next. Open the restaurants page."
+      >
+        <span className="sc-mark">
+          <MarkerCore full={false} />
+        </span>
+        <span className="sc-body">
+          <span className="sc-name">Restaurants / Hospitality</span>
+          <span className="sc-detail">surveying this terrain</span>
+        </span>
+      </Link>
+    </div>
+    </>
   );
 }
