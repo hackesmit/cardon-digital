@@ -377,6 +377,8 @@ export default function VineField() {
     let onscreen = false;
     let last = 0;
     let T = 0;
+    // compact portrait composition below this measured canvas width
+    let compact = false;
 
     const ROWN = 7;
     const rowFrac: number[] = [];
@@ -393,6 +395,59 @@ export default function VineField() {
     let fillLevel = 0;
 
     const layout = () => {
+      compact = W < 520;
+
+      if (compact) {
+        // Portrait recomposition: a field of vine rows across the top funnels
+        // its readings down into one collection node, then a vertical channel
+        // drops into a large centered bottle that fills as rows report. Reads
+        // top to bottom on a phone held upright.
+        const RN = 5;
+        const bw = Math.min(Math.max(W * 0.32, 92), 132);
+        const bh = Math.min(H * 0.4, 250);
+        const bcx = W * 0.5;
+        const bTop = H * 0.52;
+        const CN: Pt = { x: W * 0.5, y: H * 0.445 };
+        const neck: Pt = { x: bcx, y: bTop + 2 };
+        const xL = W * 0.09;
+        const xR = W * 0.8;
+        geom = { xL, xC: CN.x, bcx, bw, bh, bTop, CN, neck };
+
+        rows = [];
+        const rowsTop = H * 0.16;
+        const rowsBot = H * 0.375;
+        const samples = 40;
+        for (let i = 0; i < RN; i++) {
+          const yf = rowsTop + (rowsBot - rowsTop) * (i / (RN - 1));
+          const linePts: Pt[] = [];
+          for (let j = 0; j <= samples; j++) {
+            const xf = j / samples;
+            const x = xL + (xR - xL) * xf;
+            const wob =
+              4.5 * Math.sin(xf * 4.4 + i * 0.5) +
+              2.6 * Math.sin(xf * 2.2 - 0.4 + i * 0.3);
+            linePts.push({ x, y: yf + wob });
+          }
+          const line = makeTrace(dedupe(linePts));
+          const reportPts = linePts.concat([
+            { x: CN.x, y: CN.y },
+            { x: neck.x, y: neck.y },
+          ]);
+          const report = makeTrace(dedupe(reportPts));
+          rows.push({
+            line,
+            report,
+            endY: yf,
+            latch: 0.1 + 0.82 * (i / (RN - 1)),
+            heads: [],
+            spawn: 0.6 + i * 0.42,
+            latched: false,
+          });
+        }
+        placeOverlays();
+        return;
+      }
+
       const xL = W * 0.055;
       const xC = W * 0.635;
       const avail = Math.max(60, W - xC);
@@ -444,9 +499,29 @@ export default function VineField() {
       if (!overlay || !geom) return;
       const rect = canvas.getBoundingClientRect();
       if (!rect.width) return;
-      const band = Math.max(20, (0.7 / (ROWN - 1)) * H * 0.74);
       const btns = overlay.querySelectorAll<HTMLButtonElement>(".vine-row");
+      if (compact) {
+        const band = Math.max(30, (H * 0.215) / rows.length + 8);
+        for (let i = 0; i < btns.length; i++) {
+          if (i >= rows.length) {
+            btns[i].style.display = "none";
+            continue;
+          }
+          btns[i].style.display = "";
+          const r = rows[i];
+          const lx = r.line.pts[0].x;
+          const rx = r.line.pts[r.line.pts.length - 1].x;
+          const top = Math.max(50, r.endY - band / 2);
+          btns[i].style.left = lx.toFixed(1) + "px";
+          btns[i].style.width = Math.max(60, rx - lx).toFixed(1) + "px";
+          btns[i].style.top = top.toFixed(1) + "px";
+          btns[i].style.height = band.toFixed(1) + "px";
+        }
+        return;
+      }
+      const band = Math.max(20, (0.7 / (ROWN - 1)) * H * 0.74);
       for (let i = 0; i < btns.length && i < ROWN; i++) {
+        btns[i].style.display = "";
         const midY = rowFrac[i] * H;
         const top = Math.max(2, midY - band / 2);
         btns[i].style.left = geom.xL.toFixed(1) + "px";
@@ -459,6 +534,45 @@ export default function VineField() {
     const drawSpine = () => {
       if (!ctx || !geom) return;
       const g = geom;
+      if (compact) {
+        // faint feeders from each row end converging into the collection node
+        ctx.strokeStyle = PAL.lineSoft;
+        ctx.lineWidth = 1;
+        ctx.lineCap = "round";
+        for (let i = 0; i < rows.length; i++) {
+          const e = rows[i].line.pts[rows[i].line.pts.length - 1];
+          ctx.beginPath();
+          ctx.moveTo(e.x, e.y);
+          ctx.lineTo(g.CN.x, g.CN.y);
+          ctx.stroke();
+        }
+        // vertical collection channel: node down to the bottle neck
+        ctx.strokeStyle = PAL.line;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(g.CN.x, g.CN.y);
+        ctx.lineTo(g.neck.x, g.neck.y);
+        ctx.stroke();
+        const pulseC = reduced()
+          ? 0.5
+          : 0.45 + 0.3 * Math.sin(performance.now() / 900);
+        ctx.globalAlpha = 0.5 + pulseC * 0.4;
+        ctx.fillStyle = PAL.primaryFaint;
+        ctx.beginPath();
+        ctx.arc(g.CN.x, g.CN.y, 9, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = PAL.primaryDim;
+        ctx.lineWidth = 1.3;
+        ctx.beginPath();
+        ctx.arc(g.CN.x, g.CN.y, 5.5, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.fillStyle = PAL.primary;
+        ctx.beginPath();
+        ctx.arc(g.CN.x, g.CN.y, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+        return;
+      }
       ctx.strokeStyle = PAL.line;
       ctx.lineWidth = 1.4;
       ctx.lineCap = "round";
@@ -494,7 +608,7 @@ export default function VineField() {
 
     const drawRows = () => {
       if (!ctx) return;
-      for (let i = 0; i < ROWN; i++) {
+      for (let i = 0; i < rows.length; i++) {
         const r = rows[i];
         const isActive = active === i;
         const dim = active !== null && !isActive;
@@ -513,7 +627,7 @@ export default function VineField() {
 
     const drawStreams = () => {
       if (!ctx) return;
-      for (let i = 0; i < ROWN; i++) {
+      for (let i = 0; i < rows.length; i++) {
         if (active !== null && active !== i) continue;
         const r = rows[i];
         for (let h = 0; h < r.heads.length; h++) {
@@ -682,6 +796,27 @@ export default function VineField() {
     const drawPanelChrome = (full: boolean) => {
       if (!ctx || !geom) return;
       const g = geom;
+      if (compact) {
+        // No top header in portrait (the stage-tag overlay is the title, so
+        // there is nothing to collide with). A small status sits by the node
+        // and one caption reads under the bottle.
+        ctx.font = "600 10px " + MONO;
+        ctx.textBaseline = "middle";
+        ctx.textAlign = "left";
+        ctx.fillStyle = full ? PAL.primary : PAL.muted;
+        ctx.fillText(full ? "CURRENT" : "LIVE", g.CN.x + 15, g.CN.y);
+        ctx.textBaseline = "alphabetic";
+        ctx.textAlign = "center";
+        ctx.font = "600 11px " + MONO;
+        ctx.fillStyle = PAL.dim;
+        ctx.fillText(
+          full ? "one connected view" : "reporting",
+          g.bcx,
+          Math.min(H - 10, g.bTop + g.bh + 24)
+        );
+        ctx.textAlign = "left";
+        return;
+      }
       drawMark(ctx, g.xC + 8, 12, PAL.primary);
       ctx.font = "600 11px " + MONO;
       ctx.textBaseline = "alphabetic";
@@ -728,7 +863,7 @@ export default function VineField() {
 
     const resolvedStatic = () => {
       fillLevel = 1;
-      for (let i = 0; i < ROWN; i++) {
+      for (let i = 0; i < rows.length; i++) {
         rows[i].latched = true;
         rows[i].heads = [rows[i].line.len * 0.5];
       }
@@ -736,7 +871,7 @@ export default function VineField() {
     };
 
     const spawnHeads = (dt: number) => {
-      for (let i = 0; i < ROWN; i++) {
+      for (let i = 0; i < rows.length; i++) {
         const r = rows[i];
         r.spawn -= dt;
         if (r.spawn <= 0 && r.heads.length < 2) {
@@ -764,7 +899,7 @@ export default function VineField() {
 
       const fp = clamp01((T - INTRO) / FILL);
       fillLevel = easeInOut(fp);
-      for (let i = 0; i < ROWN; i++) rows[i].latched = fp >= rows[i].latch;
+      for (let i = 0; i < rows.length; i++) rows[i].latched = fp >= rows[i].latch;
 
       spawnHeads(dt);
       for (let rp = ripples.length - 1; rp >= 0; rp--) {
@@ -786,7 +921,7 @@ export default function VineField() {
       T = 0;
       fillLevel = 0;
       ripples = [];
-      for (let i = 0; i < ROWN; i++) {
+      for (let i = 0; i < rows.length; i++) {
         rows[i].latched = false;
         rows[i].heads = [];
         rows[i].spawn = 0.6 + i * 0.42;

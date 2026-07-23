@@ -14,6 +14,8 @@ type Geom = {
   esIn: Pt;
   trayY: number;
   roster: { x: number; y: number; w: number; h: number };
+  compact: boolean;
+  parkX: number;
 };
 type Seg = {
   d: number;
@@ -162,9 +164,17 @@ export default function PipelineStage() {
     let running = false;
     let onscreen = false;
     let last = 0;
+    let compact = false;
 
     const GATE_KEYS = ["applied", "screened", "interviewed", "offer"];
     const GATEX = [0.335, 0.455, 0.575, 0.695];
+    // Portrait compact mode: a vertical spine with gates stacked top to bottom,
+    // EN/ES inlets entering from the top corners, parked cards peeling to a left
+    // column, the roster as a row along the bottom. The gate y-fractions are
+    // fixed so the HTML gate hotspots (positioned from JS below) align exactly
+    // with the drawn gate bars.
+    const GATEY_C = [0.37, 0.49, 0.61, 0.73];
+    const SX_C = 0.5;
     const SCRIPT: Cand[] = [
       { stream: "EN", ini: "AM", park: -1 },
       { stream: "ES", ini: "GP", park: 0 },
@@ -209,6 +219,10 @@ export default function PipelineStage() {
     const curCand = () => SCRIPT[Math.min(idx, SCRIPT.length - 1)];
 
     const layout = () => {
+      if (compact) {
+        layoutCompact();
+        return;
+      }
       const cw = Math.max(30, Math.min(44, W * 0.07));
       const ch = cw * 0.66;
       const spineY = H * 0.44;
@@ -224,10 +238,40 @@ export default function PipelineStage() {
         esIn: { x: W * 0.05, y: H * 0.66 },
         trayY: H * 0.795,
         roster: { x: W * 0.775, y: H * 0.13, w: Math.max(60, W * 0.18), h: H * 0.64 },
+        compact: false,
+        parkX: 0,
+      };
+    };
+    // portrait composition: vertical spine, gates stacked, inlets from the top
+    // corners, parked cards in a left column, roster as a bottom row.
+    const layoutCompact = () => {
+      const cw = Math.max(40, Math.min(54, W * 0.15));
+      const ch = cw * 0.6;
+      const sx = SX_C * W;
+      const mergeY = H * 0.255;
+      const gates: Pt[] = [];
+      for (let i = 0; i < 4; i++) gates.push({ x: sx, y: GATEY_C[i] * H });
+      const gap = cw * 0.34;
+      const pitch = cw + gap;
+      const totalW = ROSTER_SLOTS * cw + (ROSTER_SLOTS - 1) * gap;
+      const slot0 = (W - totalW) / 2 + cw / 2;
+      geom = {
+        cw,
+        ch,
+        spineY: mergeY,
+        gates,
+        merge: { x: sx, y: mergeY },
+        enIn: { x: W * 0.17, y: H * 0.15 },
+        esIn: { x: W * 0.83, y: H * 0.15 },
+        trayY: H * 0.9,
+        roster: { x: slot0, y: H * 0.9, w: pitch, h: ch },
+        compact: true,
+        parkX: W * 0.135,
       };
     };
     const rosterSlot = (slot: number): Pt => {
       const g = geom as Geom;
+      if (g.compact) return { x: g.roster.x + g.roster.w * slot, y: g.roster.y };
       const r = g.roster;
       const headH = 22;
       const pad = 8;
@@ -236,6 +280,7 @@ export default function PipelineStage() {
     };
     const parkPos = (gate: number, n: number): Pt => {
       const g = geom as Geom;
+      if (g.compact) return { x: g.parkX, y: g.gates[gate].y + n * g.ch * 0.5 };
       const gx = g.gates[gate].x;
       const col = (n % 3) - 1;
       const rowi = Math.floor(n / 3);
@@ -422,26 +467,135 @@ export default function PipelineStage() {
         : stream === "EN"
         ? PAL.primary
         : PAL.secondary;
-      rr(x - w / 2, y - h / 2, 3.2, h, 2);
+      rr(x - w / 2, y - h / 2, compact ? 4.5 : 3.2, h, 2);
       ctx.fillStyle = stripe;
       ctx.fill();
       ctx.textAlign = "center";
-      ctx.fillStyle = parkedState ? PAL.muted : PAL.ink;
-      ctx.font = "600 " + (h * 0.42).toFixed(1) + "px " + MONO;
       ctx.textBaseline = "middle";
-      ctx.fillText(ini, x + 2, y - h * 0.11);
-      ctx.font = "600 " + (h * 0.26).toFixed(1) + "px " + MONO;
-      ctx.fillStyle = parkedState
-        ? PAL.muted
-        : stream === "EN"
-        ? PAL.primary
-        : PAL.secondary;
-      ctx.fillText(stream, x + 2, y + h * 0.3);
+      ctx.fillStyle = parkedState ? PAL.muted : PAL.ink;
+      if (compact) {
+        // bigger initials, no tiny sub-label: the coloured stripe carries stream
+        ctx.font = "600 " + (h * 0.5).toFixed(1) + "px " + MONO;
+        ctx.fillText(ini, x + 3, y + 0.5);
+      } else {
+        ctx.font = "600 " + (h * 0.42).toFixed(1) + "px " + MONO;
+        ctx.fillText(ini, x + 2, y - h * 0.11);
+        ctx.font = "600 " + (h * 0.26).toFixed(1) + "px " + MONO;
+        ctx.fillStyle = parkedState
+          ? PAL.muted
+          : stream === "EN"
+          ? PAL.primary
+          : PAL.secondary;
+        ctx.fillText(stream, x + 2, y + h * 0.3);
+      }
       ctx.restore();
+    };
+
+    const curveV = (a: Pt, b: Pt) => {
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      const my = (a.y + b.y) / 2;
+      ctx.bezierCurveTo(a.x, my, b.x, my, b.x, b.y);
+      ctx.stroke();
+    };
+    const inletChip = (p: Pt, label: string, col: string) => {
+      const g = geom as Geom;
+      const w = Math.max(32, g.cw * 0.72);
+      const h = Math.max(18, g.ch * 0.64);
+      rr(p.x - w / 2, p.y - h / 2, w, h, 5);
+      ctx.fillStyle = PAL.card;
+      ctx.fill();
+      ctx.lineWidth = 1.3;
+      ctx.strokeStyle = col;
+      ctx.stroke();
+      ctx.fillStyle = col;
+      ctx.beginPath();
+      ctx.arc(p.x - w / 2 + 8, p.y, 2.7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = PAL.ink;
+      ctx.font = "600 11px " + MONO;
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.fillText(label, p.x - w / 2 + 14, p.y + 0.5);
+    };
+    const drawStructureCompact = (g: Geom) => {
+      const sx = g.merge.x;
+      // two inlet feeds curving down into the merge node
+      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = PAL.line;
+      curveV(g.enIn, g.merge);
+      curveV(g.esIn, g.merge);
+      inletChip(g.enIn, "EN", PAL.primary);
+      inletChip(g.esIn, "ES", PAL.secondary);
+      // the single vertical spine, sage
+      ctx.strokeStyle = PAL.sage;
+      ctx.globalAlpha = 0.85;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(sx, g.merge.y);
+      ctx.lineTo(sx, g.roster.y - g.ch * 0.95);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      dot(sx, g.merge.y, 4, PAL.sage);
+      ctx.strokeStyle = PAL.sageFaint;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.moveTo(sx, g.roster.y - g.ch * 0.95);
+      ctx.lineTo(sx, g.roster.y - g.ch * 0.55);
+      ctx.stroke();
+      // gates: bars across the spine, name to the right
+      const gh = g.cw * 0.9;
+      for (let i = 0; i < 4; i++) {
+        const gy = g.gates[i].y;
+        const on = activeGate === i;
+        if (on) {
+          ctx.strokeStyle = PAL.sage;
+          ctx.globalAlpha = 0.18;
+          ctx.lineWidth = 12;
+          ctx.beginPath();
+          ctx.moveTo(sx - gh, gy);
+          ctx.lineTo(sx + gh, gy);
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+        ctx.strokeStyle = on ? PAL.sage : PAL.secondary;
+        ctx.globalAlpha = on ? 1 : 0.7;
+        ctx.lineWidth = 2.4;
+        ctx.beginPath();
+        ctx.moveTo(sx - gh, gy);
+        ctx.lineTo(sx + gh, gy);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        dot(sx - gh, gy, 2.6, on ? PAL.sage : PAL.secondary);
+        dot(sx + gh, gy, 2.6, on ? PAL.sage : PAL.secondary);
+        ctx.font = "600 10px " + MONO;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = on ? PAL.sage : PAL.muted;
+        ctx.fillText(GATE_KEYS[i].toUpperCase(), sx + gh + 8, gy);
+      }
+      // parked "not this role" column marker on the left
+      ctx.font = "600 10px " + MONO;
+      ctx.textAlign = "left";
+      ctx.textBaseline = "alphabetic";
+      ctx.fillStyle = PAL.muted;
+      ctx.fillText("NOT THIS ROLE", g.parkX - g.cw / 2, g.gates[0].y - g.ch * 0.72);
+      ctx.strokeStyle = PAL.lineSoft;
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 5]);
+      ctx.beginPath();
+      ctx.moveTo(g.parkX, g.gates[0].y - g.ch * 0.4);
+      ctx.lineTo(g.parkX, g.gates[3].y + g.ch * 0.5);
+      ctx.stroke();
+      ctx.setLineDash([]);
     };
 
     const drawStructure = () => {
       const g = geom as Geom;
+      if (g.compact) {
+        drawStructureCompact(g);
+        return;
+      }
       ctx.lineWidth = 1.4;
       ctx.strokeStyle = PAL.line;
       curve(g.enIn, g.merge);
@@ -520,20 +674,31 @@ export default function PipelineStage() {
     const drawRoster = (GF: number) => {
       const g = geom as Geom;
       const r = g.roster;
-      rr(r.x, r.y, r.w, r.h, 12);
-      ctx.globalAlpha = 0.55;
-      ctx.fillStyle = PAL.panel;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-      ctx.lineWidth = 1.2;
-      ctx.strokeStyle = PAL.line;
-      ctx.stroke();
-      ctx.font = "600 8.5px " + MONO;
-      ctx.textAlign = "left";
-      ctx.textBaseline = "alphabetic";
-      ctx.fillStyle = PAL.muted;
-      ctx.fillText("TEAM ROSTER", r.x + 10, r.y + 14);
-      dot(r.x + r.w - 12, r.y + 10, 2.6, PAL.sage);
+      if (g.compact) {
+        // bottom row: a label above four slots, no heavy box
+        const y0 = r.y - g.ch / 2;
+        ctx.font = "600 10px " + MONO;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = PAL.muted;
+        ctx.fillText("TEAM ROSTER", r.x - g.cw / 2, y0 - 9);
+        dot(r.x + r.w * (ROSTER_SLOTS - 1) + g.cw / 2, y0 - 12.5, 2.6, PAL.sage);
+      } else {
+        rr(r.x, r.y, r.w, r.h, 12);
+        ctx.globalAlpha = 0.55;
+        ctx.fillStyle = PAL.panel;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = PAL.line;
+        ctx.stroke();
+        ctx.font = "600 8.5px " + MONO;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = PAL.muted;
+        ctx.fillText("TEAM ROSTER", r.x + 10, r.y + 14);
+        dot(r.x + r.w - 12, r.y + 10, 2.6, PAL.sage);
+      }
       for (let i = 0; i < ROSTER_SLOTS; i++) {
         const c = rosterSlot(i);
         let filled: RosterEntry | null = null;
@@ -670,7 +835,7 @@ export default function PipelineStage() {
       globalFade = 1;
       draw();
       const g = geom as Geom;
-      drawCard(g.gates[2].x, g.spineY, "MK", "ES", 1, "active");
+      drawCard(g.gates[2].x, g.gates[2].y, "MK", "ES", 1, "active");
       if (caption) caption.textContent = "interviewed";
     };
 
@@ -690,8 +855,10 @@ export default function PipelineStage() {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
       H = Math.max(1, Math.round(rect.height));
+      compact = W < 520;
       fitCanvas(canvas, ctx, W, H);
       layout();
+      positionHotspots();
       if (reduced()) resolveStatic();
       else {
         resetState();
@@ -729,9 +896,10 @@ export default function PipelineStage() {
     // gate hotspots: hover or focus highlights the gate and raises its plate
     const gateCleanups: Array<() => void> = [];
     const hotspots = frame
-      ? frame.querySelectorAll<HTMLAnchorElement>(".gate-hotspot")
-      : null;
-    hotspots?.forEach((h) => {
+      ? Array.from(frame.querySelectorAll<HTMLAnchorElement>(".gate-hotspot"))
+      : [];
+    const origLeft = hotspots.map((h) => h.style.left);
+    hotspots.forEach((h) => {
       const gi = parseInt(h.getAttribute("data-gate") || "0", 10);
       const on = () => {
         activeGate = gi;
@@ -752,6 +920,27 @@ export default function PipelineStage() {
         h.removeEventListener("blur", off);
       });
     });
+    // keep the anchors aligned with the drawn gates in either layout. In the
+    // portrait compact mode the gates stack, so the hotspots become horizontal
+    // bands crossing the vertical spine at each gate's y.
+    const positionHotspots = () => {
+      hotspots.forEach((h) => {
+        const gi = parseInt(h.getAttribute("data-gate") || "0", 10);
+        if (compact) {
+          h.style.left = "50%";
+          h.style.top = (GATEY_C[gi] * 100).toFixed(2) + "%";
+          h.style.width = "66%";
+          h.style.height = "12%";
+          h.style.transform = "translate(-50%, -50%)";
+        } else {
+          h.style.left = origLeft[gi];
+          h.style.top = "";
+          h.style.width = "";
+          h.style.height = "";
+          h.style.transform = "";
+        }
+      });
+    };
 
     // card hover: raise a readout plate for any visible card
     const onCanvasMove = (e: PointerEvent) => {

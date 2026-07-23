@@ -73,6 +73,17 @@
   position: relative;
   z-index: 1;
 }
+/* two purpose-made compositions live in one component; show exactly one so the
+   hidden svg never intersects and never runs its rAF loop */
+.pg-construction .sp-portrait { display: none; }
+/* portrait type is sized up so no rendered string falls below ~10px CSS */
+.pg-construction .sp-portrait .chip-label { font-size: 11px; }
+.pg-construction .sp-portrait .lane-date { font-size: 11px; letter-spacing: 0.08em; }
+.pg-construction .sp-portrait .plot-id { font-size: 11px; }
+.pg-construction .sp-portrait .sp-head { font-size: 11px; letter-spacing: 0.14em; }
+.pg-construction .sp-portrait .chip-pill-id { font-size: 10px; }
+.pg-construction .sp-portrait .plate-title { font-size: 11px; }
+.pg-construction .sp-portrait .plate-meta { font-size: 9.5px; }
 .pg-construction .sig-fallback {
   position: absolute;
   inset: 0;
@@ -175,4 +186,20 @@
 @media (max-width: 640px) {
   .pg-construction .cap-grid { grid-template-columns: 1fr; }
   .pg-construction .cap-card:last-child { grid-column: auto; }
+}
+/* phone: swap to the portrait plan; it sets its own portrait box (no letterbox) */
+@media (max-width: 560px) {
+  .pg-construction .sp-desktop { display: none; }
+  .pg-construction .sp-portrait {
+    display: block;
+    height: auto;
+    aspect-ratio: 340 / 578;
+  }
+  .pg-construction .sig-tag {
+    max-width: 64%;
+    line-height: 1.5;
+    background: color-mix(in srgb, var(--ground) 52%, transparent);
+    border-radius: 9px;
+    padding: 6px 10px;
+  }
 }

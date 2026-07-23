@@ -14,6 +14,19 @@
   width: 100%;
   height: clamp(360px, 44vw, 520px);
 }
+/* Portrait hero: the compact canvas composition (two card columns feeding a
+   central spine into a full-width panel) is designed tall, not letterboxed.
+   Kept in step with the compact geometry breakpoint (measured width < 560). */
+@media (max-width: 600px) {
+  .pg-home #heroCanvas {
+    height: clamp(432px, 122vw, 500px);
+  }
+  /* the compact panel already carries the "One system" title, so the status
+     caption is redundant here and would overlap the last lane; hide it */
+  .pg-home .stage-caption {
+    display: none;
+  }
+}
 
 /* ============================ COMPARE: CARDON VS THE USUAL STACK ============================
    Page-scoped comparison block. The section/kicker/section-sub/container
@@ -127,6 +140,198 @@
 }
 .pg-home .cmp-foot a:hover {
   border-color: var(--primary);
+}
+
+/* ============================ SECTOR LIST (mobile map) ============================
+   The geographic SectorMap canvas is landscape and its always-on station labels
+   collide badly in portrait. On narrow screens we swap it for a vertical list of
+   the same stations and case studies. Only one of .map-stage / .sector-list is
+   ever displayed (see the media query below), so the accessibility tree has no
+   duplicates and the hidden map never runs its canvas loop. */
+.pg-home .sector-list {
+  display: none;
+}
+.pg-home .sl-hub {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 7px 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.pg-home .sl-hub svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}
+.pg-home .sl-head {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 8px 0 2px;
+}
+.pg-home .sector-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--scrim), transparent);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.pg-home .sector-card.focus {
+  border-color: var(--primary-dim);
+  background: linear-gradient(
+    180deg,
+    var(--primary-faint),
+    color-mix(in srgb, var(--panel) 62%, transparent)
+  );
+}
+.pg-home .sector-card:hover,
+.pg-home .sector-card:focus-visible {
+  border-color: var(--primary-dim);
+  box-shadow: 0 0 0 1px var(--primary-faint);
+}
+.pg-home .sc-mark {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+/* neutralize the map-absolute positioning so the marker sits inline */
+.pg-home .sector-card .marker-core {
+  position: static;
+  transform: none;
+  width: 40px;
+  height: 40px;
+}
+.pg-home .sector-card:hover .mk-core,
+.pg-home .sector-card:focus-visible .mk-core {
+  fill: var(--primary-bright);
+}
+.pg-home .sc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.pg-home .sc-badge {
+  align-self: flex-start;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--energy);
+  border: 1px solid color-mix(in srgb, var(--energy) 45%, transparent);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-bottom: 2px;
+}
+.pg-home .sc-name {
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  line-height: 1.25;
+}
+.pg-home .sc-detail {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--primary);
+  line-height: 1.3;
+}
+.pg-home .sector-card.survey .mk-ring-out {
+  stroke: var(--secondary);
+  stroke-dasharray: 3 4;
+}
+.pg-home .sector-card.survey .mk-ring-in {
+  stroke: var(--muted);
+  stroke-dasharray: 2 3;
+}
+.pg-home .sector-card.survey .mk-core {
+  fill: var(--secondary);
+}
+.pg-home .sector-card.survey .sc-detail {
+  color: var(--secondary);
+}
+.pg-home .sl-cases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 2px 0 4px 54px;
+}
+.pg-home .sl-case {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  min-height: 40px;
+  transition: border-color 0.2s ease;
+}
+.pg-home .sl-case:hover,
+.pg-home .sl-case:focus-visible {
+  border-color: var(--primary-dim);
+}
+.pg-home .sl-case .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--energy);
+  flex-shrink: 0;
+}
+.pg-home .sl-case b {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .pg-home .map-stage {
+    display: none;
+  }
+  .pg-home .sector-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: clamp(22px, 5vw, 32px);
+  }
+}
+
+/* ============================ OPS COMPRESSION: mobile twin ============================
+   The desktop ops SVG (viewBox 520 wide) shrinks its text below the legible
+   floor in a phone column. A portrait twin (viewBox 360x300, larger type) is
+   swapped in on narrow screens; the JS drives both, CSS shows one. */
+.pg-home .ops-svg-m {
+  display: none;
+}
+@media (max-width: 600px) {
+  .pg-home .ops-svg-d {
+    display: none;
+  }
+  .pg-home .ops-svg-m {
+    display: block;
+  }
+  .pg-home .ops-vis {
+    padding: 18px 16px 18px;
+  }
 }
 
 @media (max-width: 640px) {

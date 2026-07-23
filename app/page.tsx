@@ -116,7 +116,7 @@ export default function Home() {
             <div className="split-vis">
               <PlayOnceVis className="demand-vis" tag="measured before optimized">
                 <svg
-                  className="demand-svg"
+                  className="demand-svg demand-svg-d"
                   viewBox="0 0 520 300"
                   role="img"
                   aria-label="A single reading is checked against a measured baseline and settles to a verified state."

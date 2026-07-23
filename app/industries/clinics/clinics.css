@@ -203,6 +203,13 @@
 @media (max-width:560px){
   .pg-clinics .pricing-note{grid-template-columns:1fr;gap:8px;}
 }
+/* Portrait phones: the schedule canvas switches to a purpose-built vertical
+   composition (ClinicSchedule.tsx, compact branch) with the two emitters at the
+   top and the week grid using the full width below. Give it a taller,
+   phone-shaped canvas. Matches the JS compact breakpoint (measured width < 520). */
+@media (max-width:568px){
+  .pg-clinics #clinicCanvas{height:clamp(478px,134vw,568px);}
+}
 @media (max-width:400px){
   .pg-clinics .cal-plate{max-width:150px;}
 }

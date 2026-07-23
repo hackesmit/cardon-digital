@@ -410,19 +410,19 @@ export default function EnkantoCaseStudy() {
                     </text>
 
                     <line className="e-divider" x1="392" y1="54" x2="392" y2="246" />
-                    <text className="e-lab mono" x="410" y="82" fontSize="10.5" letterSpacing="1">
+                    <text className="e-lab mono" x="404" y="82" fontSize="9.5" letterSpacing="0.3">
                       ACROSS THE BORDER
                     </text>
-                    <circle className="e-guest" cx="424" cy="150" r="6" />
-                    <path className="e-carry" d="M432 150 L 476 150" />
+                    <circle className="e-guest" cx="418" cy="150" r="6" />
+                    <path className="e-carry" d="M426 150 L 466 150" />
                     <path
                       className="e-home"
-                      d="M480 150 L 492 140 L 504 150 M484 148 L484 162 L500 162 L500 148"
+                      d="M470 150 L 482 140 L 494 150 M474 148 L474 162 L490 162 L490 148"
                     />
-                    <text className="e-muted mono" x="410" y="192" fontSize="10.5">
+                    <text className="e-muted mono" x="404" y="192" fontSize="9.5">
                       carried in person,
                     </text>
-                    <text className="e-muted mono" x="410" y="208" fontSize="10.5">
+                    <text className="e-muted mono" x="404" y="208" fontSize="9.5">
                       personal allowance
                     </text>
                   </svg>

@@ -452,8 +452,8 @@ export default function MonteXanicCaseStudy() {
                       about 2 min
                     </text>
                     <g className="fin-badge">
-                      <rect className="fin-badge-box" x="34" y="130" width="178" height="34" rx="8" />
-                      <text className="fin-badge-text" x="50" y="152" fontSize="14" fontWeight="600">
+                      <rect className="fin-badge-box" x="34" y="130" width="204" height="34" rx="8" />
+                      <text className="fin-badge-text" x="50" y="152" fontSize="13" fontWeight="600">
                         about 97 percent less
                       </text>
                     </g>

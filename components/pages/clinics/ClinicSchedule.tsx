@@ -53,6 +53,9 @@ type Geo = {
   chipW: number;
   chipH: number;
   headerH: number;
+  compact: boolean;
+  gateY: number;
+  railEndY: number;
 };
 
 type Slot = {
@@ -127,6 +130,7 @@ export default function ClinicSchedule() {
     let onscreen = false;
     let last = 0;
     let T = 0;
+    let compact = false;
 
     /* ---------------- palette read from the active theme tokens ---------------- */
     const WHITE: RGB = [255, 255, 255];
@@ -317,6 +321,49 @@ export default function ClinicSchedule() {
     /* ---------------- geometry, recomputed on resize ---------------- */
     let G: Geo | null = null;
     const layout = () => {
+      const headerH = Math.max(14, Math.min(22, H * 0.05));
+      if (compact) {
+        // portrait: two emitters at the top, a short vertical intake line with
+        // the confirm gate, then the week grid uses the full width below so the
+        // five day columns are wide enough to carry real EN / ES appointments.
+        const emX = W * 0.265;
+        const enY = H * 0.105;
+        const mX = W * 0.5;
+        const mY = H * 0.17;
+        const gateY = H * 0.315;
+        const railEndY = H * 0.39;
+        const calX0 = W * 0.045;
+        const calX1 = W * 0.955;
+        const calTop = H * 0.435;
+        const calBot = H * 0.955;
+        const gridTop = calTop + headerH;
+        const chipW = Math.max(40, Math.min(56, W * 0.13));
+        const chipH = Math.max(16, Math.min(22, chipW * 0.4));
+        G = {
+          emX,
+          enY,
+          esY: enY,
+          mX,
+          mY,
+          gateX: mX,
+          railEnd: mX,
+          calX0,
+          calX1,
+          calTop,
+          gridTop,
+          calBot,
+          cellW: (calX1 - calX0) / COLS,
+          cellH: (calBot - gridTop) / ROWS,
+          chipW,
+          chipH,
+          headerH,
+          compact: true,
+          gateY,
+          railEndY,
+        };
+        positionHotspots();
+        return;
+      }
       const emX = Math.max(26, W * 0.095);
       const enY = H * 0.3;
       const esY = H * 0.7;
@@ -328,7 +375,6 @@ export default function ClinicSchedule() {
       const calX1 = W * 0.965;
       const calTop = H * 0.135;
       const calBot = H * 0.905;
-      const headerH = Math.max(14, Math.min(22, H * 0.05));
       const gridTop = calTop + headerH;
       const cellW = (calX1 - calX0) / COLS;
       const cellH = (calBot - gridTop) / ROWS;
@@ -352,6 +398,9 @@ export default function ClinicSchedule() {
         chipW,
         chipH,
         headerH,
+        compact: false,
+        gateY: mY,
+        railEndY: mY,
       };
       positionHotspots();
     };
@@ -361,6 +410,7 @@ export default function ClinicSchedule() {
     };
     const emitterPos = (ch: Channel) => {
       const g = G!;
+      if (g.compact) return { x: ch === "EN" ? g.emX : W - g.emX, y: g.enY };
       return { x: g.emX, y: ch === "EN" ? g.enY : g.esY };
     };
 
@@ -507,10 +557,16 @@ export default function ClinicSchedule() {
       rr(ctx!, x + pad, y + pad, Math.max(2.5, bw * 0.1), bh, 2);
       ctx!.fill();
       /* a small settled tick + label if the cell is wide enough */
-      if (bw > 44) {
+      if (bw > 40) {
         ctx!.fillStyle = PAL.oasisBright;
         ctx!.font =
-          "600 " + Math.max(7, Math.min(9, bw * 0.16)).toFixed(0) + "px " + MONO;
+          "600 " +
+          (compact
+            ? Math.max(10, Math.min(13, bw * 0.22))
+            : Math.max(7, Math.min(9, bw * 0.16))
+          ).toFixed(0) +
+          "px " +
+          MONO;
         ctx!.textAlign = "left";
         ctx!.textBaseline = "middle";
         ctx!.fillText(channel, x + pad + bw * 0.2, y + g.cellH / 2);
@@ -529,26 +585,48 @@ export default function ClinicSchedule() {
       col: string
     ) => {
       const g = G!;
-      const w = Math.max(26, g.chipW * 0.62);
-      const h = Math.max(15, g.chipH + 2);
+      const w = compact ? Math.max(46, g.chipW * 0.84) : Math.max(26, g.chipW * 0.62);
+      const h = compact ? Math.max(21, g.chipH + 4) : Math.max(15, g.chipH + 2);
       rr(ctx!, p.x - w / 2, p.y - h / 2, w, h, 5);
       ctx!.fillStyle = PAL.card;
       ctx!.fill();
       ctx!.strokeStyle = col;
-      ctx!.lineWidth = 1.3;
+      ctx!.lineWidth = 1.4;
       ctx!.stroke();
       ctx!.fillStyle = col;
       ctx!.beginPath();
-      ctx!.arc(p.x - w / 2 + 7, p.y, 2.6, 0, Math.PI * 2);
+      ctx!.arc(p.x - w / 2 + (compact ? 9 : 7), p.y, compact ? 3 : 2.6, 0, Math.PI * 2);
       ctx!.fill();
       ctx!.fillStyle = PAL.ink;
-      ctx!.font = "600 9px " + MONO;
+      ctx!.font = "600 " + (compact ? 11 : 9) + "px " + MONO;
       ctx!.textAlign = "left";
       ctx!.textBaseline = "middle";
-      ctx!.fillText(label, p.x - w / 2 + 13, p.y + 0.5);
+      ctx!.fillText(label, p.x - w / 2 + (compact ? 17 : 13), p.y + 0.5);
     };
     const drawGate = () => {
       const g = G!;
+      if (g.compact) {
+        const gx = g.mX;
+        const gy = g.gateY;
+        const gh = Math.max(15, g.chipH + 7);
+        ctx!.strokeStyle = PAL.secondarySoft;
+        ctx!.lineWidth = 1.6;
+        ctx!.lineCap = "round";
+        ctx!.beginPath();
+        ctx!.moveTo(gx - gh, gy);
+        ctx!.lineTo(gx - 4, gy);
+        ctx!.stroke();
+        ctx!.beginPath();
+        ctx!.moveTo(gx + 4, gy);
+        ctx!.lineTo(gx + gh, gy);
+        ctx!.stroke();
+        ctx!.fillStyle = PAL.muted;
+        ctx!.font = "600 10px " + MONO;
+        ctx!.textAlign = "left";
+        ctx!.textBaseline = "middle";
+        ctx!.fillText("confirm", gx + gh + 7, gy);
+        return;
+      }
       const gx = g.gateX;
       const gy = g.mY;
       const gh = Math.max(12, g.chipH + 4);
@@ -574,6 +652,37 @@ export default function ClinicSchedule() {
       const en = emitterPos("EN");
       const es = emitterPos("ES");
       const M = { x: g.mX, y: g.mY };
+      if (g.compact) {
+        /* two feeds from the top emitters curving down into the merge node */
+        ctx!.lineWidth = 1.5;
+        ctx!.lineCap = "round";
+        const midY = (en.y + M.y) / 2;
+        ctx!.strokeStyle = rgba(PAL.primaryRgb, 0.3);
+        ctx!.beginPath();
+        ctx!.moveTo(en.x, en.y + g.chipH * 0.5);
+        ctx!.bezierCurveTo(en.x, midY, M.x, midY, M.x, M.y);
+        ctx!.stroke();
+        ctx!.strokeStyle = rgba(PAL.secondaryRgb, 0.3);
+        ctx!.beginPath();
+        ctx!.moveTo(es.x, es.y + g.chipH * 0.5);
+        ctx!.bezierCurveTo(es.x, midY, M.x, midY, M.x, M.y);
+        ctx!.stroke();
+        /* the single vertical intake line down toward the week grid, oasis */
+        ctx!.strokeStyle = PAL.oasisDim;
+        ctx!.lineWidth = 2;
+        ctx!.beginPath();
+        ctx!.moveTo(M.x, M.y);
+        ctx!.lineTo(g.mX, g.railEndY);
+        ctx!.stroke();
+        ctx!.fillStyle = PAL.oasis;
+        ctx!.beginPath();
+        ctx!.arc(M.x, M.y, 3.4, 0, Math.PI * 2);
+        ctx!.fill();
+        drawEmitter(en, "EN", PAL.primary);
+        drawEmitter(es, "ES", PAL.secondary);
+        drawGate();
+        return;
+      }
       /* two faint feed curves from the emitters converging at the merge node */
       ctx!.lineWidth = 1.4;
       ctx!.lineCap = "round";
@@ -624,13 +733,13 @@ export default function ClinicSchedule() {
       ctx!.stroke();
       ctx!.fillStyle = col;
       ctx!.beginPath();
-      ctx!.arc(x - w / 2 + 6, y, 2.2, 0, Math.PI * 2);
+      ctx!.arc(x - w / 2 + (compact ? 8 : 6), y, compact ? 2.6 : 2.2, 0, Math.PI * 2);
       ctx!.fill();
       ctx!.fillStyle = PAL.dim;
-      ctx!.font = "600 7px " + MONO;
+      ctx!.font = "600 " + (compact ? 9 : 7) + "px " + MONO;
       ctx!.textAlign = "left";
       ctx!.textBaseline = "middle";
-      ctx!.fillText(glyph, x - w / 2 + 11, y + 0.5);
+      ctx!.fillText(glyph, x - w / 2 + (compact ? 14 : 11), y + 0.5);
       ctx!.restore();
     };
     const drawPing = (gx: number, gy: number, prog: number) => {
@@ -646,13 +755,13 @@ export default function ClinicSchedule() {
       const fade = Math.sin(e * Math.PI);
       ctx!.globalAlpha = fade;
       ctx!.fillStyle = PAL.oasisBright;
-      ctx!.font = "600 8px " + MONO;
+      ctx!.font = "600 " + (compact ? 10 : 8) + "px " + MONO;
       ctx!.textAlign = "center";
       ctx!.textBaseline = "alphabetic";
-      ctx!.fillText("reminder", gx, gy - g.chipH - 8);
+      ctx!.fillText("reminder", gx, gy - g.chipH - (compact ? 10 : 8));
       ctx!.fillStyle = PAL.muted;
-      ctx!.font = "600 7px " + MONO;
-      ctx!.fillText("no-show prevented", gx, gy - g.chipH - 19);
+      ctx!.font = "600 " + (compact ? 9 : 7) + "px " + MONO;
+      ctx!.fillText("no-show prevented", gx, gy - g.chipH - (compact ? 23 : 19));
       ctx!.globalAlpha = 1;
     };
 
@@ -662,8 +771,12 @@ export default function ClinicSchedule() {
       const e = T - ch.spawnT;
       if (e < 0) return null;
       const M = { x: g.mX, y: g.mY };
-      const gate = { x: g.gateX, y: g.mY };
-      const rend = { x: g.railEnd, y: g.mY };
+      const gate = g.compact
+        ? { x: g.mX, y: g.gateY }
+        : { x: g.gateX, y: g.mY };
+      const rend = g.compact
+        ? { x: g.mX, y: g.railEndY }
+        : { x: g.railEnd, y: g.mY };
       const start = emitterPos(ch.channel);
       const C = cellCenter(ch.cell.c, ch.cell.r);
       const t1 = D1;
@@ -743,7 +856,8 @@ export default function ClinicSchedule() {
           const ch = CHIPS[k];
           const st = chipState(ch);
           if (!st || st.docked) continue;
-          if (st.confirmProg >= 0) drawPing(G!.gateX, G!.mY, st.confirmProg);
+          if (st.confirmProg >= 0)
+            drawPing(G!.gateX, G!.compact ? G!.gateY : G!.mY, st.confirmProg);
           drawChip(st.x, st.y, ch.channel, ch.glyph);
         }
         /* gentle fade at the loop seam so the reset is never jarring */
@@ -764,6 +878,7 @@ export default function ClinicSchedule() {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
       H = Math.max(1, Math.round(rect.height));
+      compact = W < 520;
       ctx = fitCanvas(canvas, W, H);
       layout();
       if (reduced()) render(true);
