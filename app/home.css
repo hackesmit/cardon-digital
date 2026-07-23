@@ -315,6 +315,50 @@
   }
 }
 
+/* ============================ MOBILE SECTION POLISH ============================ */
+@media (max-width: 600px) {
+  /* the large diagnostic CTA runs edge-to-edge with its long label on a phone;
+     give it room as a full-width tap target with a comfortable hit height */
+  .pg-home .diag-actions {
+    width: 100%;
+  }
+  .pg-home .diag-actions .cta-lg {
+    width: 100%;
+    padding: 15px 18px;
+    font-size: 1rem;
+    /* the label is long; let it wrap to two centered lines rather than
+       press against the pill edges */
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+  }
+}
+
+/* ============================ DEMAND: mobile twin ============================
+   The desktop demand SVG (viewBox 520 wide) renders its labels too small in a
+   phone column. A portrait twin (viewBox 360x340, larger type) is swapped in on
+   narrow screens. It reuses the same CSS-driven play/settle animation; only the
+   knob's travel distance is geometry-specific, overridden below. */
+.pg-home .demand-svg-m {
+  display: none;
+}
+@media (max-width: 600px) {
+  .pg-home .demand-svg-d {
+    display: none;
+  }
+  .pg-home .demand-svg-m {
+    display: block;
+  }
+  /* resolved / playing: knob travels start(30) to the measured gate(255) */
+  .pg-home .demand-vis .demand-svg-m .dm-knob {
+    transform: translateX(225px);
+  }
+  /* before state: knob waits at the start */
+  .pg-home .demand-vis[data-anim="pre"] .demand-svg-m .dm-knob {
+    transform: translateX(0);
+  }
+}
+
 /* ============================ OPS COMPRESSION: mobile twin ============================
    The desktop ops SVG (viewBox 520 wide) shrinks its text below the legible
    floor in a phone column. A portrait twin (viewBox 360x300, larger type) is

@@ -831,7 +831,7 @@ export default function VineField() {
       ctx.font = "600 10px " + MONO;
       ctx.fillStyle = PAL.muted;
       ctx.fillText(
-        full ? "todo en una vista" : "reporting",
+        full ? "all in one view" : "reporting",
         g.bcx,
         Math.min(H - 8, g.bTop + g.bh + 18)
       );
