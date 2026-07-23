@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const links = [
   { href: "/work/monte-xanic", label: "Work" },
@@ -33,6 +34,15 @@ export default function Nav() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = prev;
+    };
   }, [open]);
 
   function toggleMode() {
@@ -109,6 +119,16 @@ export default function Nav() {
           >
             Menu
           </button>
+          {open &&
+            createPortal(
+              <button
+                className="nav-scrim"
+                type="button"
+                aria-label="Close menu"
+                onClick={() => setOpen(false)}
+              />,
+              document.body,
+            )}
           <div className={"nav-menu" + (open ? " open" : "")} id="nav-menu">
             <ul className="nav-list">
               {links.map((l) => (
