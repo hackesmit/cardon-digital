@@ -127,6 +127,13 @@
 .pg-restaurants .diag-price b{color:var(--accent-bright);}
 .pg-restaurants .spec-dot{background:var(--accent);}
 
+/* portrait phones: a taller, phone-shaped floor-plan canvas so the clock strip
+   (dropped below the tag in FloorPlan.tsx's compact branch), the room, and the
+   covers band all have vertical room. Matches the JS compact breakpoint. */
+@media (max-width:568px){
+  .pg-restaurants #floorCanvas{height:clamp(452px,124vw,560px);}
+}
+
 /* page-specific small-screen tuning */
 @media (max-width:400px){
   .pg-restaurants .table-plate{max-width:150px;}

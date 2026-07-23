@@ -464,7 +464,7 @@ export default function FloorPlan() {
       ctx.lineWidth = 1.4;
       ctx.lineCap = "round";
       line(ctx, G.x0, G.clockY, G.x1, G.clockY);
-      ctx.font = "600 9px " + MONO;
+      ctx.font = "600 " + (compact ? 10 : 9) + "px " + MONO;
       ctx.textBaseline = "alphabetic";
       for (let h = 0; h <= 6; h++) {
         const m = h * 60;
@@ -472,9 +472,13 @@ export default function FloorPlan() {
         ctx.strokeStyle = PAL.lineSoft;
         ctx.lineWidth = 1.4;
         line(ctx, x, G.clockY - 4, x, G.clockY + 4);
-        ctx.fillStyle = PAL.muted;
-        ctx.textAlign = "center";
-        ctx.fillText(17 + h + ":00", x, G.clockY - 10);
+        /* narrow screens: keep every hour tick but label only every other hour
+           (17, 19, 21, 23) so the labels never collide */
+        if (!compact || h % 2 === 0) {
+          ctx.fillStyle = PAL.muted;
+          ctx.textAlign = "center";
+          ctx.fillText(17 + h + ":00", x, G.clockY - 10);
+        }
       }
       /* playhead */
       const px = timeX(t);
@@ -541,7 +545,7 @@ export default function FloorPlan() {
     const drawLoad = (t: number) => {
       const n = Math.max(0, Math.min(SERVICE, Math.floor(t)));
       /* label + baseline */
-      ctx.font = "600 9px " + MONO;
+      ctx.font = "600 " + (compact ? 10 : 9) + "px " + MONO;
       ctx.textBaseline = "alphabetic";
       ctx.textAlign = "left";
       ctx.fillStyle = PAL.muted;
@@ -615,7 +619,7 @@ export default function FloorPlan() {
         ctx.textAlign = leftAnchor ? "left" : "right";
         ctx.textBaseline = "alphabetic";
         ctx.fillText(
-          "the rush, visible an hour early",
+          compact ? "rush, an hour early" : "the rush, visible an hour early",
           leftAnchor ? rx + 7 : rx - 7,
           ly
         );
@@ -709,6 +713,7 @@ export default function FloorPlan() {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
       H = Math.max(1, Math.round(rect.height));
+      compact = W < 520;
       ctx = fitCanvas(canvas, W, H);
       layout();
       if (reduced() || !running) resolved();
