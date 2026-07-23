@@ -498,90 +498,94 @@ export default function SectorMap() {
 
       <span className="sl-head mono">Stations built</span>
 
-      <Link
-        className="sector-card focus"
-        href="/industries/winery"
-        aria-label="Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page."
-      >
-        <span className="sc-mark">
-          <MarkerCore full />
-        </span>
-        <span className="sc-body">
-          <span className="sc-badge">Focus terrain</span>
-          <span className="sc-name">Winery / Valle de Guadalupe</span>
-          <span className="sc-detail">harvest and finances, one view</span>
-        </span>
-      </Link>
+      <div className="sl-grid">
+        <Link
+          className="sector-card focus"
+          href="/industries/winery"
+          aria-label="Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page."
+        >
+          <span className="sc-mark">
+            <MarkerCore full />
+          </span>
+          <span className="sc-body">
+            <span className="sc-badge">Focus terrain</span>
+            <span className="sc-name">Winery / Valle de Guadalupe</span>
+            <span className="sc-detail">harvest and finances, one view</span>
+          </span>
+        </Link>
 
-      <div className="sl-cases">
-        <Link className="sl-case" href="/work/monte-xanic" aria-label="Read the Monte Xanic case study, from berry to bottle.">
-          <span className="dot" aria-hidden="true" />
-          <span>Case study: <b>Monte Xanic</b></span>
+        <Link
+          className="sector-card"
+          href="/industries/construction"
+          aria-label="Construction and Logistics. Field to office, one system. Open the logistics page."
+        >
+          <span className="sc-mark">
+            <MarkerCore full />
+          </span>
+          <span className="sc-body">
+            <span className="sc-name">Construction / Logistics</span>
+            <span className="sc-detail">field to office, one system</span>
+          </span>
         </Link>
-        <Link className="sl-case" href="/work/enkanto" aria-label="Read the Vinedo En'kanto case study, the commerce side.">
-          <span className="dot" aria-hidden="true" />
-          <span>Case study: <b>En&apos;kanto</b></span>
+
+        <Link
+          className="sector-card"
+          href="/industries/hiring"
+          aria-label="Hiring and HR. From first click to hire. Open the hiring page."
+        >
+          <span className="sc-mark">
+            <MarkerCore full />
+          </span>
+          <span className="sc-body">
+            <span className="sc-name">Hiring / HR</span>
+            <span className="sc-detail">from first click to hire</span>
+          </span>
         </Link>
+
+        <div className="sl-cases">
+          <Link className="sl-case" href="/work/monte-xanic" aria-label="Read the Monte Xanic case study, from berry to bottle.">
+            <span className="dot" aria-hidden="true" />
+            <span>Case study: <b>Monte Xanic</b></span>
+          </Link>
+          <Link className="sl-case" href="/work/enkanto" aria-label="Read the Vinedo En'kanto case study, the commerce side.">
+            <span className="dot" aria-hidden="true" />
+            <span>Case study: <b>En&apos;kanto</b></span>
+          </Link>
+        </div>
       </div>
-
-      <Link
-        className="sector-card"
-        href="/industries/construction"
-        aria-label="Construction and Logistics. Field to office, one system. Open the logistics page."
-      >
-        <span className="sc-mark">
-          <MarkerCore full />
-        </span>
-        <span className="sc-body">
-          <span className="sc-name">Construction / Logistics</span>
-          <span className="sc-detail">field to office, one system</span>
-        </span>
-      </Link>
-
-      <Link
-        className="sector-card"
-        href="/industries/hiring"
-        aria-label="Hiring and HR. From first click to hire. Open the hiring page."
-      >
-        <span className="sc-mark">
-          <MarkerCore full />
-        </span>
-        <span className="sc-body">
-          <span className="sc-name">Hiring / HR</span>
-          <span className="sc-detail">from first click to hire</span>
-        </span>
-      </Link>
 
       <span className="sl-head mono">Survey sites</span>
 
-      <Link
-        className="sector-card survey"
-        href="/industries/clinics"
-        aria-label="Clinics and healthcare. Focus terrain: defend and recapture patient flow. Open the clinics page."
-      >
-        <span className="sc-mark">
-          <MarkerCore full={false} />
-        </span>
-        <span className="sc-body">
-          <span className="sc-badge">Focus terrain</span>
-          <span className="sc-name">Clinics / Healthcare</span>
-          <span className="sc-detail">defend and recapture patient flow</span>
-        </span>
-      </Link>
+      <div className="sl-grid">
+        <Link
+          className="sector-card survey"
+          href="/industries/clinics"
+          aria-label="Clinics and healthcare. Focus terrain: defend and recapture patient flow. Open the clinics page."
+        >
+          <span className="sc-mark">
+            <MarkerCore full={false} />
+          </span>
+          <span className="sc-body">
+            <span className="sc-badge">Focus terrain</span>
+            <span className="sc-name">Clinics / Healthcare</span>
+            <span className="sc-detail">defend and recapture patient flow</span>
+          </span>
+        </Link>
 
-      <Link
-        className="sector-card survey"
-        href="/industries/restaurants"
-        aria-label="Restaurants and hospitality. Terrain we are surveying next. Open the restaurants page."
-      >
-        <span className="sc-mark">
-          <MarkerCore full={false} />
-        </span>
-        <span className="sc-body">
-          <span className="sc-name">Restaurants / Hospitality</span>
-          <span className="sc-detail">surveying this terrain</span>
-        </span>
-      </Link>
+        <Link
+          className="sector-card survey"
+          href="/industries/restaurants"
+          aria-label="Restaurants and hospitality. Terrain we are surveying next. Open the restaurants page."
+        >
+          <span className="sc-mark">
+            <MarkerCore full={false} />
+          </span>
+          <span className="sc-body">
+            <span className="sc-name">Restaurants / Hospitality</span>
+            <span className="sc-detail">surveying this terrain</span>
+          </span>
+        </Link>
+      </div>
     </div>
     </>
   );

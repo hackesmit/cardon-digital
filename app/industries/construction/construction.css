@@ -73,6 +73,15 @@
   position: relative;
   z-index: 1;
 }
+/* The desktop composition is a wide 600x380 plan. Keying its frame off that
+   same aspect (instead of a fixed clamp height) makes the drawing fill the
+   frame edge to edge across the dead band and up to the widest desktop, so
+   there is no letterbox band; the max-height only caps the very tall extreme. */
+.pg-construction .sp-desktop {
+  height: auto;
+  aspect-ratio: 600 / 380;
+  max-height: 600px;
+}
 /* two purpose-made compositions live in one component; show exactly one so the
    hidden svg never intersects and never runs its rAF loop */
 .pg-construction .sp-portrait { display: none; }
@@ -176,6 +185,18 @@
 }
 .pg-construction .cap-note b { color: var(--primary); font-weight: 600; }
 .pg-construction .cap-card:last-child .cap-body { max-width: 62ch; }
+
+/* ============================ FLEET TRACKING ============================ */
+.pg-construction .fleet-split { align-items: center; }
+.pg-construction .fleet-lead {
+  color: var(--text-dim);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  max-width: 52ch;
+}
+.pg-construction .fleet-frame { border-radius: 18px; }
+/* fallback height for pre-JS paint; FleetMap sets the exact height per
+   composition from the measured width (single source of truth, no dead band) */
+.pg-construction .fleet-canvas { display: block; width: 100%; height: 380px; }
 
 /* ============================ RESPONSIVE ============================ */
 @media (max-width: 900px) {

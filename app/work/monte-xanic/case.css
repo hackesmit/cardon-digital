@@ -156,7 +156,7 @@
 .pg-case .vine-marker.on{opacity:0.94;transform:translate(-50%,-100%);}
 
 .pg-case .vine-plate{
-  position:absolute;z-index:7;min-width:152px;max-width:216px;pointer-events:none;
+  position:absolute;z-index:7;min-width:158px;max-width:236px;pointer-events:none;
   background:color-mix(in srgb, var(--panel) 92%, transparent);
   border:1px solid var(--line);border-left:3px solid var(--wine-accent);
   border-radius:9px;padding:8px 11px;
@@ -166,13 +166,16 @@
 }
 .pg-case .vine-plate.show{opacity:1;}
 .pg-case .vp-name{font-family:var(--mono);font-size:0.74rem;letter-spacing:0.03em;color:var(--text);line-height:1.3;}
+.pg-case .vp-aspects{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.01em;color:var(--muted);line-height:1.35;}
 .pg-case .vp-status{font-family:var(--mono);font-size:0.66rem;letter-spacing:0.02em;color:var(--text-dim);line-height:1.3;}
-.pg-case .vp-action{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--wine-accent);line-height:1.4;margin-top:2px;}
+.pg-case .vp-action{font-family:var(--mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--wine-accent);line-height:1.35;margin-top:2px;}
 
 .pg-case .vine-legend{
-  position:absolute;top:14px;left:16px;z-index:6;max-width:64%;
-  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;
+  position:absolute;top:14px;left:16px;z-index:6;max-width:66%;
+  display:flex;flex-direction:column;gap:3px;font-family:var(--mono);
 }
+.pg-case .vine-legend-main{font-size:0.66rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;line-height:1.3;}
+.pg-case .vine-legend-sub{font-size:0.6rem;letter-spacing:0.03em;color:var(--muted);opacity:0.82;line-height:1.35;}
 .pg-case .vine-honest{
   position:absolute;bottom:12px;right:16px;z-index:6;max-width:70%;text-align:right;
   font-family:var(--mono);font-size:0.64rem;letter-spacing:0.05em;color:var(--muted);
@@ -211,6 +214,7 @@
 .pg-case .season-range:focus-visible::-moz-range-thumb{outline:2px solid var(--primary);outline-offset:2px;}
 
 /* ============================ BERRY TO BOTTLE STRIP ============================ */
+.pg-case .b2b-host{display:block;width:100%;}
 .pg-case .b2b-stage{padding:10px 8px;}
 .pg-case .b2b-note{
   position:absolute;bottom:10px;right:16px;z-index:2;
@@ -225,10 +229,10 @@
 .pg-case .b2b-ico-fill{fill:var(--muted);stroke:none;transition:fill .4s ease;}
 .pg-case .b2b-station.reached .b2b-ico{stroke:var(--wine-accent);}
 .pg-case .b2b-station.reached .b2b-ico-fill{fill:var(--wine-accent);}
-.pg-case .b2b-lab{font-family:var(--mono);font-size:15px;fill:var(--text-dim);letter-spacing:0.04em;transition:fill .4s ease;}
+.pg-case .b2b-lab{font-family:var(--mono);font-size:var(--b2b-fs,15px);fill:var(--text-dim);letter-spacing:0.04em;transition:fill .4s ease;}
 .pg-case .b2b-station.reached .b2b-lab{fill:var(--text);}
-/* mobile vertical thread: phone-legible station names (~25px CSS at 360) */
-.pg-case .b2b-lab-m{font-size:26px;letter-spacing:0.02em;}
+/* mobile vertical thread: phone-legible station names (counter-scaled ~25px) */
+.pg-case .b2b-lab-m{font-size:var(--b2b-fs,26px);letter-spacing:0.02em;}
 .pg-case .b2b-stage-m{padding:14px 10px;}
 .pg-case .b2b-halo{fill:var(--wine-faint);}
 .pg-case .b2b-dot{fill:var(--wine-accent);}
@@ -257,11 +261,18 @@
 @media (max-width:640px){
   .pg-case .callouts{grid-template-columns:1fr;}
   .pg-case .vine-stage{aspect-ratio:auto;min-height:380px;}
+  /* the berry-to-bottle stage fits its own SVG content: never a tall letterbox */
+  .pg-case .b2b-stage{min-height:0;}
   .pg-case .plot-key{font-size:0.6rem;}
-  /* keep the season scrub on one line (cool / slider / ready) at phone widths */
-  .pg-case .season-scrub{gap:10px;}
-  .pg-case .season-range{flex-basis:150px;min-width:104px;}
+  /* smaller harvest flag on phones so it stays clear of the section label */
+  .pg-case .vine-marker{width:16px;height:19px;}
+  /* keep the season scrub label + ends legible at phone widths */
+  .pg-case .season-scrub{gap:9px;}
+  .pg-case .season-range{flex-basis:140px;min-width:96px;}
+  .pg-case .ss-lab{font-size:0.62rem;letter-spacing:0.1em;}
 }
 @media (max-width:400px){
-  .pg-case .vine-plate{max-width:170px;}
+  .pg-case .vine-plate{max-width:196px;}
+  .pg-case .vine-marker{width:14px;height:17px;}
+  .pg-case .vine-legend{max-width:74%;}
 }

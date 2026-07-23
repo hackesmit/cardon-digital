@@ -132,6 +132,8 @@ export default function PipelineStage() {
     };
 
     const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
+    const clampN = (v: number, a: number, b: number) =>
+      v < a ? a : v > b ? b : v;
     const easeInOut = (t: number) => {
       t = clamp01(t);
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -266,7 +268,7 @@ export default function PipelineStage() {
         trayY: H * 0.9,
         roster: { x: slot0, y: H * 0.9, w: pitch, h: ch },
         compact: true,
-        parkX: W * 0.135,
+        parkX: W * 0.11,
       };
     };
     const rosterSlot = (slot: number): Pt => {
@@ -543,8 +545,11 @@ export default function PipelineStage() {
       ctx.moveTo(sx, g.roster.y - g.ch * 0.95);
       ctx.lineTo(sx, g.roster.y - g.ch * 0.55);
       ctx.stroke();
-      // gates: bars across the spine, name to the right
-      const gh = g.cw * 0.9;
+      // gates: bars across the spine, name to the right. The bar half-length
+      // scales with width so the gates fill the frame as it widens toward the
+      // handoff, while staying clear of the gate name on the right at every
+      // width (label always fits: gh <= 0.5W - name width - margin).
+      const gh = clampN(W * 0.5 - 92, 60, 160);
       for (let i = 0; i < 4; i++) {
         const gy = g.gates[i].y;
         const on = activeGate === i;
@@ -854,8 +859,17 @@ export default function PipelineStage() {
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
-      H = Math.max(1, Math.round(rect.height));
       compact = W < 520;
+      /* Height is authoritative here, set from the measured width: a portrait
+         box for the vertical compact composition, a wider landscape box for the
+         horizontal desktop one. Single source of truth (measured width decides
+         both composition and height) so no CSS media query can disagree. */
+      H = Math.round(
+        compact
+          ? clampN(W * 0.9 + 180, 468, 560)
+          : clampN(W * 0.46 + 23, 380, 540)
+      );
+      canvas.style.height = H + "px";
       fitCanvas(canvas, ctx, W, H);
       layout();
       positionHotspots();

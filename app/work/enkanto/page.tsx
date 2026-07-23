@@ -149,7 +149,7 @@ export default function EnkantoCaseStudy() {
                   <span className="vis-tag">empty in name, then built out</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 258"
                     role="img"
                     aria-label="An empty placeholder product card becomes a real product card with an image, name, price, and weight."
                   >
@@ -222,7 +222,7 @@ export default function EnkantoCaseStudy() {
                   <span className="vis-tag">five front doors, then one</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 238"
                     role="img"
                     aria-label="Five competing homepages resolve to one canonical page, with the sitemap and robots cleaned."
                   >
@@ -306,7 +306,7 @@ export default function EnkantoCaseStudy() {
                   <span className="vis-tag">cards and cash, one checkout</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 230"
                     role="img"
                     aria-label="Card, cash, and transfer methods feed one checkout that reaches an order placed state."
                   >
@@ -382,7 +382,7 @@ export default function EnkantoCaseStudy() {
                   <span className="vis-tag">pickup, domestic, and an honest carry-home</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 240"
                     role="img"
                     aria-label="An order splits to pickup at the winery and a domestic carrier; a separate dashed lane shows US guests carrying wine home in person under the personal allowance."
                   >
@@ -459,31 +459,31 @@ export default function EnkantoCaseStudy() {
                   <span className="vis-tag">EN and ES, one foundation</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 186"
                     role="img"
                     aria-label="English and Spanish rails converge into a single store foundation."
                   >
-                    <rect className="e-chip e-chip-live" x="40" y="88" width="70" height="40" rx="10" />
-                    <text className="e-ink mono" x="75" y="113" fontSize="15" fontWeight="600" textAnchor="middle">
+                    <rect className="e-chip e-chip-live" x="40" y="46" width="70" height="40" rx="10" />
+                    <text className="e-ink mono" x="75" y="71" fontSize="15" fontWeight="600" textAnchor="middle">
                       EN
                     </text>
-                    <rect className="e-chip e-chip-live" x="40" y="172" width="70" height="40" rx="10" />
-                    <text className="e-ink mono" x="75" y="197" fontSize="15" fontWeight="600" textAnchor="middle">
+                    <rect className="e-chip e-chip-live" x="40" y="130" width="70" height="40" rx="10" />
+                    <text className="e-ink mono" x="75" y="155" fontSize="15" fontWeight="600" textAnchor="middle">
                       ES
                     </text>
 
-                    <path className="e-conn-enk" d="M110 108 C 180 108, 200 150, 268 150" />
-                    <path className="e-conn-enk" d="M110 192 C 180 192, 200 150, 268 150" />
-                    <circle className="e-enk" cx="268" cy="150" r="3" />
+                    <path className="e-conn-enk" d="M110 66 C 180 66, 200 108, 268 108" />
+                    <path className="e-conn-enk" d="M110 150 C 180 150, 200 108, 268 108" />
+                    <circle className="e-enk" cx="268" cy="108" r="3" />
 
-                    <rect className="e-panel" x="300" y="98" width="186" height="104" rx="12" />
-                    <text className="e-ink mono" x="318" y="128" fontSize="14" fontWeight="600">
+                    <rect className="e-panel" x="300" y="56" width="198" height="104" rx="12" />
+                    <text className="e-ink mono" x="318" y="86" fontSize="14" fontWeight="600">
                       One store
                     </text>
-                    <text className="e-muted mono" x="318" y="152" fontSize="11">
+                    <text className="e-muted mono" x="318" y="110" fontSize="11">
                       read whole in both
                     </text>
-                    <text className="e-primary mono" x="318" y="182" fontSize="11">
+                    <text className="e-primary mono" x="318" y="140" fontSize="10.5">
                       one foundation, not a bolt-on
                     </text>
                   </svg>

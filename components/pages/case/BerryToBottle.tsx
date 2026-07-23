@@ -17,31 +17,60 @@ import { useEffect, useRef, useState } from "react";
  * flip restyles for free because every color comes from a CSS token class.
  */
 
-const MOBILE_MQ = "(max-width: 519.98px)";
+/* One source of truth: the MEASURED host width decides the composition (not the
+   viewport), and the supporting CSS keys off the same threshold via .b2b-host.
+   Below this the vertical (portrait) variant mounts; at or above it the
+   horizontal thread mounts. Both fit their content height at every width. */
+const MOBILE_MAX = 540;
 
 export default function BerryToBottle() {
-  // SSR + first client render is the desktop variant, so hydration matches.
-  // The component sits well below the fold, so the one-time swap to the mobile
-  // variant on a phone happens long before it scrolls into view (no flash).
-  const [mobile, setMobile] = useState(false);
+  const hostRef = useRef<HTMLDivElement | null>(null);
+  // SSR + first client render (w === null) is the horizontal variant, so
+  // hydration matches. This visual sits well below the fold, so the one-time
+  // swap to the vertical variant on a phone happens before it scrolls into view.
+  const [w, setW] = useState<number | null>(null);
 
   useEffect(() => {
-    const mq = window.matchMedia(MOBILE_MQ);
-    const on = () => setMobile(mq.matches);
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
+    const host = hostRef.current;
+    if (!host) return;
+    const measure = () => setW(host.clientWidth);
+    measure();
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => measure());
+      ro.observe(host);
+      return () => ro.disconnect();
+    }
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, []);
 
-  return mobile ? <BerryToBottleMobile /> : <BerryToBottleDesktop />;
+  const mobile = w !== null && w < MOBILE_MAX;
+  return (
+    <div className="b2b-host" ref={hostRef}>
+      {mobile ? (
+        <BerryToBottleMobile width={w as number} />
+      ) : (
+        <BerryToBottleDesktop width={w} />
+      )}
+    </div>
+  );
 }
 
 /* ============================ DESKTOP (horizontal thread) ============================ */
-function BerryToBottleDesktop() {
+function BerryToBottleDesktop({ width }: { width: number | null }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
+  /* hold the station labels near a fixed rendered size (~15px) regardless of
+     width: SVG text scales with the viewBox, so counter-scale the font. Keeps
+     the thread legible from the handoff width up, not just on desktop. The var
+     is set on the stage and inherits down to the label text. */
+  const fs = width ? Math.round((15 * 1000) / width) : 15;
   const dotRef = useRef<SVGCircleElement | null>(null);
   const haloRef = useRef<SVGCircleElement | null>(null);
   const progRef = useRef<SVGLineElement | null>(null);
+
+  useEffect(() => {
+    wrapRef.current?.style.setProperty("--b2b-fs", fs + "px");
+  }, [fs]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -247,11 +276,18 @@ function BerryToBottleDesktop() {
    the wine dot descends it, and each station lights as it is reached. Icons and
    station names sit to the right of the rail at phone-legible sizes. The taller-
    than-wide viewBox fills the frame, so there is no dead letterbox space. */
-function BerryToBottleMobile() {
+function BerryToBottleMobile({ width }: { width: number }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
+  /* counter-scale the station labels to a fixed rendered size (~25px) so the
+     portrait thread reads at phone-legible size across the narrow range. */
+  const fs = width ? Math.round((25 * 320) / width) : 26;
   const dotRef = useRef<SVGCircleElement | null>(null);
   const haloRef = useRef<SVGCircleElement | null>(null);
   const progRef = useRef<SVGLineElement | null>(null);
+
+  useEffect(() => {
+    wrapRef.current?.style.setProperty("--b2b-fs", fs + "px");
+  }, [fs]);
 
   useEffect(() => {
     const wrap = wrapRef.current;

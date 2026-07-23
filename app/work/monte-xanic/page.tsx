@@ -119,28 +119,28 @@ export default function MonteXanicCaseStudy() {
                   <span className="vis-tag">three sources, one live view</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 270"
                     role="img"
                     aria-label="A production system, spreadsheets, and field notebooks feed into one live consolidated dashboard."
                   >
                     <g>
-                      <rect className="d-card" x="20" y="70" width="118" height="30" rx="7" />
+                      <rect className="d-card" x="20" y="70" width="134" height="30" rx="7" />
                       <text className="d-lab mono" x="34" y="89" fontSize="11" letterSpacing="0.5">
                         system
                       </text>
-                      <rect className="d-card" x="20" y="135" width="118" height="30" rx="7" />
+                      <rect className="d-card" x="20" y="135" width="134" height="30" rx="7" />
                       <text className="d-lab mono" x="34" y="154" fontSize="11" letterSpacing="0.5">
                         spreadsheets
                       </text>
-                      <rect className="d-card" x="20" y="200" width="118" height="30" rx="7" />
+                      <rect className="d-card" x="20" y="200" width="134" height="30" rx="7" />
                       <text className="d-lab mono" x="34" y="219" fontSize="11" letterSpacing="0.5">
                         field notebooks
                       </text>
                     </g>
                     <g className="d-conn">
-                      <path d="M138 85 C 180 85, 190 130, 232 132" />
-                      <path d="M138 150 L 232 150" />
-                      <path d="M138 215 C 180 215, 190 172, 232 170" />
+                      <path d="M154 85 C 186 85, 196 130, 232 132" />
+                      <path d="M154 150 L 232 150" />
+                      <path d="M154 215 C 186 215, 196 172, 232 170" />
                     </g>
                     <circle className="d-primary" cx="232" cy="132" r="2.6" />
                     <circle className="d-primary" cx="232" cy="150" r="2.6" />
@@ -221,7 +221,7 @@ export default function MonteXanicCaseStudy() {
                   <span className="vis-tag">the row, bound to the land</span>
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 274"
                     role="img"
                     aria-label="A table row for section B3 is bound to its polygon on a small vineyard map."
                   >
@@ -322,7 +322,7 @@ export default function MonteXanicCaseStudy() {
                 >
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 300"
+                    viewBox="0 0 520 286"
                     role="img"
                     aria-label="A readiness curve rises to meet the Monte Xanic standard line, with a projected point marking anticipated readiness."
                   >
@@ -417,7 +417,7 @@ export default function MonteXanicCaseStudy() {
                 >
                   <svg
                     className="mini-svg"
-                    viewBox="0 0 520 210"
+                    viewBox="0 0 520 182"
                     role="img"
                     aria-label="A one hour manual workflow compresses to about two minutes and runs itself, refreshed through the day."
                   >

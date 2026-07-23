@@ -23,10 +23,11 @@
 .pg-winery .hero-copy{max-width:780px;}
 .pg-winery .hero-sub{max-width:62ch;}
 
-/* the stage tag sits above the visual and never blocks pointer input */
+/* the stage tag sits above the visual and never blocks pointer input. The
+   single status caption is drawn in-canvas (see VineField), so there is no HTML
+   overlay caption to keep in sync. */
 .pg-winery .stage-tag{z-index:4;pointer-events:none;}
 .pg-winery .stage-tag .midword{color:var(--muted);}
-.pg-winery .stage-caption{z-index:4;pointer-events:none;}
 
 /* ---- signature visual: canvas + interactive vine rows ---- */
 .pg-winery .vine-canvas{display:block;width:100%;height:clamp(380px,46vw,540px);}
@@ -184,11 +185,12 @@
 .pg-winery .photoband-fill{
   position:absolute;inset:0;
   background:
-    repeating-linear-gradient(115deg, color-mix(in srgb, var(--text) 4%, transparent) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(24deg, color-mix(in srgb, var(--ground) 10%, transparent) 0 1px, transparent 1px 4px),
-    radial-gradient(120% 140% at 18% 12%, color-mix(in srgb, var(--primary) 46%, transparent), transparent 60%),
-    radial-gradient(120% 120% at 88% 92%, color-mix(in srgb, var(--secondary) 34%, transparent), transparent 62%),
-    linear-gradient(150deg, color-mix(in srgb, var(--primary) 30%, var(--ground)) 0%, var(--panel-2) 52%, color-mix(in srgb, var(--ground) 88%, var(--secondary)) 100%);
+    repeating-linear-gradient(92deg, color-mix(in srgb, var(--secondary) 9%, transparent) 0 2px, transparent 2px 30px),
+    repeating-linear-gradient(115deg, color-mix(in srgb, var(--text) 6%, transparent) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(24deg, color-mix(in srgb, var(--ground) 14%, transparent) 0 1px, transparent 1px 4px),
+    radial-gradient(120% 140% at 18% 12%, color-mix(in srgb, var(--primary) 50%, transparent), transparent 60%),
+    radial-gradient(120% 120% at 88% 92%, color-mix(in srgb, var(--secondary) 38%, transparent), transparent 62%),
+    linear-gradient(150deg, color-mix(in srgb, var(--primary) 32%, var(--ground)) 0%, var(--panel-2) 52%, color-mix(in srgb, var(--ground) 86%, var(--secondary)) 100%);
 }
 .pg-winery .photoband-fill::after{
   content:"";position:absolute;inset:0;
@@ -212,20 +214,25 @@
 @media (max-width:640px){
   .pg-winery .cap-grid{grid-template-columns:1fr;gap:16px;}
   .pg-winery .leak-grid{grid-template-columns:1fr;gap:14px;}
-  /* portrait-appropriate photo slot: a tall panel rather than a thin band */
-  .pg-winery .photoband{aspect-ratio:4 / 5;border-radius:18px;}
+  /* portrait-appropriate photo slot: a designed, bounded band, never a giant
+     empty panel. The aspect gives it shape and the max-height caps it so the
+     duotone fill and caption always read as one object. */
+  .pg-winery .photoband{aspect-ratio:4 / 3;max-height:min(56vh,420px);border-radius:18px;}
   .pg-winery .photoband-cap{left:12px;bottom:12px;letter-spacing:0.1em;}
 }
-/* ---- hero visual: portrait compact composition (see VineField compact mode) ---- */
-@media (max-width:520px){
-  .pg-winery .vine-canvas{height:clamp(430px,120vw,540px);}
+/* ---- hero visual: portrait compact composition (see VineField compact mode).
+   The VineField JS switches to the compact composition when its measured canvas
+   width drops below 560px. With the container padding (24px each side) plus the
+   frame border, the canvas crosses 560px at a viewport of ~610px, so the
+   supporting CSS keys off max-width:609px: JS and CSS never disagree, and the
+   canvas is tall enough for the portrait composition across the whole range. */
+@media (max-width:609px){
+  .pg-winery .vine-canvas{height:clamp(430px,116vw,560px);}
   .pg-winery .stage-tag{
     top:12px;left:12px;max-width:66%;line-height:1.55;gap:0 6px;
     background:color-mix(in srgb, var(--ground) 52%, transparent);
     border-radius:9px;padding:6px 10px;
   }
-  /* the single status caption is drawn in-canvas under the bottle in compact */
-  .pg-winery .stage-caption{display:none;}
 }
 @media (max-width:400px){
   .pg-winery .row-plate{max-width:150px;}
