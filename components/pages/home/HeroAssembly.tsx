@@ -369,27 +369,49 @@ export default function HeroAssembly() {
       c.lineWidth = 1.2;
       c.strokeStyle = wired ? PAL.primarySoft : PAL.line;
       c.stroke();
-      const nameFont = compact ? 10.5 : 8.5;
+      let nameFont = compact ? 10.5 : 8.5;
       const tagFont = compact ? 9 : 7.5;
       const nameY = compact ? 17 : 15;
       const chipY = compact ? 7 : 6;
       const chipH = compact ? 14 : 12;
       const dividerY = compact ? 24 : 21;
       c.textBaseline = "alphabetic";
-      c.textAlign = "left";
-      c.fillStyle = PAL.dim;
-      c.font = "600 " + nameFont + "px " + MONO;
-      c.fillText(d.name, 9, nameY);
+      // Fit the file name into the space left of the type chip. Shrink toward a
+      // legible floor (10px in compact, the 8.5px desktop size otherwise); if the
+      // name plus chip still cannot both fit, drop the decorative chip (the file
+      // name already carries the extension) so the two never collide.
       c.font = "600 " + tagFont + "px " + MONO;
       const tagW = c.measureText(d.tag).width + 10;
-      const cc = chipCols();
-      rr(c, w - 9 - tagW, chipY, tagW, chipH, 3);
-      c.fillStyle = cc.bg;
-      c.fill();
-      c.fillStyle = cc.fg;
-      c.textAlign = "center";
-      c.fillText(d.tag, w - 9 - tagW / 2, nameY);
+      const floor = compact ? 10 : 8.5;
+      let showChip = true;
+      let nameAvail = w - 18 - tagW - 6;
+      c.font = "600 " + nameFont + "px " + MONO;
+      let nameW = c.measureText(d.name).width;
+      if (nameW > nameAvail) {
+        const scaled = (nameFont * nameAvail) / nameW;
+        if (scaled < floor) {
+          showChip = false;
+          nameAvail = w - 18;
+          nameFont = Math.max(floor, Math.min(nameFont, (nameFont * nameAvail) / nameW));
+        } else {
+          nameFont = scaled;
+        }
+        c.font = "600 " + nameFont + "px " + MONO;
+      }
       c.textAlign = "left";
+      c.fillStyle = PAL.dim;
+      c.fillText(d.name, 9, nameY);
+      if (showChip) {
+        const cc = chipCols();
+        c.font = "600 " + tagFont + "px " + MONO;
+        rr(c, w - 9 - tagW, chipY, tagW, chipH, 3);
+        c.fillStyle = cc.bg;
+        c.fill();
+        c.fillStyle = cc.fg;
+        c.textAlign = "center";
+        c.fillText(d.tag, w - 9 - tagW / 2, nameY);
+        c.textAlign = "left";
+      }
       c.strokeStyle = PAL.line;
       c.lineWidth = 0.8;
       c.beginPath();
