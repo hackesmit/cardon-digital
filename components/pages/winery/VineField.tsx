@@ -407,8 +407,10 @@ export default function VineField() {
         // measured width so the composition never reads sparse or stretched as
         // it approaches the handoff (no near-tablet phone layout).
         const RN = 5;
-        const bw = Math.min(Math.max(W * 0.3, 96), 180);
-        const bh = Math.min(H * 0.4, 250);
+        // Wine proportions: the body width derives from the height budget at
+        // roughly 3:1 so the bottle reads Bordeaux-slender, never a squat jar.
+        const bh = Math.min(H * 0.42, 260);
+        const bw = Math.max(64, Math.min(bh / 3.0, 92));
         const bcx = W * 0.5;
         const bTop = H * 0.52;
         const CN: Pt = { x: W * 0.5, y: H * 0.445 };
@@ -659,8 +661,11 @@ export default function VineField() {
       const bw = g.bw;
       const bh = g.bh;
       const bTop = g.bTop;
-      const nw = bw * 0.34;
-      const neckH = bh * 0.17;
+      // Compact runs a longer neck on the slender body (a phone-height bottle
+      // reads squat with the desktop neck ratio); desktop keeps its approved
+      // proportions untouched.
+      const nw = bw * (compact ? 0.32 : 0.34);
+      const neckH = bh * (compact ? 0.28 : 0.17);
       const shoulderH = bh * 0.12;
       const bodyTop = bTop + neckH + shoulderH;
       const bodyBot = bTop + bh;
