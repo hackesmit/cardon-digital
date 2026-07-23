@@ -192,6 +192,84 @@ export default function Home() {
                     priced on performance, a share of results
                   </text>
                 </svg>
+
+                <svg
+                  className="demand-svg demand-svg-m"
+                  viewBox="0 0 360 340"
+                  role="img"
+                  aria-label="A single reading is checked against a measured baseline and settles to a verified state."
+                >
+                  <text
+                    className="dm-in-lab mono"
+                    x="30"
+                    y="120"
+                    fontSize="13"
+                    letterSpacing="1.5"
+                  >
+                    SIGNAL IN
+                  </text>
+                  <line className="dm-track" x1="30" y1="166" x2="330" y2="166" />
+                  <line className="dm-tick" x1="30" y1="159" x2="30" y2="173" />
+                  <line className="dm-tick" x1="105" y1="160" x2="105" y2="172" />
+                  <line className="dm-tick" x1="180" y1="160" x2="180" y2="172" />
+                  <line className="dm-tick" x1="255" y1="160" x2="255" y2="172" />
+                  <line className="dm-gate" x1="255" y1="128" x2="255" y2="204" />
+                  <text
+                    className="dm-gate-lab mono"
+                    x="255"
+                    y="222"
+                    textAnchor="middle"
+                    fontSize="12"
+                    letterSpacing="1.5"
+                  >
+                    MEASURED
+                  </text>
+                  <g className="dm-knob">
+                    <circle className="dm-knob-halo" cx="30" cy="166" r="15" />
+                    <circle className="dm-knob-core" cx="30" cy="166" r="6.5" />
+                  </g>
+                  <g className="dm-badge">
+                    <circle className="dm-badge-ring" cx="255" cy="100" r="17" />
+                    <path className="dm-badge-check" d="M246 100 L253 107 L265 93" />
+                  </g>
+                  <text
+                    className="dm-value mono"
+                    x="330"
+                    y="150"
+                    textAnchor="end"
+                    fontSize="15"
+                    fontWeight="600"
+                  >
+                    reading
+                  </text>
+                  <text
+                    className="dm-lab-pre mono"
+                    x="24"
+                    y="268"
+                    fontSize="16"
+                    letterSpacing="0.4"
+                  >
+                    checking the numbers
+                  </text>
+                  <text
+                    className="dm-lab-ok mono"
+                    x="24"
+                    y="268"
+                    fontSize="16"
+                    letterSpacing="0.4"
+                  >
+                    verified, safe to optimize
+                  </text>
+                  <text
+                    className="dm-fee mono"
+                    x="24"
+                    y="304"
+                    fontSize="12"
+                    letterSpacing="0.2"
+                  >
+                    priced on performance, a share of results
+                  </text>
+                </svg>
               </PlayOnceVis>
             </div>
           </div>

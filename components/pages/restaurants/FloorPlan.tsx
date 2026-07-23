@@ -265,6 +265,7 @@ export default function FloorPlan() {
     let onscreen = false;
     let last = 0;
     let cycT = 0;
+    let compact = false;
 
     let G: Geo = {
       x0: 0,
@@ -283,10 +284,12 @@ export default function FloorPlan() {
     const layout = () => {
       G.x0 = W * 0.075;
       G.x1 = W * 0.94; /* shared time axis for clock strip + load line */
-      G.clockY = H * 0.085;
+      /* portrait phones: drop the clock strip below the frame tag and start the
+         room a little lower so the time axis never sits under the tag. */
+      G.clockY = H * (compact ? 0.15 : 0.085);
       G.roomX0 = W * 0.045;
       G.roomX1 = W * 0.955;
-      G.roomY0 = H * 0.15;
+      G.roomY0 = H * (compact ? 0.205 : 0.15);
       G.roomY1 = H * 0.665;
       G.loadTop = H * 0.74;
       G.loadBase = H * 0.955;
