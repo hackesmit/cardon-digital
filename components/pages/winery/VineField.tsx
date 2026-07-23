@@ -25,36 +25,6 @@ type Geom = {
   neck: Pt;
 };
 
-const VINE_ROWS = [
-  {
-    name: "Cabernet / Bloque A",
-    aria: "Cabernet, Bloque A. Reporting to the cellar view. Highlight this row.",
-  },
-  {
-    name: "Nebbiolo / Bloque B",
-    aria: "Nebbiolo, Bloque B. Reporting to the cellar view. Highlight this row.",
-  },
-  {
-    name: "Chenin / Bloque C",
-    aria: "Chenin, Bloque C. Reporting to the cellar view. Highlight this row.",
-  },
-  {
-    name: "Merlot / Bloque D",
-    aria: "Merlot, Bloque D. Reporting to the cellar view. Highlight this row.",
-  },
-  {
-    name: "Tempranillo / Bloque E",
-    aria: "Tempranillo, Bloque E. Reporting to the cellar view. Highlight this row.",
-  },
-  {
-    name: "Chardonnay / Bloque F",
-    aria: "Chardonnay, Bloque F. Reporting to the cellar view. Highlight this row.",
-  },
-  {
-    name: "Grenache / Bloque G",
-    aria: "Grenache, Bloque G. Reporting to the cellar view. Highlight this row.",
-  },
-];
 
 /**
  * Signature visual: a field of parallel vine-row lines (following the contours)
@@ -71,12 +41,10 @@ const VINE_ROWS = [
 export default function VineField() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const overlayRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const stage = stageRef.current;
     const canvas = canvasRef.current;
-    const overlay = overlayRef.current;
     if (!stage || !canvas || !canvas.getContext) return;
     let ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -388,8 +356,6 @@ export default function VineField() {
 
     let geom: Geom | null = null;
     let rows: Row[] = [];
-    let active: number | null = null;
-    let activeL = 0;
     let ripples: { t: number }[] = [];
 
     const INTRO = 0.5;
@@ -398,6 +364,11 @@ export default function VineField() {
     // Cork slide progress: 0 while the bottle is open (filling), eases to 1
     // once the fill completes and the cork slides into the mouth.
     let corkT = 0;
+    // The was/now ledger replaces the old hover-only row plate: an always
+    // visible strip that alternates between the old scattered records and the
+    // live view, then settles on NOW once the bottle is full.
+    const LEDGER_CYCLE = 8.2;
+    const LEDGER_WAS_TEXT = "notebooks, spreadsheets, a legacy system";
 
     const layout = () => {
       compact = W < COMPACT_W;
@@ -453,7 +424,6 @@ export default function VineField() {
             latched: false,
           });
         }
-        placeOverlays();
         return;
       }
 
@@ -501,44 +471,8 @@ export default function VineField() {
           latched: false,
         });
       }
-      placeOverlays();
     };
 
-    const placeOverlays = () => {
-      if (!overlay || !geom) return;
-      const rect = canvas.getBoundingClientRect();
-      if (!rect.width) return;
-      const btns = overlay.querySelectorAll<HTMLButtonElement>(".vine-row");
-      if (compact) {
-        const band = Math.max(30, (H * 0.215) / rows.length + 8);
-        for (let i = 0; i < btns.length; i++) {
-          if (i >= rows.length) {
-            btns[i].style.display = "none";
-            continue;
-          }
-          btns[i].style.display = "";
-          const r = rows[i];
-          const lx = r.line.pts[0].x;
-          const rx = r.line.pts[r.line.pts.length - 1].x;
-          const top = Math.max(50, r.endY - band / 2);
-          btns[i].style.left = lx.toFixed(1) + "px";
-          btns[i].style.width = Math.max(60, rx - lx).toFixed(1) + "px";
-          btns[i].style.top = top.toFixed(1) + "px";
-          btns[i].style.height = band.toFixed(1) + "px";
-        }
-        return;
-      }
-      const band = Math.max(20, (0.7 / (ROWN - 1)) * H * 0.74);
-      for (let i = 0; i < btns.length && i < ROWN; i++) {
-        btns[i].style.display = "";
-        const midY = rowFrac[i] * H;
-        const top = Math.max(2, midY - band / 2);
-        btns[i].style.left = geom.xL.toFixed(1) + "px";
-        btns[i].style.width = Math.max(40, geom.xC - geom.xL).toFixed(1) + "px";
-        btns[i].style.top = top.toFixed(1) + "px";
-        btns[i].style.height = band.toFixed(1) + "px";
-      }
-    };
 
     const drawSpine = () => {
       if (!ctx || !geom) return;
@@ -619,9 +553,6 @@ export default function VineField() {
       if (!ctx) return;
       for (let i = 0; i < rows.length; i++) {
         const r = rows[i];
-        const isActive = active === i;
-        const dim = active !== null && !isActive;
-        ctx.globalAlpha = dim ? 0.4 : 1;
         ctx.strokeStyle = r.latched ? PAL.primaryDim : PAL.line;
         ctx.lineWidth = r.latched ? 1.7 : 1.3;
         strokeTrace(ctx, r.line);
@@ -630,14 +561,12 @@ export default function VineField() {
         ctx.beginPath();
         ctx.arc(e.x, e.y, r.latched ? 2.6 : 1.8, 0, Math.PI * 2);
         ctx.fill();
-        ctx.globalAlpha = 1;
       }
     };
 
     const drawStreams = () => {
       if (!ctx) return;
       for (let i = 0; i < rows.length; i++) {
-        if (active !== null && active !== i) continue;
         const r = rows[i];
         for (let h = 0; h < r.heads.length; h++) {
           drawFlow(ctx, r.report, r.heads[h], PAL.primarySoft, PAL.secondaryBright);
@@ -645,17 +574,6 @@ export default function VineField() {
       }
     };
 
-    const drawActive = () => {
-      if (!ctx || active === null) return;
-      const r = rows[active];
-      ctx.globalAlpha = 0.9;
-      ctx.strokeStyle = PAL.wineSoft;
-      ctx.lineWidth = 2.2;
-      strokeTrace(ctx, r.report);
-      ctx.globalAlpha = 1;
-      const L = reduced() ? r.report.len * 0.62 : activeL;
-      drawFlow(ctx, r.report, L, PAL.wineSoft, PAL.wineGlow);
-    };
 
     const drawBottle = () => {
       if (!ctx || !geom) return;
@@ -869,6 +787,74 @@ export default function VineField() {
       ctx.textAlign = "left";
     };
 
+    const drawLedger = (full: boolean) => {
+      if (!ctx || !geom) return;
+      const g = geom;
+      // Crossfade weight for the NOW entry; WAS gets the complement. Once the
+      // bottle is full (or under reduced motion) the ledger holds on NOW.
+      let nowA: number;
+      if (full || reduced()) {
+        nowA = 1;
+      } else {
+        const ph = T % LEDGER_CYCLE;
+        if (ph < 3.4) nowA = 0;
+        else if (ph < 3.85) nowA = easeInOut((ph - 3.4) / 0.45);
+        else if (ph < 7.75) nowA = 1;
+        else nowA = 1 - easeInOut((ph - 7.75) / 0.45);
+      }
+      const d = new Date();
+      const hh = String(d.getHours());
+      const mm = String(d.getMinutes()).padStart(2, "0");
+      const nowText = "one view, synced " + (hh.length < 2 ? "0" + hh : hh) + ":" + mm;
+      const fs = W < 380 ? 9.5 : 10.5;
+      const c = ctx;
+      c.font = "600 " + fs + "px " + MONO;
+      c.textBaseline = "middle";
+      c.textAlign = "left";
+      const entries: Array<{ a: number; pre: string; body: string; preCol: string; bodyCol: string }> = [
+        { a: 1 - nowA, pre: "was:", body: LEDGER_WAS_TEXT, preCol: PAL.secondary, bodyCol: PAL.muted },
+        { a: nowA, pre: "now:", body: nowText, preCol: PAL.primary, bodyCol: PAL.dim },
+      ];
+      for (const en of entries) {
+        if (en.a <= 0.01) continue;
+        const preW = c.measureText(en.pre).width;
+        const bodyW = c.measureText(en.body).width;
+        const gap = 5;
+        const padX = 9;
+        const padY = 6;
+        const chipW = padX * 2 + preW + gap + bodyW;
+        let x0: number;
+        let cy: number;
+        if (compact) {
+          // centered in the quiet band between the row field and the node
+          let rowsBot = 0;
+          for (let i = 0; i < rows.length; i++) rowsBot = Math.max(rowsBot, rows[i].endY);
+          x0 = W * 0.5 - chipW / 2;
+          cy = (rowsBot + g.CN.y - 14) / 2 + 4;
+        } else {
+          // quiet bottom-left strip under the row field
+          x0 = g.xL;
+          cy = H - 16;
+        }
+        c.save();
+        c.globalAlpha = en.a;
+        rr(c, x0, cy - fs / 2 - padY, chipW, fs + padY * 2, 7);
+        c.fillStyle = PAL.panel;
+        c.globalAlpha = en.a * 0.82;
+        c.fill();
+        c.globalAlpha = en.a;
+        c.strokeStyle = PAL.lineSoft;
+        c.lineWidth = 1;
+        c.stroke();
+        c.fillStyle = en.preCol;
+        c.fillText(en.pre, x0 + padX, cy + 0.5);
+        c.fillStyle = en.bodyCol;
+        c.fillText(en.body, x0 + padX + preW + gap, cy + 0.5);
+        c.restore();
+      }
+      c.textBaseline = "alphabetic";
+    };
+
     const draw = () => {
       if (!ctx || W === 0 || H === 0) return;
       ctx.clearRect(0, 0, W, H);
@@ -880,11 +866,11 @@ export default function VineField() {
       drawStreams();
       const full = fillLevel > 0.97;
       drawBottle();
-      drawActive();
       // The single caption is drawn in-canvas under the bottle by
       // drawPanelChrome, so there is exactly one caption at every width (no
       // separate HTML overlay caption that could disagree with the canvas).
       drawPanelChrome(full);
+      drawLedger(full);
     };
 
     const resolvedStatic = () => {
@@ -936,11 +922,6 @@ export default function VineField() {
         if (ripples[rp].t >= 1) ripples.splice(rp, 1);
       }
 
-      if (active !== null) {
-        activeL += (rows[active].report.len / 3.4) * dt;
-        if (activeL > rows[active].report.len + 40) activeL = 0;
-      }
-
       draw();
     };
 
@@ -967,35 +948,6 @@ export default function VineField() {
         raf = 0;
       }
     };
-
-    const setActive = (idx: number | null) => {
-      active = idx;
-      activeL = 0;
-      if (!running) draw();
-    };
-
-    const btns = overlay
-      ? Array.from(overlay.querySelectorAll<HTMLButtonElement>(".vine-row"))
-      : [];
-    const rowWiring: Array<{
-      el: HTMLButtonElement;
-      enter: () => void;
-      leave: () => void;
-      focus: () => void;
-      blur: () => void;
-    }> = [];
-    btns.forEach((b) => {
-      const idx = parseInt(b.getAttribute("data-row") || "0", 10);
-      const enter = () => setActive(idx);
-      const leave = () => setActive(null);
-      const focus = () => setActive(idx);
-      const blur = () => setActive(null);
-      b.addEventListener("mouseenter", enter);
-      b.addEventListener("mouseleave", leave);
-      b.addEventListener("focus", focus);
-      b.addEventListener("blur", blur);
-      rowWiring.push({ el: b, enter, leave, focus, blur });
-    });
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -1063,12 +1015,6 @@ export default function VineField() {
       document.removeEventListener("visibilitychange", onVisibility);
       reduceMQ.removeEventListener("change", onReduceChange);
       if (io) io.disconnect();
-      rowWiring.forEach((w) => {
-        w.el.removeEventListener("mouseenter", w.enter);
-        w.el.removeEventListener("mouseleave", w.leave);
-        w.el.removeEventListener("focus", w.focus);
-        w.el.removeEventListener("blur", w.blur);
-      });
     };
   }, []);
 
@@ -1079,23 +1025,12 @@ export default function VineField() {
         <span className="midword">reports into</span>{" "}
         <span className="after">one view</span>
       </span>
-      <canvas className="vine-canvas" ref={canvasRef} aria-hidden="true" />
-      <div className="vine-overlay" ref={overlayRef} aria-hidden="false">
-        {VINE_ROWS.map((r, i) => (
-          <button
-            key={i}
-            className="vine-row"
-            type="button"
-            data-row={i}
-            aria-label={r.aria}
-          >
-            <span className="row-plate">
-              <span className="row-name">{r.name}</span>
-              <span className="row-detail">reporting to one view</span>
-            </span>
-          </button>
-        ))}
-      </div>
+      <canvas
+        className="vine-canvas"
+        ref={canvasRef}
+        role="img"
+        aria-label="Vine rows stream their readings into one collection channel that fills a single bottle. A small ledger alternates between the old records, notebooks, spreadsheets, and a legacy system, and the new state: one view, freshly synced."
+      />
       <noscript>
         <div className="stage-fallback">
           A field of vine rows, each following the land, streams its readings into

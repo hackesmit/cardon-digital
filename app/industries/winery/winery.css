@@ -41,24 +41,6 @@
 }
 .pg-winery .spot:hover::after{opacity:1;}
 
-.pg-winery .vine-overlay{position:absolute;inset:0;z-index:3;}
-.pg-winery .vine-row{
-  position:absolute;padding:0;margin:0;border:0;background:transparent;cursor:pointer;
-  border-radius:9px;transition:background .25s ease;
-}
-.pg-winery .vine-row:hover,.pg-winery .vine-row:focus-visible{background:color-mix(in srgb, var(--primary) 5%, transparent);}
-.pg-winery .row-plate{
-  position:absolute;top:50%;right:6px;transform:translateY(-50%) translateX(6px);
-  width:max-content;max-width:190px;
-  display:flex;flex-direction:column;gap:2px;pointer-events:none;
-  background:color-mix(in srgb, var(--panel) 88%, transparent);
-  border:1px solid var(--wine-line);border-radius:8px;padding:6px 10px;
-  opacity:0;transition:opacity .22s ease, transform .22s ease;
-  box-shadow:0 0 0 1px var(--wine-faint);
-}
-.pg-winery .vine-row:hover .row-plate,.pg-winery .vine-row:focus-visible .row-plate{opacity:1;transform:translateY(-50%) translateX(0);}
-.pg-winery .row-name{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--text);line-height:1.25;overflow-wrap:break-word;}
-.pg-winery .row-detail{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.02em;color:var(--wine-bright);line-height:1.25;overflow-wrap:break-word;}
 
 /* the wine kicker variant (gold and clay already live in globals) */
 .pg-winery .kicker.wine{color:var(--wine-bright);}
@@ -235,5 +217,4 @@
   }
 }
 @media (max-width:400px){
-  .pg-winery .row-plate{max-width:150px;}
 }
