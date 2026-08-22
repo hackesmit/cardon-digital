@@ -13,3 +13,9 @@ npm-debug.log*
 # committed here: this repository is public.
 COPY-DOCTRINE.md
 LAUNCH.md
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
