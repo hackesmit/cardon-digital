@@ -8,3 +8,8 @@ out
 next-env.d.ts
 npm-debug.log*
 .vercel
+
+# Internal only. These live in ~/hq/bunkers/cardon-digital and must never be
+# committed here: this repository is public.
+COPY-DOCTRINE.md
+LAUNCH.md
