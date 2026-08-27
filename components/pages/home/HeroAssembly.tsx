@@ -770,9 +770,8 @@ export default function HeroAssembly() {
     <div className="stage-wrap">
       <div className="stage-frame">
         <span className="stage-tag mono">
-          <span className="before">scattered</span>{" "}
-          <span className="midword">wired into</span>{" "}
-          <span className="after">one system</span>
+          <span className="before">notebooks in</span>{" "}
+          <span className="midword">one view out</span>
         </span>
         <span className="stage-caption mono" ref={captionRef}>
           connecting

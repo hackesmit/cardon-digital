@@ -20,25 +20,24 @@ export default function Home() {
       <section className="hero" aria-label="Introduction">
         <div className="container">
           <div className="hero-copy">
-            <p className="eyebrow">Not another SaaS</p>
+            <p className="eyebrow">Automation studio, Baja California</p>
             <h1>
-              An hour of manual work,
+              Your harvest, your cellar, your books.
               <br />
-              <span className="accent">cut to two minutes.</span>
+              <span className="accent">One living system.</span>
             </h1>
             <p className="hero-sub">
-              That is one workflow we built for a Valle de Guadalupe winery: a 97
-              percent reduction on a job that ran every week. It is the pattern we
-              repeat. We find the manual jobs eating your week, make them run
-              themselves, and wire what is left into one system your team ends up
-              owning. <b>You own what we build.</b>
+              Weights, lab samples, tank moves, and the books usually live in
+              notebooks and spreadsheets that never agree. We wire them into one
+              connected system your winery reads from and ends up owning.{" "}
+              <b>Make your numbers true, then compound.</b>
             </p>
             <div className="hero-actions">
               <a className="cta" href="#diagnostic">
                 Get the free Growth Diagnostic
               </a>
               <a className="btn-ghost" href="#operations">
-                See how it works
+                Built for wineries
               </a>
             </div>
             <p className="brandline">Built to hold water</p>
