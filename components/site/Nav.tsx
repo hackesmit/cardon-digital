@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -26,6 +27,12 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [indOpen, setIndOpen] = useState(false);
   const [mode, setMode] = useState<"dark" | "light">("dark");
+  // Identity v3: clay marks the one action we want taken, so no viewport ever
+  // holds two clay elements. The nav action stays quiet while a page action is
+  // on screen and takes the clay only once none is. Without JS it stays quiet,
+  // which is the correct state at the top of every page.
+  const [navIsOnlyAction, setNavIsOnlyAction] = useState(false);
+  const pathname = usePathname();
   const toggleBtn = useRef<HTMLButtonElement | null>(null);
   const dropRef = useRef<HTMLLIElement | null>(null);
 
@@ -88,6 +95,26 @@ export default function Nav() {
     setMode(next);
     window.dispatchEvent(new CustomEvent("cardon-mode", { detail: next }));
   }
+
+  useEffect(() => {
+    const actions = Array.from(document.querySelectorAll("main .cta"));
+    if (!actions.length) {
+      // Nothing else competes, so the nav action is the page's one clay mark.
+      setNavIsOnlyAction(true);
+      return;
+    }
+    if (!("IntersectionObserver" in window)) return;
+    const onScreen = new Set<Element>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) onScreen.add(e.target);
+        else onScreen.delete(e.target);
+      });
+      setNavIsOnlyAction(onScreen.size === 0);
+    });
+    actions.forEach((a) => io.observe(a));
+    return () => io.disconnect();
+  }, [pathname]);
 
   return (
     <header className="site-header">
@@ -268,7 +295,10 @@ export default function Nav() {
                 </svg>
               </button>
               <Link
-                className="cta cta-sm"
+                className={
+                  "cta cta-sm nav-cta" +
+                  (navIsOnlyAction || open ? " is-primary" : "")
+                }
                 href="/#diagnostic"
                 onClick={() => setOpen(false)}
               >
