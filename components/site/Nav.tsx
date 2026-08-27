@@ -5,12 +5,13 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 const linksBefore = [
+  { href: "/industries/winery", label: "Wineries" },
   { href: "/work/monte-xanic", label: "Work" },
-  { href: "/#services", label: "Services" },
 ];
-const linksAfter = [
-  { href: "/#about", label: "About" },
-  { href: "/#diagnostic", label: "Contact" },
+// Identity v3: the nav is Wineries, Work, Industries. Services and About
+// fold into the pages themselves; the diagnostic CTA is the contact path and
+// the footer still carries both links.
+const linksAfter: { href: string; label: string }[] = [
 ];
 const industryLinks = [
   { href: "/#sectors", label: "All industries" },
