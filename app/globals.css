@@ -178,6 +178,23 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 .cta:hover{background:var(--energy-bright);border-color:var(--energy-bright);box-shadow:0 0 0 4px color-mix(in srgb, var(--energy) 22%, transparent);}
 .cta:active{transform:translateY(1px);}
 .cta-sm{padding:8px 15px;font-size:0.9rem;}
+
+/* Identity v3: clay marks the ONE action we want taken, so a viewport never
+   holds two clay elements. The nav action is quiet by default (and without
+   JS, which is correct at the top of a page where the hero action is clay)
+   and takes the clay only when no page action is on screen. */
+.nav-cta{background:transparent;color:var(--text);border-color:var(--line);}
+.nav-cta:hover{
+  background:var(--primary-faint);border-color:var(--primary-dim);
+  box-shadow:none;
+}
+.nav-cta.is-primary{
+  background:var(--energy);color:var(--cta-ink);border-color:var(--energy);
+}
+.nav-cta.is-primary:hover{
+  background:var(--energy-bright);border-color:var(--energy-bright);
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--energy) 22%, transparent);
+}
 .cta-lg{padding:15px 28px;font-size:1.05rem;position:relative;isolation:isolate;}
 /* slow orbiting glow ring, on the diagnostic CTA only */
 @property --ang{syntax:"<angle>";initial-value:0deg;inherits:false;}
