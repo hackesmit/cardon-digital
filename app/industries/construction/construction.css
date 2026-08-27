@@ -21,7 +21,7 @@
 .pg-construction .sig-frame {
   position: relative;
   border: 1px solid var(--line);
-  border-radius: 20px;
+  border-radius:2px;
   overflow: hidden;
   background: linear-gradient(180deg, var(--scrim), transparent);
   box-shadow: var(--shadow);
@@ -154,7 +154,7 @@
   grid-column: span 2;
   position: relative;
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius:2px;
   background: linear-gradient(180deg, var(--scrim), transparent);
   padding: 22px 22px 24px;
   display: flex;
@@ -193,7 +193,7 @@
   font-size: clamp(1rem, 1.3vw, 1.1rem);
   max-width: 52ch;
 }
-.pg-construction .fleet-frame { border-radius: 18px; }
+.pg-construction .fleet-frame { border-radius:2px; }
 /* fallback height for pre-JS paint; FleetMap sets the exact height per
    composition from the measured width (single source of truth, no dead band) */
 .pg-construction .fleet-canvas { display: block; width: 100%; height: 380px; }
@@ -220,7 +220,7 @@
     max-width: 64%;
     line-height: 1.5;
     background: color-mix(in srgb, var(--ground) 52%, transparent);
-    border-radius: 9px;
+    border-radius:2px;
     padding: 6px 10px;
   }
 }

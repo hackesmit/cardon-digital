@@ -11,5 +11,5 @@
 .pg-legal li{margin-bottom:7px;}
 .pg-legal b{color:var(--text);font-weight:600;}
 .pg-legal a{color:var(--primary);text-decoration:underline;text-underline-offset:3px;}
-.pg-legal .legal-note{border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb, var(--panel) 70%, transparent);padding:16px 18px;margin:26px 0;}
+.pg-legal .legal-note{border:1px solid var(--line);border-radius:2px;background:color-mix(in srgb, var(--panel) 70%, transparent);padding:16px 18px;margin:26px 0;}
 .pg-legal .legal-note p{margin:0;}

@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
+import { Archivo } from "next/font/google";
 import ContourField from "@/components/site/ContourField";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import "./globals.css";
+
+// Identity: Archivo carries display and body (Cardon system v3, 2026-08-27).
+// Self-hosted by next/font, so no CDN request and no layout shift.
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-archivo",
+});
 
 // Pre-paint script: apply the stored mode before first paint so there is no
 // flash, and flag the document as JS-enabled so reveal-on-scroll can hide.
@@ -50,7 +60,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-mode="dark" suppressHydrationWarning>
+    <html lang="en" data-mode="dark" className={archivo.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: modeScript }} />
       </head>

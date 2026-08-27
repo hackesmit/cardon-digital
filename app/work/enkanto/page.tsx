@@ -156,8 +156,8 @@ export default function EnkantoCaseStudy() {
                     <text className="e-lab mono" x="40" y="52" fontSize="11" letterSpacing="1.5">
                       IN NAME ONLY
                     </text>
-                    <rect className="e-card" x="40" y="66" width="176" height="176" rx="12" />
-                    <rect className="e-dash" x="58" y="84" width="46" height="46" rx="8" />
+                    <rect className="e-card" x="40" y="66" width="176" height="176" rx="2" />
+                    <rect className="e-dash" x="58" y="84" width="46" height="46" rx="2" />
                     <line className="e-dash" x1="118" y1="94" x2="196" y2="94" />
                     <line className="e-dash" x1="118" y1="112" x2="176" y2="112" />
                     <line className="e-dash" x1="58" y1="158" x2="150" y2="158" />
@@ -169,8 +169,8 @@ export default function EnkantoCaseStudy() {
                     <text className="e-lab mono" x="304" y="52" fontSize="11" letterSpacing="1.5">
                       BUILT OUT
                     </text>
-                    <rect className="e-card e-card-live" x="304" y="66" width="176" height="176" rx="12" />
-                    <rect className="e-img" x="322" y="84" width="52" height="52" rx="9" />
+                    <rect className="e-card e-card-live" x="304" y="66" width="176" height="176" rx="2" />
+                    <rect className="e-img" x="322" y="84" width="52" height="52" rx="2" />
                     <path
                       className="e-img-glyph"
                       d="M348 92 L348 100 L342 108 L342 128 L354 128 L354 108 L348 100"
@@ -185,7 +185,7 @@ export default function EnkantoCaseStudy() {
                     <text className="e-muted mono" x="322" y="184" fontSize="12">
                       750 ml
                     </text>
-                    <rect className="e-add" x="408" y="170" width="54" height="22" rx="11" />
+                    <rect className="e-add" x="408" y="170" width="54" height="22" rx="2" />
                     <text className="e-primary mono" x="435" y="185" fontSize="11" fontWeight="600" textAnchor="middle">
                       add
                     </text>
@@ -230,23 +230,23 @@ export default function EnkantoCaseStudy() {
                       HOMEPAGES
                     </text>
                     <g>
-                      <rect className="e-page-off" x="34" y="58" width="190" height="26" rx="7" />
+                      <rect className="e-page-off" x="34" y="58" width="190" height="26" rx="2" />
                       <text className="e-muted mono" x="46" y="75" fontSize="11">
                         unpublished
                       </text>
-                      <rect className="e-page-off" x="34" y="92" width="190" height="26" rx="7" />
+                      <rect className="e-page-off" x="34" y="92" width="190" height="26" rx="2" />
                       <text className="e-muted mono" x="46" y="109" fontSize="11">
                         unpublished
                       </text>
-                      <rect className="e-page-live" x="34" y="126" width="190" height="26" rx="7" />
+                      <rect className="e-page-live" x="34" y="126" width="190" height="26" rx="2" />
                       <text className="e-ink mono" x="46" y="143" fontSize="11" fontWeight="600">
                         canonical store
                       </text>
-                      <rect className="e-page-off" x="34" y="160" width="190" height="26" rx="7" />
+                      <rect className="e-page-off" x="34" y="160" width="190" height="26" rx="2" />
                       <text className="e-muted mono" x="46" y="177" fontSize="11">
                         unpublished
                       </text>
-                      <rect className="e-page-off" x="34" y="194" width="190" height="26" rx="7" />
+                      <rect className="e-page-off" x="34" y="194" width="190" height="26" rx="2" />
                       <text className="e-muted mono" x="46" y="211" fontSize="11">
                         unpublished
                       </text>
@@ -255,7 +255,7 @@ export default function EnkantoCaseStudy() {
                     <path className="e-conn-enk" d="M224 139 C 258 139, 262 139, 296 139" />
                     <circle className="e-enk" cx="296" cy="139" r="3" />
 
-                    <rect className="e-panel" x="304" y="96" width="182" height="108" rx="11" />
+                    <rect className="e-panel" x="304" y="96" width="182" height="108" rx="2" />
                     <text className="e-lab mono" x="322" y="122" fontSize="11" letterSpacing="1">
                       sitemap.xml
                     </text>
@@ -311,15 +311,15 @@ export default function EnkantoCaseStudy() {
                     aria-label="Card, cash, and transfer methods feed one checkout that reaches an order placed state."
                   >
                     <g>
-                      <rect className="e-chip" x="34" y="70" width="128" height="34" rx="9" />
+                      <rect className="e-chip" x="34" y="70" width="128" height="34" rx="2" />
                       <text className="e-val mono" x="54" y="92" fontSize="13">
                         Card
                       </text>
-                      <rect className="e-chip" x="34" y="122" width="128" height="34" rx="9" />
+                      <rect className="e-chip" x="34" y="122" width="128" height="34" rx="2" />
                       <text className="e-val mono" x="54" y="144" fontSize="13">
                         Cash
                       </text>
-                      <rect className="e-chip" x="34" y="174" width="128" height="34" rx="9" />
+                      <rect className="e-chip" x="34" y="174" width="128" height="34" rx="2" />
                       <text className="e-val mono" x="54" y="196" fontSize="13">
                         Transfer
                       </text>
@@ -331,15 +331,15 @@ export default function EnkantoCaseStudy() {
                     </g>
                     <circle className="e-enk" cx="268" cy="139" r="3" />
 
-                    <rect className="e-panel" x="300" y="82" width="186" height="132" rx="12" />
+                    <rect className="e-panel" x="300" y="82" width="186" height="132" rx="2" />
                     <text className="e-lab mono" x="318" y="110" fontSize="11" letterSpacing="1">
                       TOTAL
                     </text>
                     <text className="e-ink mono" x="468" y="110" fontSize="14" fontWeight="600" textAnchor="end">
                       $ 520
                     </text>
-                    <rect className="e-track" x="318" y="126" width="150" height="6" rx="3" />
-                    <rect className="e-fill" x="318" y="126" width="150" height="6" rx="3" />
+                    <rect className="e-track" x="318" y="126" width="150" height="6" rx="2" />
+                    <rect className="e-fill" x="318" y="126" width="150" height="6" rx="2" />
                     <text className="e-clay mono" x="318" y="170" fontSize="14" fontWeight="600">
                       Order placed
                     </text>
@@ -463,11 +463,11 @@ export default function EnkantoCaseStudy() {
                     role="img"
                     aria-label="English and Spanish rails converge into a single store foundation."
                   >
-                    <rect className="e-chip e-chip-live" x="40" y="46" width="70" height="40" rx="10" />
+                    <rect className="e-chip e-chip-live" x="40" y="46" width="70" height="40" rx="2" />
                     <text className="e-ink mono" x="75" y="71" fontSize="15" fontWeight="600" textAnchor="middle">
                       EN
                     </text>
-                    <rect className="e-chip e-chip-live" x="40" y="130" width="70" height="40" rx="10" />
+                    <rect className="e-chip e-chip-live" x="40" y="130" width="70" height="40" rx="2" />
                     <text className="e-ink mono" x="75" y="155" fontSize="15" fontWeight="600" textAnchor="middle">
                       ES
                     </text>
@@ -476,7 +476,7 @@ export default function EnkantoCaseStudy() {
                     <path className="e-conn-enk" d="M110 150 C 180 150, 200 108, 268 108" />
                     <circle className="e-enk" cx="268" cy="108" r="3" />
 
-                    <rect className="e-panel" x="300" y="56" width="198" height="104" rx="12" />
+                    <rect className="e-panel" x="300" y="56" width="198" height="104" rx="2" />
                     <text className="e-ink mono" x="318" y="86" fontSize="14" fontWeight="600">
                       One store
                     </text>

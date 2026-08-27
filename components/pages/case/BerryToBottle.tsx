@@ -223,7 +223,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
         <g className="b2b-station" id="b2b-st-1">
           <circle className="b2b-node" cx="380" cy="150" r="9" />
           <g transform="translate(380,66)">
-            <ellipse className="b2b-ico" cx="0" cy="0" rx="14" ry="5" />
+            <ellipse className="b2b-ico" cx="0" cy="0" rx="2" ry="2" />
             <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
             <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
           </g>
@@ -235,7 +235,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
         <g className="b2b-station" id="b2b-st-2">
           <circle className="b2b-node" cx="620" cy="150" r="9" />
           <g transform="translate(620,70)">
-            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="12" />
+            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="2" />
             <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
             <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
           </g>
@@ -439,7 +439,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
         <g className="b2b-station" id="b2b-m-1">
           <circle className="b2b-node" cx="58" cy="224" r="12" />
           <g transform="translate(104,224) scale(1.2) translate(0,-15)">
-            <ellipse className="b2b-ico" cx="0" cy="0" rx="14" ry="5" />
+            <ellipse className="b2b-ico" cx="0" cy="0" rx="2" ry="2" />
             <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
             <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
           </g>
@@ -451,7 +451,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
         <g className="b2b-station" id="b2b-m-2">
           <circle className="b2b-node" cx="58" cy="352" r="12" />
           <g transform="translate(104,352) scale(1.2) translate(0,-11)">
-            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="12" />
+            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="2" />
             <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
             <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
           </g>
