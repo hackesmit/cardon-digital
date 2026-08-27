@@ -246,7 +246,7 @@ export default function ClinicsPage() {
                 <p className="build-p">
                   Google and Meta campaigns designed against COFEPRIS rules and
                   the platforms&apos; healthcare policies from the first draft, at
-                  the cutting edge of what the platforms allow. Campaigns designed
+                  what the platforms actually allow. Campaigns designed
                   to keep running.
                 </p>
                 <p className="build-borrow">
