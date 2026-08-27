@@ -395,7 +395,7 @@ export default function SitePlanVisual() {
             SCHEDULE / THIS WEEK
           </text>
 
-          <rect className="sp-frame" x="24" y="46" width="320" height="304" rx="10" />
+          <rect className="sp-frame" x="24" y="46" width="320" height="304" rx="2" />
           <path
             className="sp-contour"
             d="M60 150 C 120 96, 230 92, 300 132 C 340 156, 330 210, 268 250 C 196 292, 96 288, 56 232 C 30 196, 34 176, 60 150 Z"
@@ -413,11 +413,11 @@ export default function SitePlanVisual() {
 
           {/* weekly lanes */}
           <g>
-            <rect className="lane-track" x="402" y="73" width="180" height="38" rx="8" />
-            <rect className="lane-track" x="402" y="123" width="180" height="38" rx="8" />
-            <rect className="lane-track" x="402" y="173" width="180" height="38" rx="8" />
-            <rect className="lane-track" x="402" y="223" width="180" height="38" rx="8" />
-            <rect className="lane-track" x="402" y="273" width="180" height="38" rx="8" />
+            <rect className="lane-track" x="402" y="73" width="180" height="38" rx="2" />
+            <rect className="lane-track" x="402" y="123" width="180" height="38" rx="2" />
+            <rect className="lane-track" x="402" y="173" width="180" height="38" rx="2" />
+            <rect className="lane-track" x="402" y="223" width="180" height="38" rx="2" />
+            <rect className="lane-track" x="402" y="273" width="180" height="38" rx="2" />
             <text className="lane-date" x="372" y="95" textAnchor="start">
               MON
             </text>
@@ -507,18 +507,18 @@ export default function SitePlanVisual() {
             tabIndex={0}
             aria-label="Work order: grade site, crew 1, plot A, scheduled Monday."
           >
-            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="10" />
-            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="8" />
+            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
+            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
             <text className="chip-label" x="-62" y="4">
               grade site / crew 1
             </text>
-            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="4" />
+            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               A
             </text>
             <g className="plate">
-              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="7" />
+              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
               <text className="plate-title" x="-62" y="-38">
                 GRADE SITE
               </text>
@@ -535,18 +535,18 @@ export default function SitePlanVisual() {
             tabIndex={0}
             aria-label="Work order: form footings, crew 2, plot B, scheduled Tuesday."
           >
-            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="10" />
-            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="8" />
+            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
+            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
             <text className="chip-label" x="-62" y="4">
               form footings / crew 2
             </text>
-            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="4" />
+            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               B
             </text>
             <g className="plate">
-              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="7" />
+              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
               <text className="plate-title" x="-62" y="-38">
                 FORM FOOTINGS
               </text>
@@ -563,18 +563,18 @@ export default function SitePlanVisual() {
             tabIndex={0}
             aria-label="Work order: rebar delivery, materials, plot C, scheduled Wednesday."
           >
-            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="10" />
-            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="8" />
+            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
+            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
             <text className="chip-label" x="-62" y="4">
               rebar delivery
             </text>
-            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="4" />
+            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               C
             </text>
             <g className="plate">
-              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="7" />
+              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
               <text className="plate-title" x="-62" y="-38">
                 REBAR DELIVERY
               </text>
@@ -591,18 +591,18 @@ export default function SitePlanVisual() {
             tabIndex={0}
             aria-label="Work order: pour slab, crew 2, plot D, scheduled Thursday."
           >
-            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="10" />
-            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="8" />
+            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
+            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
             <text className="chip-label" x="-62" y="4">
               pour slab / crew 2
             </text>
-            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="4" />
+            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               D
             </text>
             <g className="plate">
-              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="7" />
+              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
               <text className="plate-title" x="-62" y="-38">
                 POUR SLAB
               </text>
@@ -619,18 +619,18 @@ export default function SitePlanVisual() {
             tabIndex={0}
             aria-label="Work order: inspection, city, plot E, scheduled Friday."
           >
-            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="10" />
-            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="8" />
+            <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
+            <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
             <text className="chip-label" x="-62" y="4">
               inspection
             </text>
-            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="4" />
+            <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               E
             </text>
             <g className="plate">
-              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="7" />
+              <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
               <text className="plate-title" x="-62" y="-38">
                 INSPECTION
               </text>
@@ -670,7 +670,7 @@ export default function SitePlanVisual() {
             SCHEDULE / THIS WEEK
           </text>
 
-          <rect className="sp-frame" x="14" y="80" width="312" height="180" rx="10" />
+          <rect className="sp-frame" x="14" y="80" width="312" height="180" rx="2" />
           <path
             className="sp-contour"
             d="M50 150 C 110 110, 230 108, 288 148 C 312 168, 300 210, 240 236 C 170 262, 80 254, 52 210 C 36 184, 38 168, 50 150 Z"
@@ -692,7 +692,7 @@ export default function SitePlanVisual() {
                 y={c.y - 21}
                 width="274"
                 height="42"
-                rx="8"
+                rx="2"
               />
             ))}
             {PORTRAIT_DAYS.map((d, i) => (
@@ -763,18 +763,18 @@ export default function SitePlanVisual() {
               tabIndex={0}
               aria-label={c.aria}
             >
-              <rect className="chip-focus" x="-128" y="-21" width="256" height="42" rx="10" />
-              <rect className="chip-body" x="-124" y="-17" width="248" height="34" rx="8" />
+              <rect className="chip-focus" x="-128" y="-21" width="256" height="42" rx="2" />
+              <rect className="chip-body" x="-124" y="-17" width="248" height="34" rx="2" />
               <rect className="chip-accent" x="-124" y="-17" width="4" height="34" rx="2" />
               <text className="chip-label" x="-110" y="5">
                 {c.label}
               </text>
-              <rect className="chip-pill" x="92" y="-11" width="20" height="22" rx="5" />
+              <rect className="chip-pill" x="92" y="-11" width="20" height="22" rx="2" />
               <text className="chip-pill-id" x="102" y="5" textAnchor="middle">
                 {c.pill}
               </text>
               <g className="plate">
-                <rect className="plate-box" x="-124" y="-54" width="250" height="34" rx="7" />
+                <rect className="plate-box" x="-124" y="-54" width="250" height="34" rx="2" />
                 <text className="plate-title" x="-110" y="-39">
                   {c.title}
                 </text>

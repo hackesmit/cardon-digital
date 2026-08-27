@@ -152,7 +152,7 @@ export default function Home() {
                   role="img"
                   aria-label="Separate modular parts are placed and wired into one working board."
                 >
-                  <rect className="tl-board" x="40" y="30" width="440" height="190" rx="14" />
+                  <rect className="tl-board" x="40" y="30" width="440" height="190" rx="2" />
                   <g className="solder tl-solder" fill="none" strokeWidth="1.3" opacity="0.5">
                     <path d="M238 63 L 252 63" />
                     <path d="M148 90 L 148 78" />
@@ -162,31 +162,31 @@ export default function Home() {
                     <path d="M412 154 L 412 142" />
                   </g>
                   <g className="blk blk-a">
-                    <rect className="tl-card" x="58" y="48" width="180" height="30" rx="7" />
+                    <rect className="tl-card" x="58" y="48" width="180" height="30" rx="2" />
                     <circle className="tl-primary" cx="76" cy="63" r="5" />
-                    <rect className="tl-muted" x="90" y="59" width="120" height="8" rx="4" opacity="0.55" />
+                    <rect className="tl-muted" x="90" y="59" width="120" height="8" rx="2" opacity="0.55" />
                     <g className="solder tl-secondary">
                       <circle cx="64" cy="74" r="2" />
                       <circle cx="232" cy="74" r="2" />
                     </g>
                   </g>
                   <g className="blk blk-b">
-                    <rect className="tl-card" x="252" y="48" width="210" height="30" rx="7" />
-                    <rect className="tl-secondary" x="266" y="58" width="60" height="10" rx="5" opacity="0.9" />
-                    <rect className="tl-muted" x="336" y="59" width="112" height="8" rx="4" opacity="0.5" />
+                    <rect className="tl-card" x="252" y="48" width="210" height="30" rx="2" />
+                    <rect className="tl-secondary" x="266" y="58" width="60" height="10" rx="2" opacity="0.9" />
+                    <rect className="tl-muted" x="336" y="59" width="112" height="8" rx="2" opacity="0.5" />
                     <g className="solder tl-secondary">
                       <circle cx="258" cy="74" r="2" />
                       <circle cx="456" cy="74" r="2" />
                     </g>
                   </g>
                   <g className="blk blk-c">
-                    <rect className="tl-card" x="58" y="90" width="180" height="112" rx="9" />
+                    <rect className="tl-card" x="58" y="90" width="180" height="112" rx="2" />
                     <g className="screen-detail">
-                      <rect className="tl-primary" x="76" y="170" width="18" height="18" rx="3" opacity="0.85" />
-                      <rect className="tl-primary" x="102" y="152" width="18" height="36" rx="3" opacity="0.7" />
-                      <rect className="tl-primary" x="128" y="134" width="18" height="54" rx="3" />
-                      <rect className="tl-secondary" x="154" y="120" width="18" height="68" rx="3" />
-                      <rect className="tl-primary" x="180" y="146" width="18" height="42" rx="3" opacity="0.7" />
+                      <rect className="tl-primary" x="76" y="170" width="18" height="18" rx="2" opacity="0.85" />
+                      <rect className="tl-primary" x="102" y="152" width="18" height="36" rx="2" opacity="0.7" />
+                      <rect className="tl-primary" x="128" y="134" width="18" height="54" rx="2" />
+                      <rect className="tl-secondary" x="154" y="120" width="18" height="68" rx="2" />
+                      <rect className="tl-primary" x="180" y="146" width="18" height="42" rx="2" opacity="0.7" />
                       <line
                         className="tl-stroke-muted"
                         x1="70"
@@ -200,7 +200,7 @@ export default function Home() {
                     </g>
                   </g>
                   <g className="blk blk-d">
-                    <rect className="tl-card" x="252" y="90" width="210" height="52" rx="9" />
+                    <rect className="tl-card" x="252" y="90" width="210" height="52" rx="2" />
                     <g
                       className="screen-detail tl-stroke-secondary"
                       fill="none"
@@ -212,17 +212,17 @@ export default function Home() {
                     </g>
                   </g>
                   <g className="blk blk-e">
-                    <rect className="tl-card" x="252" y="154" width="100" height="48" rx="9" />
+                    <rect className="tl-card" x="252" y="154" width="100" height="48" rx="2" />
                     <g className="screen-detail">
-                      <rect className="tl-muted" x="266" y="166" width="60" height="9" rx="4" opacity="0.5" />
-                      <rect className="tl-primary" x="266" y="182" width="40" height="12" rx="4" />
+                      <rect className="tl-muted" x="266" y="166" width="60" height="9" rx="2" opacity="0.5" />
+                      <rect className="tl-primary" x="266" y="182" width="40" height="12" rx="2" />
                     </g>
                   </g>
                   <g className="blk blk-f">
-                    <rect className="tl-card" x="362" y="154" width="100" height="48" rx="9" />
+                    <rect className="tl-card" x="362" y="154" width="100" height="48" rx="2" />
                     <g className="screen-detail">
-                      <rect className="tl-muted" x="376" y="166" width="60" height="9" rx="4" opacity="0.5" />
-                      <rect className="tl-secondary" x="376" y="182" width="52" height="12" rx="4" />
+                      <rect className="tl-muted" x="376" y="166" width="60" height="9" rx="2" opacity="0.5" />
+                      <rect className="tl-secondary" x="376" y="182" width="52" height="12" rx="2" />
                     </g>
                   </g>
                 </svg>

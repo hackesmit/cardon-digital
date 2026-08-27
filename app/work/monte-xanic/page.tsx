@@ -124,15 +124,15 @@ export default function MonteXanicCaseStudy() {
                     aria-label="A production system, spreadsheets, and field notebooks feed into one live consolidated dashboard."
                   >
                     <g>
-                      <rect className="d-card" x="20" y="70" width="134" height="30" rx="7" />
+                      <rect className="d-card" x="20" y="70" width="134" height="30" rx="2" />
                       <text className="d-lab mono" x="34" y="89" fontSize="11" letterSpacing="0.5">
                         system
                       </text>
-                      <rect className="d-card" x="20" y="135" width="134" height="30" rx="7" />
+                      <rect className="d-card" x="20" y="135" width="134" height="30" rx="2" />
                       <text className="d-lab mono" x="34" y="154" fontSize="11" letterSpacing="0.5">
                         spreadsheets
                       </text>
-                      <rect className="d-card" x="20" y="200" width="134" height="30" rx="7" />
+                      <rect className="d-card" x="20" y="200" width="134" height="30" rx="2" />
                       <text className="d-lab mono" x="34" y="219" fontSize="11" letterSpacing="0.5">
                         field notebooks
                       </text>
@@ -146,11 +146,11 @@ export default function MonteXanicCaseStudy() {
                     <circle className="d-primary" cx="232" cy="150" r="2.6" />
                     <circle className="d-primary" cx="232" cy="170" r="2.6" />
                     <g>
-                      <rect className="d-panel" x="240" y="46" width="258" height="208" rx="12" />
+                      <rect className="d-panel" x="240" y="46" width="258" height="208" rx="2" />
                       <text className="d-ink mono" x="256" y="72" fontSize="13" fontWeight="600">
                         One view
                       </text>
-                      <rect className="live-pill" x="416" y="58" width="66" height="20" rx="10" />
+                      <rect className="live-pill" x="416" y="58" width="66" height="20" rx="2" />
                       <circle className="live-dot" cx="428" cy="68" r="3.2" />
                       <text className="d-primary mono" x="438" y="72" fontSize="10" letterSpacing="1">
                         LIVE
@@ -182,12 +182,12 @@ export default function MonteXanicCaseStudy() {
                           tracked
                         </text>
                       </g>
-                      <rect className="d-track" x="256" y="122" width="150" height="5" rx="2.5" />
-                      <rect className="d-primary" x="256" y="122" width="104" height="5" rx="2.5" />
-                      <rect className="d-track" x="256" y="156" width="150" height="5" rx="2.5" />
-                      <rect className="d-secondary" x="256" y="156" width="72" height="5" rx="2.5" />
-                      <rect className="d-track" x="256" y="190" width="150" height="5" rx="2.5" />
-                      <rect className="d-primary" x="256" y="190" width="132" height="5" rx="2.5" />
+                      <rect className="d-track" x="256" y="122" width="150" height="5" rx="2" />
+                      <rect className="d-primary" x="256" y="122" width="104" height="5" rx="2" />
+                      <rect className="d-track" x="256" y="156" width="150" height="5" rx="2" />
+                      <rect className="d-secondary" x="256" y="156" width="72" height="5" rx="2" />
+                      <rect className="d-track" x="256" y="190" width="150" height="5" rx="2" />
+                      <rect className="d-primary" x="256" y="190" width="132" height="5" rx="2" />
                     </g>
                   </svg>
                 </div>
@@ -226,7 +226,7 @@ export default function MonteXanicCaseStudy() {
                     aria-label="A table row for section B3 is bound to its polygon on a small vineyard map."
                   >
                     <g>
-                      <rect className="d-card" x="26" y="96" width="188" height="108" rx="9" />
+                      <rect className="d-card" x="26" y="96" width="188" height="108" rx="2" />
                       <text className="d-lab mono" x="42" y="120" fontSize="10" letterSpacing="1">
                         SECTION
                       </text>
@@ -427,8 +427,8 @@ export default function MonteXanicCaseStudy() {
                     <text className="fin-lab-auto mono" x="34" y="58" fontSize="12" letterSpacing="1.5">
                       RUNS ITSELF, ALL DAY
                     </text>
-                    <rect className="fin-track" x="34" y="74" width="452" height="18" rx="9" />
-                    <rect className="fin-bar" x="34" y="74" width="452" height="18" rx="9" />
+                    <rect className="fin-track" x="34" y="74" width="452" height="18" rx="2" />
+                    <rect className="fin-bar" x="34" y="74" width="452" height="18" rx="2" />
                     <line className="fin-tick" x1="34" y1="104" x2="34" y2="114" />
                     <line className="fin-tick" x1="486" y1="104" x2="486" y2="114" />
                     <text
@@ -452,7 +452,7 @@ export default function MonteXanicCaseStudy() {
                       about 2 min
                     </text>
                     <g className="fin-badge">
-                      <rect className="fin-badge-box" x="34" y="130" width="204" height="34" rx="8" />
+                      <rect className="fin-badge-box" x="34" y="130" width="204" height="34" rx="2" />
                       <text className="fin-badge-text" x="50" y="152" fontSize="13" fontWeight="600">
                         about 97 percent less
                       </text>
