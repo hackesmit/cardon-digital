@@ -22,15 +22,16 @@ export default function Home() {
           <div className="hero-copy">
             <p className="eyebrow">Not another SaaS</p>
             <h1>
-              Your ads, your site, your operations.
+              An hour of manual work,
               <br />
-              <span className="accent">One living system.</span>
+              <span className="accent">cut to two minutes.</span>
             </h1>
             <p className="hero-sub">
-              Scattered spreadsheets, PDFs, inboxes, and messages are how most
-              businesses actually run. We wire them into one connected system you
-              read from and decide with, then hand your team the keys.{" "}
-              <b>Make your numbers true, then compound.</b>
+              That is one workflow we built for a Valle de Guadalupe winery: a 97
+              percent reduction on a job that ran every week. It is the pattern we
+              repeat. We find the manual jobs eating your week, make them run
+              themselves, and wire what is left into one system your team ends up
+              owning. <b>You own what we build.</b>
             </p>
             <div className="hero-actions">
               <a className="cta" href="#diagnostic">
@@ -52,26 +53,26 @@ export default function Home() {
         <h2 className="sr-only">What it is worth to you</h2>
         <div className="container value-grid">
           <div className="value-item">
-            <span className="value-key">Paid on performance</span>
-            <p className="value-lead">
-              For ad work, our fee is{" "}
-              <span className="cool">a share of what the ads produce.</span>
-            </p>
-            <p className="value-body">
-              A percent of spend, with a floor; a share of the sales the ads
-              bring in once measurement you trust is in place. When results grow,
-              we earn it. When they do not, we feel it too.
-            </p>
-          </div>
-          <div className="value-item">
             <span className="value-key">Work that runs itself</span>
             <p className="value-lead">
               Manual routines,{" "}
               <span className="cool">turned into work that runs itself.</span>
             </p>
             <p className="value-body">
-              We find the jobs your team does by hand every week and make them run
-              on their own, then compound the hours you get back.
+              We find the jobs your team does by hand every week, measure what they
+              cost you in hours, and make them run on their own. Then we compound
+              the hours you get back.
+            </p>
+          </div>
+          <div className="value-item">
+            <span className="value-key">Yours to keep</span>
+            <p className="value-lead">
+              The system stays yours,{" "}
+              <span className="cool">keys and all.</span>
+            </p>
+            <p className="value-body">
+              Source, data, domains, credentials, and a team trained to run it.
+              Pause the care retainer and nothing switches off, because you own it.
             </p>
           </div>
           <div className="value-item">
@@ -87,18 +88,162 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ============================ OPERATIONS ============================ */}
+      <section className="section" id="operations" aria-labelledby="ops-title">
+        <div className="container">
+          <div className="split reverse">
+            <div className="split-copy">
+              <span className="kicker gold">01 / Operations</span>
+              <h2 id="ops-title">The hours come back, and they compound.</h2>
+              <p className="section-sub">
+                Every operation has jobs that run every week and eat an afternoon:
+                rekeying the same numbers between systems, chasing status, rebuilding
+                a report someone already built. We find them, measure what they
+                actually cost you in hours, and make them run on their own. Then we
+                do it again with the next one.{" "}
+                <b>Hours back every month, compounding.</b>
+              </p>
+              <p className="note">
+                Measured before and after, so the saving is <b>provable, not
+                claimed.</b>
+              </p>
+            </div>
+            <div className="split-vis">
+              <OpsCompression />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ TOOLS ============================ */}
+      <section className="section" id="tools" aria-labelledby="tools-title">
+        <div className="container">
+          <div className="split">
+            <div className="split-copy">
+              <span className="kicker">02 / Tools</span>
+              <h2 id="tools-title">Tools your team actually runs, and owns.</h2>
+              <p className="section-sub">
+                We build custom workflows and internal tools your team uses every
+                day, <b>integrated end to end</b>, trained into the business, and
+                yours to keep. Underneath them all sits one data warehouse:
+                every channel, file, and system combined into clean, organized
+                fields that feed everything you see. Where it helps, we add an
+                assistant trained on your own data, so you can ask your business a
+                question and get an answer from your numbers. Separate parts,
+                spreadsheets, dashboards, and forms become one working board with
+                no per-seat subscription to babysit.
+              </p>
+              <p className="section-sub">
+                The build is a <b>scoped fixed fee</b>, agreed before work starts.
+                After handoff, most owners keep a monthly <b>care retainer</b>:
+                corrections, refinements, and the changes that shape the system
+                around how your team actually uses it. Pause it whenever you
+                want; everything keeps running and stays yours.
+              </p>
+              <p className="note">
+                Model: <b>trained in and owned,</b> not another subscription.
+              </p>
+            </div>
+            <div className="split-vis">
+              <PlayOnceVis className="tools-vis" tag="parts wired into one board">
+                <svg
+                  className="tools-svg"
+                  viewBox="0 0 520 250"
+                  role="img"
+                  aria-label="Separate modular parts are placed and wired into one working board."
+                >
+                  <rect className="tl-board" x="40" y="30" width="440" height="190" rx="14" />
+                  <g className="solder tl-solder" fill="none" strokeWidth="1.3" opacity="0.5">
+                    <path d="M238 63 L 252 63" />
+                    <path d="M148 90 L 148 78" />
+                    <path d="M357 90 L 357 78" />
+                    <path d="M148 202 L 148 218 L 357 218 L 357 202" />
+                    <path d="M302 154 L 302 142" />
+                    <path d="M412 154 L 412 142" />
+                  </g>
+                  <g className="blk blk-a">
+                    <rect className="tl-card" x="58" y="48" width="180" height="30" rx="7" />
+                    <circle className="tl-primary" cx="76" cy="63" r="5" />
+                    <rect className="tl-muted" x="90" y="59" width="120" height="8" rx="4" opacity="0.55" />
+                    <g className="solder tl-secondary">
+                      <circle cx="64" cy="74" r="2" />
+                      <circle cx="232" cy="74" r="2" />
+                    </g>
+                  </g>
+                  <g className="blk blk-b">
+                    <rect className="tl-card" x="252" y="48" width="210" height="30" rx="7" />
+                    <rect className="tl-secondary" x="266" y="58" width="60" height="10" rx="5" opacity="0.9" />
+                    <rect className="tl-muted" x="336" y="59" width="112" height="8" rx="4" opacity="0.5" />
+                    <g className="solder tl-secondary">
+                      <circle cx="258" cy="74" r="2" />
+                      <circle cx="456" cy="74" r="2" />
+                    </g>
+                  </g>
+                  <g className="blk blk-c">
+                    <rect className="tl-card" x="58" y="90" width="180" height="112" rx="9" />
+                    <g className="screen-detail">
+                      <rect className="tl-primary" x="76" y="170" width="18" height="18" rx="3" opacity="0.85" />
+                      <rect className="tl-primary" x="102" y="152" width="18" height="36" rx="3" opacity="0.7" />
+                      <rect className="tl-primary" x="128" y="134" width="18" height="54" rx="3" />
+                      <rect className="tl-secondary" x="154" y="120" width="18" height="68" rx="3" />
+                      <rect className="tl-primary" x="180" y="146" width="18" height="42" rx="3" opacity="0.7" />
+                      <line
+                        className="tl-stroke-muted"
+                        x1="70"
+                        y1="112"
+                        x2="150"
+                        y2="112"
+                        strokeWidth="6"
+                        strokeLinecap="round"
+                        opacity="0.5"
+                      />
+                    </g>
+                  </g>
+                  <g className="blk blk-d">
+                    <rect className="tl-card" x="252" y="90" width="210" height="52" rx="9" />
+                    <g
+                      className="screen-detail tl-stroke-secondary"
+                      fill="none"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M266 126 L 300 110 L 334 118 L 368 98 L 402 104 L 448 88" />
+                    </g>
+                  </g>
+                  <g className="blk blk-e">
+                    <rect className="tl-card" x="252" y="154" width="100" height="48" rx="9" />
+                    <g className="screen-detail">
+                      <rect className="tl-muted" x="266" y="166" width="60" height="9" rx="4" opacity="0.5" />
+                      <rect className="tl-primary" x="266" y="182" width="40" height="12" rx="4" />
+                    </g>
+                  </g>
+                  <g className="blk blk-f">
+                    <rect className="tl-card" x="362" y="154" width="100" height="48" rx="9" />
+                    <g className="screen-detail">
+                      <rect className="tl-muted" x="376" y="166" width="60" height="9" rx="4" opacity="0.5" />
+                      <rect className="tl-secondary" x="376" y="182" width="52" height="12" rx="4" />
+                    </g>
+                  </g>
+                </svg>
+              </PlayOnceVis>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ============================ DEMAND ============================ */}
       <section className="section" id="services" aria-labelledby="demand-title">
         <div className="container">
           <div className="split">
             <div className="split-copy">
-              <span className="kicker">01 / Demand</span>
+              <span className="kicker">03 / Demand</span>
               <h2 id="demand-title">
                 Demand you can trust, before you optimize it.
               </h2>
               <p className="section-sub">
                 We run Google Ads with the rigor of the most sophisticated
-                agencies, at the cutting edge of what the platforms can do, and{" "}
+                agencies, using what the platforms actually allow, and{" "}
                 <b>priced in proportion to performance</b>: a percent of ad spend
                 with a floor, or, once measurement you trust is in place, a
                 percent of the sales the ads bring in. Before anyone tunes a
@@ -276,148 +421,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============================ OPERATIONS ============================ */}
-      <section className="section" id="operations" aria-labelledby="ops-title">
-        <div className="container">
-          <div className="split reverse">
-            <div className="split-copy">
-              <span className="kicker gold">02 / Operations</span>
-              <h2 id="ops-title">An hour of manual work, made to run itself.</h2>
-              <p className="section-sub">
-                One financial workflow we built went from an hour of manual work to
-                about two minutes, refreshed through the day. That is a{" "}
-                <b>97 percent reduction</b>, and it is not a one-off. It is the
-                pattern we repeat: find the hour-long manual jobs, make them run
-                themselves, then compound the hours you get back every month.
-              </p>
-              <p className="note">
-                Pattern, not a trophy: <b>hours back every month,</b> compounding.
-              </p>
-            </div>
-            <div className="split-vis">
-              <OpsCompression />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================ TOOLS ============================ */}
-      <section className="section" id="tools" aria-labelledby="tools-title">
-        <div className="container">
-          <div className="split">
-            <div className="split-copy">
-              <span className="kicker">03 / Tools</span>
-              <h2 id="tools-title">Tools your team actually runs, and owns.</h2>
-              <p className="section-sub">
-                We build custom workflows and internal tools your team uses every
-                day, <b>integrated end to end</b>, trained into the business, and
-                yours to keep. Underneath them all sits one data warehouse:
-                every channel, file, and system combined into clean, organized
-                fields that feed everything you see. Where it helps, we add an
-                assistant trained on your own data, so you can ask your business a
-                question and get an answer from your numbers. Separate parts,
-                spreadsheets, dashboards, and forms become one working board with
-                no per-seat subscription to babysit.
-              </p>
-              <p className="section-sub">
-                The build is a <b>scoped fixed fee</b>, agreed before work starts.
-                After handoff, most owners keep a monthly <b>care retainer</b>:
-                corrections, refinements, and the changes that shape the system
-                around how your team actually uses it. Pause it whenever you
-                want; everything keeps running and stays yours.
-              </p>
-              <p className="note">
-                Model: <b>trained in and owned,</b> not another subscription.
-              </p>
-            </div>
-            <div className="split-vis">
-              <PlayOnceVis className="tools-vis" tag="parts wired into one board">
-                <svg
-                  className="tools-svg"
-                  viewBox="0 0 520 250"
-                  role="img"
-                  aria-label="Separate modular parts are placed and wired into one working board."
-                >
-                  <rect className="tl-board" x="40" y="30" width="440" height="190" rx="14" />
-                  <g className="solder tl-solder" fill="none" strokeWidth="1.3" opacity="0.5">
-                    <path d="M238 63 L 252 63" />
-                    <path d="M148 90 L 148 78" />
-                    <path d="M357 90 L 357 78" />
-                    <path d="M148 202 L 148 218 L 357 218 L 357 202" />
-                    <path d="M302 154 L 302 142" />
-                    <path d="M412 154 L 412 142" />
-                  </g>
-                  <g className="blk blk-a">
-                    <rect className="tl-card" x="58" y="48" width="180" height="30" rx="7" />
-                    <circle className="tl-primary" cx="76" cy="63" r="5" />
-                    <rect className="tl-muted" x="90" y="59" width="120" height="8" rx="4" opacity="0.55" />
-                    <g className="solder tl-secondary">
-                      <circle cx="64" cy="74" r="2" />
-                      <circle cx="232" cy="74" r="2" />
-                    </g>
-                  </g>
-                  <g className="blk blk-b">
-                    <rect className="tl-card" x="252" y="48" width="210" height="30" rx="7" />
-                    <rect className="tl-secondary" x="266" y="58" width="60" height="10" rx="5" opacity="0.9" />
-                    <rect className="tl-muted" x="336" y="59" width="112" height="8" rx="4" opacity="0.5" />
-                    <g className="solder tl-secondary">
-                      <circle cx="258" cy="74" r="2" />
-                      <circle cx="456" cy="74" r="2" />
-                    </g>
-                  </g>
-                  <g className="blk blk-c">
-                    <rect className="tl-card" x="58" y="90" width="180" height="112" rx="9" />
-                    <g className="screen-detail">
-                      <rect className="tl-primary" x="76" y="170" width="18" height="18" rx="3" opacity="0.85" />
-                      <rect className="tl-primary" x="102" y="152" width="18" height="36" rx="3" opacity="0.7" />
-                      <rect className="tl-primary" x="128" y="134" width="18" height="54" rx="3" />
-                      <rect className="tl-secondary" x="154" y="120" width="18" height="68" rx="3" />
-                      <rect className="tl-primary" x="180" y="146" width="18" height="42" rx="3" opacity="0.7" />
-                      <line
-                        className="tl-stroke-muted"
-                        x1="70"
-                        y1="112"
-                        x2="150"
-                        y2="112"
-                        strokeWidth="6"
-                        strokeLinecap="round"
-                        opacity="0.5"
-                      />
-                    </g>
-                  </g>
-                  <g className="blk blk-d">
-                    <rect className="tl-card" x="252" y="90" width="210" height="52" rx="9" />
-                    <g
-                      className="screen-detail tl-stroke-secondary"
-                      fill="none"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M266 126 L 300 110 L 334 118 L 368 98 L 402 104 L 448 88" />
-                    </g>
-                  </g>
-                  <g className="blk blk-e">
-                    <rect className="tl-card" x="252" y="154" width="100" height="48" rx="9" />
-                    <g className="screen-detail">
-                      <rect className="tl-muted" x="266" y="166" width="60" height="9" rx="4" opacity="0.5" />
-                      <rect className="tl-primary" x="266" y="182" width="40" height="12" rx="4" />
-                    </g>
-                  </g>
-                  <g className="blk blk-f">
-                    <rect className="tl-card" x="362" y="154" width="100" height="48" rx="9" />
-                    <g className="screen-detail">
-                      <rect className="tl-muted" x="376" y="166" width="60" height="9" rx="4" opacity="0.5" />
-                      <rect className="tl-secondary" x="376" y="182" width="52" height="12" rx="4" />
-                    </g>
-                  </g>
-                </svg>
-              </PlayOnceVis>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ============================ COMPARE ============================ */}
       <section className="section compare" id="compare" aria-labelledby="compare-title">
         <div className="container">
@@ -538,6 +541,102 @@ export default function Home() {
             Three stations built, two terrains ahead. In focus:{" "}
             <b>the winery valley and the clinics.</b>
           </p>
+        </div>
+      </section>
+
+      {/* ============================ PRICING ============================ */}
+      <section className="section pricing" id="pricing" aria-labelledby="pricing-title">
+        <div className="container">
+          <div className="section-head">
+            <span className="kicker">What it costs</span>
+            <h2 id="pricing-title">Published floors. The real number comes after the diagnostic.</h2>
+            <p className="section-sub">
+              A scoped build at a fixed fee, then a care retainer only if you want
+              one. No per-seat fees, no lock-in, and{" "}
+              <b>no quote before we have seen your numbers.</b>
+            </p>
+          </div>
+
+          <div className="tiers">
+            <div className="tier">
+              <span className="tier-n">Tier 1</span>
+              <h3 className="tier-name">Quick Win</h3>
+              <p className="tier-price">
+                from <b>$3,500</b> <span className="tier-cur">USD</span>
+              </p>
+              <p className="tier-time">2 to 3 weeks</p>
+              <p className="tier-body">
+                One process automated end to end. Small enough to start with, real
+                enough to change a week.
+              </p>
+            </div>
+
+            <div className="tier tier-lead">
+              <span className="tier-n">Tier 2</span>
+              <h3 className="tier-name">Operations System</h3>
+              <p className="tier-price">
+                from <b>$12,000</b> <span className="tier-cur">USD</span>
+              </p>
+              <p className="tier-time">5 to 8 weeks</p>
+              <p className="tier-body">
+                Three to five connected processes plus the data layer that makes
+                them one system. Where most of our work lands.
+              </p>
+            </div>
+
+            <div className="tier">
+              <span className="tier-n">Tier 3</span>
+              <h3 className="tier-name">Full Operational Build</h3>
+              <p className="tier-price">
+                from <b>$35,000</b> <span className="tier-cur">USD</span>
+              </p>
+              <p className="tier-time">8 to 16 weeks</p>
+              <p className="tier-body">
+                The system your company runs on: production or service
+                intelligence, finance, and the customer-facing surface, connected.
+              </p>
+            </div>
+          </div>
+
+          <div className="pricing-foot">
+            <div className="pf-item">
+              <span className="pf-k">Care retainer</span>
+              <p>
+                Optional, from <b>$400</b> a month. Monitoring, corrections, and
+                changes as your team actually uses it. Pause it and nothing
+                switches off, because you own the system.
+              </p>
+            </div>
+            <div className="pf-item">
+              <span className="pf-k">Ad management</span>
+              <p>
+                A share of spend with a floor, from <b>$1,200</b> a month. We run
+                ads only inside a system we built or rebuilt, never on their own.
+              </p>
+            </div>
+            <div className="pf-item">
+              <span className="pf-k">Mexico</span>
+              <p>
+                Quoted and billed locally in pesos, indexed to the Mexican market
+                rather than converted from this card. Ask us and we will send it.
+              </p>
+            </div>
+          </div>
+
+          <div className="founding">
+            <span className="kicker clay">Founding clients</span>
+            <p className="founding-lead">
+              <b>30 percent off the build fee for our first five clients, through
+              31 December 2026.</b>
+            </p>
+            <p className="founding-body">
+              In exchange we ask for three things, written into the agreement: a
+              named case study with the real before-and-after numbers, one
+              reference call for someone in your industry, and one introduction to
+              a peer. Would rather not be named? Then you pay the full fee and we
+              still take the work.
+            </p>
+          </div>
         </div>
       </section>
 
