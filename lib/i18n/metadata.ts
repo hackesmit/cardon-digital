@@ -19,9 +19,11 @@ export function pageMetadata(
   locale: Locale,
   path: string,
   meta: { title: string; description: string },
+  /** The home page carries the full brand title, so it skips the template. */
+  absoluteTitle = false,
 ): Metadata {
   return {
-    title: meta.title,
+    title: absoluteTitle ? { absolute: meta.title } : meta.title,
     description: meta.description,
     alternates: alternatesFor(locale, path),
     openGraph: {

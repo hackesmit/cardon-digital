@@ -76,6 +76,12 @@ export function formatAmount(amount: number, locale: Locale): string {
   }).format(amount);
 }
 
+/** Amount with its currency mark, as a reader sees it in a sentence. */
+export function formatMoney(locale: Locale, amount: number): string {
+  const n = formatAmount(amount, locale);
+  return locale === "en" ? "$" + n : "$" + n + " MXN";
+}
+
 export function pricingFor(locale: Locale): PricingTable {
   return pricing[locale];
 }
