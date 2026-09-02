@@ -13,6 +13,13 @@
   --amber-line: color-mix(in srgb, var(--amber) 58%, transparent);
   --amber-ink: color-mix(in srgb, var(--amber) 66%, var(--text) 34%);
 }
+/* Light is the default mode, and #c98a2b sits at 2.4:1 on the cream ground,
+   well under the contrast the rest of the palette holds. Same amber hue, more
+   depth, so the site-plan visual and the kicker stay readable on cream.
+   Matches the per-mode pattern --oasis, --sage and --wine already use. */
+:root[data-mode="light"] .pg-construction {
+  --amber: #8a5a12;
+}
 
 /* hero: only the one addition not already in the shared layer */
 .pg-construction .hero-sub .dry { color: var(--muted); }

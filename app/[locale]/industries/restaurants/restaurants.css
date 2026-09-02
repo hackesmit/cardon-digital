@@ -18,6 +18,12 @@
   --accent-faint: color-mix(in srgb, var(--accent) 16%, transparent);
   --accent-line: color-mix(in srgb, var(--accent) 40%, transparent);
 }
+/* Light is the default mode, and #B85C38 lands at 3.7:1 on the cream ground.
+   A deeper terracotta keeps the sector accent and clears 4.5:1, matching the
+   per-mode pattern --oasis, --sage and --wine already use. */
+:root[data-mode="light"] .pg-restaurants {
+  --accent: #a34f26;
+}
 
 /* hero: this page runs a slightly wider copy column and a terracotta h1 accent */
 .pg-restaurants .hero-copy{max-width:820px;}
