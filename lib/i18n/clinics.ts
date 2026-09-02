@@ -112,6 +112,26 @@ const en = {
       },
     ],
   },
+  vis: {
+    tagBefore: "EN + ES",
+    tagMid: "merge into",
+    tagAfter: "one calm week",
+    filling: "filling the week",
+    calm: "one calm week",
+    hotspotsAria:
+      "Illustrative week schedule. Appointments dock from two language channels.",
+    fallback:
+      "Inquiry chips arrive from two channels, one labeled EN and one labeled ES, carrying calls, forms, and messages. They merge into a single intake line, pause briefly at a confirm step where a reminder prevents a no-show, then dock as appointments onto a clean week grid that fills evenly. Two languages, many channels, one schedule the front desk can trust. Labels are illustrative.",
+    days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+    dayLetters: ["M", "T", "W", "T", "F"],
+    glyphs: ["CALL", "FORM", "MSG", "DM"],
+    confirm: "confirm",
+    reminder: "reminder",
+    noShow: "no-show prevented",
+    illustrative: "illustrative",
+    slotAria: "Appointment, illustrative. {day} {time}, {channel} inquiry, confirmed.",
+    plateMeta: " inquiry / confirmed",
+  },
   diagDesc:
     "Ten business days instrumenting your actual inquiry pipeline: response times, where inquiries leak between channels, real conversion, and your no-show rate. You get a written memo with hard numbers, not a sales deck: what is true, what is leaking, and what to build first. Measure the leak, then decide.",
   diagSpecs: [
@@ -232,6 +252,26 @@ const es: typeof en = {
         body: "Lo construimos, lo enseñamos dentro de la clínica y entregamos las llaves. Sin software por usuario que andar cuidando, y sin depender de nosotros para que la semana corra.",
       },
     ],
+  },
+  vis: {
+    tagBefore: "EN + ES",
+    tagMid: "se juntan en",
+    tagAfter: "una semana tranquila",
+    filling: "llenando la semana",
+    calm: "una semana tranquila",
+    hotspotsAria:
+      "Agenda semanal ilustrativa. Las citas entran desde dos canales de idioma.",
+    fallback:
+      "Las fichas de solicitud llegan por dos canales, uno marcado EN y otro marcado ES, con llamadas, formularios y mensajes. Se juntan en una sola línea de entrada, se detienen un momento en un paso de confirmación donde un recordatorio evita una falta, y luego se acomodan como citas en una malla semanal limpia que se llena parejo. Dos idiomas, muchos canales, una sola agenda en la que la recepción confía. Las etiquetas son ilustrativas.",
+    days: ["Lun", "Mar", "Mié", "Jue", "Vie"],
+    dayLetters: ["L", "M", "M", "J", "V"],
+    glyphs: ["LLAM", "FORM", "MSG", "DM"],
+    confirm: "confirmar",
+    reminder: "recordatorio",
+    noShow: "falta evitada",
+    illustrative: "ilustrativo",
+    slotAria: "Cita, ilustrativa. {day} {time}, solicitud por {channel}, confirmada.",
+    plateMeta: " solicitud / confirmada",
   },
   diagDesc:
     "Diez días hábiles instrumentando su canal real de solicitudes: tiempos de respuesta, dónde se fugan las solicitudes entre canales, conversión real y su tasa de faltas. Usted recibe un informe escrito con números duros, no una presentación de ventas: qué es cierto, qué se está fugando y qué conviene construir primero. Mida la fuga, luego decida.",

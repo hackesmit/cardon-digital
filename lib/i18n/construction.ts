@@ -77,6 +77,71 @@ const en = {
     demandNote:
       "Pricing: **a share of ad spend with a floor, or of the sales the ads bring in once measurement you trust is in place.** We get paid when it works.",
   },
+  vis: {
+    fleet: {
+      depot: "DEPOT",
+      siteA: "SITE A",
+      siteB: "SITE B",
+      arrivals: "ARRIVALS",
+      auto: "AUTO",
+      logged: "logged",
+      at: " at ",
+      fleet: "FLEET",
+      live: "LIVE",
+      ready: "READY",
+      status: "{n} vehicles on one map / arrivals log themselves",
+      fallback:
+        "A live map of your sites and vehicles. Each site is a geofenced ring; when a vehicle crosses into one, its arrival is logged automatically, with no phone call. Every vehicle on one map.",
+    },
+    plan: {
+      tagBefore: "scattered orders",
+      tagMid: "placed into",
+      tagAfter: "one schedule",
+      descDesktop:
+        "A top-down site plan with five plots sits beside a weekly schedule strip. Scattered work-order chips are placed one at a time into dated lanes; as each lands its plot lights and a dependency line links it to the next in sequence. Focus a placed chip to raise its readout and light its plot.",
+      descPortrait:
+        "A top-down site plan with five plots sits above a weekly schedule of five dated lanes. Scattered work-order chips are placed one at a time into the lanes; as each lands its plot lights and a dependency line links it to the next in sequence. Focus a placed chip to raise its readout and light its plot.",
+      fallback:
+        "Scattered work orders, grade site, form footings, rebar delivery, pour slab, and inspection, settle one at a time into dated lanes on a weekly schedule beside a site plan, each lighting its plot and linking to the next in sequence.",
+      sitePlan: "SITE PLAN",
+      schedule: "SCHEDULE / THIS WEEK",
+      placing: "placing",
+      oneSchedule: "one schedule",
+      days: ["MON", "TUE", "WED", "THU", "FRI"],
+      cards: [
+        {
+          plate: "GRADE SITE",
+          chip: "grade site / crew 1",
+          meta: "crew 1 / plot A / mon",
+          aria: "Work order: grade site, crew 1, plot A, scheduled Monday.",
+        },
+        {
+          plate: "FORM FOOTINGS",
+          chip: "form footings / crew 2",
+          meta: "crew 2 / plot B / tue",
+          aria: "Work order: form footings, crew 2, plot B, scheduled Tuesday.",
+        },
+        {
+          plate: "REBAR DELIVERY",
+          chip: "rebar delivery",
+          meta: "materials / plot C / wed",
+          aria: "Work order: rebar delivery, materials, plot C, scheduled Wednesday.",
+        },
+        {
+          plate: "POUR SLAB",
+          chip: "pour slab / crew 2",
+          meta: "crew 2 / plot D / thu",
+          aria: "Work order: pour slab, crew 2, plot D, scheduled Thursday.",
+        },
+        {
+          plate: "INSPECTION",
+          chip: "inspection",
+          meta: "city / plot E / fri",
+          aria: "Work order: inspection, city, plot E, scheduled Friday.",
+        },
+      ],
+    },
+  },
   diagDesc:
     "Ten business days looking at your operations, your site, and your demand as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
   diagSpecs: [
@@ -161,6 +226,71 @@ const es: typeof en = {
     ],
     demandNote:
       "Precio: **un porcentaje de la inversión en anuncios con un piso, o de las ventas que traen los anuncios cuando ya existe una medición en la que usted confía.** Cobramos cuando funciona.",
+  },
+  vis: {
+    fleet: {
+      depot: "PATIO",
+      siteA: "OBRA A",
+      siteB: "OBRA B",
+      arrivals: "LLEGADAS",
+      auto: "AUTO",
+      logged: "registrada",
+      at: " en ",
+      fleet: "FLOTILLA",
+      live: "AL DÍA",
+      ready: "LISTO",
+      status: "{n} vehículos en un solo mapa / las llegadas se registran solas",
+      fallback:
+        "Un mapa al día de sus obras y sus vehículos. Cada obra es un perímetro; cuando un vehículo entra, su llegada se registra sola, sin una llamada. Cada vehículo en un solo mapa.",
+    },
+    plan: {
+      tagBefore: "órdenes sueltas",
+      tagMid: "acomodadas en",
+      tagAfter: "un solo programa",
+      descDesktop:
+        "Un plano de obra visto desde arriba con cinco lotes está junto a una tira de programa semanal. Las tarjetas sueltas de orden de trabajo se van acomodando una por una en carriles con fecha; conforme cada una aterriza, su lote se enciende y una línea de dependencia la liga con la siguiente en secuencia. Enfoque una tarjeta colocada para levantar su lectura y encender su lote.",
+      descPortrait:
+        "Un plano de obra visto desde arriba con cinco lotes está sobre un programa semanal de cinco carriles con fecha. Las tarjetas sueltas de orden de trabajo se van acomodando una por una en los carriles; conforme cada una aterriza, su lote se enciende y una línea de dependencia la liga con la siguiente en secuencia. Enfoque una tarjeta colocada para levantar su lectura y encender su lote.",
+      fallback:
+        "Órdenes de trabajo sueltas, nivelar terreno, cimbra de zapatas, entrega de varilla, colado de losa e inspección, se acomodan una por una en carriles con fecha de un programa semanal junto a un plano de obra, cada una encendiendo su lote y ligándose con la siguiente en secuencia.",
+      sitePlan: "PLANO DE OBRA",
+      schedule: "PROGRAMA / ESTA SEMANA",
+      placing: "acomodando",
+      oneSchedule: "un solo programa",
+      days: ["LUN", "MAR", "MIÉ", "JUE", "VIE"],
+      cards: [
+        {
+          plate: "NIVELAR",
+          chip: "nivelar terreno / cuadrilla 1",
+          meta: "cuadrilla 1 / lote A / lun",
+          aria: "Orden de trabajo: nivelar terreno, cuadrilla 1, lote A, programada para el lunes.",
+        },
+        {
+          plate: "CIMENTACIÓN",
+          chip: "cimbra de zapatas / cuadrilla 2",
+          meta: "cuadrilla 2 / lote B / mar",
+          aria: "Orden de trabajo: cimbra de zapatas, cuadrilla 2, lote B, programada para el martes.",
+        },
+        {
+          plate: "ENTREGA VARILLA",
+          chip: "entrega de varilla",
+          meta: "materiales / lote C / mié",
+          aria: "Orden de trabajo: entrega de varilla, materiales, lote C, programada para el miércoles.",
+        },
+        {
+          plate: "COLADO",
+          chip: "colado de losa / cuadrilla 2",
+          meta: "cuadrilla 2 / lote D / jue",
+          aria: "Orden de trabajo: colado de losa, cuadrilla 2, lote D, programada para el jueves.",
+        },
+        {
+          plate: "INSPECCIÓN",
+          chip: "inspección",
+          meta: "municipio / lote E / vie",
+          aria: "Orden de trabajo: inspección, municipio, lote E, programada para el viernes.",
+        },
+      ],
+    },
   },
   diagDesc:
     "Diez días hábiles revisando su operación, sus obras y su demanda como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",

@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { construction } from "@/lib/i18n/construction";
 
 /**
  * Signature visual: placement onto a site plan. Scattered work-order chips are
@@ -73,16 +75,17 @@ const PORTRAIT_LEADERS = [
 
 /* portrait work-order chips (default state is placed in lanes) */
 const PORTRAIT_CHIPS = [
-  { y: 323, label: "grade site / crew 1", pill: "A", title: "GRADE SITE", meta: "crew 1 / plot A / mon", aria: "Work order: grade site, crew 1, plot A, scheduled Monday." },
-  { y: 373, label: "form footings / crew 2", pill: "B", title: "FORM FOOTINGS", meta: "crew 2 / plot B / tue", aria: "Work order: form footings, crew 2, plot B, scheduled Tuesday." },
-  { y: 423, label: "rebar delivery", pill: "C", title: "REBAR DELIVERY", meta: "materials / plot C / wed", aria: "Work order: rebar delivery, materials, plot C, scheduled Wednesday." },
-  { y: 473, label: "pour slab / crew 2", pill: "D", title: "POUR SLAB", meta: "crew 2 / plot D / thu", aria: "Work order: pour slab, crew 2, plot D, scheduled Thursday." },
-  { y: 523, label: "inspection", pill: "E", title: "INSPECTION", meta: "city / plot E / fri", aria: "Work order: inspection, city, plot E, scheduled Friday." },
+  { y: 323, pill: "A" },
+  { y: 373, pill: "B" },
+  { y: 423, pill: "C" },
+  { y: 473, pill: "D" },
+  { y: 523, pill: "E" },
 ];
 
-const PORTRAIT_DAYS = ["MON", "TUE", "WED", "THU", "FRI"];
+
 
 export default function SitePlanVisual() {
+  const t = useDict(construction).vis.plan;
   const deskRef = useRef<SVGSVGElement | null>(null);
   const portRef = useRef<SVGSVGElement | null>(null);
   const captionRef = useRef<HTMLSpanElement | null>(null);
@@ -184,7 +187,7 @@ export default function SitePlanVisual() {
         }
         for (let s = 0; s < depEls.length; s++) setDep(s, 1);
         svg.style.opacity = "1";
-        if (caption) caption.textContent = "one schedule";
+        if (caption) caption.textContent = t.oneSchedule;
       };
 
       /* pre: chips scattered at edges, plots unlit, spine hidden */
@@ -196,7 +199,7 @@ export default function SitePlanVisual() {
           landed[i] = false;
         }
         for (let s = 0; s < depEls.length; s++) setDep(s, 0);
-        if (caption) caption.textContent = "placing";
+        if (caption) caption.textContent = t.placing;
       };
 
       const draw = () => {
@@ -242,7 +245,7 @@ export default function SitePlanVisual() {
         svg.style.opacity = fo.toFixed(3);
 
         if (caption)
-          caption.textContent = placedCount >= N ? "one schedule" : "placing";
+          caption.textContent = placedCount >= N ? t.oneSchedule : t.placing;
       };
 
       const canRun = () => !reduced() && docVisible && onscreen;
@@ -358,12 +361,12 @@ export default function SitePlanVisual() {
   return (
     <div className="sig-frame">
       <span className="sig-tag mono">
-        <span className="before">scattered orders</span>{" "}
-        <span className="midword">placed into</span>{" "}
-        <span className="after">one schedule</span>
+        <span className="before">{t.tagBefore}</span>{" "}
+        <span className="midword">{t.tagMid}</span>{" "}
+        <span className="after">{t.tagAfter}</span>
       </span>
       <span className="sig-caption mono" ref={captionRef}>
-        one schedule
+        {t.oneSchedule}
       </span>
 
       {/* ---- desktop composition: plan left, schedule right ---- */}
@@ -378,22 +381,12 @@ export default function SitePlanVisual() {
         <title id="sigTitle">
           Work orders placed onto a site plan and its weekly schedule
         </title>
-        <desc id="sigDesc">
-          A top-down site plan with five plots sits beside a weekly schedule
-          strip. Scattered work-order chips are placed one at a time into dated
-          lanes; as each lands its plot lights and a dependency line links it to
-          the next in sequence. Focus a placed chip to raise its readout and
-          light its plot.
-        </desc>
+        <desc id="sigDesc">{t.descDesktop}</desc>
 
         {/* decorative base: plan boundary, contours, divider, labels, lanes */}
         <g aria-hidden="true">
-          <text className="sp-head" x="26" y="38">
-            SITE PLAN
-          </text>
-          <text className="sp-head" x="372" y="38">
-            SCHEDULE / THIS WEEK
-          </text>
+          <text className="sp-head" x="26" y="38">{t.sitePlan}</text>
+          <text className="sp-head" x="372" y="38">{t.schedule}</text>
 
           <rect className="sp-frame" x="24" y="46" width="320" height="304" rx="2" />
           <path
@@ -418,21 +411,11 @@ export default function SitePlanVisual() {
             <rect className="lane-track" x="402" y="173" width="180" height="38" rx="2" />
             <rect className="lane-track" x="402" y="223" width="180" height="38" rx="2" />
             <rect className="lane-track" x="402" y="273" width="180" height="38" rx="2" />
-            <text className="lane-date" x="372" y="95" textAnchor="start">
-              MON
-            </text>
-            <text className="lane-date" x="372" y="145" textAnchor="start">
-              TUE
-            </text>
-            <text className="lane-date" x="372" y="195" textAnchor="start">
-              WED
-            </text>
-            <text className="lane-date" x="372" y="245" textAnchor="start">
-              THU
-            </text>
-            <text className="lane-date" x="372" y="295" textAnchor="start">
-              FRI
-            </text>
+            <text className="lane-date" x="372" y="95" textAnchor="start">{t.days[0]}</text>
+            <text className="lane-date" x="372" y="145" textAnchor="start">{t.days[1]}</text>
+            <text className="lane-date" x="372" y="195" textAnchor="start">{t.days[2]}</text>
+            <text className="lane-date" x="372" y="245" textAnchor="start">{t.days[3]}</text>
+            <text className="lane-date" x="372" y="295" textAnchor="start">{t.days[4]}</text>
           </g>
         </g>
 
@@ -505,26 +488,20 @@ export default function SitePlanVisual() {
             transform="translate(492,92)"
             role="button"
             tabIndex={0}
-            aria-label="Work order: grade site, crew 1, plot A, scheduled Monday."
+            aria-label={t.cards[0].aria}
           >
             <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
             <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
-            <text className="chip-label" x="-62" y="4">
-              grade site / crew 1
-            </text>
+            <text className="chip-label" x="-62" y="4">{t.cards[0].chip}</text>
             <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               A
             </text>
             <g className="plate">
               <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
-              <text className="plate-title" x="-62" y="-38">
-                GRADE SITE
-              </text>
-              <text className="plate-meta" x="-62" y="-27">
-                crew 1 / plot A / mon
-              </text>
+              <text className="plate-title" x="-62" y="-38">{t.cards[0].plate}</text>
+              <text className="plate-meta" x="-62" y="-27">{t.cards[0].meta}</text>
             </g>
           </g>
           <g
@@ -533,26 +510,20 @@ export default function SitePlanVisual() {
             transform="translate(492,142)"
             role="button"
             tabIndex={0}
-            aria-label="Work order: form footings, crew 2, plot B, scheduled Tuesday."
+            aria-label={t.cards[1].aria}
           >
             <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
             <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
-            <text className="chip-label" x="-62" y="4">
-              form footings / crew 2
-            </text>
+            <text className="chip-label" x="-62" y="4">{t.cards[1].chip}</text>
             <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               B
             </text>
             <g className="plate">
               <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
-              <text className="plate-title" x="-62" y="-38">
-                FORM FOOTINGS
-              </text>
-              <text className="plate-meta" x="-62" y="-27">
-                crew 2 / plot B / tue
-              </text>
+              <text className="plate-title" x="-62" y="-38">{t.cards[1].plate}</text>
+              <text className="plate-meta" x="-62" y="-27">{t.cards[1].meta}</text>
             </g>
           </g>
           <g
@@ -561,26 +532,20 @@ export default function SitePlanVisual() {
             transform="translate(492,192)"
             role="button"
             tabIndex={0}
-            aria-label="Work order: rebar delivery, materials, plot C, scheduled Wednesday."
+            aria-label={t.cards[2].aria}
           >
             <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
             <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
-            <text className="chip-label" x="-62" y="4">
-              rebar delivery
-            </text>
+            <text className="chip-label" x="-62" y="4">{t.cards[2].chip}</text>
             <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               C
             </text>
             <g className="plate">
               <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
-              <text className="plate-title" x="-62" y="-38">
-                REBAR DELIVERY
-              </text>
-              <text className="plate-meta" x="-62" y="-27">
-                materials / plot C / wed
-              </text>
+              <text className="plate-title" x="-62" y="-38">{t.cards[2].plate}</text>
+              <text className="plate-meta" x="-62" y="-27">{t.cards[2].meta}</text>
             </g>
           </g>
           <g
@@ -589,26 +554,20 @@ export default function SitePlanVisual() {
             transform="translate(492,242)"
             role="button"
             tabIndex={0}
-            aria-label="Work order: pour slab, crew 2, plot D, scheduled Thursday."
+            aria-label={t.cards[3].aria}
           >
             <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
             <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
-            <text className="chip-label" x="-62" y="4">
-              pour slab / crew 2
-            </text>
+            <text className="chip-label" x="-62" y="4">{t.cards[3].chip}</text>
             <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               D
             </text>
             <g className="plate">
               <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
-              <text className="plate-title" x="-62" y="-38">
-                POUR SLAB
-              </text>
-              <text className="plate-meta" x="-62" y="-27">
-                crew 2 / plot D / thu
-              </text>
+              <text className="plate-title" x="-62" y="-38">{t.cards[3].plate}</text>
+              <text className="plate-meta" x="-62" y="-27">{t.cards[3].meta}</text>
             </g>
           </g>
           <g
@@ -617,26 +576,20 @@ export default function SitePlanVisual() {
             transform="translate(492,292)"
             role="button"
             tabIndex={0}
-            aria-label="Work order: inspection, city, plot E, scheduled Friday."
+            aria-label={t.cards[4].aria}
           >
             <rect className="chip-focus" x="-78" y="-20" width="156" height="40" rx="2" />
             <rect className="chip-body" x="-74" y="-16" width="148" height="32" rx="2" />
             <rect className="chip-accent" x="-74" y="-16" width="3.5" height="32" rx="1.75" />
-            <text className="chip-label" x="-62" y="4">
-              inspection
-            </text>
+            <text className="chip-label" x="-62" y="4">{t.cards[4].chip}</text>
             <rect className="chip-pill" x="52" y="-9" width="16" height="18" rx="2" />
             <text className="chip-pill-id" x="60" y="4" textAnchor="middle">
               E
             </text>
             <g className="plate">
               <rect className="plate-box" x="-74" y="-52" width="150" height="30" rx="2" />
-              <text className="plate-title" x="-62" y="-38">
-                INSPECTION
-              </text>
-              <text className="plate-meta" x="-62" y="-27">
-                city / plot E / fri
-              </text>
+              <text className="plate-title" x="-62" y="-38">{t.cards[4].plate}</text>
+              <text className="plate-meta" x="-62" y="-27">{t.cards[4].meta}</text>
             </g>
           </g>
         </g>
@@ -654,21 +607,11 @@ export default function SitePlanVisual() {
         <title id="sigTitleP">
           Work orders placed onto a site plan and its weekly schedule
         </title>
-        <desc id="sigDescP">
-          A top-down site plan with five plots sits above a weekly schedule of
-          five dated lanes. Scattered work-order chips are placed one at a time
-          into the lanes; as each lands its plot lights and a dependency line
-          links it to the next in sequence. Focus a placed chip to raise its
-          readout and light its plot.
-        </desc>
+        <desc id="sigDescP">{t.descPortrait}</desc>
 
         <g aria-hidden="true">
-          <text className="sp-head" x="320" y="72" textAnchor="end">
-            SITE PLAN
-          </text>
-          <text className="sp-head" x="18" y="292">
-            SCHEDULE / THIS WEEK
-          </text>
+          <text className="sp-head" x="320" y="72" textAnchor="end">{t.sitePlan}</text>
+          <text className="sp-head" x="18" y="292">{t.schedule}</text>
 
           <rect className="sp-frame" x="14" y="80" width="312" height="180" rx="2" />
           <path
@@ -695,7 +638,7 @@ export default function SitePlanVisual() {
                 rx="2"
               />
             ))}
-            {PORTRAIT_DAYS.map((d, i) => (
+            {t.days.map((d, i) => (
               <text
                 key={"day" + i}
                 className="lane-date"
@@ -761,13 +704,13 @@ export default function SitePlanVisual() {
               transform={"translate(189," + c.y + ")"}
               role="button"
               tabIndex={0}
-              aria-label={c.aria}
+              aria-label={t.cards[i].aria}
             >
               <rect className="chip-focus" x="-128" y="-21" width="256" height="42" rx="2" />
               <rect className="chip-body" x="-124" y="-17" width="248" height="34" rx="2" />
               <rect className="chip-accent" x="-124" y="-17" width="4" height="34" rx="2" />
               <text className="chip-label" x="-110" y="5">
-                {c.label}
+                {t.cards[i].chip}
               </text>
               <rect className="chip-pill" x="92" y="-11" width="20" height="22" rx="2" />
               <text className="chip-pill-id" x="102" y="5" textAnchor="middle">
@@ -776,10 +719,10 @@ export default function SitePlanVisual() {
               <g className="plate">
                 <rect className="plate-box" x="-124" y="-54" width="250" height="34" rx="2" />
                 <text className="plate-title" x="-110" y="-39">
-                  {c.title}
+                  {t.cards[i].plate}
                 </text>
                 <text className="plate-meta" x="-110" y="-27">
-                  {c.meta}
+                  {t.cards[i].meta}
                 </text>
               </g>
             </g>
@@ -788,12 +731,7 @@ export default function SitePlanVisual() {
       </svg>
 
       <noscript>
-        <div className="sig-fallback">
-          Scattered work orders, grade site, form footings, rebar delivery, pour
-          slab, and inspection, settle one at a time into dated lanes on a weekly
-          schedule beside a site plan, each lighting its plot and linking to the
-          next in sequence.
-        </div>
+        <div className="sig-fallback">{t.fallback}</div>
       </noscript>
     </div>
   );

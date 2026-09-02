@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { construction } from "@/lib/i18n/construction";
 
 type RGB = [number, number, number];
 type Pt = { x: number; y: number };
 type Trace = { pts: Pt[]; cum: number[]; len: number };
-type Site = { node: number; label: string };
+type SiteKey = "depot" | "siteA" | "siteB";
+type Site = { node: number; labelKey: SiteKey };
 type Vehicle = {
   id: string;
   route: number[];
@@ -38,9 +41,9 @@ const ROADS: Array<[number, number]> = [
 ];
 
 const SITES: Site[] = [
-  { node: 0, label: "DEPOT" },
-  { node: 2, label: "SITE A" },
-  { node: 4, label: "SITE B" },
+  { node: 0, labelKey: "depot" },
+  { node: 2, labelKey: "siteA" },
+  { node: 4, labelKey: "siteB" },
 ];
 
 /* each vehicle loops a route of node indices; the trace closes back to its start */
@@ -65,6 +68,7 @@ const ROUTES: Array<{ id: string; route: number[]; speed: number; start: number 
  * only.
  */
 export default function FleetMap() {
+  const t = useDict(construction).vis.fleet;
   const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -229,10 +233,10 @@ export default function FleetMap() {
     // A live feed is kept exactly maxRows long so the panel is always full and
     // never reads as a reserved empty box; new arrivals push the oldest out.
     const SEED: Array<{ veh: string; site: string }> = [
-      { veh: "V2", site: "SITE B" },
-      { veh: "V1", site: "DEPOT" },
-      { veh: "V3", site: "SITE A" },
-      { veh: "V4", site: "DEPOT" },
+      { veh: "V2", site: t.siteB },
+      { veh: "V1", site: t.depot },
+      { veh: "V3", site: t.siteA },
+      { veh: "V4", site: t.depot },
     ];
     const seedLog = () => {
       logRows = SEED.slice(0, maxRows).map((s, i) => ({
@@ -355,7 +359,7 @@ export default function FleetMap() {
         c.textAlign = "center";
         c.textBaseline = "middle";
         c.fillStyle = PAL.muted;
-        c.fillText(SITES[s].label, p.x, p.y + ringR + 10);
+        c.fillText(t[SITES[s].labelKey], p.x, p.y + ringR + 10);
       }
       c.textAlign = "left";
       c.textBaseline = "alphabetic";
@@ -430,10 +434,10 @@ export default function FleetMap() {
       c.textBaseline = "alphabetic";
       c.textAlign = "left";
       c.fillStyle = PAL.muted;
-      c.fillText("ARRIVALS", px, y);
+      c.fillText(t.arrivals, px, y);
       c.textAlign = "right";
       c.fillStyle = PAL.primary;
-      c.fillText("AUTO", log.x + log.w - 12, y);
+      c.fillText(t.auto, log.x + log.w - 12, y);
       c.textAlign = "left";
 
       c.strokeStyle = PAL.lineSoft;
@@ -470,11 +474,11 @@ export default function FleetMap() {
         c.globalAlpha = fade;
         c.font = "600 10px " + MONO;
         c.fillStyle = i === 0 ? PAL.ink : PAL.dim;
-        c.fillText(rw.veh + " at " + rw.site, px + 16, ry);
+        c.fillText(rw.veh + t.at + rw.site, px + 16, ry);
         c.font = "600 8px " + MONO;
         c.fillStyle = PAL.muted;
         c.textAlign = "right";
-        c.fillText("logged", log.x + log.w - 12, ry);
+        c.fillText(t.logged, log.x + log.w - 12, ry);
         c.textAlign = "left";
         c.globalAlpha = 1;
       }
@@ -487,7 +491,7 @@ export default function FleetMap() {
       c.textBaseline = "alphabetic";
       c.textAlign = "left";
       c.fillStyle = PAL.ink;
-      c.fillText("FLEET", P, headY);
+      c.fillText(t.fleet, P, headY);
       // live dot
       const pulse = reduced() ? 0.7 : 0.5 + 0.4 * Math.sin(clock * 3);
       const dotX = P + 52;
@@ -499,12 +503,12 @@ export default function FleetMap() {
       c.globalAlpha = 1;
       c.font = "600 9px " + MONO;
       c.fillStyle = PAL.muted;
-      c.fillText(live ? "LIVE" : "READY", dotX + 8, headY);
+      c.fillText(live ? t.live : t.ready, dotX + 8, headY);
       // status line
       c.font = "600 9px " + MONO;
       c.fillStyle = PAL.muted;
       c.fillText(
-        ROUTES.length + " vehicles on one map / arrivals log themselves",
+        t.status.replace("{n}", String(ROUTES.length)),
         P,
         statusY
       );
@@ -537,7 +541,7 @@ export default function FleetMap() {
           const d = Math.hypot(v.pos.x - sitePts[s].x, v.pos.y - sitePts[s].y);
           if (!v.inside[s] && d < ringR) {
             v.inside[s] = true;
-            pushLog(v.id, SITES[s].label);
+            pushLog(v.id, t[SITES[s].labelKey]);
             if (pulses.length < 6)
               pulses.push({ x: sitePts[s].x, y: sitePts[s].y, t: 0 });
           } else if (v.inside[s] && d > ringR * 1.2) {
@@ -676,11 +680,7 @@ export default function FleetMap() {
     <div className="vis-frame fleet-frame" ref={frameRef}>
       <canvas className="fleet-canvas" ref={canvasRef} aria-hidden="true" />
       <noscript>
-        <div className="sig-fallback">
-          A live map of your sites and vehicles. Each site is a geofenced ring;
-          when a vehicle crosses into one, its arrival is logged automatically,
-          with no phone call. Every vehicle on one map.
-        </div>
+        <div className="sig-fallback">{t.fallback}</div>
       </noscript>
     </div>
   );
