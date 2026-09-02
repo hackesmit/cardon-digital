@@ -13,7 +13,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "beads_hooks_post_checkout",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_checkout",
       "community": 24,
       "norm_label": "post-checkout"
     },
@@ -27,7 +27,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "beads_hooks_post_checkout__entry",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_checkout__entry",
       "community": 24,
       "norm_label": "post-checkout script"
     },
@@ -41,7 +41,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "beads_hooks_post_merge",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_merge",
       "community": 25,
       "norm_label": "post-merge"
     },
@@ -55,7 +55,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "beads_hooks_post_merge__entry",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_merge__entry",
       "community": 25,
       "norm_label": "post-merge script"
     },
@@ -69,7 +69,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "beads_hooks_pre_commit",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_commit",
       "community": 26,
       "norm_label": "pre-commit"
     },
@@ -83,7 +83,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "beads_hooks_pre_commit__entry",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_commit__entry",
       "community": 26,
       "norm_label": "pre-commit script"
     },
@@ -97,7 +97,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "beads_hooks_pre_push",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_push",
       "community": 27,
       "norm_label": "pre-push"
     },
@@ -111,7 +111,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "beads_hooks_pre_push__entry",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_push__entry",
       "community": 27,
       "norm_label": "pre-push script"
     },
@@ -125,7 +125,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "beads_hooks_prepare_commit_msg",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_prepare_commit_msg",
       "community": 28,
       "norm_label": "prepare-commit-msg"
     },
@@ -139,7 +139,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "beads_hooks_prepare_commit_msg__entry",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_hooks_prepare_commit_msg__entry",
       "community": 28,
       "norm_label": "prepare-commit-msg script"
     },
@@ -1410,7 +1410,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_home_opscompression",
-      "community": 0,
+      "community": 15,
       "norm_label": "opscompression.tsx"
     },
     {
@@ -2099,7 +2099,7 @@
       "source_file": "package.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "package",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_json",
       "community": 4,
       "norm_label": "package.json"
     },
@@ -2109,7 +2109,7 @@
       "source_file": "package.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "package_name",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_name",
       "community": 4,
       "norm_label": "name"
     },
@@ -2119,7 +2119,7 @@
       "source_file": "package.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "package_version",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_version",
       "community": 4,
       "norm_label": "version"
     },
@@ -2129,7 +2129,7 @@
       "source_file": "package.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "package_private",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_private",
       "community": 4,
       "norm_label": "private"
     },
@@ -2139,7 +2139,7 @@
       "source_file": "package.json",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "package_scripts",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_scripts",
       "community": 4,
       "norm_label": "scripts"
     },
@@ -2149,7 +2149,7 @@
       "source_file": "package.json",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "package_scripts_dev",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_scripts_dev",
       "community": 4,
       "norm_label": "dev"
     },
@@ -2159,7 +2159,7 @@
       "source_file": "package.json",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "package_scripts_build",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_scripts_build",
       "community": 4,
       "norm_label": "build"
     },
@@ -2169,7 +2169,7 @@
       "source_file": "package.json",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "package_scripts_start",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_scripts_start",
       "community": 4,
       "norm_label": "start"
     },
@@ -2179,7 +2179,7 @@
       "source_file": "package.json",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "package_scripts_lint",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_scripts_lint",
       "community": 4,
       "norm_label": "lint"
     },
@@ -2189,7 +2189,7 @@
       "source_file": "package.json",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "package_dependencies",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
       "community": 4,
       "norm_label": "dependencies"
     },
@@ -2199,7 +2199,7 @@
       "source_file": "package.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "package_dependencies_lenis",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_dependencies_lenis",
       "community": 4,
       "norm_label": "lenis"
     },
@@ -2219,7 +2219,7 @@
       "source_file": "package.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "package_dependencies_next",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_dependencies_next",
       "community": 4,
       "norm_label": "next"
     },
@@ -2239,7 +2239,7 @@
       "source_file": "package.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "package_dependencies_next_view_transitions",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_dependencies_next_view_transitions",
       "community": 4,
       "norm_label": "next-view-transitions"
     },
@@ -2259,7 +2259,7 @@
       "source_file": "package.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "package_dependencies_react",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_dependencies_react",
       "community": 4,
       "norm_label": "react"
     },
@@ -2279,7 +2279,7 @@
       "source_file": "package.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "package_dependencies_react_dom",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_dependencies_react_dom",
       "community": 4,
       "norm_label": "react-dom"
     },
@@ -2299,7 +2299,7 @@
       "source_file": "package.json",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "package_devdependencies",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
       "community": 8,
       "norm_label": "devdependencies"
     },
@@ -2309,7 +2309,7 @@
       "source_file": "package.json",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "package_devdependencies_types_node",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_node",
       "community": 8,
       "norm_label": "@types/node"
     },
@@ -2329,7 +2329,7 @@
       "source_file": "package.json",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "package_devdependencies_types_react",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_react",
       "community": 8,
       "norm_label": "@types/react"
     },
@@ -2349,7 +2349,7 @@
       "source_file": "package.json",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "package_devdependencies_types_react_dom",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_react_dom",
       "community": 8,
       "norm_label": "@types/react-dom"
     },
@@ -2369,7 +2369,7 @@
       "source_file": "package.json",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "package_devdependencies_autoprefixer",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_autoprefixer",
       "community": 8,
       "norm_label": "autoprefixer"
     },
@@ -2389,7 +2389,7 @@
       "source_file": "package.json",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "package_devdependencies_postcss",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_postcss",
       "community": 8,
       "norm_label": "postcss"
     },
@@ -2409,7 +2409,7 @@
       "source_file": "package.json",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "package_devdependencies_tailwindcss",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_tailwindcss",
       "community": 8,
       "norm_label": "tailwindcss"
     },
@@ -2429,7 +2429,7 @@
       "source_file": "package.json",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "package_devdependencies_typescript",
+      "id": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_typescript",
       "community": 8,
       "norm_label": "typescript"
     },
@@ -2489,7 +2489,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "tsconfig",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_json",
       "community": 1,
       "norm_label": "tsconfig.json"
     },
@@ -2499,7 +2499,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
       "community": 1,
       "norm_label": "compileroptions"
     },
@@ -2509,7 +2509,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_lib",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_lib",
       "community": 1,
       "norm_label": "lib"
     },
@@ -2549,7 +2549,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_allowjs",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_allowjs",
       "community": 1,
       "norm_label": "allowjs"
     },
@@ -2559,7 +2559,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_skiplibcheck",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_skiplibcheck",
       "community": 1,
       "norm_label": "skiplibcheck"
     },
@@ -2569,7 +2569,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_strict",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_strict",
       "community": 1,
       "norm_label": "strict"
     },
@@ -2579,7 +2579,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_noemit",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_noemit",
       "community": 1,
       "norm_label": "noemit"
     },
@@ -2589,7 +2589,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_esmoduleinterop",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_esmoduleinterop",
       "community": 1,
       "norm_label": "esmoduleinterop"
     },
@@ -2599,7 +2599,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_module",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_module",
       "community": 1,
       "norm_label": "module"
     },
@@ -2609,7 +2609,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_moduleresolution",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_moduleresolution",
       "community": 1,
       "norm_label": "moduleresolution"
     },
@@ -2619,7 +2619,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_resolvejsonmodule",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_resolvejsonmodule",
       "community": 1,
       "norm_label": "resolvejsonmodule"
     },
@@ -2629,7 +2629,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_isolatedmodules",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_isolatedmodules",
       "community": 1,
       "norm_label": "isolatedmodules"
     },
@@ -2639,7 +2639,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_jsx",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_jsx",
       "community": 1,
       "norm_label": "jsx"
     },
@@ -2649,7 +2649,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_incremental",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_incremental",
       "community": 1,
       "norm_label": "incremental"
     },
@@ -2659,7 +2659,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_plugins",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_plugins",
       "community": 1,
       "norm_label": "plugins"
     },
@@ -2669,7 +2669,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "tsconfig_compileroptions_paths",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_paths",
       "community": 1,
       "norm_label": "paths"
     },
@@ -2679,7 +2679,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "tsconfig_paths",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_paths",
       "community": 1,
       "norm_label": "@/*"
     },
@@ -2699,7 +2699,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "tsconfig_include",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_include",
       "community": 1,
       "norm_label": "include"
     },
@@ -2749,7 +2749,7 @@
       "source_file": "tsconfig.json",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "tsconfig_exclude",
+      "id": "home_daniel_hq_rigs_cardon_digital_tsconfig_exclude",
       "community": 1,
       "norm_label": "exclude"
     },
@@ -2769,7 +2769,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_md",
       "community": 17,
       "norm_label": "skill.md"
     },
@@ -2779,7 +2779,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill_beads",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
       "community": 17,
       "norm_label": "beads"
     },
@@ -2789,7 +2789,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill_first_step",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_first_step",
       "community": 17,
       "norm_label": "first step"
     },
@@ -2799,7 +2799,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill_preferred_route",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_preferred_route",
       "community": 17,
       "norm_label": "preferred route"
     },
@@ -2809,7 +2809,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill_core_cli_workflow",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_core_cli_workflow",
       "community": 17,
       "norm_label": "core cli workflow"
     },
@@ -2819,7 +2819,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill_what_belongs_in_beads",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_what_belongs_in_beads",
       "community": 17,
       "norm_label": "what belongs in beads"
     },
@@ -2829,7 +2829,7 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "agents_skills_beads_skill_rules",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_rules",
       "community": 17,
       "norm_label": "rules"
     },
@@ -2839,7 +2839,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "beads_readme",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_md",
       "community": 14,
       "norm_label": "readme.md"
     },
@@ -2849,7 +2849,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "beads_readme_beads_ai_native_issue_tracking",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
       "community": 14,
       "norm_label": "beads - ai-native issue tracking"
     },
@@ -2859,7 +2859,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "beads_readme_what_is_beads",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_what_is_beads",
       "community": 14,
       "norm_label": "what is beads?"
     },
@@ -2869,7 +2869,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "beads_readme_quick_start",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_quick_start",
       "community": 14,
       "norm_label": "quick start"
     },
@@ -2879,7 +2879,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "beads_readme_essential_commands",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_essential_commands",
       "community": 14,
       "norm_label": "essential commands"
     },
@@ -2889,7 +2889,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "beads_readme_working_with_issues",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_working_with_issues",
       "community": 14,
       "norm_label": "working with issues"
     },
@@ -2899,7 +2899,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "beads_readme_why_beads",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_why_beads",
       "community": 14,
       "norm_label": "why beads?"
     },
@@ -2909,7 +2909,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "beads_readme_get_started_with_beads",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_get_started_with_beads",
       "community": 14,
       "norm_label": "get started with beads"
     },
@@ -2919,7 +2919,7 @@
       "source_file": ".beads/README.md",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "beads_readme_learn_more",
+      "id": "home_daniel_hq_rigs_cardon_digital_beads_readme_learn_more",
       "community": 14,
       "norm_label": "learn more"
     },
@@ -2929,7 +2929,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_md",
       "community": 11,
       "norm_label": "agents.md"
     },
@@ -2939,7 +2939,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "agents_agent_instructions",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
       "community": 11,
       "norm_label": "agent instructions"
     },
@@ -2949,7 +2949,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "agents_quick_reference",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_quick_reference",
       "community": 11,
       "norm_label": "quick reference"
     },
@@ -2959,7 +2959,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "agents_non_interactive_shell_commands",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_non_interactive_shell_commands",
       "community": 11,
       "norm_label": "non-interactive shell commands"
     },
@@ -2969,7 +2969,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "agents_beads_issue_tracker",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker",
       "community": 11,
       "norm_label": "beads issue tracker"
     },
@@ -2979,7 +2979,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "agents_quick_reference_55",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_quick_reference_55",
       "community": 11,
       "norm_label": "quick reference"
     },
@@ -2989,7 +2989,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "agents_rules",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_rules",
       "community": 11,
       "norm_label": "rules"
     },
@@ -2999,7 +2999,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "agents_agent_context_profiles",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_agent_context_profiles",
       "community": 11,
       "norm_label": "agent context profiles"
     },
@@ -3009,7 +3009,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L80",
       "_origin": "ast",
-      "id": "agents_session_completion",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_session_completion",
       "community": 11,
       "norm_label": "session completion"
     },
@@ -3019,7 +3019,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "agents_beads_issue_tracker_107",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker_107",
       "community": 11,
       "norm_label": "beads issue tracker"
     },
@@ -3029,7 +3029,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L111",
       "_origin": "ast",
-      "id": "agents_quick_reference_111",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_quick_reference_111",
       "community": 11,
       "norm_label": "quick reference"
     },
@@ -3039,7 +3039,7 @@
       "source_file": "AGENTS.md",
       "source_location": "L121",
       "_origin": "ast",
-      "id": "agents_rules_121",
+      "id": "home_daniel_hq_rigs_cardon_digital_agents_rules_121",
       "community": 11,
       "norm_label": "rules"
     },
@@ -3049,7 +3049,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "claude",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_md",
       "community": 12,
       "norm_label": "claude.md"
     },
@@ -3059,7 +3059,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "claude_project_instructions_for_ai_agents",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
       "community": 12,
       "norm_label": "project instructions for ai agents"
     },
@@ -3069,7 +3069,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "claude_beads_issue_tracker",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_beads_issue_tracker",
       "community": 12,
       "norm_label": "beads issue tracker"
     },
@@ -3079,7 +3079,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "claude_quick_reference",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_quick_reference",
       "community": 12,
       "norm_label": "quick reference"
     },
@@ -3089,7 +3089,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "claude_rules",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_rules",
       "community": 12,
       "norm_label": "rules"
     },
@@ -3099,7 +3099,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "claude_agent_context_profiles",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_agent_context_profiles",
       "community": 12,
       "norm_label": "agent context profiles"
     },
@@ -3109,7 +3109,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "claude_session_completion",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_session_completion",
       "community": 12,
       "norm_label": "session completion"
     },
@@ -3119,7 +3119,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "claude_build_test",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_build_test",
       "community": 12,
       "norm_label": "build & test"
     },
@@ -3129,7 +3129,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L72",
       "_origin": "ast",
-      "id": "claude_architecture_overview",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_architecture_overview",
       "community": 12,
       "norm_label": "architecture overview"
     },
@@ -3139,7 +3139,7 @@
       "source_file": "CLAUDE.md",
       "source_location": "L76",
       "_origin": "ast",
-      "id": "claude_conventions_patterns",
+      "id": "home_daniel_hq_rigs_cardon_digital_claude_conventions_patterns",
       "community": 12,
       "norm_label": "conventions & patterns"
     },
@@ -3149,7 +3149,7 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_md",
       "community": 16,
       "norm_label": "readme.md"
     },
@@ -3159,7 +3159,7 @@
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme_cardon_digital",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
       "community": 16,
       "norm_label": "cardon digital"
     },
@@ -3169,7 +3169,7 @@
       "source_file": "README.md",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "readme_stack",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_stack",
       "community": 16,
       "norm_label": "stack"
     },
@@ -3179,7 +3179,7 @@
       "source_file": "README.md",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "readme_running_locally",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_running_locally",
       "community": 16,
       "norm_label": "running locally"
     },
@@ -3189,7 +3189,7 @@
       "source_file": "README.md",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "readme_scripts",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_scripts",
       "community": 16,
       "norm_label": "scripts"
     },
@@ -3199,7 +3199,7 @@
       "source_file": "README.md",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "readme_layout",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_layout",
       "community": 16,
       "norm_label": "layout"
     },
@@ -3209,7 +3209,7 @@
       "source_file": "README.md",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "readme_pre_launch_gate",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_pre_launch_gate",
       "community": 16,
       "norm_label": "pre-launch gate"
     },
@@ -3219,7 +3219,7 @@
       "source_file": "README.md",
       "source_location": "L50",
       "_origin": "ast",
-      "id": "readme_license",
+      "id": "home_daniel_hq_rigs_cardon_digital_readme_license",
       "community": 16,
       "norm_label": "license"
     },
@@ -3271,8 +3271,8 @@
       "source_file": ".beads/hooks/post-checkout",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "beads_hooks_post_checkout",
-      "target": "beads_hooks_post_checkout__entry",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_checkout",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_checkout__entry",
       "confidence_score": 1.0
     },
     {
@@ -3281,8 +3281,8 @@
       "source_file": ".beads/hooks/post-merge",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "beads_hooks_post_merge",
-      "target": "beads_hooks_post_merge__entry",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_merge",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_hooks_post_merge__entry",
       "confidence_score": 1.0
     },
     {
@@ -3291,8 +3291,8 @@
       "source_file": ".beads/hooks/pre-commit",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "beads_hooks_pre_commit",
-      "target": "beads_hooks_pre_commit__entry",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_commit",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_commit__entry",
       "confidence_score": 1.0
     },
     {
@@ -3301,8 +3301,8 @@
       "source_file": ".beads/hooks/pre-push",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "beads_hooks_pre_push",
-      "target": "beads_hooks_pre_push__entry",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_push",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_hooks_pre_push__entry",
       "confidence_score": 1.0
     },
     {
@@ -3311,8 +3311,8 @@
       "source_file": ".beads/hooks/prepare-commit-msg",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "beads_hooks_prepare_commit_msg",
-      "target": "beads_hooks_prepare_commit_msg__entry",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_hooks_prepare_commit_msg",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_hooks_prepare_commit_msg__entry",
       "confidence_score": 1.0
     },
     {
@@ -6117,8 +6117,8 @@
       "source_file": "package.json",
       "source_location": "L11",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_dependencies",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
       "confidence_score": 1.0
     },
     {
@@ -6127,8 +6127,8 @@
       "source_file": "package.json",
       "source_location": "L18",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_devdependencies",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
       "confidence_score": 1.0
     },
     {
@@ -6137,8 +6137,8 @@
       "source_file": "package.json",
       "source_location": "L2",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_name",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_name",
       "confidence_score": 1.0
     },
     {
@@ -6147,8 +6147,8 @@
       "source_file": "package.json",
       "source_location": "L4",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_private",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_private",
       "confidence_score": 1.0
     },
     {
@@ -6157,8 +6157,8 @@
       "source_file": "package.json",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_scripts",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_scripts",
       "confidence_score": 1.0
     },
     {
@@ -6167,8 +6167,8 @@
       "source_file": "package.json",
       "source_location": "L3",
       "weight": 1.0,
-      "source": "package",
-      "target": "package_version",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_version",
       "confidence_score": 1.0
     },
     {
@@ -6177,8 +6177,8 @@
       "source_file": "package.json",
       "source_location": "L7",
       "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_build",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_scripts",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_scripts_build",
       "confidence_score": 1.0
     },
     {
@@ -6187,8 +6187,8 @@
       "source_file": "package.json",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_dev",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_scripts",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_scripts_dev",
       "confidence_score": 1.0
     },
     {
@@ -6197,8 +6197,8 @@
       "source_file": "package.json",
       "source_location": "L9",
       "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_lint",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_scripts",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_scripts_lint",
       "confidence_score": 1.0
     },
     {
@@ -6207,8 +6207,8 @@
       "source_file": "package.json",
       "source_location": "L8",
       "weight": 1.0,
-      "source": "package_scripts",
-      "target": "package_scripts_start",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_scripts",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_scripts_start",
       "confidence_score": 1.0
     },
     {
@@ -6217,8 +6217,8 @@
       "source_file": "package.json",
       "source_location": "L12",
       "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_lenis",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_dependencies_lenis",
       "confidence_score": 1.0
     },
     {
@@ -6227,8 +6227,8 @@
       "source_file": "package.json",
       "source_location": "L13",
       "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_next",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_dependencies_next",
       "confidence_score": 1.0
     },
     {
@@ -6237,8 +6237,8 @@
       "source_file": "package.json",
       "source_location": "L14",
       "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_next_view_transitions",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_dependencies_next_view_transitions",
       "confidence_score": 1.0
     },
     {
@@ -6247,8 +6247,8 @@
       "source_file": "package.json",
       "source_location": "L15",
       "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_react",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_dependencies_react",
       "confidence_score": 1.0
     },
     {
@@ -6257,8 +6257,8 @@
       "source_file": "package.json",
       "source_location": "L16",
       "weight": 1.0,
-      "source": "package_dependencies",
-      "target": "package_dependencies_react_dom",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_dependencies_react_dom",
       "confidence_score": 1.0
     },
     {
@@ -6268,7 +6268,7 @@
       "source_location": "L12",
       "weight": 1.0,
       "context": "import",
-      "source": "package_dependencies_lenis",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies_lenis",
       "target": "lenis",
       "confidence_score": 1.0
     },
@@ -6279,7 +6279,7 @@
       "source_location": "L13",
       "weight": 1.0,
       "context": "import",
-      "source": "package_dependencies_next",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies_next",
       "target": "next",
       "confidence_score": 1.0
     },
@@ -6290,7 +6290,7 @@
       "source_location": "L14",
       "weight": 1.0,
       "context": "import",
-      "source": "package_dependencies_next_view_transitions",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies_next_view_transitions",
       "target": "next_view_transitions",
       "confidence_score": 1.0
     },
@@ -6301,7 +6301,7 @@
       "source_location": "L15",
       "weight": 1.0,
       "context": "import",
-      "source": "package_dependencies_react",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies_react",
       "target": "react",
       "confidence_score": 1.0
     },
@@ -6312,7 +6312,7 @@
       "source_location": "L16",
       "weight": 1.0,
       "context": "import",
-      "source": "package_dependencies_react_dom",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_dependencies_react_dom",
       "target": "react_dom",
       "confidence_score": 1.0
     },
@@ -6322,8 +6322,8 @@
       "source_file": "package.json",
       "source_location": "L22",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_autoprefixer",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_autoprefixer",
       "confidence_score": 1.0
     },
     {
@@ -6332,8 +6332,8 @@
       "source_file": "package.json",
       "source_location": "L23",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_postcss",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_postcss",
       "confidence_score": 1.0
     },
     {
@@ -6342,8 +6342,8 @@
       "source_file": "package.json",
       "source_location": "L24",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_tailwindcss",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_tailwindcss",
       "confidence_score": 1.0
     },
     {
@@ -6352,8 +6352,8 @@
       "source_file": "package.json",
       "source_location": "L19",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_node",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_node",
       "confidence_score": 1.0
     },
     {
@@ -6362,8 +6362,8 @@
       "source_file": "package.json",
       "source_location": "L20",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_react",
       "confidence_score": 1.0
     },
     {
@@ -6372,8 +6372,8 @@
       "source_file": "package.json",
       "source_location": "L21",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_types_react_dom",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_react_dom",
       "confidence_score": 1.0
     },
     {
@@ -6382,8 +6382,8 @@
       "source_file": "package.json",
       "source_location": "L25",
       "weight": 1.0,
-      "source": "package_devdependencies",
-      "target": "package_devdependencies_typescript",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies",
+      "target": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_typescript",
       "confidence_score": 1.0
     },
     {
@@ -6393,7 +6393,7 @@
       "source_location": "L19",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_types_node",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_node",
       "target": "types_node",
       "confidence_score": 1.0
     },
@@ -6404,7 +6404,7 @@
       "source_location": "L20",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_types_react",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_react",
       "target": "types_react",
       "confidence_score": 1.0
     },
@@ -6415,7 +6415,7 @@
       "source_location": "L21",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_types_react_dom",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_types_react_dom",
       "target": "types_react_dom",
       "confidence_score": 1.0
     },
@@ -6426,7 +6426,7 @@
       "source_location": "L22",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_autoprefixer",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_autoprefixer",
       "target": "autoprefixer",
       "confidence_score": 1.0
     },
@@ -6437,7 +6437,7 @@
       "source_location": "L23",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_postcss",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_postcss",
       "target": "postcss",
       "confidence_score": 1.0
     },
@@ -6448,7 +6448,7 @@
       "source_location": "L24",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_tailwindcss",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_tailwindcss",
       "target": "tailwindcss",
       "confidence_score": 1.0
     },
@@ -6459,7 +6459,7 @@
       "source_location": "L25",
       "weight": 1.0,
       "context": "import",
-      "source": "package_devdependencies_typescript",
+      "source": "home_daniel_hq_rigs_cardon_digital_package_devdependencies_typescript",
       "target": "typescript",
       "confidence_score": 1.0
     },
@@ -6489,8 +6489,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L2",
       "weight": 1.0,
-      "source": "tsconfig",
-      "target": "tsconfig_compileroptions",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
       "confidence_score": 1.0
     },
     {
@@ -6499,8 +6499,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L19",
       "weight": 1.0,
-      "source": "tsconfig",
-      "target": "tsconfig_exclude",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_exclude",
       "confidence_score": 1.0
     },
     {
@@ -6509,8 +6509,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L18",
       "weight": 1.0,
-      "source": "tsconfig",
-      "target": "tsconfig_include",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_json",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_include",
       "confidence_score": 1.0
     },
     {
@@ -6519,8 +6519,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L4",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_allowjs",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_allowjs",
       "confidence_score": 1.0
     },
     {
@@ -6529,8 +6529,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L8",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_esmoduleinterop",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_esmoduleinterop",
       "confidence_score": 1.0
     },
     {
@@ -6539,8 +6539,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L14",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_incremental",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_incremental",
       "confidence_score": 1.0
     },
     {
@@ -6549,8 +6549,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L12",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_isolatedmodules",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_isolatedmodules",
       "confidence_score": 1.0
     },
     {
@@ -6559,8 +6559,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L13",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_jsx",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_jsx",
       "confidence_score": 1.0
     },
     {
@@ -6569,8 +6569,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L3",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_lib",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_lib",
       "confidence_score": 1.0
     },
     {
@@ -6579,8 +6579,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L9",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_module",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_module",
       "confidence_score": 1.0
     },
     {
@@ -6589,8 +6589,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L10",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_moduleresolution",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_moduleresolution",
       "confidence_score": 1.0
     },
     {
@@ -6599,8 +6599,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L7",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_noemit",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_noemit",
       "confidence_score": 1.0
     },
     {
@@ -6609,8 +6609,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L16",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_paths",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_paths",
       "confidence_score": 1.0
     },
     {
@@ -6619,8 +6619,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L15",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_plugins",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_plugins",
       "confidence_score": 1.0
     },
     {
@@ -6629,8 +6629,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L11",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_resolvejsonmodule",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_resolvejsonmodule",
       "confidence_score": 1.0
     },
     {
@@ -6639,8 +6639,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_skiplibcheck",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_skiplibcheck",
       "confidence_score": 1.0
     },
     {
@@ -6649,8 +6649,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions",
-      "target": "tsconfig_compileroptions_strict",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_strict",
       "confidence_score": 1.0
     },
     {
@@ -6660,7 +6660,7 @@
       "source_location": "L3",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_compileroptions_lib",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_lib",
       "target": "ref_dom",
       "confidence_score": 1.0
     },
@@ -6671,7 +6671,7 @@
       "source_location": "L3",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_compileroptions_lib",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_lib",
       "target": "ref_dom_iterable",
       "confidence_score": 1.0
     },
@@ -6682,7 +6682,7 @@
       "source_location": "L3",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_compileroptions_lib",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_lib",
       "target": "ref_esnext",
       "confidence_score": 1.0
     },
@@ -6692,8 +6692,8 @@
       "source_file": "tsconfig.json",
       "source_location": "L16",
       "weight": 1.0,
-      "source": "tsconfig_compileroptions_paths",
-      "target": "tsconfig_paths",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_compileroptions_paths",
+      "target": "home_daniel_hq_rigs_cardon_digital_tsconfig_paths",
       "confidence_score": 1.0
     },
     {
@@ -6703,7 +6703,7 @@
       "source_location": "L16",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_paths",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_paths",
       "target": "ref",
       "confidence_score": 1.0
     },
@@ -6714,7 +6714,7 @@
       "source_location": "L18",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_include",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_include",
       "target": "ref_next_env_d_ts",
       "confidence_score": 1.0
     },
@@ -6725,7 +6725,7 @@
       "source_location": "L18",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_include",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_include",
       "target": "ref_next_types_ts",
       "confidence_score": 1.0
     },
@@ -6736,7 +6736,7 @@
       "source_location": "L18",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_include",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_include",
       "target": "ref_ts",
       "confidence_score": 1.0
     },
@@ -6747,7 +6747,7 @@
       "source_location": "L18",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_include",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_include",
       "target": "ref_tsx",
       "confidence_score": 1.0
     },
@@ -6758,7 +6758,7 @@
       "source_location": "L19",
       "weight": 1.0,
       "context": "import",
-      "source": "tsconfig_exclude",
+      "source": "home_daniel_hq_rigs_cardon_digital_tsconfig_exclude",
       "target": "ref_node_modules",
       "confidence_score": 1.0
     },
@@ -6768,8 +6768,8 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "agents_skills_beads_skill",
-      "target": "agents_skills_beads_skill_beads",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_md",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
       "confidence_score": 1.0
     },
     {
@@ -6778,8 +6778,8 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L28",
       "weight": 1.0,
-      "source": "agents_skills_beads_skill_beads",
-      "target": "agents_skills_beads_skill_core_cli_workflow",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_core_cli_workflow",
       "confidence_score": 1.0
     },
     {
@@ -6788,8 +6788,8 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L10",
       "weight": 1.0,
-      "source": "agents_skills_beads_skill_beads",
-      "target": "agents_skills_beads_skill_first_step",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_first_step",
       "confidence_score": 1.0
     },
     {
@@ -6798,8 +6798,8 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L24",
       "weight": 1.0,
-      "source": "agents_skills_beads_skill_beads",
-      "target": "agents_skills_beads_skill_preferred_route",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_preferred_route",
       "confidence_score": 1.0
     },
     {
@@ -6808,8 +6808,8 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L74",
       "weight": 1.0,
-      "source": "agents_skills_beads_skill_beads",
-      "target": "agents_skills_beads_skill_rules",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_rules",
       "confidence_score": 1.0
     },
     {
@@ -6818,8 +6818,8 @@
       "source_file": ".agents/skills/beads/SKILL.md",
       "source_location": "L62",
       "weight": 1.0,
-      "source": "agents_skills_beads_skill_beads",
-      "target": "agents_skills_beads_skill_what_belongs_in_beads",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_beads",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_skills_beads_skill_what_belongs_in_beads",
       "confidence_score": 1.0
     },
     {
@@ -6828,8 +6828,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "beads_readme",
-      "target": "beads_readme_beads_ai_native_issue_tracking",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_md",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
       "confidence_score": 1.0
     },
     {
@@ -6838,8 +6838,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L58",
       "weight": 1.0,
-      "source": "beads_readme_beads_ai_native_issue_tracking",
-      "target": "beads_readme_get_started_with_beads",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_get_started_with_beads",
       "confidence_score": 1.0
     },
     {
@@ -6848,8 +6848,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L73",
       "weight": 1.0,
-      "source": "beads_readme_beads_ai_native_issue_tracking",
-      "target": "beads_readme_learn_more",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_learn_more",
       "confidence_score": 1.0
     },
     {
@@ -6858,8 +6858,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L11",
       "weight": 1.0,
-      "source": "beads_readme_beads_ai_native_issue_tracking",
-      "target": "beads_readme_quick_start",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_quick_start",
       "confidence_score": 1.0
     },
     {
@@ -6868,8 +6868,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "beads_readme_beads_ai_native_issue_tracking",
-      "target": "beads_readme_what_is_beads",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_what_is_beads",
       "confidence_score": 1.0
     },
     {
@@ -6878,8 +6878,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L41",
       "weight": 1.0,
-      "source": "beads_readme_beads_ai_native_issue_tracking",
-      "target": "beads_readme_why_beads",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_beads_ai_native_issue_tracking",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_why_beads",
       "confidence_score": 1.0
     },
     {
@@ -6888,8 +6888,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L13",
       "weight": 1.0,
-      "source": "beads_readme_quick_start",
-      "target": "beads_readme_essential_commands",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_quick_start",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_essential_commands",
       "confidence_score": 1.0
     },
     {
@@ -6898,8 +6898,8 @@
       "source_file": ".beads/README.md",
       "source_location": "L33",
       "weight": 1.0,
-      "source": "beads_readme_quick_start",
-      "target": "beads_readme_working_with_issues",
+      "source": "home_daniel_hq_rigs_cardon_digital_beads_readme_quick_start",
+      "target": "home_daniel_hq_rigs_cardon_digital_beads_readme_working_with_issues",
       "confidence_score": 1.0
     },
     {
@@ -6908,8 +6908,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "agents",
-      "target": "agents_agent_instructions",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_md",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
       "confidence_score": 1.0
     },
     {
@@ -6918,8 +6918,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L72",
       "weight": 1.0,
-      "source": "agents_agent_instructions",
-      "target": "agents_agent_context_profiles",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_agent_context_profiles",
       "confidence_score": 1.0
     },
     {
@@ -6928,8 +6928,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L51",
       "weight": 1.0,
-      "source": "agents_agent_instructions",
-      "target": "agents_beads_issue_tracker",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker",
       "confidence_score": 1.0
     },
     {
@@ -6938,8 +6938,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L107",
       "weight": 1.0,
-      "source": "agents_agent_instructions",
-      "target": "agents_beads_issue_tracker_107",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker_107",
       "confidence_score": 1.0
     },
     {
@@ -6948,8 +6948,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L26",
       "weight": 1.0,
-      "source": "agents_agent_instructions",
-      "target": "agents_non_interactive_shell_commands",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_non_interactive_shell_commands",
       "confidence_score": 1.0
     },
     {
@@ -6958,8 +6958,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L16",
       "weight": 1.0,
-      "source": "agents_agent_instructions",
-      "target": "agents_quick_reference",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_quick_reference",
       "confidence_score": 1.0
     },
     {
@@ -6968,8 +6968,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L80",
       "weight": 1.0,
-      "source": "agents_agent_instructions",
-      "target": "agents_session_completion",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_agent_instructions",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_session_completion",
       "confidence_score": 1.0
     },
     {
@@ -6978,8 +6978,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L55",
       "weight": 1.0,
-      "source": "agents_beads_issue_tracker",
-      "target": "agents_quick_reference_55",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_quick_reference_55",
       "confidence_score": 1.0
     },
     {
@@ -6988,8 +6988,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L64",
       "weight": 1.0,
-      "source": "agents_beads_issue_tracker",
-      "target": "agents_rules",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_rules",
       "confidence_score": 1.0
     },
     {
@@ -6998,8 +6998,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L111",
       "weight": 1.0,
-      "source": "agents_beads_issue_tracker_107",
-      "target": "agents_quick_reference_111",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker_107",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_quick_reference_111",
       "confidence_score": 1.0
     },
     {
@@ -7008,8 +7008,8 @@
       "source_file": "AGENTS.md",
       "source_location": "L121",
       "weight": 1.0,
-      "source": "agents_beads_issue_tracker_107",
-      "target": "agents_rules_121",
+      "source": "home_daniel_hq_rigs_cardon_digital_agents_beads_issue_tracker_107",
+      "target": "home_daniel_hq_rigs_cardon_digital_agents_rules_121",
       "confidence_score": 1.0
     },
     {
@@ -7018,8 +7018,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "claude",
-      "target": "claude_project_instructions_for_ai_agents",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_md",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
       "confidence_score": 1.0
     },
     {
@@ -7028,8 +7028,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L27",
       "weight": 1.0,
-      "source": "claude_project_instructions_for_ai_agents",
-      "target": "claude_agent_context_profiles",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_agent_context_profiles",
       "confidence_score": 1.0
     },
     {
@@ -7038,8 +7038,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L72",
       "weight": 1.0,
-      "source": "claude_project_instructions_for_ai_agents",
-      "target": "claude_architecture_overview",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_architecture_overview",
       "confidence_score": 1.0
     },
     {
@@ -7048,8 +7048,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "claude_project_instructions_for_ai_agents",
-      "target": "claude_beads_issue_tracker",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_beads_issue_tracker",
       "confidence_score": 1.0
     },
     {
@@ -7058,8 +7058,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L62",
       "weight": 1.0,
-      "source": "claude_project_instructions_for_ai_agents",
-      "target": "claude_build_test",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_build_test",
       "confidence_score": 1.0
     },
     {
@@ -7068,8 +7068,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L76",
       "weight": 1.0,
-      "source": "claude_project_instructions_for_ai_agents",
-      "target": "claude_conventions_patterns",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_conventions_patterns",
       "confidence_score": 1.0
     },
     {
@@ -7078,8 +7078,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L35",
       "weight": 1.0,
-      "source": "claude_project_instructions_for_ai_agents",
-      "target": "claude_session_completion",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_project_instructions_for_ai_agents",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_session_completion",
       "confidence_score": 1.0
     },
     {
@@ -7088,8 +7088,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L10",
       "weight": 1.0,
-      "source": "claude_beads_issue_tracker",
-      "target": "claude_quick_reference",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_beads_issue_tracker",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_quick_reference",
       "confidence_score": 1.0
     },
     {
@@ -7098,8 +7098,8 @@
       "source_file": "CLAUDE.md",
       "source_location": "L19",
       "weight": 1.0,
-      "source": "claude_beads_issue_tracker",
-      "target": "claude_rules",
+      "source": "home_daniel_hq_rigs_cardon_digital_claude_beads_issue_tracker",
+      "target": "home_daniel_hq_rigs_cardon_digital_claude_rules",
       "confidence_score": 1.0
     },
     {
@@ -7108,8 +7108,8 @@
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
-      "source": "readme",
-      "target": "readme_cardon_digital",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_md",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
       "confidence_score": 1.0
     },
     {
@@ -7118,8 +7118,8 @@
       "source_file": "README.md",
       "source_location": "L33",
       "weight": 1.0,
-      "source": "readme_cardon_digital",
-      "target": "readme_layout",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_layout",
       "confidence_score": 1.0
     },
     {
@@ -7128,8 +7128,8 @@
       "source_file": "README.md",
       "source_location": "L50",
       "weight": 1.0,
-      "source": "readme_cardon_digital",
-      "target": "readme_license",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_license",
       "confidence_score": 1.0
     },
     {
@@ -7138,8 +7138,8 @@
       "source_file": "README.md",
       "source_location": "L44",
       "weight": 1.0,
-      "source": "readme_cardon_digital",
-      "target": "readme_pre_launch_gate",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_pre_launch_gate",
       "confidence_score": 1.0
     },
     {
@@ -7148,8 +7148,8 @@
       "source_file": "README.md",
       "source_location": "L14",
       "weight": 1.0,
-      "source": "readme_cardon_digital",
-      "target": "readme_running_locally",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_running_locally",
       "confidence_score": 1.0
     },
     {
@@ -7158,8 +7158,8 @@
       "source_file": "README.md",
       "source_location": "L24",
       "weight": 1.0,
-      "source": "readme_cardon_digital",
-      "target": "readme_scripts",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_scripts",
       "confidence_score": 1.0
     },
     {
@@ -7168,8 +7168,8 @@
       "source_file": "README.md",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "readme_cardon_digital",
-      "target": "readme_stack",
+      "source": "home_daniel_hq_rigs_cardon_digital_readme_cardon_digital",
+      "target": "home_daniel_hq_rigs_cardon_digital_readme_stack",
       "confidence_score": 1.0
     },
     {
@@ -7204,5 +7204,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "6a8c04c570659eaaaedec7648caef7d28022d957"
+  "built_at_commit": "8886d809fc04289cc9ce7e047b9079711e26bfaa"
 }
