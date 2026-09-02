@@ -1,0 +1,332 @@
+{
+  ".beads/backup/backup_state.json": {
+    "mtime": 1788335512.6771617,
+    "ast_hash": "f9f6db3865de1061a4ec55f8ed06110a",
+    "semantic_hash": ""
+  },
+  ".beads/hooks/post-checkout": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "3544ca2ca545aee03375d2d09b02aabb",
+    "semantic_hash": ""
+  },
+  ".beads/hooks/post-merge": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "e1c7845dcc73d1cf008d6546ad532faf",
+    "semantic_hash": ""
+  },
+  ".beads/hooks/pre-commit": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "5fe1bc25d249ee673378751351589b07",
+    "semantic_hash": ""
+  },
+  ".beads/hooks/pre-push": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "f2ba51d944c05470786df8b664aa0a69",
+    "semantic_hash": ""
+  },
+  ".beads/hooks/prepare-commit-msg": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "e414b7d865c0d03d952d78426d490445",
+    "semantic_hash": ""
+  },
+  ".beads/metadata.json": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "e0e2ebbdc36c1a913171e9c9552d8b3e",
+    "semantic_hash": ""
+  },
+  ".claude/settings.json": {
+    "mtime": 1788335221.2718408,
+    "ast_hash": "408623853c987db7ac558792eeaec276",
+    "semantic_hash": ""
+  },
+  ".codex/hooks.json": {
+    "mtime": 1788335221.2718408,
+    "ast_hash": "6ab111cb0ebd91918bed9fa0805d8a31",
+    "semantic_hash": ""
+  },
+  "app/coming-soon/page.tsx": {
+    "mtime": 1788335221.2718408,
+    "ast_hash": "1a79c976207e48d9a04de6e9c0fdcab6",
+    "semantic_hash": ""
+  },
+  "app/industries/clinics/page.tsx": {
+    "mtime": 1788339346.3511,
+    "ast_hash": "68798e1df6f0eac49d418a1df5dffa32",
+    "semantic_hash": ""
+  },
+  "app/industries/construction/page.tsx": {
+    "mtime": 1788335221.280078,
+    "ast_hash": "ddadca24fbfb6f6a69fa572271c33869",
+    "semantic_hash": ""
+  },
+  "app/industries/hiring/page.tsx": {
+    "mtime": 1788335221.280078,
+    "ast_hash": "856db0f05f928c79d055ddf6d70c4f26",
+    "semantic_hash": ""
+  },
+  "app/industries/restaurants/page.tsx": {
+    "mtime": 1788335221.2841964,
+    "ast_hash": "cd4e66f8a96d9980b98bc91fcaad104f",
+    "semantic_hash": ""
+  },
+  "app/industries/winery/page.tsx": {
+    "mtime": 1788339346.3511,
+    "ast_hash": "f25085c8492147916acb920d6e0e2965",
+    "semantic_hash": ""
+  },
+  "app/layout.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "78b019bbe120ba09d209a9336ae0964c",
+    "semantic_hash": ""
+  },
+  "app/page.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "95f97da24861096be1a82862ca46d757",
+    "semantic_hash": ""
+  },
+  "app/privacy/page.tsx": {
+    "mtime": 1788335221.2841964,
+    "ast_hash": "2eb53823509fa2a82733d1947b7c9843",
+    "semantic_hash": ""
+  },
+  "app/robots.ts": {
+    "mtime": 1788335221.2841964,
+    "ast_hash": "0002f7bb01c4a1577e155b31d929d485",
+    "semantic_hash": ""
+  },
+  "app/sitemap.ts": {
+    "mtime": 1788335221.2841964,
+    "ast_hash": "17f7af118c56fc11f38934fe458921d6",
+    "semantic_hash": ""
+  },
+  "app/terms/page.tsx": {
+    "mtime": 1788335221.2841964,
+    "ast_hash": "95cc7ebc0d7ecd772787766eddc5d49c",
+    "semantic_hash": ""
+  },
+  "app/work/enkanto/page.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "30f8c4d81246f65cf3a73d2ebac29609",
+    "semantic_hash": ""
+  },
+  "app/work/monte-xanic/page.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "f53797fddca4ae7c5b8986bc467c7381",
+    "semantic_hash": ""
+  },
+  "components/pages/case/BerryToBottle.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "f5f132a6b3c4c95491d9c4e35d889b4e",
+    "semantic_hash": ""
+  },
+  "components/pages/case/PlayOnceVis.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "abeec6289c22381c10a2fea55144c646",
+    "semantic_hash": ""
+  },
+  "components/pages/case/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "5208a8160b8cca820c492dd6a5cefc8f",
+    "semantic_hash": ""
+  },
+  "components/pages/case/VineyardMap.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "4483785bc9d33d5c33c5b16cf5aa3640",
+    "semantic_hash": ""
+  },
+  "components/pages/clinics/ClinicSchedule.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "f71ba229f6089d2c5381b423337da0b5",
+    "semantic_hash": ""
+  },
+  "components/pages/clinics/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "cf95fa85c3242ab13ecada19ec6f9f09",
+    "semantic_hash": ""
+  },
+  "components/pages/construction/FleetMap.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "a2f28c46ee8989c7b87d0d94813ef3da",
+    "semantic_hash": ""
+  },
+  "components/pages/construction/SitePlanVisual.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "8d0c9b3fc68e221fb6fe2cb028961cc2",
+    "semantic_hash": ""
+  },
+  "components/pages/construction/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "4022244e688163ca50e0b1d17428bc88",
+    "semantic_hash": ""
+  },
+  "components/pages/enkanto/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "9e1fc12bb500867cae601930de46a314",
+    "semantic_hash": ""
+  },
+  "components/pages/enkanto/ThreeLines.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "1719ac6f8139f5749d905588dcd1fe0a",
+    "semantic_hash": ""
+  },
+  "components/pages/hiring/PipelineStage.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "c453755d7f1c2fe188a6174156ff59a7",
+    "semantic_hash": ""
+  },
+  "components/pages/hiring/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "5d0316c784b4e3a190e80f7acfb5c6f5",
+    "semantic_hash": ""
+  },
+  "components/pages/home/HeroAssembly.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "528fc2d341eda55962bd101a25ed1b9e",
+    "semantic_hash": ""
+  },
+  "components/pages/home/OpsCompression.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "d404c8fe5eea77bbffc95ed6dff6e4ac",
+    "semantic_hash": ""
+  },
+  "components/pages/home/PlayOnceVis.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "16fffa0a51e29a3c4a4ba09e92b813c6",
+    "semantic_hash": ""
+  },
+  "components/pages/home/SectorMap.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "25e7ba494545f77af1207d67e0f8fee2",
+    "semantic_hash": ""
+  },
+  "components/pages/home/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "adc6e4edf58e9f084394dc5450222db9",
+    "semantic_hash": ""
+  },
+  "components/pages/home/canvasKit.ts": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "05551d8394138b35dc12b75568d5a6a1",
+    "semantic_hash": ""
+  },
+  "components/pages/restaurants/FloorPlan.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "41a634ee290b1ccafdcd7a2df4f74610",
+    "semantic_hash": ""
+  },
+  "components/pages/restaurants/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "3203c18354a5758584ebdb3d60c6bbc9",
+    "semantic_hash": ""
+  },
+  "components/pages/winery/SpotlightFrames.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "9756f089c07d3a279762f7d11b076929",
+    "semantic_hash": ""
+  },
+  "components/pages/winery/VineField.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "2083516ddc667b86ff7d99bb5ce62f8f",
+    "semantic_hash": ""
+  },
+  "components/site/ContourField.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "1a458795403dddfcdd1c5a55d1df1719",
+    "semantic_hash": ""
+  },
+  "components/site/Footer.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "f1edeb619cbbec5b81b1fd9df7440358",
+    "semantic_hash": ""
+  },
+  "components/site/Nav.tsx": {
+    "mtime": 1788339346.3552597,
+    "ast_hash": "aeba5f11dd61ce6845a2d550d4ea1b02",
+    "semantic_hash": ""
+  },
+  "components/site/Reveal.tsx": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "64ccf5a08c45d6b821a833034960c5f8",
+    "semantic_hash": ""
+  },
+  "middleware.ts": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "2a3b3e241f33c6b57008faa71ad45e2b",
+    "semantic_hash": ""
+  },
+  "next.config.mjs": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "9430769833db8646880c5198dc80c450",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "166ea2e942f620e55bdf5d8837d57e8c",
+    "semantic_hash": ""
+  },
+  "postcss.config.mjs": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "d3fd1d29b05a09ff76b595a70e1e7d50",
+    "semantic_hash": ""
+  },
+  "tailwind.config.ts": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "6e3b3b14b32bbeb2491aaaf8457ef589",
+    "semantic_hash": ""
+  },
+  "tsconfig.json": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "1b472675188d3d4392b147db24ce9467",
+    "semantic_hash": ""
+  },
+  ".agents/skills/beads/SKILL.md": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "4eba59bd27c18667fbbed3d5942b40ef",
+    "semantic_hash": ""
+  },
+  ".agents/skills/beads/agents/openai.yaml": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "075f32133b20f796e271f03cd50cd03e",
+    "semantic_hash": ""
+  },
+  ".beads/README.md": {
+    "mtime": 1788335221.2677224,
+    "ast_hash": "7b562344dfbbf12388c3032ba0aa4d4e",
+    "semantic_hash": ""
+  },
+  ".beads/config.yaml": {
+    "mtime": 1788338242.382744,
+    "ast_hash": "8f385405e71091f2b8b2ed8fe24b0ea4",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1788335221.2718408,
+    "ast_hash": "f560abcc9eddc9775a5099a1596698cb",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1788335221.2718408,
+    "ast_hash": "6a2d57dc57bf39401603a7e636a83c37",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1788335221.2718408,
+    "ast_hash": "6d11e54730d568abd2811d2835864de8",
+    "semantic_hash": ""
+  },
+  "public/20b3ca2c2820f9bedded38cecf008ece.txt": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "31ca4d444b994669cc6ed5ac694d37d6",
+    "semantic_hash": ""
+  },
+  "app/icon.svg": {
+    "mtime": 1788335221.2759595,
+    "ast_hash": "cc882268d3699d02fa131709804e7a68",
+    "semantic_hash": ""
+  },
+  "public/og.png": {
+    "mtime": 1788335221.2883148,
+    "ast_hash": "4eda01394f695a3a93c9ebf8ce00fc25",
+    "semantic_hash": ""
+  }
+}
