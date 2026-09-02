@@ -37,7 +37,10 @@ export default function Home({ params }: Params) {
     price.placeholder
       ? d.pricing.tbdMonthly
       : d.pricing.perMonth.replace("{amount}", formatMoney(locale, amount));
-  const footPrices = [monthly(price.care.from), monthly(price.ads.from), ""];
+  const adsPrice = price.placeholder
+    ? d.pricing.tbdFloor
+    : d.pricing.perMonth.replace("{amount}", formatMoney(locale, price.ads.from));
+  const footPrices = [monthly(price.care.from), adsPrice, ""];
 
   return (
     <main id="main" className="pg-home">

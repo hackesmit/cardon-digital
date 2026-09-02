@@ -135,6 +135,7 @@ const en = {
     tbd: "Set in the diagnostic",
     perMonth: "from **{amount}** a month",
     tbdMonthly: "with the monthly fee set in the diagnostic",
+    tbdFloor: "with the monthly floor set in the diagnostic",
     tiers: [
       {
         n: "Tier 1",
@@ -384,6 +385,7 @@ const es: typeof en = {
     tbd: "Se fija en el diagnóstico",
     perMonth: "desde **{amount}** al mes",
     tbdMonthly: "con la mensualidad fijada en el diagnóstico",
+    tbdFloor: "con el piso mensual fijado en el diagnóstico",
     tiers: [
       {
         n: "Nivel 1",
@@ -411,7 +413,7 @@ const es: typeof en = {
       },
       {
         k: "Manejo de anuncios",
-        body: "Un porcentaje de la inversión con un piso, {price}. Solo manejamos anuncios dentro de un sistema que construimos o reconstruimos, nunca por su cuenta.",
+        body: "Un porcentaje de la inversión, {price}. Solo manejamos anuncios dentro de un sistema que construimos o reconstruimos, nunca por su cuenta.",
       },
       {
         k: "Facturación",
