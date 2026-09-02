@@ -1,6 +1,6 @@
 /* ============================ CARDON DIGITAL SHARED LAYER ============================
    Ported from the approved desert-tech-v2 home concept. Single AGAVE theme:
-   dark by default, light via the mode toggle. Tokens are keyed on
+   light by default, dark via the mode toggle. Tokens are keyed on
    :root[data-mode="dark"] / :root[data-mode="light"] only. No data-theme,
    no swatches. Class names are kept identical to the source so page agents
    can paste section markup and have it styled by this shared layer. */
