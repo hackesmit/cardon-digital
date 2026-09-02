@@ -1,16 +1,16 @@
 # Graph Report - cardon-digital  (2026-09-02)
 
 ## Corpus Check
-- 61 files · ~68,085 words
+- 62 files · ~82,950 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 318 nodes · 377 edges · 32 communities (20 shown, 12 thin omitted)
+- 322 nodes · 380 edges · 33 communities (21 shown, 12 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bbef6cc5`
+- Built from commit: `6a8c04c5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -45,6 +45,7 @@
 - next.config.mjs
 - postcss.config.mjs
 - tailwind.config.ts
+- Media credits
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 15 edges
@@ -73,7 +74,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (32 total, 12 thin omitted)
+## Communities (33 total, 12 thin omitted)
 
 ### Community 0 - "canvasKit.ts"
 Cohesion: 0.12
@@ -147,8 +148,12 @@ Nodes (7): Cardon Digital, Layout, License, Pre-launch gate, Running locally, Sc
 Cohesion: 0.29
 Nodes (6): Beads, Core CLI Workflow, First Step, Preferred Route, Rules, What Belongs In Beads
 
+### Community 32 - "Media credits"
+Cohesion: 0.50
+Nodes (3): enkanto-valle.webp, Media credits, valle-vineyard.webp
+
 ## Knowledge Gaps
-- **158 isolated node(s):** `metadata`, `metadata`, `metadata`, `metadata`, `metadata` (+153 more)
+- **160 isolated node(s):** `metadata`, `metadata`, `metadata`, `metadata`, `metadata` (+155 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -156,11 +161,11 @@ Nodes (6): Beads, Core CLI Workflow, First Step, Preferred Route, Rules, What Be
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Reveal()` connect `FloorPlan.tsx` to `page.tsx`, `page.tsx`, `ClinicSchedule.tsx`, `PipelineStage.tsx`?**
-  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+  _High betweenness centrality (0.065) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `devDependencies` to `package.json`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `metadata`, `metadata`, `metadata` to the rest of the system?**
-  _158 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _160 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `canvasKit.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.11794871794871795 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
