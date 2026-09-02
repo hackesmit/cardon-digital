@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { monteXanic } from "@/lib/i18n/monte-xanic";
 
 /**
  * Berry to bottle strip. On wide screens a single wine dot travels one
@@ -58,6 +60,7 @@ export default function BerryToBottle() {
 
 /* ============================ DESKTOP (horizontal thread) ============================ */
 function BerryToBottleDesktop({ width }: { width: number | null }) {
+  const t = useDict(monteXanic).vis.b2b;
   const wrapRef = useRef<HTMLDivElement | null>(null);
   /* hold the station labels near a fixed rendered size (~15px) regardless of
      width: SVG text scales with the viewBox, so counter-scale the font. Keeps
@@ -194,7 +197,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
         className="b2b-svg"
         viewBox="0 0 1000 240"
         role="img"
-        aria-label="A continuous thread runs through four stations, berry, tank, barrel, and bottle, with wine travelling along it."
+        aria-label={t.ariaH}
       >
         <line className="b2b-track" x1="140" y1="150" x2="860" y2="150" />
         <line
@@ -215,9 +218,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
             <circle className="b2b-ico-fill" cx="-1" cy="14" r="6" />
             <path className="b2b-ico" d="M0 -8 L4 -16" />
           </g>
-          <text className="b2b-lab" x="140" y="196" textAnchor="middle">
-            Berry
-          </text>
+          <text className="b2b-lab" x="140" y="196" textAnchor="middle">{t.berry}</text>
         </g>
 
         <g className="b2b-station" id="b2b-st-1">
@@ -227,9 +228,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
             <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
             <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
           </g>
-          <text className="b2b-lab" x="380" y="196" textAnchor="middle">
-            Tank
-          </text>
+          <text className="b2b-lab" x="380" y="196" textAnchor="middle">{t.tank}</text>
         </g>
 
         <g className="b2b-station" id="b2b-st-2">
@@ -239,9 +238,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
             <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
             <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
           </g>
-          <text className="b2b-lab" x="620" y="196" textAnchor="middle">
-            Barrel
-          </text>
+          <text className="b2b-lab" x="620" y="196" textAnchor="middle">{t.barrel}</text>
         </g>
 
         <g className="b2b-station" id="b2b-st-3">
@@ -253,19 +250,14 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
             />
             <line className="b2b-ico" x1="-4" y1="-6" x2="4" y2="-6" />
           </g>
-          <text className="b2b-lab" x="860" y="196" textAnchor="middle">
-            Bottle
-          </text>
+          <text className="b2b-lab" x="860" y="196" textAnchor="middle">{t.bottle}</text>
         </g>
 
         <circle className="b2b-halo" id="b2bHalo" ref={haloRef} cx="140" cy="150" r="12" />
         <circle className="b2b-dot" id="b2bDot" ref={dotRef} cx="140" cy="150" r="5" />
       </svg>
       <noscript>
-        <div className="vine-fallback">
-          Berry, tank, barrel, bottle: the wine is tracked as one continuous
-          thread from the vine to the finished bottle.
-        </div>
+        <div className="vine-fallback">{t.fallback}</div>
       </noscript>
     </div>
   );
@@ -277,6 +269,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
    station names sit to the right of the rail at phone-legible sizes. The taller-
    than-wide viewBox fills the frame, so there is no dead letterbox space. */
 function BerryToBottleMobile({ width }: { width: number }) {
+  const t = useDict(monteXanic).vis.b2b;
   const wrapRef = useRef<HTMLDivElement | null>(null);
   /* counter-scale the station labels to a fixed rendered size (~25px) so the
      portrait thread reads at phone-legible size across the narrow range. */
@@ -411,7 +404,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
         className="b2b-svg"
         viewBox="0 0 320 540"
         role="img"
-        aria-label="A continuous thread runs top to bottom through four stations, berry, tank, barrel, and bottle, with wine travelling along it."
+        aria-label={t.ariaV}
       >
         <line className="b2b-track" x1="58" y1="96" x2="58" y2="480" />
         <line
@@ -431,9 +424,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
             <circle className="b2b-ico-fill" cx="-1" cy="14" r="6" />
             <path className="b2b-ico" d="M0 -8 L4 -16" />
           </g>
-          <text className="b2b-lab b2b-lab-m" x="150" y="96" dominantBaseline="middle">
-            Berry
-          </text>
+          <text className="b2b-lab b2b-lab-m" x="150" y="96" dominantBaseline="middle">{t.berry}</text>
         </g>
 
         <g className="b2b-station" id="b2b-m-1">
@@ -443,9 +434,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
             <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
             <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
           </g>
-          <text className="b2b-lab b2b-lab-m" x="150" y="224" dominantBaseline="middle">
-            Tank
-          </text>
+          <text className="b2b-lab b2b-lab-m" x="150" y="224" dominantBaseline="middle">{t.tank}</text>
         </g>
 
         <g className="b2b-station" id="b2b-m-2">
@@ -455,9 +444,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
             <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
             <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
           </g>
-          <text className="b2b-lab b2b-lab-m" x="150" y="352" dominantBaseline="middle">
-            Barrel
-          </text>
+          <text className="b2b-lab b2b-lab-m" x="150" y="352" dominantBaseline="middle">{t.barrel}</text>
         </g>
 
         <g className="b2b-station" id="b2b-m-3">
@@ -469,19 +456,14 @@ function BerryToBottleMobile({ width }: { width: number }) {
             />
             <line className="b2b-ico" x1="-4" y1="-6" x2="4" y2="-6" />
           </g>
-          <text className="b2b-lab b2b-lab-m" x="150" y="480" dominantBaseline="middle">
-            Bottle
-          </text>
+          <text className="b2b-lab b2b-lab-m" x="150" y="480" dominantBaseline="middle">{t.bottle}</text>
         </g>
 
         <circle className="b2b-halo" ref={haloRef} cx="58" cy="96" r="16" />
         <circle className="b2b-dot" ref={dotRef} cx="58" cy="96" r="6.5" />
       </svg>
       <noscript>
-        <div className="vine-fallback">
-          Berry, tank, barrel, bottle: the wine is tracked as one continuous
-          thread from the vine to the finished bottle.
-        </div>
+        <div className="vine-fallback">{t.fallback}</div>
       </noscript>
     </div>
   );

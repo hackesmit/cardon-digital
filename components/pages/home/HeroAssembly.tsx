@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { home } from "@/lib/i18n/home";
 import {
   MONO,
   clamp01,
@@ -68,6 +70,7 @@ interface Pose {
 }
 
 export default function HeroAssembly() {
+  const t = useDict(home).vis.hero;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const captionRef = useRef<HTMLSpanElement | null>(null);
 
@@ -112,12 +115,12 @@ export default function HeroAssembly() {
       | "fillStart"
       | "pulseSpawned"
     >> = [
-      { name: "sales.xlsx", tag: "XLSX", kind: "sheet", side: -1, row: 0, sx: 0.1, sy: 0.18, rot: -8 },
-      { name: "leads.csv", tag: "CSV", kind: "csv", side: 1, row: 1, sx: 0.88, sy: 0.14, rot: 7 },
-      { name: "expenses.xlsx", tag: "XLSX", kind: "sheet", side: -1, row: 2, sx: 0.16, sy: 0.84, rot: 6 },
-      { name: "invoice.pdf", tag: "PDF", kind: "pdf", side: 1, row: 3, sx: 0.86, sy: 0.82, rot: -7 },
-      { name: "receipt", tag: "RECEIPT", kind: "receipt", side: -1, row: 4, sx: 0.07, sy: 0.52, rot: 5 },
-      { name: "whatsapp", tag: "MSG", kind: "chat", side: 1, row: 5, sx: 0.92, sy: 0.5, rot: -6 },
+      { ...t.docs[0], kind: "sheet", side: -1, row: 0, sx: 0.1, sy: 0.18, rot: -8 },
+      { ...t.docs[1], kind: "csv", side: 1, row: 1, sx: 0.88, sy: 0.14, rot: 7 },
+      { ...t.docs[2], kind: "sheet", side: -1, row: 2, sx: 0.16, sy: 0.84, rot: 6 },
+      { ...t.docs[3], kind: "pdf", side: 1, row: 3, sx: 0.86, sy: 0.82, rot: -7 },
+      { ...t.docs[4], kind: "receipt", side: -1, row: 4, sx: 0.07, sy: 0.52, rot: 5 },
+      { ...t.docs[5], kind: "chat", side: 1, row: 5, sx: 0.92, sy: 0.5, rot: -6 },
     ];
     const EMPTY: Trace = makeTrace([
       { x: 0, y: 0 },
@@ -136,12 +139,12 @@ export default function HeroAssembly() {
       pulseSpawned: false,
     }));
     const ROWS: Row[] = [
-      { k: "SALES", v: "live", frac: 0.72, col: "primary" },
-      { k: "LEADS", v: "ready", frac: 0.55, col: "secondary" },
-      { k: "EXPENSES", v: "matched", frac: 0.4, col: "primary" },
-      { k: "PAYMENTS", v: "3 today", frac: 0.48, col: "secondary" },
-      { k: "MARGIN", v: "34%", frac: 0.34, col: "primary" },
-      { k: "CLOSE", v: "current", frac: 0.62, col: "secondary" },
+      { ...t.rows[0], frac: 0.72, col: "primary" },
+      { ...t.rows[1], frac: 0.55, col: "secondary" },
+      { ...t.rows[2], frac: 0.4, col: "primary" },
+      { ...t.rows[3], frac: 0.48, col: "secondary" },
+      { ...t.rows[4], frac: 0.34, col: "primary" },
+      { ...t.rows[5], frac: 0.62, col: "secondary" },
     ];
     const rowLatched: boolean[] = [false, false, false, false, false, false];
 
@@ -485,11 +488,11 @@ export default function HeroAssembly() {
       c.textBaseline = "alphabetic";
       c.textAlign = "left";
       c.fillStyle = PAL.ink;
-      c.fillText("One system", g.pX + 32, g.pY + 22);
+      c.fillText(t.panelTitle, g.pX + 32, g.pY + 22);
       c.textAlign = "right";
       c.fillStyle = PAL.muted;
       c.font = "600 " + cornerFont + "px " + MONO;
-      c.fillText("SUMMARY", g.pX + g.pW - 14, g.pY + 22);
+      c.fillText(t.panelSummary, g.pX + g.pW - 14, g.pY + 22);
       c.textAlign = "left";
       c.strokeStyle = PAL.line;
       c.lineWidth = 1;
@@ -604,7 +607,7 @@ export default function HeroAssembly() {
         for (let cc = 0; cc < DOCS.length; cc++) {
           drawDoc(ctx, DOCS[cc], DOCS[cc].targetX, DOCS[cc].targetY, 0, 1, true);
         }
-        if (caption) caption.textContent = "one system";
+        if (caption) caption.textContent = t.oneSystem;
         return;
       }
 
@@ -655,7 +658,7 @@ export default function HeroAssembly() {
       if (caption) {
         let allIn = true;
         for (let k = 0; k < rowLatched.length; k++) if (!rowLatched[k]) allIn = false;
-        caption.textContent = allIn ? "one system" : "connecting";
+        caption.textContent = allIn ? t.oneSystem : t.connecting;
       }
     }
 
@@ -770,18 +773,15 @@ export default function HeroAssembly() {
     <div className="stage-wrap">
       <div className="stage-frame">
         <span className="stage-tag mono">
-          <span className="before">notebooks in</span>{" "}
-          <span className="midword">one view out</span>
+          <span className="before">{t.tagBefore}</span>{" "}
+          <span className="midword">{t.tagMid}</span>
         </span>
         <span className="stage-caption mono" ref={captionRef}>
-          connecting
+          {t.connecting}
         </span>
         <canvas id="heroCanvas" ref={canvasRef} aria-hidden="true" />
         <noscript>
-          <div className="stage-fallback">
-            Scattered documents, spreadsheets, invoices, email, and messages
-            settle into clean rows around one connected panel your team owns.
-          </div>
+          <div className="stage-fallback">{t.fallback}</div>
         </noscript>
       </div>
     </div>

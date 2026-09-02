@@ -121,6 +121,43 @@ const en = {
     p1: "The work that used to go into assembling the picture now goes into acting on it. Monte Xanic reads one live view, mapped to its own vineyards, that anticipates readiness against its own standard and follows the wine from berry to bottle, while the finance behind it stays current on its own.",
     p2: "**The point was never a dashboard.** It was giving a winery that is meticulous about the bottle a picture of the harvest that is finally as clear, and as current, as the wine deserves.",
   },
+  vis: {
+    map: {
+      legendMain: "Vineyard sections / quality vs standard",
+      legendSub: "color = quality scored against Monte Xanic's standard",
+      honest: "illustrative view, not client data",
+      plotsAria:
+        "Map of nine vineyard sections and their readiness through the season",
+      sectionWord: "Section",
+      plateAspects: "heat / water / sample",
+      plateStatus: "quality vs standard",
+      plateAction: "hold",
+      heat: "heat",
+      water: "water",
+      sample: "sample",
+      quality: "quality",
+      vsStandard: "vs standard",
+      meets: "meets standard, harvest",
+      below: "below standard, hold",
+      fallback:
+        "A stylized map of nine vineyard sections. As accumulated heat rises through the season, each section scores quality against Monte Xanic's own standard from heat, water, and ripeness sample, and warms from cool green to deep wine, taking a harvest marker when it meets the standard.",
+      seasonLab: "Season, accumulated heat",
+      early: "early",
+      harvest: "harvest",
+      rangeAria:
+        "Accumulated heat through the season. Drag to accumulate heat and watch each section score quality against Monte Xanic's standard.",
+    },
+    b2b: {
+      berry: "Berry",
+      tank: "Tank",
+      barrel: "Barrel",
+      bottle: "Bottle",
+      ariaH: "A continuous thread runs through four stations, berry, tank, barrel, and bottle, with wine travelling along it.",
+      ariaV: "A continuous thread runs top to bottom through four stations, berry, tank, barrel, and bottle, with wine travelling along it.",
+      fallback:
+        "Berry, tank, barrel, bottle: the wine is tracked as one continuous thread from the vine to the finished bottle.",
+    },
+  },
   diagDesc:
     "Ten business days looking at your ads, your site, and your operations as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
   diagSpecs: [
@@ -248,6 +285,43 @@ const es: typeof en = {
     title: "Una cosecha que la bodega sí puede ver.",
     p1: "El trabajo que antes se iba en armar la imagen ahora se va en actuar sobre ella. Monte Xanic lee una sola vista al día, amarrada a sus propios viñedos, que anticipa la madurez contra su propio estándar y sigue el vino de la baya a la botella, mientras las finanzas de atrás se mantienen al corriente solas.",
     p2: "**El punto nunca fue un tablero.** Fue darle a una bodega meticulosa con la botella una imagen de la cosecha por fin igual de clara, y igual de al día, que el vino que merece.",
+  },
+  vis: {
+    map: {
+      legendMain: "Cuadros del viñedo / calidad contra el estándar",
+      legendSub: "el color es la calidad medida contra el estándar de Monte Xanic",
+      honest: "vista ilustrativa, no son datos de cliente",
+      plotsAria:
+        "Mapa de nueve cuadros del viñedo y su madurez a lo largo de la temporada",
+      sectionWord: "Cuadro",
+      plateAspects: "calor / agua / muestra",
+      plateStatus: "calidad contra estándar",
+      plateAction: "esperar",
+      heat: "calor",
+      water: "agua",
+      sample: "muestra",
+      quality: "calidad",
+      vsStandard: "contra estándar",
+      meets: "cumple el estándar, cosechar",
+      below: "por debajo del estándar, esperar",
+      fallback:
+        "Un mapa estilizado de nueve cuadros del viñedo. Conforme sube el calor acumulado de la temporada, cada cuadro califica su calidad contra el propio estándar de Monte Xanic a partir del calor, el agua y la muestra de madurez, y se va calentando del verde frío al vino profundo, tomando una marca de cosecha cuando cumple el estándar.",
+      seasonLab: "Temporada, calor acumulado",
+      early: "temprano",
+      harvest: "cosecha",
+      rangeAria:
+        "Calor acumulado de la temporada. Arrastre para acumular calor y ver cómo cada cuadro califica su calidad contra el estándar de Monte Xanic.",
+    },
+    b2b: {
+      berry: "Baya",
+      tank: "Tanque",
+      barrel: "Barrica",
+      bottle: "Botella",
+      ariaH: "Un hilo continuo recorre cuatro estaciones, baya, tanque, barrica y botella, con el vino viajando por él.",
+      ariaV: "Un hilo continuo recorre de arriba abajo cuatro estaciones, baya, tanque, barrica y botella, con el vino viajando por él.",
+      fallback:
+        "Baya, tanque, barrica, botella: el vino se sigue como un solo hilo continuo de la vid a la botella terminada.",
+    },
   },
   diagDesc:
     "Diez días hábiles revisando sus anuncios, su sitio y su operación como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",

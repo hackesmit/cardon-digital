@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { localePath } from "@/lib/i18n/config";
+import { home } from "@/lib/i18n/home";
 import {
   drawFlow,
   dedupe,
@@ -66,6 +69,9 @@ function MarkerCore({ full }: Core) {
 }
 
 export default function SectorMap() {
+  const locale = useLocale();
+  const t = home[locale].vis.map;
+  const href = (path: string) => localePath(locale, path);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -300,10 +306,8 @@ export default function SectorMap() {
   return (
     <>
     <div className="map-stage" ref={stageRef}>
-      <span className="map-legend mono">
-        Survey of terrains: three stations, two survey sites
-      </span>
-      <span className="map-scale mono">Baja California and the US border</span>
+<span className="map-legend mono">{t.legend}</span>
+      <span className="map-scale mono">{t.scale}</span>
 
       <svg
         className="map-base"
@@ -367,112 +371,112 @@ export default function SectorMap() {
           <circle className="bm-ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
           <circle className="bm-dot" cx="13" cy="20" r="3.4" />
         </svg>
-        One system
+        {t.hub}
       </span>
 
       <Link
         className="map-marker m-left"
         id="mk-winery"
-        href="/industries/winery"
+        href={href("/industries/winery")}
         data-sector="winery"
         data-route="route-winery"
         style={{ left: "20%", top: "34%" }}
-        aria-label="Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page."
+        aria-label={t.wineryAria}
       >
         <MarkerCore full />
         <span className="marker-label">
-          <span className="marker-focus">Focus terrain</span>
-          <span className="marker-name">Winery / Valle de Guadalupe</span>
-          <span className="marker-detail">harvest and finances, one view</span>
+          <span className="marker-focus">{t.focus}</span>
+          <span className="marker-name">{t.wineryName}</span>
+          <span className="marker-detail">{t.wineryDetail}</span>
         </span>
       </Link>
 
       <Link
         className="map-case"
-        href="/work/monte-xanic"
+        href={href("/work/monte-xanic")}
         style={{ left: "21%", top: "62%" }}
-        aria-label="Read the Monte Xanic case study, from berry to bottle."
+        aria-label={t.xanicAria}
       >
         <span className="dot" aria-hidden="true" />
         <span>
-          Case study: <b>Monte Xanic</b>
+          {t.caseStudy} <b>Monte Xanic</b>
         </span>
       </Link>
 
       <Link
         className="map-case"
-        href="/work/enkanto"
+        href={href("/work/enkanto")}
         style={{ left: "33%", top: "72%" }}
-        aria-label="Read the Vinedo En'kanto case study, the commerce side."
+        aria-label={t.enkantoAria}
       >
         <span className="dot" aria-hidden="true" />
         <span>
-          Case study: <b>En&apos;kanto</b>
+          {t.caseStudy} <b>En&apos;kanto</b>
         </span>
       </Link>
 
       <Link
         className="map-marker survey"
         id="mk-restaurants"
-        href="/industries/restaurants"
+        href={href("/industries/restaurants")}
         data-sector="restaurants"
         data-route="route-restaurants"
         style={{ left: "36%", top: "18%" }}
-        aria-label="Restaurants and hospitality. Terrain we are surveying next. Open the restaurants page."
+        aria-label={t.restaurantsAria}
       >
         <MarkerCore full={false} />
         <span className="marker-label">
-          <span className="marker-name">Restaurants / Hospitality</span>
-          <span className="marker-detail">surveying this terrain</span>
+          <span className="marker-name">{t.restaurantsName}</span>
+          <span className="marker-detail">{t.restaurantsDetail}</span>
         </span>
       </Link>
 
       <Link
         className="map-marker survey"
         id="mk-clinics"
-        href="/industries/clinics"
+        href={href("/industries/clinics")}
         data-sector="clinics"
         data-route="route-clinics"
         style={{ left: "72%", top: "62%" }}
-        aria-label="Clinics and healthcare. Focus terrain: defend and recapture patient flow. Open the clinics page."
+        aria-label={t.clinicsAria}
       >
         <MarkerCore full={false} />
         <span className="marker-label">
-          <span className="marker-focus">Focus terrain</span>
-          <span className="marker-name">Clinics / Healthcare</span>
-          <span className="marker-detail">defend and recapture patient flow</span>
+          <span className="marker-focus">{t.focus}</span>
+          <span className="marker-name">{t.clinicsName}</span>
+          <span className="marker-detail">{t.clinicsDetail}</span>
         </span>
       </Link>
 
       <Link
         className="map-marker m-right"
         id="mk-logistics"
-        href="/industries/construction"
+        href={href("/industries/construction")}
         data-sector="logistics"
         data-route="route-logistics"
         style={{ left: "80%", top: "30%" }}
-        aria-label="Construction and Logistics. Field to office, one system. Open the logistics page."
+        aria-label={t.constructionAria}
       >
         <MarkerCore full />
         <span className="marker-label">
-          <span className="marker-name">Construction / Logistics</span>
-          <span className="marker-detail">field to office, one system</span>
+          <span className="marker-name">{t.constructionName}</span>
+          <span className="marker-detail">{t.constructionDetail}</span>
         </span>
       </Link>
 
       <Link
         className="map-marker m-up"
         id="mk-hiring"
-        href="/industries/hiring"
+        href={href("/industries/hiring")}
         data-sector="hiring"
         data-route="route-hiring"
         style={{ left: "52%", top: "72%" }}
-        aria-label="Hiring and HR. From first click to hire. Open the hiring page."
+        aria-label={t.hiringAria}
       >
         <MarkerCore full />
         <span className="marker-label">
-          <span className="marker-name">Hiring / HR</span>
-          <span className="marker-detail">from first click to hire</span>
+          <span className="marker-name">{t.hiringName}</span>
+          <span className="marker-detail">{t.hiringDetail}</span>
         </span>
       </Link>
     </div>
@@ -483,7 +487,7 @@ export default function SectorMap() {
         of map-stage / sector-list is displayed at a time (CSS), so there is no
         duplicate content in the accessibility tree and no hidden canvas loop
         (the hidden map-stage never intersects, so its rAF never starts). */}
-    <div className="sector-list" aria-label="Terrains we know">
+    <div className="sector-list" aria-label={t.listAria}>
       <span className="sl-hub mono" aria-hidden="true">
         <svg viewBox="0 0 26 26" focusable="false">
           <line className="bm-line" x1="13" y1="20" x2="6" y2="8" strokeWidth="1.2" opacity="0.75" />
@@ -493,96 +497,96 @@ export default function SectorMap() {
           <circle className="bm-ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
           <circle className="bm-dot" cx="13" cy="20" r="3.4" />
         </svg>
-        One system
+        {t.hub}
       </span>
 
-      <span className="sl-head mono">Stations built</span>
+      <span className="sl-head mono">{t.stationsHead}</span>
 
       <div className="sl-grid">
         <Link
           className="sector-card focus"
-          href="/industries/winery"
-          aria-label="Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page."
+          href={href("/industries/winery")}
+          aria-label={t.wineryAria}
         >
           <span className="sc-mark">
             <MarkerCore full />
           </span>
           <span className="sc-body">
-            <span className="sc-badge">Focus terrain</span>
-            <span className="sc-name">Winery / Valle de Guadalupe</span>
-            <span className="sc-detail">harvest and finances, one view</span>
+            <span className="sc-badge">{t.focus}</span>
+            <span className="sc-name">{t.wineryName}</span>
+            <span className="sc-detail">{t.wineryDetail}</span>
           </span>
         </Link>
 
         <Link
           className="sector-card"
-          href="/industries/construction"
-          aria-label="Construction and Logistics. Field to office, one system. Open the logistics page."
+          href={href("/industries/construction")}
+          aria-label={t.constructionAria}
         >
           <span className="sc-mark">
             <MarkerCore full />
           </span>
           <span className="sc-body">
-            <span className="sc-name">Construction / Logistics</span>
-            <span className="sc-detail">field to office, one system</span>
+            <span className="sc-name">{t.constructionName}</span>
+            <span className="sc-detail">{t.constructionDetail}</span>
           </span>
         </Link>
 
         <Link
           className="sector-card"
-          href="/industries/hiring"
-          aria-label="Hiring and HR. From first click to hire. Open the hiring page."
+          href={href("/industries/hiring")}
+          aria-label={t.hiringAria}
         >
           <span className="sc-mark">
             <MarkerCore full />
           </span>
           <span className="sc-body">
-            <span className="sc-name">Hiring / HR</span>
-            <span className="sc-detail">from first click to hire</span>
+            <span className="sc-name">{t.hiringName}</span>
+            <span className="sc-detail">{t.hiringDetail}</span>
           </span>
         </Link>
 
         <div className="sl-cases">
-          <Link className="sl-case" href="/work/monte-xanic" aria-label="Read the Monte Xanic case study, from berry to bottle.">
+          <Link className="sl-case" href={href("/work/monte-xanic")} aria-label={t.xanicAria}>
             <span className="dot" aria-hidden="true" />
-            <span>Case study: <b>Monte Xanic</b></span>
+            <span>{t.caseStudy} <b>Monte Xanic</b></span>
           </Link>
-          <Link className="sl-case" href="/work/enkanto" aria-label="Read the Vinedo En'kanto case study, the commerce side.">
+          <Link className="sl-case" href={href("/work/enkanto")} aria-label={t.enkantoAria}>
             <span className="dot" aria-hidden="true" />
-            <span>Case study: <b>En&apos;kanto</b></span>
+            <span>{t.caseStudy} <b>En&apos;kanto</b></span>
           </Link>
         </div>
       </div>
 
-      <span className="sl-head mono">Survey sites</span>
+      <span className="sl-head mono">{t.surveyHead}</span>
 
       <div className="sl-grid">
         <Link
           className="sector-card survey"
-          href="/industries/clinics"
-          aria-label="Clinics and healthcare. Focus terrain: defend and recapture patient flow. Open the clinics page."
+          href={href("/industries/clinics")}
+          aria-label={t.clinicsAria}
         >
           <span className="sc-mark">
             <MarkerCore full={false} />
           </span>
           <span className="sc-body">
-            <span className="sc-badge">Focus terrain</span>
-            <span className="sc-name">Clinics / Healthcare</span>
-            <span className="sc-detail">defend and recapture patient flow</span>
+            <span className="sc-badge">{t.focus}</span>
+            <span className="sc-name">{t.clinicsName}</span>
+            <span className="sc-detail">{t.clinicsDetail}</span>
           </span>
         </Link>
 
         <Link
           className="sector-card survey"
-          href="/industries/restaurants"
-          aria-label="Restaurants and hospitality. Terrain we are surveying next. Open the restaurants page."
+          href={href("/industries/restaurants")}
+          aria-label={t.restaurantsAria}
         >
           <span className="sc-mark">
             <MarkerCore full={false} />
           </span>
           <span className="sc-body">
-            <span className="sc-name">Restaurants / Hospitality</span>
-            <span className="sc-detail">surveying this terrain</span>
+            <span className="sc-name">{t.restaurantsName}</span>
+            <span className="sc-detail">{t.restaurantsDetail}</span>
           </span>
         </Link>
       </div>
