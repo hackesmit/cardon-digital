@@ -2,16 +2,88 @@ import type { Metadata } from "next";
 import SitePlanVisual from "@/components/pages/construction/SitePlanVisual";
 import FleetMap from "@/components/pages/construction/FleetMap";
 import SpotlightFrames from "@/components/pages/construction/SpotlightFrames";
+import { isLocale, type Locale } from "@/lib/i18n/config";
+import { construction } from "@/lib/i18n/construction";
+import { pageMetadata } from "@/lib/i18n/metadata";
+import { rich } from "@/lib/i18n/rich";
+import { site } from "@/lib/i18n/site";
 import "./construction.css";
 
-export const metadata: Metadata = {
-  title: "Construction growth systems",
-  description:
-    "Work orders, crews, materials, and sites on one scheduled board, built for construction companies, with qualified lead generation priced on performance.",
-  alternates: { canonical: "/industries/construction" },
-};
+type Params = { params: { locale: string } };
 
-export default function ConstructionPage() {
+function localeOf(params: { locale: string }): Locale {
+  return isLocale(params.locale) ? params.locale : "es";
+}
+
+export function generateMetadata({ params }: Params): Metadata {
+  const locale = localeOf(params);
+  return pageMetadata(
+    locale,
+    "/industries/construction",
+    construction[locale].meta,
+  );
+}
+
+/* Card glyphs are decoration, so only the words beside them are translated. */
+const capGlyphs = [
+  (
+    <span className="cap-glyph" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <rect className="g-stroke" x="4" y="3" width="16" height="18" rx="2" />
+                        <path className="g-stroke" d="M8 8h8M8 12h8M8 16h5" />
+                        <circle className="g-fill" cx="18.5" cy="16.5" r="1.6" />
+                      </svg>
+                    </span>
+  ),
+  (
+    <span className="cap-glyph" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <rect className="g-stroke" x="3" y="5" width="18" height="15" rx="2" />
+                        <path className="g-stroke" d="M3 9h18M8 3v4M16 3v4" />
+                        <path className="g-gold" d="M9 14l2 2 4-4" />
+                      </svg>
+                    </span>
+  ),
+  (
+    <span className="cap-glyph" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path
+                          className="g-stroke"
+                          d="M12 21c4-4 6-7 6-10a6 6 0 1 0-12 0c0 3 2 6 6 10z"
+                        />
+                        <circle className="g-fill" cx="12" cy="11" r="2.2" />
+                      </svg>
+                    </span>
+  ),
+  (
+    <span className="cap-glyph" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path className="g-stroke" d="M20 12a8 8 0 1 1-2.3-5.6" />
+                        <path className="g-gold" d="M20 4v4h-4" />
+                        <circle className="g-fill" cx="12" cy="12" r="1.9" />
+                      </svg>
+                    </span>
+  ),
+  (
+    <span className="cap-glyph" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path className="g-stroke" d="M4 16a8 8 0 0 1 16 0" />
+                        <path className="g-stroke" d="M7.5 16a4.5 4.5 0 0 1 9 0" />
+                        <circle className="g-fill" cx="12" cy="16" r="2" />
+                        <path className="g-gold" d="M12 16l3.5-9" />
+                      </svg>
+                    </span>
+  ),
+];
+
+export default function ConstructionPage({ params }: Params) {
+  const locale = localeOf(params);
+  const d = construction[locale];
+  const s = site[locale];
+  const mailto =
+    "mailto:daniel@cardondigital.com?subject=" +
+    encodeURIComponent(s.diag.mailSubject);
+
   return (
     <main id="main" className="pg-construction">
       <span id="top" />
@@ -20,35 +92,24 @@ export default function ConstructionPage() {
       <section className="hero" aria-labelledby="hero-title">
         <div className="container">
           <div className="hero-copy">
-            <p className="eyebrow">Industries / Construction</p>
+            <p className="eyebrow">{d.hero.eyebrow}</p>
             <h1 id="hero-title">
-              Every crew, every material, every site.
+              {d.hero.title}
               <br />
-              <span className="accent">One board.</span>
+              <span className="accent">{d.hero.titleAccent}</span>
             </h1>
             <p className="hero-sub">
-              We built the operations and logistics system for a construction
-              company, so we know how a build actually runs: work orders, crews,
-              materials, and site progress that live in calls, texts, and paper,
-              wired into one scheduled board the office and the field both read
-              from. <b>Scattered orders become a sequence you can trust.</b>{" "}
-              <span className="dry">
-                Yes, a construction company named Logistics. The name set a high
-                bar.
-              </span>
+              {rich(d.hero.sub)} <span className="dry">{d.hero.dry}</span>
             </p>
             <div className="hero-actions">
-              <a
-                className="cta"
-                href="mailto:daniel@cardondigital.com?subject=Growth%20Diagnostic"
-              >
-                Get the free Growth Diagnostic
+              <a className="cta" href={mailto}>
+                {s.diag.cta}
               </a>
               <a className="btn-ghost" href="#capabilities">
-                See what we build
+                {d.hero.ctaGhost}
               </a>
             </div>
-            <p className="brandline">Built to hold water</p>
+            <p className="brandline">{s.brandline}</p>
           </div>
 
           <div className="stage-wrap">
@@ -59,45 +120,16 @@ export default function ConstructionPage() {
       </section>
 
       {/* ============================ VALUE STRIP ============================ */}
-      <section
-        className="value"
-        aria-label="What this is worth to a construction company"
-      >
-        <h2 className="sr-only">What this is worth to you</h2>
+      <section className="value" aria-label={d.value.aria}>
+        <h2 className="sr-only">{d.value.srTitle}</h2>
         <div className="container value-grid">
-          <div className="value-item">
-            <span className="value-key">A domain we built for</span>
-            <p className="value-lead">
-              We built the operations system{" "}
-              <span className="cool">a construction company runs on.</span>
-            </p>
-            <p className="value-body">
-              Not a pitch about an industry we might learn. We already know how a
-              build coordinates, from the first work order to the final
-              inspection.
-            </p>
-          </div>
-          <div className="value-item">
-            <span className="value-key">Office and field, one board</span>
-            <p className="value-lead">
-              The same live schedule{" "}
-              <span className="cool">the crew updates and the office reads.</span>
-            </p>
-            <p className="value-body">
-              No relay of phone calls to find out where a site stands. One source
-              of truth everyone works from.
-            </p>
-          </div>
-          <div className="value-item">
-            <span className="value-key">Yours to own</span>
-            <p className="value-lead">
-              Trained into your team, <span className="cool">and yours to keep.</span>
-            </p>
-            <p className="value-body">
-              Built around how you already run, handed over to your people, with
-              no per-seat subscription to babysit.
-            </p>
-          </div>
+          {d.value.items.map((item) => (
+            <div className="value-item" key={item.key}>
+              <span className="value-key">{item.key}</span>
+              <p className="value-lead">{rich(item.lead, { hl: "cool" })}</p>
+              <p className="value-body">{item.body}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -106,17 +138,10 @@ export default function ConstructionPage() {
         <div className="container">
           <div className="split fleet-split">
             <div className="split-copy">
-              <span className="kicker">Fleet and logistics</span>
-              <h2 id="fleet-title">Every vehicle on one map.</h2>
-              <p className="fleet-lead">
-                Every vehicle runs on one map, so the office sees where each one
-                is without a single phone call. When a truck reaches a site, its
-                arrival logs itself the moment it crosses the geofence. The board
-                fills on its own, and the day stops running on chase calls.
-              </p>
-              <p className="note">
-                <b>Arrivals log themselves.</b> The office stops phoning around.
-              </p>
+              <span className="kicker">{d.fleet.kicker}</span>
+              <h2 id="fleet-title">{d.fleet.title}</h2>
+              <p className="fleet-lead">{d.fleet.lead}</p>
+              <p className="note">{rich(d.fleet.note)}</p>
             </div>
             <div className="split-vis">
               <FleetMap />
@@ -129,122 +154,25 @@ export default function ConstructionPage() {
       <section className="section" id="capabilities" aria-labelledby="cap-title">
         <div className="container">
           <div className="section-head">
-            <span className="kicker">What we build</span>
-            <h2 id="cap-title">Built for how a build actually runs.</h2>
-            <p className="section-sub">
-              Not a generic CRM bent into the shape of a job site. These are the
-              operations a construction company lives on, wired into one connected
-              system your team owns.
-            </p>
+            <span className="kicker">{d.caps.kicker}</span>
+            <h2 id="cap-title">{d.caps.title}</h2>
+            <p className="section-sub">{d.caps.sub}</p>
           </div>
 
           <div className="cap-grid">
-            <article className="cap-card">
-              <div className="cap-top">
-                <span className="cap-glyph" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <rect className="g-stroke" x="4" y="3" width="16" height="18" rx="2" />
-                    <path className="g-stroke" d="M8 8h8M8 12h8M8 16h5" />
-                    <circle className="g-fill" cx="18.5" cy="16.5" r="1.6" />
-                  </svg>
-                </span>
-                <span className="cap-idx">01 / Job flow</span>
-              </div>
-              <h3 className="cap-title">Work orders and job flow</h3>
-              <p className="cap-body">
-                Scattered orders, calls, and messages become one scheduled board.
-                Every job carries an owner, a date, and a status the whole company
-                can see, so nothing lives only in someone&apos;s head or a lost
-                text thread.
-              </p>
-            </article>
-
-            <article className="cap-card">
-              <div className="cap-top">
-                <span className="cap-glyph" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <rect className="g-stroke" x="3" y="5" width="18" height="15" rx="2" />
-                    <path className="g-stroke" d="M3 9h18M8 3v4M16 3v4" />
-                    <path className="g-gold" d="M9 14l2 2 4-4" />
-                  </svg>
-                </span>
-                <span className="cap-idx">02 / Scheduling</span>
-              </div>
-              <h3 className="cap-title">Crew and materials scheduling</h3>
-              <p className="cap-body">
-                Assign crews and materials against real availability. The board
-                shows the double-booking or the missing delivery before it costs
-                you a day on site, not after the crew is already standing around.
-              </p>
-            </article>
-
-            <article className="cap-card">
-              <div className="cap-top">
-                <span className="cap-glyph" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path
-                      className="g-stroke"
-                      d="M12 21c4-4 6-7 6-10a6 6 0 1 0-12 0c0 3 2 6 6 10z"
-                    />
-                    <circle className="g-fill" cx="12" cy="11" r="2.2" />
-                  </svg>
-                </span>
-                <span className="cap-idx">03 / Visibility</span>
-              </div>
-              <h3 className="cap-title">Site and progress tracking</h3>
-              <p className="cap-body">
-                The office reads where every site stands without calling the field.
-                Daily progress, blockers, and photos land in one place, so a status
-                update is a glance, not an interruption to someone&apos;s afternoon.
-              </p>
-            </article>
-
-            <article className="cap-card">
-              <div className="cap-top">
-                <span className="cap-glyph" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path className="g-stroke" d="M20 12a8 8 0 1 1-2.3-5.6" />
-                    <path className="g-gold" d="M20 4v4h-4" />
-                    <circle className="g-fill" cx="12" cy="12" r="1.9" />
-                  </svg>
-                </span>
-                <span className="cap-idx">04 / Procurement</span>
-              </div>
-              <h3 className="cap-title">Procurement and quoting</h3>
-              <p className="cap-body">
-                The routine parts of buying and quoting run themselves: request to
-                purchase order, quote to job, reminders and follow-ups that no
-                longer wait on someone remembering. Manual routines turned into work
-                that runs itself, with hours back every month.
-              </p>
-            </article>
-
-            <article className="cap-card">
-              <div className="cap-top">
-                <span className="cap-glyph" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path className="g-stroke" d="M4 16a8 8 0 0 1 16 0" />
-                    <path className="g-stroke" d="M7.5 16a4.5 4.5 0 0 1 9 0" />
-                    <circle className="g-fill" cx="12" cy="16" r="2" />
-                    <path className="g-gold" d="M12 16l3.5-9" />
-                  </svg>
-                </span>
-                <span className="cap-idx">05 / Demand</span>
-              </div>
-              <h3 className="cap-title">Demand that measures first</h3>
-              <p className="cap-body">
-                Qualified leads for the work you actually want more of. We run the
-                ads with the rigor of the most sophisticated agencies, and we check
-                that the numbers coming in are real before anyone optimizes, so
-                every decision after that rests on something true.
-              </p>
-              <p className="cap-note">
-                Pricing:{" "}
-                <b>a share of ad spend with a floor, or of the sales the ads bring
-                in once measurement you trust is in place.</b> We get paid when it
-                works.
-              </p>
-            </article>
+            {d.caps.cards.map((card, i) => (
+              <article className="cap-card" key={card.idx}>
+                <div className="cap-top">
+                  {capGlyphs[i]}
+                  <span className="cap-idx">{card.idx}</span>
+                </div>
+                <h3 className="cap-title">{card.h}</h3>
+                <p className="cap-body">{card.body}</p>
+                {i === d.caps.cards.length - 1 ? (
+                  <p className="cap-note">{rich(d.caps.demandNote)}</p>
+                ) : null}
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -258,55 +186,23 @@ export default function ConstructionPage() {
         <div className="container">
           <div className="diag-inner">
             <div className="diag-lead">
-              <span className="kicker clay">Start here</span>
-              <h2 id="diag-title">The Growth Diagnostic</h2>
-              <p className="diag-desc">
-                Ten business days looking at your operations, your site, and your
-                demand as one system. You get a written memo, not a sales deck,
-                telling you what is true, what is broken, and what to build first.
-              </p>
+              <span className="kicker clay">{s.diag.kicker}</span>
+              <h2 id="diag-title">{s.diag.title}</h2>
+              <p className="diag-desc">{d.diagDesc}</p>
               <div className="diag-actions">
-                <a
-                  className="cta cta-lg"
-                  href="mailto:daniel@cardondigital.com?subject=Growth%20Diagnostic"
-                >
-                  Get the free Growth Diagnostic
+                <a className="cta cta-lg" href={mailto}>
+                  {s.diag.cta}
                 </a>
               </div>
-              <p className="diag-price">
-                <b>Free.</b> No retainer, no obligation. If the memo shows work
-                worth doing, we propose the build and you decide.
-              </p>
+              <p className="diag-price">{rich(s.diag.price)}</p>
             </div>
             <div className="diag-specs">
-              <div className="spec">
-                <span className="spec-dot" />
-                <span>
-                  <b>Day 1.</b> A working session on your operations, your site
-                  work, and your demand.
-                </span>
-              </div>
-              <div className="spec">
-                <span className="spec-dot" />
-                <span>
-                  <b>Days 2 to 9.</b> We dig: work orders, scheduling, site
-                  reporting, procurement, and the numbers behind your leads.
-                </span>
-              </div>
-              <div className="spec">
-                <span className="spec-dot" />
-                <span>
-                  <b>Day 10.</b> The memo lands: what is true, what is broken, what
-                  to build first.
-                </span>
-              </div>
-              <div className="spec">
-                <span className="spec-dot" />
-                <span>
-                  <b>Free, with no strings.</b> Act on it with us or without us. If
-                  we build, pricing is agreed up front.
-                </span>
-              </div>
+              {d.diagSpecs.map((spec, i) => (
+                <div className="spec" key={i}>
+                  <span className="spec-dot" />
+                  <span>{rich(spec)}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
