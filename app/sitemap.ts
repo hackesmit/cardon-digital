@@ -17,6 +17,9 @@ const routes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // Pre-launch the whole site serves the holding page under a noindex header,
+  // so there is nothing to list. Removing COMING_SOON restores the full map.
+  if (process.env.COMING_SOON === "1") return [];
   const lastModified = new Date();
   return routes.flatMap((r) =>
     locales.map((locale) => ({
