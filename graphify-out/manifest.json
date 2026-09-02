@@ -70,8 +70,8 @@
     "semantic_hash": ""
   },
   "app/industries/winery/page.tsx": {
-    "mtime": 1788339346.3511,
-    "ast_hash": "f25085c8492147916acb920d6e0e2965",
+    "mtime": 1788341569.9023552,
+    "ast_hash": "d59b2b7e27fb532ee35d44809c143529",
     "semantic_hash": ""
   },
   "app/layout.tsx": {
@@ -105,8 +105,8 @@
     "semantic_hash": ""
   },
   "app/work/enkanto/page.tsx": {
-    "mtime": 1788339346.3552597,
-    "ast_hash": "30f8c4d81246f65cf3a73d2ebac29609",
+    "mtime": 1788341569.9023552,
+    "ast_hash": "6a8d27d9b4a9601b5de444852a71e11d",
     "semantic_hash": ""
   },
   "app/work/monte-xanic/page.tsx": {
@@ -327,6 +327,21 @@
   "public/og.png": {
     "mtime": 1788335221.2883148,
     "ast_hash": "4eda01394f695a3a93c9ebf8ce00fc25",
+    "semantic_hash": ""
+  },
+  "public/media/CREDITS.md": {
+    "mtime": 1788341569.9023552,
+    "ast_hash": "2330d009258fdf7d9820c4aff5392ff4",
+    "semantic_hash": ""
+  },
+  "public/media/enkanto-valle.webp": {
+    "mtime": 1788341569.9023552,
+    "ast_hash": "1f2978de19f48aa4da9bcb654f021e26",
+    "semantic_hash": ""
+  },
+  "public/media/valle-vineyard.webp": {
+    "mtime": 1788341569.9023552,
+    "ast_hash": "fa2073c02442ecbd1d40c3277b74f001",
     "semantic_hash": ""
   }
 }

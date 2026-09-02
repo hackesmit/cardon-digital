@@ -3222,6 +3222,46 @@
       "id": "readme_license",
       "community": 16,
       "norm_label": "license"
+    },
+    {
+      "label": "CREDITS.md",
+      "file_type": "document",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "public_media_credits",
+      "community": 32,
+      "norm_label": "credits.md"
+    },
+    {
+      "label": "Media credits",
+      "file_type": "document",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "public_media_credits_media_credits",
+      "community": 32,
+      "norm_label": "media credits"
+    },
+    {
+      "label": "valle-vineyard.webp",
+      "file_type": "document",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "public_media_credits_valle_vineyard_webp",
+      "community": 32,
+      "norm_label": "valle-vineyard.webp"
+    },
+    {
+      "label": "enkanto-valle.webp",
+      "file_type": "document",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "public_media_credits_enkanto_valle_webp",
+      "community": 32,
+      "norm_label": "enkanto-valle.webp"
     }
   ],
   "links": [
@@ -7131,8 +7171,38 @@
       "source": "readme_cardon_digital",
       "target": "readme_stack",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "public_media_credits",
+      "target": "public_media_credits_media_credits",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "public_media_credits_media_credits",
+      "target": "public_media_credits_enkanto_valle_webp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/media/CREDITS.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "public_media_credits_media_credits",
+      "target": "public_media_credits_valle_vineyard_webp",
+      "confidence_score": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "bbef6cc5f1bad4bedd6ee49f8894ad7ead357bbf"
+  "built_at_commit": "6a8c04c570659eaaaedec7648caef7d28022d957"
 }
