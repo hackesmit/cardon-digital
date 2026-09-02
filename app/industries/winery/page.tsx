@@ -97,7 +97,7 @@ export default function WineryPage() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <rect x="5" y="6" width="24" height="18" rx="3" />
+                    <rect x="5" y="6" width="24" height="18" rx="2" />
                     <line x1="10" y1="19" x2="10" y2="15" />
                     <line x1="15" y1="19" x2="15" y2="12" />
                     <line x1="20" y1="19" x2="20" y2="9" />

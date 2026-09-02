@@ -400,8 +400,8 @@ export default function OpsCompression() {
           2 min
         </text>
 
-        <rect className="ov-track" id="opsTrack" x="18" y="126" width="424" height="18" rx="9" />
-        <rect className="ov-bar-primary" id="opsBar" x="18" y="126" width="46" height="18" rx="9" />
+        <rect className="ov-track" id="opsTrack" x="18" y="126" width="424" height="18" rx="2" />
+        <rect className="ov-bar-primary" id="opsBar" x="18" y="126" width="46" height="18" rx="2" />
         <rect
           className="ov-bar-gold"
           id="opsBarGold"
@@ -409,12 +409,12 @@ export default function OpsCompression() {
           y="126"
           width="46"
           height="18"
-          rx="9"
+          rx="2"
           opacity="0"
         />
 
         <g id="opsBadge" opacity="1">
-          <rect className="ov-badge-box" id="opsBadgeBox" x="18" y="160" width="137" height="30" rx="8" />
+          <rect className="ov-badge-box" id="opsBadgeBox" x="18" y="160" width="137" height="30" rx="2" />
           <text
             className="ov-badge-text mono"
             id="opsBadgeText"

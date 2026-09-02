@@ -38,7 +38,7 @@
   --scrim: color-mix(in srgb, var(--ground) 55%, transparent);
   --cta-ink:#FFF3EA;
   --shadow:0 30px 80px -50px rgba(0,0,0,0.85);
-  --sans: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --sans: var(--font-archivo), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --mono: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, Menlo, monospace;
   --maxw:1180px;
 }
@@ -50,6 +50,7 @@ body{
   background:var(--ground);
   color:var(--text);
   font-family:var(--sans);
+  font-size:17px;line-height:1.62;
   font-size:clamp(16px,1.02vw,18px);
   line-height:1.62;
   -webkit-font-smoothing:antialiased;
@@ -79,7 +80,7 @@ body::before{
 }
 
 a{color:inherit;text-decoration:none;}
-h1,h2,h3{margin:0;font-weight:600;letter-spacing:-0.02em;line-height:1.08;overflow-wrap:break-word;}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-0.03em;line-height:1.08;overflow-wrap:break-word;}
 p{margin:0;}
 ul{margin:0;padding:0;list-style:none;}
 
@@ -91,7 +92,7 @@ section{scroll-margin-top:82px;position:relative;}
 a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visible,.mode-toggle:focus-visible{
   outline:2px solid var(--primary);
   outline-offset:3px;
-  border-radius:6px;
+  border-radius:2px;
 }
 
 /* ============================ HEADER / NAV ============================ */
@@ -139,17 +140,17 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 @keyframes dropIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
 .nav-drop-panel{
   list-style:none;margin:0;
-  background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  background:var(--panel);border:1px solid var(--line);border-radius:2px;
   padding:8px;min-width:200px;
   box-shadow:0 24px 60px -30px rgba(0,0,0,0.6);
 }
 .nav-drop-panel a{
-  display:block;padding:9px 12px;border-radius:8px;
+  display:block;padding:9px 12px;border-radius:2px;
   color:var(--text-dim);font-size:0.93rem;transition:background .15s ease,color .15s ease;
 }
 .nav-drop-panel a::after{display:none;}
 .nav-drop-panel a:hover,.nav-drop-panel a:focus-visible{background:var(--primary-faint);color:var(--text);}
-.nav-drop-panel li:first-child a{border-bottom:1px solid var(--line-soft);border-radius:8px 8px 0 0;margin-bottom:4px;padding-bottom:11px;}
+.nav-drop-panel li:first-child a{border-bottom:1px solid var(--line-soft);border-radius:2px;margin-bottom:4px;padding-bottom:11px;}
 @media (prefers-reduced-motion:reduce){
   .has-drop.drop-open .nav-drop{animation:none;}
   .drop-caret{transition:none;}
@@ -158,7 +159,7 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 /* mode toggle */
 .mode-toggle{
   display:inline-flex;align-items:center;justify-content:center;
-  width:34px;height:30px;border:1px solid var(--line);border-radius:8px;
+  width:34px;height:30px;border:1px solid var(--line);border-radius:2px;
   background:transparent;color:var(--text);cursor:pointer;transition:border-color .2s ease, background .2s ease;
 }
 .mode-toggle:hover{border-color:var(--primary-dim);background:var(--primary-faint);}
@@ -168,20 +169,37 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 :root[data-mode="light"] .mode-toggle .icon-moon{display:none;}
 
 .cta{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  display:inline-flex;align-items:center;justify-content:flex-start;gap:8px;
   background:var(--energy);color:var(--cta-ink);font-weight:600;
-  border:1px solid var(--energy);border-radius:999px;
+  border:1px solid var(--energy);border-radius:2px;
   padding:10px 20px;font-size:0.95rem;white-space:nowrap;
   transition:background .2s ease, transform .12s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .cta:hover{background:var(--energy-bright);border-color:var(--energy-bright);box-shadow:0 0 0 4px color-mix(in srgb, var(--energy) 22%, transparent);}
 .cta:active{transform:translateY(1px);}
 .cta-sm{padding:8px 15px;font-size:0.9rem;}
+
+/* Identity v3: clay marks the ONE action we want taken, so a viewport never
+   holds two clay elements. The nav action is quiet by default (and without
+   JS, which is correct at the top of a page where the hero action is clay)
+   and takes the clay only when no page action is on screen. */
+.nav-cta{background:transparent;color:var(--text);border-color:var(--line);}
+.nav-cta:hover{
+  background:var(--primary-faint);border-color:var(--primary-dim);
+  box-shadow:none;
+}
+.nav-cta.is-primary{
+  background:var(--energy);color:var(--cta-ink);border-color:var(--energy);
+}
+.nav-cta.is-primary:hover{
+  background:var(--energy-bright);border-color:var(--energy-bright);
+  box-shadow:0 0 0 4px color-mix(in srgb, var(--energy) 22%, transparent);
+}
 .cta-lg{padding:15px 28px;font-size:1.05rem;position:relative;isolation:isolate;}
 /* slow orbiting glow ring, on the diagnostic CTA only */
 @property --ang{syntax:"<angle>";initial-value:0deg;inherits:false;}
 .cta-lg::before{
-  content:"";position:absolute;inset:-3px;border-radius:999px;z-index:-1;padding:3px;
+  content:"";position:absolute;inset:-3px;border-radius:2px;z-index:-1;padding:3px;
   background:conic-gradient(from var(--ang),
     transparent 0turn,
     color-mix(in srgb, var(--secondary) 80%, transparent) 0.12turn,
@@ -200,7 +218,7 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 
 .btn-ghost{
   display:inline-flex;align-items:center;gap:9px;
-  border:1px solid var(--line);color:var(--text);border-radius:999px;
+  border:1px solid var(--line);color:var(--text);border-radius:2px;
   padding:10px 20px;font-size:0.95rem;font-weight:500;
   transition:border-color .2s ease, background .2s ease;
 }
@@ -209,7 +227,7 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 
 .menu-toggle{
   display:none;background:transparent;color:var(--text);
-  border:1px solid var(--line);border-radius:8px;padding:8px 13px;
+  border:1px solid var(--line);border-radius:2px;padding:8px 13px;
   font-family:var(--sans);font-size:0.9rem;font-weight:600;cursor:pointer;
 }
 
@@ -232,7 +250,7 @@ h1 .accent{color:var(--primary);}
 .stage-frame{
   position:relative;
   border:1px solid var(--line);
-  border-radius:20px;
+  border-radius:2px;
   overflow:hidden;
   background:linear-gradient(180deg, var(--scrim), transparent);
   box-shadow:var(--shadow);
@@ -264,7 +282,11 @@ h1 .accent{color:var(--primary);}
 .value-body{color:var(--text-dim);font-size:0.96rem;max-width:34ch;}
 
 /* ============================ SECTIONS ============================ */
-.section{padding:clamp(58px,8vw,108px) 0;}
+/* Identity v3: a section break is a full-width 1px rule derived from agave,
+   never whitespace alone and never gray. The first section after the hero and
+   any section that already carries its own top rule opt out. */
+.section{padding:clamp(58px,8vw,108px) 0;border-top:1px solid var(--line-soft);}
+.section.no-rule,.value + .section{border-top:0;}
 .section-head{max-width:64ch;margin-bottom:clamp(30px,4vw,46px);}
 .kicker{
   font-family:var(--mono);font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;
@@ -287,7 +309,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
 .split-copy .note b{color:var(--primary);font-weight:600;}
 
 .vis-frame{
-  position:relative;border:1px solid var(--line);border-radius:18px;overflow:hidden;
+  position:relative;border:1px solid var(--line);border-radius:2px;overflow:hidden;
   background:linear-gradient(180deg, var(--scrim), transparent);
 }
 /* cursor spotlight: only lit while hovering, zero cost otherwise. Page agents
@@ -380,7 +402,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   position:relative;
   margin-top:clamp(26px,4vw,40px);
   border:1px solid var(--line);
-  border-radius:20px;
+  border-radius:2px;
   overflow:hidden;
   background:
     radial-gradient(720px 420px at 50% 44%, var(--primary-faint), transparent 62%),
@@ -415,7 +437,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;
   display:inline-flex;align-items:center;gap:8px;
   background:color-mix(in srgb, var(--panel) 82%, transparent);
-  border:1px solid var(--line);border-radius:999px;padding:6px 13px;
+  border:1px solid var(--line);border-radius:2px;padding:6px 13px;
   font-family:var(--mono);font-size:0.72rem;letter-spacing:0.06em;color:var(--text);white-space:nowrap;
 }
 .map-hub-label svg{width:16px;height:16px;display:block;flex-shrink:0;}
@@ -444,14 +466,14 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   width:max-content;max-width:190px;
   display:flex;flex-direction:column;gap:2px;
   background:color-mix(in srgb, var(--panel) 84%, transparent);
-  border:1px solid var(--line);border-radius:8px;padding:6px 10px;
+  border:1px solid var(--line);border-radius:2px;padding:6px 10px;
   transition:border-color .2s ease, box-shadow .2s ease;
 }
 .marker-focus{
   align-self:flex-start;
   font-family:var(--mono);font-size:0.56rem;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--energy);border:1px solid color-mix(in srgb, var(--energy) 45%, transparent);
-  border-radius:4px;padding:1px 5px;margin-bottom:2px;
+  border-radius:2px;padding:1px 5px;margin-bottom:2px;
 }
 .marker-name{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--text);line-height:1.25;overflow-wrap:break-word;}
 .marker-detail{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.02em;color:var(--primary);line-height:1.25;overflow-wrap:break-word;}
@@ -476,7 +498,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   position:absolute;z-index:5;transform:translate(-50%,-50%);
   display:inline-flex;align-items:center;gap:7px;
   background:color-mix(in srgb, var(--panel) 86%, transparent);
-  border:1px solid var(--line);border-radius:8px;padding:6px 11px;
+  border:1px solid var(--line);border-radius:2px;padding:6px 11px;
   font-family:var(--mono);font-size:0.66rem;letter-spacing:0.05em;color:var(--text);
   white-space:nowrap;transition:border-color .2s ease, box-shadow .2s ease;
 }
@@ -487,13 +509,67 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
 .sectors-foot{margin-top:22px;font-family:var(--mono);font-size:0.76rem;letter-spacing:0.05em;color:var(--muted);}
 .sectors-foot b{color:var(--primary);font-weight:600;}
 
+/* ============================ PRICING ============================ */
+.tiers{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,20px);
+  margin-bottom:clamp(20px,2.6vw,30px);
+}
+.tier{
+  display:flex;flex-direction:column;gap:7px;min-width:0;
+  background:var(--card);border:1px solid var(--line);border-radius:2px;
+  padding:clamp(20px,2.4vw,28px);
+}
+.tier-lead{border-color:var(--primary-dim);background:linear-gradient(150deg, var(--primary-faint), var(--card) 62%);}
+.tier-n{
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.tier-lead .tier-n{color:var(--primary);}
+.tier-name{font-size:1.16rem;font-weight:600;color:var(--text);margin:2px 0 4px;line-height:1.2;}
+.tier-price{font-family:var(--mono);font-size:0.95rem;color:var(--text-dim);letter-spacing:0.02em;}
+.tier-price b{font-size:1.5rem;font-weight:600;color:var(--primary);letter-spacing:-0.01em;}
+.tier-cur{font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
+.tier-time{
+  font-family:var(--mono);font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--secondary);margin-bottom:4px;
+}
+.tier-body{color:var(--text-dim);font-size:0.95rem;line-height:1.6;}
+
+.pricing-foot{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,20px);
+  padding-top:clamp(20px,2.4vw,28px);border-top:1px solid var(--line-soft);
+}
+.pf-item{display:flex;flex-direction:column;gap:7px;min-width:0;}
+.pf-k{
+  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.13em;text-transform:uppercase;
+  color:var(--secondary);
+}
+.pf-item p{color:var(--text-dim);font-size:0.92rem;line-height:1.6;}
+.pf-item b{color:var(--text);font-weight:600;}
+
+.founding{
+  margin-top:clamp(22px,2.8vw,34px);
+  border:1px solid color-mix(in srgb, var(--energy) 34%, transparent);
+  border-radius:2px;padding:clamp(20px,2.6vw,30px);
+  background:color-mix(in srgb, var(--energy) 7%, var(--panel));
+  display:flex;flex-direction:column;gap:9px;
+}
+.founding-lead{font-size:1.06rem;color:var(--text);max-width:62ch;}
+.founding-lead b{font-weight:600;}
+.founding-body{color:var(--text-dim);font-size:0.95rem;line-height:1.65;max-width:66ch;}
+
+@media (max-width:900px){
+  .tiers{grid-template-columns:1fr;}
+  .pricing-foot{grid-template-columns:1fr;gap:20px;}
+}
+
 /* ============================ DIAGNOSTIC ============================ */
 .diagnostic{overflow:hidden;}
 .diag-inner{
   position:relative;
   background:linear-gradient(140deg, var(--primary-faint), var(--panel-2) 70%);
   border:1px solid var(--primary-dim);
-  border-radius:22px;
+  border-radius:2px;
   padding:clamp(30px,4.5vw,58px);
   display:grid;grid-template-columns:1.15fr 0.85fr;gap:clamp(26px,4vw,48px);align-items:center;
 }
@@ -564,7 +640,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   .drop-mobile-label{display:block !important;}
   .nav-drop{position:static;display:block;padding:0;}
   .nav-drop-panel{background:transparent;border:0;box-shadow:none;padding:0 0 4px 16px;min-width:0;}
-  .nav-drop-panel a{padding:8px 0;font-size:0.98rem;border-radius:0;}
+  .nav-drop-panel a{padding:8px 0;font-size:0.98rem;border-radius:2px;}
   .nav-drop-panel li:first-child{display:none;}
 }
 @keyframes menuIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
@@ -589,8 +665,29 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
    Page agents wrap content in the Reveal component. Hidden state is gated on
    the .js class (added pre-paint), so content stays visible without JS. */
 .reveal{opacity:1;}
-.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);}
+.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);}
 .js .reveal.in{opacity:1;transform:none;}
+
+
+/* ============================ PHOTOGRAPHY ============================ */
+/* Identity v3, treatment A: the one full-colour photograph per page, top of
+   the page. The only full-saturation element besides the single clay action. */
+.photo-hero{position:relative;overflow:hidden;border:1px solid var(--line);}
+.photo-hero img{display:block;width:100%;height:auto;}
+
+/* Treatment B: everything else. Pulled toward the palette so photographs and
+   line work read as one material. */
+.photo-tint{position:relative;overflow:hidden;border:1px solid var(--line);}
+.photo-tint img{
+  display:block;width:100%;height:auto;
+  filter:sepia(0.26) saturate(0.82) contrast(1.02);
+}
+
+/* Shot annotation, set like every other annotation on the site. */
+.photo-cap{
+  margin-top:10px;font-family:var(--mono);font-size:0.72rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--muted);
+}
 
 /* ============================ REDUCED MOTION ============================ */
 @media (prefers-reduced-motion: reduce){
