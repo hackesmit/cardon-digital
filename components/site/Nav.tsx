@@ -280,7 +280,13 @@ export default function Nav() {
               </li>
             </ul>
             <div className="nav-tools">
-              <Link
+              {/* A plain anchor, not a Link, on purpose: the canvas and SVG
+                  visuals read their strings once in a mount effect, so a soft
+                  navigation that kept those component instances alive would
+                  leave a Spanish page carrying English visuals. A full document
+                  load also guarantees the cookie set on click is the one the
+                  middleware reads next time. */}
+              <a
                 className="lang-switch"
                 href={swapHref}
                 hrefLang={swapLocale}
@@ -306,7 +312,7 @@ export default function Nav() {
                 <span className="lang-short" aria-hidden="true">
                   {t.switchShort}
                 </span>
-              </Link>
+              </a>
               <button
                 className="mode-toggle"
                 id="modeToggle"
