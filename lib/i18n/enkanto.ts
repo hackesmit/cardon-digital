@@ -119,6 +119,28 @@ const en = {
     p1: "Through a season when the Valle's overall flow dipped, En'kanto's wine, its stays, and its restaurant each kept growing. Beside those three lines sits the work: a shop that takes a real order, structure and search repaired, payments that clear, shipping that reaches the door, and one bilingual foundation under all of it.",
     p2: "We state the work and we state the season, and we set them next to each other and claim no more than that. **We built the foundation. What grows on it belongs to the winery.**",
   },
+  vis: {
+    legendMain: "Three lines vs the season",
+    legendSub: "direction, not scale",
+    honest: "illustrative direction, not client data",
+    backdropL1: "Valle visitor flow,",
+    backdropL2: "the season",
+    backdropOne: "Valle visitor flow, the season",
+    status: "kept growing through the season",
+    hotLabel:
+      "{name} kept growing through the season. The work beside it: {work}.",
+    plateStatus: "status",
+    plateAction: "the work",
+    fallback:
+      "A quiet chart. Three labeled lines, wine sales, stays, and the restaurant, rise gently against a faint dipping backdrop line marked Valle visitor flow, the season. It shows direction only, with no scale: the three lines grew across a season when the Valle's overall flow fell.",
+    caption:
+      "Wine, stays, and the restaurant rise; the Valle's visitor flow dips. Direction only, side by side, no scale.",
+    series: {
+      wine: { label: "Wine sales", work: "shop and cross-border shipping" },
+      stays: { label: "Stays", work: "listing and booking flow" },
+      restaurant: { label: "Restaurant", work: "reservations and follow-up" },
+    },
+  },
   diagDesc:
     "Ten business days looking at your store, your site, and your operations as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
   diagSpecs: [
@@ -245,6 +267,28 @@ const es: typeof en = {
     title: "Tres líneas creciendo en una temporada que bajó.",
     p1: "En una temporada en la que el flujo general del Valle bajó, el vino de En'kanto, su hospedaje y su restaurante siguieron creciendo cada uno. Al lado de esas tres líneas está el trabajo: una tienda que toma un pedido de verdad, la estructura y la búsqueda reparadas, pagos que se liberan, envíos que llegan a la puerta y un solo cimiento bilingüe debajo de todo.",
     p2: "Decimos el trabajo y decimos la temporada, los ponemos uno al lado del otro y no reclamamos más que eso. **Nosotros construimos el cimiento. Lo que crece encima es de la bodega.**",
+  },
+  vis: {
+    legendMain: "Tres líneas contra la temporada",
+    legendSub: "dirección, no escala",
+    honest: "dirección ilustrativa, no son datos de cliente",
+    backdropL1: "Flujo de visitantes del Valle,",
+    backdropL2: "la temporada",
+    backdropOne: "Flujo de visitantes del Valle, la temporada",
+    status: "siguió creciendo toda la temporada",
+    hotLabel:
+      "{name} siguió creciendo toda la temporada. El trabajo al lado: {work}.",
+    plateStatus: "estado",
+    plateAction: "el trabajo",
+    fallback:
+      "Una gráfica tranquila. Tres líneas con nombre, venta de vino, hospedaje y restaurante, suben suave contra una línea de fondo tenue que baja, marcada Flujo de visitantes del Valle, la temporada. Muestra dirección y no escala: las tres líneas crecieron en una temporada en la que el flujo general del Valle cayó.",
+    caption:
+      "El vino, el hospedaje y el restaurante suben; el flujo de visitantes del Valle baja. Solo dirección, lado a lado, sin escala.",
+    series: {
+      wine: { label: "Venta de vino", work: "tienda y ruta de envío" },
+      stays: { label: "Hospedaje", work: "publicación y flujo de reserva" },
+      restaurant: { label: "Restaurante", work: "reservaciones y seguimiento" },
+    },
   },
   diagDesc:
     "Diez días hábiles revisando su tienda, su sitio y su operación como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",

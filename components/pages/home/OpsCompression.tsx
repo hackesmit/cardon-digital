@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { home } from "@/lib/i18n/home";
 import { clamp01, easeInOut } from "./canvasKit";
 
 /**
@@ -14,6 +16,7 @@ import { clamp01, easeInOut } from "./canvasKit";
  * reduced motion; ASCII and English only.
  */
 export default function OpsCompression() {
+  const t = useDict(home).vis.ops;
   const visRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -316,7 +319,7 @@ export default function OpsCompression() {
 
   return (
     <div className="vis-frame ops-vis" ref={visRef}>
-      <span className="vis-tag">an hour, compressed to two minutes</span>
+      <span className="vis-tag">{t.tag}</span>
       {/* Default geometry is a resolved static frame (viewBox 460x204): it is
           what renders before hydration and with no JS. On mount layout()
           recomputes every coordinate from the measured width. */}
@@ -325,7 +328,7 @@ export default function OpsCompression() {
         ref={svgRef}
         viewBox="0 0 460 204"
         role="img"
-        aria-label="A long tangled hour of manual work compresses into one short clean two minute automated pass, a 97 percent reduction."
+        aria-label={t.aria}
       >
         <path
           className="ov-tangle"
@@ -361,9 +364,7 @@ export default function OpsCompression() {
           fontSize="13"
           letterSpacing="1.2"
           opacity="0"
-        >
-          MANUAL, EVERY WEEK
-        </text>
+        >{t.manual}</text>
         <text
           className="ov-lab-auto mono"
           id="opsLabAuto"
@@ -372,9 +373,7 @@ export default function OpsCompression() {
           fontSize="13"
           letterSpacing="1.2"
           opacity="1"
-        >
-          AUTOMATED, RUNS ITSELF
-        </text>
+        >{t.auto}</text>
         <text
           className="ov-time-long mono"
           id="opsTimeLong"
@@ -422,9 +421,7 @@ export default function OpsCompression() {
             y="180"
             fontSize="14"
             fontWeight="600"
-          >
-            97% less time
-          </text>
+          >{t.badge}</text>
         </g>
         <text
           className="ov-foot mono"
@@ -434,9 +431,7 @@ export default function OpsCompression() {
           textAnchor="end"
           fontSize="11"
           letterSpacing="1"
-        >
-          REFRESHED THROUGH THE DAY
-        </text>
+        >{t.foot}</text>
       </svg>
     </div>
   );
