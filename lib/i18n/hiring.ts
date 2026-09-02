@@ -68,6 +68,42 @@ const en = {
     chipFoot:
       "Concepts you can act on, drawn from your own pipeline, never numbers we invented.",
   },
+  vis: {
+    tagBefore: "two streams",
+    tagMid: "into",
+    tagAfter: "one pipeline",
+    onePipeline: "one pipeline",
+    notThisRole: "NOT THIS ROLE",
+    teamRoster: "TEAM ROSTER",
+    fallback:
+      "Anonymous applicants enter from an English and a Spanish stream, merge into one pipeline, and pass through applied, screened, interviewed, and offer gates. Some settle into a quiet not this role tray; those who pass dock into a team roster.",
+    gates: [
+      {
+        key: "applied",
+        name: "Applied",
+        note: "every source, one lane",
+        aria: "Applied stage. Every applicant source arrives in one lane.",
+      },
+      {
+        key: "screened",
+        name: "Screened",
+        note: "the team reads the stage",
+        aria: "Screened stage. The whole team reads where each candidate stands.",
+      },
+      {
+        key: "interviewed",
+        name: "Interviewed",
+        note: "scheduling runs itself",
+        aria: "Interviewed stage. Scheduling that runs itself.",
+      },
+      {
+        key: "offer",
+        name: "Offer",
+        note: "time to hire, in view",
+        aria: "Offer stage. Time to hire stays in view.",
+      },
+    ],
+  },
   diagDesc:
     "Ten business days looking at how you hire, from where candidates come from to how offers get made, as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
   diagSpecs: [
@@ -143,6 +179,42 @@ const es: typeof en = {
     chips: ["Tiempo para contratar", "Caída por etapa", "Calidad de la fuente"],
     chipFoot:
       "Conceptos sobre los que se puede actuar, sacados de su propio canal, nunca números que nos inventamos.",
+  },
+  vis: {
+    tagBefore: "dos corrientes",
+    tagMid: "en",
+    tagAfter: "un solo canal",
+    onePipeline: "un solo canal",
+    notThisRole: "OTRA VACANTE",
+    teamRoster: "PLANTILLA",
+    fallback:
+      "Candidatos anónimos entran por una corriente en inglés y una en español, se juntan en un solo canal y pasan por las etapas de postulado, filtrado, entrevistado y oferta. Algunos se acomodan en una bandeja tranquila de otra vacante; los que pasan entran a la plantilla.",
+    gates: [
+      {
+        key: "postulado",
+        name: "Postulado",
+        note: "cada fuente, un solo carril",
+        aria: "Etapa de postulación. Cada fuente de candidatos llega a un solo carril.",
+      },
+      {
+        key: "filtrado",
+        name: "Filtrado",
+        note: "el equipo lee la etapa",
+        aria: "Etapa de filtrado. Todo el equipo lee dónde está cada candidato.",
+      },
+      {
+        key: "entrevistado",
+        name: "Entrevistado",
+        note: "la agenda se hace sola",
+        aria: "Etapa de entrevista. Agenda que se hace sola.",
+      },
+      {
+        key: "oferta",
+        name: "Oferta",
+        note: "el tiempo para contratar, a la vista",
+        aria: "Etapa de oferta. El tiempo para contratar se mantiene a la vista.",
+      },
+    ],
   },
   diagDesc:
     "Diez días hábiles revisando cómo contrata, desde de dónde vienen los candidatos hasta cómo se hacen las ofertas, como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",
