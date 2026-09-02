@@ -26,7 +26,7 @@ const industryLinks = [
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [indOpen, setIndOpen] = useState(false);
-  const [mode, setMode] = useState<"dark" | "light">("dark");
+  const [mode, setMode] = useState<"dark" | "light">("light");
   // Identity v3: clay marks the one action we want taken, so no viewport ever
   // holds two clay elements. The nav action stays quiet while a page action is
   // on screen and takes the clay only once none is. Without JS it stays quiet,
