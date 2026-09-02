@@ -623,10 +623,10 @@ export default function Home() {
           </div>
 
           <div className="founding">
-            <span className="kicker clay">Founding clients</span>
+            <span className="kicker clay">Case study partners</span>
             <p className="founding-lead">
-              <b>30 percent off the build fee for our first five clients, through
-              31 December 2026.</b>
+              <b>30 percent off the build fee for wineries that agree to a named
+              case study, through 31 December 2026.</b>
             </p>
             <p className="founding-body">
               In exchange we ask for three things, written into the agreement: a
