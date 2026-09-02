@@ -38,6 +38,15 @@ const en = {
     switchAria: "Ver esta página en español",
     switchShort: "ES",
   },
+  /** The diagnostic block closes every page; only its body copy changes. */
+  diag: {
+    kicker: "Start here",
+    title: "The Growth Diagnostic",
+    cta: "Get the free Growth Diagnostic",
+    mailSubject: "Growth Diagnostic",
+    price:
+      "**Free.** No retainer, no obligation. If the memo shows work worth doing, we propose the build and you decide.",
+  },
   footer: {
     label: "Footer",
     legalLabel: "Legal",
@@ -83,6 +92,14 @@ const es: typeof en = {
     switchLabel: "English",
     switchAria: "View this page in English",
     switchShort: "EN",
+  },
+  diag: {
+    kicker: "Empiece aquí",
+    title: "El Diagnóstico de Crecimiento",
+    cta: "Pida el Diagnóstico, sin costo",
+    mailSubject: "Diagnóstico de Crecimiento",
+    price:
+      "**Sin costo.** Sin anticipo y sin compromiso. Si el informe muestra trabajo que vale la pena, proponemos la construcción y usted decide.",
   },
   footer: {
     label: "Pie de página",
