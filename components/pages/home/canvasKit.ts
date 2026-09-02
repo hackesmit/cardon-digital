@@ -135,7 +135,9 @@ export function rr(
   h: number,
   r: number
 ): void {
-  r = Math.min(r, w / 2, h / 2);
+  // Identity v3 (2026-08-27): corners are 2px everywhere and the pill is
+  // retired, so the radius is clamped here rather than at every call site.
+  r = Math.min(r, 2, w / 2, h / 2);
   ctx.beginPath();
   ctx.moveTo(x + r, y);
   ctx.arcTo(x + w, y, x + w, y + h, r);
