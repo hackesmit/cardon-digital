@@ -1,7 +1,7 @@
-# Graph Report - cardon-digital  (2026-09-02)
+# Graph Report - graph-wt2  (2026-09-02)
 
 ## Corpus Check
-- 62 files · ~82,950 words
+- 61 files · ~82,944 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6a8c04c5`
+- Built from commit: `8886d809`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -82,7 +82,7 @@ Nodes (34): ColorKey, Hot, HOTS, Layout, Series, seriesValAt(), ThreeLines(), BL
 
 ### Community 1 - "compilerOptions"
 Cohesion: 0.07
-Nodes (27): ./*, dom, dom.iterable, esnext, next-env.d.ts, .next/types/**/*.ts, node_modules, **/*.ts (+19 more)
+Nodes (27): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+19 more)
 
 ### Community 2 - "FloorPlan.tsx"
 Cohesion: 0.11
@@ -94,7 +94,7 @@ Nodes (11): metadata, PlayOnceVis(), PlayOnceVisProps, SpotlightFrames(), CENTRO
 
 ### Community 4 - "package.json"
 Cohesion: 0.10
-Nodes (19): lenis, next, next-view-transitions, dependencies, lenis, next, next-view-transitions, react (+11 more)
+Nodes (19): dependencies, lenis, next, next-view-transitions, react, react-dom, name, private (+11 more)
 
 ### Community 5 - "FleetMap.tsx"
 Cohesion: 0.13
@@ -137,7 +137,7 @@ Cohesion: 0.22
 Nodes (8): Beads - AI-Native Issue Tracking, Essential Commands, Get Started with Beads, Learn More, Quick Start, What is Beads?, Why Beads?, Working with Issues
 
 ### Community 15 - "page.tsx"
-Cohesion: 0.32
+Cohesion: 0.31
 Nodes (4): metadata, OpsCompression(), PlayOnceVis(), SpotlightFrames()
 
 ### Community 16 - "Cardon Digital"
@@ -167,7 +167,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `metadata`, `metadata`, `metadata` to the rest of the system?**
   _160 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `canvasKit.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.11794871794871795 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12010796221322537 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
 - **Should `FloorPlan.tsx` be split into smaller, more focused modules?**
