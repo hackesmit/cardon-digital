@@ -112,6 +112,7 @@ export default function Home({ params }: Params) {
               <h2 id="tools-title">{d.tools.title}</h2>
               <p className="section-sub">{rich(d.tools.sub1)}</p>
               <p className="section-sub">{rich(d.tools.sub2)}</p>
+              <p className="section-sub">{rich(d.tools.sub3)}</p>
               <p className="note">{rich(d.tools.note)}</p>
             </div>
             <div className="split-vis">

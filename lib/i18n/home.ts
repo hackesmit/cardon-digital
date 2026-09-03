@@ -49,6 +49,7 @@ const en = {
     title: "Tools your team actually runs, and owns.",
     sub1: "We build custom workflows and internal tools your team uses every day, **integrated end to end**, trained into the business, and yours to keep. Underneath them all sits one data warehouse: every channel, file, and system combined into clean, organized fields that feed everything you see. Where it helps, we add an assistant trained on your own data, so you can ask your business a question and get an answer from your numbers. Separate parts, spreadsheets, dashboards, and forms become one working board with no per-seat subscription to babysit.",
     sub2: "The build is a **scoped fixed fee**, agreed before work starts. After handoff, most owners keep a monthly **care retainer**: corrections, refinements, and the changes that shape the system around how your team actually uses it. Pause it whenever you want; everything keeps running and stays yours.",
+    sub3: "That assistant answers in plain language and shows its work. Ask it what a lab number did last week and it returns the record it read, with the date and the lot. If the record does not exist, it says so. It never fills a gap with a plausible number, because a plausible number is worse than none.",
     note: "Model: **trained in and owned,** not another subscription.",
     visTag: "parts wired into one board",
     visAria:
@@ -301,6 +302,7 @@ const es: typeof en = {
     title: "Herramientas que su equipo usa, y que son suyas.",
     sub1: "Construimos los flujos de trabajo y las herramientas internas que su equipo abre todos los días, **integradas de principio a fin**, enseñadas al negocio y suyas para quedarse. Debajo de todas hay un solo almacén de datos: cada canal, archivo y sistema reunidos en campos limpios y ordenados que alimentan todo lo que usted ve. Donde ayuda, agregamos un asistente que responde sobre sus propios registros, para que pueda preguntarle a su negocio y la respuesta salga de sus números. Las piezas sueltas, las hojas de cálculo, los tableros y los formatos se vuelven un solo tablero de trabajo, sin suscripción por usuario que andar cuidando.",
     sub2: "La construcción es una **cuota fija con alcance definido**, acordada antes de empezar. Después de la entrega, la mayoría de los dueños conserva un **mantenimiento mensual**: correcciones, ajustes y los cambios que le van dando forma al sistema según cómo lo usa su equipo. Puede pausarlo cuando quiera; todo sigue funcionando y sigue siendo suyo.",
+    sub3: "Ese asistente responde en lenguaje claro y enseña de dónde salió la respuesta. Pregúntele qué hizo un dato de laboratorio la semana pasada y le devuelve el registro que leyó, con fecha y lote. Si el registro no existe, lo dice. Nunca rellena un hueco con un número verosímil, porque un número verosímil es peor que ninguno.",
     note: "El modelo: **enseñado a su equipo y suyo,** no otra suscripción.",
     visTag: "piezas conectadas en un solo tablero",
     visAria:
