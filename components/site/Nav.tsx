@@ -39,6 +39,10 @@ export default function Nav() {
     { href: href("/industries/winery"), label: t.wineries },
     { href: href("/work/monte-xanic"), label: t.work },
   ];
+  const linksAfter = [
+    { href: href("/about"), label: t.about },
+    { href: href("/contacto"), label: t.contact },
+  ];
   const otherIndustryLinks = [
     { href: href("/industries/construction"), label: t.construction },
     { href: href("/industries/hiring"), label: t.hiring },
@@ -278,6 +282,13 @@ export default function Nav() {
                   </ul>
                 </div>
               </li>
+              {linksAfter.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={() => setOpen(false)}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
             <div className="nav-tools">
               {/* A plain anchor, not a Link, on purpose: the canvas and SVG

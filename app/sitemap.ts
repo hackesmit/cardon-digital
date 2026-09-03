@@ -12,6 +12,7 @@ const routes = [
   { path: "/industries/hiring", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/industries/restaurants", priority: 0.6, changeFrequency: "monthly" as const },
   { path: "/industries/clinics", priority: 0.6, changeFrequency: "monthly" as const },
+  { path: "/about", priority: 0.5, changeFrequency: "yearly" as const },
   { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const },
   { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const },
 ];
