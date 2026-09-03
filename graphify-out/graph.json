@@ -797,7 +797,7 @@
       "label": "metadata",
       "file_type": "code",
       "source_file": "app/not-found.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "app_not_found_metadata",
       "community": 9,
@@ -807,7 +807,7 @@
       "label": "RootNotFound()",
       "file_type": "code",
       "source_file": "app/not-found.tsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "app_not_found_rootnotfound",
       "community": 9,
@@ -7755,7 +7755,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/not-found.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "app_not_found",
       "target": "app_not_found_metadata",
@@ -7765,7 +7765,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/not-found.tsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "source": "app_not_found",
       "target": "app_not_found_rootnotfound",
@@ -13461,5 +13461,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0d7fbd5b3e04c5b86b6479d573b11b318e34b0e6"
+  "built_at_commit": "191eaa93520e5e243559b7d43140aa0e37fc270d"
 }
