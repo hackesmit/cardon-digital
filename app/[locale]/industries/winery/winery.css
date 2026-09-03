@@ -190,3 +190,81 @@
 }
 @media (max-width:400px){
 }
+
+/* ---- pricing: one floor figure, three scopes as feature lists ----
+   The figure and the lists stay in one section on purpose (pricing memo 3.7
+   rule 3). While the numbers are unpublished the floor slot carries a sentence
+   instead, so the layout is identical either way and flipping the flag in
+   lib/pricing.ts needs no style change. */
+.pg-winery .price-floor{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+  margin:0 0 clamp(22px,3vw,32px);padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+.pg-winery .price-floor-k{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .price-floor-v{font-size:clamp(1.05rem,1.7vw,1.32rem);color:var(--text-dim);}
+.pg-winery .price-floor-v b{color:var(--wine-bright);font-weight:600;}
+
+.pg-winery .bundle-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);
+  align-items:start;
+}
+.pg-winery .bundle{
+  position:relative;min-width:0;overflow:hidden;
+  border:1px solid var(--line);border-radius:2px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 62%, transparent), color-mix(in srgb, var(--ground) 22%, transparent));
+  padding:clamp(20px,2.4vw,26px);
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.pg-winery .bundle:hover{border-color:var(--primary-dim);transform:translateY(-3px);box-shadow:var(--shadow);}
+.pg-winery .bundle-lead{border-color:var(--wine-line);}
+.pg-winery .bundle-head{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+  gap:6px 12px;position:relative;z-index:2;
+}
+.pg-winery .bundle-name{font-size:1.24rem;letter-spacing:-0.02em;line-height:1.14;}
+.pg-winery .bundle-scale{
+  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .bundle-k{
+  position:relative;z-index:2;margin-top:8px;
+  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--wine-bright);
+}
+.pg-winery .bundle-list{
+  position:relative;z-index:2;margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:7px;
+}
+.pg-winery .bundle-list li{
+  position:relative;padding-left:16px;
+  color:var(--text-dim);font-size:0.92rem;line-height:1.42;
+}
+.pg-winery .bundle-list li::before{
+  content:"";position:absolute;left:0;top:0.62em;
+  width:6px;height:1px;background:var(--wine-bright);opacity:0.7;
+}
+.pg-winery .bundle-list-service li::before{background:var(--muted);opacity:0.6;}
+
+.pg-winery .price-terms{
+  margin-top:clamp(22px,3vw,32px);padding-top:18px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:minmax(120px,1fr) 3fr;gap:12px clamp(16px,2vw,26px);
+}
+.pg-winery .price-terms-k{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .price-terms-list{
+  margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:8px;max-width:78ch;
+}
+.pg-winery .price-terms-list li{color:var(--text-dim);font-size:0.9rem;line-height:1.5;}
+
+@media (max-width:900px){
+  .pg-winery .bundle-grid{grid-template-columns:1fr;}
+  .pg-winery .price-terms{grid-template-columns:1fr;}
+}

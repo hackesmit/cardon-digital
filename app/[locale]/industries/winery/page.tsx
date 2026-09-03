@@ -3,6 +3,7 @@ import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import VineField from "@/components/pages/winery/VineField";
 import SpotlightFrames from "@/components/pages/winery/SpotlightFrames";
+import PricingBundles from "@/components/pages/winery/PricingBundles";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -364,6 +365,11 @@ export default function WineryPage({ params }: Params) {
           </Reveal>
         </div>
       </section>
+
+      {/* ============================ PRICING ============================ */}
+      <Reveal>
+        <PricingBundles locale={locale} />
+      </Reveal>
 
       {/* ============================ DIAGNOSTIC ============================ */}
       <section
