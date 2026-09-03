@@ -25,7 +25,11 @@
   "23": "sitemap.ts",
   "24": "post-checkout",
   "25": "post-merge",
+  "26": "pre-commit",
+  "27": "pre-push",
+  "28": "prepare-commit-msg",
   "29": "next.config.mjs",
   "30": "postcss.config.mjs",
-  "31": "tailwind.config.ts"
+  "31": "tailwind.config.ts",
+  "32": "Media credits"
 }
