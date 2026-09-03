@@ -71,10 +71,17 @@ export function reset(): void {
 }
 
 /**
- * Best guess at the client address. Vercel puts the real client first in
- * x-forwarded-for; everything after it is proxy hops and is not trusted.
+ * Best guess at the client address.
+ *
+ * x-forwarded-for is trusted here for one reason only: on Vercel the edge
+ * network sets that header itself and overwrites whatever the caller sent, so
+ * the first entry is the real client and the rest are proxy hops. Anywhere
+ * else, behind another proxy or a self-host, the header is caller-controlled
+ * and rotating it walks straight past this limiter. If this site ever moves
+ * off Vercel, the key has to come from the connection instead.
  */
 export function clientKey(headers: Headers): string {
+  // Trusted because Vercel writes it. See the note above before reusing this.
   const forwarded = headers.get("x-forwarded-for");
   if (forwarded) {
     const first = forwarded.split(",")[0].trim();
