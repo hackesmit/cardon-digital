@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Reveal from "@/components/site/Reveal";
 import ThreeLines from "@/components/pages/enkanto/ThreeLines";
 import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";
+import CaseFacts from "@/components/pages/case/CaseFacts";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -49,6 +50,13 @@ export default function EnkantoCaseStudy({ params }: Params) {
           <ThreeLines />
         </div>
       </section>
+
+      <CaseFacts
+        aria={d.facts.aria}
+        rows={d.facts.rows}
+        basisK={d.facts.basisK}
+        basis={d.facts.basis}
+      />
 
       {/* ============================ CLIENT INTRO ============================ */}
       <section className="section rule-top" aria-labelledby="client-title">
