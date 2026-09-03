@@ -375,8 +375,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/clinics.ts": {
-    "mtime": 1788418222.5366347,
-    "ast_hash": "79b450859164213b45aa46cccfeb8cb4",
+    "mtime": 1788429897.605347,
+    "ast_hash": "2c5fa6c1bd9eabaf9146231b32987c36",
     "semantic_hash": ""
   },
   "lib/i18n/coming-soon.ts": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/construction.ts": {
-    "mtime": 1788418222.5366347,
-    "ast_hash": "3206504af927cefd1969c1556d2227e2",
+    "mtime": 1788429897.605347,
+    "ast_hash": "18dd403ded48c03acc66d085d7cf0bc6",
     "semantic_hash": ""
   },
   "lib/i18n/enkanto.ts": {
@@ -400,8 +400,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/hiring.ts": {
-    "mtime": 1788418222.5366347,
-    "ast_hash": "7bab9d1dffcb2ae7b8bc8a1414d1e7fd",
+    "mtime": 1788429897.605347,
+    "ast_hash": "d46d9997f44241d7c3b9c6b665c99e5a",
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/restaurants.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "02053ddf622de45392abd0f5837f5bf4",
+    "mtime": 1788429897.605347,
+    "ast_hash": "535b5627e187fb767a8b8e38c35e06d9",
     "semantic_hash": ""
   },
   "lib/i18n/rich.tsx": {
