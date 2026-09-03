@@ -55,7 +55,7 @@ const en = {
     featureH:
       "The measurement spine: know which inquiry became which patient.",
     featureBody:
-      "Click-to-WhatsApp source tracking, a lightweight CRM, and a booking log that ties an inquiry all the way to a completed procedure. It is the first thing we build, because it is what makes every later decision measurable: which channel earns patients, what a real conversion rate is, and how much of the middleman toll you took back. Nothing else is priced on performance until this exists and both sides trust the numbers it produces.",
+      "Click-to-WhatsApp source tracking, a lightweight CRM, and a booking log that ties an inquiry all the way to a completed procedure. It is the first thing we build, because it is what makes every later decision measurable: which channel earns patients, what a real conversion rate is, and how much of the middleman toll you took back. Nothing else moves until this exists and both sides trust the numbers it produces.",
     featureBorrow:
       "Answers problem 04, and the blind spot under every other **number on this page**.",
     cards: [
@@ -89,7 +89,7 @@ const en = {
       "This offer is the marketing and funnel surface: ads, inquiries, tracking, reminders, and trust. Clinical records stay **out of scope by design**, and any access to inquiry or booking information is minimized and governed by a written data agreement before work begins.",
     pricingLabel: "How we price",
     pricingBody:
-      "Advertising is priced as a **percent of ad spend, with a floor**, never as a percent of your patient revenue. Builds are scoped and priced after the diagnostic, agreed up front. Most clinics then keep a care retainer for corrections and refinements as the team settles in; pause it anytime, the system keeps working. Clean numbers, no stake in your procedures.",
+      "Ad management sits **inside the monthly service fee**, never a share of what you spend, and the ad budget goes from you straight to Google. Builds are scoped and priced after the diagnostic, agreed up front. Most clinics then keep a care retainer for corrections and refinements as the team settles in; pause it anytime, the system keeps working. Clean numbers, no stake in your procedures.",
   },
   why: {
     kicker: "Why us",
@@ -195,7 +195,7 @@ const es: typeof en = {
     featureH:
       "La columna de medición: saber qué solicitud se volvió qué paciente.",
     featureBody:
-      "Seguimiento de origen en el clic a WhatsApp, un CRM ligero y una bitácora de citas que amarra una solicitud hasta el procedimiento terminado. Es lo primero que construimos, porque es lo que vuelve medible toda decisión posterior: qué canal gana pacientes, cuál es la tasa de conversión real y cuánto de la cuota del intermediario recuperó. Nada más se cobra por resultado hasta que esto existe y las dos partes confían en los números que produce.",
+      "Seguimiento de origen en el clic a WhatsApp, un CRM ligero y una bitácora de citas que amarra una solicitud hasta el procedimiento terminado. Es lo primero que construimos, porque es lo que vuelve medible toda decisión posterior: qué canal gana pacientes, cuál es la tasa de conversión real y cuánto de la cuota del intermediario recuperó. Nada más se mueve hasta que esto existe y las dos partes confían en los números que produce.",
     featureBorrow:
       "Responde al problema 04, y al punto ciego debajo de cada otro **número de esta página**.",
     cards: [
@@ -230,7 +230,7 @@ const es: typeof en = {
       "Esta oferta es la superficie de mercadotecnia y del embudo: anuncios, solicitudes, medición, recordatorios y confianza. Los expedientes clínicos quedan **fuera de alcance por diseño**, y cualquier acceso a información de solicitudes o citas se reduce al mínimo y se rige por un acuerdo de datos escrito antes de empezar.",
     pricingLabel: "Cómo cobramos",
     pricingBody:
-      "La publicidad se cobra como **un porcentaje de la inversión en anuncios, con un piso**, nunca como un porcentaje del ingreso de sus pacientes. Las construcciones se definen y se cotizan después del diagnóstico, acordadas desde el principio. La mayoría de las clínicas conserva luego un mantenimiento para correcciones y ajustes mientras el equipo se acomoda; puede pausarlo cuando quiera y el sistema sigue funcionando. Números limpios, sin participación en sus procedimientos.",
+      "El manejo de anuncios va **dentro de la cuota mensual del servicio**, nunca como un porcentaje de lo que usted invierte, y la inversión en anuncios la paga usted directo a Google. Las construcciones se definen y se cotizan después del diagnóstico, acordadas desde el principio. La mayoría de las clínicas conserva luego un mantenimiento para correcciones y ajustes mientras el equipo se acomoda; puede pausarlo cuando quiera y el sistema sigue funcionando. Números limpios, sin participación en sus procedimientos.",
   },
   why: {
     kicker: "Por qué nosotros",
