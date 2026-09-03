@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1788418222.5279655,
-    "ast_hash": "fa4b27cb836e27bc971456ad8be93250",
+    "mtime": 1788424941.2733243,
+    "ast_hash": "f951319d37ecae603975cf94c66c6d1f",
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
@@ -175,13 +175,13 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "d7f4204db8c6d683f86d2e6ce406a911",
+    "mtime": 1788424941.2777243,
+    "ast_hash": "e433f2fdfa08c3a05923304ec45beeab",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "d1c33838b90cf12eb7c7cbce03c3b81b",
+    "mtime": 1788424941.2777243,
+    "ast_hash": "257e26c0789cceae5708498986363782",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/page.tsx": {
-    "mtime": 1788418222.5279655,
-    "ast_hash": "3765ee944d7ddff125ea46d856c3f73b",
+    "mtime": 1788424941.2733243,
+    "ast_hash": "739656b437dbfa118253e87b78ceeddb",
     "semantic_hash": ""
   },
   "app/[locale]/layout.tsx": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1788418222.5279655,
-    "ast_hash": "41cfb2faf9aac7631de64fc8e3d256a5",
+    "mtime": 1788424941.2733243,
+    "ast_hash": "36cca7ca16993a725886222f939f94a7",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -340,13 +340,13 @@
     "semantic_hash": ""
   },
   "app/[locale]/work/enkanto/page.tsx": {
-    "mtime": 1788418222.5279655,
-    "ast_hash": "d7e1633159556f0d2c182c7376c96e6b",
+    "mtime": 1788424941.2733243,
+    "ast_hash": "afa1977e8b9d23c7891dcd0c6534ef45",
     "semantic_hash": ""
   },
   "app/[locale]/work/monte-xanic/page.tsx": {
-    "mtime": 1788418222.5279655,
-    "ast_hash": "01e9bfacfa8500f6c400bd98898cdcde",
+    "mtime": 1788424941.2733243,
+    "ast_hash": "6a9b5d6042ff3020ebef193b955f72d4",
     "semantic_hash": ""
   },
   "app/not-found.tsx": {
@@ -395,8 +395,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/enkanto.ts": {
-    "mtime": 1788418222.5366347,
-    "ast_hash": "a02a8285d263dbbc558424834cb6721a",
+    "mtime": 1788424941.2777243,
+    "ast_hash": "407dc31f05ce5428d4bde2dfd5a737ba",
     "semantic_hash": ""
   },
   "lib/i18n/hiring.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "be7625a8b743e22fa8b80afdbce0b9f1",
+    "mtime": 1788424941.2777243,
+    "ast_hash": "c7e531cd1d0c7c9daef415906426edd6",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -415,8 +415,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/monte-xanic.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "11bedcf5e5baf4d016f8e7adcade72b4",
+    "mtime": 1788424941.2777243,
+    "ast_hash": "a0e4684e4713e25f57faec61b520464e",
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
@@ -435,8 +435,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/site.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "8b5f66c5d1b2449e46c981b866b65fe4",
+    "mtime": 1788424941.2821243,
+    "ast_hash": "75c5a78164b5f8771e5c2798d956569c",
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
@@ -445,13 +445,13 @@
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "7814069150804a166e5b4988c24df1e5",
+    "mtime": 1788424941.2821243,
+    "ast_hash": "97f8ad1ff3f6377cabe25f0eebe97a04",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "9a73afc5c6a3b78ab26cfc57d3ab8e0f",
+    "mtime": 1788424941.2821243,
+    "ast_hash": "25d728653db0c784a26e6873936f9569",
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
@@ -507,6 +507,31 @@
   "lib/i18n/consent.ts": {
     "mtime": 1788423636.0282407,
     "ast_hash": "496b6682d75b6bf0a7dbdd28bb79d946",
+    "semantic_hash": ""
+  },
+  "app/[locale]/about/page.tsx": {
+    "mtime": 1788424941.2733243,
+    "ast_hash": "b9f36b56f8a8350f8eee3a43cbab5301",
+    "semantic_hash": ""
+  },
+  "components/pages/case/CaseFacts.tsx": {
+    "mtime": 1788424941.2733243,
+    "ast_hash": "04d85ff8387d325b49fab26244ec0ceb",
+    "semantic_hash": ""
+  },
+  "components/pages/winery/AssistantDemo.tsx": {
+    "mtime": 1788424941.2777243,
+    "ast_hash": "a8a2f2a28fc9895cff13de063bece09f",
+    "semantic_hash": ""
+  },
+  "components/pages/winery/PricingBundles.tsx": {
+    "mtime": 1788424941.2777243,
+    "ast_hash": "f7cdf18d8c0cf04852d56a5a00c9489e",
+    "semantic_hash": ""
+  },
+  "lib/i18n/about.ts": {
+    "mtime": 1788424941.2777243,
+    "ast_hash": "ec4ae00b0334ac60df29d1708988b8fb",
     "semantic_hash": ""
   }
 }
