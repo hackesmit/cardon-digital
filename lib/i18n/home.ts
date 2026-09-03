@@ -58,8 +58,8 @@ const en = {
   demand: {
     kicker: "03 / Demand",
     title: "Demand you can trust, before you optimize it.",
-    sub: "We run Google Ads with the rigor of the most sophisticated agencies, using what the platforms actually allow, and **priced in proportion to performance**: a percent of ad spend with a floor, or, once measurement you trust is in place, a percent of the sales the ads bring in. Before anyone tunes a campaign, we check whether the numbers coming in are real, so every decision after that rests on something true. Offline conversions, call and chat tracking, structured testing with kill rules: the same measurement discipline the biggest performance shops run, sized for owner-run businesses.",
-    note: "Pricing: **a share of spend, with a floor; results-based once measurement is proven.** We get paid when it works.",
+    sub: "We run Google Ads with the rigor of the most sophisticated agencies, using what the platforms actually allow, and **paid for inside the monthly service fee**, never as a share of what you spend. Your ad budget goes from you straight to Google. Before anyone tunes a campaign, we check whether the numbers coming in are real, so every decision after that rests on something true. Offline conversions, call and chat tracking, structured testing with kill rules: the same measurement discipline the biggest performance shops run, sized for owner-run businesses.",
+    note: "Pricing: **inside the monthly service fee, never a share of your spend.** Your budget goes straight to Google.",
     visTag: "measured before optimized",
     visAria:
       "A single reading is checked against a measured baseline and settles to a verified state.",
@@ -68,7 +68,7 @@ const en = {
     checking: "checking the numbers",
     verified: "verified, safe to optimize",
     reading: "reading",
-    fee: "priced on performance, a share of results",
+    fee: "inside the monthly fee, not a share of spend",
   },
   compare: {
     kicker: "Cardon vs the usual stack",
@@ -100,7 +100,7 @@ const en = {
       {
         dim: "Price shape",
         cardon:
-          "A scoped build, a care retainer if you want it, ads paid on performance.",
+          "A scoped setup fee, then one monthly service fee that includes the ads.",
         usual: "Per-seat fees, every month, forever.",
       },
       {
@@ -128,53 +128,74 @@ const en = {
   },
   pricing: {
     kicker: "What it costs",
-    title:
-      "Published floors. The real number comes after the diagnostic.",
-    sub: "A scoped build at a fixed fee, then a care retainer only if you want one. No per-seat fees, no lock-in, and **no quote before we have seen your numbers.**",
-    from: "from",
-    /** Shown in place of a figure while a locale's numbers are unset. */
-    tbd: "Set in the diagnostic",
-    perMonth: "from **{amount}** a month",
-    tbdMonthly: "with the monthly fee set in the diagnostic",
-    tbdFloor: "with the monthly floor set in the diagnostic",
-    tiers: [
+    title: "Three scopes. Two fees, and the system is yours.",
+    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. **No quote before we have seen your numbers.**",
+    floorLabel: "Where it starts",
+    /** {setup} is the published floor. One figure on a public page, never a table. */
+    floor: "From **{setup}** to implement, plus the monthly service fee.",
+    /** Printed in place of the floor while the figures are unpublished. */
+    floorTbd: "Set in the diagnostic.",
+    /** Same three scopes as the winery page, most expensive first. */
+    scopes: [
       {
-        n: "Tier 1",
-        name: "Quick Win",
-        time: "2 to 3 weeks",
-        body: "One process automated end to end. Small enough to start with, real enough to change a week.",
+        name: "Cava",
+        scale: "Large winery",
+        time: "8 to 12 weeks",
+        body: "The whole operation, from the cellar floor to the books and the shop.",
+        features: [
+          "The Vendimia build at large-winery scale",
+          "Three more source connectors, four historical vintages",
+          "A prediction or classification model",
+          "Finance workflow automation",
+          "Online shop, age gate, and a monthly visit",
+        ],
       },
       {
-        n: "Tier 2",
-        name: "Operations System",
-        time: "5 to 8 weeks",
-        body: "Three to five connected processes plus the data layer that makes them one system. Where most of our work lands.",
+        name: "Vendimia",
+        scale: "Mid-size winery",
+        time: "5 to 7 weeks",
+        body: "Where most of our work lands: the system, and the demand side wired into it.",
+        features: [
+          "The Bitácora build at mid-winery scale",
+          "Two more source connectors, two historical vintages",
+          "Tasting room booking",
+          "Direct sales and wine club follow-up",
+          "Ad management and content, every month",
+        ],
       },
       {
-        n: "Tier 3",
-        name: "Full Operational Build",
-        time: "8 to 16 weeks",
-        body: "The system your company runs on: production or service intelligence, finance, and the customer-facing surface, connected.",
+        name: "Bitácora",
+        scale: "Small winery",
+        time: "3 to 4 weeks",
+        body: "One winery, one site: the record, the reports, and the assistant over them.",
+        features: [
+          "Production record and vintage comparison",
+          "Commercial record and report generator",
+          "The assistant over your own records",
+          "Site, GA4 and conversion tracking",
+          "Hosting, care and a weekly call, every month",
+        ],
       },
     ],
+    more: "See what each scope includes, in full",
     foot: [
       {
-        k: "Care retainer",
-        body: "Optional, {price}. Monitoring, corrections, and changes as your team actually uses it. Pause it and nothing switches off, because you own the system.",
+        k: "The monthly fee",
+        body: "Hosting, monitoring, care, corrections, the monthly report and its readout, and fair use of the assistant. **Pause it and nothing switches off,** because you own the system.",
       },
       {
         k: "Ad management",
-        body: "A share of spend with a floor, {price}. We run ads only inside a system we built or rebuilt, never on their own.",
+        body: "It sits **inside the monthly service fee** from the Vendimia scope up, never a share of what you spend. The ad budget goes from you straight to Google.",
       },
       {
-        k: "Mexico",
-        body: "Quoted and billed locally in pesos, indexed to the Mexican market rather than converted from this card. Ask us and we will send it.",
+        k: "Payment",
+        body: "Setup is 50 percent on signature and 50 percent on acceptance, and the signature half can go in three monthly payments at no extra cost. The service fee runs month to month, 30 days notice either way. **Quoted and billed in pesos, plus IVA.**",
       },
     ],
     founding: {
-      kicker: "Case study partners",
-      lead: "**30 percent off the build fee for wineries that agree to a named case study, through 31 December 2026.**",
-      body: "In exchange we ask for three things, written into the agreement: a named case study with the real before-and-after numbers, one reference call for someone in your industry, and one introduction to a peer. Would rather not be named? Then you pay the full fee and we still take the work.",
+      kicker: "Founding winery",
+      lead: "**One founding winery, through 31 December 2026: the Vendimia scope at Bitácora prices.**",
+      body: "One slot, not a running discount, and it does not stack with anything. In exchange we ask for two things, written into the agreement: a named case study with the real before-and-after numbers, and two introductions to other wineries in the Valle. Whoever signs first takes it, and this comes off the site.",
     },
   },
   vis: {
@@ -311,8 +332,8 @@ const es: typeof en = {
   demand: {
     kicker: "03 / Demanda",
     title: "Demanda confiable, antes de ajustarla.",
-    sub: "Manejamos Google Ads con el rigor de las agencias más serias, con lo que las plataformas de verdad permiten, y **con un precio proporcional al resultado**: un porcentaje de la inversión con un piso, o, cuando ya existe una medición en la que usted confía, un porcentaje de las ventas que traen los anuncios. Antes de que alguien mueva una campaña revisamos si los números que entran son reales, para que toda decisión posterior descanse en algo cierto. Conversiones fuera de línea, seguimiento de llamadas y de chat, pruebas ordenadas con reglas de corte: la misma disciplina de medición de las agencias de resultados más grandes, a la medida de un negocio con dueño.",
-    note: "Precio: **un porcentaje de la inversión con un piso; por resultados cuando la medición ya está comprobada.** Cobramos cuando funciona.",
+    sub: "Manejamos Google Ads con el rigor de las agencias más serias, con lo que las plataformas de verdad permiten, y **pagados dentro de la cuota mensual del servicio**, nunca como porcentaje de lo que usted invierte. Su inversión en anuncios la paga usted directo a Google. Antes de que alguien mueva una campaña revisamos si los números que entran son reales, para que toda decisión posterior descanse en algo cierto. Conversiones fuera de línea, seguimiento de llamadas y de chat, pruebas ordenadas con reglas de corte: la misma disciplina de medición de las agencias de resultados más grandes, a la medida de un negocio con dueño.",
+    note: "Precio: **dentro de la cuota mensual del servicio, nunca un porcentaje de su inversión.** Su presupuesto va directo a Google.",
     visTag: "medido antes de ajustar",
     visAria:
       "Una lectura se compara contra una línea base medida y se asienta en un estado verificado.",
@@ -321,7 +342,7 @@ const es: typeof en = {
     checking: "revisando los números",
     verified: "verificado, ya se puede ajustar",
     reading: "lectura",
-    fee: "precio por resultado, un porcentaje",
+    fee: "dentro de la cuota mensual, no un porcentaje",
   },
   compare: {
     kicker: "Cardon frente a lo de siempre",
@@ -353,7 +374,7 @@ const es: typeof en = {
       {
         dim: "Forma del precio",
         cardon:
-          "Una construcción con alcance definido, un mantenimiento si lo quiere, y anuncios pagados por resultado.",
+          "Una cuota de implementación con alcance definido, y después una sola cuota mensual que incluye los anuncios.",
         usual: "Una cuota por usuario, cada mes, para siempre.",
       },
       {
@@ -381,51 +402,71 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "El precio se fija después del diagnóstico.",
-    sub: "Una construcción con alcance definido y cuota fija, y después un mantenimiento solo si lo quiere. Sin cuota por usuario, sin amarres y **sin cotización antes de haber visto sus números.**",
-    from: "desde",
-    tbd: "Se fija en el diagnóstico",
-    perMonth: "desde **{amount}** al mes",
-    tbdMonthly: "con la mensualidad fijada en el diagnóstico",
-    tbdFloor: "con el piso mensual fijado en el diagnóstico",
-    tiers: [
+    title: "Tres alcances. Dos cuotas, y el sistema queda suyo.",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual paga operarlo: hospedaje, cuidado, correcciones, el reporte y el asistente. **Sin cotización antes de haber visto sus números.**",
+    floorLabel: "De dónde parte",
+    floor: "Desde **{setup}** de implementación, más la cuota mensual del servicio.",
+    floorTbd: "Se fija en el diagnóstico.",
+    scopes: [
       {
-        n: "Nivel 1",
-        name: "Primer avance",
-        time: "2 a 3 semanas",
-        body: "Un proceso automatizado de principio a fin. Chico para empezar, suficiente para cambiar una semana de trabajo.",
+        name: "Cava",
+        scale: "Bodega grande",
+        time: "8 a 12 semanas",
+        body: "Toda la operación, del piso de la bodega a las cuentas y la tienda.",
+        features: [
+          "La construcción de Vendimia a escala de bodega grande",
+          "Tres conectores de origen más y cuatro añadas históricas",
+          "Un modelo de predicción o clasificación",
+          "Automatización del flujo financiero",
+          "Tienda en línea, control de edad y una visita mensual",
+        ],
       },
       {
-        n: "Nivel 2",
-        name: "Sistema de operación",
-        time: "5 a 8 semanas",
-        body: "De tres a cinco procesos conectados, más la capa de datos que los vuelve un solo sistema. Aquí cae la mayor parte de nuestro trabajo.",
+        name: "Vendimia",
+        scale: "Bodega mediana",
+        time: "5 a 7 semanas",
+        body: "Aquí cae la mayor parte de nuestro trabajo: el sistema, y la demanda conectada a él.",
+        features: [
+          "La construcción de Bitácora a escala de bodega mediana",
+          "Dos conectores de origen más y dos añadas históricas",
+          "Reservas para la sala de degustación",
+          "Seguimiento de venta directa y club",
+          "Manejo de anuncios y contenido, cada mes",
+        ],
       },
       {
-        n: "Nivel 3",
-        name: "Construcción completa",
-        time: "8 a 16 semanas",
-        body: "El sistema con el que opera su empresa: la información de producción o de servicio, las cuentas y la cara que ve el cliente, conectadas.",
+        name: "Bitácora",
+        scale: "Bodega chica",
+        time: "3 a 4 semanas",
+        body: "Una bodega, un sitio: el registro, los reportes y el asistente sobre ellos.",
+        features: [
+          "Registro de producción y comparación de añadas",
+          "Registro comercial y generador de reportes",
+          "El asistente sobre sus propios registros",
+          "Sitio, GA4 y medición de conversiones",
+          "Hospedaje, cuidado y una llamada semanal, cada mes",
+        ],
       },
     ],
+    more: "Vea todo lo que incluye cada alcance",
     foot: [
       {
-        k: "Mantenimiento",
-        body: "Opcional, {price}. Monitoreo, correcciones y los cambios que su equipo va pidiendo conforme lo usa. Puede pausarlo y no se apaga nada, porque el sistema es suyo.",
+        k: "La cuota mensual",
+        body: "Hospedaje, monitoreo, cuidado, correcciones, el reporte mensual y su lectura, y uso razonable del asistente. **Puede pausarla y no se apaga nada,** porque el sistema es suyo.",
       },
       {
         k: "Manejo de anuncios",
-        body: "Un porcentaje de la inversión, {price}. Solo manejamos anuncios dentro de un sistema que construimos o reconstruimos, nunca por su cuenta.",
+        body: "Va **dentro de la cuota mensual del servicio** desde el alcance Vendimia, nunca como porcentaje de lo que usted invierte. La inversión en anuncios la paga usted directo a Google.",
       },
       {
-        k: "Facturación",
-        body: "Cotizamos y cobramos en pesos, con factura. El precio está indexado al mercado mexicano, no convertido de una lista en dólares.",
+        k: "Pagos",
+        body: "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación, y la mitad de la firma se puede pagar en tres mensualidades sin recargo. La cuota mensual va mes con mes, con 30 días de aviso de cualquiera de las dos partes. **Cotizamos y cobramos en pesos, más IVA.**",
       },
     ],
     founding: {
       kicker: "Bodega fundadora",
-      lead: "**30 por ciento de descuento en la construcción para la bodega que acepte un caso de estudio con su nombre, hasta el 31 de diciembre de 2026.**",
-      body: "A cambio pedimos tres cosas, escritas en el acuerdo: un caso de estudio con su nombre y las cifras reales de antes y después, una llamada de referencia con alguien de su industria y una presentación con un colega. ¿Prefiere no aparecer con nombre? Entonces paga la cuota completa y el trabajo se hace igual.",
+      lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el alcance Vendimia al precio de Bitácora.**",
+      body: "Un solo lugar, no un descuento permanente, y no se acumula con nada. A cambio pedimos dos cosas, escritas en el acuerdo: un caso de estudio con su nombre y las cifras reales de antes y después, y dos presentaciones con otras bodegas del Valle. Quien firme primero se lo lleva, y esto sale del sitio.",
     },
   },
   vis: {

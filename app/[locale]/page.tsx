@@ -10,7 +10,12 @@ import { home } from "@/lib/i18n/home";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import { formatAmount, formatMoney, pricingFor, tierOrder } from "@/lib/pricing";
+import {
+  formatPrice,
+  wineryBundles,
+  wineryPricingPlaceholder,
+  winerySetupFloor,
+} from "@/lib/pricing";
 import "./home.css";
 
 type Params = { params: { locale: string } };
@@ -28,19 +33,19 @@ export default function Home({ params }: Params) {
   const locale = localeOf(params);
   const d = home[locale];
   const s = site[locale];
-  const price = pricingFor(locale);
   const href = (path: string) => localePath(locale, path);
   const mailto =
     "mailto:daniel@cardondigital.com?subject=" +
     encodeURIComponent(s.diag.mailSubject);
-  const monthly = (amount: number) =>
-    price.placeholder
-      ? d.pricing.tbdMonthly
-      : d.pricing.perMonth.replace("{amount}", formatMoney(locale, amount));
-  const adsPrice = price.placeholder
-    ? d.pricing.tbdFloor
-    : d.pricing.perMonth.replace("{amount}", formatMoney(locale, price.ads.from));
-  const footPrices = [monthly(price.care.from), adsPrice, ""];
+  // One floor figure for the whole page, behind the same flag the winery page
+  // reads (pricing memo 3.7 rule 4). While the flag is true the slot carries
+  // the diagnostic sentence and no figure reaches either locale.
+  const floor = wineryPricingPlaceholder
+    ? d.pricing.floorTbd
+    : d.pricing.floor.replace(
+        "{setup}",
+        formatPrice(locale, winerySetupFloor(locale)),
+      );
 
   return (
     <main id="main" className="pg-home">
@@ -442,39 +447,44 @@ export default function Home({ params }: Params) {
             <p className="section-sub">{rich(d.pricing.sub)}</p>
           </div>
 
+          <p className="price-floor">
+            <span className="price-floor-k">{d.pricing.floorLabel}</span>
+            <span className="price-floor-v">{rich(floor)}</span>
+          </p>
+
           <div className="tiers">
-            {d.pricing.tiers.map((tier, i) => (
-              <div
-                className={"tier" + (i === 1 ? " tier-lead" : "")}
-                key={tier.name}
-              >
-                <span className="tier-n">{tier.n}</span>
-                <h3 className="tier-name">{tier.name}</h3>
-                <p className="tier-price">
-                  {price.placeholder ? (
-                    <span className="tier-tbd">{d.pricing.tbd}</span>
-                  ) : (
-                    <>
-                      {d.pricing.from}{" "}
-                      <b>
-                        {"$" +
-                          formatAmount(price.tiers[tierOrder[i]].from, locale)}
-                      </b>{" "}
-                      <span className="tier-cur">{price.currency}</span>
-                    </>
-                  )}
-                </p>
-                <p className="tier-time">{tier.time}</p>
-                <p className="tier-body">{tier.body}</p>
-              </div>
-            ))}
+            {wineryBundles.map(({ id }, i) => {
+              const scope = d.pricing.scopes[i];
+              return (
+                <div
+                  className={"tier" + (i === 1 ? " tier-lead" : "")}
+                  key={id}
+                >
+                  <span className="tier-n">{scope.scale}</span>
+                  <h3 className="tier-name">{scope.name}</h3>
+                  <p className="tier-time">{scope.time}</p>
+                  <p className="tier-body">{scope.body}</p>
+                  <ul className="tier-list">
+                    {scope.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
 
+          <p className="pricing-more">
+            <Link href={href("/industries/winery") + "#pricing"}>
+              {d.pricing.more}
+            </Link>
+          </p>
+
           <div className="pricing-foot">
-            {d.pricing.foot.map((item, i) => (
+            {d.pricing.foot.map((item) => (
               <div className="pf-item" key={item.k}>
                 <span className="pf-k">{item.k}</span>
-                <p>{rich(item.body.replace("{price}", footPrices[i]))}</p>
+                <p>{rich(item.body)}</p>
               </div>
             ))}
           </div>
