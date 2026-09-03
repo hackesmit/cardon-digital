@@ -248,7 +248,7 @@ export default function MonteXanicCaseStudy({ params }: Params) {
                 <PlayOnceVis
                   id="predVis"
                   variant="pred-vis"
-                  tag="readiness, seen before it lands"
+                  tag={d.chC.tag}
                 >
                   <svg
                     className="mini-svg"
@@ -323,7 +323,7 @@ export default function MonteXanicCaseStudy({ params }: Params) {
                 <PlayOnceVis
                   id="finVis"
                   variant="fin-vis"
-                  tag="an hour, compressed to two minutes"
+                  tag={d.chE.tag}
                 >
                   <svg
                     className="mini-svg"
