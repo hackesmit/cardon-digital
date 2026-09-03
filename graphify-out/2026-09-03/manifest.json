@@ -350,8 +350,8 @@
     "semantic_hash": ""
   },
   "app/not-found.tsx": {
-    "mtime": 1788420515.7560356,
-    "ast_hash": "03cbacfcfb5a41a2e4ac5df4e889fdc5",
+    "mtime": 1788418222.5279655,
+    "ast_hash": "59c2490e23b096ef9ebb3a356a358bb5",
     "semantic_hash": ""
   },
   "components/site/NotFoundBody.tsx": {
