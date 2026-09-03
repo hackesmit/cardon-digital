@@ -6,7 +6,7 @@ const en = {
   meta: {
     title: "Construction growth systems",
     description:
-      "Work orders, crews, materials, and sites on one scheduled board, built for construction companies, with qualified lead generation priced on performance.",
+      "Work orders, crews, materials, and sites on one scheduled board, built for construction companies, with qualified lead generation run inside one monthly service fee.",
   },
   hero: {
     eyebrow: "Industries / Construction",
@@ -75,7 +75,7 @@ const en = {
       },
     ],
     demandNote:
-      "Pricing: **a share of ad spend with a floor, or of the sales the ads bring in once measurement you trust is in place.** We get paid when it works.",
+      "Pricing: **inside the monthly service fee, never a share of your spend.** The ad budget goes from you straight to Google.",
   },
   vis: {
     fleet: {
@@ -157,7 +157,7 @@ const es: typeof en = {
   meta: {
     title: "Sistemas para construcción",
     description:
-      "Órdenes de trabajo, cuadrillas, materiales y obras en un solo tablero con calendario, hecho para empresas constructoras, con generación de prospectos calificados y precio por resultado.",
+      "Órdenes de trabajo, cuadrillas, materiales y obras en un solo tablero con calendario, hecho para empresas constructoras, con generación de prospectos calificados dentro de una sola cuota mensual.",
   },
   hero: {
     eyebrow: "Sectores / Construcción",
@@ -226,7 +226,7 @@ const es: typeof en = {
       },
     ],
     demandNote:
-      "Precio: **un porcentaje de la inversión en anuncios con un piso, o de las ventas que traen los anuncios cuando ya existe una medición en la que usted confía.** Cobramos cuando funciona.",
+      "Precio: **dentro de la cuota mensual del servicio, nunca un porcentaje de su inversión.** La inversión en anuncios la paga usted directo a Google.",
   },
   vis: {
     fleet: {
