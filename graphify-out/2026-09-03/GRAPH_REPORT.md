@@ -1,7 +1,7 @@
-# Graph Report - cardon-digital  (2026-09-02)
+# Graph Report - cardon-digital  (2026-09-03)
 
 ## Corpus Check
-- 84 files · ~100,730 words
+- 84 files · ~100,732 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0d7fbd5b`
+- Built from commit: `191eaa93`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
