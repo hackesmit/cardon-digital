@@ -6,7 +6,7 @@ const en = {
   meta: {
     title: "Restaurant and hospitality growth systems",
     description:
-      "A live view of covers, costing tied to what actually sells, staffing matched to demand, and bilingual wine-country and border hospitality marketing priced on performance.",
+      "A live view of covers, costing tied to what actually sells, staffing matched to demand, and bilingual wine-country and border hospitality marketing run inside one monthly service fee.",
   },
   hero: {
     aria: "Introduction",
@@ -41,7 +41,7 @@ const en = {
       },
       {
         h: "Bilingual demand for wine country and the border.",
-        body: "Guests from both sides of the line, in English and Spanish, written natively rather than translated after the fact. The ads that fill your tables are priced in proportion to performance: a share of spend with a floor, or, once measurement you trust is in place, a share of the sales the ads bring in. We get paid when the room fills.",
+        body: "Guests from both sides of the line, in English and Spanish, written natively rather than translated after the fact. Ad management sits inside the monthly service fee, and the ad budget goes from you straight to Google.",
         borrow:
           "Borrowed from **bilingual growth systems** run for both markets at once.",
       },
@@ -122,7 +122,7 @@ const en = {
     "**Day 1.** A working session on your room, your bookings, your ads, and your numbers.",
     "**Days 2 to 9.** We dig: reservations, covers, menu costs, staffing, measurement, the numbers behind the numbers.",
     "**Day 10.** The memo lands: what is true, what is broken, what to build first for this room.",
-    "**Free, with no strings.** Act on it with us or without us. If we build, pricing is agreed up front, and ad work is priced on performance.",
+    "**Free, with no strings.** Act on it with us or without us. If we build, pricing is agreed up front, and ad management sits inside the monthly service fee.",
   ],
 };
 
@@ -130,7 +130,7 @@ const es: typeof en = {
   meta: {
     title: "Sistemas para restaurantes y hospitalidad",
     description:
-      "Una vista al día de los comensales, costeo amarrado a lo que de verdad se vende, personal ajustado a la demanda y demanda en los dos idiomas para el valle vinícola y la frontera, con precio por resultado.",
+      "Una vista al día de los comensales, costeo amarrado a lo que de verdad se vende, personal ajustado a la demanda y demanda en los dos idiomas para el valle vinícola y la frontera, dentro de una sola cuota mensual.",
   },
   hero: {
     aria: "Presentación",
@@ -165,7 +165,7 @@ const es: typeof en = {
       },
       {
         h: "Demanda en los dos idiomas para el valle vinícola y la frontera.",
-        body: "Huéspedes de los dos lados de la línea, en español y en inglés, escritos por separado y no traducidos después. Los anuncios que llenan sus mesas llevan precio proporcional al resultado: un porcentaje de la inversión con un piso, o, cuando ya existe una medición en la que usted confía, un porcentaje de las ventas que traen los anuncios. Cobramos cuando el comedor se llena.",
+        body: "Huéspedes de los dos lados de la línea, en español y en inglés, escritos por separado y no traducidos después. El manejo de anuncios va dentro de la cuota mensual del servicio, y la inversión en anuncios la paga usted directo a Google.",
         borrow:
           "Tomado de **los sistemas en los dos idiomas**, operados para los dos mercados a la vez.",
       },
@@ -246,7 +246,7 @@ const es: typeof en = {
     "**Día 1.** Una sesión de trabajo sobre su comedor, sus reservaciones, sus anuncios y sus números.",
     "**Días 2 a 9.** Escarbamos: reservaciones, comensales, costos de menú, personal, medición y los números detrás de los números.",
     "**Día 10.** Llega el informe: qué es cierto, qué está roto y qué construir primero para este comedor.",
-    "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda desde el principio y el trabajo de anuncios lleva precio por resultado.",
+    "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda desde el principio y el manejo de anuncios va dentro de la cuota mensual del servicio.",
   ],
 };
 

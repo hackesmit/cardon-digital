@@ -6,7 +6,7 @@ const en = {
   meta: {
     title: "Hiring and HR growth systems",
     description:
-      "One applicant pipeline instead of inboxes and tabs, qualification stages the team can read, scheduling that runs itself, and bilingual candidate demand priced on performance.",
+      "One applicant pipeline instead of inboxes and tabs, qualification stages the team can read, scheduling that runs itself, and bilingual candidate demand run inside one monthly service fee.",
   },
   hero: {
     aria: "Introduction",
@@ -57,7 +57,7 @@ const en = {
       },
       {
         h: "Bilingual candidate demand",
-        body: "We source in English and Spanish, across the US and Mexico, written natively rather than translated after the fact. We confirm the measurement is real before anyone optimizes, and the ad work is priced in proportion to performance: a share of spend with a floor, or, once measurement you trust is in place, a share of the results it drives.",
+        body: "We source in English and Spanish, across the US and Mexico, written natively rather than translated after the fact. We confirm the measurement is real before anyone optimizes. Ad management sits inside the monthly service fee, and the ad budget goes from you straight to Google.",
       },
       {
         h: "Reporting the owner actually reads",
@@ -118,7 +118,7 @@ const es: typeof en = {
   meta: {
     title: "Sistemas para reclutamiento",
     description:
-      "Un solo canal de candidatos en lugar de bandejas y pestañas, etapas que todo el equipo entiende, agenda de entrevistas que se hace sola y demanda de candidatos en los dos idiomas con precio por resultado.",
+      "Un solo canal de candidatos en lugar de bandejas y pestañas, etapas que todo el equipo entiende, agenda de entrevistas que se hace sola y demanda de candidatos en los dos idiomas dentro de una sola cuota mensual.",
   },
   hero: {
     aria: "Presentación",
@@ -169,7 +169,7 @@ const es: typeof en = {
       },
       {
         h: "Demanda de candidatos en los dos idiomas",
-        body: "Buscamos en español y en inglés, en México y en Estados Unidos, escrito por separado y no traducido después. Confirmamos que la medición sea real antes de que alguien ajuste, y el trabajo de anuncios lleva precio proporcional al resultado: un porcentaje de la inversión con un piso, o, cuando ya existe una medición en la que usted confía, un porcentaje de los resultados que trae.",
+        body: "Buscamos en español y en inglés, en México y en Estados Unidos, escrito por separado y no traducido después. Confirmamos que la medición sea real antes de que alguien ajuste. El manejo de anuncios va dentro de la cuota mensual del servicio, y la inversión en anuncios la paga usted directo a Google.",
       },
       {
         h: "Reportes que el dueño sí lee",
