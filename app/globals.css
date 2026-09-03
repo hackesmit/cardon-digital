@@ -580,16 +580,39 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
 }
 .tier-lead .tier-n{color:var(--primary);}
 .tier-name{font-size:1.16rem;font-weight:600;color:var(--text);margin:2px 0 4px;line-height:1.2;}
-.tier-price{font-family:var(--mono);font-size:0.95rem;color:var(--text-dim);letter-spacing:0.02em;}
-.tier-price b{font-size:1.5rem;font-weight:600;color:var(--primary);letter-spacing:-0.01em;}
-.tier-cur{font-size:0.72rem;letter-spacing:0.1em;color:var(--muted);}
-/* shown while a locale has no agreed figures yet (lib/pricing.ts) */
-.tier-tbd{font-size:0.95rem;color:var(--secondary);letter-spacing:0.02em;}
 .tier-time{
   font-family:var(--mono);font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
   color:var(--secondary);margin-bottom:4px;
 }
 .tier-body{color:var(--text-dim);font-size:0.95rem;line-height:1.6;}
+/* one figure per public surface (pricing memo 3.7 rule 4), above the three
+   scopes whose feature lists justify it (rule 3) */
+.price-floor{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+  margin:0 0 clamp(20px,2.6vw,30px);padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+.price-floor-k{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.price-floor-v{font-size:clamp(1.05rem,1.7vw,1.32rem);color:var(--text-dim);}
+.price-floor-v b{color:var(--primary);font-weight:600;}
+.tier-list{
+  margin:4px 0 0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:7px;
+}
+.tier-list li{
+  position:relative;padding-left:16px;
+  color:var(--text-dim);font-size:0.9rem;line-height:1.45;
+}
+.tier-list li::before{
+  content:"";position:absolute;left:0;top:0.62em;
+  width:6px;height:1px;background:var(--primary);opacity:0.7;
+}
+.pricing-more{margin-bottom:clamp(20px,2.6vw,30px);font-size:0.92rem;}
+.pricing-more a{color:var(--secondary);border-bottom:1px solid var(--line);padding-bottom:2px;}
+.pricing-more a:hover{color:var(--text);border-color:var(--primary-dim);}
 
 .pricing-foot{
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,1.6vw,20px);
