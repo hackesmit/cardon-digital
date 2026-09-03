@@ -10,7 +10,7 @@ const en = {
   meta: {
     title: "Winery growth systems",
     description:
-      "Live harvest and production intelligence, vineyard section maps, readiness prediction, and berry-to-bottle traceability for wineries, plus bilingual demand priced on performance.",
+      "Live harvest and production intelligence, vineyard section maps, readiness prediction, and berry-to-bottle traceability for wineries, plus bilingual demand run inside one monthly service fee.",
   },
   hero: {
     aria: "Winery introduction",

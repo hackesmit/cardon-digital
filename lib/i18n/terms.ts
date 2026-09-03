@@ -20,7 +20,7 @@ const en = {
     },
     {
       h: "The Growth Diagnostic and engagements",
-      body: "The free Growth Diagnostic is offered as described on the site: a fixed window of review work resulting in a written memo, with no obligation on either side. Any engagement beyond it, including scope, pricing, confidentiality, and data handling, is agreed in a separate written proposal or contract before work begins. Where the site describes pricing in proportion to performance, the exact basis and percentages are set in that written agreement. If these terms and a signed agreement conflict, the signed agreement wins.",
+      body: "The free Growth Diagnostic is offered as described on the site: a fixed window of review work resulting in a written memo, with no obligation on either side. Any engagement beyond it, including scope, pricing, confidentiality, and data handling, is agreed in a separate written proposal or contract before work begins. Where the site describes a setup fee plus a monthly service fee, with ad management inside the monthly fee and the ad budget going from you straight to Google, the exact scope and amounts are set in that written agreement. If these terms and a signed agreement conflict, the signed agreement wins.",
     },
     {
       h: "Intellectual property",
@@ -62,7 +62,7 @@ const es: typeof en = {
     },
     {
       h: "El Diagnóstico de Crecimiento y los trabajos",
-      body: "El Diagnóstico de Crecimiento se ofrece sin costo y como se describe en el sitio: una ventana fija de revisión que termina en un informe escrito, sin obligación para ninguna de las partes. Cualquier trabajo posterior, incluidos alcance, precio, confidencialidad y manejo de datos, se acuerda en una propuesta o contrato escrito por separado antes de empezar. Donde el sitio describe precios proporcionales al resultado, la base exacta y los porcentajes se fijan en ese acuerdo escrito. Si estos términos y un acuerdo firmado se contradicen, gana el acuerdo firmado.",
+      body: "El Diagnóstico de Crecimiento se ofrece sin costo y como se describe en el sitio: una ventana fija de revisión que termina en un informe escrito, sin obligación para ninguna de las partes. Cualquier trabajo posterior, incluidos alcance, precio, confidencialidad y manejo de datos, se acuerda en una propuesta o contrato escrito por separado antes de empezar. Donde el sitio describe una cuota de implementación más una cuota mensual del servicio, con el manejo de anuncios dentro de la cuota mensual y la inversión en anuncios pagada por usted directo a Google, el alcance exacto y los montos se fijan en ese acuerdo escrito. Si estos términos y un acuerdo firmado se contradicen, gana el acuerdo firmado.",
     },
     {
       h: "Propiedad intelectual",
