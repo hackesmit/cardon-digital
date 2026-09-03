@@ -34,6 +34,15 @@ export default function PrivacyPage({ params }: Params) {
           ))}
         </ul>
 
+        <h2>{d.measureH}</h2>
+        <p>{d.measureBody}</p>
+        <ul>
+          {d.measureList.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <p>{d.measureWithdraw}</p>
+
         <h2>{d.deviceH}</h2>
         <p>{d.deviceBody}</p>
 
