@@ -1,0 +1,304 @@
+import type { Dict } from "./rich";
+
+/** Vinedo En'kanto case study, including the labels inside its SVG visuals. */
+
+const en = {
+  meta: {
+    title: "Vinedo En'kanto case study",
+    description:
+      "Through a season when the Valle de Guadalupe's overall visitor flow dipped, En'kanto's three revenue lines, wine, stays, and restaurant, each kept growing. Beside that season sat the work: a real online shop, structure and search repaired, payments and shipping made real, bilingual by design.",
+  },
+  hero: {
+    aria: "Introduction",
+    eyebrow: "Case study / Winery",
+    t1: "The Valle's volume dropped that season. En'kanto's wine, stays, and tables kept ",
+    enk: "growing",
+    t2: ".",
+    sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. Across a season when the Valle's overall visitor flow dipped, all three kept growing. Beside that fact sits the work we did: a real online shop with cross-border-honest shipping, the site structure and search repaired, and optimization across the business. **Three lines growing, the season dropping, the work sitting beside both.**",
+  },
+  client: {
+    kicker: "The client",
+    title: "Vinedo En'kanto, San Antonio de las Minas.",
+    p1: "Vinedo En'kanto is a boutique winery, hotel, and restaurant in San Antonio de las Minas, in the Valle de Guadalupe. Three revenue lines share one place: bottles from the winery, hotel and Airbnb stays for guests who want to wake up in the Valle, and a restaurant table for the ones who come to eat.",
+    p2: "Those three lines are the business. The online presence is how each of them reaches people who have not arrived yet, so a bottle, a booking, or a reservation can begin before anyone sets foot on the property.",
+    photoAlt: "Oak barrels stacked in a winery cellar",
+  },
+  work: {
+    kicker: "The work",
+    title: "The work that sat underneath the season.",
+    p1: "Across the season this case study covers, the Valle's overall visitor flow dipped. Over the same months, the winery's wine sales, the stays, and the restaurant each kept growing. We state those two facts side by side and put nothing between them: the work below sat beside the growth, not on top of it.",
+    p2: "And there was real work to do. The online store existed in name only, products with no prices and no way to ship, and five homepages competed for the same visitor across two half-finished languages. **We rebuilt the groundwork under all three lines, one piece at a time.** Here is that work, and the line each piece serves.",
+  },
+  servesWine: "Serves the **wine line.**",
+  servesAll: "Serves **all three lines.**",
+  ch1: {
+    kicker: "01 / The store, made real",
+    title: "Products you can actually buy, and a checkout that completes.",
+    sub: "We built the catalog into real products, each with a price, a weight, and an image, and wired a checkout that carries an order through instead of stalling at a full cart. The store stops being a demonstration and **starts being a place that takes an order**.",
+    tag: "empty in name, then built out",
+    aria: "An empty placeholder product card becomes a real product card with an image, name, price, and weight.",
+    inNameOnly: "IN NAME ONLY",
+    builtOut: "BUILT OUT",
+    add: "add",
+  },
+  ch2: {
+    kicker: "02 / Structure, repaired page by page",
+    title: "One clear site, not five homepages.",
+    sub: "We unpublished the duplicate homepages so one canonical page stands for the business, wrote the missing descriptions, and cleaned the sitemap and robots so search reads the site the way a visitor does. The structure stops fighting itself, and the whole business, the wine, the stays, and the restaurant, **is found in one place**.",
+    tag: "five front doors, then one",
+    aria: "Five competing homepages resolve to one canonical page, with the sitemap and robots cleaned.",
+    homepages: "HOMEPAGES",
+    unpublished: "unpublished",
+    canonical: "canonical store",
+    clean: "clean",
+    descriptions: "descriptions written",
+  },
+  ch3: {
+    kicker: "03 / Payments for how Mexico pays",
+    title: "Set up for the ways people here actually pay.",
+    sub: "We set up payments around how Mexico pays, cards and cash, so a guest checks out the way that suits them and the order clears. Paying stops being **the place an order quietly dies**.",
+    tag: "cards and cash, one checkout",
+    aria: "Card, cash, and transfer methods feed one checkout that reaches an order placed state.",
+    card: "Card",
+    cash: "Cash",
+    transfer: "Transfer",
+    total: "TOTAL",
+    placed: "Order placed",
+    clears: "the order clears",
+  },
+  ch4: {
+    kicker: "04 / Shipping, made real",
+    title: "A real way to get the wine to the buyer.",
+    sub: "We set up a domestic carrier path with packaging that meets the rules, so a bottle bought online reaches a door inside Mexico. Selling across the border as a Mexican winery is not something the law allows, so the store sells pickup and domestic delivery, and guests visiting from the United States **carry wine home themselves under the personal allowance**. It only promises what it can keep.",
+    tag: "pickup, domestic, and an honest carry-home",
+    aria: "An order splits to pickup at the winery and a domestic carrier; a separate dashed lane shows US guests carrying wine home in person under the personal allowance.",
+    order: "Order",
+    pickup: "Pickup",
+    atWinery: "at the winery",
+    carrier: "Domestic carrier",
+    packaging: "compliant packaging",
+    acrossBorder: "ACROSS THE BORDER",
+    carried: "carried in person,",
+    allowance: "personal allowance",
+  },
+  ch5: {
+    kicker: "05 / Bilingual by design",
+    title: "One store in two languages, not one bolted onto the other.",
+    sub: "We built English and Spanish as one foundation, so the same site reads whole in either language instead of one being a thinner copy of the other. A guest from the Valle and a guest from across the border **meet the same business, each in their own words**.",
+    tag: "EN and ES, one foundation",
+    aria: "English and Spanish rails converge into a single store foundation.",
+    oneStore: "One store",
+    readWhole: "read whole in both",
+    foundation: "one foundation, not a bolt-on",
+  },
+  results: {
+    kicker: "The result",
+    title: "Three lines up, the season down.",
+    items: [
+      {
+        lead: "Wine, growing.",
+        body: "Across the season, the winery's wine sales kept rising. The shop and the cross-border-honest shipping lane sit beside that line.",
+      },
+      {
+        lead: "Stays, growing.",
+        body: "The hotel and Airbnb stays kept filling through the same months. The listings and the booking flow sit beside that line.",
+      },
+      {
+        lead: "Restaurant, growing.",
+        body: "The restaurant's tables kept rising over the season. The reservations and the follow-up sit beside that line.",
+      },
+      {
+        lead: "The season, dropping.",
+        body: "The Valle's overall visitor flow fell across the season. We put it on the same chart as the three lines and let the directions speak.",
+      },
+    ],
+  },
+  outcome: {
+    kicker: "The outcome",
+    title: "Three lines, growing through a season that went down.",
+    p1: "Through a season when the Valle's overall flow dipped, En'kanto's wine, its stays, and its restaurant each kept growing. Beside those three lines sits the work: a shop that takes a real order, structure and search repaired, payments that clear, shipping that reaches the door, and one bilingual foundation under all of it.",
+    p2: "We state the work and we state the season, and we set them next to each other and claim no more than that. **We built the foundation. What grows on it belongs to the winery.**",
+  },
+  vis: {
+    legendMain: "Three lines vs the season",
+    legendSub: "direction, not scale",
+    honest: "illustrative direction, not client data",
+    backdropL1: "Valle visitor flow,",
+    backdropL2: "the season",
+    backdropOne: "Valle visitor flow, the season",
+    status: "kept growing through the season",
+    hotLabel:
+      "{name} kept growing through the season. The work beside it: {work}.",
+    plateStatus: "status",
+    plateAction: "the work",
+    fallback:
+      "A quiet chart. Three labeled lines, wine sales, stays, and the restaurant, rise gently against a faint dipping backdrop line marked Valle visitor flow, the season. It shows direction only, with no scale: the three lines grew across a season when the Valle's overall flow fell.",
+    caption:
+      "Wine, stays, and the restaurant rise; the Valle's visitor flow dips. Direction only, side by side, no scale.",
+    series: {
+      wine: { label: "Wine sales", work: "shop and cross-border shipping" },
+      stays: { label: "Stays", work: "listing and booking flow" },
+      restaurant: { label: "Restaurant", work: "reservations and follow-up" },
+    },
+  },
+  diagDesc:
+    "Ten business days looking at your store, your site, and your operations as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
+  diagSpecs: [
+    "**Day 1.** A working session on your store, your site, and your operations.",
+    "**Days 2 to 9.** We dig: the catalog, payments, shipping, measurement, the numbers behind the numbers.",
+    "**Day 10.** The memo lands: what is true, what is broken, what to build first.",
+    "**Free, with no strings.** Act on it with us or without us. If we build, pricing is agreed up front.",
+  ],
+};
+
+const es: typeof en = {
+  meta: {
+    title: "Caso de estudio Viñedo En'kanto",
+    description:
+      "En una temporada en la que el flujo de visitantes del Valle de Guadalupe bajó, las tres líneas de En'kanto, vino, hospedaje y restaurante, siguieron creciendo. Al lado de esa temporada está el trabajo: una tienda en línea de verdad, la estructura y la búsqueda reparadas, pagos y envíos reales, y una base bilingüe.",
+  },
+  hero: {
+    aria: "Presentación",
+    eyebrow: "Caso de estudio / Bodega",
+    t1: "El volumen del Valle bajó esa temporada. El vino, el hospedaje y las mesas de En'kanto siguieron ",
+    enk: "creciendo",
+    t2: ".",
+    sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. A lo largo de una temporada en la que el flujo general de visitantes del Valle bajó, las tres siguieron creciendo. Al lado de ese hecho está el trabajo que hicimos: una tienda en línea de verdad con un envío honesto respecto a la frontera, la estructura del sitio y la búsqueda reparadas, y mejoras en todo el negocio. **Tres líneas creciendo, la temporada bajando, el trabajo al lado de las dos cosas.**",
+  },
+  client: {
+    kicker: "El cliente",
+    title: "Viñedo En'kanto, San Antonio de las Minas.",
+    p1: "Viñedo En'kanto es una bodega, hotel y restaurante boutique en San Antonio de las Minas, en el Valle de Guadalupe. Tres líneas de ingreso comparten un mismo lugar: botellas de la bodega, hospedaje de hotel y de Airbnb para quien quiere amanecer en el Valle, y una mesa de restaurante para quien viene a comer.",
+    p2: "Esas tres líneas son el negocio. La presencia en línea es la forma en que cada una llega a quien todavía no llega, para que una botella, una reserva o una mesa empiecen antes de que alguien ponga un pie en la propiedad.",
+    photoAlt: "Barricas de roble apiladas en la cava de una bodega",
+  },
+  work: {
+    kicker: "El trabajo",
+    title: "El trabajo que estuvo debajo de la temporada.",
+    p1: "A lo largo de la temporada que cubre este caso, el flujo general de visitantes del Valle bajó. En los mismos meses, la venta de vino de la bodega, el hospedaje y el restaurante siguieron creciendo cada uno. Ponemos los dos hechos lado a lado y no metemos nada entre ellos: el trabajo de abajo estuvo al lado del crecimiento, no encima de él.",
+    p2: "Y sí había trabajo que hacer. La tienda en línea existía solo de nombre, con productos sin precio y sin manera de enviar, y cinco páginas de inicio competían por el mismo visitante en dos idiomas a medias. **Reconstruimos los cimientos debajo de las tres líneas, una pieza a la vez.** Aquí está ese trabajo, y la línea a la que sirve cada pieza.",
+  },
+  servesWine: "Sirve a la **línea de vino.**",
+  servesAll: "Sirve a **las tres líneas.**",
+  ch1: {
+    kicker: "01 / La tienda, hecha de verdad",
+    title: "Productos que sí se pueden comprar, y un pago que se completa.",
+    sub: "Convertimos el catálogo en productos reales, cada uno con precio, peso e imagen, y conectamos un pago que lleva el pedido hasta el final en vez de atorarse con el carrito lleno. La tienda deja de ser una demostración y **empieza a ser un lugar que toma un pedido**.",
+    tag: "vacía de nombre, después construida",
+    aria: "Una tarjeta de producto vacía se convierte en una tarjeta real con imagen, nombre, precio y peso.",
+    inNameOnly: "SOLO DE NOMBRE",
+    builtOut: "CONSTRUIDA",
+    add: "agregar",
+  },
+  ch2: {
+    kicker: "02 / Estructura, reparada página por página",
+    title: "Un solo sitio claro, no cinco páginas de inicio.",
+    sub: "Despublicamos las páginas de inicio duplicadas para que una sola página represente al negocio, escribimos las descripciones que faltaban y limpiamos el sitemap y el robots para que la búsqueda lea el sitio como lo lee un visitante. La estructura deja de pelearse consigo misma, y todo el negocio, el vino, el hospedaje y el restaurante, **se encuentra en un solo lugar**.",
+    tag: "cinco puertas, después una",
+    aria: "Cinco páginas de inicio que competían se resuelven en una sola página canónica, con el sitemap y el robots limpios.",
+    homepages: "PÁGINAS DE INICIO",
+    unpublished: "despublicada",
+    canonical: "tienda canónica",
+    clean: "limpio",
+    descriptions: "descripciones escritas",
+  },
+  ch3: {
+    kicker: "03 / Pagos como se paga en México",
+    title: "Preparado para las formas en que aquí sí se paga.",
+    sub: "Configuramos los pagos alrededor de cómo se paga en México, tarjeta y efectivo, para que un huésped pague como le acomode y el pedido se libere. Pagar deja de ser **el lugar donde un pedido se muere en silencio**.",
+    tag: "tarjeta y efectivo, un solo pago",
+    aria: "Tarjeta, efectivo y transferencia alimentan un solo pago que llega al estado de pedido realizado.",
+    card: "Tarjeta",
+    cash: "Efectivo",
+    transfer: "Transferencia",
+    total: "TOTAL",
+    placed: "Pedido realizado",
+    clears: "el pedido se libera",
+  },
+  ch4: {
+    kicker: "04 / Envíos, hechos de verdad",
+    title: "Una forma real de llevar el vino a quien lo compra.",
+    sub: "Montamos una ruta con paquetería nacional y un empaque que cumple las reglas, para que una botella comprada en línea llegue a una puerta dentro de México. Vender del otro lado de la frontera siendo una bodega mexicana no es algo que la ley permita, así que la tienda vende recolección y entrega nacional, y los huéspedes que vienen de Estados Unidos **se llevan el vino ellos mismos bajo la franquicia personal**. Solo promete lo que puede cumplir.",
+    tag: "recolección, envío nacional y un traslado honesto",
+    aria: "Un pedido se abre a recolección en la bodega y a paquetería nacional; un carril punteado aparte muestra a los huéspedes de Estados Unidos llevándose el vino en persona bajo la franquicia personal.",
+    order: "Pedido",
+    pickup: "Recolección",
+    atWinery: "en la bodega",
+    carrier: "Paquetería nacional",
+    packaging: "empaque que cumple",
+    acrossBorder: "CRUZANDO LA FRONTERA",
+    carried: "llevado en persona,",
+    allowance: "franquicia personal",
+  },
+  ch5: {
+    kicker: "05 / Bilingüe desde el diseño",
+    title: "Una tienda en dos idiomas, no uno pegado encima del otro.",
+    sub: "Construimos el español y el inglés como un solo cimiento, para que el mismo sitio se lea completo en cualquiera de los dos y no que uno sea una copia más delgada del otro. Un huésped del Valle y uno del otro lado de la frontera **se encuentran con el mismo negocio, cada quien en sus palabras**.",
+    tag: "ES y EN, un solo cimiento",
+    aria: "Los carriles de español y de inglés convergen en un solo cimiento de tienda.",
+    oneStore: "Una tienda",
+    readWhole: "completa en los dos",
+    foundation: "un cimiento, no un añadido",
+  },
+  results: {
+    kicker: "El resultado",
+    title: "Tres líneas arriba, la temporada abajo.",
+    items: [
+      {
+        lead: "Vino, creciendo.",
+        body: "A lo largo de la temporada, la venta de vino de la bodega siguió subiendo. La tienda y el carril de envío honesto respecto a la frontera están al lado de esa línea.",
+      },
+      {
+        lead: "Hospedaje, creciendo.",
+        body: "El hotel y el hospedaje de Airbnb siguieron llenándose en los mismos meses. Las publicaciones y el flujo de reserva están al lado de esa línea.",
+      },
+      {
+        lead: "Restaurante, creciendo.",
+        body: "Las mesas del restaurante siguieron subiendo durante la temporada. Las reservaciones y el seguimiento están al lado de esa línea.",
+      },
+      {
+        lead: "La temporada, bajando.",
+        body: "El flujo general de visitantes del Valle cayó a lo largo de la temporada. Lo pusimos en la misma gráfica que las tres líneas y dejamos que las direcciones hablen.",
+      },
+    ],
+  },
+  outcome: {
+    kicker: "El desenlace",
+    title: "Tres líneas creciendo en una temporada que bajó.",
+    p1: "En una temporada en la que el flujo general del Valle bajó, el vino de En'kanto, su hospedaje y su restaurante siguieron creciendo cada uno. Al lado de esas tres líneas está el trabajo: una tienda que toma un pedido de verdad, la estructura y la búsqueda reparadas, pagos que se liberan, envíos que llegan a la puerta y un solo cimiento bilingüe debajo de todo.",
+    p2: "Decimos el trabajo y decimos la temporada, los ponemos uno al lado del otro y no reclamamos más que eso. **Nosotros construimos el cimiento. Lo que crece encima es de la bodega.**",
+  },
+  vis: {
+    legendMain: "Tres líneas contra la temporada",
+    legendSub: "dirección, no escala",
+    honest: "dirección ilustrativa, no son datos de cliente",
+    backdropL1: "Flujo de visitantes del Valle,",
+    backdropL2: "la temporada",
+    backdropOne: "Flujo de visitantes del Valle, la temporada",
+    status: "siguió creciendo toda la temporada",
+    hotLabel:
+      "{name} siguió creciendo toda la temporada. El trabajo al lado: {work}.",
+    plateStatus: "estado",
+    plateAction: "el trabajo",
+    fallback:
+      "Una gráfica tranquila. Tres líneas con nombre, venta de vino, hospedaje y restaurante, suben suave contra una línea de fondo tenue que baja, marcada Flujo de visitantes del Valle, la temporada. Muestra dirección y no escala: las tres líneas crecieron en una temporada en la que el flujo general del Valle cayó.",
+    caption:
+      "El vino, el hospedaje y el restaurante suben; el flujo de visitantes del Valle baja. Solo dirección, lado a lado, sin escala.",
+    series: {
+      wine: { label: "Venta de vino", work: "tienda y ruta de envío" },
+      stays: { label: "Hospedaje", work: "publicación y flujo de reserva" },
+      restaurant: { label: "Restaurante", work: "reservaciones y seguimiento" },
+    },
+  },
+  diagDesc:
+    "Diez días hábiles revisando su tienda, su sitio y su operación como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",
+  diagSpecs: [
+    "**Día 1.** Una sesión de trabajo sobre su tienda, su sitio y su operación.",
+    "**Días 2 a 9.** Escarbamos: el catálogo, los pagos, los envíos, la medición y los números detrás de los números.",
+    "**Día 10.** Llega el informe: qué es cierto, qué está roto y qué construir primero.",
+    "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda desde el principio.",
+  ],
+};
+
+export type EnkantoDict = typeof en;
+export const enkanto: Dict<EnkantoDict> = { en, es };

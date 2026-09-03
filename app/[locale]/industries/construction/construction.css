@@ -1,0 +1,233 @@
+/* ============================ CONSTRUCTION PAGE LAYER ============================
+   Page-specific styles for the Construction industry page. Everything here is
+   scoped under the .pg-construction root class so these rules never leak into
+   other routes (App Router CSS imports are global). Shared classes (hero,
+   value, section, kicker, diagnostic, cta, etc.) live in globals.css and are
+   NOT duplicated here. The sector accent is safety amber, used only inside the
+   signature site-plan visual. */
+
+.pg-construction {
+  /* sector accent: safety amber, scoped to this page's visual */
+  --amber: #c98a2b;
+  --amber-soft: color-mix(in srgb, var(--amber) 20%, transparent);
+  --amber-line: color-mix(in srgb, var(--amber) 58%, transparent);
+  --amber-ink: color-mix(in srgb, var(--amber) 66%, var(--text) 34%);
+}
+/* Light is the default mode, and #c98a2b sits at 2.4:1 on the cream ground,
+   well under the contrast the rest of the palette holds. Same amber hue, more
+   depth, so the site-plan visual and the kicker stay readable on cream.
+   Matches the per-mode pattern --oasis, --sage and --wine already use. */
+:root[data-mode="light"] .pg-construction {
+  --amber: #8a5a12;
+}
+
+/* hero: only the one addition not already in the shared layer */
+.pg-construction .hero-sub .dry { color: var(--muted); }
+
+/* ============================ SIGNATURE FRAME ============================ */
+.pg-construction .sig-frame {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius:2px;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--scrim), transparent);
+  box-shadow: var(--shadow);
+}
+/* cursor spotlight: hover-only radial, amber-tinted (accent lives in the visual) */
+.pg-construction .sig-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .35s ease;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--amber) 13%, transparent), transparent 70%);
+}
+.pg-construction .sig-frame:hover::after { opacity: 1; }
+.pg-construction .sig-tag {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  z-index: 3;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pg-construction .sig-tag .before { color: var(--secondary); }
+.pg-construction .sig-tag .midword { color: var(--muted); }
+.pg-construction .sig-tag .after { color: var(--primary); }
+.pg-construction .sig-caption {
+  position: absolute;
+  bottom: 12px;
+  right: 18px;
+  z-index: 3;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.pg-construction .sig-svg {
+  display: block;
+  width: 100%;
+  height: clamp(360px, 46vw, 540px);
+  position: relative;
+  z-index: 1;
+}
+/* The desktop composition is a wide 600x380 plan. Keying its frame off that
+   same aspect (instead of a fixed clamp height) makes the drawing fill the
+   frame edge to edge across the dead band and up to the widest desktop, so
+   there is no letterbox band; the max-height only caps the very tall extreme. */
+.pg-construction .sp-desktop {
+  height: auto;
+  aspect-ratio: 600 / 380;
+  max-height: 680px;
+}
+/* two purpose-made compositions live in one component; show exactly one so the
+   hidden svg never intersects and never runs its rAF loop */
+.pg-construction .sp-portrait { display: none; }
+/* portrait type is sized up so no rendered string falls below ~10px CSS */
+.pg-construction .sp-portrait .chip-label { font-size: 11px; }
+.pg-construction .sp-portrait .lane-date { font-size: 11px; letter-spacing: 0.08em; }
+.pg-construction .sp-portrait .plot-id { font-size: 11px; }
+.pg-construction .sp-portrait .sp-head { font-size: 11px; letter-spacing: 0.14em; }
+.pg-construction .sp-portrait .chip-pill-id { font-size: 10px; }
+.pg-construction .sp-portrait .plate-title { font-size: 11px; }
+.pg-construction .sp-portrait .plate-meta { font-size: 9.5px; }
+.pg-construction .sig-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  background: var(--panel);
+}
+
+/* ---- signature visual: placement onto a site plan ---- */
+.pg-construction .sp-frame { fill: none; stroke: var(--line-soft); stroke-width: 1; }
+.pg-construction .sp-contour { fill: none; stroke: var(--line); stroke-width: 1; opacity: 0.7; }
+.pg-construction .sp-contour.soft { stroke: var(--line-soft); }
+.pg-construction .sp-divider { stroke: var(--line-soft); stroke-width: 1; stroke-dasharray: 3 5; }
+.pg-construction .sp-head { fill: var(--muted); font-family: var(--mono); letter-spacing: 0.16em; font-size: 9px; }
+.pg-construction .lane-track { fill: color-mix(in srgb, var(--panel) 58%, transparent); stroke: var(--line-soft); stroke-width: 1; }
+.pg-construction .lane-date { fill: var(--muted); font-family: var(--mono); letter-spacing: 0.1em; font-size: 9px; }
+
+.pg-construction .dep { stroke: var(--primary-dim); stroke-width: 1.6; stroke-linecap: round; }
+.pg-construction .dep-node { fill: var(--primary); }
+
+.pg-construction .plot .plot-face { fill: color-mix(in srgb, var(--panel) 66%, transparent); stroke: var(--line); stroke-width: 1.2; transition: stroke .3s ease; }
+.pg-construction .plot.scheduled .plot-face { stroke: var(--amber-line); }
+.pg-construction .plot .plot-glow { fill: var(--amber); }
+.pg-construction .plot-id { fill: var(--muted); font-family: var(--mono); font-size: 9px; }
+
+.pg-construction .leader { stroke: var(--amber); stroke-width: 1.2; stroke-dasharray: 3 4; stroke-linecap: round; opacity: 0; transition: opacity .25s ease; }
+
+.pg-construction .chip { cursor: pointer; }
+.pg-construction .chip .chip-body { fill: var(--card); stroke: var(--line); stroke-width: 1.2; transition: stroke .2s ease; }
+.pg-construction .chip .chip-accent { fill: var(--amber); }
+.pg-construction .chip .chip-label { fill: var(--text-dim); font-family: var(--mono); font-size: 9.5px; }
+.pg-construction .chip .chip-pill { fill: var(--amber-soft); stroke: var(--amber); stroke-width: 1; }
+.pg-construction .chip .chip-pill-id { fill: var(--amber-ink); font-family: var(--mono); font-size: 8px; font-weight: 600; }
+.pg-construction .chip .chip-focus { fill: none; stroke: var(--primary); stroke-width: 1.6; stroke-dasharray: 3 3; opacity: 0; }
+.pg-construction .chip.hot .chip-body { stroke: var(--amber); }
+.pg-construction .chip:focus-visible { outline: none; }
+.pg-construction .chip:focus-visible .chip-focus { opacity: 1; }
+.pg-construction .chip:focus-visible .chip-body { stroke: var(--amber); }
+
+.pg-construction .plate { opacity: 0; transition: opacity .2s ease; pointer-events: none; }
+.pg-construction .chip.hot .plate,
+.pg-construction .chip:focus-visible .plate { opacity: 1; }
+.pg-construction .plate-box { fill: color-mix(in srgb, var(--panel) 93%, var(--text) 7%); stroke: var(--line); stroke-width: 1; }
+.pg-construction .plate-title { fill: var(--text); font-family: var(--mono); font-size: 9px; font-weight: 600; letter-spacing: 0.04em; }
+.pg-construction .plate-meta { fill: var(--muted); font-family: var(--mono); font-size: 7.6px; letter-spacing: 0.02em; }
+
+/* ============================ CAPABILITIES ============================ */
+.pg-construction .cap-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(16px, 2.2vw, 24px);
+}
+.pg-construction .cap-card {
+  grid-column: span 2;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius:2px;
+  background: linear-gradient(180deg, var(--scrim), transparent);
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  transition: border-color .2s ease, transform .18s ease, box-shadow .2s ease;
+}
+.pg-construction .cap-card:hover { border-color: var(--primary-dim); transform: translateY(-3px); box-shadow: var(--shadow); }
+.pg-construction .cap-card:last-child { grid-column: span 4; }
+.pg-construction .cap-top { display: flex; align-items: center; gap: 12px; }
+.pg-construction .cap-idx { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--muted); }
+.pg-construction .cap-glyph { width: 34px; height: 34px; flex-shrink: 0; color: var(--primary); }
+.pg-construction .cap-glyph svg { display: block; width: 100%; height: 100%; }
+.pg-construction .cap-glyph .g-stroke { stroke: var(--primary); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.pg-construction .cap-glyph .g-gold { stroke: var(--secondary); }
+.pg-construction .cap-glyph .g-fill { fill: var(--secondary); stroke: none; }
+.pg-construction .cap-title { font-size: 1.14rem; font-weight: 600; letter-spacing: -0.015em; color: var(--text); line-height: 1.2; }
+.pg-construction .cap-body { color: var(--text-dim); font-size: 0.96rem; }
+.pg-construction .cap-note {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  border-top: 1px solid var(--line-soft);
+  padding-top: 12px;
+}
+.pg-construction .cap-note b { color: var(--primary); font-weight: 600; }
+.pg-construction .cap-card:last-child .cap-body { max-width: 62ch; }
+
+/* ============================ FLEET TRACKING ============================ */
+.pg-construction .fleet-split { align-items: center; }
+.pg-construction .fleet-lead {
+  color: var(--text-dim);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  max-width: 52ch;
+}
+.pg-construction .fleet-frame { border-radius:2px; }
+/* fallback height for pre-JS paint; FleetMap sets the exact height per
+   composition from the measured width (single source of truth, no dead band) */
+.pg-construction .fleet-canvas { display: block; width: 100%; height: 380px; }
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width: 900px) {
+  .pg-construction .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  .pg-construction .cap-card { grid-column: auto; }
+  .pg-construction .cap-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .pg-construction .cap-grid { grid-template-columns: 1fr; }
+  .pg-construction .cap-card:last-child { grid-column: auto; }
+}
+/* phone: swap to the portrait plan; it sets its own portrait box (no letterbox) */
+@media (max-width: 560px) {
+  .pg-construction .sp-desktop { display: none; }
+  .pg-construction .sp-portrait {
+    display: block;
+    height: auto;
+    aspect-ratio: 340 / 578;
+  }
+  .pg-construction .sig-tag {
+    max-width: 64%;
+    line-height: 1.5;
+    background: color-mix(in srgb, var(--ground) 52%, transparent);
+    border-radius:2px;
+    padding: 6px 10px;
+  }
+}

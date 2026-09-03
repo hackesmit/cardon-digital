@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { hiring } from "@/lib/i18n/hiring";
 
 type Pt = { x: number; y: number };
 type Cand = { stream: string; ini: string; park: number };
@@ -62,6 +64,7 @@ type Sample = {
  * hover a card, to raise a readout plate.
  */
 export default function PipelineStage() {
+  const t = useDict(hiring).vis;
   const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const captionRef = useRef<HTMLSpanElement | null>(null);
@@ -168,7 +171,7 @@ export default function PipelineStage() {
     let last = 0;
     let compact = false;
 
-    const GATE_KEYS = ["applied", "screened", "interviewed", "offer"];
+    const GATE_KEYS = t.gates.map((g) => g.key);
     const GATEX = [0.335, 0.455, 0.575, 0.695];
     // Portrait compact mode: a vertical spine with gates stacked top to bottom,
     // EN/ES inlets entering from the top corners, parked cards peeling to a left
@@ -584,7 +587,7 @@ export default function PipelineStage() {
       ctx.textAlign = "left";
       ctx.textBaseline = "alphabetic";
       ctx.fillStyle = PAL.muted;
-      ctx.fillText("NOT THIS ROLE", g.parkX - g.cw / 2, g.gates[0].y - g.ch * 0.72);
+      ctx.fillText(t.notThisRole, g.parkX - g.cw / 2, g.gates[0].y - g.ch * 0.72);
       ctx.strokeStyle = PAL.lineSoft;
       ctx.lineWidth = 1;
       ctx.setLineDash([3, 5]);
@@ -673,7 +676,7 @@ export default function PipelineStage() {
       ctx.textAlign = "left";
       ctx.textBaseline = "alphabetic";
       ctx.fillStyle = PAL.muted;
-      ctx.fillText("NOT THIS ROLE", g.gates[0].x - g.cw, g.trayY - g.ch * 0.98);
+      ctx.fillText(t.notThisRole, g.gates[0].x - g.cw, g.trayY - g.ch * 0.98);
     };
 
     const drawRoster = (GF: number) => {
@@ -686,7 +689,7 @@ export default function PipelineStage() {
         ctx.textAlign = "left";
         ctx.textBaseline = "alphabetic";
         ctx.fillStyle = PAL.muted;
-        ctx.fillText("TEAM ROSTER", r.x - g.cw / 2, y0 - 9);
+        ctx.fillText(t.teamRoster, r.x - g.cw / 2, y0 - 9);
         dot(r.x + r.w * (ROSTER_SLOTS - 1) + g.cw / 2, y0 - 12.5, 2.6, PAL.sage);
       } else {
         rr(r.x, r.y, r.w, r.h, 12);
@@ -701,7 +704,7 @@ export default function PipelineStage() {
         ctx.textAlign = "left";
         ctx.textBaseline = "alphabetic";
         ctx.fillStyle = PAL.muted;
-        ctx.fillText("TEAM ROSTER", r.x + 10, r.y + 14);
+        ctx.fillText(t.teamRoster, r.x + 10, r.y + 14);
         dot(r.x + r.w - 12, r.y + 10, 2.6, PAL.sage);
       }
       for (let i = 0; i < ROSTER_SLOTS; i++) {
@@ -816,7 +819,7 @@ export default function PipelineStage() {
       }
       if (hoverCard) drawPlate(hoverCard);
 
-      if (caption) caption.textContent = act ? act.st : "one pipeline";
+      if (caption) caption.textContent = act ? act.st : t.onePipeline;
     };
 
     const resolveStatic = () => {
@@ -841,7 +844,7 @@ export default function PipelineStage() {
       draw();
       const g = geom as Geom;
       drawCard(g.gates[2].x, g.gates[2].y, "MK", "ES", 1, "active");
-      if (caption) caption.textContent = "interviewed";
+      if (caption) caption.textContent = t.gates[2].key;
     };
 
     const resetState = () => {
@@ -1037,12 +1040,12 @@ export default function PipelineStage() {
     <div className="stage-wrap">
       <div className="stage-frame" id="pipeFrame" ref={frameRef}>
         <span className="stage-tag mono">
-          <span className="before">two streams</span>{" "}
-          <span className="midword">into</span>{" "}
-          <span className="after">one pipeline</span>
+          <span className="before">{t.tagBefore}</span>{" "}
+          <span className="midword">{t.tagMid}</span>{" "}
+          <span className="after">{t.tagAfter}</span>
         </span>
         <span className="stage-caption mono" id="pipeCaption" ref={captionRef}>
-          one pipeline
+          {t.onePipeline}
         </span>
         <canvas id="pipeCanvas" aria-hidden="true" ref={canvasRef} />
 
@@ -1051,11 +1054,11 @@ export default function PipelineStage() {
           data-gate="0"
           href="#build"
           style={{ left: "33.5%" }}
-          aria-label="Applied stage. Every applicant source arrives in one lane."
+          aria-label={t.gates[0].aria}
         >
           <span className="gate-label">
-            <span className="gate-name">Applied</span>
-            <span className="gate-note">every source, one lane</span>
+            <span className="gate-name">{t.gates[0].name}</span>
+            <span className="gate-note">{t.gates[0].note}</span>
           </span>
         </a>
         <a
@@ -1063,11 +1066,11 @@ export default function PipelineStage() {
           data-gate="1"
           href="#build"
           style={{ left: "45.5%" }}
-          aria-label="Screened stage. The whole team reads where each candidate stands."
+          aria-label={t.gates[1].aria}
         >
           <span className="gate-label">
-            <span className="gate-name">Screened</span>
-            <span className="gate-note">the team reads the stage</span>
+            <span className="gate-name">{t.gates[1].name}</span>
+            <span className="gate-note">{t.gates[1].note}</span>
           </span>
         </a>
         <a
@@ -1075,11 +1078,11 @@ export default function PipelineStage() {
           data-gate="2"
           href="#build"
           style={{ left: "57.5%" }}
-          aria-label="Interviewed stage. Scheduling that runs itself."
+          aria-label={t.gates[2].aria}
         >
           <span className="gate-label">
-            <span className="gate-name">Interviewed</span>
-            <span className="gate-note">scheduling runs itself</span>
+            <span className="gate-name">{t.gates[2].name}</span>
+            <span className="gate-note">{t.gates[2].note}</span>
           </span>
         </a>
         <a
@@ -1087,21 +1090,16 @@ export default function PipelineStage() {
           data-gate="3"
           href="#build"
           style={{ left: "69.5%" }}
-          aria-label="Offer stage. Time to hire stays in view."
+          aria-label={t.gates[3].aria}
         >
           <span className="gate-label">
-            <span className="gate-name">Offer</span>
-            <span className="gate-note">time to hire, in view</span>
+            <span className="gate-name">{t.gates[3].name}</span>
+            <span className="gate-note">{t.gates[3].note}</span>
           </span>
         </a>
 
         <noscript>
-          <div className="stage-fallback">
-            Anonymous applicants enter from an English and a Spanish stream, merge
-            into one pipeline, and pass through applied, screened, interviewed, and
-            offer gates. Some settle into a quiet not this role tray; those who pass
-            dock into a team roster.
-          </div>
+          <div className="stage-fallback">{t.fallback}</div>
         </noscript>
       </div>
     </div>

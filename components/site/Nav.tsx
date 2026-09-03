@@ -4,24 +4,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-
-const linksBefore = [
-  { href: "/industries/winery", label: "Wineries" },
-  { href: "/work/monte-xanic", label: "Work" },
-];
-// Identity v3: the nav is Wineries, Work, Industries. Services and About
-// fold into the pages themselves; the diagnostic CTA is the contact path and
-// the footer still carries both links.
-const linksAfter: { href: string; label: string }[] = [
-];
-const industryLinks = [
-  { href: "/#sectors", label: "All industries" },
-  { href: "/industries/winery", label: "Wineries" },
-  { href: "/industries/construction", label: "Construction" },
-  { href: "/industries/hiring", label: "Hiring" },
-  { href: "/industries/restaurants", label: "Restaurants" },
-  { href: "/industries/clinics", label: "Clinics" },
-];
+import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { site } from "@/lib/i18n/site";
+import {
+  LOCALE_COOKIE,
+  LOCALE_COOKIE_MAX_AGE,
+  localePath,
+  otherLocale,
+  stripLocale,
+} from "@/lib/i18n/config";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -33,8 +24,47 @@ export default function Nav() {
   // which is the correct state at the top of every page.
   const [navIsOnlyAction, setNavIsOnlyAction] = useState(false);
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = site[locale].nav;
+  const brandHome = site[locale].brandHome;
   const toggleBtn = useRef<HTMLButtonElement | null>(null);
   const dropRef = useRef<HTMLLIElement | null>(null);
+
+  const href = (path: string) => localePath(locale, path);
+
+  // Winery-led nav (2026-09-02): wineries is the practice, so it sits first as
+  // its own item. The other industries stay reachable behind one demoted
+  // dropdown rather than sharing the top line.
+  const linksBefore = [
+    { href: href("/industries/winery"), label: t.wineries },
+    { href: href("/work/monte-xanic"), label: t.work },
+  ];
+  const otherIndustryLinks = [
+    { href: href("/industries/construction"), label: t.construction },
+    { href: href("/industries/hiring"), label: t.hiring },
+    { href: href("/industries/restaurants"), label: t.restaurants },
+    { href: href("/industries/clinics"), label: t.clinics },
+    { href: href("/#sectors"), label: t.allIndustries },
+  ];
+
+  // The switch keeps the page you are on and remembers the choice, so the
+  // geo default never overrides it again.
+  const swapLocale = otherLocale(locale);
+  const swapHref = localePath(swapLocale, stripLocale(pathname || "/"));
+  function rememberLocale() {
+    try {
+      document.cookie =
+        LOCALE_COOKIE +
+        "=" +
+        swapLocale +
+        "; path=/; max-age=" +
+        LOCALE_COOKIE_MAX_AGE +
+        "; samesite=lax";
+    } catch (e) {
+      /* storage may be unavailable; the prefixed URL still wins this visit */
+    }
+    setOpen(false);
+  }
 
   useEffect(() => {
     const cur =
@@ -119,7 +149,7 @@ export default function Nav() {
   return (
     <header className="site-header">
       <div className="container bar">
-        <Link className="brand" href="/" aria-label="Cardon Digital home">
+        <Link className="brand" href={href("/")} aria-label={brandHome}>
           <svg
             className="brand-mark"
             viewBox="0 0 26 26"
@@ -162,7 +192,7 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className="primary-nav" aria-label="Primary">
+        <nav className="primary-nav" aria-label={t.label}>
           <button
             className="menu-toggle"
             id="menuToggle"
@@ -172,14 +202,14 @@ export default function Nav() {
             aria-expanded={open ? "true" : "false"}
             onClick={() => setOpen((v) => !v)}
           >
-            Menu
+            {t.menu}
           </button>
           {open &&
             createPortal(
               <button
                 className="nav-scrim"
                 type="button"
-                aria-label="Close menu"
+                aria-label={t.closeMenu}
                 onClick={() => setOpen(false)}
               />,
               document.body,
@@ -206,7 +236,7 @@ export default function Nav() {
                   aria-controls="industries-menu"
                   onClick={() => setIndOpen((v) => !v)}
                 >
-                  Industries
+                  {t.otherIndustries}
                   <svg
                     className="drop-caret"
                     viewBox="0 0 10 6"
@@ -225,14 +255,14 @@ export default function Nav() {
                 </button>
                 <Link
                   className="drop-mobile-label"
-                  href="/#sectors"
+                  href={href("/#sectors")}
                   onClick={() => setOpen(false)}
                 >
-                  Industries
+                  {t.otherIndustries}
                 </Link>
                 <div className="nav-drop" id="industries-menu">
                   <ul className="nav-drop-panel">
-                    {industryLinks.map((l) => (
+                    {otherIndustryLinks.map((l) => (
                       <li key={l.href}>
                         <Link
                           href={l.href}
@@ -248,25 +278,51 @@ export default function Nav() {
                   </ul>
                 </div>
               </li>
-              {linksAfter.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} onClick={() => setOpen(false)}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
             </ul>
             <div className="nav-tools">
+              {/* A plain anchor, not a Link, on purpose: the canvas and SVG
+                  visuals read their strings once in a mount effect, so a soft
+                  navigation that kept those component instances alive would
+                  leave a Spanish page carrying English visuals. A full document
+                  load also guarantees the cookie set on click is the one the
+                  middleware reads next time. */}
+              <a
+                className="lang-switch"
+                href={swapHref}
+                hrefLang={swapLocale}
+                lang={swapLocale}
+                aria-label={t.switchAria}
+                onClick={rememberLocale}
+              >
+                <svg
+                  className="icon"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18" />
+                  <path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0 -18" />
+                </svg>
+                <span className="lang-full">{t.switchLabel}</span>
+                <span className="lang-short" aria-hidden="true">
+                  {t.switchShort}
+                </span>
+              </a>
               <button
                 className="mode-toggle"
                 id="modeToggle"
                 type="button"
-                aria-label="Switch between light and dark mode"
+                aria-label={t.modeToggle}
                 aria-pressed={mode === "dark" ? "true" : "false"}
                 onClick={toggleMode}
               >
                 <span className="sr-only">
-                  {mode === "dark" ? "Dark mode" : "Light mode"}
+                  {mode === "dark" ? t.darkMode : t.lightMode}
                 </span>
                 <svg
                   className="icon icon-moon"
@@ -299,10 +355,10 @@ export default function Nav() {
                   "cta cta-sm nav-cta" +
                   (navIsOnlyAction || open ? " is-primary" : "")
                 }
-                href="/#diagnostic"
+                href={href("/#diagnostic")}
                 onClick={() => setOpen(false)}
               >
-                Get the diagnostic
+                {t.cta}
               </Link>
             </div>
           </div>
