@@ -325,13 +325,13 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1788424941.2733243,
-    "ast_hash": "36cca7ca16993a725886222f939f94a7",
+    "mtime": 1788427590.1661556,
+    "ast_hash": "00526d0720d9f2e2cdb1e682e9a9950a",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
-    "mtime": 1788418222.5279655,
-    "ast_hash": "ed5a896b36ec74fa63e36ac6c25f3854",
+    "mtime": 1788427590.1705554,
+    "ast_hash": "d96786c9d61986dcb05ead4970e8087d",
     "semantic_hash": ""
   },
   "app/[locale]/terms/page.tsx": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1788424941.2777243,
-    "ast_hash": "c7e531cd1d0c7c9daef415906426edd6",
+    "mtime": 1788427590.1705554,
+    "ast_hash": "f3d1911edf1eb84891bbe6fb2529c78a",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "ecdc741236543d068b17c2b16e88dddc",
+    "mtime": 1788427590.1705554,
+    "ast_hash": "d5bb87a65878f74fb57e96c8c6e9d2df",
     "semantic_hash": ""
   },
   "lib/i18n/restaurants.ts": {
@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
-    "mtime": 1788424941.2821243,
-    "ast_hash": "25d728653db0c784a26e6873936f9569",
+    "mtime": 1788427590.1705554,
+    "ast_hash": "9bba9c814497c7a445d73878d8bd0558",
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
