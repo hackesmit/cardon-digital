@@ -360,8 +360,8 @@
     "semantic_hash": ""
   },
   "components/site/SiteShell.tsx": {
-    "mtime": 1788418222.5366347,
-    "ast_hash": "55f95cdbcf3bb486d3347de213702767",
+    "mtime": 1788423636.0282407,
+    "ast_hash": "be2a843518e8e52c8dba286f4b3a4262",
     "semantic_hash": ""
   },
   "lib/fonts.ts": {
@@ -452,6 +452,61 @@
   "lib/pricing.ts": {
     "mtime": 1788418222.5409694,
     "ast_hash": "9a73afc5c6a3b78ab26cfc57d3ab8e0f",
+    "semantic_hash": ""
+  },
+  "components/consent/ConsentBanner.tsx": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "0ad1aa346672d7cf110c363eae430913",
+    "semantic_hash": ""
+  },
+  "components/consent/ConsentGate.tsx": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "a2c23a5010adabc378cabccce37f7073",
+    "semantic_hash": ""
+  },
+  "components/consent/ConversionListeners.tsx": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "5e3269a782c8507421d7397d945231d3",
+    "semantic_hash": ""
+  },
+  "components/consent/MeasurementScripts.tsx": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "3d225f29e9a541917419591134ca0a26",
+    "semantic_hash": ""
+  },
+  "lib/analytics/config.ts": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "366bd974abac81423e9d5ccb0be114a7",
+    "semantic_hash": ""
+  },
+  "lib/analytics/consent.ts": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "b556dd805e8cb51ab6aab4676a7d5dc9",
+    "semantic_hash": ""
+  },
+  "lib/analytics/events.ts": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "71a63fb7111f5c5b6d964766405cc3b1",
+    "semantic_hash": ""
+  },
+  "lib/analytics/gtag.ts": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "1b0753653f1bcc8db11e0b2557a1dfe3",
+    "semantic_hash": ""
+  },
+  "lib/analytics/index.ts": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "9664e253319a8ad91d58aaa18e3fca46",
+    "semantic_hash": ""
+  },
+  "lib/analytics/proof/measurement-proof.mjs": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "7406b9e97a546551cc8fdd972040aed6",
+    "semantic_hash": ""
+  },
+  "lib/i18n/consent.ts": {
+    "mtime": 1788423636.0282407,
+    "ast_hash": "496b6682d75b6bf0a7dbdd28bb79d946",
     "semantic_hash": ""
   }
 }
