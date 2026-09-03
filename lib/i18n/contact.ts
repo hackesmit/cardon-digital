@@ -1,18 +1,53 @@
 import type { Dict } from "./rich";
+import type { DoorVariant } from "@/lib/contact/doors";
 
-/** The contact page: three doors (WhatsApp, a booked call, the form) and the
- *  form's own labels, hints and answers. The Spanish is the original; the
- *  English follows it rather than the other way around. */
+/** The contact page: the doors this build actually has (WhatsApp, a booked
+ *  call, the form) and the form's own labels, hints and answers. The Spanish
+ *  is the original; the English follows it rather than the other way around.
+ *
+ *  The headline, the standfirst and the meta description are written once per
+ *  door variant, because a door hides when its environment value is missing
+ *  and the copy is never allowed to promise a door the page does not render.
+ *  The form is always there, so a variant names what stands beside it. */
+
+type Intro = { title: string; sub: string };
+
+const enIntro: Record<DoorVariant, Intro> = {
+  all: {
+    title: "Three ways to __start__.",
+    sub: "Pick whichever suits you. All three reach the same person, and that person is the one who does the work.",
+  },
+  whatsappForm: {
+    title: "Two ways to __start__.",
+    sub: "Pick whichever suits you. Both reach the same person, and that person is the one who does the work.",
+  },
+  bookingForm: {
+    title: "Two ways to __start__.",
+    sub: "Pick whichever suits you. Both reach the same person, and that person is the one who does the work.",
+  },
+  formOnly: {
+    title: "Start with a __message__.",
+    sub: "Leave us a few lines. They reach the person who does the work, and that person is the one who answers.",
+  },
+};
+
+const enDescription: Record<DoorVariant, string> = {
+  all: "Three ways to reach Cardon Digital: WhatsApp, a booked call, or a short message. All three reach the person who does the work.",
+  whatsappForm:
+    "Two ways to reach Cardon Digital: WhatsApp or a short message. Both reach the person who does the work.",
+  bookingForm:
+    "Two ways to reach Cardon Digital: a booked call or a short message. Both reach the person who does the work.",
+  formOnly:
+    "Write to Cardon Digital with a short message. It reaches the person who does the work.",
+};
 
 const en = {
   meta: {
     title: "Contact",
-    description:
-      "Three ways to reach Cardon Digital: WhatsApp, a booked call, or a short message. All three reach the person who does the work.",
+    description: enDescription,
   },
   eyebrow: "Contact",
-  title: "Three ways to __start__.",
-  sub: "Pick whichever suits you. All three reach the same person, and that person is the one who does the work.",
+  intro: enIntro,
   reply: "We answer within one business day.",
 
   doorsAria: "Ways to reach us",
@@ -60,26 +95,65 @@ const en = {
       email: "That address does not read as a valid one.",
       whatsapp: "Digits only, with the country code.",
       message: "Tell us a little more, a few lines at least.",
-      general:
-        "The message did not go through. Write to us on WhatsApp and we will pick it up there.",
-      rate: "That is several messages in a row. Give it a few minutes, or write on WhatsApp.",
+      /** Two answers per problem: one for a page that has the WhatsApp door
+       *  above the form, one for a page that does not. */
+      general: {
+        withWhatsapp:
+          "The message did not go through. Write to us on WhatsApp and we will pick it up there.",
+        alone: "The message did not go through. Please try again in a moment.",
+      },
+      rate: {
+        withWhatsapp:
+          "That is several messages in a row. Give it a few minutes, or write on WhatsApp.",
+        alone: "That is several messages in a row. Give it a few minutes and send it again.",
+      },
       large: "The message is longer than the form takes. Trim it a little.",
     },
     sentTitle: "Received.",
-    sentBody:
-      "We answer by email within one business day. If you would rather not wait, WhatsApp is above.",
+    sentBody: {
+      withWhatsapp:
+        "We answer by email within one business day. If you would rather not wait, WhatsApp is above.",
+      alone: "We answer by email within one business day.",
+    },
   },
+};
+
+const esIntro: Record<DoorVariant, Intro> = {
+  all: {
+    title: "Tres formas de __empezar__.",
+    sub: "Escoja la que le acomode. Las tres llegan a la misma persona, y esa persona es quien hace el trabajo.",
+  },
+  whatsappForm: {
+    title: "Dos formas de __empezar__.",
+    sub: "Escoja la que le acomode. Las dos llegan a la misma persona, y esa persona es quien hace el trabajo.",
+  },
+  bookingForm: {
+    title: "Dos formas de __empezar__.",
+    sub: "Escoja la que le acomode. Las dos llegan a la misma persona, y esa persona es quien hace el trabajo.",
+  },
+  formOnly: {
+    title: "Empiece con un __mensaje__.",
+    sub: "Déjenos unas líneas. Llegan a quien hace el trabajo, y esa persona es quien le contesta.",
+  },
+};
+
+const esDescription: Record<DoorVariant, string> = {
+  all: "Tres formas de llegar a Cardon Digital: WhatsApp, una llamada agendada o un mensaje corto. Las tres llegan a quien hace el trabajo.",
+  whatsappForm:
+    "Dos formas de llegar a Cardon Digital: WhatsApp o un mensaje corto. Las dos llegan a quien hace el trabajo.",
+  bookingForm:
+    "Dos formas de llegar a Cardon Digital: una llamada agendada o un mensaje corto. Las dos llegan a quien hace el trabajo.",
+  formOnly:
+    "Escriba a Cardon Digital con un mensaje corto. Llega a quien hace el trabajo.",
 };
 
 const es: typeof en = {
   meta: {
     title: "Contacto",
-    description:
-      "Tres formas de llegar a Cardon Digital: WhatsApp, una llamada agendada o un mensaje corto. Las tres llegan a quien hace el trabajo.",
+    description: esDescription,
   },
   eyebrow: "Contacto",
-  title: "Tres formas de __empezar__.",
-  sub: "Escoja la que le acomode. Las tres llegan a la misma persona, y esa persona es quien hace el trabajo.",
+  intro: esIntro,
   reply: "Respondemos dentro del siguiente día hábil.",
 
   doorsAria: "Formas de contactarnos",
@@ -126,14 +200,24 @@ const es: typeof en = {
       email: "Esa dirección no se lee como una dirección válida.",
       whatsapp: "Solo números, con lada del país.",
       message: "Cuéntenos un poco más, aunque sean unas líneas.",
-      general:
-        "El mensaje no salió. Escríbanos por WhatsApp y por ahí lo atendemos.",
-      rate: "Son varios mensajes seguidos. Espere unos minutos o escríbanos por WhatsApp.",
+      general: {
+        withWhatsapp:
+          "El mensaje no salió. Escríbanos por WhatsApp y por ahí lo atendemos.",
+        alone: "El mensaje no salió. Vuelva a intentarlo en un momento, por favor.",
+      },
+      rate: {
+        withWhatsapp:
+          "Son varios mensajes seguidos. Espere unos minutos o escríbanos por WhatsApp.",
+        alone: "Son varios mensajes seguidos. Espere unos minutos y vuelva a enviarlo.",
+      },
       large: "El mensaje es más largo de lo que acepta el formulario. Recórtelo un poco.",
     },
     sentTitle: "Recibido.",
-    sentBody:
-      "Le respondemos por correo dentro del siguiente día hábil. Si prefiere no esperar, WhatsApp está arriba.",
+    sentBody: {
+      withWhatsapp:
+        "Le respondemos por correo dentro del siguiente día hábil. Si prefiere no esperar, WhatsApp está arriba.",
+      alone: "Le respondemos por correo dentro del siguiente día hábil.",
+    },
   },
 };
 

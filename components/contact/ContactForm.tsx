@@ -8,6 +8,7 @@ import {
   readAttribution,
   type Attribution,
 } from "@/lib/contact/attribution";
+import { DOORS } from "@/lib/contact/doors";
 import {
   HONEYPOT_FIELD,
   LIMITS,
@@ -30,13 +31,18 @@ const EMPTY: Values = {
  * The written door.
  *
  * The same validator the route uses runs here first, so an obvious mistake is
- * caught without a round trip and the server stays the authority. Without JS
- * the form does not submit at all, which is why the page never renders it as
- * the only way through: WhatsApp is a plain link above it.
+ * caught without a round trip and the server stays the authority.
+ *
+ * Every answer the form gives comes in two versions: one that sends a stuck
+ * visitor to WhatsApp, and one that does not, because the WhatsApp door is
+ * only on the page when its environment value is set. The form never points
+ * at a door that is not there.
  */
 export default function ContactForm() {
   const locale = useLocale();
   const d = contact[locale].form;
+  /* Which half of the two-version answers this build uses. */
+  const tone = DOORS.whatsapp ? "withWhatsapp" : "alone";
 
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<ContactField[]>([]);
@@ -112,15 +118,15 @@ export default function ContactForm() {
           setErrors(body.fields);
           return;
         }
-        setGeneral(d.errors.general);
+        setGeneral(d.errors.general[tone]);
         return;
       }
       if (res.status === 413) return setGeneral(d.errors.large);
-      if (res.status === 429) return setGeneral(d.errors.rate);
-      setGeneral(d.errors.general);
+      if (res.status === 429) return setGeneral(d.errors.rate[tone]);
+      setGeneral(d.errors.general[tone]);
     } catch {
       setStatus("idle");
-      setGeneral(d.errors.general);
+      setGeneral(d.errors.general[tone]);
     }
   }
 
@@ -128,7 +134,7 @@ export default function ContactForm() {
     return (
       <div className="form-sent" tabIndex={-1} ref={sentRef} role="status">
         <h3>{d.sentTitle}</h3>
-        <p>{d.sentBody}</p>
+        <p>{d.sentBody[tone]}</p>
       </div>
     );
   }
