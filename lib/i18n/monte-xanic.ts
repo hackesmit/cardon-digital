@@ -19,6 +19,25 @@ const en = {
     t3: ".",
     sub: "The state of the harvest used to live in three places at once and agree in none. We pulled it into one living view, bound it to their real vineyard sections, and taught it to read ripeness against Monte Xanic's own standard. **One winery, one true picture, all season.**",
   },
+  facts: {
+    aria: "Case study facts: client, sector, place, engagement, what we built, and the outcome",
+    rows: [
+      { k: "Client", v: "Monte Xanic" },
+      { k: "Sector", v: "Winery" },
+      { k: "Place", v: "Valle de Guadalupe, Baja California" },
+      { k: "Engagement", v: "Build and ongoing work" },
+      {
+        k: "What we built",
+        v: "Live harvest dashboard; vineyard section maps; ripeness prediction; berry-to-bottle traceability; automated financial reporting",
+      },
+      {
+        k: "Outcome",
+        v: "An hour of finance work, now about two minutes, refreshed through the day",
+      },
+    ],
+    basisK: "Basis",
+    basis: "The finance workflow was timed by hand before the build, and the two minutes are the refresh the dashboard generates, not a stopwatch average. The harvest, mapping and ripeness work is stated as a change in what the winery can do, not as a yield or a quality result, because we do not measure those. No Monte Xanic production, sales or financial figures are published here.",
+  },
   client: {
     kicker: "The client",
     title: "Monte Xanic, Valle de Guadalupe.",
@@ -186,6 +205,25 @@ const es: typeof en = {
     wine: "botella",
     t3: ".",
     sub: "El estado de la cosecha vivía en tres lugares a la vez y no coincidía en ninguno. Lo juntamos en una sola vista viva, la amarramos a los cuadros reales de sus viñedos y le enseñamos a leer la madurez contra el estándar de Monte Xanic. **Una bodega, una sola imagen cierta, toda la temporada.**",
+  },
+  facts: {
+    aria: "Datos del caso: cliente, sector, lugar, relación, lo que construimos y el resultado",
+    rows: [
+      { k: "Cliente", v: "Monte Xanic" },
+      { k: "Sector", v: "Bodega" },
+      { k: "Lugar", v: "Valle de Guadalupe, Baja California" },
+      { k: "Relación", v: "Construcción y trabajo continuo" },
+      {
+        k: "Lo que construimos",
+        v: "Tablero de cosecha al día; mapas de los cuadros del viñedo; predicción de madurez; trazabilidad de la baya a la botella; reportes financieros automáticos",
+      },
+      {
+        k: "Resultado",
+        v: "Una hora de trabajo financiero, ahora unos dos minutos, actualizados a lo largo del día",
+      },
+    ],
+    basisK: "Base",
+    basis: "El flujo financiero se cronometró a mano antes de la construcción, y los dos minutos son la actualización que genera el tablero, no un promedio de cronómetro. El trabajo de cosecha, mapas y madurez se cuenta como un cambio en lo que la bodega puede hacer, no como un resultado de rendimiento ni de calidad, porque nosotros no medimos eso. Aquí no publicamos ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
   },
   client: {
     kicker: "El cliente",

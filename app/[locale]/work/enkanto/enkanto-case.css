@@ -187,3 +187,41 @@
   .pg-enkanto .tl-plate{max-width:180px;}
   .pg-enkanto .tl-honest{max-width:52%;}
 }
+
+/* ---- case header block (case-naming memo 6.1) ----
+   Same fields, same order, on every case page, so two cases read the same way
+   in four seconds. The outcome row is the emphasized one and the basis
+   paragraph under it accounts for every number above, which is the rule that
+   keeps a case page honest. Identical rules live in the sibling case
+   stylesheet; the two pages carry different accents but one convention. */
+.pg-enkanto .case-facts-band{
+  padding:clamp(20px,3vw,30px) 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.pg-enkanto .case-facts{
+  margin:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:clamp(14px,2vw,22px) clamp(18px,2.4vw,32px);
+}
+.pg-enkanto .case-fact{display:flex;flex-direction:column;gap:5px;min-width:0;}
+.pg-enkanto .case-fact-k{
+  font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.pg-enkanto .case-fact-v{margin:0;font-size:0.94rem;line-height:1.45;color:var(--text-dim);}
+.pg-enkanto .case-fact-outcome{grid-column:1 / -1;}
+.pg-enkanto .case-fact-outcome .case-fact-k{color:var(--enk-accent);}
+.pg-enkanto .case-fact-outcome .case-fact-v{
+  font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--text);
+}
+.pg-enkanto .case-basis{
+  margin:clamp(16px,2vw,22px) 0 0;padding-top:14px;
+  border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;
+  max-width:92ch;
+}
+.pg-enkanto .case-basis-k{
+  font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.pg-enkanto .case-basis-v{font-size:0.84rem;line-height:1.55;color:var(--muted);}
