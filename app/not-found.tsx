@@ -3,6 +3,7 @@ import SiteShell from "@/components/site/SiteShell";
 import NotFoundBody from "@/components/site/NotFoundBody";
 import { defaultLocale } from "@/lib/i18n/config";
 import { site } from "@/lib/i18n/site";
+import "./[locale]/legal.css";
 
 /**
  * The site 404. Every address that resolves to no route lands here, whether it
