@@ -190,3 +190,221 @@
 }
 @media (max-width:400px){
 }
+
+/* ---- pricing: one floor figure, three scopes as feature lists ----
+   The figure and the lists stay in one section on purpose (pricing memo 3.7
+   rule 3). While the numbers are unpublished the floor slot carries a sentence
+   instead, so the layout is identical either way and flipping the flag in
+   lib/pricing.ts needs no style change. */
+.pg-winery .price-floor{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+  margin:0 0 clamp(22px,3vw,32px);padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+}
+.pg-winery .price-floor-k{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .price-floor-v{font-size:clamp(1.05rem,1.7vw,1.32rem);color:var(--text-dim);}
+.pg-winery .price-floor-v b{color:var(--wine-bright);font-weight:600;}
+
+.pg-winery .bundle-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);
+  align-items:start;
+}
+.pg-winery .bundle{
+  position:relative;min-width:0;overflow:hidden;
+  border:1px solid var(--line);border-radius:2px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 62%, transparent), color-mix(in srgb, var(--ground) 22%, transparent));
+  padding:clamp(20px,2.4vw,26px);
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.pg-winery .bundle:hover{border-color:var(--primary-dim);transform:translateY(-3px);box-shadow:var(--shadow);}
+.pg-winery .bundle-lead{border-color:var(--wine-line);}
+.pg-winery .bundle-head{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+  gap:6px 12px;position:relative;z-index:2;
+}
+.pg-winery .bundle-name{font-size:1.24rem;letter-spacing:-0.02em;line-height:1.14;}
+.pg-winery .bundle-scale{
+  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .bundle-k{
+  position:relative;z-index:2;margin-top:8px;
+  font-family:var(--mono);font-size:0.66rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--wine-bright);
+}
+.pg-winery .bundle-list{
+  position:relative;z-index:2;margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:7px;
+}
+.pg-winery .bundle-list li{
+  position:relative;padding-left:16px;
+  color:var(--text-dim);font-size:0.92rem;line-height:1.42;
+}
+.pg-winery .bundle-list li::before{
+  content:"";position:absolute;left:0;top:0.62em;
+  width:6px;height:1px;background:var(--wine-bright);opacity:0.7;
+}
+.pg-winery .bundle-list-service li::before{background:var(--muted);opacity:0.6;}
+
+.pg-winery .price-terms{
+  margin-top:clamp(22px,3vw,32px);padding-top:18px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:minmax(120px,1fr) 3fr;gap:12px clamp(16px,2vw,26px);
+}
+.pg-winery .price-terms-k{
+  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .price-terms-list{
+  margin:0;padding:0;list-style:none;
+  display:flex;flex-direction:column;gap:8px;max-width:78ch;
+}
+.pg-winery .price-terms-list li{color:var(--text-dim);font-size:0.9rem;line-height:1.5;}
+
+@media (max-width:900px){
+  .pg-winery .bundle-grid{grid-template-columns:1fr;}
+  .pg-winery .price-terms{grid-template-columns:1fr;}
+}
+
+/* ---- assistant demo: a board, a short transcript, and the cited rows ----
+   The markup renders the RESOLVED state, so with no JS, with reduced motion,
+   or before the observer fires, the whole exchange is on screen, still and
+   complete. data-anim="pre" hides the staged pieces; data-anim="play" brings
+   them back with a transition delay per step. Nothing here animates layout,
+   so the reveal cannot reflow the page.
+
+   Full-range: the grid reflows on auto-fit with no threshold, and the frame
+   height is content height, so there is no width at which JS and CSS could
+   disagree about the composition. */
+.pg-winery .assist-demo{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));
+  gap:clamp(14px,1.8vw,20px);align-items:start;
+}
+.pg-winery .ad-board,
+.pg-winery .ad-chat{
+  min-width:0;border:1px solid var(--line);border-radius:2px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 70%, transparent), color-mix(in srgb, var(--ground) 26%, transparent));
+  padding:clamp(16px,2vw,22px);
+}
+.pg-winery .ad-board{display:flex;flex-direction:column;gap:14px;}
+
+.pg-winery .ad-board-head{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  padding-bottom:10px;border-bottom:1px solid var(--line);
+}
+.pg-winery .ad-board-title{font-size:1.02rem;letter-spacing:-0.01em;font-weight:600;}
+.pg-winery .ad-live{
+  font-size:0.6rem;letter-spacing:0.18em;color:var(--primary);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.pg-winery .ad-live::before{
+  content:"";width:5px;height:5px;border-radius:50%;background:var(--primary);
+}
+
+.pg-winery .ad-chart{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:end;}
+.pg-winery .ad-chart-k{
+  grid-column:1 / -1;font-size:0.62rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--muted);
+}
+.pg-winery .ad-bars{
+  display:flex;align-items:flex-end;gap:5px;height:56px;min-width:0;
+}
+.pg-winery .ad-bar{
+  flex:1 1 0;min-width:0;height:calc(var(--h) * 100%);
+  background:linear-gradient(180deg, var(--wine-bright), color-mix(in srgb, var(--wine-bright) 30%, transparent));
+  transform-origin:50% 100%;
+}
+.pg-winery .ad-chart-v{
+  font-size:1.18rem;font-weight:600;color:var(--wine-bright);white-space:nowrap;
+}
+
+.pg-winery .ad-rows{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;}
+.pg-winery .ad-row{
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  padding:9px 10px;border-top:1px solid var(--line);
+  border-left:2px solid transparent;
+  font-size:0.88rem;color:var(--text-dim);
+  transition:background .4s ease, border-left-color .4s ease, color .4s ease;
+}
+.pg-winery .ad-row-v{font-size:0.72rem;color:var(--muted);white-space:nowrap;}
+.pg-winery .ad-row-cited{
+  border-left-color:var(--wine-bright);color:var(--text);
+  background:color-mix(in srgb, var(--wine-bright) 9%, transparent);
+}
+
+.pg-winery .ad-chat{display:flex;flex-direction:column;gap:12px;}
+.pg-winery .ad-label{
+  margin:0;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);
+}
+.pg-winery .ad-exchange{display:flex;flex-direction:column;gap:10px;}
+.pg-winery .ad-q{
+  margin:0;align-self:flex-start;max-width:92%;
+  padding:9px 12px;border:1px solid var(--line);border-radius:2px;
+  background:color-mix(in srgb, var(--panel) 80%, transparent);
+  font-size:0.92rem;color:var(--text);
+}
+.pg-winery .ad-a{
+  align-self:stretch;padding:11px 13px;border-radius:2px;
+  border:1px solid var(--wine-line);
+  background:color-mix(in srgb, var(--wine-bright) 7%, transparent);
+  display:flex;flex-direction:column;gap:5px;
+}
+.pg-winery .ad-a-line{margin:0;font-size:0.92rem;line-height:1.45;color:var(--text);}
+.pg-winery .ad-cite{
+  margin:4px 0 0;padding-top:8px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;
+}
+.pg-winery .ad-cite-k{
+  font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--wine-bright);
+}
+.pg-winery .ad-cite-v{font-size:0.8rem;color:var(--text-dim);font-style:italic;}
+.pg-winery .ad-rule{height:1px;background:var(--line);margin:2px 0;}
+
+/* ---- the staged reveal, and only the staged reveal ---- */
+.pg-winery .assist-demo[data-anim="pre"] .ad-turn{opacity:0;transform:translateY(8px);}
+.pg-winery .assist-demo[data-anim="pre"] .ad-bar{transform:scaleY(0.06);}
+.pg-winery .assist-demo[data-anim="pre"] .ad-row-cited{
+  border-left-color:transparent;background:transparent;color:var(--text-dim);
+}
+.pg-winery .assist-demo[data-anim="play"] .ad-turn{
+  opacity:1;transform:none;
+  transition:opacity .45s ease, transform .45s ease;
+  transition-delay:calc(0.25s + var(--i) * 0.55s);
+}
+.pg-winery .assist-demo[data-anim="play"] .ad-bar{
+  transform:none;transition:transform .5s ease;
+  transition-delay:calc(var(--i) * 0.06s);
+}
+.pg-winery .assist-demo[data-anim="play"] .ad-row-cited{
+  transition-delay:calc(0.5s + (var(--i) * 2 + 1) * 0.55s);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .pg-winery .assist-demo .ad-turn{opacity:1;transform:none;transition:none;}
+  .pg-winery .assist-demo .ad-bar{transform:none;transition:none;}
+  .pg-winery .assist-demo .ad-row-cited{
+    border-left-color:var(--wine-bright);color:var(--text);
+    background:color-mix(in srgb, var(--wine-bright) 9%, transparent);
+    transition:none;
+  }
+}
+
+.pg-winery .assist-copy{max-width:66ch;display:flex;flex-direction:column;gap:14px;}
+.pg-winery .assist-copy p{color:var(--text-dim);font-size:1rem;line-height:1.6;}
+.pg-winery .assist-note{
+  margin-top:6px;font-family:var(--mono);font-size:0.78rem;letter-spacing:0.02em;
+  color:var(--muted);
+}
+.pg-winery .assist-note b{color:var(--wine-bright);font-weight:600;}
+.pg-winery .assist-grid{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+  gap:clamp(20px,3vw,40px);align-items:start;
+}
+@media (max-width:900px){
+  .pg-winery .assist-grid{grid-template-columns:1fr;}
+}

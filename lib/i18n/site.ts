@@ -37,6 +37,8 @@ const en = {
     hiring: "Hiring",
     restaurants: "Restaurants",
     clinics: "Clinics",
+    about: "About",
+    contact: "Contact",
     cta: "Get the diagnostic",
     modeToggle: "Switch between light and dark mode",
     darkMode: "Dark mode",
@@ -101,6 +103,10 @@ const es: typeof en = {
     hiring: "Reclutamiento",
     restaurants: "Restaurantes",
     clinics: "Clínicas",
+    /* Short in the nav bar, where five items plus the switch and the CTA
+       share one line above 820px; the footer keeps the full phrase. */
+    about: "Nosotros",
+    contact: "Contacto",
     cta: "Pida el diagnóstico",
     modeToggle: "Cambiar entre modo claro y modo oscuro",
     darkMode: "Modo oscuro",
