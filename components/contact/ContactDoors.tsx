@@ -11,9 +11,10 @@ import {
   type Attribution,
 } from "@/lib/contact/attribution";
 import { bookingHref, whatsappHref, whatsappText } from "@/lib/contact/links";
+import { DOORS } from "@/lib/contact/doors";
 
-/* Read at build time and inlined, so the whole expression has to be written
-   out: Next only substitutes the literal form. */
+/* The environment values are read once, in lib/contact/doors, so the page copy
+   and the doors themselves always agree on how many doors there are. */
 const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP;
 const BOOKING = process.env.NEXT_PUBLIC_BOOKING_URL;
 
@@ -35,11 +36,10 @@ export default function ContactDoors() {
     setAttribution(readAttribution());
   }, []);
 
-  const waHref = whatsappHref(
-    WHATSAPP,
-    whatsappText(d.whatsapp.prefill, attribution),
-  );
-  const bookHref = bookingHref(BOOKING, attribution);
+  const waHref = DOORS.whatsapp
+    ? whatsappHref(WHATSAPP, whatsappText(d.whatsapp.prefill, attribution))
+    : "";
+  const bookHref = DOORS.booking ? bookingHref(BOOKING, attribution) : "";
 
   if (!waHref && !bookHref) return null;
 
