@@ -2,14 +2,12 @@ import type { Locale } from "./i18n/config";
 
 /**
  * Pricing data module. Data only: no formatting decisions about how a page
- * lays a tier out, no copy. Every string a reader sees lives in lib/i18n.
+ * lays a scope out, no copy. Every string a reader sees lives in lib/i18n.
  *
- * TODO(pricing bead): the amounts below are the pre-winery card, in USD.
- * Daniel's 2026-09-02 direction is that these are too high for the Valle
- * market and get replaced by the winery tiers (Bitacora, Vendimia, Casa) in
- * MXN. Until that bead lands, `es` carries the same structure with
- * `placeholder: true` so the Spanish site never prints a peso figure we have
- * not agreed. Replace the numbers, flip the flag, and nothing else changes.
+ * The pre-winery card (Quick Win / Operations System / Full Operational Build,
+ * three published USD figures plus a care and an ad floor) is gone: no current
+ * document carries those numbers, and no page reads them. The site sells the
+ * three winery scopes below, on both the winery page and the home page.
  */
 
 export type CurrencyCode = "MXN" | "USD";
@@ -18,54 +16,6 @@ export const currencyByLocale: Record<Locale, CurrencyCode> = {
   es: "MXN",
   en: "USD",
 };
-
-export type TierId = "quickWin" | "operations" | "full";
-
-export type TierAmounts = {
-  /** Published floor, in the locale's currency. */
-  from: number;
-};
-
-export type PricingTable = {
-  currency: CurrencyCode;
-  /** False once the pricing bead has set real figures for this locale. */
-  placeholder: boolean;
-  tiers: Record<TierId, TierAmounts>;
-  /** Optional monthly care retainer floor. */
-  care: TierAmounts;
-  /** Ad management floor, a share of spend above it. */
-  ads: TierAmounts;
-};
-
-export const pricing: Record<Locale, PricingTable> = {
-  en: {
-    currency: "USD",
-    placeholder: false,
-    // TODO(pricing bead): current published card, kept as is by this bead.
-    tiers: {
-      quickWin: { from: 3500 },
-      operations: { from: 12000 },
-      full: { from: 35000 },
-    },
-    care: { from: 400 },
-    ads: { from: 1200 },
-  },
-  es: {
-    currency: "MXN",
-    // TODO(pricing bead): peso figures are not set. While this is true the
-    // Spanish pricing section prints the diagnostic line instead of a number.
-    placeholder: true,
-    tiers: {
-      quickWin: { from: 0 },
-      operations: { from: 0 },
-      full: { from: 0 },
-    },
-    care: { from: 0 },
-    ads: { from: 0 },
-  },
-};
-
-export const tierOrder: TierId[] = ["quickWin", "operations", "full"];
 
 const groupLocale: Record<Locale, string> = { es: "es-MX", en: "en-US" };
 
@@ -76,19 +26,8 @@ export function formatAmount(amount: number, locale: Locale): string {
   }).format(amount);
 }
 
-/** Amount with its currency mark, as a reader sees it in a sentence. */
-export function formatMoney(locale: Locale, amount: number): string {
-  const n = formatAmount(amount, locale);
-  return locale === "en" ? "$" + n : "$" + n + " MXN";
-}
-
-export function pricingFor(locale: Locale): PricingTable {
-  return pricing[locale];
-}
-
 /* ============================ WINERY BUNDLES ============================
-   The winery practice does not sell the card above. It sells three scoped
-   bundles, each a setup fee plus a monthly service fee, priced in
+   Three scoped bundles, each a setup fee plus a monthly service fee, priced in
    research/2026-09/pricing-features.md section 2.3. Section 3.7 of that memo
    governs how the figures may be written in public:
 
