@@ -10,6 +10,14 @@ const en = {
   skipToContent: "Skip to content",
   brandHome: "Cardon Digital home",
   brandline: "Built to hold water",
+  /** The 404 page. Shown for any address that does not resolve to a route. */
+  notFound: {
+    metaTitle: "Page not found",
+    eyebrow: "404",
+    title: "That page is not here.",
+    body: "The link may be old, or the address may carry a typo. The work, the industries and the diagnostic are all one step away from the home page.",
+    home: "Back to the home page",
+  },
   meta: {
     title: "Cardon Digital | Growth systems built to hold water",
     titleTemplate: "%s | Cardon Digital",
@@ -66,6 +74,14 @@ const es: typeof en = {
   skipToContent: "Saltar al contenido",
   brandHome: "Cardon Digital, inicio",
   brandline: "Sistemas que siguen funcionando cuando nos vamos",
+  /** The 404 page. Shown for any address that does not resolve to a route. */
+  notFound: {
+    metaTitle: "Página no encontrada",
+    eyebrow: "404",
+    title: "Esa página no está aquí.",
+    body: "Puede que el enlace ya esté viejo o que la dirección traiga un error de dedo. Los casos, los sectores y el diagnóstico quedan a un paso desde la página de inicio.",
+    home: "Volver al inicio",
+  },
   meta: {
     title: "Cardon Digital | El sistema con el que trabaja su bodega",
     titleTemplate: "%s | Cardon Digital",
