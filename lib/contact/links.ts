@@ -8,12 +8,20 @@
 
 import { shortLeadId, type Attribution } from "./attribution";
 
-/** Ad group lane to the token that appears in the WhatsApp text. */
-const LANE_TOKENS: Record<string, string> = {
-  "vin-sistemas": "VIN-A1",
-  "vin-marketing": "VIN-A2",
-  "ens-servicios": "ENS-B1",
-};
+/**
+ * Ad group lane to the token that appears in the WhatsApp text.
+ *
+ * A Map, not an object literal, because the lane arrives from the URL and an
+ * object literal answers for every name on Object.prototype: cd_lane=
+ * constructor would otherwise put "[function Object() { [native code] }]" in
+ * the prefill a prospect sends us. A Map only answers for lanes we put in it,
+ * and an unknown lane leaves the prefill alone.
+ */
+const LANE_TOKENS = new Map<string, string>([
+  ["vin-sistemas", "VIN-A1"],
+  ["vin-marketing", "VIN-A2"],
+  ["ens-servicios", "ENS-B1"],
+]);
 
 /** wa.me wants digits only: no plus, no spaces, no punctuation. */
 export function whatsappNumber(raw: string | undefined): string {
@@ -27,7 +35,7 @@ export function whatsappNumber(raw: string | undefined): string {
  * when the visit carries them, so a reply can be traced to its campaign.
  */
 export function whatsappText(base: string, attribution: Attribution): string {
-  const token = LANE_TOKENS[attribution.cd_lane] ?? "";
+  const token = LANE_TOKENS.get(attribution.cd_lane) ?? "";
   const short = shortLeadId(attribution.cd_lead_id);
   const marks = [token, short].filter(Boolean);
   return marks.length > 0 ? base + " [" + marks.join(" ") + "]" : base;
