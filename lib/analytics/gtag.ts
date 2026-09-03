@@ -12,15 +12,27 @@ export function loaderSrc(): string | null {
  * arrived with consent already given, and injected by the banner for a visitor
  * who accepts during the visit, so neither path needs a reload.
  *
- * Consent Mode is set to granted here rather than defaulted to denied and then
- * updated, because this script only ever exists once consent is in hand.
+ * Every consent type is named explicitly in both calls, denied first and then
+ * updated, because gtag.js treats a type that no call ever names as granted: its
+ * internal gate returns true for the "not set" state, so omitting a key does not
+ * withhold it, it only hides it. Denying by name is the only way to withhold,
+ * and it is also Google's stated practice of setting a default for each type
+ * used. See support.google.com/google-ads/answer/13802165.
+ *
+ * The update grants the three keys the privacy policy names: analytics_storage
+ * for Google Analytics 4, and ad_storage plus ad_user_data for Google Ads
+ * conversion measurement (ad_storage keeps the click cookie, ad_user_data lets
+ * the conversion reach Google). ad_personalization stays denied: Google lists it
+ * as the switch for remarketing and personalized advertising, which the policy
+ * describes nowhere and which conversion measurement does not need.
  */
 export function bootstrapScript(): string {
   const lines = [
     "window.dataLayer=window.dataLayer||[];",
     "function gtag(){window.dataLayer.push(arguments);}",
     "window.gtag=gtag;",
-    "gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});",
+    "gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});",
+    "gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'denied',analytics_storage:'granted'});",
     "gtag('js',new Date());",
   ];
   if (GA4_ID) lines.push("gtag('config','" + GA4_ID + "');");
