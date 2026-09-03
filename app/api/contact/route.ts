@@ -10,12 +10,13 @@ import { MAX_BODY_BYTES, validateSubmission } from "@/lib/contact/validate";
  * Order matters and is deliberate: cheapest rejection first, so an abusive
  * caller is turned away before anything is parsed or sent.
  *
- *   1. body size, from the declared length and again as the stream is read
- *   2. per address rate limit
- *   3. JSON parse
- *   4. field validation, which is also the header injection gate
- *   5. honeypot, answered with success so a bot learns nothing
- *   6. delivery, or dry mode when the practice is not wired for mail yet
+ *   1. content type, which is also what closes the cross-origin form path
+ *   2. body size, from the declared length and again as the stream is read
+ *   3. per address rate limit
+ *   4. JSON parse
+ *   5. field validation, which is also the header injection gate
+ *   6. honeypot, answered with success so a bot learns nothing
+ *   7. delivery, or dry mode when the practice is not wired for mail yet
  *
  * The route is a Node handler rather than an edge one because the rate limit
  * keeps its window in module memory.
@@ -31,6 +32,14 @@ function fail(status: number, error: string, extra: Record<string, unknown> = {}
 }
 
 export async function POST(req: Request) {
+  // Only JSON is accepted, which is also what keeps a cross-origin form from
+  // reaching this route: a browser cannot send application/json across origins
+  // without a preflight, and no preflight is answered here.
+  const contentType = req.headers.get("content-type") ?? "";
+  if (!contentType.toLowerCase().includes("application/json")) {
+    return fail(415, "unsupported_type");
+  }
+
   const declared = Number(req.headers.get("content-length") ?? "0");
   if (Number.isFinite(declared) && declared > MAX_BODY_BYTES) {
     return fail(413, "too_large");
