@@ -92,6 +92,50 @@ const en = {
     ],
     foot: "Your own numbers come out of the diagnostic.",
   },
+  assist: {
+    kicker: "The assistant",
+    title: "Ask your own cellar a question. Get your own record back.",
+    body: [
+      "A harvest leaves a trail. Lab sheets, tank cards, field notebooks, a spreadsheet somebody keeps on a laptop. None of it is wrong. It is scattered, and by the time anyone gathers it the decision has already been made. We put the trail in one place and keep it current, so the number you need at six in the morning in the cellar is the number you get.",
+      "Nothing here decides anything about your wine. The blend, the pick date, the time on skins stay where they belong. The system remembers, calculates, and compares. It holds every vintage you have made, sets this one beside the last four, and shows the difference without anyone re-typing a page.",
+      "The assistant on top of it answers in plain language and shows its work. Ask what the Cabernet's total acidity did last week and it returns the lab record it read, with the date and the lot. If the record does not exist, it says so. It never fills a gap with a plausible number, because in a cellar a plausible number is worse than none.",
+    ],
+    note: "**Every answer** carries the record it came from.",
+    demo: {
+      label: "Illustrative data",
+      aria: "A winery dashboard beside an assistant. Two questions are asked and answered. Each answer names the record it read and marks the matching row on the dashboard. The second answer says there is no data rather than estimating.",
+      boardTitle: "Cellar view",
+      live: "LIVE",
+      chartK: "Brix, Cabernet Sauvignon",
+      chartV: "24.3 Bx",
+      rows: [
+        { k: "Berry sampling", v: "28 Aug 2026" },
+        { k: "Tank intake", v: "30 Aug 2026" },
+        { k: "Technical measurements", v: "1 Sep 2026" },
+        { k: "Sales", v: "to 31 Aug 2026" },
+      ],
+      citeK: "Record",
+      turns: [
+        {
+          q: "How is the Cabernet Sauvignon tracking on Brix this week?",
+          a: [
+            "24.3 Bx, tonnage-weighted across 6 samples.",
+            "Same week in 2025: 23.8 Bx.",
+            "Ripening is running about 5 days ahead.",
+          ],
+          cite: "Berry sampling, 28 August 2026, lots 26-CS-01 to 26-CS-06.",
+        },
+        {
+          q: "How much fruit came in yesterday?",
+          a: [
+            "No data. There are no intake records entered for 1 September 2026.",
+            "The last one is 30 August: 18.4 t of Chenin Blanc.",
+          ],
+          cite: "Tank intake, 30 August 2026.",
+        },
+      ],
+    },
+  },
   proof: {
     kicker: "Case study",
     title: "Proof, not a promise.",
@@ -292,6 +336,50 @@ const es: typeof en = {
       },
     ],
     foot: "Sus propios números salen del diagnóstico.",
+  },
+  assist: {
+    kicker: "El asistente",
+    title: "Pregúntele a su bodega. La respuesta es su propio registro.",
+    body: [
+      "Una cosecha deja rastro. Hojas de laboratorio, tarjetas de tanque, libretas de campo, una hoja de cálculo que alguien guarda en su computadora. Nada de eso está mal. Está disperso, y para cuando se junta, la decisión ya se tomó. Nosotros lo reunimos en un solo lugar y lo mantenemos al día, para que el dato que usted necesita a las seis de la mañana en la bodega sea el dato que reciba.",
+      "Aquí nada decide sobre su vino. La mezcla, la fecha de corte y el tiempo en pieles se quedan donde deben estar. El sistema recuerda, calcula y compara. Guarda cada añada que usted ha hecho, pone esta junto a las cuatro anteriores y muestra la diferencia sin que nadie vuelva a capturar una hoja.",
+      "El asistente que va encima responde en lenguaje claro y enseña de dónde salió la respuesta. Pregúntele qué hizo la acidez total del Cabernet la semana pasada y le devuelve el registro de laboratorio que leyó, con fecha y lote. Si el registro no existe, lo dice. Nunca rellena un hueco con un número verosímil, porque en una bodega un número verosímil es peor que ninguno.",
+    ],
+    note: "**Cada respuesta** trae el registro del que salió.",
+    demo: {
+      label: "Datos de ejemplo",
+      aria: "Un tablero de bodega junto a un asistente. Se hacen dos preguntas y se responden. Cada respuesta nombra el registro que leyó y marca la fila que le corresponde en el tablero. La segunda respuesta dice que no hay dato en lugar de estimarlo.",
+      boardTitle: "Vista de bodega",
+      live: "AL DÍA",
+      chartK: "Brix, Cabernet Sauvignon",
+      chartV: "24.3 Bx",
+      rows: [
+        { k: "Muestreo de bayas", v: "28 ago 2026" },
+        { k: "Recepción de tanque", v: "30 ago 2026" },
+        { k: "Mediciones técnicas", v: "1 sep 2026" },
+        { k: "Ventas", v: "al 31 ago 2026" },
+      ],
+      citeK: "Registro",
+      turns: [
+        {
+          q: "¿Cómo va el Cabernet Sauvignon en grados Brix esta semana?",
+          a: [
+            "24.3 Bx, promedio ponderado por tonelaje de 6 muestras.",
+            "En la misma semana de 2025: 23.8 Bx.",
+            "Maduración adelantada unos 5 días.",
+          ],
+          cite: "Muestreo de bayas, 28 de agosto de 2026, lotes 26-CS-01 a 26-CS-06.",
+        },
+        {
+          q: "¿Cuánta uva recibimos ayer?",
+          a: [
+            "No hay dato. No existen recepciones capturadas para el 1 de septiembre de 2026.",
+            "El último registro es del 30 de agosto: 18.4 t de Chenin Blanc.",
+          ],
+          cite: "Recepción de tanque, 30 de agosto de 2026.",
+        },
+      ],
+    },
   },
   proof: {
     kicker: "Caso de estudio",

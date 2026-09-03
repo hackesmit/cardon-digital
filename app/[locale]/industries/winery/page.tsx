@@ -4,6 +4,7 @@ import Reveal from "@/components/site/Reveal";
 import VineField from "@/components/pages/winery/VineField";
 import SpotlightFrames from "@/components/pages/winery/SpotlightFrames";
 import PricingBundles from "@/components/pages/winery/PricingBundles";
+import AssistantDemo from "@/components/pages/winery/AssistantDemo";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -299,6 +300,30 @@ export default function WineryPage({ params }: Params) {
               ))}
             </ol>
             <p className="leak-foot">{d.leak.foot}</p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ ASSISTANT ============================ */}
+      <section className="section assist" id="assistant" aria-labelledby="assist-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker wine">{d.assist.kicker}</span>
+              <h2 id="assist-title">{d.assist.title}</h2>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="assist-grid">
+              <div className="assist-copy">
+                {d.assist.body.map((para) => (
+                  <p key={para}>{para}</p>
+                ))}
+                <p className="assist-note">{rich(d.assist.note)}</p>
+              </div>
+              <AssistantDemo />
+            </div>
           </Reveal>
         </div>
       </section>
