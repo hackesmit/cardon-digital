@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { winery } from "@/lib/i18n/winery";
 
 type RGB = [number, number, number];
 type Pt = { x: number; y: number };
@@ -47,6 +49,7 @@ type Geom = {
  * "cardon-mode" event when the mode toggle fires.
  */
 export default function VineField() {
+  const t = useDict(winery).vis;
   const stageRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -420,7 +423,7 @@ export default function VineField() {
     // visible strip that alternates between the old scattered records and the
     // live view, then settles on NOW once the bottle is full.
     const LEDGER_CYCLE = 8.2;
-    const LEDGER_WAS_TEXT = "notebooks, spreadsheets, a legacy system";
+    const LEDGER_WAS_TEXT = t.ledgerWasText;
 
     const layout = () => {
       compact = W < COMPACT_W;
@@ -872,13 +875,13 @@ export default function VineField() {
         ctx.textBaseline = "middle";
         ctx.textAlign = "left";
         ctx.fillStyle = full ? PAL.primary : PAL.muted;
-        ctx.fillText(full ? "CURRENT" : "LIVE", g.CN.x + 15, g.CN.y);
+        ctx.fillText(full ? t.current : t.live, g.CN.x + 15, g.CN.y);
         ctx.textBaseline = "alphabetic";
         ctx.textAlign = "center";
         ctx.font = "600 11px " + MONO;
         ctx.fillStyle = PAL.dim;
         ctx.fillText(
-          full ? "one connected view" : "reporting",
+          full ? t.captionFullCompact : t.captionPre,
           g.bcx,
           Math.min(H - 10, g.bTop + g.bh + 24)
         );
@@ -890,16 +893,16 @@ export default function VineField() {
       ctx.textBaseline = "alphabetic";
       ctx.textAlign = "left";
       ctx.fillStyle = PAL.ink;
-      ctx.fillText("One cellar view", g.xC + 27, 21);
+      ctx.fillText(t.header, g.xC + 27, 21);
       ctx.textAlign = "right";
       ctx.font = "600 9px " + MONO;
       ctx.fillStyle = full ? PAL.primary : PAL.muted;
-      ctx.fillText(full ? "CURRENT" : "LIVE", W - 10, 21);
+      ctx.fillText(full ? t.current : t.live, W - 10, 21);
       ctx.textAlign = "center";
       ctx.font = "600 10px " + MONO;
       ctx.fillStyle = PAL.muted;
       ctx.fillText(
-        full ? "all in one view" : "reporting",
+        full ? t.captionFull : t.captionPre,
         g.bcx,
         Math.min(H - 8, g.bTop + g.bh + 18)
       );
@@ -924,15 +927,15 @@ export default function VineField() {
       const d = new Date();
       const hh = String(d.getHours());
       const mm = String(d.getMinutes()).padStart(2, "0");
-      const nowText = "one view, synced " + (hh.length < 2 ? "0" + hh : hh) + ":" + mm;
+      const nowText = t.ledgerNowText + (hh.length < 2 ? "0" + hh : hh) + ":" + mm;
       const fs = W < 380 ? 9.5 : 10.5;
       const c = ctx;
       c.font = "600 " + fs + "px " + MONO;
       c.textBaseline = "middle";
       c.textAlign = "left";
       const entries: Array<{ a: number; pre: string; body: string; preCol: string; bodyCol: string }> = [
-        { a: 1 - nowA, pre: "was:", body: LEDGER_WAS_TEXT, preCol: PAL.secondary, bodyCol: PAL.muted },
-        { a: nowA, pre: "now:", body: nowText, preCol: PAL.primary, bodyCol: PAL.dim },
+        { a: 1 - nowA, pre: t.ledgerWas, body: LEDGER_WAS_TEXT, preCol: PAL.secondary, bodyCol: PAL.muted },
+        { a: nowA, pre: t.ledgerNow, body: nowText, preCol: PAL.primary, bodyCol: PAL.dim },
       ];
       for (const en of entries) {
         if (en.a <= 0.01) continue;
@@ -1137,22 +1140,18 @@ export default function VineField() {
   return (
     <div className="stage-frame spot" ref={stageRef}>
       <span className="stage-tag mono">
-        <span className="before">scattered records</span>{" "}
-        <span className="midword">wired into</span>{" "}
-        <span className="after">one view</span>
+        <span className="before">{t.tagBefore}</span>{" "}
+        <span className="midword">{t.tagMid}</span>{" "}
+        <span className="after">{t.tagAfter}</span>
       </span>
       <canvas
         className="vine-canvas"
         ref={canvasRef}
         role="img"
-        aria-label="Scattered old records, field notebooks, spreadsheet cards, and a legacy terminal window, stream their contents one by one into a single collection channel that fills a wine bottle. Each emptied source fades away; a ledger flips from the old scattered state to one live view, and a cork slides into the full bottle."
+        aria-label={t.aria}
       />
       <noscript>
-        <div className="stage-fallback">
-          Notebooks, spreadsheets, and a legacy system stream their contents into
-          one collection channel that fills a single cellar view. Scattered
-          records, wired into one view.
-        </div>
+        <div className="stage-fallback">{t.fallback}</div>
       </noscript>
     </div>
   );

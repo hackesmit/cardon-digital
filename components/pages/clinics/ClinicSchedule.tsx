@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { clinics } from "@/lib/i18n/clinics";
 
 /**
  * Signature visual: two inquiry streams becoming one calm week.
@@ -106,6 +108,7 @@ type Palette = {
 };
 
 export default function ClinicSchedule() {
+  const t = useDict(clinics).vis;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const hotWrapRef = useRef<HTMLDivElement | null>(null);
   const captionRef = useRef<HTMLSpanElement | null>(null);
@@ -280,10 +283,10 @@ export default function ClinicSchedule() {
     const COLS = 5;
     const ROWS = 3;
     const N = COLS * ROWS;
-    const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-    const DAYLET = ["M", "T", "W", "T", "F"];
+    const DAYS = t.days;
+    const DAYLET = t.dayLetters;
     const SLOTS = ["09:30", "12:00", "16:00"];
-    const GLYPHS = ["CALL", "FORM", "MSG", "DM"];
+    const GLYPHS = t.glyphs;
 
     /* build order: row-major so the week fills evenly, left to right, top down */
     const ORDER: Cell[] = [];
@@ -432,13 +435,10 @@ export default function ClinicSchedule() {
         btn.setAttribute("aria-hidden", "true");
         btn.setAttribute(
           "aria-label",
-          "Appointment, illustrative. " +
-            day +
-            " " +
-            time +
-            ", " +
-            ch.channel +
-            " inquiry, confirmed."
+          t.slotAria
+            .replace("{day}", day)
+            .replace("{time}", time)
+            .replace("{channel}", ch.channel)
         );
         if (cell.r === 0) btn.classList.add("plate-below");
         if (cell.c === 0) btn.classList.add("plate-left");
@@ -451,10 +451,10 @@ export default function ClinicSchedule() {
         l1.textContent = day + " " + time;
         const l2 = document.createElement("span");
         l2.className = "p-meta";
-        l2.textContent = ch.channel + " inquiry / confirmed";
+        l2.textContent = ch.channel + t.plateMeta;
         const l3 = document.createElement("span");
         l3.className = "p-illus";
-        l3.textContent = "illustrative";
+        l3.textContent = t.illustrative;
         plate.appendChild(l1);
         plate.appendChild(l2);
         plate.appendChild(l3);
@@ -626,7 +626,7 @@ export default function ClinicSchedule() {
         ctx!.font = "600 10px " + MONO;
         ctx!.textAlign = "left";
         ctx!.textBaseline = "middle";
-        ctx!.fillText("confirm", gx + gh + 7, gy);
+        ctx!.fillText(t.confirm, gx + gh + 7, gy);
         return;
       }
       const gx = g.gateX;
@@ -647,7 +647,7 @@ export default function ClinicSchedule() {
       ctx!.font = "600 8px " + MONO;
       ctx!.textAlign = "center";
       ctx!.textBaseline = "alphabetic";
-      ctx!.fillText("confirm", gx, gy + gh + 10);
+      ctx!.fillText(t.confirm, gx, gy + gh + 10);
     };
     const drawStreams = () => {
       const g = G!;
@@ -760,10 +760,10 @@ export default function ClinicSchedule() {
       ctx!.font = "600 " + (compact ? 10 : 8) + "px " + MONO;
       ctx!.textAlign = "center";
       ctx!.textBaseline = "alphabetic";
-      ctx!.fillText("reminder", gx, gy - g.chipH - (compact ? 10 : 8));
+      ctx!.fillText(t.reminder, gx, gy - g.chipH - (compact ? 10 : 8));
       ctx!.fillStyle = PAL.muted;
       ctx!.font = "600 " + (compact ? 9 : 7) + "px " + MONO;
-      ctx!.fillText("no-show prevented", gx, gy - g.chipH - (compact ? 23 : 19));
+      ctx!.fillText(t.noShow, gx, gy - g.chipH - (compact ? 23 : 19));
       ctx!.globalAlpha = 1;
     };
 
@@ -871,8 +871,8 @@ export default function ClinicSchedule() {
       }
 
       if (caption) {
-        if (staticFull || T >= FILL_DONE) caption.textContent = "one calm week";
-        else caption.textContent = "filling the week";
+        if (staticFull || T >= FILL_DONE) caption.textContent = t.calm;
+        else caption.textContent = t.filling;
       }
     };
 
@@ -993,29 +993,22 @@ export default function ClinicSchedule() {
     <div className="stage-wrap">
       <div className="stage-frame sig-frame" id="sigFrame">
         <span className="stage-tag mono">
-          <span className="before">EN + ES</span>{" "}
-          <span className="midword">merge into</span>{" "}
-          <span className="after">one calm week</span>
+          <span className="before">{t.tagBefore}</span>{" "}
+          <span className="midword">{t.tagMid}</span>{" "}
+          <span className="after">{t.tagAfter}</span>
         </span>
         <span className="stage-caption mono" id="sigCaption" ref={captionRef}>
-          filling the week
+          {t.filling}
         </span>
         <canvas id="clinicCanvas" ref={canvasRef} aria-hidden="true" />
         <div
           className="cal-hotspots"
           id="calHotspots"
           ref={hotWrapRef}
-          aria-label="Illustrative week schedule. Appointments dock from two language channels."
+          aria-label={t.hotspotsAria}
         />
         <noscript>
-          <div className="stage-fallback">
-            Inquiry chips arrive from two channels, one labeled EN and one
-            labeled ES, carrying calls, forms, and messages. They merge into a
-            single intake line, pause briefly at a confirm step where a reminder
-            prevents a no-show, then dock as appointments onto a clean week grid
-            that fills evenly. Two languages, many channels, one schedule the
-            front desk can trust. Labels are illustrative.
-          </div>
+          <div className="stage-fallback">{t.fallback}</div>
         </noscript>
       </div>
     </div>

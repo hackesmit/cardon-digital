@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { enkanto } from "@/lib/i18n/enkanto";
 import {
   clamp01,
   easeInOut,
@@ -45,10 +47,10 @@ import {
 
 type ColorKey = "primary" | "secondary" | "energy";
 
+type SeriesKey = "wine" | "stays" | "restaurant";
+
 type Series = {
-  key: string;
-  label: string;
-  work: string;
+  key: SeriesKey;
   from: number;
   to: number;
   amp: number;
@@ -63,8 +65,6 @@ type Series = {
 const SERIES: Series[] = [
   {
     key: "wine",
-    label: "Wine sales",
-    work: "shop and cross-border shipping",
     from: 0.2,
     to: 0.82,
     amp: 0.028,
@@ -73,8 +73,6 @@ const SERIES: Series[] = [
   },
   {
     key: "stays",
-    label: "Stays",
-    work: "listing and booking flow",
     from: 0.15,
     to: 0.62,
     amp: 0.024,
@@ -83,8 +81,6 @@ const SERIES: Series[] = [
   },
   {
     key: "restaurant",
-    label: "Restaurant",
-    work: "reservations and follow-up",
     from: 0.1,
     to: 0.46,
     amp: 0.02,
@@ -116,19 +112,22 @@ type Hot = {
 
 /* SSR / pre-measure default positions; positionHots() overrides them with the
    real line ends once the fluid layout is computed. */
-const HOTS: Hot[] = SERIES.map((sdef) => ({
-  key: sdef.key,
-  fx: 0.8,
-  fy: 0.86 - 0.6 * clamp01(sdef.to),
-  name: sdef.label,
-  status: "kept growing through the season",
-  action: sdef.work,
-  label:
-    sdef.label +
-    " kept growing through the season. The work beside it: " +
-    sdef.work +
-    ".",
-}));
+function buildHots(t: ThreeLinesDict): Hot[] {
+  return SERIES.map((sdef) => {
+    const s = t.series[sdef.key];
+    return {
+      key: sdef.key,
+      fx: 0.8,
+      fy: 0.86 - 0.6 * clamp01(sdef.to),
+      name: s.label,
+      status: t.status,
+      action: s.work,
+      label: t.hotLabel.replace("{name}", s.label).replace("{work}", s.work),
+    };
+  });
+}
+
+type ThreeLinesDict = (typeof enkanto)["en"]["vis"];
 
 /* timeline (seconds): the lines draw in slowly, then settle and hold */
 const DRAW_DUR = 5.0;
@@ -147,6 +146,8 @@ type Layout = {
 };
 
 export default function ThreeLines() {
+  const t = useDict(enkanto).vis;
+  const hotSpots = buildHots(t);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const plateRef = useRef<HTMLDivElement | null>(null);
@@ -273,10 +274,10 @@ export default function ThreeLines() {
         const lx = PLm + 10;
         const ly = ym(BACK_FROM) - 12;
         if (twoLine) {
-          ctx.fillText("Valle visitor flow,", lx, ly - 15);
-          ctx.fillText("the season", lx, ly);
+          ctx.fillText(t.backdropL1, lx, ly - 15);
+          ctx.fillText(t.backdropL2, lx, ly);
         } else {
-          ctx.fillText("Valle visitor flow, the season", lx, ly);
+          ctx.fillText(t.backdropOne, lx, ly);
         }
         ctx.globalAlpha = 1;
       }
@@ -312,7 +313,7 @@ export default function ThreeLines() {
           ctx.textAlign = "left";
           ctx.textBaseline = "middle";
           ctx.fillStyle = col(SERIES[i].colorKey);
-          ctx.fillText(SERIES[i].label, end.x + 12, end.y);
+          ctx.fillText(t.series[SERIES[i].key].label, end.x + 12, end.y);
         });
         ctx.globalAlpha = 1;
       }
@@ -363,8 +364,8 @@ export default function ThreeLines() {
           fx = end.x / LB.W;
           fy = end.y / LB.H;
         } else {
-          fx = HOTS[i].fx;
-          fy = HOTS[i].fy;
+          fx = hotSpots[i].fx;
+          fy = hotSpots[i].fy;
         }
         h.style.left = fx * 100 + "%";
         h.style.top = fy * 100 + "%";
@@ -517,14 +518,14 @@ export default function ThreeLines() {
     <div className="lines-showcase">
       <div className="tl-stage" ref={stageRef}>
         <div className="tl-legend mono">
-          <span className="tl-legend-main">Three lines vs the season</span>
-          <span className="tl-legend-sub">direction, not scale</span>
+          <span className="tl-legend-main">{t.legendMain}</span>
+          <span className="tl-legend-sub">{t.legendSub}</span>
         </div>
-        <span className="tl-honest mono">illustrative direction, not client data</span>
+        <span className="tl-honest mono">{t.honest}</span>
 
         <canvas className="tl-canvas" ref={canvasRef} aria-hidden="true" />
 
-        {HOTS.map((h) => (
+        {hotSpots.map((h) => (
           <button
             key={h.key}
             type="button"
@@ -542,26 +543,17 @@ export default function ThreeLines() {
         ))}
 
         <div className="tl-plate" ref={plateRef} aria-hidden="true">
-          <span className="sp-name">Wine sales</span>
-          <span className="sp-status">status</span>
-          <span className="sp-action">the work</span>
+          <span className="sp-name">{t.series.wine.label}</span>
+          <span className="sp-status">{t.plateStatus}</span>
+          <span className="sp-action">{t.plateAction}</span>
         </div>
 
         <noscript>
-          <div className="tl-fallback">
-            A quiet chart. Three labeled lines, wine sales, stays, and the
-            restaurant, rise gently against a faint dipping backdrop line marked
-            "Valle visitor flow, the season". It shows direction only, with no
-            scale: the three lines grew across a season when the Valle's overall
-            flow fell.
-          </div>
+          <div className="tl-fallback">{t.fallback}</div>
         </noscript>
       </div>
 
-      <p className="tl-caption mono">
-        Wine, stays, and the restaurant rise; the Valle&apos;s visitor flow dips.
-        Direction only, side by side, no scale.
-      </p>
+      <p className="tl-caption mono">{t.caption}</p>
     </div>
   );
 }

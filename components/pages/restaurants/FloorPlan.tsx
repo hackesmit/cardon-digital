@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useDict } from "@/lib/i18n/LocaleProvider";
+import { restaurants } from "@/lib/i18n/restaurants";
 
 type RGB = [number, number, number];
 
@@ -58,26 +60,34 @@ interface Geo {
 
 /* accessible table readouts, positioned over the floor plan. Data is generic and
    illustrative, clearly labeled as such. Fractions match the drawn TABLES below. */
+type TableKind =
+  | "twoWindow"
+  | "fourCenter"
+  | "banquette"
+  | "fourLower"
+  | "largeTop"
+  | "twoLower";
+
 const READOUTS: Array<{
   cls: string;
   left: string;
   top: string;
-  aria: string;
-  name: string;
-  detail: string;
+  kind: TableKind;
+  n: number;
+  time: string;
 }> = [
-  { cls: "m-left", left: "15%", top: "24.5%", aria: "Two-top by the window. Illustrative reservation: party of 2, seated 19:30.", name: "Two-top / window", detail: "party of 2, seated 19:30" },
-  { cls: "", left: "29%", top: "24.5%", aria: "Two-top by the window. Illustrative reservation: party of 2, seated 19:55.", name: "Two-top / window", detail: "party of 2, seated 19:55" },
-  { cls: "", left: "43%", top: "24.5%", aria: "Two-top by the window. Illustrative reservation: party of 2, seated 18:25.", name: "Two-top / window", detail: "party of 2, seated 18:25" },
-  { cls: "", left: "57%", top: "24.5%", aria: "Two-top by the window. Illustrative reservation: party of 2, seated 20:35.", name: "Two-top / window", detail: "party of 2, seated 20:35" },
-  { cls: "m-left", left: "16%", top: "41%", aria: "Four-top. Illustrative reservation: party of 4, seated 17:40.", name: "Four-top / center", detail: "party of 4, seated 17:40" },
-  { cls: "", left: "30%", top: "41%", aria: "Four-top. Illustrative reservation: party of 4, seated 18:10.", name: "Four-top / center", detail: "party of 4, seated 18:10" },
-  { cls: "", left: "45%", top: "41%", aria: "Four-top. Illustrative reservation: party of 4, seated 20:30.", name: "Four-top / center", detail: "party of 4, seated 20:30" },
-  { cls: "", left: "60%", top: "41%", aria: "Four-top. Illustrative reservation: party of 4, seated 19:05.", name: "Four-top / center", detail: "party of 4, seated 19:05" },
-  { cls: "m-right", left: "85%", top: "33%", aria: "Banquette, six seats. Illustrative reservation: party of 6, seated 18:30.", name: "Banquette / six seats", detail: "party of 6, seated 18:30" },
-  { cls: "m-left m-up", left: "19%", top: "57%", aria: "Four-top. Illustrative reservation: party of 4, seated 19:15.", name: "Four-top / lower room", detail: "party of 4, seated 19:15" },
-  { cls: "m-up", left: "42%", top: "57%", aria: "Large table, six seats. Illustrative reservation: party of 5, seated 19:30.", name: "Large top / six seats", detail: "party of 5, seated 19:30" },
-  { cls: "m-up", left: "62%", top: "57%", aria: "Two-top. Illustrative reservation: party of 2, seated 19:55.", name: "Two-top / lower room", detail: "party of 2, seated 19:55" },
+  { cls: "m-left", left: "15%", top: "24.5%", kind: "twoWindow", n: 2, time: "19:30" },
+  { cls: "", left: "29%", top: "24.5%", kind: "twoWindow", n: 2, time: "19:55" },
+  { cls: "", left: "43%", top: "24.5%", kind: "twoWindow", n: 2, time: "18:25" },
+  { cls: "", left: "57%", top: "24.5%", kind: "twoWindow", n: 2, time: "20:35" },
+  { cls: "m-left", left: "16%", top: "41%", kind: "fourCenter", n: 4, time: "17:40" },
+  { cls: "", left: "30%", top: "41%", kind: "fourCenter", n: 4, time: "18:10" },
+  { cls: "", left: "45%", top: "41%", kind: "fourCenter", n: 4, time: "20:30" },
+  { cls: "", left: "60%", top: "41%", kind: "fourCenter", n: 4, time: "19:05" },
+  { cls: "m-right", left: "85%", top: "33%", kind: "banquette", n: 6, time: "18:30" },
+  { cls: "m-left m-up", left: "19%", top: "57%", kind: "fourLower", n: 4, time: "19:15" },
+  { cls: "m-up", left: "42%", top: "57%", kind: "largeTop", n: 5, time: "19:30" },
+  { cls: "m-up", left: "62%", top: "57%", kind: "twoLower", n: 2, time: "19:55" },
 ];
 
 /**
@@ -90,6 +100,7 @@ const READOUTS: Array<{
  * visibility, resolved to a static peak-service snapshot under reduced motion.
  */
 export default function FloorPlan() {
+  const vis = useDict(restaurants).vis;
   const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const captionRef = useRef<HTMLSpanElement | null>(null);
@@ -482,7 +493,7 @@ export default function FloorPlan() {
       /* keep the label inside the room so it never crowds the covers-band label
          below, even when the table unit grows on wide screens */
       ctx.fillText(
-        "ENTRANCE",
+        vis.entrance,
         G.roomX0 + 6,
         Math.min(G.door.y + G.unit * 0.7 + 12, G.roomY1 - 16)
       );
@@ -583,9 +594,9 @@ export default function FloorPlan() {
       ctx.textBaseline = "alphabetic";
       ctx.textAlign = "left";
       ctx.fillStyle = PAL.muted;
-      ctx.fillText("COVERS OVER THE EVENING", G.x0, G.loadTop - 8);
+      ctx.fillText(vis.covers, G.x0, G.loadTop - 8);
       ctx.textAlign = "right";
-      ctx.fillText("ILLUSTRATIVE", G.x1, G.loadTop - 8);
+      ctx.fillText(vis.illustrativeUpper, G.x1, G.loadTop - 8);
 
       /* designed presence from t0: faint horizontal gridlines, hour ticks tying
          the band to the timeline, a ghost of the full evening curve, and its
@@ -684,7 +695,7 @@ export default function FloorPlan() {
         ctx.textAlign = leftAnchor ? "left" : "right";
         ctx.textBaseline = "alphabetic";
         ctx.fillText(
-          compact ? "rush, an hour early" : "the rush, visible an hour early",
+          compact ? vis.rushCompact : vis.rush,
           leftAnchor ? rx + 7 : rx - 7,
           ly
         );
@@ -710,11 +721,11 @@ export default function FloorPlan() {
     const setCaption = (t: number, holding: boolean) => {
       if (!caption) return;
       let s;
-      if (holding) s = "one evening";
-      else if (t < 2) s = "service begins";
-      else if (t < rushT) s = "filling";
-      else if (t < peakT) s = "the rush, flagged early";
-      else s = "peak service";
+      if (holding) s = vis.captions.oneEvening;
+      else if (t < 2) s = vis.captions.begins;
+      else if (t < rushT) s = vis.captions.filling;
+      else if (t < peakT) s = vis.captions.flagged;
+      else s = vis.captions.peak;
       caption.textContent = s;
     };
 
@@ -871,10 +882,11 @@ export default function FloorPlan() {
   return (
     <div className="stage-frame vis-frame" id="floorFrame" ref={frameRef}>
       <span className="stage-tag mono">
-        one evening <span className="warm">17:00 to 23:00</span>
+        {vis.tagLead}
+        <span className="warm">{vis.tagHours}</span>
       </span>
       <span className="stage-caption mono" id="floorCaption" ref={captionRef}>
-        service begins
+        {vis.captions.begins}
       </span>
       <canvas id="floorCanvas" ref={canvasRef} aria-hidden="true" />
 
@@ -884,24 +896,22 @@ export default function FloorPlan() {
           className={("table-btn " + b.cls).trim()}
           type="button"
           style={{ left: b.left, top: b.top }}
-          aria-label={b.aria}
+          aria-label={vis.tableAria[b.kind]
+            .replace("{n}", String(b.n))
+            .replace("{time}", b.time)}
         >
           <span className="table-plate">
-            <span className="plate-name">{b.name}</span>
-            <span className="plate-detail">{b.detail}</span>
-            <span className="plate-illus">illustrative</span>
+            <span className="plate-name">{vis.tables[b.kind]}</span>
+            <span className="plate-detail">
+              {vis.party.replace("{n}", String(b.n)).replace("{time}", b.time)}
+            </span>
+            <span className="plate-illus">{vis.illustrative}</span>
           </span>
         </button>
       ))}
 
       <noscript>
-        <div className="stage-fallback">
-          A top-down floor plan of a dining room across one service, from 17:00 to
-          23:00. Reservations dock onto tables as small chips, tables warm as they
-          seat and cool as they turn, and a quiet load line tracks covers over the
-          evening. An hour before the peak, a calm marker shows the rush arriving,
-          visible early rather than as a surprise.
-        </div>
+        <div className="stage-fallback">{vis.fallback}</div>
       </noscript>
     </div>
   );
