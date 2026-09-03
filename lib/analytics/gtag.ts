@@ -14,13 +14,21 @@ export function loaderSrc(): string | null {
  *
  * Consent Mode is set to granted here rather than defaulted to denied and then
  * updated, because this script only ever exists once consent is in hand.
+ *
+ * The grant lists only the three keys the privacy policy names: analytics_storage
+ * for Google Analytics 4, and ad_storage plus ad_user_data for Google Ads
+ * conversion measurement (ad_storage keeps the click cookie, ad_user_data lets
+ * the conversion reach Google). ad_personalization, which Google defines as
+ * consent for personalized advertising, is left unset because the policy
+ * describes no remarketing or ad personalization and conversion measurement does
+ * not need it. See developers.google.com/tag-platform/gtagjs/reference#consent.
  */
 export function bootstrapScript(): string {
   const lines = [
     "window.dataLayer=window.dataLayer||[];",
     "function gtag(){window.dataLayer.push(arguments);}",
     "window.gtag=gtag;",
-    "gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});",
+    "gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',analytics_storage:'granted'});",
     "gtag('js',new Date());",
   ];
   if (GA4_ID) lines.push("gtag('config','" + GA4_ID + "');");
