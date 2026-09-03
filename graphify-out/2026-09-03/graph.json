@@ -150,7 +150,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_coming_soon_page",
-      "community": 4,
+      "community": 9,
       "norm_label": "page.tsx"
     },
     {
@@ -160,7 +160,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_coming_soon_page_params",
-      "community": 4,
+      "community": 9,
       "norm_label": "params"
     },
     {
@@ -170,7 +170,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_coming_soon_page_localeof",
-      "community": 4,
+      "community": 9,
       "norm_label": "localeof()"
     },
     {
@@ -180,7 +180,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_coming_soon_page_generatemetadata",
-      "community": 4,
+      "community": 9,
       "norm_label": "generatemetadata()"
     },
     {
@@ -190,7 +190,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_locale_coming_soon_page_comingsoonpage",
-      "community": 4,
+      "community": 9,
       "norm_label": "comingsoonpage()"
     },
     {
@@ -510,7 +510,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_locale_layout_localelayout",
-      "community": 21,
+      "community": 9,
       "norm_label": "localelayout()"
     },
     {
@@ -520,7 +520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_page",
-      "community": 0,
+      "community": 11,
       "norm_label": "page.tsx"
     },
     {
@@ -530,7 +530,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_locale_page_params",
-      "community": 0,
+      "community": 11,
       "norm_label": "params"
     },
     {
@@ -540,7 +540,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_page_localeof",
-      "community": 21,
+      "community": 11,
       "norm_label": "localeof()"
     },
     {
@@ -550,7 +550,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_locale_page_generatemetadata",
-      "community": 21,
+      "community": 11,
       "norm_label": "generatemetadata()"
     },
     {
@@ -570,7 +570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_privacy_page",
-      "community": 21,
+      "community": 5,
       "norm_label": "page.tsx"
     },
     {
@@ -580,7 +580,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_privacy_page_params",
-      "community": 21,
+      "community": 5,
       "norm_label": "params"
     },
     {
@@ -590,7 +590,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_privacy_page_localeof",
-      "community": 21,
+      "community": 5,
       "norm_label": "localeof()"
     },
     {
@@ -600,7 +600,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_privacy_page_generatemetadata",
-      "community": 21,
+      "community": 5,
       "norm_label": "generatemetadata()"
     },
     {
@@ -610,7 +610,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_privacy_page_privacypage",
-      "community": 21,
+      "community": 5,
       "norm_label": "privacypage()"
     },
     {
@@ -620,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_terms_page",
-      "community": 21,
+      "community": 5,
       "norm_label": "page.tsx"
     },
     {
@@ -630,7 +630,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_terms_page_params",
-      "community": 21,
+      "community": 5,
       "norm_label": "params"
     },
     {
@@ -640,7 +640,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_terms_page_localeof",
-      "community": 21,
+      "community": 5,
       "norm_label": "localeof()"
     },
     {
@@ -650,7 +650,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_terms_page_generatemetadata",
-      "community": 21,
+      "community": 5,
       "norm_label": "generatemetadata()"
     },
     {
@@ -660,7 +660,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_terms_page_termspage",
-      "community": 21,
+      "community": 5,
       "norm_label": "termspage()"
     },
     {
@@ -670,7 +670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page",
-      "community": 2,
+      "community": 4,
       "norm_label": "page.tsx"
     },
     {
@@ -680,7 +680,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_params",
-      "community": 2,
+      "community": 4,
       "norm_label": "params"
     },
     {
@@ -690,7 +690,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_localeof",
-      "community": 2,
+      "community": 4,
       "norm_label": "localeof()"
     },
     {
@@ -700,7 +700,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_generatemetadata",
-      "community": 2,
+      "community": 4,
       "norm_label": "generatemetadata()"
     },
     {
@@ -710,7 +710,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_enkantocasestudy",
-      "community": 2,
+      "community": 4,
       "norm_label": "enkantocasestudy()"
     },
     {
@@ -862,6 +862,136 @@
       "id": "app_sitemap_sitemap",
       "community": 9,
       "norm_label": "sitemap()"
+    },
+    {
+      "label": "ConsentBanner.tsx",
+      "file_type": "code",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_consent_consentbanner",
+      "community": 9,
+      "norm_label": "consentbanner.tsx"
+    },
+    {
+      "label": "ConsentBanner()",
+      "file_type": "code",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "components_consent_consentbanner_consentbanner",
+      "community": 9,
+      "norm_label": "consentbanner()"
+    },
+    {
+      "label": "ConsentGate.tsx",
+      "file_type": "code",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_consent_consentgate",
+      "community": 21,
+      "norm_label": "consentgate.tsx"
+    },
+    {
+      "label": "ConsentGate()",
+      "file_type": "code",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "components_consent_consentgate_consentgate",
+      "community": 21,
+      "norm_label": "consentgate()"
+    },
+    {
+      "label": "ConversionListeners.tsx",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners",
+      "community": 21,
+      "norm_label": "conversionlisteners.tsx"
+    },
+    {
+      "label": "DESTINATIONS",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners_destinations",
+      "community": 21,
+      "norm_label": "destinations"
+    },
+    {
+      "label": "kindFromAttribute()",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners_kindfromattribute",
+      "community": 21,
+      "norm_label": "kindfromattribute()"
+    },
+    {
+      "label": "kindFromHref()",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners_kindfromhref",
+      "community": 21,
+      "norm_label": "kindfromhref()"
+    },
+    {
+      "label": "countedOnSubmit()",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners_countedonsubmit",
+      "community": 21,
+      "norm_label": "countedonsubmit()"
+    },
+    {
+      "label": "submitsACountedForm()",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners_submitsacountedform",
+      "community": 21,
+      "norm_label": "submitsacountedform()"
+    },
+    {
+      "label": "ConversionListeners()",
+      "file_type": "code",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "components_consent_conversionlisteners_conversionlisteners",
+      "community": 21,
+      "norm_label": "conversionlisteners()"
+    },
+    {
+      "label": "MeasurementScripts.tsx",
+      "file_type": "code",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_consent_measurementscripts",
+      "community": 21,
+      "norm_label": "measurementscripts.tsx"
+    },
+    {
+      "label": "MeasurementScripts()",
+      "file_type": "code",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "components_consent_measurementscripts_measurementscripts",
+      "community": 21,
+      "norm_label": "measurementscripts()"
     },
     {
       "label": "BerryToBottle.tsx",
@@ -1430,7 +1560,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_enkanto_spotlightframes",
-      "community": 2,
+      "community": 4,
       "norm_label": "spotlightframes.tsx"
     },
     {
@@ -1440,7 +1570,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_pages_enkanto_spotlightframes_spotlightframes",
-      "community": 2,
+      "community": 4,
       "norm_label": "spotlightframes()"
     },
     {
@@ -1740,7 +1870,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_home_opscompression",
-      "community": 0,
+      "community": 11,
       "norm_label": "opscompression.tsx"
     },
     {
@@ -1750,7 +1880,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "components_pages_home_opscompression_opscompression",
-      "community": 0,
+      "community": 11,
       "norm_label": "opscompression()"
     },
     {
@@ -1760,7 +1890,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_home_playoncevis",
-      "community": 0,
+      "community": 11,
       "norm_label": "playoncevis.tsx"
     },
     {
@@ -1770,7 +1900,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "components_pages_home_playoncevis_playoncevis",
-      "community": 0,
+      "community": 11,
       "norm_label": "playoncevis()"
     },
     {
@@ -1820,7 +1950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_home_spotlightframes",
-      "community": 0,
+      "community": 11,
       "norm_label": "spotlightframes.tsx"
     },
     {
@@ -1830,7 +1960,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_pages_home_spotlightframes_spotlightframes",
-      "community": 0,
+      "community": 11,
       "norm_label": "spotlightframes()"
     },
     {
@@ -2377,11 +2507,341 @@
       "label": "SiteShell()",
       "file_type": "code",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L20",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "components_site_siteshell_siteshell",
       "community": 9,
       "norm_label": "siteshell()"
+    },
+    {
+      "label": "config.ts",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_analytics_config",
+      "community": 21,
+      "norm_label": "config.ts"
+    },
+    {
+      "label": "GA4_ID",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "lib_analytics_config_ga4_id",
+      "community": 21,
+      "norm_label": "ga4_id"
+    },
+    {
+      "label": "ADS_ID",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_analytics_config_ads_id",
+      "community": 21,
+      "norm_label": "ads_id"
+    },
+    {
+      "label": "ConversionKind",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "lib_analytics_config_conversionkind",
+      "community": 21,
+      "norm_label": "conversionkind"
+    },
+    {
+      "label": "ADS_LABELS",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "lib_analytics_config_ads_labels",
+      "community": 21,
+      "norm_label": "ads_labels"
+    },
+    {
+      "label": "loaderId()",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "lib_analytics_config_loaderid",
+      "community": 21,
+      "norm_label": "loaderid()"
+    },
+    {
+      "label": "measurementConfigured()",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "lib_analytics_config_measurementconfigured",
+      "community": 21,
+      "norm_label": "measurementconfigured()"
+    },
+    {
+      "label": "sendTo()",
+      "file_type": "code",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "lib_analytics_config_sendto",
+      "community": 21,
+      "norm_label": "sendto()"
+    },
+    {
+      "label": "consent.ts",
+      "file_type": "code",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_analytics_consent",
+      "community": 21,
+      "norm_label": "consent.ts"
+    },
+    {
+      "label": "ConsentDecision",
+      "file_type": "code",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_analytics_consent_consentdecision",
+      "community": 21,
+      "norm_label": "consentdecision"
+    },
+    {
+      "label": "isDecision()",
+      "file_type": "code",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_analytics_consent_isdecision",
+      "community": 21,
+      "norm_label": "isdecision()"
+    },
+    {
+      "label": "decisionFrom()",
+      "file_type": "code",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "lib_analytics_consent_decisionfrom",
+      "community": 21,
+      "norm_label": "decisionfrom()"
+    },
+    {
+      "label": "readConsent()",
+      "file_type": "code",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "lib_analytics_consent_readconsent",
+      "community": 21,
+      "norm_label": "readconsent()"
+    },
+    {
+      "label": "writeConsent()",
+      "file_type": "code",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "lib_analytics_consent_writeconsent",
+      "community": 21,
+      "norm_label": "writeconsent()"
+    },
+    {
+      "label": "events.ts",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_analytics_events",
+      "community": 21,
+      "norm_label": "events.ts"
+    },
+    {
+      "label": "EVENT_NAME",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "lib_analytics_events_event_name",
+      "community": 21,
+      "norm_label": "event_name"
+    },
+    {
+      "label": "Params",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "lib_analytics_events_params",
+      "community": 21,
+      "norm_label": "params"
+    },
+    {
+      "label": "log()",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "lib_analytics_events_log",
+      "community": 21,
+      "norm_label": "log()"
+    },
+    {
+      "label": "trackConversion()",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "lib_analytics_events_trackconversion",
+      "community": 21,
+      "norm_label": "trackconversion()"
+    },
+    {
+      "label": "trackContactSubmit()",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "lib_analytics_events_trackcontactsubmit",
+      "community": 21,
+      "norm_label": "trackcontactsubmit()"
+    },
+    {
+      "label": "trackWhatsAppClick()",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "lib_analytics_events_trackwhatsappclick",
+      "community": 21,
+      "norm_label": "trackwhatsappclick()"
+    },
+    {
+      "label": "trackBookingClick()",
+      "file_type": "code",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "lib_analytics_events_trackbookingclick",
+      "community": 21,
+      "norm_label": "trackbookingclick()"
+    },
+    {
+      "label": "gtag.ts",
+      "file_type": "code",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_analytics_gtag",
+      "community": 21,
+      "norm_label": "gtag.ts"
+    },
+    {
+      "label": "loaderSrc()",
+      "file_type": "code",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "lib_analytics_gtag_loadersrc",
+      "community": 21,
+      "norm_label": "loadersrc()"
+    },
+    {
+      "label": "bootstrapScript()",
+      "file_type": "code",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "lib_analytics_gtag_bootstrapscript",
+      "community": 21,
+      "norm_label": "bootstrapscript()"
+    },
+    {
+      "label": "GtagFn",
+      "file_type": "code",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "lib_analytics_gtag_gtagfn",
+      "community": 21,
+      "norm_label": "gtagfn"
+    },
+    {
+      "label": "gtag()",
+      "file_type": "code",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "lib_analytics_gtag_gtag",
+      "community": 21,
+      "norm_label": "gtag()"
+    },
+    {
+      "label": "loadMeasurement()",
+      "file_type": "code",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "lib_analytics_gtag_loadmeasurement",
+      "community": 21,
+      "norm_label": "loadmeasurement()"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_analytics_index",
+      "community": 21,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "measurement-proof.mjs",
+      "file_type": "code",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_analytics_proof_measurement_proof",
+      "community": 26,
+      "norm_label": "measurement-proof.mjs"
+    },
+    {
+      "label": "logs",
+      "file_type": "code",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "lib_analytics_proof_measurement_proof_logs",
+      "community": 26,
+      "norm_label": "logs"
+    },
+    {
+      "label": "step()",
+      "file_type": "code",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "lib_analytics_proof_measurement_proof_step",
+      "community": 26,
+      "norm_label": "step()"
+    },
+    {
+      "label": "cookie",
+      "file_type": "code",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "lib_analytics_proof_measurement_proof_cookie",
+      "community": 26,
+      "norm_label": "cookie"
     },
     {
       "label": "fonts.ts",
@@ -2550,7 +3010,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "lib_i18n_coming_soon_comingsoon",
-      "community": 4,
+      "community": 9,
       "norm_label": "comingsoon"
     },
     {
@@ -2590,7 +3050,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "lib_i18n_config_islocale",
-      "community": 21,
+      "community": 9,
       "norm_label": "islocale()"
     },
     {
@@ -2610,7 +3070,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "lib_i18n_config_localefromcountry",
-      "community": 21,
+      "community": 9,
       "norm_label": "localefromcountry()"
     },
     {
@@ -2640,7 +3100,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "lib_i18n_config_localefrompath",
-      "community": 21,
+      "community": 9,
       "norm_label": "localefrompath()"
     },
     {
@@ -2662,6 +3122,56 @@
       "id": "lib_i18n_config_localepath",
       "community": 9,
       "norm_label": "localepath()"
+    },
+    {
+      "label": "consent.ts",
+      "file_type": "code",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_i18n_consent",
+      "community": 4,
+      "norm_label": "consent.ts"
+    },
+    {
+      "label": "en",
+      "file_type": "code",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "lib_i18n_consent_en",
+      "community": 4,
+      "norm_label": "en"
+    },
+    {
+      "label": "es",
+      "file_type": "code",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "lib_i18n_consent_es",
+      "community": 4,
+      "norm_label": "es"
+    },
+    {
+      "label": "ConsentDict",
+      "file_type": "code",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "lib_i18n_consent_consentdict",
+      "community": 4,
+      "norm_label": "consentdict"
+    },
+    {
+      "label": "consent",
+      "file_type": "code",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "lib_i18n_consent_consent",
+      "community": 4,
+      "norm_label": "consent"
     },
     {
       "label": "construction.ts",
@@ -2820,7 +3330,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_home",
-      "community": 0,
+      "community": 11,
       "norm_label": "home.ts"
     },
     {
@@ -2830,7 +3340,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_i18n_home_en",
-      "community": 0,
+      "community": 11,
       "norm_label": "en"
     },
     {
@@ -2840,7 +3350,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "lib_i18n_home_es",
-      "community": 0,
+      "community": 11,
       "norm_label": "es"
     },
     {
@@ -2850,7 +3360,7 @@
       "source_location": "L508",
       "_origin": "ast",
       "id": "lib_i18n_home_homedict",
-      "community": 0,
+      "community": 11,
       "norm_label": "homedict"
     },
     {
@@ -2860,7 +3370,7 @@
       "source_location": "L509",
       "_origin": "ast",
       "id": "lib_i18n_home_home",
-      "community": 0,
+      "community": 11,
       "norm_label": "home"
     },
     {
@@ -2890,7 +3400,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "lib_i18n_metadata_pagemetadata",
-      "community": 21,
+      "community": 5,
       "norm_label": "pagemetadata()"
     },
     {
@@ -2990,7 +3500,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "lib_i18n_privacy_privacy",
-      "community": 21,
+      "community": 4,
       "norm_label": "privacy"
     },
     {
@@ -3070,7 +3580,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "lib_i18n_rich_inline",
-      "community": 2,
+      "community": 4,
       "norm_label": "inline()"
     },
     {
@@ -3080,7 +3590,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "lib_i18n_rich_rich",
-      "community": 2,
+      "community": 4,
       "norm_label": "rich()"
     },
     {
@@ -3380,7 +3890,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "middleware",
-      "community": 21,
+      "community": 9,
       "norm_label": "middleware.ts"
     },
     {
@@ -3390,7 +3900,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "middleware_config",
-      "community": 21,
+      "community": 9,
       "norm_label": "config"
     },
     {
@@ -3400,7 +3910,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "middleware_middleware",
-      "community": 21,
+      "community": 9,
       "norm_label": "middleware()"
     },
     {
@@ -7925,6 +8435,558 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "components_consent_consentbanner_consentbanner",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_analytics_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_analytics_consent_writeconsent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_analytics_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_analytics_gtag_loadmeasurement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_config_localepath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_consent_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_localeprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_localeprovider_usedict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner",
+      "target": "lib_i18n_localeprovider_uselocale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "components_consent_consentbanner",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner_consentbanner",
+      "target": "lib_i18n_config_localepath"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner_consentbanner",
+      "target": "lib_i18n_localeprovider_usedict"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/ConsentBanner.tsx",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "components_consent_consentbanner_consentbanner",
+      "target": "lib_i18n_localeprovider_uselocale"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "components_consent_consentgate_consentgate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "components_consent_conversionlisteners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "components_consent_conversionlisteners_conversionlisteners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "lib_analytics_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "lib_analytics_config_measurementconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "lib_analytics_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_consentgate",
+      "target": "lib_analytics_consent_decisionfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site/SiteShell.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_site_siteshell",
+      "target": "components_consent_consentgate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "components_consent_consentgate_consentgate",
+      "target": "lib_analytics_config_measurementconfigured"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/ConsentGate.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "components_consent_consentgate_consentgate",
+      "target": "lib_analytics_consent_decisionfrom"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site/SiteShell.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_site_siteshell",
+      "target": "components_consent_consentgate_consentgate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "components_consent_conversionlisteners_conversionlisteners",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "components_consent_conversionlisteners_countedonsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "components_consent_conversionlisteners_destinations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "components_consent_conversionlisteners_kindfromattribute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L40",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "components_consent_conversionlisteners_kindfromhref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "components_consent_conversionlisteners_submitsacountedform",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "lib_analytics_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "lib_analytics_config_conversionkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "lib_analytics_events",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "lib_analytics_events_trackcontactsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners",
+      "target": "lib_analytics_events_trackconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners_countedonsubmit",
+      "target": "components_consent_conversionlisteners_kindfromattribute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/ConversionListeners.tsx",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "components_consent_conversionlisteners_submitsacountedform",
+      "target": "components_consent_conversionlisteners_countedonsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts",
+      "target": "components_consent_measurementscripts_measurementscripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts",
+      "target": "lib_analytics_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts",
+      "target": "lib_analytics_consent_decisionfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts",
+      "target": "lib_analytics_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts",
+      "target": "lib_analytics_gtag_bootstrapscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts",
+      "target": "lib_analytics_gtag_loadersrc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site/SiteShell.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_site_siteshell",
+      "target": "components_consent_measurementscripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts_measurementscripts",
+      "target": "lib_analytics_consent_decisionfrom"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts_measurementscripts",
+      "target": "lib_analytics_gtag_bootstrapscript"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/consent/MeasurementScripts.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "components_consent_measurementscripts_measurementscripts",
+      "target": "lib_analytics_gtag_loadersrc"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site/SiteShell.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_site_siteshell",
+      "target": "components_consent_measurementscripts_measurementscripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "components/pages/case/BerryToBottle.tsx",
       "source_location": "L28",
       "weight": 1.0,
@@ -10592,7 +11654,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L3",
+      "source_location": "L5",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "components_site_footer",
@@ -10712,7 +11774,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L2",
+      "source_location": "L4",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "components_site_nav",
@@ -10862,7 +11924,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "components_site_siteshell_siteshell",
@@ -10873,7 +11935,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_fonts",
@@ -10884,7 +11946,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_fonts_archivo",
@@ -10895,7 +11957,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_config",
@@ -10906,7 +11968,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_config_htmllang",
@@ -10917,7 +11979,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_config_locale",
@@ -10928,7 +11990,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L4",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_localeprovider",
@@ -10939,7 +12001,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L4",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_localeprovider_localeprovider",
@@ -10950,7 +12012,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_site",
@@ -10961,10 +12023,830 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/site/SiteShell.tsx",
-      "source_location": "L5",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "components_site_siteshell",
       "target": "lib_i18n_site_site",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_ads_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_ads_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_conversionkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_ga4_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_loaderid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_measurementconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "lib_analytics_config",
+      "target": "lib_analytics_config_sendto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_config_ga4_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_ga4_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_config_ads_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_ads_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_config_conversionkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_conversionkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_ads_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/config.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "lib_analytics_config_measurementconfigured",
+      "target": "lib_analytics_config_loaderid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_config_loaderid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag_loadersrc",
+      "target": "lib_analytics_config_loaderid"
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_loaderid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_config_measurementconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackconversion",
+      "target": "lib_analytics_config_measurementconfigured"
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_measurementconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_config_sendto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackconversion",
+      "target": "lib_analytics_config_sendto"
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_config_sendto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "lib_analytics_consent",
+      "target": "lib_analytics_consent_consentdecision",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "lib_analytics_consent",
+      "target": "lib_analytics_consent_decisionfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_consent",
+      "target": "lib_analytics_consent_isdecision",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "lib_analytics_consent",
+      "target": "lib_analytics_consent_readconsent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "lib_analytics_consent",
+      "target": "lib_analytics_consent_writeconsent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_consent_consentdecision",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "lib_analytics_consent_decisionfrom",
+      "target": "lib_analytics_consent_isdecision",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_consent_isdecision",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/consent.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "lib_analytics_consent_readconsent",
+      "target": "lib_analytics_consent_decisionfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_consent_decisionfrom",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_consent_readconsent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackconversion",
+      "target": "lib_analytics_consent_readconsent"
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_consent_readconsent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_consent_writeconsent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_event_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_log",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_params",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_trackbookingclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_trackcontactsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_trackconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_events_trackwhatsappclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_analytics_events",
+      "target": "lib_analytics_gtag_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_events",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackconversion",
+      "target": "lib_analytics_events_log",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackbookingclick",
+      "target": "lib_analytics_events_trackconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackcontactsubmit",
+      "target": "lib_analytics_events_trackconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackconversion",
+      "target": "lib_analytics_gtag_gtag"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/events.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "lib_analytics_events_trackwhatsappclick",
+      "target": "lib_analytics_events_trackconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_events_trackconversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_events_trackcontactsubmit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_events_trackwhatsappclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_events_trackbookingclick",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_gtag_bootstrapscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_gtag_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_gtag_gtagfn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_gtag_loadersrc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag",
+      "target": "lib_analytics_gtag_loadmeasurement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag_loadmeasurement",
+      "target": "lib_analytics_gtag_loadersrc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_gtag_loadersrc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/gtag.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "lib_analytics_gtag_loadmeasurement",
+      "target": "lib_analytics_gtag_bootstrapscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_gtag_bootstrapscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_gtag_gtag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/index.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "lib_analytics_index",
+      "target": "lib_analytics_gtag_loadmeasurement",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "lib_analytics_proof_measurement_proof",
+      "target": "lib_analytics_proof_measurement_proof_cookie",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "lib_analytics_proof_measurement_proof",
+      "target": "lib_analytics_proof_measurement_proof_logs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/analytics/proof/measurement-proof.mjs",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "lib_analytics_proof_measurement_proof",
+      "target": "lib_analytics_proof_measurement_proof_step",
       "confidence_score": 1.0
     },
     {
@@ -11504,6 +13386,68 @@
       "weight": 1.0,
       "source": "middleware_middleware",
       "target": "lib_i18n_config_localepath"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "lib_i18n_consent",
+      "target": "lib_i18n_consent_consent",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "lib_i18n_consent",
+      "target": "lib_i18n_consent_consentdict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "lib_i18n_consent",
+      "target": "lib_i18n_consent_en",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "lib_i18n_consent",
+      "target": "lib_i18n_consent_es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_i18n_consent",
+      "target": "lib_i18n_rich",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/consent.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_i18n_consent",
+      "target": "lib_i18n_rich_dict",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13461,5 +15405,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "191eaa93520e5e243559b7d43140aa0e37fc270d"
+  "built_at_commit": "28526abcc579399eec79e35da667cd6183062a1e"
 }

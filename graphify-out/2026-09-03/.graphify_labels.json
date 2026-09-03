@@ -25,6 +25,7 @@
   "23": "sitemap.ts",
   "24": "post-checkout",
   "25": "post-merge",
+  "26": "measurement-proof.mjs",
   "29": "next.config.mjs",
   "30": "postcss.config.mjs",
   "31": "tailwind.config.ts"
