@@ -10,12 +10,12 @@ export default function Footer({ locale }: { locale: Locale }) {
     { href: href("/work/monte-xanic"), label: t.work },
     { href: href("/#services"), label: t.services },
     { href: href("/#sectors"), label: t.industries },
-    { href: href("/#about"), label: t.about },
-    { href: href("/#diagnostic"), label: t.contact },
+    { href: href("/about"), label: t.about },
+    { href: href("/contacto"), label: t.contact },
   ];
 
   return (
-    <footer className="site-footer" id="about">
+    <footer className="site-footer">
       <div className="container">
         <div className="footer-grid">
           <div className="foot-brand">
