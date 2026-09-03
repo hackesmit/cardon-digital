@@ -15,7 +15,9 @@ import { trackContactSubmit, trackConversion } from "@/lib/analytics/events";
  *
  *   1. data-conversion="contact|whatsapp|booking" on a link, button or form.
  *      This is the contract for anything built later; it is explicit and it
- *      survives a change of provider.
+ *      survives a change of provider. A marked submit control inside a form the
+ *      submit branch already counts stays silent on click, so a lead marked in
+ *      both places is still one conversion.
  *   2. A recognised destination. WhatsApp, the booking providers and mailto
  *      links are counted as they are, so the CTAs already on the site report
  *      from the day the ids are set.
@@ -40,6 +42,25 @@ function kindFromHref(href: string): ConversionKind | null {
   return null;
 }
 
+// The submit branch counts a form marked for contact, so anything that submits
+// that form must not also count on click. HTMLButtonElement.type reports
+// "submit" for a button with no type attribute, which is the default and the
+// common case.
+function countedOnSubmit(form: HTMLFormElement | null): boolean {
+  if (!form) return false;
+  return kindFromAttribute(form) === "contact" || form.id === "contact-form";
+}
+
+function submitsACountedForm(el: Element): boolean {
+  if (el instanceof HTMLButtonElement) {
+    return el.type === "submit" && countedOnSubmit(el.form);
+  }
+  if (el instanceof HTMLInputElement) {
+    return (el.type === "submit" || el.type === "image") && countedOnSubmit(el.form);
+  }
+  return false;
+}
+
 export default function ConversionListeners() {
   useEffect(() => {
     function onClick(event: MouseEvent) {
@@ -51,7 +72,9 @@ export default function ConversionListeners() {
       const marked = target.closest("[data-conversion]");
       if (marked && marked.tagName !== "FORM") {
         const kind = kindFromAttribute(marked);
-        if (kind) {
+        // A contact-marked submit control defers to the submit branch, which
+        // already counts that form, so one lead stays one conversion.
+        if (kind && !(kind === "contact" && submitsACountedForm(marked))) {
           trackConversion(kind, { source: "attribute" });
           return;
         }
