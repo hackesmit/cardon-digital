@@ -1,38 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Archivo } from "next/font/google";
-import ContourField from "@/components/site/ContourField";
-import Nav from "@/components/site/Nav";
-import Footer from "@/components/site/Footer";
-import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
+import SiteShell from "@/components/site/SiteShell";
 import { alternatesFor, SITE_URL } from "@/lib/i18n/metadata";
 import { site } from "@/lib/i18n/site";
-import {
-  htmlLang,
-  isLocale,
-  locales,
-  ogLocale,
-  type Locale,
-} from "@/lib/i18n/config";
-import "./globals.css";
-
-// Identity: Archivo carries display and body (Cardon system v3, 2026-08-27).
-// Self-hosted by next/font, so no CDN request and no layout shift.
-const archivo = Archivo({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-archivo",
-});
-
-// Pre-paint script: apply the stored mode before first paint so there is no
-// flash, and flag the document as JS-enabled so reveal-on-scroll can hide.
-const modeScript =
-  '(function(){try{var m=localStorage.getItem("cardon-mode");if(m==="light"||m==="dark"){document.documentElement.setAttribute("data-mode",m);}}catch(e){}document.documentElement.classList.add("js");})();';
+import { isLocale, locales, ogLocale, type Locale } from "@/lib/i18n/config";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
+
+/* Only es and en are real first segments. Without this Next treats the segment
+   as open, so /nothing.txt and /anything.php match [locale] and reach the
+   layout, where a request-time notFound() renders an empty shell instead of the
+   404 page. Closing the segment sends every other first segment straight to the
+   prerendered root not-found, which carries the chrome and the lang attribute. */
+export const dynamicParams = false;
 
 export function generateMetadata({
   params,
@@ -74,30 +56,6 @@ export default function LocaleLayout({
   params,
 }: Readonly<{ children: React.ReactNode; params: { locale: string } }>) {
   if (!isLocale(params.locale)) notFound();
-  const locale: Locale = params.locale;
-  const s = site[locale];
 
-  return (
-    <html
-      lang={htmlLang[locale]}
-      data-mode="light"
-      className={archivo.variable}
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: modeScript }} />
-      </head>
-      <body>
-        <LocaleProvider locale={locale}>
-          <a className="sr-only" href="#main">
-            {s.skipToContent}
-          </a>
-          <ContourField />
-          <Nav />
-          {children}
-          <Footer locale={locale} />
-        </LocaleProvider>
-      </body>
-    </html>
-  );
+  return <SiteShell locale={params.locale}>{children}</SiteShell>;
 }
