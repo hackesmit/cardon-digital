@@ -97,6 +97,7 @@ const en = {
       tagBefore: "scattered orders",
       tagMid: "placed into",
       tagAfter: "one schedule",
+      title: "Work orders placed onto a site plan and its weekly schedule",
       descDesktop:
         "A top-down site plan with five plots sits beside a weekly schedule strip. Scattered work-order chips are placed one at a time into dated lanes; as each lands its plot lights and a dependency line links it to the next in sequence. Focus a placed chip to raise its readout and light its plot.",
       descPortrait:
@@ -247,6 +248,7 @@ const es: typeof en = {
       tagBefore: "órdenes sueltas",
       tagMid: "acomodadas en",
       tagAfter: "un solo programa",
+      title: "Órdenes de trabajo acomodadas en un plano de obra y su programa semanal",
       descDesktop:
         "Un plano de obra visto desde arriba con cinco lotes está junto a una tira de programa semanal. Las tarjetas sueltas de orden de trabajo se van acomodando una por una en carriles con fecha; conforme cada una aterriza, su lote se enciende y una línea de dependencia la liga con la siguiente en secuencia. Enfoque una tarjeta colocada para levantar su lectura y encender su lote.",
       descPortrait:

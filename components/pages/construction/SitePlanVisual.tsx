@@ -378,9 +378,7 @@ export default function SitePlanVisual() {
         aria-labelledby="sigTitle sigDesc"
         preserveAspectRatio="xMidYMid meet"
       >
-        <title id="sigTitle">
-          Work orders placed onto a site plan and its weekly schedule
-        </title>
+        <title id="sigTitle">{t.title}</title>
         <desc id="sigDesc">{t.descDesktop}</desc>
 
         {/* decorative base: plan boundary, contours, divider, labels, lanes */}
@@ -604,9 +602,7 @@ export default function SitePlanVisual() {
         aria-labelledby="sigTitleP sigDescP"
         preserveAspectRatio="xMidYMid meet"
       >
-        <title id="sigTitleP">
-          Work orders placed onto a site plan and its weekly schedule
-        </title>
+        <title id="sigTitleP">{t.title}</title>
         <desc id="sigDescP">{t.descPortrait}</desc>
 
         <g aria-hidden="true">

@@ -192,7 +192,7 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
       ref={wrapRef}
       style={{ aspectRatio: "auto" }}
     >
-      <span className="b2b-note mono">field to bottle, one continuous thread</span>
+      <span className="b2b-note mono">{t.note}</span>
       <svg
         className="b2b-svg"
         viewBox="0 0 1000 240"
@@ -399,7 +399,7 @@ function BerryToBottleMobile({ width }: { width: number }) {
       ref={wrapRef}
       style={{ aspectRatio: "auto" }}
     >
-      <span className="b2b-note mono">field to bottle, one continuous thread</span>
+      <span className="b2b-note mono">{t.note}</span>
       <svg
         className="b2b-svg"
         viewBox="0 0 320 540"
