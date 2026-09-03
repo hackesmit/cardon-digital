@@ -1,0 +1,43 @@
+/* ============================ ABOUT PAGE ============================
+   Page-scoped styles under .pg-about. The shared layer (globals.css) already
+   provides the header, hero base, section, kicker, diagnostic and reveal, so
+   this file adds only the two-column chapter layout, its prose measure, and
+   the credentials line. No accent of its own: the about page is the plainest
+   page on the site on purpose, and the brand primary carries it. */
+
+.pg-about{position:relative;z-index:1;}
+
+.pg-about .hero{padding-bottom:clamp(28px,4vw,52px);}
+.pg-about .hero-copy{max-width:760px;}
+.pg-about .hero-sub{max-width:60ch;}
+
+.pg-about .about-chapter{padding-top:clamp(30px,4vw,56px);}
+.pg-about .about-split{
+  display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);
+  gap:clamp(18px,3vw,48px);align-items:start;
+}
+.pg-about .about-head{position:sticky;top:96px;min-width:0;}
+.pg-about .about-head h2{
+  margin-top:10px;font-size:clamp(1.3rem,2.4vw,1.9rem);
+  letter-spacing:-0.02em;line-height:1.14;max-width:22ch;
+}
+.pg-about .about-prose{
+  min-width:0;display:flex;flex-direction:column;gap:14px;max-width:64ch;
+}
+.pg-about .about-prose p{color:var(--text-dim);font-size:1.02rem;line-height:1.62;}
+
+.pg-about .about-cred{
+  margin-top:8px;padding-top:14px;border-top:1px solid var(--line);
+  display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;
+}
+.pg-about .about-cred-k{
+  font-size:0.62rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--muted);
+}
+.pg-about .about-cred-v{font-size:0.94rem;color:var(--text);}
+
+@media (max-width:900px){
+  .pg-about .about-split{grid-template-columns:1fr;}
+  .pg-about .about-head{position:static;}
+  .pg-about .about-head h2{max-width:28ch;}
+}

@@ -4,6 +4,7 @@ import VineyardMap from "@/components/pages/case/VineyardMap";
 import BerryToBottle from "@/components/pages/case/BerryToBottle";
 import PlayOnceVis from "@/components/pages/case/PlayOnceVis";
 import SpotlightFrames from "@/components/pages/case/SpotlightFrames";
+import CaseFacts from "@/components/pages/case/CaseFacts";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -53,6 +54,13 @@ export default function MonteXanicCaseStudy({ params }: Params) {
           <VineyardMap />
         </div>
       </section>
+
+      <CaseFacts
+        aria={d.facts.aria}
+        rows={d.facts.rows}
+        basisK={d.facts.basisK}
+        basis={d.facts.basis}
+      />
 
       {/* ============================ CLIENT INTRO ============================ */}
       <section className="section rule-top" aria-labelledby="client-title">

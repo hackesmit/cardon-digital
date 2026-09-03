@@ -16,6 +16,26 @@ const en = {
     t2: ".",
     sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. Across a season when the Valle's overall visitor flow dipped, all three kept growing. Beside that fact sits the work we did: a real online shop with cross-border-honest shipping, the site structure and search repaired, and optimization across the business. **Three lines growing, the season dropping, the work sitting beside both.**",
   },
+  facts: {
+    aria: "Case study facts: client, sector, place, scale, engagement, what we built, and the outcome",
+    rows: [
+      { k: "Client", v: "Vinedo En'kanto" },
+      { k: "Sector", v: "Winery, hotel and restaurant" },
+      { k: "Place", v: "San Antonio de las Minas, Valle de Guadalupe" },
+      { k: "Scale", v: "Three revenue lines: winery, stays, restaurant" },
+      { k: "Engagement", v: "Project" },
+      {
+        k: "What we built",
+        v: "Online shop; site structure and search; payments for how Mexico pays; cross-border shipping; bilingual build",
+      },
+      {
+        k: "Outcome",
+        v: "Three revenue lines grew across a season when the Valle's visitor flow dipped",
+      },
+    ],
+    basisK: "Basis",
+    basis: "The three revenue lines and the direction of the season come from En'kanto's own figures for the season this case covers. The Valle's visitor trend is a separate observation and stands on its own. We set the two side by side and claim no causal relationship between the work and the growth. No En'kanto revenue figures are published here.",
+  },
   client: {
     kicker: "The client",
     title: "Vinedo En'kanto, San Antonio de las Minas.",
@@ -164,6 +184,26 @@ const es: typeof en = {
     enk: "creciendo",
     t2: ".",
     sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. A lo largo de una temporada en la que el flujo general de visitantes del Valle bajó, las tres siguieron creciendo. Al lado de ese hecho está el trabajo que hicimos: una tienda en línea de verdad con un envío honesto respecto a la frontera, la estructura del sitio y la búsqueda reparadas, y mejoras en todo el negocio. **Tres líneas creciendo, la temporada bajando, el trabajo al lado de las dos cosas.**",
+  },
+  facts: {
+    aria: "Datos del caso: cliente, sector, lugar, escala, relación, lo que construimos y el resultado",
+    rows: [
+      { k: "Cliente", v: "Viñedo En'kanto" },
+      { k: "Sector", v: "Bodega, hotel y restaurante" },
+      { k: "Lugar", v: "San Antonio de las Minas, Valle de Guadalupe" },
+      { k: "Escala", v: "Tres líneas de ingreso: bodega, hospedaje, restaurante" },
+      { k: "Relación", v: "Proyecto" },
+      {
+        k: "Lo que construimos",
+        v: "Tienda en línea; estructura y búsqueda del sitio; pagos como se paga en México; envíos transfronterizos; construcción bilingüe",
+      },
+      {
+        k: "Resultado",
+        v: "Las tres líneas de ingreso crecieron en una temporada en la que bajó el flujo de visitantes del Valle",
+      },
+    ],
+    basisK: "Base",
+    basis: "Las tres líneas de ingreso y la dirección de la temporada salen de las cifras de la propia En'kanto para la temporada que cubre este caso. La tendencia de visitantes del Valle es una observación aparte y se sostiene sola. Ponemos las dos una al lado de la otra y no reclamamos ninguna relación de causa entre el trabajo y el crecimiento. Aquí no publicamos ninguna cifra de ingresos de En'kanto.",
   },
   client: {
     kicker: "El cliente",
