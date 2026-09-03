@@ -26,7 +26,35 @@ export type Email = {
   replyTo: string;
   subject: string;
   text: string;
+  /** What may be written to a log. The email itself is never logged. */
+  redacted: RedactedLead;
 };
+
+/**
+ * The shape a lead takes in a log line: enough to know a message arrived,
+ * roughly who from and how long it was, and not enough to be a second copy of
+ * somebody's personal data sitting in a log nobody prunes. A server log is
+ * not an inbox, so while delivery is not wired the site can see that leads are
+ * coming in but cannot answer them, which is what makes RESEND_API_KEY a
+ * launch gate rather than a nicety.
+ */
+export type RedactedLead = {
+  name: string;
+  emailDomain: string;
+  messageChars: number;
+  locale: string;
+};
+
+export function redactLead(s: ContactSubmission): RedactedLead {
+  const first = s.name.trim().slice(0, 1).toUpperCase();
+  const at = s.email.lastIndexOf("@");
+  return {
+    name: first ? first + "." : "unknown",
+    emailDomain: at >= 0 ? s.email.slice(at + 1) : "unknown",
+    messageChars: s.message.length,
+    locale: s.locale,
+  };
+}
 
 export type DeliveryResult =
   | { mode: "dry"; ok: true }
@@ -88,6 +116,7 @@ export function buildEmail(s: ContactSubmission): Email {
     replyTo: headerSafe(s.email, 254),
     subject: subjectFor(s),
     text: bodyFor(s),
+    redacted: redactLead(s),
   };
 }
 
@@ -103,20 +132,18 @@ export async function deliver(email: Email): Promise<DeliveryResult> {
     const reason = !key
       ? "no RESEND_API_KEY"
       : "no CONTACT_FROM or CONTACT_TO";
+    // Redacted on purpose: the message, the sender's address and their name
+    // never reach the log, in dry mode or any other.
     console.log(
       "[contact] dry mode (" +
         reason +
-        "), would send:\n" +
-        "to: " +
-        (email.to || "unset") +
-        "\nfrom: " +
-        (email.from || "unset") +
-        "\nreply-to: " +
-        email.replyTo +
-        "\nsubject: " +
-        email.subject +
-        "\n\n" +
-        email.text,
+        "), not sent: " +
+        JSON.stringify({
+          at: new Date().toISOString(),
+          to: email.to || "unset",
+          from: email.from || "unset",
+          ...email.redacted,
+        }),
     );
     return { mode: "dry", ok: true };
   }

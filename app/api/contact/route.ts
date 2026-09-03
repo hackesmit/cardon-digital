@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { readBoundedText } from "@/lib/contact/body";
 import { clientKey, hit } from "@/lib/contact/rateLimit";
-import { buildEmail, deliver } from "@/lib/contact/mail";
+import { buildEmail, deliver, redactLead } from "@/lib/contact/mail";
 import { MAX_BODY_BYTES, validateSubmission } from "@/lib/contact/validate";
 
 /**
@@ -89,6 +89,24 @@ export async function POST(req: Request) {
   const delivery = await deliver(buildEmail(submission));
 
   if (!delivery.ok) {
+    // A refused or failed send would otherwise lose the lead with no trace.
+    // The marker is redacted and timestamped, so an outage is visible and the
+    // window it covers is known. The visitor gets a calm error and never the
+    // provider's own words.
+    console.error(
+      "[contact] undelivered lead " +
+        JSON.stringify({
+          at: new Date().toISOString(),
+          channel: "form",
+          mode: "undelivered",
+          status: delivery.status,
+          winery: submission.winery || null,
+          leadId: submission.attribution.leadId || null,
+          gclid: submission.attribution.gclid || null,
+          lane: submission.attribution.lane || null,
+          ...redactLead(submission),
+        }),
+    );
     return fail(502, "delivery");
   }
 
