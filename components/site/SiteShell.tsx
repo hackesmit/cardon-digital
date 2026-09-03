@@ -1,4 +1,6 @@
 import ContourField from "@/components/site/ContourField";
+import ConsentGate from "@/components/consent/ConsentGate";
+import MeasurementScripts from "@/components/consent/MeasurementScripts";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
@@ -32,6 +34,7 @@ export default function SiteShell({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: modeScript }} />
+        <MeasurementScripts />
       </head>
       <body>
         <LocaleProvider locale={locale}>
@@ -42,6 +45,7 @@ export default function SiteShell({
           <Nav />
           {children}
           <Footer locale={locale} />
+          <ConsentGate />
         </LocaleProvider>
       </body>
     </html>
