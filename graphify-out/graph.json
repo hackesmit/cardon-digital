@@ -146,6 +146,56 @@
     {
       "label": "page.tsx",
       "file_type": "code",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_locale_about_page",
+      "community": 4,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "Params",
+      "file_type": "code",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_locale_about_page_params",
+      "community": 4,
+      "norm_label": "params"
+    },
+    {
+      "label": "localeOf()",
+      "file_type": "code",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "app_locale_about_page_localeof",
+      "community": 4,
+      "norm_label": "localeof()"
+    },
+    {
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "app_locale_about_page_generatemetadata",
+      "community": 4,
+      "norm_label": "generatemetadata()"
+    },
+    {
+      "label": "AboutPage()",
+      "file_type": "code",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "app_locale_about_page_aboutpage",
+      "community": 4,
+      "norm_label": "aboutpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
       "source_file": "app/[locale]/coming-soon/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
@@ -420,57 +470,57 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_industries_winery_page",
-      "community": 10,
+      "community": 4,
       "norm_label": "page.tsx"
     },
     {
       "label": "Params",
       "file_type": "code",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L13",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "app_locale_industries_winery_page_params",
-      "community": 10,
+      "community": 4,
       "norm_label": "params"
     },
     {
       "label": "localeOf()",
       "file_type": "code",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "app_locale_industries_winery_page_localeof",
-      "community": 10,
+      "community": 4,
       "norm_label": "localeof()"
     },
     {
       "label": "generateMetadata()",
       "file_type": "code",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L19",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "app_locale_industries_winery_page_generatemetadata",
-      "community": 10,
+      "community": 4,
       "norm_label": "generatemetadata()"
     },
     {
       "label": "capGlyphs",
       "file_type": "code",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L26",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "app_locale_industries_winery_page_capglyphs",
-      "community": 10,
+      "community": 4,
       "norm_label": "capglyphs"
     },
     {
       "label": "WineryPage()",
       "file_type": "code",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L145",
+      "source_location": "L147",
       "_origin": "ast",
       "id": "app_locale_industries_winery_page_winerypage",
-      "community": 10,
+      "community": 4,
       "norm_label": "winerypage()"
     },
     {
@@ -570,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_privacy_page",
-      "community": 5,
+      "community": 10,
       "norm_label": "page.tsx"
     },
     {
@@ -580,7 +630,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_privacy_page_params",
-      "community": 5,
+      "community": 10,
       "norm_label": "params"
     },
     {
@@ -590,7 +640,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_privacy_page_localeof",
-      "community": 5,
+      "community": 10,
       "norm_label": "localeof()"
     },
     {
@@ -600,7 +650,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_privacy_page_generatemetadata",
-      "community": 5,
+      "community": 10,
       "norm_label": "generatemetadata()"
     },
     {
@@ -610,7 +660,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_privacy_page_privacypage",
-      "community": 5,
+      "community": 10,
       "norm_label": "privacypage()"
     },
     {
@@ -620,7 +670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_terms_page",
-      "community": 5,
+      "community": 10,
       "norm_label": "page.tsx"
     },
     {
@@ -630,7 +680,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_terms_page_params",
-      "community": 5,
+      "community": 10,
       "norm_label": "params"
     },
     {
@@ -640,7 +690,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_terms_page_localeof",
-      "community": 5,
+      "community": 10,
       "norm_label": "localeof()"
     },
     {
@@ -650,7 +700,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_terms_page_generatemetadata",
-      "community": 5,
+      "community": 10,
       "norm_label": "generatemetadata()"
     },
     {
@@ -660,7 +710,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_terms_page_termspage",
-      "community": 5,
+      "community": 10,
       "norm_label": "termspage()"
     },
     {
@@ -677,7 +727,7 @@
       "label": "Params",
       "file_type": "code",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_params",
       "community": 4,
@@ -687,7 +737,7 @@
       "label": "localeOf()",
       "file_type": "code",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_localeof",
       "community": 4,
@@ -697,7 +747,7 @@
       "label": "generateMetadata()",
       "file_type": "code",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_generatemetadata",
       "community": 4,
@@ -707,7 +757,7 @@
       "label": "EnkantoCaseStudy()",
       "file_type": "code",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_page_enkantocasestudy",
       "community": 4,
@@ -727,7 +777,7 @@
       "label": "Params",
       "file_type": "code",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_params",
       "community": 3,
@@ -737,7 +787,7 @@
       "label": "localeOf()",
       "file_type": "code",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_localeof",
       "community": 3,
@@ -747,7 +797,7 @@
       "label": "generateMetadata()",
       "file_type": "code",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_generatemetadata",
       "community": 3,
@@ -757,7 +807,7 @@
       "label": "MonteXanicCaseStudy()",
       "file_type": "code",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_montexaniccasestudy",
       "community": 3,
@@ -857,7 +907,7 @@
       "label": "sitemap()",
       "file_type": "code",
       "source_file": "app/sitemap.ts",
-      "source_location": "L19",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "app_sitemap_sitemap",
       "community": 9,
@@ -870,7 +920,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_consent_consentbanner",
-      "community": 9,
+      "community": 21,
       "norm_label": "consentbanner.tsx"
     },
     {
@@ -880,7 +930,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "components_consent_consentbanner_consentbanner",
-      "community": 9,
+      "community": 21,
       "norm_label": "consentbanner()"
     },
     {
@@ -1032,6 +1082,36 @@
       "id": "components_pages_case_berrytobottle_berrytobottlemobile",
       "community": 3,
       "norm_label": "berrytobottlemobile()"
+    },
+    {
+      "label": "CaseFacts.tsx",
+      "file_type": "code",
+      "source_file": "components/pages/case/CaseFacts.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_pages_case_casefacts",
+      "community": 3,
+      "norm_label": "casefacts.tsx"
+    },
+    {
+      "label": "CaseFact",
+      "file_type": "code",
+      "source_file": "components/pages/case/CaseFacts.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "components_pages_case_casefacts_casefact",
+      "community": 3,
+      "norm_label": "casefact"
+    },
+    {
+      "label": "CaseFacts()",
+      "file_type": "code",
+      "source_file": "components/pages/case/CaseFacts.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "components_pages_case_casefacts_casefacts",
+      "community": 3,
+      "norm_label": "casefacts()"
     },
     {
       "label": "PlayOnceVis.tsx",
@@ -1870,7 +1950,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_home_opscompression",
-      "community": 11,
+      "community": 0,
       "norm_label": "opscompression.tsx"
     },
     {
@@ -1880,7 +1960,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "components_pages_home_opscompression_opscompression",
-      "community": 11,
+      "community": 3,
       "norm_label": "opscompression()"
     },
     {
@@ -2284,13 +2364,73 @@
       "norm_label": "spotlightframes()"
     },
     {
+      "label": "AssistantDemo.tsx",
+      "file_type": "code",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_pages_winery_assistantdemo",
+      "community": 3,
+      "norm_label": "assistantdemo.tsx"
+    },
+    {
+      "label": "BARS",
+      "file_type": "code",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "components_pages_winery_assistantdemo_bars",
+      "community": 3,
+      "norm_label": "bars"
+    },
+    {
+      "label": "CITED_ROW",
+      "file_type": "code",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "components_pages_winery_assistantdemo_cited_row",
+      "community": 3,
+      "norm_label": "cited_row"
+    },
+    {
+      "label": "AssistantDemo()",
+      "file_type": "code",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "components_pages_winery_assistantdemo_assistantdemo",
+      "community": 3,
+      "norm_label": "assistantdemo()"
+    },
+    {
+      "label": "PricingBundles.tsx",
+      "file_type": "code",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_pages_winery_pricingbundles",
+      "community": 4,
+      "norm_label": "pricingbundles.tsx"
+    },
+    {
+      "label": "PricingBundles()",
+      "file_type": "code",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "components_pages_winery_pricingbundles_pricingbundles",
+      "community": 4,
+      "norm_label": "pricingbundles()"
+    },
+    {
       "label": "SpotlightFrames.tsx",
       "file_type": "code",
       "source_file": "components/pages/winery/SpotlightFrames.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_spotlightframes",
-      "community": 10,
+      "community": 4,
       "norm_label": "spotlightframes.tsx"
     },
     {
@@ -2300,7 +2440,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_pages_winery_spotlightframes_spotlightframes",
-      "community": 10,
+      "community": 4,
       "norm_label": "spotlightframes()"
     },
     {
@@ -2310,7 +2450,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield",
-      "community": 10,
+      "community": 4,
       "norm_label": "vinefield.tsx"
     },
     {
@@ -2320,7 +2460,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_rgb",
-      "community": 10,
+      "community": 4,
       "norm_label": "rgb"
     },
     {
@@ -2330,7 +2470,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_pt",
-      "community": 10,
+      "community": 4,
       "norm_label": "pt"
     },
     {
@@ -2340,7 +2480,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_trace",
-      "community": 10,
+      "community": 4,
       "norm_label": "trace"
     },
     {
@@ -2350,7 +2490,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_sourcekind",
-      "community": 10,
+      "community": 4,
       "norm_label": "sourcekind"
     },
     {
@@ -2360,7 +2500,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_source",
-      "community": 10,
+      "community": 4,
       "norm_label": "source"
     },
     {
@@ -2370,7 +2510,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_geom",
-      "community": 10,
+      "community": 4,
       "norm_label": "geom"
     },
     {
@@ -2380,7 +2520,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_vinefield",
-      "community": 10,
+      "community": 4,
       "norm_label": "vinefield()"
     },
     {
@@ -2470,7 +2610,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_site_reveal",
-      "community": 2,
+      "community": 4,
       "norm_label": "reveal.tsx"
     },
     {
@@ -2480,7 +2620,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_site_reveal_revealprops",
-      "community": 2,
+      "community": 4,
       "norm_label": "revealprops"
     },
     {
@@ -2490,7 +2630,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "components_site_reveal_reveal",
-      "community": 2,
+      "community": 4,
       "norm_label": "reveal()"
     },
     {
@@ -2870,7 +3010,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider",
-      "community": 9,
+      "community": 0,
       "norm_label": "localeprovider.tsx"
     },
     {
@@ -2880,7 +3020,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_localecontext",
-      "community": 9,
+      "community": 0,
       "norm_label": "localecontext"
     },
     {
@@ -2900,7 +3040,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_uselocale",
-      "community": 9,
+      "community": 0,
       "norm_label": "uselocale()"
     },
     {
@@ -2912,6 +3052,56 @@
       "id": "lib_i18n_localeprovider_usedict",
       "community": 3,
       "norm_label": "usedict()"
+    },
+    {
+      "label": "about.ts",
+      "file_type": "code",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_i18n_about",
+      "community": 4,
+      "norm_label": "about.ts"
+    },
+    {
+      "label": "en",
+      "file_type": "code",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "lib_i18n_about_en",
+      "community": 4,
+      "norm_label": "en"
+    },
+    {
+      "label": "es",
+      "file_type": "code",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L57",
+      "_origin": "ast",
+      "id": "lib_i18n_about_es",
+      "community": 4,
+      "norm_label": "es"
+    },
+    {
+      "label": "AboutDict",
+      "file_type": "code",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "lib_i18n_about_aboutdict",
+      "community": 4,
+      "norm_label": "aboutdict"
+    },
+    {
+      "label": "about",
+      "file_type": "code",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "lib_i18n_about_about",
+      "community": 4,
+      "norm_label": "about"
     },
     {
       "label": "clinics.ts",
@@ -3010,7 +3200,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "lib_i18n_coming_soon_comingsoon",
-      "community": 9,
+      "community": 4,
       "norm_label": "comingsoon"
     },
     {
@@ -3130,7 +3320,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_consent",
-      "community": 4,
+      "community": 21,
       "norm_label": "consent.ts"
     },
     {
@@ -3140,7 +3330,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_i18n_consent_en",
-      "community": 4,
+      "community": 21,
       "norm_label": "en"
     },
     {
@@ -3150,7 +3340,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "lib_i18n_consent_es",
-      "community": 4,
+      "community": 21,
       "norm_label": "es"
     },
     {
@@ -3160,7 +3350,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "lib_i18n_consent_consentdict",
-      "community": 4,
+      "community": 21,
       "norm_label": "consentdict"
     },
     {
@@ -3170,7 +3360,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "lib_i18n_consent_consent",
-      "community": 4,
+      "community": 21,
       "norm_label": "consent"
     },
     {
@@ -3247,7 +3437,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/enkanto.ts",
-      "source_location": "L154",
+      "source_location": "L174",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_es",
       "community": 4,
@@ -3257,7 +3447,7 @@
       "label": "EnkantoDict",
       "file_type": "code",
       "source_file": "lib/i18n/enkanto.ts",
-      "source_location": "L303",
+      "source_location": "L343",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_enkantodict",
       "community": 4,
@@ -3267,7 +3457,7 @@
       "label": "enkanto",
       "file_type": "code",
       "source_file": "lib/i18n/enkanto.ts",
-      "source_location": "L304",
+      "source_location": "L344",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_enkanto",
       "community": 4,
@@ -3330,7 +3520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_home",
-      "community": 11,
+      "community": 0,
       "norm_label": "home.ts"
     },
     {
@@ -3340,37 +3530,37 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_i18n_home_en",
-      "community": 11,
+      "community": 0,
       "norm_label": "en"
     },
     {
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L257",
+      "source_location": "L258",
       "_origin": "ast",
       "id": "lib_i18n_home_es",
-      "community": 11,
+      "community": 0,
       "norm_label": "es"
     },
     {
       "label": "HomeDict",
       "file_type": "code",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L508",
+      "source_location": "L510",
       "_origin": "ast",
       "id": "lib_i18n_home_homedict",
-      "community": 11,
+      "community": 0,
       "norm_label": "homedict"
     },
     {
       "label": "home",
       "file_type": "code",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L509",
+      "source_location": "L511",
       "_origin": "ast",
       "id": "lib_i18n_home_home",
-      "community": 11,
+      "community": 0,
       "norm_label": "home"
     },
     {
@@ -3400,7 +3590,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "lib_i18n_metadata_pagemetadata",
-      "community": 5,
+      "community": 10,
       "norm_label": "pagemetadata()"
     },
     {
@@ -3427,7 +3617,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/monte-xanic.ts",
-      "source_location": "L174",
+      "source_location": "L193",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_es",
       "community": 3,
@@ -3437,7 +3627,7 @@
       "label": "MonteXanicDict",
       "file_type": "code",
       "source_file": "lib/i18n/monte-xanic.ts",
-      "source_location": "L342",
+      "source_location": "L380",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_montexanicdict",
       "community": 3,
@@ -3447,7 +3637,7 @@
       "label": "monteXanic",
       "file_type": "code",
       "source_file": "lib/i18n/monte-xanic.ts",
-      "source_location": "L343",
+      "source_location": "L381",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_montexanic",
       "community": 3,
@@ -3460,7 +3650,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_privacy",
-      "community": 4,
+      "community": 10,
       "norm_label": "privacy.ts"
     },
     {
@@ -3470,7 +3660,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_i18n_privacy_en",
-      "community": 4,
+      "community": 10,
       "norm_label": "en"
     },
     {
@@ -3480,7 +3670,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "lib_i18n_privacy_es",
-      "community": 4,
+      "community": 10,
       "norm_label": "es"
     },
     {
@@ -3490,7 +3680,7 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "lib_i18n_privacy_privacydict",
-      "community": 4,
+      "community": 10,
       "norm_label": "privacydict"
     },
     {
@@ -3500,7 +3690,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "lib_i18n_privacy_privacy",
-      "community": 4,
+      "community": 10,
       "norm_label": "privacy"
     },
     {
@@ -3637,7 +3827,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L73",
+      "source_location": "L75",
       "_origin": "ast",
       "id": "lib_i18n_site_es",
       "community": 9,
@@ -3647,7 +3837,7 @@
       "label": "SiteDict",
       "file_type": "code",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L135",
+      "source_location": "L141",
       "_origin": "ast",
       "id": "lib_i18n_site_sitedict",
       "community": 9,
@@ -3657,7 +3847,7 @@
       "label": "site",
       "file_type": "code",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L136",
+      "source_location": "L142",
       "_origin": "ast",
       "id": "lib_i18n_site_site",
       "community": 9,
@@ -3670,7 +3860,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_terms",
-      "community": 4,
+      "community": 10,
       "norm_label": "terms.ts"
     },
     {
@@ -3680,7 +3870,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_i18n_terms_en",
-      "community": 4,
+      "community": 10,
       "norm_label": "en"
     },
     {
@@ -3690,7 +3880,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_i18n_terms_es",
-      "community": 4,
+      "community": 10,
       "norm_label": "es"
     },
     {
@@ -3700,7 +3890,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "lib_i18n_terms_termsdict",
-      "community": 4,
+      "community": 10,
       "norm_label": "termsdict"
     },
     {
@@ -3710,7 +3900,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "lib_i18n_terms_terms",
-      "community": 4,
+      "community": 10,
       "norm_label": "terms"
     },
     {
@@ -3720,7 +3910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_winery",
-      "community": 10,
+      "community": 4,
       "norm_label": "winery.ts"
     },
     {
@@ -3730,37 +3920,37 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "lib_i18n_winery_en",
-      "community": 10,
+      "community": 4,
       "norm_label": "en"
     },
     {
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L132",
+      "source_location": "L254",
       "_origin": "ast",
       "id": "lib_i18n_winery_es",
-      "community": 10,
+      "community": 4,
       "norm_label": "es"
     },
     {
       "label": "WineryDict",
       "file_type": "code",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L255",
+      "source_location": "L497",
       "_origin": "ast",
       "id": "lib_i18n_winery_winerydict",
-      "community": 10,
+      "community": 4,
       "norm_label": "winerydict"
     },
     {
       "label": "winery",
       "file_type": "code",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L256",
+      "source_location": "L498",
       "_origin": "ast",
       "id": "lib_i18n_winery_winery",
-      "community": 10,
+      "community": 4,
       "norm_label": "winery"
     },
     {
@@ -3882,6 +4072,56 @@
       "id": "lib_pricing_pricingfor",
       "community": 11,
       "norm_label": "pricingfor()"
+    },
+    {
+      "label": "WineryBundleId",
+      "file_type": "code",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L106",
+      "_origin": "ast",
+      "id": "lib_pricing_winerybundleid",
+      "community": 11,
+      "norm_label": "winerybundleid"
+    },
+    {
+      "label": "WineryBundle",
+      "file_type": "code",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L108",
+      "_origin": "ast",
+      "id": "lib_pricing_winerybundle",
+      "community": 11,
+      "norm_label": "winerybundle"
+    },
+    {
+      "label": "wineryBundles",
+      "file_type": "code",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L127",
+      "_origin": "ast",
+      "id": "lib_pricing_winerybundles",
+      "community": 11,
+      "norm_label": "winerybundles"
+    },
+    {
+      "label": "winerySetupFloor()",
+      "file_type": "code",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L149",
+      "_origin": "ast",
+      "id": "lib_pricing_winerysetupfloor",
+      "community": 4,
+      "norm_label": "winerysetupfloor()"
+    },
+    {
+      "label": "formatPrice()",
+      "file_type": "code",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L155",
+      "_origin": "ast",
+      "id": "lib_pricing_formatprice",
+      "community": 4,
+      "norm_label": "formatprice()"
     },
     {
       "label": "middleware.ts",
@@ -5154,6 +5394,244 @@
       "source": "beads_hooks_prepare_commit_msg",
       "target": "beads_hooks_prepare_commit_msg__entry",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "app_locale_about_page_aboutpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "app_locale_about_page_generatemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "app_locale_about_page_localeof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "app_locale_about_page_params",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "components_site_reveal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "components_site_reveal_reveal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_about",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_about_about",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_config_islocale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_config_locale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_metadata_pagemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_rich",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_rich_rich",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_site",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_locale_about_page",
+      "target": "lib_i18n_site_site",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "app_locale_about_page_aboutpage",
+      "target": "app_locale_about_page_localeof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "app_locale_about_page_generatemetadata",
+      "target": "app_locale_about_page_localeof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "app_locale_about_page_localeof",
+      "target": "lib_i18n_config_islocale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "app_locale_about_page_generatemetadata",
+      "target": "lib_i18n_metadata_pagemetadata"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/[locale]/about/page.tsx",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "app_locale_about_page_aboutpage",
+      "target": "lib_i18n_rich_rich"
     },
     {
       "relation": "contains",
@@ -6435,7 +6913,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L26",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "app_locale_industries_winery_page_capglyphs",
@@ -6445,7 +6923,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L19",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "app_locale_industries_winery_page_generatemetadata",
@@ -6455,7 +6933,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "app_locale_industries_winery_page_localeof",
@@ -6465,7 +6943,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L13",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "app_locale_industries_winery_page_params",
@@ -6475,10 +6953,43 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L145",
+      "source_location": "L147",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "app_locale_industries_winery_page_winerypage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/industries/winery/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_locale_industries_winery_page",
+      "target": "components_pages_winery_assistantdemo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/industries/winery/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_locale_industries_winery_page",
+      "target": "components_pages_winery_pricingbundles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/industries/winery/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_locale_industries_winery_page",
+      "target": "components_pages_winery_pricingbundles_pricingbundles",
       "confidence_score": 1.0
     },
     {
@@ -6552,7 +7063,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_config",
@@ -6563,7 +7074,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_config_islocale",
@@ -6574,7 +7085,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_config_locale",
@@ -6585,7 +7096,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L6",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_config_localepath",
@@ -6596,7 +7107,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_metadata",
@@ -6607,7 +7118,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_metadata_pagemetadata",
@@ -6618,7 +7129,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L8",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_rich",
@@ -6629,7 +7140,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L8",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_rich_rich",
@@ -6640,7 +7151,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_site",
@@ -6651,7 +7162,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L9",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_site_site",
@@ -6662,7 +7173,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_winery",
@@ -6673,7 +7184,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L10",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page",
       "target": "lib_i18n_winery_winery",
@@ -6684,7 +7195,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page_generatemetadata",
       "target": "app_locale_industries_winery_page_localeof",
@@ -6695,7 +7206,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L16",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page_localeof",
       "target": "lib_i18n_config_islocale",
@@ -6706,7 +7217,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L146",
+      "source_location": "L148",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page_winerypage",
       "target": "app_locale_industries_winery_page_localeof",
@@ -6718,7 +7229,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L21",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page_generatemetadata",
       "target": "lib_i18n_metadata_pagemetadata"
@@ -6729,7 +7240,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L149",
+      "source_location": "L151",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page_winerypage",
       "target": "lib_i18n_config_localepath"
@@ -6740,7 +7251,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/industries/winery/page.tsx",
-      "source_location": "L169",
+      "source_location": "L171",
       "weight": 1.0,
       "source": "app_locale_industries_winery_page_winerypage",
       "target": "lib_i18n_rich_rich"
@@ -7327,7 +7838,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L460",
+      "source_location": "L461",
       "weight": 1.0,
       "source": "app_locale_page_home",
       "target": "lib_pricing_formatamount"
@@ -7680,7 +8191,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "app_locale_work_enkanto_page_enkantocasestudy",
@@ -7690,7 +8201,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "app_locale_work_enkanto_page_generatemetadata",
@@ -7700,7 +8211,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "app_locale_work_enkanto_page_localeof",
@@ -7710,10 +8221,32 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "app_locale_work_enkanto_page_params",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/work/enkanto/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_locale_work_enkanto_page",
+      "target": "components_pages_case_casefacts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/work/enkanto/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_locale_work_enkanto_page",
+      "target": "components_pages_case_casefacts_casefacts",
       "confidence_score": 1.0
     },
     {
@@ -7776,7 +8309,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_config",
@@ -7787,7 +8320,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_config_islocale",
@@ -7798,7 +8331,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_config_locale",
@@ -7809,7 +8342,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_enkanto",
@@ -7820,7 +8353,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_enkanto_enkanto",
@@ -7831,7 +8364,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_metadata",
@@ -7842,7 +8375,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_metadata_pagemetadata",
@@ -7853,7 +8386,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_rich",
@@ -7864,7 +8397,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_rich_rich",
@@ -7875,7 +8408,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_site",
@@ -7886,7 +8419,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page",
       "target": "lib_i18n_site_site",
@@ -7897,7 +8430,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page_enkantocasestudy",
       "target": "app_locale_work_enkanto_page_localeof",
@@ -7908,7 +8441,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page_generatemetadata",
       "target": "app_locale_work_enkanto_page_localeof",
@@ -7919,7 +8452,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page_localeof",
       "target": "lib_i18n_config_islocale",
@@ -7931,7 +8464,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page_generatemetadata",
       "target": "lib_i18n_metadata_pagemetadata"
@@ -7942,7 +8475,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/work/enkanto/page.tsx",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0,
       "source": "app_locale_work_enkanto_page_enkantocasestudy",
       "target": "lib_i18n_rich_rich"
@@ -7951,7 +8484,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "app_locale_work_monte_xanic_page_generatemetadata",
@@ -7961,7 +8494,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "app_locale_work_monte_xanic_page_localeof",
@@ -7971,7 +8504,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "app_locale_work_monte_xanic_page_montexaniccasestudy",
@@ -7981,7 +8514,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "app_locale_work_monte_xanic_page_params",
@@ -7996,6 +8529,28 @@
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "components_pages_case_berrytobottle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/work/monte-xanic/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_locale_work_monte_xanic_page",
+      "target": "components_pages_case_casefacts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/[locale]/work/monte-xanic/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_locale_work_monte_xanic_page",
+      "target": "components_pages_case_casefacts_casefacts",
       "confidence_score": 1.0
     },
     {
@@ -8080,7 +8635,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_config",
@@ -8091,7 +8646,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_config_islocale",
@@ -8102,7 +8657,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_config_locale",
@@ -8113,7 +8668,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_metadata",
@@ -8124,7 +8679,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L8",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_metadata_pagemetadata",
@@ -8135,7 +8690,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_monte_xanic",
@@ -8146,7 +8701,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_monte_xanic_montexanic",
@@ -8157,7 +8712,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_rich",
@@ -8168,7 +8723,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_rich_rich",
@@ -8179,7 +8734,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_site",
@@ -8190,7 +8745,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page",
       "target": "lib_i18n_site_site",
@@ -8201,7 +8756,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L21",
+      "source_location": "L22",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page_generatemetadata",
       "target": "app_locale_work_monte_xanic_page_localeof",
@@ -8212,7 +8767,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page_localeof",
       "target": "lib_i18n_config_islocale",
@@ -8223,7 +8778,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page_montexaniccasestudy",
       "target": "app_locale_work_monte_xanic_page_localeof",
@@ -8235,7 +8790,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L22",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page_generatemetadata",
       "target": "lib_i18n_metadata_pagemetadata"
@@ -8246,7 +8801,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/work/monte-xanic/page.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "weight": 1.0,
       "source": "app_locale_work_monte_xanic_page_montexaniccasestudy",
       "target": "lib_i18n_rich_rich"
@@ -8371,7 +8926,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/sitemap.ts",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "app_sitemap",
       "target": "app_sitemap_sitemap",
@@ -8427,7 +8982,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/sitemap.ts",
-      "source_location": "L26",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "app_sitemap_sitemap",
       "target": "lib_i18n_config_localepath"
@@ -9079,6 +9634,26 @@
       "weight": 1.0,
       "source": "components_pages_case_berrytobottle_berrytobottlemobile",
       "target": "lib_i18n_localeprovider_usedict"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/case/CaseFacts.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "components_pages_case_casefacts",
+      "target": "components_pages_case_casefacts_casefact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/case/CaseFacts.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "components_pages_case_casefacts",
+      "target": "components_pages_case_casefacts_casefacts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -11420,6 +11995,255 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "components_pages_winery_assistantdemo_assistantdemo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "components_pages_winery_assistantdemo_bars",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "components_pages_winery_assistantdemo_cited_row",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "lib_i18n_localeprovider",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "lib_i18n_localeprovider_usedict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "lib_i18n_winery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo",
+      "target": "lib_i18n_winery_winery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo_assistantdemo",
+      "target": "components_pages_winery_assistantdemo_cited_row"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pages/winery/AssistantDemo.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "components_pages_winery_assistantdemo_assistantdemo",
+      "target": "lib_i18n_localeprovider_usedict"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "components_pages_winery_pricingbundles_pricingbundles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_i18n_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_i18n_config_locale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_i18n_rich",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_i18n_rich_rich",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_i18n_winery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_i18n_winery_winery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_pricing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_pricing_formatprice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_pricing_winerybundles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles",
+      "target": "lib_pricing_winerysetupfloor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles_pricingbundles",
+      "target": "lib_i18n_rich_rich"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles_pricingbundles",
+      "target": "lib_pricing_formatprice"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "components/pages/winery/PricingBundles.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "components_pages_winery_pricingbundles_pricingbundles",
+      "target": "lib_pricing_winerysetupfloor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "components/pages/winery/SpotlightFrames.tsx",
       "source_location": "L11",
       "weight": 1.0,
@@ -11797,7 +12621,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Nav.tsx",
-      "source_location": "L52",
+      "source_location": "L56",
       "weight": 1.0,
       "source": "components_site_nav_nav",
       "target": "lib_i18n_config_otherlocale"
@@ -11808,7 +12632,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Nav.tsx",
-      "source_location": "L53",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "components_site_nav_nav",
       "target": "lib_i18n_config_striplocale"
@@ -12924,6 +13748,68 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "lib_i18n_about",
+      "target": "lib_i18n_about_about",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "lib_i18n_about",
+      "target": "lib_i18n_about_aboutdict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "lib_i18n_about",
+      "target": "lib_i18n_about_en",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "lib_i18n_about",
+      "target": "lib_i18n_about_es",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_i18n_about",
+      "target": "lib_i18n_rich",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/i18n/about.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "lib_i18n_about",
+      "target": "lib_i18n_rich_dict",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "lib/i18n/clinics.ts",
       "source_location": "L287",
       "weight": 1.0,
@@ -13525,7 +14411,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/enkanto.ts",
-      "source_location": "L304",
+      "source_location": "L344",
       "weight": 1.0,
       "source": "lib_i18n_enkanto",
       "target": "lib_i18n_enkanto_enkanto",
@@ -13535,7 +14421,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/enkanto.ts",
-      "source_location": "L303",
+      "source_location": "L343",
       "weight": 1.0,
       "source": "lib_i18n_enkanto",
       "target": "lib_i18n_enkanto_enkantodict",
@@ -13545,7 +14431,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/enkanto.ts",
-      "source_location": "L154",
+      "source_location": "L174",
       "weight": 1.0,
       "source": "lib_i18n_enkanto",
       "target": "lib_i18n_enkanto_es",
@@ -13649,7 +14535,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L257",
+      "source_location": "L258",
       "weight": 1.0,
       "source": "lib_i18n_home",
       "target": "lib_i18n_home_es",
@@ -13659,7 +14545,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L509",
+      "source_location": "L511",
       "weight": 1.0,
       "source": "lib_i18n_home",
       "target": "lib_i18n_home_home",
@@ -13669,7 +14555,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L508",
+      "source_location": "L510",
       "weight": 1.0,
       "source": "lib_i18n_home",
       "target": "lib_i18n_home_homedict",
@@ -13742,7 +14628,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/monte-xanic.ts",
-      "source_location": "L174",
+      "source_location": "L193",
       "weight": 1.0,
       "source": "lib_i18n_monte_xanic",
       "target": "lib_i18n_monte_xanic_es",
@@ -13752,7 +14638,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/monte-xanic.ts",
-      "source_location": "L343",
+      "source_location": "L381",
       "weight": 1.0,
       "source": "lib_i18n_monte_xanic",
       "target": "lib_i18n_monte_xanic_montexanic",
@@ -13762,7 +14648,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/monte-xanic.ts",
-      "source_location": "L342",
+      "source_location": "L380",
       "weight": 1.0,
       "source": "lib_i18n_monte_xanic",
       "target": "lib_i18n_monte_xanic_montexanicdict",
@@ -14055,7 +14941,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L73",
+      "source_location": "L75",
       "weight": 1.0,
       "source": "lib_i18n_site",
       "target": "lib_i18n_site_es",
@@ -14065,7 +14951,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L136",
+      "source_location": "L142",
       "weight": 1.0,
       "source": "lib_i18n_site",
       "target": "lib_i18n_site_site",
@@ -14075,7 +14961,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L135",
+      "source_location": "L141",
       "weight": 1.0,
       "source": "lib_i18n_site",
       "target": "lib_i18n_site_sitedict",
@@ -14135,7 +15021,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L132",
+      "source_location": "L254",
       "weight": 1.0,
       "source": "lib_i18n_winery",
       "target": "lib_i18n_winery_es",
@@ -14145,7 +15031,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L256",
+      "source_location": "L498",
       "weight": 1.0,
       "source": "lib_i18n_winery",
       "target": "lib_i18n_winery_winery",
@@ -14155,7 +15041,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L255",
+      "source_location": "L497",
       "weight": 1.0,
       "source": "lib_i18n_winery",
       "target": "lib_i18n_winery_winerydict",
@@ -14199,6 +15085,16 @@
       "weight": 1.0,
       "source": "lib_pricing",
       "target": "lib_pricing_formatmoney",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L155",
+      "weight": 1.0,
+      "source": "lib_pricing",
+      "target": "lib_pricing_formatprice",
       "confidence_score": 1.0
     },
     {
@@ -14272,6 +15168,46 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "lib_pricing",
+      "target": "lib_pricing_winerybundle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L106",
+      "weight": 1.0,
+      "source": "lib_pricing",
+      "target": "lib_pricing_winerybundleid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L127",
+      "weight": 1.0,
+      "source": "lib_pricing",
+      "target": "lib_pricing_winerybundles",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L149",
+      "weight": 1.0,
+      "source": "lib_pricing",
+      "target": "lib_pricing_winerysetupfloor",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -14279,6 +15215,17 @@
       "source_location": "L81",
       "weight": 1.0,
       "source": "lib_pricing_formatmoney",
+      "target": "lib_pricing_formatamount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/pricing.ts",
+      "source_location": "L156",
+      "weight": 1.0,
+      "source": "lib_pricing_formatprice",
       "target": "lib_pricing_formatamount",
       "confidence_score": 1.0
     },
@@ -15405,5 +16352,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "28526abcc579399eec79e35da667cd6183062a1e"
+  "built_at_commit": "55dd93d06e785f5a8e01b32175fcd7c494fb55fa"
 }
