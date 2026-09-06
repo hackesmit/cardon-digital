@@ -383,10 +383,13 @@
    One responsive SVG: its viewBox is the measured container width by the
    composition height (set from JS in a ResizeObserver), so it fits its content
    at every width with no letterbox and no twin/CSS handoff to disagree with.
-   Only the phone-width padding trim lives here. */
+   Only the phone-width padding trim lives here. The top of that trim is set by
+   the caption, not by the drawing: the tag names Monte Xanic and carries the
+   case page's hedged wording, so it wraps to three lines on the narrowest
+   phones and needs that band to itself. */
 @media (max-width: 600px) {
   .pg-home .ops-vis {
-    padding: 18px 16px 18px;
+    padding: 34px 16px 18px;
   }
 }
 
