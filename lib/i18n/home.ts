@@ -226,8 +226,8 @@ const en = {
       ],
     },
     ops: {
-      tag: "an hour, compressed to two minutes",
-      aria: "A long tangled hour of manual work compresses into one short clean two minute automated pass, a 97 percent reduction.",
+      tag: "Monte Xanic: an hour, compressed to two minutes",
+      aria: "At Monte Xanic, a long tangled hour of manual work compresses into one short clean two minute automated pass, a 97 percent reduction.",
       manual: "MANUAL, EVERY WEEK",
       auto: "AUTOMATED, RUNS ITSELF",
       badge: "97% less time",
@@ -497,8 +497,8 @@ const es: typeof en = {
       ],
     },
     ops: {
-      tag: "una hora, comprimida a dos minutos",
-      aria: "Una hora larga y enredada de trabajo manual se comprime en un solo paso automático y limpio de dos minutos, una reducción del 97 por ciento.",
+      tag: "Monte Xanic: una hora, comprimida a dos minutos",
+      aria: "En Monte Xanic, una hora larga y enredada de trabajo manual se comprime en un solo paso automático y limpio de dos minutos, una reducción del 97 por ciento.",
       manual: "A MANO, CADA SEMANA",
       auto: "AUTOMATIZADO, CORRE SOLO",
       badge: "97% menos tiempo",
