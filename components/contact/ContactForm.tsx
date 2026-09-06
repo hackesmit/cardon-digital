@@ -8,7 +8,7 @@ import {
   readAttribution,
   type Attribution,
 } from "@/lib/contact/attribution";
-import { DOORS } from "@/lib/contact/doors";
+import { CLICK_DOORS } from "@/lib/contact/doors";
 import {
   HONEYPOT_FIELD,
   LIMITS,
@@ -42,7 +42,7 @@ export default function ContactForm() {
   const locale = useLocale();
   const d = contact[locale].form;
   /* Which half of the two-version answers this build uses. */
-  const tone = DOORS.whatsapp ? "withWhatsapp" : "alone";
+  const tone = CLICK_DOORS.whatsapp ? "withWhatsapp" : "alone";
 
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<ContactField[]>([]);

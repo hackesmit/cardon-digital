@@ -31,14 +31,23 @@ export function whatsappNumber(raw: string | undefined): string {
 }
 
 /**
- * The prefilled message, with the lane token and the short lead id appended
- * when the visit carries them, so a reply can be traced to its campaign.
+ * The campaign marks this visit carries, in the bracketed form that travels
+ * inside a message a person is about to send: the lane token and the short
+ * lead id, either or both, or nothing at all.
  */
-export function whatsappText(base: string, attribution: Attribution): string {
+function marked(base: string, attribution: Attribution): string {
   const token = LANE_TOKENS.get(attribution.cd_lane) ?? "";
   const short = shortLeadId(attribution.cd_lead_id);
   const marks = [token, short].filter(Boolean);
   return marks.length > 0 ? base + " [" + marks.join(" ") + "]" : base;
+}
+
+/**
+ * The prefilled message, with the lane token and the short lead id appended
+ * when the visit carries them, so a reply can be traced to its campaign.
+ */
+export function whatsappText(base: string, attribution: Attribution): string {
+  return marked(base, attribution);
 }
 
 /** Empty when there is no usable number, which hides the button. */
@@ -72,4 +81,24 @@ export function bookingHref(
     url.searchParams.set("cd_lead_id", attribution.cd_lead_id);
   }
   return url.toString();
+}
+
+/**
+ * The address the rest of the site already writes to, and the door the
+ * contact page shows in place of the form when this environment cannot
+ * deliver mail. It is a constant rather than CONTACT_TO because that value is
+ * server-side configuration and has no business being rendered into a public
+ * page.
+ */
+export const MAIL_ADDRESS = "daniel@cardondigital.com";
+
+/**
+ * A plain mailto, with the campaign marks in the subject so an email door
+ * carries the same trace the WhatsApp door does. Nothing here can fail: the
+ * address is a constant and the subject is encoded.
+ */
+export function mailtoHref(subject: string, attribution: Attribution): string {
+  return (
+    "mailto:" + MAIL_ADDRESS + "?subject=" + encodeURIComponent(marked(subject, attribution))
+  );
 }

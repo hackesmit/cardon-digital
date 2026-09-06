@@ -11,7 +11,7 @@ import {
   type Attribution,
 } from "@/lib/contact/attribution";
 import { bookingHref, whatsappHref, whatsappText } from "@/lib/contact/links";
-import { DOORS } from "@/lib/contact/doors";
+import { CLICK_DOORS } from "@/lib/contact/doors";
 
 /* The environment values are read once, in lib/contact/doors, so the page copy
    and the doors themselves always agree on how many doors there are. */
@@ -36,10 +36,10 @@ export default function ContactDoors() {
     setAttribution(readAttribution());
   }, []);
 
-  const waHref = DOORS.whatsapp
+  const waHref = CLICK_DOORS.whatsapp
     ? whatsappHref(WHATSAPP, whatsappText(d.whatsapp.prefill, attribution))
     : "";
-  const bookHref = DOORS.booking ? bookingHref(BOOKING, attribution) : "";
+  const bookHref = CLICK_DOORS.booking ? bookingHref(BOOKING, attribution) : "";
 
   if (!waHref && !bookHref) return null;
 

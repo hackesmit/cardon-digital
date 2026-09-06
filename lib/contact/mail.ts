@@ -4,10 +4,13 @@
  * Delivery goes through Resend's HTTP API with plain fetch. The SDK would add
  * a dependency for one POST, which this site does not take.
  *
- * Dry mode is the default: with no RESEND_API_KEY (or no addresses to send
- * between) the route logs the message it would have sent and answers the
- * visitor with success, so the form is never broken by a missing environment
- * value. Real delivery is proved separately once the key is on Vercel.
+ * Delivery is either wired or it is not, and the site says which. With no
+ * RESEND_API_KEY, or no addresses to send between, nothing can be delivered,
+ * so the form does not accept a message at all: the contact page shows the
+ * mailto door instead (see ./doors) and this module reports the state through
+ * deliveryConfigured. Accepting a message we cannot deliver and answering the
+ * visitor with success would lose a real lead while promising an answer,
+ * which is worse than showing one door fewer.
  */
 
 import { headerSafe, type ContactSubmission } from "./validate";
@@ -16,8 +19,8 @@ const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
 /* Either a bare address or the "Name <address>" form, and nothing that could
    open a second header line. Env values are trusted more than form input, but
-   not blindly: a bad value fails closed into dry mode instead of shipping a
-   broken header. */
+   not blindly: a bad value closes the form and leaves the mailto door instead
+   of shipping a broken header. */
 const ADDRESS = /^[^\u0000-\u001F<>]*<?[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+>?$/;
 
 export type Email = {
@@ -26,17 +29,13 @@ export type Email = {
   replyTo: string;
   subject: string;
   text: string;
-  /** What may be written to a log. The email itself is never logged. */
-  redacted: RedactedLead;
 };
 
 /**
  * The shape a lead takes in a log line: enough to know a message arrived,
  * roughly who from and how long it was, and not enough to be a second copy of
  * somebody's personal data sitting in a log nobody prunes. A server log is
- * not an inbox, so while delivery is not wired the site can see that leads are
- * coming in but cannot answer them, which is what makes RESEND_API_KEY a
- * launch gate rather than a nicety.
+ * not an inbox: it records that something happened, never the lead itself.
  */
 export type RedactedLead = {
   name: string;
@@ -57,13 +56,25 @@ export function redactLead(s: ContactSubmission): RedactedLead {
 }
 
 export type DeliveryResult =
-  | { mode: "dry"; ok: true }
+  | { mode: "unavailable"; ok: false; reason: string }
   | { mode: "sent"; ok: true; id: string }
   | { mode: "sent"; ok: false; status: number; detail: string };
 
 function envAddress(name: string): string {
   const value = headerSafe(process.env[name] ?? "");
   return ADDRESS.test(value) ? value : "";
+}
+
+/**
+ * Whether this environment can actually deliver a message: a key to send with
+ * and two usable addresses to send between. Server side only, because
+ * RESEND_API_KEY is not a NEXT_PUBLIC value and must never be. The contact
+ * page asks this before it decides whether the written door is the form or
+ * the mailto, and the route asks it again through deliver().
+ */
+export function deliveryConfigured(): boolean {
+  const key = (process.env.RESEND_API_KEY ?? "").trim();
+  return key !== "" && envAddress("CONTACT_FROM") !== "" && envAddress("CONTACT_TO") !== "";
 }
 
 /** The subject a lead notification arrives under. */
@@ -116,36 +127,23 @@ export function buildEmail(s: ContactSubmission): Email {
     replyTo: headerSafe(s.email, 254),
     subject: subjectFor(s),
     text: bodyFor(s),
-    redacted: redactLead(s),
   };
 }
 
 /**
- * Sends the email, or logs it and reports success when the practice is not
- * wired for delivery yet. Never throws: a network failure comes back as an
- * unsuccessful sent result and the route decides what the visitor sees.
+ * Sends the email, or reports that this environment cannot. Never throws: a
+ * network failure comes back as an unsuccessful sent result and the route
+ * decides what the visitor sees.
  */
 export async function deliver(email: Email): Promise<DeliveryResult> {
   const key = (process.env.RESEND_API_KEY ?? "").trim();
 
   if (!key || !email.from || !email.to) {
-    const reason = !key
-      ? "no RESEND_API_KEY"
-      : "no CONTACT_FROM or CONTACT_TO";
-    // Redacted on purpose: the message, the sender's address and their name
-    // never reach the log, in dry mode or any other.
-    console.log(
-      "[contact] dry mode (" +
-        reason +
-        "), not sent: " +
-        JSON.stringify({
-          at: new Date().toISOString(),
-          to: email.to || "unset",
-          from: email.from || "unset",
-          ...email.redacted,
-        }),
-    );
-    return { mode: "dry", ok: true };
+    // The route writes the one redacted line for this, as it does for the
+    // other two outcomes; the reason travels with the result so that line can
+    // say which environment value is missing.
+    const reason = !key ? "no RESEND_API_KEY" : "no CONTACT_FROM or CONTACT_TO";
+    return { mode: "unavailable", ok: false, reason };
   }
 
   try {
