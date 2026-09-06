@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Reveal from "@/components/site/Reveal";
 import ContactDoors from "@/components/contact/ContactDoors";
 import ContactForm from "@/components/contact/ContactForm";
-import { DOORS } from "@/lib/contact/doors";
+import ContactMail from "@/components/contact/ContactMail";
+import { readDoors } from "@/lib/contact/doors";
+import { deliveryConfigured } from "@/lib/contact/mail";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { contact } from "@/lib/i18n/contact";
@@ -19,6 +21,12 @@ function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
+/* Which doors this build has. The written door is always one of the three,
+   and it is the form only when this environment can actually deliver mail;
+   otherwise it is the mailto, which cannot swallow a message. Read on the
+   server, where RESEND_API_KEY is readable and stays. */
+const DOORS = readDoors(deliveryConfigured());
+
 export function generateMetadata({ params }: Params): Metadata {
   const locale = localeOf(params);
   const meta = contact[locale].meta;
@@ -31,9 +39,11 @@ export function generateMetadata({ params }: Params): Metadata {
 
 export default function ContactPage({ params }: Params) {
   const d = contact[localeOf(params)];
+  /* The written door's own heading, which names what it actually is. */
+  const written = DOORS.form ? d.form : d.mail;
   /* The headline counts the doors that are actually on the page: three with
      WhatsApp and the booking link configured, two with one of them, and the
-     form alone when neither is. */
+     written door alone when neither is. */
   const intro = d.intro[DOORS.variant];
 
   return (
@@ -56,11 +66,11 @@ export default function ContactPage({ params }: Params) {
           <Reveal>
             <div className="form-inner">
               <div className="form-lead">
-                <span className="kicker clay">{d.form.kicker}</span>
-                <h2 id="form-title">{d.form.title}</h2>
-                <p className="section-sub">{rich(d.form.sub)}</p>
+                <span className="kicker clay">{written.kicker}</span>
+                <h2 id="form-title">{written.title}</h2>
+                <p className="section-sub">{rich(written.sub)}</p>
               </div>
-              <ContactForm />
+              {DOORS.form ? <ContactForm /> : <ContactMail />}
             </div>
           </Reveal>
         </div>

@@ -8,7 +8,9 @@ import type { DoorVariant } from "@/lib/contact/doors";
  *  The headline, the standfirst and the meta description are written once per
  *  door variant, because a door hides when its environment value is missing
  *  and the copy is never allowed to promise a door the page does not render.
- *  The form is always there, so a variant names what stands beside it. */
+ *  The written door is always there, so a variant names what stands beside
+ *  it; whether that door is the form or the mailto below depends on whether
+ *  this environment can deliver mail. */
 
 type Intro = { title: string; sub: string };
 
@@ -64,6 +66,18 @@ const en = {
     title: "A call, at your hour",
     body: "Thirty minutes, no cost, no sales script. We ask what you sell, how the work arrives and where it gets stuck.",
     cta: "Book a call",
+  },
+
+  /* The written door when the site cannot deliver mail itself: a plain
+     mailto, so the message leaves from the visitor's own outbox and a copy
+     stays with them. Nothing is promised that a missing key would swallow. */
+  mail: {
+    kicker: "By email",
+    title: "Write us an email",
+    sub: "For now the written door is a direct email. It reaches the person who does the work, and that person is the one who answers.",
+    body: "Tell us what you sell, what is not working, and what you would like to be different. The more concrete the message, the more useful the answer.",
+    subject: "Contact from the site",
+    note: "The message leaves from your own mail program, so the copy stays with you. It feeds no mailing list and we share it with nobody.",
   },
 
   form: {
@@ -170,6 +184,15 @@ const es: typeof en = {
     title: "Una llamada, a su hora",
     body: "Treinta minutos, sin costo y sin discurso de venta. Preguntamos qué vende, cómo le llega el trabajo y dónde se le atora.",
     cta: "Agendar una llamada",
+  },
+
+  mail: {
+    kicker: "Por correo",
+    title: "Escríbanos un correo",
+    sub: "Por ahora el contacto por escrito es un correo directo. Llega a quien hace el trabajo, y esa persona es quien le contesta.",
+    body: "Díganos qué vende, qué no está funcionando y qué le gustaría que fuera distinto. Entre más concreto el mensaje, más útil la respuesta.",
+    subject: "Contacto desde el sitio",
+    note: "El correo sale de su propio programa de correo, así que la copia se queda con usted. No alimenta ninguna lista y no lo compartimos con nadie.",
   },
 
   form: {

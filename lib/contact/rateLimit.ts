@@ -73,19 +73,42 @@ export function reset(): void {
 /**
  * Best guess at the client address.
  *
- * x-forwarded-for is trusted here for one reason only: on Vercel the edge
- * network sets that header itself and overwrites whatever the caller sent, so
- * the first entry is the real client and the rest are proxy hops. Anywhere
- * else, behind another proxy or a self-host, the header is caller-controlled
- * and rotating it walks straight past this limiter. If this site ever moves
- * off Vercel, the key has to come from the connection instead.
+ * The key is bound to the Vercel header first: on Vercel the edge network
+ * writes x-vercel-forwarded-for itself, per request, with the address it saw,
+ * so it is the one value here that a caller cannot choose. Anywhere else it
+ * is absent and the fallback is the LAST entry of x-forwarded-for, which is
+ * the hop nearest to this server, the entry a proxy in front of us appended.
+ * The first entry, which this used to read, is simply whatever the caller
+ * wrote, so rotating that header walked straight past this limiter.
+ *
+ * A direct caller with no proxy in front of it can still forge the whole
+ * header. Nothing readable from a Request object fixes that; a self-host
+ * would have to take the key from the connection instead.
  */
 export function clientKey(headers: Headers): string {
-  // Trusted because Vercel writes it. See the note above before reusing this.
-  const forwarded = headers.get("x-forwarded-for");
-  if (forwarded) {
-    const first = forwarded.split(",")[0].trim();
-    if (first) return first;
-  }
+  // Written by the platform, not by the caller. This is the trusted path.
+  const vercel = firstEntry(headers.get("x-vercel-forwarded-for"));
+  if (vercel) return vercel;
+
+  // Nearest hop, not the caller's own first entry. See the note above.
+  const nearestHop = lastEntry(headers.get("x-forwarded-for"));
+  if (nearestHop) return nearestHop;
+
   return headers.get("x-real-ip")?.trim() || "unknown";
+}
+
+function entries(raw: string | null): string[] {
+  return (raw ?? "")
+    .split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+}
+
+function firstEntry(raw: string | null): string {
+  return entries(raw)[0] ?? "";
+}
+
+function lastEntry(raw: string | null): string {
+  const all = entries(raw);
+  return all.length > 0 ? all[all.length - 1] : "";
 }

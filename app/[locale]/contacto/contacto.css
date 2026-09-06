@@ -22,6 +22,19 @@
   .doors{grid-template-columns:repeat(2,1fr);gap:20px;}
 }
 
+/* ======================= WRITTEN DOOR, MAIL ======================= */
+/* Shown in place of the form when the site cannot deliver mail itself, so it
+   carries the same panel weight the form's confirmation does. */
+.pg-contacto .mail-door{
+  border:1px solid var(--line);border-radius:2px;
+  background:color-mix(in srgb, var(--panel) 70%, transparent);
+  padding:24px 22px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:14px;
+}
+.pg-contacto .mail-body{color:var(--text-dim);font-size:0.97rem;line-height:1.6;margin:0;max-width:46ch;}
+.pg-contacto .mail-door .cta{align-self:flex-start;}
+.pg-contacto .mail-note{color:var(--muted);font-size:0.84rem;line-height:1.55;max-width:52ch;margin:0;}
+
 /* ============================ FORM ============================ */
 .pg-contacto .form-inner{display:grid;grid-template-columns:1fr;gap:clamp(24px,4vw,44px);}
 .pg-contacto .form-lead h2{font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.02em;margin:10px 0 0;}

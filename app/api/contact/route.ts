@@ -16,7 +16,7 @@ import { MAX_BODY_BYTES, validateSubmission } from "@/lib/contact/validate";
  *   4. JSON parse
  *   5. field validation, which is also the header injection gate
  *   6. honeypot, answered with success so a bot learns nothing
- *   7. delivery, or dry mode when the practice is not wired for mail yet
+ *   7. delivery, or a plain refusal when this environment cannot deliver
  *
  * The route is a Node handler rather than an edge one because the rate limit
  * keeps its window in module memory.
@@ -87,6 +87,29 @@ export async function POST(req: Request) {
 
   const submission = result.value;
   const delivery = await deliver(buildEmail(submission));
+
+  if (delivery.mode === "unavailable") {
+    /* No key, or no addresses to send between. The contact page does not
+       render the form in this state, so this is a stale page, a direct caller
+       or a bot; either way the honest answer is that the message was not
+       taken. Accepting it would drop a real lead behind a success message.
+       The marker is redacted: the submission is not kept anywhere. */
+    console.error(
+      "[contact] refused, delivery is not configured " +
+        JSON.stringify({
+          at: new Date().toISOString(),
+          channel: "form",
+          mode: "unavailable",
+          reason: delivery.reason,
+          winery: submission.winery || null,
+          leadId: submission.attribution.leadId || null,
+          gclid: submission.attribution.gclid || null,
+          lane: submission.attribution.lane || null,
+          ...redactLead(submission),
+        }),
+    );
+    return fail(503, "unavailable");
+  }
 
   if (!delivery.ok) {
     // A refused or failed send would otherwise lose the lead with no trace.
