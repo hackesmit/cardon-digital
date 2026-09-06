@@ -1,0 +1,96 @@
+/* Contact page. Mobile first: one column of doors, then the form, and the two
+   split into columns only when there is room for them. Scoped under
+   .pg-contacto except for the doors section, which the doors component owns
+   and renders as a sibling of the page's own sections. */
+
+.pg-contacto{position:relative;z-index:1;}
+.pg-contacto .hero{padding-top:clamp(90px,12vw,140px);}
+
+/* ============================ DOORS ============================ */
+.doors-section{padding-top:clamp(20px,3vw,32px);}
+.doors{display:grid;grid-template-columns:1fr;gap:16px;}
+.door{
+  border:1px solid var(--line);border-radius:2px;
+  background:color-mix(in srgb, var(--panel) 70%, transparent);
+  padding:22px 20px 24px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+}
+.door h2{font-size:clamp(1.2rem,2.2vw,1.45rem);letter-spacing:-0.01em;margin:0;}
+.door p{color:var(--text-dim);font-size:0.97rem;line-height:1.6;margin:0;max-width:44ch;}
+.door .cta,.door .btn-ghost{margin-top:6px;}
+@media (min-width:760px){
+  .doors{grid-template-columns:repeat(2,1fr);gap:20px;}
+}
+
+/* ======================= WRITTEN DOOR, MAIL ======================= */
+/* Shown in place of the form when the site cannot deliver mail itself, so it
+   carries the same panel weight the form's confirmation does. */
+.pg-contacto .mail-door{
+  border:1px solid var(--line);border-radius:2px;
+  background:color-mix(in srgb, var(--panel) 70%, transparent);
+  padding:24px 22px;
+  display:flex;flex-direction:column;align-items:flex-start;gap:14px;
+}
+.pg-contacto .mail-body{color:var(--text-dim);font-size:0.97rem;line-height:1.6;margin:0;max-width:46ch;}
+.pg-contacto .mail-door .cta{align-self:flex-start;}
+.pg-contacto .mail-note{color:var(--muted);font-size:0.84rem;line-height:1.55;max-width:52ch;margin:0;}
+
+/* ============================ FORM ============================ */
+.pg-contacto .form-inner{display:grid;grid-template-columns:1fr;gap:clamp(24px,4vw,44px);}
+.pg-contacto .form-lead h2{font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.02em;margin:10px 0 0;}
+@media (min-width:960px){
+  .pg-contacto .form-inner{grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);align-items:start;}
+}
+
+.contact-form{display:flex;flex-direction:column;gap:16px;}
+.contact-form .field{display:flex;flex-direction:column;gap:6px;margin:0;}
+.contact-form label{
+  font-family:var(--mono);font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);display:flex;align-items:baseline;gap:8px;
+}
+.contact-form .field-tag{
+  font-size:0.66rem;letter-spacing:0.08em;color:var(--muted);opacity:0.75;text-transform:none;
+}
+.contact-form input,
+.contact-form textarea{
+  width:100%;font-family:var(--sans);font-size:1rem;color:var(--text);
+  background:color-mix(in srgb, var(--panel) 60%, transparent);
+  border:1px solid var(--line);border-radius:2px;
+  padding:11px 13px;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.contact-form textarea{resize:vertical;min-height:150px;line-height:1.55;}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder{color:var(--muted);opacity:0.8;}
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible{
+  outline:none;border-color:var(--primary-dim);
+  box-shadow:0 0 0 3px var(--primary-faint);
+}
+.contact-form .is-invalid input,
+.contact-form .is-invalid textarea{border-color:var(--energy);}
+.contact-form .field-error{color:var(--energy-bright);font-size:0.86rem;}
+
+/* Off screen rather than hidden: a bot that skips display:none still fills it. */
+.contact-form .field-trap{
+  position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;
+}
+
+.contact-form .form-foot{display:flex;flex-direction:column;gap:12px;margin-top:4px;}
+.contact-form .form-foot .cta{align-self:flex-start;cursor:pointer;font-family:var(--sans);}
+.contact-form .form-foot .cta[disabled]{opacity:0.6;cursor:progress;}
+.contact-form .form-privacy{color:var(--muted);font-size:0.84rem;line-height:1.55;max-width:52ch;margin:0;}
+.contact-form .form-general:empty{display:none;}
+.contact-form .form-general{
+  color:var(--energy-bright);font-size:0.92rem;margin:0;
+  border-left:2px solid var(--energy);padding-left:12px;
+}
+
+.pg-contacto .form-sent{
+  border:1px solid var(--line);border-radius:2px;
+  background:color-mix(in srgb, var(--panel) 70%, transparent);
+  padding:24px 22px;
+}
+.pg-contacto .form-sent:focus-visible{outline:2px solid var(--primary-dim);outline-offset:3px;}
+.pg-contacto .form-sent h3{font-size:1.25rem;letter-spacing:-0.01em;margin:0 0 8px;}
+.pg-contacto .form-sent p{color:var(--text-dim);font-size:0.97rem;line-height:1.6;margin:0;max-width:46ch;}
