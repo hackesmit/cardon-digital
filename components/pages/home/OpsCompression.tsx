@@ -6,14 +6,17 @@ import { home } from "@/lib/i18n/home";
 import { clamp01, easeInOut } from "./canvasKit";
 
 /**
- * Operations visual: an hour of manual work compressing to about two minutes,
- * a 97 percent reduction. One responsive SVG whose viewBox is the MEASURED
- * container width by the composition height (set in layout() from a ResizeObserver),
+ * Operations visual: about an hour of finance work at Monte Xanic compressing
+ * to about two minutes. Every figure is hedged the way the Monte Xanic case
+ * page hedges it, because naming the client turns these numbers into a client
+ * result claim. One responsive SVG whose viewBox is the MEASURED container
+ * width by the composition height (set in layout() from a ResizeObserver),
  * so it fits its content at every width with no letterbox, no dead band, and no
  * twin/CSS handoff to disagree with. JS drives a calm watchable loop (~9.5s);
  * colors stay in CSS tokens (class driven) so the mode toggle recolors it with no
  * palette read here. Paused offscreen and when hidden; resolved static frame under
- * reduced motion; ASCII and English only.
+ * reduced motion; every string in the drawing comes from the dictionary, so the
+ * labels and the badge box follow the locale rather than a hardcoded English one.
  */
 export default function OpsCompression() {
   const t = useDict(home).vis.ops;
@@ -48,6 +51,7 @@ export default function OpsCompression() {
     }
     const svgEl = svg;
     const cleanNodes = cleanN;
+    const badgeLabel = badgeTx as unknown as SVGTextElement;
     const timeLong = timeL;
     const timeShort = timeS;
     const nodeEls = Array.from(cleanNodes.querySelectorAll("circle"));
@@ -59,6 +63,20 @@ export default function OpsCompression() {
 
     const set = (el: Element | null, a: string, v: string) => {
       if (el) el.setAttribute(a, v);
+    };
+
+    // Width of the text a browser actually drew. Every box and every row in this
+    // drawing is sized from this, never from a hardcoded English string, so the
+    // longer Spanish labels get the room they need. The character estimate is a
+    // fallback for the case where the element is not measurable yet.
+    const textLen = (el: Element | null, font: number, ls: number) => {
+      if (!el) return 0;
+      const t = el as unknown as SVGTextElement;
+      if (typeof t.getComputedTextLength === "function") {
+        const measured = t.getComputedTextLength();
+        if (measured > 0) return measured;
+      }
+      return (t.textContent || "").length * (font * 0.62 + ls);
     };
 
     // ---- geometry (px space; viewBox is 0 0 W VBH so 1 unit == 1 CSS px) ----
@@ -102,20 +120,26 @@ export default function OpsCompression() {
         nodeEls[i].setAttribute("cy", mMid.toFixed(1));
       }
 
-      // label + time row
+      // label + time row. The time reads in the case page's hedged wording
+      // ("about 1 hr", "como 1 hora"), which is long enough that on a phone it
+      // no longer fits beside the state label; when the two would run into each
+      // other the time takes a row of its own and everything below it drops.
       const labelY = 110;
+      const labW = Math.max(textLen(labM, 13, 1.2), textLen(labA, 13, 1.2));
+      const timW = Math.max(textLen(timeL, 15, 0), textLen(timeS, 15, 0));
+      const rowDrop = labW + 12 + timW > innerW ? 20 : 0;
       set(labM, "x", left.toFixed(1));
       set(labM, "y", labelY.toFixed(1));
       set(labA, "x", left.toFixed(1));
       set(labA, "y", labelY.toFixed(1));
       set(timeL, "x", right.toFixed(1));
-      set(timeL, "y", labelY.toFixed(1));
+      set(timeL, "y", (labelY + rowDrop).toFixed(1));
       set(timeS, "x", right.toFixed(1));
-      set(timeS, "y", labelY.toFixed(1));
+      set(timeS, "y", (labelY + rowDrop).toFixed(1));
 
       // time bar
       barX = left;
-      barY = 126;
+      barY = 126 + rowDrop;
       barH = 18;
       barMaxW = innerW;
       barMinW = Math.max(46, innerW * 0.09);
@@ -131,17 +155,29 @@ export default function OpsCompression() {
         set(b, "rx", (barH / 2).toFixed(1));
       }
 
-      // badge (persistent) + footer caption
-      const badgeY = 160;
+      // badge (persistent) + footer caption. The box is sized from the text the
+      // browser actually rendered, not from a hardcoded English string, so the
+      // longer Spanish label stays inside its border; if even the full inner
+      // width is too narrow the label steps down a point or two rather than
+      // running past the frame.
+      const badgeY = 160 + rowDrop;
       const badgeH = 30;
-      const badgeFont = 14;
-      const badgeText = "97% less time";
-      const badgeW = Math.round(badgeText.length * badgeFont * 0.62) + 28;
+      const badgePad = 16;
+      let badgeFont = 14;
+      set(badgeTx, "font-size", String(badgeFont));
+      let tw = textLen(badgeLabel, badgeFont, 0);
+      const badgeRoom = innerW - badgePad * 2;
+      if (tw > badgeRoom && badgeRoom > 0) {
+        badgeFont = Math.max(10, Math.floor((badgeFont * badgeRoom) / tw));
+        set(badgeTx, "font-size", String(badgeFont));
+        tw = textLen(badgeLabel, badgeFont, 0);
+      }
+      const badgeW = Math.min(innerW, Math.round(tw) + badgePad * 2);
       set(badgeBox, "x", left.toFixed(1));
       set(badgeBox, "y", badgeY.toFixed(1));
       set(badgeBox, "width", badgeW.toFixed(1));
       set(badgeBox, "height", badgeH.toFixed(1));
-      set(badgeTx, "x", (left + 16).toFixed(1));
+      set(badgeTx, "x", (left + badgePad).toFixed(1));
       set(badgeTx, "y", (badgeY + 20).toFixed(1));
 
       let vbh: number;
@@ -192,9 +228,13 @@ export default function OpsCompression() {
       set(labM, "opacity", (1 - clamp01((p - 0.35) / 0.3)).toFixed(3));
       set(labA, "opacity", clamp01((p - 0.55) / 0.3).toFixed(3));
 
-      // the hour counts down to two minutes as the bar compresses
+      // the hour counts down to two minutes as the bar compresses. The two
+      // endpoints are the claim, so they read in the case page's hedged wording
+      // ("about 1 hr", "about 2 min") and in the reader's locale; the frames in
+      // between are a running counter, not a figure anyone is quoting.
       const minutes = Math.max(2, Math.round(60 - 58 * e));
-      const timeText = minutes >= 60 ? "1 hr" : minutes + " min";
+      const timeText =
+        minutes >= 60 ? t.long : minutes <= 2 ? t.short : minutes + " " + t.unit;
       if (timeLong.textContent !== timeText) timeLong.textContent = timeText;
       if (timeShort.textContent !== timeText) timeShort.textContent = timeText;
       set(timeL, "opacity", (1 - e).toFixed(3));
@@ -383,9 +423,7 @@ export default function OpsCompression() {
           fontSize="15"
           fontWeight="600"
           opacity="0"
-        >
-          2 min
-        </text>
+        >{t.short}</text>
         <text
           className="ov-time-short mono"
           id="opsTimeShort"
@@ -395,9 +433,7 @@ export default function OpsCompression() {
           fontSize="15"
           fontWeight="600"
           opacity="1"
-        >
-          2 min
-        </text>
+        >{t.short}</text>
 
         <rect className="ov-track" id="opsTrack" x="18" y="126" width="424" height="18" rx="2" />
         <rect className="ov-bar-primary" id="opsBar" x="18" y="126" width="46" height="18" rx="2" />
@@ -413,7 +449,7 @@ export default function OpsCompression() {
         />
 
         <g id="opsBadge" opacity="1">
-          <rect className="ov-badge-box" id="opsBadgeBox" x="18" y="160" width="137" height="30" rx="2" />
+          <rect className="ov-badge-box" id="opsBadgeBox" x="18" y="160" width="214" height="30" rx="2" />
           <text
             className="ov-badge-text mono"
             id="opsBadgeText"

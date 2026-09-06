@@ -376,7 +376,13 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
 .demand-vis[data-anim="pre"] .dm-value{fill:var(--muted);}
 
 /* ---- Operations: an hour compressing to two minutes (slow, JS driven) ---- */
-.ops-vis{position:relative;padding:26px 24px 24px;}
+/* This is the one visual whose tag names a client and carries the case page's
+   hedged wording, so it is far longer than the other tags and has to wrap. It
+   gets its own caption band (the taller top padding) and a capped, balanced
+   measure, so two or three wrapped lines sit above the drawing instead of
+   running across it. Other .vis-tag captions are unaffected. */
+.ops-vis{position:relative;padding:38px 24px 24px;}
+.ops-vis > .vis-tag{right:16px;max-width:300px;line-height:1.34;text-wrap:balance;}
 .ops-svg{display:block;width:100%;height:auto;transition:opacity .3s linear;}
 .ov-tangle{stroke:var(--secondary);}
 .ov-tangle circle{fill:var(--secondary);stroke:none;}
