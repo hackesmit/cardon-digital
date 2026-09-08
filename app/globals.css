@@ -108,6 +108,7 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 .bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;}
 .brand{display:inline-flex;align-items:center;gap:11px;font-weight:600;letter-spacing:-0.01em;font-size:1.05rem;flex-shrink:0;}
 .brand-mark{width:26px;height:26px;display:block;flex-shrink:0;}
+.brand-mark--nav{width:auto;height:36px;}
 .bm-line{stroke:var(--primary);}
 .bm-ring{stroke:var(--primary);fill:none;}
 .bm-dot{fill:var(--secondary);}
