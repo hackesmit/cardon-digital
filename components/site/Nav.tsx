@@ -156,7 +156,7 @@ export default function Nav() {
       <div className="container bar">
         <Link className="brand" href={href("/")} aria-label={brandHome}>
           <Mark
-            className="brand-mark"
+            className="brand-mark brand-mark--nav"
             variant={mode === "dark" ? "mono-bloom" : "color"}
           />
           <span className="brand-name">
