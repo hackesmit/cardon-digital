@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-145.49 -469.1 352.79 738.2" role="img" aria-label="Cardon">
+  <title>Cardon</title>
+  <g fill="none" stroke="currentColor" stroke-width="14.59" stroke-linejoin="round">
+    <path d="M-100 -61.8 V0 H161.8 V-223.61"/>
+    <path d="M0 -385.41 V261.8"/>
+  </g>
+  <g stroke="currentColor" stroke-width="14.59">
+    <circle cx="0" cy="-423.61" r="30.9" fill="currentColor"/>
+    <circle cx="-100" cy="-100" r="30.9" fill="currentColor"/>
+    <circle cx="161.8" cy="-261.8" r="30.9" fill="currentColor"/>
+  </g>
+</svg>
