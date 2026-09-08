@@ -1,9 +1,7 @@
 /* Coming-soon holding page, scoped under .pg-soon */
 .pg-soon{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;}
 .pg-soon .soon-wrap{max-width:640px;padding:40px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
-.pg-soon .soon-mark{width:52px;height:52px;stroke:var(--primary);}
-.pg-soon .soon-mark .ring{fill:none;stroke:var(--secondary);}
-.pg-soon .soon-mark .dot{fill:var(--primary);stroke:none;}
+.pg-soon .soon-mark{width:auto;height:52px;display:block;color:var(--text);}
 .pg-soon h1{font-size:clamp(2rem,6vw,3rem);letter-spacing:-0.02em;margin:4px 0 0;}
 .pg-soon h1 span{color:var(--muted);font-weight:600;}
 .pg-soon .soon-line{color:var(--text-dim);font-size:1.08rem;line-height:1.55;margin:0;}
