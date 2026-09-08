@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { comingSoon } from "@/lib/i18n/coming-soon";
 import { site } from "@/lib/i18n/site";
+import Mark from "@/components/site/Mark";
 import "./soon.css";
 
 type Params = { params: { locale: string } };
@@ -29,14 +30,7 @@ export default function ComingSoonPage({ params }: Params) {
   return (
     <main id="main" className="pg-soon">
       <div className="soon-wrap">
-        <svg className="soon-mark" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
-                  <line x1="13" y1="20" x2="6" y2="8" strokeWidth="1.2" opacity="0.75" />
-                  <line x1="13" y1="20" x2="20" y2="8" strokeWidth="1.2" opacity="0.75" />
-                  <line x1="6" y1="8" x2="20" y2="8" strokeWidth="1.2" opacity="0.55" />
-                  <circle className="ring" cx="6" cy="8" r="3" strokeWidth="1.4" />
-                  <circle className="ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
-                  <circle className="dot" cx="13" cy="20" r="3.4" />
-                </svg>
+        <Mark className="soon-mark" variant="mono-bloom" />
         <h1>
           Cardon <span>Digital</span>
         </h1>
