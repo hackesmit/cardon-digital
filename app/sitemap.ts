@@ -5,6 +5,7 @@ import { SITE_URL } from "@/lib/i18n/metadata";
 /** Every page, in every locale. Paths here are locale-free. */
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" as const },
+  { path: "/modulos", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/industries/winery", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/work/monte-xanic", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/work/enkanto", priority: 0.9, changeFrequency: "monthly" as const },
