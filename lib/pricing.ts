@@ -40,6 +40,43 @@ export function formatPrice(locale: Locale, amount: number): string {
   return "$" + formatAmount(amount, locale) + " " + currencyByLocale[locale];
 }
 
+/**
+ * A policy rate as the percent number copy prints, so a page states 10 and 12
+ * because `mixDiscountByRank` says so and not because somebody typed it. No
+ * percent sign and no word: the dictionaries own how a locale says "percent".
+ *
+ * The printed figure must be the rate that is actually applied. Truncating it
+ * would recreate the drift this helper exists to remove, one decimal further
+ * out: a 0.1234 pass-through printed as "12.3" is a published policy the
+ * calculation does not follow. So the percent is derived exactly, with binary
+ * float noise cleaned off (0.1234 x 100 is 12.339999999999998), and a rate
+ * finer than the format can carry throws rather than publishing a wrong one.
+ */
+export function formatPercent(locale: Locale, fraction: number): string {
+  // Adding 0 normalises a negative zero, which Intl would otherwise print as
+  // "-0" and which is not caught by `< 0`; the same trick roundHalfDown uses
+  // for the same reason (bead hq-ggot1.15).
+  const rate = fraction + 0;
+  if (!Number.isFinite(rate) || rate < 0) {
+    // NaN and Infinity would sail through the comparison below, since every
+    // comparison with NaN is false, and print "NaN" or the infinity sign on a
+    // pricing page. A negative rate would publish a surcharge as a discount.
+    throw new Error(`a policy rate is a finite non-negative fraction, not ${fraction}`);
+  }
+  const percent = Math.round(rate * 1e9) / 1e7;
+  // The tolerance is one ulp, which is the rounding of the division itself and
+  // nothing more: every rate the printed form can carry reproduces exactly, and
+  // one that carries more precision than it misses by more than an ulp and is
+  // refused rather than published a decimal short.
+  if (Math.abs(percent / 100 - rate) > Number.EPSILON * rate) {
+    throw new Error(`percent ${percent} does not reproduce the rate ${fraction}`);
+  }
+  return new Intl.NumberFormat(groupLocale[locale], {
+    maximumFractionDigits: 7,
+    useGrouping: false,
+  }).format(percent);
+}
+
 /* ============================== RATES AND SIZES ==========================
    Carried over untouched from pricing-features.md, per memo "What carries
    over untouched". All prices exclude IVA. */
@@ -58,6 +95,18 @@ export type Size = "S" | "M" | "L";
 export const sizes = ["S", "M", "L"] as const;
 
 export type BySize<T> = Record<Size, T>;
+
+const sizeOrder: BySize<number> = { S: 0, M: 1, L: 2 };
+
+/**
+ * The largest of a set of sizes. Size is set per module (memo section 3), so a
+ * mix can be M on one module and S on another, and the shared service base is
+ * charged at the largest of them (memo 5.1).
+ */
+export function largestSize(sizesBought: Size[]): Size {
+  if (sizesBought.length === 0) throw new Error("no size to compare");
+  return sizesBought.reduce((a, b) => (sizeOrder[b] > sizeOrder[a] ? b : a));
+}
 
 /** Scope factor. At S it is 1.00, so there is no value premium to spend. */
 export const scopeFactor: BySize<number> = { S: 1.0, M: 1.5, L: 2.05 };
@@ -190,6 +239,13 @@ export const moduleIds: readonly ModuleId[] = [
   "hospitalidad",
   "restaurante",
 ] as const;
+
+/**
+ * A module bought at its own size. Size is set per module at the Diagnostico
+ * (memo section 3), which is what lets a client be M on one module and S on
+ * another, so a quote takes a selection rather than one size for the mix.
+ */
+export type ModuleSelection = { module: ModuleId; size: Size };
 
 /**
  * A build feature. `hours` is null at a size where the feature does not exist.
@@ -508,6 +564,31 @@ export function featureSetup(
   return priced(round100(h * setupRate * scopeFactor[size]));
 }
 
+/**
+ * The cross-module features, in the memo's catalogue order: a feature quotable
+ * only when another module is bought, which is why it is in no standard bundle
+ * (memo 2.2 and 2.3). /modulos calls them the bridges. A mix makes them
+ * quotable, it does not put them in the quote, so a page that names the build a
+ * worked example buys has to say they are quoted on top the way memo 8.2's
+ * third example says it of the payment link (Lucy 2026-09-08, first finding).
+ */
+export function bridgeFeatures(
+  moduleIdsBought: ModuleId[],
+): { module: ModuleId; feature: string; requires: ModuleId }[] {
+  const bought = new Set(moduleIdsBought);
+  return moduleIds.flatMap((id) =>
+    bought.has(id)
+      ? modules[id].catalogue
+          .filter((f) => f.requires !== undefined && bought.has(f.requires))
+          .map((f) => ({
+            module: id,
+            feature: f.id,
+            requires: f.requires as ModuleId,
+          }))
+      : [],
+  );
+}
+
 /** Daniel hours a module's standard bundle at this size actually buys. */
 export function bundleHours(moduleId: ModuleId, size: Size): number {
   const module = modules[moduleId];
@@ -604,7 +685,22 @@ export function runCostBreakdown(
     .map((line) => ({ id: line.id, monthly: serviceLineMonthly(line, size) }));
 }
 
-/** The quoted run-cost line for one module. Additive across modules. */
+/**
+ * The quoted run-cost line for one module. Additive across modules.
+ *
+ * A run cost is the sum of its own rounded lines, so it can sit a little under
+ * the service-rate amount for the hours it carries: Restaurante at S reads
+ * 2,900 against 2.4 hours at 1,225, which is 2,940. That is the rounding
+ * tolerance memo section 1 states out loud ("the memo does not bump a fee by
+ * 100 to chase 31 pesos"), not a discount, and it is bounded by one rounding
+ * increment. What the memo makes a floor is invariant B in 6.7, on the QUOTED
+ * MONTHLY: the shared base plus every run cost clears the whole mix's Daniel
+ * time and absorbed provider cash. Restaurante alone at S is 12,100 against
+ * 12,081. Adding a per-line floor here would move published figures (the 2,900
+ * in memo 5.2 and in worked example 3 of 8.2), which is a memo change and not
+ * a code change (Lucy 2026-09-08, fifth finding; lib/pricing.test.ts pins both
+ * the tolerance and the floor that does bind).
+ */
 export function runCost(moduleId: ModuleId, size: Size): number {
   const total = runCostBreakdown(moduleId, size).reduce(
     (sum, line) => sum + line.monthly,
@@ -733,6 +829,8 @@ export function sharedBuildHours(
 
 export type QuoteLine = {
   module: ModuleId;
+  /** This module's own size. Size is set per module (memo section 3). */
+  size: Size;
   /** 1 is the most expensive build, which is the one at full price. */
   rank: 1 | 2 | 3;
   bundleHours: number;
@@ -755,16 +853,23 @@ export type QuoteLine = {
 };
 
 export type Quote = {
+  /**
+   * The size the shared service base is charged at, which is the size of the
+   * LARGEST module bought (memo 5.1). In a quote where every module is the
+   * same size this is that size, which is every figure this memo publishes.
+   */
   size: Size;
   /** Ranked by build-only price, most expensive first. */
   modules: ModuleId[];
+  /** The same ranking, each module with its own size. */
+  selections: ModuleSelection[];
   lines: QuoteLine[];
-  addOns: { id: AddOnId; monthly: number }[];
+  addOns: { id: AddOnId; size: Size; monthly: number }[];
   setup: Record<CurrencyCode, number>;
   monthly: Record<CurrencyCode, number>;
   /** Charged once whatever the mix, at the largest module's size. */
   sharedServiceBase: number;
-  runCosts: { module: ModuleId; monthly: number }[];
+  runCosts: { module: ModuleId; size: Size; monthly: number }[];
   /** True when a total landed on a bare multiple and took its increment. */
   setupBumped: boolean;
   monthlyBumped: boolean;
@@ -777,21 +882,126 @@ export type Quote = {
 };
 
 /**
+ * One entry per module. A module named twice at the same size is the same
+ * selection said twice and collapses; named twice at DIFFERENT sizes it is
+ * contradictory input, and picking one of the two would quote a client for a
+ * build nobody chose, so it throws instead.
+ */
+function uniqueSelections(list: ModuleSelection[]): ModuleSelection[] {
+  const seen = new Map<ModuleId, ModuleSelection>();
+  for (const entry of list) {
+    const already = seen.get(entry.module);
+    if (already && already.size !== entry.size) {
+      throw new Error(
+        `${entry.module} is selected at two sizes, ${already.size} and ${entry.size}`,
+      );
+    }
+    if (!already) seen.set(entry.module, entry);
+  }
+  return Array.from(seen.values());
+}
+
+/**
+ * Add-ons are a set: section 5.3 quotes each one once, and the census of memo
+ * 7.1 runs over subsets. A list that repeats one would charge it twice, so it
+ * is refused rather than quietly collapsed.
+ */
+function readAddOns(chosen: AddOnId[]): AddOnId[] {
+  const seen = new Set<AddOnId>();
+  for (const id of chosen) {
+    if (seen.has(id)) throw new Error(`add-on ${id} is chosen twice`);
+    seen.add(id);
+  }
+  return chosen;
+}
+
+/**
+ * Reads either call shape into one selection list. `quote(ids, size)` is the
+ * single-size form every published figure uses; `quote(selections)` is the
+ * mixed-size form memo section 3 allows, where a client is M on one module and
+ * S on another.
+ */
+function readSelections(
+  bought: ModuleId[] | ModuleSelection[],
+  sizeOrAddOns: Size | AddOnId[] | undefined,
+  trailingAddOns: AddOnId[],
+): { selections: ModuleSelection[]; chosenAddOns: AddOnId[] } {
+  if (bought.length === 0) throw new Error("a quote needs at least one module");
+  if (typeof bought[0] === "string") {
+    if (typeof sizeOrAddOns !== "string") {
+      throw new Error("a quote of module ids needs a size");
+    }
+    const size = sizeOrAddOns;
+    return {
+      selections: uniqueSelections(
+        (bought as ModuleId[]).map((module) => ({ module, size })),
+      ),
+      chosenAddOns: readAddOns(trailingAddOns),
+    };
+  }
+  return {
+    selections: uniqueSelections(bought as ModuleSelection[]),
+    chosenAddOns: readAddOns((sizeOrAddOns as AddOnId[] | undefined) ?? []),
+  };
+}
+
+/**
+ * The size an add-on is quoted at once sizes can differ per module. The
+ * on-site visit is per client and takes the largest module's size, which is
+ * what memo 5.3 says. Ads and content are the work of the module they manage,
+ * so they take the largest size among the bought modules they attach to. In a
+ * single-size quote the two readings coincide, so no published figure moves.
+ */
+function addOnSize(
+  addOn: AddOn,
+  ranked: ModuleSelection[],
+  baseSize: Size,
+): Size {
+  if (addOn.attachesTo === "client") return baseSize;
+  const attached = addOn.attachesTo;
+  const bought = ranked.filter((r) => attached.includes(r.module));
+  return bought.length === 0 ? baseSize : largestSize(bought.map((r) => r.size));
+}
+
+/**
  * The mix rule. Rank the modules by their own build-only price, most expensive
  * first; the first is at full price, the second 10 percent off, the third 12.
  * The shared service base is charged once, at the largest module's size.
+ *
+ * Size is set per module at the Diagnostico (memo section 3), so the second
+ * form takes a size per module: `quote([{ module: "produccion", size: "M" },
+ * { module: "hospitalidad", size: "S" }])`. Each bundle is then priced and
+ * ranked at its own size and the base is charged at the largest of them, which
+ * is the configuration /modulos advertises and the old signature could not
+ * price at all (Lucy 2026-09-08, third finding).
  */
 export function quote(
   moduleIdsBought: ModuleId[],
   size: Size,
-  chosenAddOns: AddOnId[] = [],
+  chosenAddOns?: AddOnId[],
+): Quote;
+export function quote(
+  selections: ModuleSelection[],
+  chosenAddOns?: AddOnId[],
+): Quote;
+export function quote(
+  bought: ModuleId[] | ModuleSelection[],
+  sizeOrAddOns?: Size | AddOnId[],
+  trailingAddOns: AddOnId[] = [],
 ): Quote {
-  const unique = Array.from(new Set(moduleIdsBought));
-  if (unique.length === 0) throw new Error("a quote needs at least one module");
+  const { selections, chosenAddOns } = readSelections(
+    bought,
+    sizeOrAddOns,
+    trailingAddOns,
+  );
+  const baseSize = largestSize(selections.map((s) => s.size));
 
-  const ranked = [...unique].sort((a, b) => buildOnly(b, size) - buildOnly(a, size));
+  const ranked = [...selections].sort(
+    (a, b) => buildOnly(b.module, b.size) - buildOnly(a.module, a.size),
+  );
 
-  const lines: QuoteLine[] = ranked.map((moduleId, index) => {
+  const lines: QuoteLine[] = ranked.map((selection, index) => {
+    const { module: moduleId, size } = selection;
     const rank = (index + 1) as 1 | 2 | 3;
     const mixDiscount = mixDiscountByRank[index];
     const build = buildOnly(moduleId, size);
@@ -803,6 +1013,7 @@ export function quote(
     const bound = concessioned < costRecovery;
     return {
       module: moduleId,
+      size,
       rank,
       bundleHours: bundleHours(moduleId, size),
       buildOnly: build,
@@ -819,18 +1030,21 @@ export function quote(
   const setupRaw = lines.reduce((sum, line) => sum + line.packagedSetup, 0);
   const setupTotal = bumpOffBareMultiple(setupRaw, 10000, 500, "up");
 
-  for (const id of chosenAddOns) {
-    if (!addOnAvailable(id, ranked, size)) {
+  const boughtIds = ranked.map((r) => r.module);
+  const chosen = chosenAddOns.map((id) => {
+    const size = addOnSize(addOnOf(id), ranked, baseSize);
+    if (!addOnAvailable(id, boughtIds, size)) {
       throw new Error(`add-on ${id} is not available on this mix at ${size}`);
     }
-  }
-  const chosen = chosenAddOns.map((id) => ({
-    id,
-    monthly: addOnMonthly(id, size) as number,
-  }));
+    return { id, size, monthly: addOnMonthly(id, size) as number };
+  });
 
-  const base = sharedServiceBase(size);
-  const runCosts = ranked.map((m) => ({ module: m, monthly: runCost(m, size) }));
+  const base = sharedServiceBase(baseSize);
+  const runCosts = ranked.map((r) => ({
+    module: r.module,
+    size: r.size,
+    monthly: runCost(r.module, r.size),
+  }));
   const monthlyRaw =
     base +
     runCosts.reduce((sum, r) => sum + r.monthly, 0) +
@@ -838,8 +1052,9 @@ export function quote(
   const monthlyTotal = bumpOffBareMultiple(monthlyRaw, 1000, 100, "up");
 
   return {
-    size,
-    modules: ranked,
+    size: baseSize,
+    modules: boughtIds,
+    selections: ranked,
     lines,
     addOns: chosen,
     setup: priced(setupTotal),
@@ -900,7 +1115,11 @@ export type AnnualPrepay = {
   size: Size;
   monthly: number;
   twelveMonths: number;
-  /** 4 percent of twelve months of the shared base, whatever the mix. */
+  /**
+   * 4 percent of twelve months of the shared base, whatever the mix, except on
+   * the two quotes at S where the paid year would otherwise land on a bare
+   * multiple of 10,000 and the 100 of increment comes off here (memo 7.1).
+   */
   concession: Record<CurrencyCode, number>;
   paid: Record<CurrencyCode, number>;
 };
@@ -918,13 +1137,24 @@ export function annualPrepay(size: Size, monthly: number): AnnualPrepay {
   const raw = round100(sharedServiceBase(size) * 12 * annualPrepayRate);
   // A concession that lands on a bare multiple moves one increment in the
   // direction that favours the floor, which for a discount is down.
-  const concession = bumpOffBareMultiple(raw, 1000, 100, "down");
+  const settled = bumpOffBareMultiple(raw, 1000, 100, "down");
+  // The prepaid annual figure is a quote line too, so it never lands on a bare
+  // multiple of 10,000 (memo section 1 order of operations, 7.1 and invariant
+  // E in 6.7). The increment sits on the concession line rather than floating,
+  // so the quote still reads paid = twelve months less the concession. Across
+  // the 113 quotable configurations this bites twice, both at S: Produccion
+  // plus Restaurante with no add-on (164,400 less 4,400 would be a bare
+  // 160,000, so the quote is 160,100) and Hospitalidad plus Restaurante once
+  // Content is bought (194,400 less 4,400 would be 190,000, so it is 190,100).
+  // The concession reads 4,300 on both (bead hq-ggot1.9, memo commit 8dd9b95).
+  const paid = bumpOffBareMultiple(twelveMonths - settled, 10000, 100, "up");
+  const concession = twelveMonths - paid;
   return {
     size,
     monthly,
     twelveMonths,
     concession: priced(concession),
-    paid: priced(twelveMonths - concession),
+    paid: priced(paid),
   };
 }
 
@@ -951,21 +1181,32 @@ export type WorkedExample = {
   monthlyIfAlone: Record<CurrencyCode, number>;
   yearOneTogether: Record<CurrencyCode, number>;
   yearOneAlone: Record<CurrencyCode, number>;
+  /**
+   * What the mix takes off, in both currencies. Each one is the conversion of
+   * the ROUNDED MXN saving, never the difference of two independently rounded
+   * USD totals: the memo's rate note says every dollar figure is a conversion
+   * of its own peso figure, and subtracting converted values quietly makes the
+   * saving a figure no peso amount produced (Lucy 2026-09-08, fourth finding).
+   */
+  setupSaving: Record<CurrencyCode, number>;
+  monthlySaving: Record<CurrencyCode, number>;
+  yearOneSaving: Record<CurrencyCode, number>;
   prepay: AnnualPrepay;
   /**
-   * Memo 8.2 allows four examples on a public surface, all at S: the three
-   * modules alone and all three together. Examples vary the mix, never the
-   * size, so a reader can never reconstruct a cell of the S/M/L table.
+   * What memo 8.1 lets a public surface carry: worked examples, each with the
+   * complete feature list that produced its figure. The constraint 8.2 adds is
+   * on the SIZE and not on the count, because publishing one module at two
+   * sizes lets a reader rebuild a row of the S/M/L table decision 1 keeps off
+   * the site. So the seven combinations at the entry size are publishable and
+   * nothing above S is (Lucy 2026-09-08, second finding).
    */
   publishable: boolean;
 };
 
-const publishableIds = new Set([
-  "s-produccion",
-  "s-hospitalidad",
-  "s-restaurante",
-  "s-produccion-hospitalidad-restaurante",
-]);
+/** The seven combinations at the entry size, and nothing at any other size. */
+const publishableIds = new Set(
+  combinations.map((c) => `s-${c.join("-")}`),
+);
 
 function workedExample(moduleIdsBought: ModuleId[], size: Size): WorkedExample {
   const q = quote(moduleIdsBought, size);
@@ -982,6 +1223,13 @@ function workedExample(moduleIdsBought: ModuleId[], size: Size): WorkedExample {
     monthlyIfAlone,
     yearOneTogether: priced(q.setup.MXN + q.monthly.MXN * 12),
     yearOneAlone: sumPriced([setupIfAlone, ...Array(12).fill(monthlyIfAlone)]),
+    setupSaving: priced(setupIfAlone.MXN - q.setup.MXN),
+    monthlySaving: priced(monthlyIfAlone.MXN - q.monthly.MXN),
+    yearOneSaving: priced(
+      setupIfAlone.MXN +
+        monthlyIfAlone.MXN * 12 -
+        (q.setup.MXN + q.monthly.MXN * 12),
+    ),
     prepay: annualPrepay(size, q.monthly.MXN),
     publishable: publishableIds.has(id),
   };

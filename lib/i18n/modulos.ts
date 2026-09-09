@@ -51,7 +51,7 @@ const en = {
   meta: {
     title: "The three modules",
     description:
-      "Produccion, Hospitalidad and Restaurante: the winery record, the lodging calendar and the point of sale. Buy one, two or three, at the size your operation is, and the bridges between them come with the mix.",
+      "Produccion, Hospitalidad and Restaurante: the winery record, the lodging calendar and the point of sale. Buy one, two or three, at the size your operation is, and each bridge between them can be quoted separately once both of the modules it joins are bought.",
   },
 
   hero: {
@@ -63,9 +63,15 @@ const en = {
     ctaCombina: "How they combine",
   },
 
-  /** The one line on this page that touches price, and it only points away. */
+  /**
+   * The one line on this page that touches price, and it only points away.
+   * It says the rules are stated, not that every figure behind them is: memo
+   * 8.1 publishes the annual rule as policy and keeps the percentage and the
+   * arithmetic off every public surface, so a claim that they are written out
+   * in full is a promise the pricing page may not keep (Lucy 2026-09-08).
+   */
   priceLine:
-    "Every module has a published entry price, setup and monthly, and the combination and annual rules are written out in full. **They all live on the pricing page.**",
+    "Every module has a published entry price, setup and monthly, and the combination and annual rules are stated as the policy they are. **They all live on the pricing page.**",
   priceCta: "See pricing",
 
   demoNote:
@@ -342,8 +348,11 @@ const en = {
 
   combina: {
     kicker: "The seven combinations",
-    title: "One, two or three, and the bridges come with the mix.",
-    sub: "Buy the modules you run on. **A bridge is only built when both of the modules it joins are bought**, and what each one adds is one sentence long.",
+    title: "One, two or three, and what the bridges add.",
+    // A bridge is in no standard bundle (memo 2.2 and 2.3), so it is quoted on
+    // top of the two modules rather than carried by them, and this page may not
+    // say it "comes with" a mix that does not pay for it (Lucy 2026-09-08).
+    sub: "Buy the modules you run on. **A bridge is only built when both of the modules it joins are bought**, it is quoted on top of the two, and what each one adds is one sentence long.",
     single: "On its own",
     bridge: "The bridge",
     shared: "One system",
@@ -405,7 +414,7 @@ const es: typeof en = {
   meta: {
     title: "Los tres módulos",
     description:
-      "Producción, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamaño de la operación, y los puentes entre ellos vienen con la combinación.",
+      "Producción, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamaño de la operación, y cada puente entre ellos se puede cotizar aparte cuando se compran los dos módulos que une.",
   },
 
   hero: {
@@ -418,7 +427,7 @@ const es: typeof en = {
   },
 
   priceLine:
-    "Cada módulo tiene un precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas completas. **Todo eso vive en la página de precios.**",
+    "Cada módulo tiene un precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas como la política que son. **Todo eso vive en la página de precios.**",
   priceCta: "Ver precios",
 
   demoNote:
@@ -696,8 +705,8 @@ const es: typeof en = {
 
   combina: {
     kicker: "Las siete combinaciones",
-    title: "Uno, dos o tres, y los puentes vienen con la combinación.",
-    sub: "Se compran los módulos que se operan. **Un puente solo se construye cuando se compran los dos módulos que une**, y lo que agrega cada uno cabe en una frase.",
+    title: "Uno, dos o tres, y lo que agregan los puentes.",
+    sub: "Se compran los módulos que se operan. **Un puente solo se construye cuando se compran los dos módulos que une**, se cotiza aparte, encima de los dos, y lo que agrega cada uno cabe en una frase.",
     single: "Por su cuenta",
     bridge: "El puente",
     shared: "Un solo sistema",
