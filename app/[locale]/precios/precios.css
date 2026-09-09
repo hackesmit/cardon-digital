@@ -71,7 +71,7 @@
 }
 .pg-precios .floor-foot b{color:var(--text);font-weight:600;}
 
-/* ---- more than one module: the rules, then the one worked example ---- */
+/* ---- more than one module: the rules, the seven combinations, the example ---- */
 .pg-precios .mix-rules{
   margin:0 0 clamp(24px,3vw,34px);padding:0;list-style:none;
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px);
@@ -120,6 +120,63 @@
 .pg-precios .mix-table tbody tr:last-child th,
 .pg-precios .mix-table tbody tr:last-child td{border-bottom:0;}
 .pg-precios .mix-note{color:var(--muted);font-size:0.86rem;line-height:1.55;max-width:76ch;}
+
+/* The seven combinations. Same table grammar as the worked example, with the
+   name and how it is priced stacked in the row header so the figures keep
+   their own columns. */
+.pg-precios .mix-combos{
+  display:flex;flex-direction:column;gap:10px;
+  margin:0 0 clamp(24px,3vw,34px);
+}
+.pg-precios .combo-table{max-width:900px;table-layout:fixed;}
+.pg-precios .combo-table thead th:first-child{text-align:left;}
+.pg-precios .combo-table td{white-space:nowrap;}
+/* The row header keeps display:table-cell so table-layout:fixed can give it
+   its column width; the two lines inside it stack as blocks. */
+.pg-precios .combo-table tbody th{padding-right:26px;vertical-align:top;}
+.pg-precios .combo-name{display:block;color:var(--text);font-weight:600;}
+.pg-precios .combo-how{
+  display:block;margin-top:3px;
+  color:var(--muted);font-size:0.8rem;line-height:1.45;font-weight:400;
+}
+/* Only shown once the table stacks on a phone, where the column head is no
+   longer beside the figure it labels. */
+.pg-precios .combo-cell-k{display:none;}
+
+/* The prose column only takes a fixed share while the table is still a table;
+   below 700px the rows stack and the header cell takes the full width. */
+@media (min-width:701px){
+  .pg-precios .combo-table th:first-child{width:54%;}
+}
+
+@media (max-width:700px){
+  /* Three columns, one of them a sentence, do not fit a phone. The rows stack
+     and each figure carries its own label instead of overflowing sideways. */
+  .pg-precios .combo-table{max-width:none;table-layout:auto;}
+  .pg-precios .combo-table thead{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+  }
+  .pg-precios .combo-table,
+  .pg-precios .combo-table tbody,
+  .pg-precios .combo-table tr,
+  .pg-precios .combo-table tbody th,
+  .pg-precios .combo-table td{display:block;width:auto;}
+  .pg-precios .combo-table tbody tr{
+    padding:14px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .pg-precios .combo-table tbody tr:last-child{border-bottom:0;}
+  .pg-precios .combo-table tbody th{padding:0 0 8px;vertical-align:baseline;}
+  .pg-precios .combo-table td{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:14px;max-width:300px;
+    padding:3px 0 0;border-bottom:0;text-align:right;
+  }
+  .pg-precios .combo-cell-k{
+    display:inline;font-family:var(--mono);font-size:0.62rem;
+    letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+  }
+}
 
 /* ---- the monthly fee, the annual rule, the ads rule, the terms ---- */
 .pg-precios .pr-list{
@@ -179,6 +236,8 @@
   .pg-precios .mix-table tbody th{font-size:0.84rem;}
   .pg-precios .mix-table thead th{font-size:0.6rem;letter-spacing:0.1em;}
   .pg-precios .mix-row-together td{font-size:0.86rem;}
+  .pg-precios .combo-how{font-size:0.74rem;}
+  .pg-precios .combo-table tbody th{padding-right:8px;}
 }
 
 @media (max-width:600px){
