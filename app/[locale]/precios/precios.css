@@ -195,7 +195,25 @@
    which reads a little gray by design and is not this bead's to change; every
    series is named in text as well, so nothing here is identified by colour
    alone.
+
+   The build bar (data-part="setup") is not a module and was never meant to be
+   in the legend's four; drawing it in --primary was a bug, not a choice, since
+   it landed on the exact colour the legend assigns to Produccion (reviewer B1,
+   round two). The brand has only the three hues above to draw from and all
+   three are already spoken for, so the build bar and the legend's own "gray"
+   family are the only room left: a neutral text/panel mix, distinct in kind
+   (achromatic, not a fourth hue) from all three modules and from --muted so it
+   reads as its own thing rather than a repaint of the shared base. Lightness
+   alone carries the difference from --muted, which is unaffected by colour
+   vision deficiency the way a hue pair would be. Contrast against the card
+   surface: 5.96:1 light, 6.69:1 dark, both comfortably past the 3:1 floor the
+   rest of this set holds to. The legend note under the keys ties the legend to
+   the monthly blocks explicitly, so the build bar's own colour is never read
+   as one of the four.
    ============================================================ */
+.pg-precios .combo-fill[data-part="setup"]{
+  background: color-mix(in srgb, var(--text) 78%, var(--panel) 22%);
+}
 
 .pg-precios .fc-bar[data-module="produccion"],
 .pg-precios .combo-fill[data-part="produccion"],
@@ -208,7 +226,6 @@
 .pg-precios .combo-key[data-part="restaurante"] .combo-swatch{background:var(--energy-bright);}
 .pg-precios .combo-fill[data-part="base"],
 .pg-precios .combo-key[data-part="base"] .combo-swatch{background:var(--muted);}
-.pg-precios .combo-fill[data-part="setup"]{background:var(--primary);}
 
 /* ---- the three entry prices, compared ---- */
 .pg-precios .floor-vis{
@@ -245,8 +262,11 @@
 
 /* ---- the seven combinations, drawn under the figures they belong to ---- */
 .pg-precios .combo-legend{
-  margin:0 0 14px;padding:0;list-style:none;
+  margin:0 0 8px;padding:0;list-style:none;
   display:flex;flex-wrap:wrap;gap:6px 8px;
+}
+.pg-precios .combo-legend-note{
+  margin:0 0 14px;color:var(--muted);font-size:0.76rem;line-height:1.5;max-width:60ch;
 }
 .pg-precios .combo-key{
   display:inline-flex;align-items:center;gap:7px;
@@ -300,6 +320,10 @@
     box-sizing:border-box;box-shadow:none;border:3px solid CanvasText;
     border-radius:0;min-width:6px;
   }
+  /* Setup is not one of the legend's four and never shares a track with them,
+     but it still needs a style of its own: unset it would default to the
+     shorthand's solid and collide with the shared base's key (below). */
+  .pg-precios .combo-fill[data-part="setup"]{border-style:ridge;}
   .pg-precios .combo-fill[data-part="base"],
   .pg-precios .combo-key[data-part="base"] .combo-swatch{border-style:solid;}
   .pg-precios .combo-fill[data-part="produccion"],

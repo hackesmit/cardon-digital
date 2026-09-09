@@ -143,6 +143,10 @@ const en = {
     combosLabel: "The seven combinations at the entry size",
     /** The first block of every stacked monthly bar, named in its legend. */
     baseLabel: "Shared base",
+    /** Scopes the legend to the monthly bar, so its colours are never read
+     *  onto the build bar beside it (reviewer B1, bead hq-wrig5.13 round two). */
+    legendNote:
+      "Colour keys the monthly blocks only. Each row's build bar draws in a shade of its own, not one of these four.",
     comboLabel: "What you buy",
     nameJoin: " and ",
     pricedOnLead: "Priced on the hours actually built:",
@@ -335,6 +339,8 @@ const es: typeof en = {
       "Cada módulo en su tamaño de entrada, de mayor a menor. La construcción detrás de cada renglón son las listas completas de arriba, una por cada módulo que el renglón nombra.",
     combosLabel: "Las siete combinaciones en el tamaño de entrada",
     baseLabel: "Base compartida",
+    legendNote:
+      "El color marca solo los bloques mensuales. La barra de arranque de cada renglón usa un tono propio, ninguno de estos cuatro.",
     comboLabel: "Lo que compra",
     nameJoin: " y ",
     pricedOnLead: "Cotizada sobre las horas que de verdad se construyen:",
