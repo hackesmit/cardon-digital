@@ -29,7 +29,7 @@ const en = {
     eyebrow: "What it costs",
     t1: "Three modules. ",
     accent: "Each one has a published entry price.",
-    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **Pause the service and nothing switches off:** the system is yours, and you carry the hosting and assistant bills directly.",
+    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **When the service ends, nothing moves between accounts:** we promote you to owner, hand over the payment method and remove our access.",
     ctaFloors: "See the entry prices",
     ctaModules: "See the three modules",
   },
@@ -155,7 +155,7 @@ const en = {
       "report-assembly-and-readout": "The monthly report and its readout",
       "client-admin-and-case-study": "Your invoicing and account admin",
     } as Record<string, string>,
-    foot: "Each module adds its own run cost on top: watching its feeds, its care and corrections, its section of the report, and keeping its side of the assistant current. **Pause the service and nothing switches off,** because the system is yours: it keeps running on accounts in your name, and from there the winery pays the providers directly for hosting, the database and the assistant's usage.",
+    foot: "Each module adds its own run cost on top: watching its feeds, its care and corrections, its section of the report, and keeping its side of the assistant current. **When the service ends, nothing moves between accounts:** we promote you to owner, hand over the payment method and remove our access.",
   },
 
   ads: {
@@ -201,7 +201,7 @@ const es: typeof en = {
     eyebrow: "Lo que cuesta",
     t1: "Tres módulos. ",
     accent: "Cada uno con su precio de entrada publicado.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Si la pausa, no se apaga nada:** el sistema es suyo, y usted cubre directo las cuentas de hospedaje y del asistente.",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Cuando el servicio termina, no se mueve nada entre cuentas:** lo promovemos a usted como titular, le entregamos el método de pago y retiramos nuestro acceso.",
     ctaFloors: "Ver los precios de entrada",
     ctaModules: "Ver los tres módulos",
   },
@@ -313,7 +313,7 @@ const es: typeof en = {
       "report-assembly-and-readout": "El informe mensual y su lectura",
       "client-admin-and-case-study": "Su facturación y la administración de su cuenta",
     } as Record<string, string>,
-    foot: "Cada módulo agrega encima su propio costo de operación: vigilar sus fuentes, su cuidado y sus correcciones, su sección del informe, y mantener al día su lado del asistente. **Si pausa el servicio no se apaga nada,** porque el sistema es suyo: sigue corriendo en cuentas a su nombre, y de ahí en adelante la bodega paga directo a los proveedores el hospedaje, la base de datos y el uso del asistente.",
+    foot: "Cada módulo agrega encima su propio costo de operación: vigilar sus fuentes, su cuidado y sus correcciones, su sección del informe, y mantener al día su lado del asistente. **Cuando el servicio termina, no se mueve nada entre cuentas:** lo promovemos a usted como titular, le entregamos el método de pago y retiramos nuestro acceso.",
   },
 
   ads: {
