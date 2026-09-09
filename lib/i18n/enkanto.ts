@@ -6,7 +6,7 @@ const en = {
   meta: {
     title: "Vinedo En'kanto case study",
     description:
-      "Through a season when the Valle de Guadalupe's overall visitor flow dipped, En'kanto's three revenue lines, wine, stays, and restaurant, each kept growing. Beside that season sat the work: a real online shop, structure and search repaired, payments and shipping made real, bilingual by design. Behind the three lines now sits the system that runs them, twenty screens across production, the restaurant point of sale and bookings, built and open to try.",
+      "Through a season when the Valle de Guadalupe's overall visitor flow dipped, En'kanto's three revenue lines, wine, stays, and restaurant, each kept growing. Beside that season sat the work: a real online shop, structure and search repaired, payments and shipping made real, bilingual by design. Then the system built for all three lines, twenty screens across production, the restaurant point of sale and bookings, open to walk through screen by screen.",
   },
   hero: {
     aria: "Introduction",
@@ -14,7 +14,7 @@ const en = {
     t1: "The Valle's volume dropped that season. En'kanto's wine, stays, and tables kept ",
     enk: "growing",
     t2: ".",
-    sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. Across a season when the Valle's overall visitor flow dipped, all three kept growing. Beside that fact sits the work we did: first a real online shop with cross-border-honest shipping and the site structure repaired, then the system that runs all three lines behind it. **Three lines growing, the season dropping, the work sitting beside both.**",
+    sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. Across a season when the Valle's overall visitor flow dipped, all three kept growing. Beside that fact sits the work we did: first a real online shop with cross-border-honest shipping and the site structure repaired, then the system built for all three lines behind it. **Three lines growing, the season dropping, the work sitting beside both.**",
   },
   facts: {
     aria: "Case study facts: client, sector, place, scale, engagement, what we built, and the outcome",
@@ -26,15 +26,15 @@ const en = {
       { k: "Engagement", v: "Build and ongoing work" },
       {
         k: "What we built",
-        v: "Online shop; site structure and search; payments for how Mexico pays; cross-border shipping; bilingual build; then the operating system for all three lines: wine production, restaurant point of sale, and bookings",
+        v: "Online shop; site structure and search; payments for how Mexico pays; cross-border shipping; bilingual build; then the system for all three lines: wine production, restaurant point of sale, and bookings",
       },
       {
         k: "Outcome",
-        v: "Three revenue lines grew across a season when the Valle's visitor flow dipped, and the system those lines run on is built and open to try",
+        v: "Three revenue lines grew across a season when the Valle's visitor flow dipped, and the system built for those lines is there to walk through, screen by screen",
       },
     ],
     basisK: "Basis",
-    basis: "The three revenue lines and the direction of the season come from En'kanto's own figures for the season this case covers. The Valle's visitor trend is a separate observation and stands on its own. We set the two side by side and claim no causal relationship between the work and the growth. No En'kanto revenue figures are published here. The system is described from the build itself and not from a plan: twenty screens across three modules and ten staff roles, counted in the merged code, with a test suite of 305 checks across 28 files running green on 9 September 2026. We publish no operating result from En'kanto's own use of the system, because we have not measured one.",
+    basis: "The three revenue lines and the direction of the season come from En'kanto's own figures for the season this case covers. The Valle's visitor trend is a separate observation and stands on its own. We set the two side by side and claim no causal relationship between the work and the growth. No En'kanto revenue figures are published here. The system is described from the build itself and not from a plan. Every count here is a count of that build on 9 September 2026: three modules, the twenty screens named one by one on this page in lists of five, six and nine, and the ten staff positions its own route table defines, with a suite of 305 checks across 28 files running green on that date. The system is not yet in service at En'kanto, so this page reports no result from its use there and claims none.",
   },
   client: {
     kicker: "The client",
@@ -114,8 +114,8 @@ const en = {
   system: {
     kicker: "The system",
     title: "Three lines, one system, and it is built.",
-    p1: "The store, the structure and the payments put the three lines in front of people. Behind them ran three operations sharing one property and no shared record. The order was written on a pad. The bookings arrived in as many places as there were channels. The cellar, the dining room and the front desk each held their own version of the day, and nobody could see the property as one business, because nothing held it as one.",
-    p2: "So we built the system that does. One place, twenty screens, and each area seeing only its own: the cellar sees production, the dining room sees the dining room, the front desk sees the calendar, and administration sees the whole property. **Wine first, then the restaurant, then the bookings.**",
+    p1: "The store, the structure and the payments put the three lines in front of people. Behind them ran three operations sharing one property and no shared record. The order went on a pad. The bookings arrived in as many places as there were channels. Nothing held the winery, the rooms and the dining room as one business, because nothing had been built to.",
+    p2: "So we built the one that does. One place, twenty screens, and a set of screens per area instead of one screen for everybody: the cellar works from production, the dining room from the dining room, the front desk from the calendar, and administration sees the property whole. **Wine first, then the restaurant, then the bookings.**",
     screensK: "Screens",
     modules: [
       {
@@ -155,11 +155,15 @@ const en = {
         lead: "A bill is paid when the confirmation arrives.",
         body: "A card at the table goes out as a payment link and its QR code, and the bill stays open until the confirmation comes back. If it does not arrive before the link expires, the bill reopens and is taken another way. Nothing is ever marked paid on optimism, because a till that lies about one night is a till nobody trusts again.",
       },
+      {
+        lead: "It is built. It is not yet in service at En'kanto.",
+        body: "Everything on this page is here because it is merged and it runs. Putting the system into the property's daily work is the next phase, and until that happens we describe what is built and claim nothing about what it changed. We would rather be a step behind our own page than a step in front of it.",
+      },
     ],
     demo: {
       kicker: "See it",
       title: "The system is open. Go through it yourself.",
-      body: "It runs as a public demonstration, dressed as a fictional winery with illustrative data. **No En'kanto information appears in it, and none ever will.** Open any of the three modules, pick any of the ten staff roles, and see exactly what that person sees.",
+      body: "It runs as a public demonstration, dressed as a fictional winery. **It is assembled from a whitelist that leaves En'kanto's own data files out of the deployment, so there is nothing of theirs there to serve.** Open any of the three modules, pick any of the ten staff positions, and walk the screens that position gets.",
       cta: "Open the demo",
       note: "Illustrative data under a fictional name. Nothing here belongs to a client.",
     },
@@ -195,7 +199,7 @@ const en = {
     kicker: "The outcome",
     title: "Three lines, growing through a season that went down.",
     p1: "Through a season when the Valle's overall flow dipped, En'kanto's wine, its stays, and its restaurant each kept growing. Beside those three lines sits the work: a shop that takes a real order, structure and search repaired, payments that clear, shipping that reaches the door, and one bilingual foundation under all of it.",
-    p2: "Then we built the system those three lines run on. The cellar's record of the vintage, the dining room's order from the phone to the cash cut, and every booking in one calendar, in one place, with each area seeing its own. It is built, it is open, and it says plainly where it stops.",
+    p2: "Then we built the system for those three lines. The cellar's record of the vintage, the dining room's order from the phone to the cash cut, and every booking in one calendar, in one place, with a set of screens per area. It is built, it is open to walk through, and it says plainly where it stops.",
     p3: "We state the work and we state the season, and we set them next to each other and claim no more than that. **We built the foundation. What grows on it belongs to the winery.**",
   },
   vis: {
@@ -234,7 +238,7 @@ const es: typeof en = {
   meta: {
     title: "Caso de estudio Viñedo En'kanto",
     description:
-      "En una temporada en la que el flujo de visitantes del Valle de Guadalupe bajó, las tres líneas de En'kanto, vino, hospedaje y restaurante, siguieron creciendo. Al lado de esa temporada está el trabajo: una tienda en línea de verdad, la estructura y la búsqueda reparadas, pagos y envíos reales, y una base bilingüe. Detrás de las tres líneas está ahora el sistema que las opera: veinte pantallas entre producción, el punto de venta del restaurante y las reservas, construido y abierto para recorrerlo.",
+      "En una temporada en la que el flujo de visitantes del Valle de Guadalupe bajó, las tres líneas de En'kanto, vino, hospedaje y restaurante, siguieron creciendo. Al lado de esa temporada está el trabajo: una tienda en línea de verdad, la estructura y la búsqueda reparadas, pagos y envíos reales, y una base bilingüe. Después, el sistema construido para las tres líneas: veinte pantallas entre producción, el punto de venta del restaurante y las reservas, abierto para recorrerlo pantalla por pantalla.",
   },
   hero: {
     aria: "Presentación",
@@ -242,7 +246,7 @@ const es: typeof en = {
     t1: "El volumen del Valle bajó esa temporada. El vino, el hospedaje y las mesas de En'kanto siguieron ",
     enk: "creciendo",
     t2: ".",
-    sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. A lo largo de una temporada en la que el flujo general de visitantes del Valle bajó, las tres siguieron creciendo. Al lado de ese hecho está el trabajo que hicimos: primero una tienda en línea de verdad con un envío honesto respecto a la frontera y la estructura del sitio reparada, después el sistema que opera las tres líneas por detrás. **Tres líneas creciendo, la temporada bajando, el trabajo al lado de las dos cosas.**",
+    sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. A lo largo de una temporada en la que el flujo general de visitantes del Valle bajó, las tres siguieron creciendo. Al lado de ese hecho está el trabajo que hicimos: primero una tienda en línea de verdad con un envío honesto respecto a la frontera y la estructura del sitio reparada, después el sistema construido para las tres líneas por detrás. **Tres líneas creciendo, la temporada bajando, el trabajo al lado de las dos cosas.**",
   },
   facts: {
     aria: "Datos del caso: cliente, sector, lugar, escala, relación, lo que construimos y el resultado",
@@ -254,15 +258,15 @@ const es: typeof en = {
       { k: "Relación", v: "Construcción y trabajo en curso" },
       {
         k: "Lo que construimos",
-        v: "Tienda en línea; estructura y búsqueda del sitio; pagos como se paga en México; envíos transfronterizos; construcción bilingüe; y después el sistema que opera las tres líneas: producción de vino, punto de venta del restaurante y reservas",
+        v: "Tienda en línea; estructura y búsqueda del sitio; pagos como se paga en México; envíos transfronterizos; construcción bilingüe; y después el sistema para las tres líneas: producción de vino, punto de venta del restaurante y reservas",
       },
       {
         k: "Resultado",
-        v: "Las tres líneas de ingreso crecieron en una temporada en la que bajó el flujo de visitantes del Valle, y el sistema sobre el que corren esas líneas está construido y abierto para recorrerlo",
+        v: "Las tres líneas de ingreso crecieron en una temporada en la que bajó el flujo de visitantes del Valle, y el sistema construido para esas líneas está ahí para recorrerlo, pantalla por pantalla",
       },
     ],
     basisK: "Base",
-    basis: "Las tres líneas de ingreso y la dirección de la temporada salen de las cifras de la propia En'kanto para la temporada que cubre este caso. La tendencia de visitantes del Valle es una observación aparte y se sostiene sola. Ponemos las dos una al lado de la otra y no reclamamos ninguna relación de causa entre el trabajo y el crecimiento. Aquí no publicamos ninguna cifra de ingresos de En'kanto. El sistema se describe desde la construcción misma y no desde un plan: veinte pantallas en tres módulos y diez puestos, contadas en el código integrado, con una suite de 305 comprobaciones en 28 archivos que corre en verde el 9 de septiembre de 2026. No publicamos ningún resultado de operación del uso que En'kanto haga del sistema, porque no lo hemos medido.",
+    basis: "Las tres líneas de ingreso y la dirección de la temporada salen de las cifras de la propia En'kanto para la temporada que cubre este caso. La tendencia de visitantes del Valle es una observación aparte y se sostiene sola. Ponemos las dos una al lado de la otra y no reclamamos ninguna relación de causa entre el trabajo y el crecimiento. Aquí no publicamos ninguna cifra de ingresos de En'kanto. El sistema se describe desde la construcción misma y no desde un plan. Cada conteo de aquí es un conteo de esa construcción al 9 de septiembre de 2026: tres módulos, las veinte pantallas nombradas una por una en esta página en listas de cinco, seis y nueve, y los diez puestos de personal que define su propia tabla de rutas, con una suite de 305 comprobaciones en 28 archivos que corre en verde en esa fecha. El sistema todavía no está en servicio en En'kanto, así que esta página no reporta ningún resultado de su uso ahí ni lo reclama.",
   },
   client: {
     kicker: "El cliente",
@@ -342,8 +346,8 @@ const es: typeof en = {
   system: {
     kicker: "El sistema",
     title: "Tres líneas, un sistema, y ya está construido.",
-    p1: "La tienda, la estructura y los pagos pusieron las tres líneas frente a la gente. Por detrás corrían tres operaciones que comparten una sola propiedad y ningún registro común. La comanda se escribía en papel. Las reservas llegaban a tantos lugares como canales había. La bodega, el comedor y la recepción tenían cada uno su propia versión del día, y nadie podía ver la propiedad como un solo negocio, porque nada la sostenía como uno.",
-    p2: "Así que construimos el sistema que sí lo hace. Un solo lugar, veinte pantallas, y cada área viendo únicamente lo suyo: la bodega ve producción, el comedor ve el comedor, la recepción ve el calendario, y administración ve la propiedad entera. **Primero el vino, luego el restaurante, luego las reservas.**",
+    p1: "La tienda, la estructura y los pagos pusieron las tres líneas frente a la gente. Por detrás corrían tres operaciones que comparten una sola propiedad y ningún registro común. La comanda se escribía en papel. Las reservas llegaban a tantos lugares como canales había. Nada sostenía la bodega, los cuartos y el comedor como un solo negocio, porque nada se había construido para eso.",
+    p2: "Así que construimos el que sí lo hace. Un solo lugar, veinte pantallas, y un juego de pantallas por área en lugar de una sola pantalla para todos: la bodega trabaja desde producción, el comedor desde el comedor, la recepción desde el calendario, y administración ve la propiedad entera. **Primero el vino, luego el restaurante, luego las reservas.**",
     screensK: "Pantallas",
     modules: [
       {
@@ -383,11 +387,15 @@ const es: typeof en = {
         lead: "Una cuenta está pagada cuando llega la confirmación.",
         body: "Una tarjeta en la mesa sale como link de pago con su código QR, y la cuenta queda abierta hasta que regresa la confirmación. Si no llega antes de que el link expire, la cuenta se reabre y se cobra por otro medio. Nada se marca pagado por optimismo, porque una caja que miente una noche es una caja en la que ya nadie vuelve a confiar.",
       },
+      {
+        lead: "Está construido. Todavía no está en servicio en En'kanto.",
+        body: "Todo lo que está en esta página está porque ya se integró y corre. Meter el sistema al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase describimos lo construido y no reclamamos nada sobre lo que cambió. Preferimos ir un paso atrás de nuestra propia página que un paso adelante de ella.",
+      },
     ],
     demo: {
       kicker: "Véalo",
       title: "El sistema está abierto. Recórralo usted mismo.",
-      body: "Corre como una demostración pública, vestida de bodega ficticia y con datos ilustrativos. **Ahí no aparece ninguna información de En'kanto, y nunca va a aparecer.** Abra cualquiera de los tres módulos, elija cualquiera de los diez puestos, y vea exactamente lo que esa persona ve.",
+      body: "Corre como una demostración pública, vestida de bodega ficticia. **Se arma con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto, así que ahí no hay nada suyo que servir.** Abra cualquiera de los tres módulos, elija cualquiera de los diez puestos, y recorra las pantallas que ese puesto recibe.",
       cta: "Abrir el demo",
       note: "Datos ilustrativos bajo un nombre ficticio. Nada de aquí es de un cliente.",
     },
@@ -423,7 +431,7 @@ const es: typeof en = {
     kicker: "El desenlace",
     title: "Tres líneas creciendo en una temporada que bajó.",
     p1: "En una temporada en la que el flujo general del Valle bajó, el vino de En'kanto, su hospedaje y su restaurante siguieron creciendo cada uno. Al lado de esas tres líneas está el trabajo: una tienda que toma un pedido de verdad, la estructura y la búsqueda reparadas, pagos que se liberan, envíos que llegan a la puerta y un solo cimiento bilingüe debajo de todo.",
-    p2: "Después construimos el sistema sobre el que corren esas tres líneas. El registro de la añada en la bodega, la comanda del restaurante desde el teléfono hasta el corte de caja, y todas las reservas en un solo calendario, en un mismo lugar y con cada área viendo lo suyo. Está construido, está abierto y dice con claridad dónde se detiene.",
+    p2: "Después construimos el sistema para esas tres líneas. El registro de la añada en la bodega, la comanda del restaurante desde el teléfono hasta el corte de caja, y todas las reservas en un solo calendario, en un mismo lugar y con un juego de pantallas por área. Está construido, está abierto para recorrerlo y dice con claridad dónde se detiene.",
     p3: "Decimos el trabajo y decimos la temporada, los ponemos uno al lado del otro y no reclamamos más que eso. **Nosotros construimos el cimiento. Lo que crece encima es de la bodega.**",
   },
   vis: {
