@@ -6,6 +6,7 @@ import {
   localeFromCountry,
   localeFromPath,
   localePath,
+  stripLocale,
 } from "@/lib/i18n/config";
 
 /* Two jobs in one pass.
@@ -28,10 +29,34 @@ export const config = {
 
 const NOINDEX = "noindex, nofollow";
 
+/* Retired industry pages (bead hq-wrig5.11): the site sells three areas only,
+   so clinics, construction, hiring and restaurants are gone. Their routes, with
+   or without a locale prefix, redirect permanently to the modules page. */
+const REMOVED_INDUSTRIES = new Set([
+  "/industries/clinics",
+  "/industries/construction",
+  "/industries/hiring",
+  "/industries/restaurants",
+]);
+
 export function middleware(req: NextRequest) {
   const gated = process.env.COMING_SOON === "1";
   const { pathname } = req.nextUrl;
   const pathLocale = localeFromPath(pathname);
+
+  // A literal 301 to /<locale>/modulos, the moved-permanently status the
+  // removal was specified with (Next's own redirects() would emit 308).
+  if (REMOVED_INDUSTRIES.has(stripLocale(pathname))) {
+    const cookie = req.cookies.get(LOCALE_COOKIE)?.value;
+    const locale =
+      pathLocale ??
+      (isLocale(cookie)
+        ? cookie
+        : localeFromCountry(req.headers.get("x-vercel-ip-country")));
+    const url = req.nextUrl.clone();
+    url.pathname = localePath(locale, "/modulos");
+    return NextResponse.redirect(url, 301);
+  }
 
   if (!pathLocale) {
     const chosen = req.cookies.get(LOCALE_COOKIE)?.value;

@@ -325,10 +325,6 @@
 }
 
 .pg-winery .ad-chat{display:flex;flex-direction:column;gap:12px;}
-.pg-winery .ad-label{
-  margin:0;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;
-  color:var(--muted);
-}
 .pg-winery .ad-exchange{display:flex;flex-direction:column;gap:10px;}
 .pg-winery .ad-q{
   margin:0;align-self:flex-start;max-width:92%;

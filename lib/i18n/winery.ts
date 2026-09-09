@@ -102,7 +102,6 @@ const en = {
     ],
     note: "**Every answer** carries the record it came from.",
     demo: {
-      label: "Illustrative data",
       aria: "A winery dashboard beside an assistant. Two questions are asked and answered. Each answer names the record it read and marks the matching row on the dashboard. The second answer says there is no data rather than estimating.",
       boardTitle: "Cellar view",
       live: "LIVE",
@@ -314,7 +313,6 @@ const es: typeof en = {
     ],
     note: "**Cada respuesta** trae el registro del que salió.",
     demo: {
-      label: "Datos de ejemplo",
       aria: "Un tablero de bodega junto a un asistente. Se hacen dos preguntas y se responden. Cada respuesta nombra el registro que leyó y marca la fila que le corresponde en el tablero. La segunda respuesta dice que no hay dato en lugar de estimarlo.",
       boardTitle: "Vista de bodega",
       live: "AL DÍA",
