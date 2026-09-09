@@ -320,9 +320,11 @@
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: 38px;
-  height: 38px;
-  margin: -19px 0 0 -19px;
+  width: var(--w);
+  height: var(--h);
+  min-width: 38px;
+  min-height: 38px;
+  transform: translate(-50%, -50%);
   border: 0;
   border-radius: 50%;
   background: transparent;
@@ -724,8 +726,10 @@
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: var(--d);
-  height: var(--d);
+  width: var(--w);
+  height: var(--h);
+  min-width: 38px;
+  min-height: 38px;
   transform: translate(-50%, -50%);
   border: 0;
   border-radius: 50%;

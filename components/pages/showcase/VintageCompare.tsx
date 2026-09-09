@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import type { Locale } from "@/lib/i18n/config";
+import { htmlLang, type Locale } from "@/lib/i18n/config";
 import { showcase } from "@/lib/i18n/showcase";
 
 /**
@@ -49,6 +49,15 @@ const SERIES = [
   { key: "prev", back: 1, values: [8.7, 8.1, 7.4, 6.9, 6.3, 5.9, 5.6, 5.4, 5.3] },
   { key: "now", back: 0, values: [9.4, 8.9, 8.3, 7.7, 7.2, 6.8, 6.5, 6.3, 6.2] },
 ] as const;
+
+/** One decimal, grouped the way the locale groups it, so a Spanish reader gets
+    6,2 rather than 6.2 beside Spanish prices on the same page. */
+function oneDecimal(locale: Locale, value: number): string {
+  return new Intl.NumberFormat(htmlLang[locale], {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(value);
+}
 
 /* The plot box inside the 320 x 170 viewBox, leaving room for the two axes. */
 const BOX = { x: 34, y: 10, w: 268, h: 124 };
@@ -179,7 +188,9 @@ export default function VintageCompare({
           <span className="vc-key" key={s.key} data-series={s.key}>
             <span className="vc-swatch" aria-hidden="true" />
             <span className="vc-key-l mono">{year - s.back}</span>
-            <span className="vc-key-v mono">{(s.values[picked] ?? 0).toFixed(1)}</span>
+            <span className="vc-key-v mono">
+              {oneDecimal(locale, s.values[picked] ?? 0)}
+            </span>
           </span>
         ))}
       </figcaption>

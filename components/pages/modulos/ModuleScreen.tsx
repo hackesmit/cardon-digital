@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import type { Locale } from "@/lib/i18n/config";
+import { htmlLang, type Locale } from "@/lib/i18n/config";
 import { modulos } from "@/lib/i18n/modulos";
 
 /**
@@ -28,6 +28,16 @@ import { modulos } from "@/lib/i18n/modulos";
  * than in the dictionary: they are not copy, they are the shape of a screen.
  * The site-wide disclaimer in lib/i18n/terms.ts covers the same ground.
  */
+
+/** One decimal, grouped the way the locale groups it, so a Spanish board reads
+    24,4 next to the Spanish prices rather than 24.4. It is not in lib/pricing.ts
+    because that module formats money and these are readings off a board. */
+function oneDecimal(locale: Locale, value: number): string {
+  return new Intl.NumberFormat(htmlLang[locale], {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(value);
+}
 
 /* ------------------------------ THE BOARDS ------------------------------ */
 
@@ -143,14 +153,14 @@ function LotBoard({ locale, uid }: { locale: Locale; uid: string }) {
                  technology, so without this the button reads as four unlabelled
                  tokens, "L-12 Cabernet T4 24.4", and nothing says which one is
                  the tank (Lucy 2026-09-09, second finding). */
-              aria-label={`${d.lot} ${row.lot}, ${d.variety} ${row.variety}, ${d.tank} ${row.tank}, ${d.brix} ${row.brix[row.brix.length - 1]?.toFixed(1)}`}
+              aria-label={`${d.lot} ${row.lot}, ${d.variety} ${row.variety}, ${d.tank} ${row.tank}, ${d.brix} ${oneDecimal(locale, row.brix[row.brix.length - 1] ?? 0)}`}
               onClick={() => setPicked(i)}
             >
               <span className="ms-cell mono">{row.lot}</span>
               <span className="ms-cell">{row.variety}</span>
               <span className="ms-cell mono">{row.tank}</span>
               <span className="ms-cell mono ms-num">
-                {row.brix[row.brix.length - 1]?.toFixed(1)}
+                {oneDecimal(locale, row.brix[row.brix.length - 1] ?? 0)}
               </span>
             </button>
           </li>
@@ -166,7 +176,7 @@ function LotBoard({ locale, uid }: { locale: Locale; uid: string }) {
         </span>
         <Spark values={lot.brix} className="ms-spark" />
         <span className="ms-detail-v mono">
-          {d.brix} {lot.brix[lot.brix.length - 1]?.toFixed(1)}
+          {d.brix} {oneDecimal(locale, lot.brix[lot.brix.length - 1] ?? 0)}
         </span>
       </div>
     </div>
@@ -225,7 +235,13 @@ function Calendar({ locale, uid }: { locale: Locale; uid: string }) {
                     data-channel={s.channel}
                     aria-pressed={i === picked}
                     aria-controls={panel}
-                    aria-label={`${unit} ${d.channels[s.channel]} ${s.nights} ${d.nights}`}
+                    /* The day columns are a visual axis and are hidden, so
+                       without the range in here two stays of the same unit,
+                       channel and length are indistinguishable to a screen
+                       reader (Lucy 2026-09-09 round two, first finding). */
+                    aria-label={`${unit}, ${d.channels[s.channel]}, ${d.dayRange
+                      .replace("{a}", String(s.start))
+                      .replace("{b}", String(s.start + s.nights - 1))}, ${s.nights} ${d.nights}`}
                     onClick={() => setPicked(i)}
                     style={
                       {
@@ -243,7 +259,9 @@ function Calendar({ locale, uid }: { locale: Locale; uid: string }) {
       </div>
 
       <div className="ms-detail" id={panel} aria-live="polite">
-        <span className="ms-detail-k mono">{UNITS[stay.unit]}</span>
+        <span className="ms-detail-k mono">
+          {UNITS[stay.unit]} · {stay.start}-{stay.start + stay.nights - 1}
+        </span>
         <span className="ms-chip" data-channel={stay.channel}>
           {d.channels[stay.channel]}
         </span>
@@ -291,11 +309,17 @@ function TableMap({ locale, uid }: { locale: Locale; uid: string }) {
             aria-controls={panel}
             aria-label={`${d.table} ${t.n} ${d.states[t.state as TableState]}`}
             onClick={() => setPicked(i)}
+            /* The width and the height are shares of the drawing, not pixels:
+               the svg scales with its container, so a fixed size would leave
+               most of a table inert at 760 px and only fit at one width. The
+               38 px floor is a min in CSS, for the narrow end (Lucy 2026-09-09
+               round two, second finding). */
             style={
               {
                 "--x": (t.x / 300) * 100 + "%",
                 "--y": (t.y / 190) * 100 + "%",
-                "--d": Math.max(38, t.r * 2) + "px",
+                "--w": ((t.r * 2) / 300) * 100 + "%",
+                "--h": ((t.r * 2) / 190) * 100 + "%",
               } as React.CSSProperties
             }
           />
