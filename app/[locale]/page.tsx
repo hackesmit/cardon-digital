@@ -3,7 +3,6 @@ import Link from "next/link";
 import Showcase from "@/components/pages/showcase/Showcase";
 import { showcaseEnabled } from "@/components/pages/showcase/flag";
 import HeroAssembly from "@/components/pages/home/HeroAssembly";
-import OpsCompression from "@/components/pages/home/OpsCompression";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
 import SectorMap from "@/components/pages/home/SectorMap";
 import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
@@ -70,7 +69,7 @@ function OfficialHome({ params }: Params) {
               <a className="cta" href="#diagnostic">
                 {d.hero.cta}
               </a>
-              <a className="btn-ghost" href="#operations">
+              <a className="btn-ghost" href="#sectors">
                 {d.hero.ctaGhost}
               </a>
             </div>
@@ -92,23 +91,6 @@ function OfficialHome({ params }: Params) {
               <p className="value-body">{item.body}</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* ============================ OPERATIONS ============================ */}
-      <section className="section" id="operations" aria-labelledby="ops-title">
-        <div className="container">
-          <div className="split reverse">
-            <div className="split-copy">
-              <span className="kicker gold">{d.operations.kicker}</span>
-              <h2 id="ops-title">{d.operations.title}</h2>
-              <p className="section-sub">{rich(d.operations.sub)}</p>
-              <p className="note">{rich(d.operations.note)}</p>
-            </div>
-            <div className="split-vis">
-              <OpsCompression />
-            </div>
-          </div>
         </div>
       </section>
 
@@ -420,23 +402,6 @@ function OfficialHome({ params }: Params) {
           </Link>
 
           <SectorMap />
-
-          <div className="sector-secondary">
-            <span className="sector-secondary-label">
-              {d.sectors.secondaryLabel}
-            </span>
-            <nav className="sector-secondary-list" aria-label={d.sectors.secondaryLabel}>
-              <Link href={href("/industries/construction")}>
-                {s.nav.construction}
-              </Link>
-              <Link href={href("/industries/hiring")}>{s.nav.hiring}</Link>
-              <Link href={href("/industries/restaurants")}>
-                {s.nav.restaurants}
-              </Link>
-              <Link href={href("/industries/clinics")}>{s.nav.clinics}</Link>
-            </nav>
-            <p className="sector-secondary-note">{d.sectors.secondaryNote}</p>
-          </div>
 
           <p className="sectors-foot mono">{rich(d.sectors.foot)}</p>
         </div>
