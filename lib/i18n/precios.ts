@@ -29,7 +29,7 @@ const en = {
     eyebrow: "What it costs",
     t1: "Three modules. ",
     accent: "Each one has a published entry price.",
-    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **Pause the service and nothing switches off.**",
+    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **Pause the service and nothing switches off:** the system is yours, and you carry the hosting and assistant bills directly.",
     ctaFloors: "See the entry prices",
     ctaModules: "See the three modules",
   },
@@ -155,7 +155,7 @@ const en = {
       "report-assembly-and-readout": "The monthly report and its readout",
       "client-admin-and-case-study": "Your invoicing and account admin",
     } as Record<string, string>,
-    foot: "Each module adds its own run cost on top: watching its feeds, its care and corrections, its section of the report, and keeping its side of the assistant current. **Pause the service and nothing switches off,** because the system is yours.",
+    foot: "Each module adds its own run cost on top: watching its feeds, its care and corrections, its section of the report, and keeping its side of the assistant current. **Pause the service and nothing switches off,** because the system is yours: it keeps running on accounts in your name, and from there the winery pays the providers directly for hosting, the database and the assistant's usage.",
   },
 
   ads: {
@@ -171,7 +171,7 @@ const en = {
       "Setup is 50 percent on signature, 50 percent on acceptance.",
       "The signature half can be paid in three monthly payments at no extra cost.",
       "The service fee is paid in advance, month to month, 30 days notice either way.",
-      "Leave the service inside the first twelve months and we invoice the part of the build the service fee was funding, less one twelfth for every month already paid. At the entry prices on this page there is nothing to invoice, because the setup fee already covers the whole build.",
+      "Leave the service inside the first twelve months and we invoice the part of the build the service fee was funding, less one twelfth for every month already paid. How much that is depends on the configuration, and your quote states it.",
       "All prices are plus IVA. Your ad budget goes from you straight to Google, and never through us.",
       "We quote and invoice in Mexican pesos. Every dollar figure here is converted from its own peso figure and rounded, so a dollar column can sit a few dollars off its own sum.",
     ],
@@ -201,7 +201,7 @@ const es: typeof en = {
     eyebrow: "Lo que cuesta",
     t1: "Tres módulos. ",
     accent: "Cada uno con su precio de entrada publicado.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Si la pausa, no se apaga nada.**",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Si la pausa, no se apaga nada:** el sistema es suyo, y usted cubre directo las cuentas de hospedaje y del asistente.",
     ctaFloors: "Ver los precios de entrada",
     ctaModules: "Ver los tres módulos",
   },
@@ -313,7 +313,7 @@ const es: typeof en = {
       "report-assembly-and-readout": "El informe mensual y su lectura",
       "client-admin-and-case-study": "Su facturación y la administración de su cuenta",
     } as Record<string, string>,
-    foot: "Cada módulo agrega encima su propio costo de operación: vigilar sus fuentes, su cuidado y sus correcciones, su sección del informe, y mantener al día su lado del asistente. **Si pausa el servicio no se apaga nada,** porque el sistema es suyo.",
+    foot: "Cada módulo agrega encima su propio costo de operación: vigilar sus fuentes, su cuidado y sus correcciones, su sección del informe, y mantener al día su lado del asistente. **Si pausa el servicio no se apaga nada,** porque el sistema es suyo: sigue corriendo en cuentas a su nombre, y de ahí en adelante la bodega paga directo a los proveedores el hospedaje, la base de datos y el uso del asistente.",
   },
 
   ads: {
@@ -329,7 +329,7 @@ const es: typeof en = {
       "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación.",
       "La mitad de la firma se puede pagar en tres mensualidades, sin recargo.",
       "La cuota mensual va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Si deja el servicio antes de doce mensualidades, facturamos la parte de la construcción que la cuota del servicio venía pagando, menos un doceavo por cada mensualidad ya pagada. En los precios de entrada de esta página no hay nada que facturar, porque la implementación ya cubre la construcción completa.",
+      "Si deja el servicio antes de doce mensualidades, facturamos la parte de la construcción que la cuota del servicio venía pagando, menos un doceavo por cada mensualidad ya pagada. Cuánto es depende de la configuración, y su cotización lo indica.",
       "Todos los precios son más IVA. Su presupuesto de anuncios lo paga usted directo a Google, y nunca pasa por nosotros.",
       "Cotizamos y facturamos en pesos mexicanos. Cada cifra en dólares es la conversión redondeada de su propia cifra en pesos, así que una columna en dólares puede quedar a unos dólares de su propia suma.",
     ],
