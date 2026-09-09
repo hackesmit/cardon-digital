@@ -18,6 +18,21 @@ function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
+/**
+ * True only on a Vercel production deployment, which is what gates the
+ * placeholder below out of the live site.
+ *
+ * Daniel asked for the missing results section to be left on the page as a
+ * clearly marked placeholder, so he can see the gap while reviewing. A marker
+ * a reviewer can see is worth having; a marker the public can see is not. This
+ * flag keeps both: the block renders locally and on preview deployments, and
+ * a production build drops it, which lands the page on the "no outcome" form
+ * the case-naming convention explicitly permits (6.2, form 4) rather than on
+ * an internal note. Editorial care still has to close it; this only decides
+ * what happens if editorial care does not.
+ */
+const isProductionDeploy = process.env.VERCEL_ENV === "production";
+
 export function generateMetadata({ params }: Params): Metadata {
   const locale = localeOf(params);
   return pageMetadata(locale, "/work/enkanto", enkanto[locale].meta);
@@ -494,17 +509,19 @@ export default function EnkantoCaseStudy({ params }: Params) {
         outcome framing rule (case-naming.md 6.2), or delete this section and
         its dictionary block. It must not reach production as it stands.
       */}
-      <section className="section pending-sec" aria-labelledby="pending-title">
-        <div className="container">
-          <div className="pending-block">
-            <p className="pending-marker mono">{d.pending.marker}</p>
-            <h2 id="pending-title" className="pending-title">
-              {d.pending.title}
-            </h2>
-            <p className="pending-body">{d.pending.body}</p>
+      {isProductionDeploy ? null : (
+        <section className="section pending-sec" aria-labelledby="pending-title">
+          <div className="container">
+            <div className="pending-block">
+              <p className="pending-marker mono">{d.pending.marker}</p>
+              <h2 id="pending-title" className="pending-title">
+                {d.pending.title}
+              </h2>
+              <p className="pending-body">{d.pending.body}</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ============================ OUTCOME ============================ */}
       <section className="outcome" aria-labelledby="outcome-title">
