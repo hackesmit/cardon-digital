@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
 
 import { showcaseEnabled } from "./flag";
-import { allModules, demoHref, demoIsLive, DEMO_PATH } from "../../../lib/demo";
+import {
+  allModules,
+  demoHref,
+  demoIsLive,
+  DEMO_HOST,
+} from "../../../lib/demo";
 import {
   showcase,
   type ProblemItem,
@@ -21,7 +26,7 @@ import { moduleIds } from "../../../lib/pricing";
  *   1. the flag rule itself, so "unset renders the official home" is checked
  *      rather than asserted,
  *   2. the demo buttons: one per module plus all three, every one of them
- *      pointing somewhere real while the demo host is down,
+ *      pointing at the live demo host with the right ?modulos= value,
  *   3. the showcase dictionary carrying no figure and no second copy of a
  *      module description, since the descriptions on the page are rendered
  *      from lib/i18n/modulos.ts and a price may not travel away from the build
@@ -73,16 +78,18 @@ describe("the SHOWCASE flag", () => {
 });
 
 describe("the demo buttons", () => {
-  it("sends every button to the locale placeholder while the host is down", () => {
-    // The host is not up yet (bead hq-ko3a0.6), so a button that quietly
-    // pointed at demo.cardondigital.com would be a dead link on a page we are
-    // sending out for feedback.
-    expect(demoIsLive).toBe(false);
+  it("sends every button to the live demo host with its own module list", () => {
+    // The host is up (bead hq-ko3a0.6), so every button carries the modules
+    // it advertises in the query the host reads (?modulos=, comma separated,
+    // enkanto-system js/demo/config.js MODULOS_IDS).
+    expect(demoIsLive).toBe(true);
     for (const locale of locales as readonly Locale[]) {
       for (const id of moduleIds) {
-        expect(demoHref(locale, [id])).toBe("/" + locale + DEMO_PATH);
+        expect(demoHref(locale, [id])).toBe(`${DEMO_HOST}/?modulos=${id}`);
       }
-      expect(demoHref(locale, allModules)).toBe("/" + locale + DEMO_PATH);
+      expect(demoHref(locale, allModules)).toBe(
+        `${DEMO_HOST}/?modulos=${moduleIds.join(",")}`,
+      );
     }
   });
 

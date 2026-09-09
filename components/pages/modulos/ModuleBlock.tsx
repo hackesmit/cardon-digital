@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ModuleScreen from "@/components/pages/modulos/ModuleScreen";
 import Reveal from "@/components/site/Reveal";
+import { demoIsLive } from "@/lib/demo";
 import type { Locale } from "@/lib/i18n/config";
 import { modulos, type ModuleCopy } from "@/lib/i18n/modulos";
 import { rich } from "@/lib/i18n/rich";
@@ -180,9 +181,17 @@ export default function ModuleBlock({
         {/* the demo for this module alone */}
         <Reveal delay={60}>
           <div className="mod-demo">
-            <Link className="demo-btn" href={demoHref}>
+            <Link
+              className="demo-btn"
+              href={demoHref}
+              {...(demoIsLive
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+            >
               <span>{m.demo}</span>
-              <span className="demo-soon mono">{d.demoSoon}</span>
+              {demoIsLive ? null : (
+                <span className="demo-soon mono">{d.demoSoon}</span>
+              )}
             </Link>
             {showDemoNote ? (
               <p className="mod-note">{rich(d.demoNote)}</p>

@@ -53,8 +53,7 @@ export default function Showcase({ locale }: { locale: Locale }) {
     encodeURIComponent(s.diag.mailSubject);
 
   /* One button per module and one for all three, in the order the pricing data
-     keeps them. Until the demo host is up every href is the placeholder and
-     every button says so; see ./demo.ts. */
+     keeps them, opening the live demo host in a new tab; see lib/demo.ts. */
   const demoButtons = [
     ...d.demos.modules.map((m) => ({
       key: m.id,
@@ -100,6 +99,9 @@ export default function Showcase({ locale }: { locale: Locale }) {
                     key={b.key}
                     href={b.href}
                     aria-label={b.aria}
+                    {...(demoIsLive
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                   >
                     <span>{b.label}</span>
                     {demoIsLive ? null : (
