@@ -737,6 +737,41 @@
   background: color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
+/* ------------------------ FORCED COLOURS -------------------------
+   In forced-colours mode every author background and fill is replaced by a
+   system colour, so a channel on the calendar and a state on the table map
+   would all collapse to the same block and the overview would say nothing
+   until each item is selected one at a time (Lucy 2026-09-09, third finding).
+   Borders and dash patterns survive, so each category gets one of its own.
+   The selected item keeps its own mark on top of that. */
+@media (forced-colors: active) {
+  .ms-stay {
+    border: 2px solid CanvasText;
+  }
+  .ms-stay[data-channel="ota1"] {
+    border-style: dashed;
+  }
+  .ms-stay[data-channel="ota2"] {
+    border-style: dotted;
+  }
+  .ms-stay[aria-pressed="true"] {
+    outline: 2px solid Highlight;
+  }
+  .ms-table circle {
+    stroke-dasharray: none;
+  }
+  .ms-table[data-state="check"] circle {
+    stroke-dasharray: 5 3;
+  }
+  .ms-table[data-state="free"] circle {
+    stroke-dasharray: 1 4;
+  }
+  .ms-chip[data-channel],
+  .ms-chip[data-state] {
+    border: 1px solid CanvasText;
+  }
+}
+
 /* ============================ NARROW ============================ */
 @media (max-width: 900px) {
   .mod-problem,

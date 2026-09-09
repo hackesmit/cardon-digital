@@ -28,17 +28,26 @@ import { showcase } from "@/lib/i18n/showcase";
  * The numbers are invented and shaped to read the way a season reads, which is
  * what the honest label on the frame says and what lib/i18n/terms.ts says for
  * every illustrative visual on the site.
+ *
+ * The three season labels are years counted back from `year`, which the server
+ * reads off the clock at build time and passes in. It is a prop rather than a
+ * `new Date()` in this file because this file also runs in the browser: a page
+ * built in December and hydrated in January would render one year on the server
+ * and another on the client, which is a hydration mismatch. Passed down, the
+ * labels are fixed at build and a redeploy is what moves them, so the chart
+ * cannot go on calling a season three years old the running one (Lucy
+ * 2026-09-09, fourth finding).
  */
 
 /** Days from veraison, and total acidity in g/L for each season on that day.
     Decoration: the shape is the reading, so it lives here and not in a
     dictionary. `now` is the running season, `prev` and `prior` the two before
-    it; the labels for all three are years, which need no translation. */
+    it, oldest drawn first. */
 const DAYS = [0, 5, 10, 15, 20, 25, 30, 35, 40] as const;
 const SERIES = [
-  { key: "prior", label: "2024", values: [9.1, 8.4, 7.8, 7.1, 6.6, 6.2, 5.9, 5.7, 5.6] },
-  { key: "prev", label: "2025", values: [8.7, 8.1, 7.4, 6.9, 6.3, 5.9, 5.6, 5.4, 5.3] },
-  { key: "now", label: "2026", values: [9.4, 8.9, 8.3, 7.7, 7.2, 6.8, 6.5, 6.3, 6.2] },
+  { key: "prior", back: 2, values: [9.1, 8.4, 7.8, 7.1, 6.6, 6.2, 5.9, 5.7, 5.6] },
+  { key: "prev", back: 1, values: [8.7, 8.1, 7.4, 6.9, 6.3, 5.9, 5.6, 5.4, 5.3] },
+  { key: "now", back: 0, values: [9.4, 8.9, 8.3, 7.7, 7.2, 6.8, 6.5, 6.3, 6.2] },
 ] as const;
 
 /* The plot box inside the 320 x 170 viewBox, leaving room for the two axes. */
@@ -59,7 +68,14 @@ function py(value: number): number {
   return BOX.y + BOX.h - ((value - Y_MIN) / (Y_MAX - Y_MIN)) * BOX.h;
 }
 
-export default function VintageCompare({ locale }: { locale: Locale }) {
+export default function VintageCompare({
+  locale,
+  year,
+}: {
+  locale: Locale;
+  /** The running season, read off the clock on the server at build time. */
+  year: number;
+}) {
   const d = showcase[locale].chart;
   const uid = useId();
   const readout = uid + "-readout";
@@ -162,7 +178,7 @@ export default function VintageCompare({ locale }: { locale: Locale }) {
         {SERIES.map((s) => (
           <span className="vc-key" key={s.key} data-series={s.key}>
             <span className="vc-swatch" aria-hidden="true" />
-            <span className="vc-key-l mono">{s.label}</span>
+            <span className="vc-key-l mono">{year - s.back}</span>
             <span className="vc-key-v mono">{(s.values[picked] ?? 0).toFixed(1)}</span>
           </span>
         ))}

@@ -283,6 +283,34 @@
   .pg-precios .fc{grid-template-columns:1fr;gap:20px;}
 }
 
+/* In forced-colours mode the fill of every block is replaced by one system
+   colour, so a stacked bar would read as one undivided block and the shared
+   base would stop being visible as the thing it is (Lucy 2026-09-09, third
+   finding). Background images do not survive that mode in Chromium either,
+   so the carrier is the one thing that does: border style. Each part takes a
+   border of its own, the bar grows enough for the pattern to read, and the
+   legend swatches take the same four borders so the key still matches. */
+@media (forced-colors:active){
+  .pg-precios .combo-bar{height:16px;gap:2px;overflow:visible;}
+  .pg-precios .combo-fill{
+    box-shadow:none;border:3px solid CanvasText;border-radius:0;
+  }
+  .pg-precios .combo-fill[data-part="base"],
+  .pg-precios .combo-key[data-part="base"] .combo-swatch{border-style:solid;}
+  .pg-precios .combo-fill[data-part="produccion"],
+  .pg-precios .combo-key[data-part="produccion"] .combo-swatch{border-style:dashed;}
+  .pg-precios .combo-fill[data-part="hospitalidad"],
+  .pg-precios .combo-key[data-part="hospitalidad"] .combo-swatch{border-style:dotted;}
+  .pg-precios .combo-fill[data-part="restaurante"],
+  .pg-precios .combo-key[data-part="restaurante"] .combo-swatch{border-style:double;}
+  .pg-precios .combo-key .combo-swatch{
+    width:16px;height:16px;border-width:3px;border-color:CanvasText;
+  }
+  .pg-precios .fc-bar{border:1px solid CanvasText;}
+}
+
+
+
 /* ---- the monthly fee, the annual rule, the ads rule, the terms ---- */
 .pg-precios .pr-list{
   margin:0;padding:0;list-style:none;

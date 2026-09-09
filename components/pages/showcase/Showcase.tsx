@@ -132,7 +132,10 @@ export default function Showcase({ locale }: { locale: Locale }) {
           {/* The comparison the pitch names, drawn: the section that says the
               question takes an afternoon shows what the answer looks like. */}
           <Reveal delay={60}>
-            <VintageCompare locale={locale} />
+            {/* The running season, read at build time and passed down rather
+                than read inside the client component, where the server and the
+                browser could disagree across a new year. */}
+            <VintageCompare locale={locale} year={new Date().getFullYear()} />
           </Reveal>
 
           <ol className="sc-problem-list">
