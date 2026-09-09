@@ -100,7 +100,10 @@ const tieEpsilon = 1e-9;
 
 /** Rounds to the nearest `step`, an exact half going down. */
 export function roundHalfDown(value: number, step: number): number {
-  return Math.ceil(value / step - 0.5 - tieEpsilon) * step;
+  // A value under half a step lands on Math.ceil(-something) === -0, which
+  // formats as "-0" through Intl. Adding 0 normalises -0 to 0 and leaves every
+  // other result untouched (bead hq-ggot1.15).
+  return Math.ceil(value / step - 0.5 - tieEpsilon) * step + 0;
 }
 
 /** Setup figures take the nearest 500 MXN. */
@@ -131,7 +134,10 @@ export function bumpOffBareMultiple(
   direction: "up" | "down",
 ): number {
   if (value % bare !== 0) return value;
-  return direction === "up" ? value + increment : value - increment;
+  const bumped = direction === "up" ? value + increment : value - increment;
+  // A downward bump never carries a figure below zero: a zero-valued line or a
+  // zero-fee mix would otherwise print as a negative price (bead hq-ggot1.15).
+  return bumped < 0 ? value : bumped;
 }
 
 /**
@@ -146,6 +152,23 @@ export function usdFromMxn(mxn: number): number {
 /** Both currencies for one MXN figure. USD is never priced independently. */
 export function priced(mxn: number): Record<CurrencyCode, number> {
   return { MXN: mxn, USD: usdFromMxn(mxn) };
+}
+
+/**
+ * Adds priced figures currency by currency, so a total a page prints adds up in
+ * whichever currency it is read. USD stays a sum of the per-module USD figures
+ * (each itself a conversion of a rounded MXN amount, memo rate note), never a
+ * fresh conversion of the MXN sum: converting the sum and summing the
+ * conversions differ by a rounding step, which is what made the /en cards and
+ * the bought-separately row disagree (bead hq-ggot1.13).
+ */
+export function sumPriced(
+  figures: Record<CurrencyCode, number>[],
+): Record<CurrencyCode, number> {
+  return {
+    MXN: figures.reduce((sum, f) => sum + f.MXN, 0),
+    USD: figures.reduce((sum, f) => sum + f.USD, 0),
+  };
 }
 
 /** Hours carry at most three decimals; keeps derived hour counts readable. */
@@ -947,18 +970,18 @@ const publishableIds = new Set([
 function workedExample(moduleIdsBought: ModuleId[], size: Size): WorkedExample {
   const q = quote(moduleIdsBought, size);
   const alone = moduleIdsBought.map((m) => quote([m], size));
-  const setupIfAlone = alone.reduce((sum, a) => sum + a.setup.MXN, 0);
-  const monthlyIfAlone = alone.reduce((sum, a) => sum + a.monthly.MXN, 0);
+  const setupIfAlone = sumPriced(alone.map((a) => a.setup));
+  const monthlyIfAlone = sumPriced(alone.map((a) => a.monthly));
   const id = `${size.toLowerCase()}-${moduleIdsBought.join("-")}`;
   return {
     id,
     size,
     modules: q.modules,
     quote: q,
-    setupIfAlone: priced(setupIfAlone),
-    monthlyIfAlone: priced(monthlyIfAlone),
+    setupIfAlone,
+    monthlyIfAlone,
     yearOneTogether: priced(q.setup.MXN + q.monthly.MXN * 12),
-    yearOneAlone: priced(setupIfAlone + monthlyIfAlone * 12),
+    yearOneAlone: sumPriced([setupIfAlone, ...Array(12).fill(monthlyIfAlone)]),
     prepay: annualPrepay(size, q.monthly.MXN),
     publishable: publishableIds.has(id),
   };

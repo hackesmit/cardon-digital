@@ -8,10 +8,12 @@ import {
   addOnMonthly,
   annualPrepay,
   buildOnly,
+  bumpOffBareMultiple,
   bundleHours,
   ceilTo,
   combinations,
   featureSetup,
+  formatPrice,
   growerBundleHours,
   growerSetupS,
   legacyWineryBundles,
@@ -37,6 +39,7 @@ import {
   winerySetupFloor,
   workedExamples,
 } from "./pricing";
+import { mixRankingSentence, precios } from "./i18n/precios";
 
 /**
  * Every expected figure below is transcribed by hand from
@@ -112,6 +115,23 @@ describe("rounding", () => {
     expect(usdFromMxn(300)).toBe(20);
     expect(usdFromMxn(1600)).toBe(95);
     expect(usdFromMxn(1700)).toBe(100);
+  });
+
+  it("never lets a negative zero or a negative bump reach the page", () => {
+    // A value under half a step rounds to zero, not to -0, so Intl cannot print
+    // "$-0". round100(50) is the smallest such case (red-team hq-ggot1.6 f.5).
+    expect(Object.is(round100(50), 0)).toBe(true);
+    expect(Object.is(round500(200), 0)).toBe(true);
+    expect(Object.is(usdFromMxn(0), 0)).toBe(true);
+    expect(formatPrice("es", usdFromMxn(0))).not.toContain("-");
+    expect(formatPrice("es", 0)).not.toContain("-");
+    expect(formatPrice("en", round100(50))).not.toContain("-");
+    // A downward bump on a bare multiple refuses to cross zero, so a zero-fee
+    // line or concession cannot print a minus price. 0 stays 0, not -100.
+    expect(bumpOffBareMultiple(0, 1000, 100, "down")).toBe(0);
+    expect(bumpOffBareMultiple(100, 100, 100, "down")).toBe(0);
+    // The legitimate downward bump the annual concession relies on is untouched.
+    expect(bumpOffBareMultiple(11000, 1000, 100, "down")).toBe(10900);
   });
 });
 
@@ -475,6 +495,97 @@ describe("the seven combinations at S and at M", () => {
     ]);
     // Examples vary the mix, never the size, so no reader can rebuild a row.
     expect(publishable.every((e) => e.size === "S")).toBe(true);
+  });
+
+  it("the bought-separately row equals the sum of the entry cards in BOTH currencies", () => {
+    // The /precios mix table calls its "alone" figures the sum of the three
+    // entry cards above it ("the three lists above"). MixExample reads the
+    // bought-separately row from setupIfAlone/monthlyIfAlone and each card from
+    // the single-module quote, so the two must reconcile per currency, not only
+    // in the priced MXN. Before hq-ggot1.13 the /en row converted the MXN sum
+    // once (10,150 USD setup) while the cards each converted their own figure
+    // (2,760 + 3,120 + 4,260 = 10,140), so the printed page did not add up.
+    const combined = workedExamples.find(
+      (e) => e.id === "s-produccion-hospitalidad-restaurante",
+    )!;
+    const cards = ["produccion", "hospitalidad", "restaurante"].map(
+      (m) => workedExamples.find((e) => e.id === `s-${m}`)!,
+    );
+    for (const currency of ["MXN", "USD"] as const) {
+      const setupCards = cards.reduce((s, c) => s + c.quote.setup[currency], 0);
+      const monthlyCards = cards.reduce(
+        (s, c) => s + c.quote.monthly[currency],
+        0,
+      );
+      expect(combined.setupIfAlone[currency]).toBe(setupCards);
+      expect(combined.monthlyIfAlone[currency]).toBe(monthlyCards);
+    }
+    // The regression this locks: the USD row now matches the USD cards.
+    expect(combined.setupIfAlone.USD).toBe(10140);
+    expect(combined.monthlyIfAlone.USD).toBe(2030);
+    // ...while the priced MXN sum is untouched, so the ES page is unchanged.
+    expect(combined.setupIfAlone.MXN).toBe(172500);
+    expect(combined.monthlyIfAlone.MXN).toBe(34400);
+  });
+});
+
+describe("the mix example's ranking sentence tracks the quote, not the dict", () => {
+  const publishable = workedExamples.find(
+    (e) => e.publishable && e.modules.length === 3,
+  )!;
+
+  // The exact prose the page rendered before hq-ggot1.14, now composed from
+  // the quote's own module order instead of typed into lib/i18n/precios.ts.
+  const expected = {
+    en: "All three modules, each at its entry size. The complete build is the three lists above, ranked by build price: Restaurante at full price, Hospitalidad second, Produccion third.",
+    es: "Los tres módulos, cada uno en su tamaño de entrada. La construcción completa son las tres listas de arriba, ordenadas por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercero.",
+  } as const;
+
+  it.each(["en", "es"] as const)(
+    "%s reads exactly as before, built from example.modules",
+    (locale) => {
+      expect(mixRankingSentence(locale, publishable.modules)).toBe(
+        expected[locale],
+      );
+    },
+  );
+
+  it.each(["en", "es"] as const)(
+    "%s names the modules in the same order quote() ranks them",
+    (locale) => {
+      const sentence = mixRankingSentence(locale, publishable.modules);
+      const names = publishable.modules.map(
+        (id) => precios[locale].floors.modules[id].name,
+      );
+      // The names appear in build-price order, most expensive first.
+      const positions = names.map((n) => sentence.indexOf(n));
+      expect(positions).toEqual([...positions].sort((a, b) => a - b));
+      expect(positions.every((p) => p >= 0)).toBe(true);
+      // And the ranking, not just the names, is derived: reorder the ids and
+      // the sentence follows, which a hardcoded string could not do. This is
+      // the perturbation the red team demonstrated (raising production-record
+      // hours flips restaurante > produccion > hospitalidad); the prose now
+      // moves with it instead of shipping a wrong sentence beside a right table.
+      const flipped = mixRankingSentence(locale, [
+        "produccion",
+        "restaurante",
+        "hospitalidad",
+      ]);
+      const prod = precios[locale].floors.modules.produccion.name;
+      const rest = precios[locale].floors.modules.restaurante.name;
+      expect(flipped.indexOf(prod)).toBeLessThan(flipped.indexOf(rest));
+    },
+  );
+
+  it("keeps the ranking out of the dictionary entirely", () => {
+    for (const locale of ["en", "es"] as const) {
+      const lead = precios[locale].mix.exampleLead;
+      for (const id of ["produccion", "hospitalidad", "restaurante"] as const) {
+        expect(lead).not.toContain(precios[locale].floors.modules[id].name);
+      }
+      // The dict no longer carries a "Producción" spelled with its accent.
+      expect(lead).not.toContain("Producción");
+    }
   });
 });
 
