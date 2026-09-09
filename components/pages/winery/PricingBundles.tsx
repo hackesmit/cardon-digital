@@ -1,33 +1,19 @@
-import { rich } from "@/lib/i18n/rich";
-import type { Locale } from "@/lib/i18n/config";
+import Link from "next/link";
+import { localePath, type Locale } from "@/lib/i18n/config";
 import { winery } from "@/lib/i18n/winery";
-import {
-  formatPrice,
-  wineryBundles,
-  wineryPricingPlaceholder,
-  winerySetupFloor,
-} from "@/lib/pricing";
 
 /**
- * The winery pricing section. Three scoped bundles as feature lists, most
- * expensive first, and exactly one figure above them.
+ * The winery pricing section. The fee shape, the modules a winery buys, and
+ * the terms. No figure appears here on purpose: pricing-features.md 3.7 rule 3
+ * says a price never travels away from the feature list that produced it, and
+ * that list lives on /precios, which is the only page that prints a figure.
  *
- * The figure and the lists are deliberately in the same section: memo
- * research/2026-09/pricing-features.md section 3.7 rule 3 says a price never
- * travels away from the features that produced it, and rule 4 says a public
- * surface carries one floor figure rather than a table. While
- * `wineryPricingPlaceholder` is true the floor line prints the diagnostic
- * sentence instead of a number, in both locales, and the lists carry the
- * section on their own.
- *
- * The bundle order comes from the data module, not from this file, so the
- * copy and the numbers cannot drift out of order.
+ * This section used to carry the three retired bundles and a floor slot behind
+ * a placeholder flag. pricing-modules.md section 11 retires those names on
+ * every surface, so both are gone rather than restyled.
  */
 export default function PricingBundles({ locale }: { locale: Locale }) {
   const d = winery[locale].pricing;
-  const floor = wineryPricingPlaceholder
-    ? d.floorTbd
-    : d.floor.replace("{setup}", formatPrice(locale, winerySetupFloor(locale)));
 
   return (
     <section
@@ -42,41 +28,23 @@ export default function PricingBundles({ locale }: { locale: Locale }) {
           <p className="section-sub">{d.sub}</p>
         </div>
 
-        <p className="price-floor">
-          <span className="price-floor-k">{d.floorLabel}</span>
-          <span className="price-floor-v">{rich(floor)}</span>
-        </p>
-
+        <p className="bundle-k">{d.modulesLabel}</p>
         <div className="bundle-grid">
-          {wineryBundles.map(({ id }, i) => {
-            const bundle = d.bundles[i];
-            return (
-            <article
-              className={"bundle spot" + (i === 1 ? " bundle-lead" : "")}
-              key={id}
-            >
+          {d.modules.map((module) => (
+            <article className="bundle spot" key={module.name}>
               <header className="bundle-head">
-                <h3 className="bundle-name">{bundle.name}</h3>
-                <span className="bundle-scale">{bundle.scale}</span>
+                <h3 className="bundle-name">{module.name}</h3>
+                <span className="bundle-scale">{module.scale}</span>
               </header>
-
-              <p className="bundle-k">{d.buildLabel}</p>
-              <ul className="bundle-list">
-                {bundle.build.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-
-              <p className="bundle-k">{d.serviceLabel}</p>
-              <ul className="bundle-list bundle-list-service">
-                {bundle.service.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <p className="bundle-body">{module.body}</p>
             </article>
-            );
-          })}
+          ))}
         </div>
+
+        <p className="pricing-more">
+          {d.moreLead}{" "}
+          <Link href={localePath(locale, "/precios")}>{d.moreCta}</Link>
+        </p>
 
         <div className="price-terms">
           <span className="price-terms-k">{d.termsLabel}</span>

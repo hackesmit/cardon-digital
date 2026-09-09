@@ -59,7 +59,7 @@ const en = {
       {
         num: "06 / Demand",
         h: "Fill the tasting room, the club, and DTC.",
-        body: "Bilingual ads for your tasting room, your wine club, and direct to consumer, run with the rigor of the most sophisticated agencies. The Valle's visitor flow dipped in 2025, so the wineries that keep their share are the ones whose follow-up and measurement work. Ad management sits inside the monthly service fee at the Vendimia and Cava scopes, and the ad budget goes from you straight to Google.",
+        body: "Bilingual ads for your tasting room, your wine club, and direct to consumer, run with the rigor of the most sophisticated agencies. The Valle's visitor flow dipped in 2025, so the wineries that keep their share are the ones whose follow-up and measurement work. Ad management attaches to the Hospitalidad and Restaurante modules, sits inside the monthly service fee, and the ad budget goes from you straight to Google.",
         note: "**One fee,** never a cut of your budget.",
       },
     ],
@@ -145,81 +145,48 @@ const en = {
     meta: "One winery, one connected view, run by the people who grow the wine.",
     sealSub: "Valle de Guadalupe",
   },
+  /**
+   * Pricing, wired to the module model (research/2026-09/pricing-modules.md).
+   * The three retired bundles are gone from every surface (memo section 11)
+   * and no figure lives on this page: an entry price never travels away from
+   * the build that produced it (pricing-features.md 3.7 rule 3), and that
+   * build is on /precios, which is the only page that prints a figure.
+   *
+   * The modules are listed in catalogue order rather than most expensive
+   * first, because with no figures beside them the order a winery reads them
+   * in is the order it buys them in, and it matches /modulos.
+   */
   pricing: {
     kicker: "What it costs",
-    title: "Three scopes for a winery. Two fees, no license.",
+    title: "Two fees, no license, and the winery owns the build.",
     sub: "The setup fee pays for the build, and the winery owns what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. Pause the service and nothing switches off.",
-    floorLabel: "Where it starts",
-    /** {setup} is the published floor. One figure on a public page, never a table. */
-    floor: "From **{setup}** to implement, plus the monthly service fee.",
-    /** Printed in place of the floor while the figures are unpublished. */
-    floorTbd: "Set in the diagnostic.",
-    buildLabel: "The build",
-    serviceLabel: "Every month",
-    bundles: [
+    modulesLabel: "The modules a winery buys",
+    modules: [
       {
-        name: "Cava",
-        scale: "Large winery",
-        build: [
-          "The Vendimia build at large-winery scale",
-          "Three more source connectors",
-          "Four historical vintages loaded",
-          "A prediction or classification model",
-          "Finance workflow automation",
-          "Online shop and age gate",
-        ],
-        service: [
-          "Everything in Vendimia",
-          "A monthly visit",
-          "A larger ad spend ceiling",
-        ],
+        name: "Produccion",
+        scale: "The winery's own record",
+        body: "Where every winery starts: production, vintage comparison, the commercial record, the monthly report, and the assistant over your own records.",
       },
       {
-        name: "Vendimia",
-        scale: "Mid-size winery",
-        build: [
-          "The Bitácora build at mid-winery scale",
-          "Two more source connectors",
-          "Two historical vintages loaded",
-          "Tasting room booking",
-          "Direct sales and wine club follow-up",
-        ],
-        service: [
-          "Everything in Bitácora",
-          "Ad management",
-          "Content",
-          "A quarterly visit",
-        ],
+        name: "Hospitalidad",
+        scale: "Rooms, tasting room and events",
+        body: "For a winery with rooms, casitas, a tasting room or events. Every booking from every channel in one calendar, and the guest kept between visits.",
       },
       {
-        name: "Bitácora",
-        scale: "Small winery",
-        build: [
-          "Production record and vintage comparison",
-          "Commercial record",
-          "One historical vintage loaded",
-          "Report generator",
-          "The assistant over your own records",
-          "Site, GA4 and conversion tracking",
-          "Google Ads build",
-          "Training and handover",
-        ],
-        service: [
-          "Hosting and monitoring",
-          "Care and corrections",
-          "A weekly call and WhatsApp",
-          "The monthly report and its readout",
-          "Fair use of the assistant",
-          "Your own admin account",
-        ],
+        name: "Restaurante",
+        scale: "The dining room",
+        body: "For a winery with its own restaurant, from the waiter's phone to the cash cut, with the wine list read live from the cellar.",
       },
     ],
+    moreLead:
+      "Each module has a published entry price, setup and monthly, and the combination and annual rules are written out in full.",
+    moreCta: "See pricing",
     termsLabel: "Terms",
     terms: [
       "Setup is 50 percent on signature, 50 percent on acceptance.",
       "The signature half can be paid in three monthly payments at no extra cost.",
       "The service fee is paid in advance, month to month, 30 days notice either way.",
-      "Leave the service before twelve payments and we invoice the difference against the build-only price, less one twelfth for every month already paid.",
+      "Leave the service inside the first twelve months and we invoice the part of the build the service fee was funding, less one twelfth for every month already paid.",
       "All prices plus IVA. The ad budget goes from you straight to Google.",
     ],
   },
@@ -304,7 +271,7 @@ const es: typeof en = {
       {
         num: "06 / Demanda",
         h: "Llene la sala de degustación, el club y la venta directa.",
-        body: "Anuncios en los dos idiomas para su sala de degustación, su club de vino y la venta directa, manejados con el rigor de las agencias más serias. El flujo de visitantes del Valle bajó en 2025, así que las bodegas que conservan su parte son las que tienen seguimiento y medición que sí funcionan. El manejo de anuncios va dentro de la cuota mensual en los alcances Vendimia y Cava, y la inversión publicitaria la paga usted directo a Google.",
+        body: "Anuncios en los dos idiomas para su sala de degustación, su club de vino y la venta directa, manejados con el rigor de las agencias más serias. El flujo de visitantes del Valle bajó en 2025, así que las bodegas que conservan su parte son las que tienen seguimiento y medición que sí funcionan. El manejo de anuncios se agrega a los módulos de Hospitalidad y Restaurante, va dentro de la cuota mensual del servicio, y la inversión publicitaria la paga usted directo a Google.",
         note: "**Una sola cuota,** nunca un porcentaje de su inversión.",
       },
     ],
@@ -392,77 +359,35 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Tres alcances para una bodega. Dos cuotas, sin licencia.",
-    sub: "La cuota de implementación paga la construcción, y el sistema queda suyo. La cuota mensual paga operarlo: hospedaje, cuidado, correcciones, el reporte y el asistente. Si la pausa, no se apaga nada.",
-    floorLabel: "De dónde parte",
-    floor: "Desde **{setup}** de implementación, más la cuota mensual del servicio.",
-    floorTbd: "Se fija en el diagnóstico.",
-    buildLabel: "La construcción",
-    serviceLabel: "Cada mes",
-    bundles: [
+    title: "Dos cuotas, sin licencia, y la construcción queda de la bodega.",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda de la bodega. La cuota mensual paga operarlo: hospedaje, cuidado, correcciones, el informe y el asistente. Si la pausa, no se apaga nada.",
+    modulesLabel: "Los módulos que compra una bodega",
+    modules: [
       {
-        name: "Cava",
-        scale: "Bodega grande",
-        build: [
-          "La construcción de Vendimia a escala de bodega grande",
-          "Tres conectores de origen adicionales",
-          "Cuatro añadas históricas cargadas",
-          "Un modelo de predicción o clasificación",
-          "Automatización del flujo financiero",
-          "Tienda en línea y control de edad",
-        ],
-        service: [
-          "Todo lo de Vendimia",
-          "Una visita mensual",
-          "Un techo de inversión publicitaria mayor",
-        ],
+        name: "Producción",
+        scale: "El registro propio de la bodega",
+        body: "Donde empieza toda bodega: producción, comparación de añadas, el registro comercial, el informe mensual y el asistente sobre sus propios registros.",
       },
       {
-        name: "Vendimia",
-        scale: "Bodega mediana",
-        build: [
-          "La construcción de Bitácora a escala de bodega mediana",
-          "Dos conectores de origen adicionales",
-          "Dos añadas históricas cargadas",
-          "Reservas para la sala de degustación",
-          "Seguimiento de venta directa y club",
-        ],
-        service: [
-          "Todo lo de Bitácora",
-          "Manejo de anuncios",
-          "Contenido",
-          "Una visita trimestral",
-        ],
+        name: "Hospitalidad",
+        scale: "Cuartos, sala de degustación y eventos",
+        body: "Para la bodega con cuartos, casitas, sala de degustación o eventos. Cada reserva de cada canal en un solo calendario, y el huésped conservado entre visitas.",
       },
       {
-        name: "Bitácora",
-        scale: "Bodega chica",
-        build: [
-          "Registro de producción y comparación de añadas",
-          "Registro comercial",
-          "Una añada histórica cargada",
-          "Generador de reportes",
-          "El asistente sobre sus propios registros",
-          "Sitio, GA4 y medición de conversiones",
-          "Armado de Google Ads",
-          "Capacitación y entrega",
-        ],
-        service: [
-          "Hospedaje y monitoreo",
-          "Cuidado y correcciones",
-          "Una llamada semanal y WhatsApp",
-          "El reporte mensual y su lectura",
-          "Uso razonable del asistente",
-          "Su propia cuenta de administrador",
-        ],
+        name: "Restaurante",
+        scale: "El comedor",
+        body: "Para la bodega con restaurante propio, del teléfono del mesero al corte de caja, con la carta de vinos leída viva desde la cava.",
       },
     ],
+    moreLead:
+      "Cada módulo tiene su precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas completas.",
+    moreCta: "Ver precios",
     termsLabel: "Condiciones",
     terms: [
       "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación.",
       "La mitad de la firma se puede pagar en tres mensualidades, sin recargo.",
       "La cuota mensual va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Si deja el servicio antes de doce pagos, facturamos la diferencia contra el precio de la construcción sola, menos un doceavo por cada mensualidad ya pagada.",
+      "Si deja el servicio antes de doce mensualidades, facturamos la parte de la construcción que la cuota del servicio venía pagando, menos un doceavo por cada mensualidad ya pagada.",
       "Todos los precios más IVA. La inversión en anuncios la paga usted directo a Google.",
     ],
   },

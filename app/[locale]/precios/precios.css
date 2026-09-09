@@ -1,0 +1,182 @@
+/* ============================================================
+   /precios: the only page on the site that prints a figure.
+
+   Every figure comes out of lib/pricing.ts, so the layout's job is to keep a
+   figure and the build that produced it inside one card (pricing-features.md
+   3.7 rule 3), and to keep the entry prices visually apart from the mix
+   example, which is priced on a different rule and must never read as a floor.
+   ============================================================ */
+
+.pg-precios h1 .accent{display:inline-block;}
+
+/* ---- the three entry prices, most expensive first ---- */
+.pg-precios .floor-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);
+  align-items:start;
+}
+.pg-precios .floor{
+  position:relative;min-width:0;height:100%;overflow:hidden;
+  border:1px solid var(--line);border-radius:2px;
+  background:linear-gradient(180deg, color-mix(in srgb, var(--panel) 62%, transparent), color-mix(in srgb, var(--ground) 22%, transparent));
+  padding:clamp(20px,2.4vw,26px);
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.pg-precios .floor:hover{
+  border-color:var(--primary-dim);transform:translateY(-3px);box-shadow:var(--shadow);
+}
+.pg-precios .floor-head{display:flex;flex-direction:column;gap:5px;}
+.pg-precios .floor-name{font-size:1.24rem;letter-spacing:-0.02em;line-height:1.14;}
+.pg-precios .floor-tag{color:var(--muted);font-size:0.88rem;line-height:1.45;}
+.pg-precios .floor-who{
+  color:var(--text-dim);font-size:0.92rem;line-height:1.5;
+  padding-bottom:12px;border-bottom:1px solid var(--line-soft);
+}
+
+.pg-precios .floor-figs{display:flex;flex-direction:column;gap:6px;}
+.pg-precios .floor-fig{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
+  gap:4px 14px;
+}
+.pg-precios .floor-k{
+  font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);
+}
+.pg-precios .floor-v{
+  font-family:var(--mono);font-variant-numeric:tabular-nums;
+  font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--primary-bright);font-weight:600;
+}
+.pg-precios .floor-alone{
+  font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+}
+.pg-precios .floor-note{color:var(--muted);font-size:0.84rem;line-height:1.5;}
+
+.pg-precios .floor-bk{
+  margin-top:6px;
+  font-size:0.66rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--secondary-bright);
+}
+.pg-precios .floor-list{
+  margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;
+}
+.pg-precios .floor-list li{
+  position:relative;padding-left:16px;
+  color:var(--text-dim);font-size:0.92rem;line-height:1.42;
+}
+.pg-precios .floor-list li::before{
+  content:"";position:absolute;left:0;top:0.62em;
+  width:6px;height:1px;background:var(--primary);opacity:0.75;
+}
+.pg-precios .floor-foot{
+  margin-top:clamp(22px,3vw,32px);padding-top:18px;border-top:1px solid var(--line);
+  color:var(--text-dim);font-size:0.95rem;line-height:1.6;max-width:78ch;
+}
+.pg-precios .floor-foot b{color:var(--text);font-weight:600;}
+
+/* ---- more than one module: the rules, then the one worked example ---- */
+.pg-precios .mix-rules{
+  margin:0 0 clamp(24px,3vw,34px);padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px);
+}
+.pg-precios .mix-rules li{
+  position:relative;padding-top:14px;border-top:1px solid var(--line);
+  color:var(--text-dim);font-size:0.95rem;line-height:1.6;
+}
+.pg-precios .mix-rules b{color:var(--text);font-weight:600;}
+
+.pg-precios .mix-example{
+  border:1px solid var(--primary-dim);border-radius:2px;
+  background:linear-gradient(150deg, var(--primary-faint), var(--card) 62%);
+  padding:clamp(22px,3vw,34px);
+  display:flex;flex-direction:column;gap:12px;
+}
+.pg-precios .mix-ex-title{font-size:clamp(1.2rem,2vw,1.5rem);letter-spacing:-0.02em;}
+.pg-precios .mix-ex-sub{color:var(--text-dim);font-size:0.98rem;line-height:1.6;max-width:72ch;}
+
+.pg-precios .mix-table{
+  width:100%;max-width:640px;border-collapse:collapse;margin:6px 0 4px;
+}
+.pg-precios .mix-table th,
+.pg-precios .mix-table td{
+  text-align:right;padding:9px 0 9px 18px;
+  border-bottom:1px solid var(--line-soft);
+  font-size:0.95rem;
+}
+.pg-precios .mix-table thead th{
+  font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);font-weight:400;
+}
+.pg-precios .mix-table tbody th{
+  text-align:left;padding-left:0;color:var(--text-dim);font-weight:400;
+}
+.pg-precios .mix-table td{
+  font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--text-dim);
+}
+.pg-precios .mix-row-together th{color:var(--text);font-weight:600;}
+.pg-precios .mix-row-together td{
+  color:var(--primary-bright);font-weight:600;
+  font-size:clamp(1.02rem,1.5vw,1.2rem);
+}
+.pg-precios .mix-row-saving th{color:var(--secondary-bright);}
+.pg-precios .mix-row-saving td{color:var(--secondary-bright);}
+.pg-precios .mix-table tbody tr:last-child th,
+.pg-precios .mix-table tbody tr:last-child td{border-bottom:0;}
+.pg-precios .mix-note{color:var(--muted);font-size:0.86rem;line-height:1.55;max-width:76ch;}
+
+/* ---- the monthly fee, the annual rule, the ads rule, the terms ---- */
+.pg-precios .pr-list{
+  margin:0;padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px clamp(20px,3vw,40px);max-width:78ch;
+}
+.pg-precios .pr-list li{
+  position:relative;padding-left:16px;
+  color:var(--text-dim);font-size:0.95rem;line-height:1.5;
+}
+.pg-precios .pr-list li::before{
+  content:"";position:absolute;left:0;top:0.62em;
+  width:6px;height:1px;background:var(--primary);opacity:0.75;
+}
+.pg-precios .pr-note{
+  margin-top:clamp(20px,2.6vw,28px);
+  color:var(--text-dim);font-size:0.95rem;line-height:1.65;max-width:78ch;
+}
+.pg-precios .pr-note b{color:var(--text);font-weight:600;}
+
+.pg-precios .pr-block{display:flex;flex-direction:column;gap:14px;max-width:76ch;}
+.pg-precios .pr-body{color:var(--text-dim);font-size:1.02rem;line-height:1.7;}
+.pg-precios .pr-body b{color:var(--text);font-weight:600;}
+
+.pg-precios .pr-terms-list{
+  margin:0;padding:0;list-style:none;counter-reset:term;
+  display:flex;flex-direction:column;gap:12px;max-width:82ch;
+}
+.pg-precios .pr-terms-list li{
+  counter-increment:term;position:relative;padding-left:34px;
+  color:var(--text-dim);font-size:0.95rem;line-height:1.6;
+}
+.pg-precios .pr-terms-list li::before{
+  content:counter(term,decimal-leading-zero);
+  position:absolute;left:0;top:0.15em;
+  font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;color:var(--muted);
+}
+
+/* Three scenario lines, so the figures under them start on the same baseline
+   across the three cards in both locales. */
+@media (min-width:901px){
+  .pg-precios .floor-who{min-height:4.6em;}
+}
+
+@media (max-width:900px){
+  .pg-precios .floor-grid{grid-template-columns:1fr;}
+  .pg-precios .mix-rules{grid-template-columns:1fr;}
+  .pg-precios .pr-list{grid-template-columns:1fr;}
+}
+@media (max-width:560px){
+  /* An amount that wraps mid-figure is hard to read and easy to misread, so
+     the columns tighten and the figures stay on one line. */
+  .pg-precios .mix-table th,
+  .pg-precios .mix-table td{padding-left:8px;font-size:0.86rem;}
+  .pg-precios .mix-table td{white-space:nowrap;font-size:0.8rem;}
+  .pg-precios .mix-table tbody th{font-size:0.84rem;}
+  .pg-precios .mix-table thead th{font-size:0.6rem;letter-spacing:0.1em;}
+  .pg-precios .mix-row-together td{font-size:0.86rem;}
+}
