@@ -148,6 +148,23 @@ export function priced(mxn: number): Record<CurrencyCode, number> {
   return { MXN: mxn, USD: usdFromMxn(mxn) };
 }
 
+/**
+ * Adds priced figures currency by currency, so a total a page prints adds up in
+ * whichever currency it is read. USD stays a sum of the per-module USD figures
+ * (each itself a conversion of a rounded MXN amount, memo rate note), never a
+ * fresh conversion of the MXN sum: converting the sum and summing the
+ * conversions differ by a rounding step, which is what made the /en cards and
+ * the bought-separately row disagree (bead hq-ggot1.13).
+ */
+export function sumPriced(
+  figures: Record<CurrencyCode, number>[],
+): Record<CurrencyCode, number> {
+  return {
+    MXN: figures.reduce((sum, f) => sum + f.MXN, 0),
+    USD: figures.reduce((sum, f) => sum + f.USD, 0),
+  };
+}
+
 /** Hours carry at most three decimals; keeps derived hour counts readable. */
 function hours3(value: number): number {
   return Math.round(value * 1000) / 1000;
@@ -947,18 +964,18 @@ const publishableIds = new Set([
 function workedExample(moduleIdsBought: ModuleId[], size: Size): WorkedExample {
   const q = quote(moduleIdsBought, size);
   const alone = moduleIdsBought.map((m) => quote([m], size));
-  const setupIfAlone = alone.reduce((sum, a) => sum + a.setup.MXN, 0);
-  const monthlyIfAlone = alone.reduce((sum, a) => sum + a.monthly.MXN, 0);
+  const setupIfAlone = sumPriced(alone.map((a) => a.setup));
+  const monthlyIfAlone = sumPriced(alone.map((a) => a.monthly));
   const id = `${size.toLowerCase()}-${moduleIdsBought.join("-")}`;
   return {
     id,
     size,
     modules: q.modules,
     quote: q,
-    setupIfAlone: priced(setupIfAlone),
-    monthlyIfAlone: priced(monthlyIfAlone),
+    setupIfAlone,
+    monthlyIfAlone,
     yearOneTogether: priced(q.setup.MXN + q.monthly.MXN * 12),
-    yearOneAlone: priced(setupIfAlone + monthlyIfAlone * 12),
+    yearOneAlone: sumPriced([setupIfAlone, ...Array(12).fill(monthlyIfAlone)]),
     prepay: annualPrepay(size, q.monthly.MXN),
     publishable: publishableIds.has(id),
   };

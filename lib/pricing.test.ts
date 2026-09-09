@@ -476,6 +476,37 @@ describe("the seven combinations at S and at M", () => {
     // Examples vary the mix, never the size, so no reader can rebuild a row.
     expect(publishable.every((e) => e.size === "S")).toBe(true);
   });
+
+  it("the bought-separately row equals the sum of the entry cards in BOTH currencies", () => {
+    // The /precios mix table calls its "alone" figures the sum of the three
+    // entry cards above it ("the three lists above"). MixExample reads the
+    // bought-separately row from setupIfAlone/monthlyIfAlone and each card from
+    // the single-module quote, so the two must reconcile per currency, not only
+    // in the priced MXN. Before hq-ggot1.13 the /en row converted the MXN sum
+    // once (10,150 USD setup) while the cards each converted their own figure
+    // (2,760 + 3,120 + 4,260 = 10,140), so the printed page did not add up.
+    const combined = workedExamples.find(
+      (e) => e.id === "s-produccion-hospitalidad-restaurante",
+    )!;
+    const cards = ["produccion", "hospitalidad", "restaurante"].map(
+      (m) => workedExamples.find((e) => e.id === `s-${m}`)!,
+    );
+    for (const currency of ["MXN", "USD"] as const) {
+      const setupCards = cards.reduce((s, c) => s + c.quote.setup[currency], 0);
+      const monthlyCards = cards.reduce(
+        (s, c) => s + c.quote.monthly[currency],
+        0,
+      );
+      expect(combined.setupIfAlone[currency]).toBe(setupCards);
+      expect(combined.monthlyIfAlone[currency]).toBe(monthlyCards);
+    }
+    // The regression this locks: the USD row now matches the USD cards.
+    expect(combined.setupIfAlone.USD).toBe(10140);
+    expect(combined.monthlyIfAlone.USD).toBe(2030);
+    // ...while the priced MXN sum is untouched, so the ES page is unchanged.
+    expect(combined.setupIfAlone.MXN).toBe(172500);
+    expect(combined.monthlyIfAlone.MXN).toBe(34400);
+  });
 });
 
 describe("paying a year up front", () => {
