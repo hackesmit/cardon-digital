@@ -1262,12 +1262,19 @@ describe("(7) the published policy percentages come from mixDiscountByRank", () 
     expect(() => formatPercent(locale, 0.1234000000005)).toThrow(
       "does not reproduce",
     );
+    expect(() => formatPercent(locale, 0.1234000000000001)).toThrow(
+      "does not reproduce",
+    );
+    // A rate whose only error is the division's own rounding still prints.
+    expect(formatPercent(locale, 0.3333333)).toBe("33.33333");
     // A rate that is not a rate at all fails loudly instead of printing "NaN"
     // or an infinity sign on a pricing page.
     for (const bad of [Number.NaN, Infinity, -Infinity, -0.1]) {
       expect(() => formatPercent(locale, bad)).toThrow("finite non-negative");
     }
     expect(formatPercent(locale, 0)).toBe("0");
+    // A negative zero is zero, and never prints as "-0" (bead hq-ggot1.15).
+    expect(formatPercent(locale, -0)).toBe("0");
   });
 
   it.each(locales)("%s prices each combination row from its own lines", (locale) => {
