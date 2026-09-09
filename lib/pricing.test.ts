@@ -37,6 +37,7 @@ import {
   winerySetupFloor,
   workedExamples,
 } from "./pricing";
+import { mixRankingSentence, precios } from "./i18n/precios";
 
 /**
  * Every expected figure below is transcribed by hand from
@@ -506,6 +507,66 @@ describe("the seven combinations at S and at M", () => {
     // ...while the priced MXN sum is untouched, so the ES page is unchanged.
     expect(combined.setupIfAlone.MXN).toBe(172500);
     expect(combined.monthlyIfAlone.MXN).toBe(34400);
+  });
+});
+
+describe("the mix example's ranking sentence tracks the quote, not the dict", () => {
+  const publishable = workedExamples.find(
+    (e) => e.publishable && e.modules.length === 3,
+  )!;
+
+  // The exact prose the page rendered before hq-ggot1.14, now composed from
+  // the quote's own module order instead of typed into lib/i18n/precios.ts.
+  const expected = {
+    en: "All three modules, each at its entry size. The complete build is the three lists above, ranked by build price: Restaurante at full price, Hospitalidad second, Produccion third.",
+    es: "Los tres módulos, cada uno en su tamaño de entrada. La construcción completa son las tres listas de arriba, ordenadas por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercero.",
+  } as const;
+
+  it.each(["en", "es"] as const)(
+    "%s reads exactly as before, built from example.modules",
+    (locale) => {
+      expect(mixRankingSentence(locale, publishable.modules)).toBe(
+        expected[locale],
+      );
+    },
+  );
+
+  it.each(["en", "es"] as const)(
+    "%s names the modules in the same order quote() ranks them",
+    (locale) => {
+      const sentence = mixRankingSentence(locale, publishable.modules);
+      const names = publishable.modules.map(
+        (id) => precios[locale].floors.modules[id].name,
+      );
+      // The names appear in build-price order, most expensive first.
+      const positions = names.map((n) => sentence.indexOf(n));
+      expect(positions).toEqual([...positions].sort((a, b) => a - b));
+      expect(positions.every((p) => p >= 0)).toBe(true);
+      // And the ranking, not just the names, is derived: reorder the ids and
+      // the sentence follows, which a hardcoded string could not do. This is
+      // the perturbation the red team demonstrated (raising production-record
+      // hours flips restaurante > produccion > hospitalidad); the prose now
+      // moves with it instead of shipping a wrong sentence beside a right table.
+      const flipped = mixRankingSentence(locale, [
+        "produccion",
+        "restaurante",
+        "hospitalidad",
+      ]);
+      const prod = precios[locale].floors.modules.produccion.name;
+      const rest = precios[locale].floors.modules.restaurante.name;
+      expect(flipped.indexOf(prod)).toBeLessThan(flipped.indexOf(rest));
+    },
+  );
+
+  it("keeps the ranking out of the dictionary entirely", () => {
+    for (const locale of ["en", "es"] as const) {
+      const lead = precios[locale].mix.exampleLead;
+      for (const id of ["produccion", "hospitalidad", "restaurante"] as const) {
+        expect(lead).not.toContain(precios[locale].floors.modules[id].name);
+      }
+      // The dict no longer carries a "Producción" spelled with its accent.
+      expect(lead).not.toContain("Producción");
+    }
   });
 });
 

@@ -1,5 +1,5 @@
 import type { Locale } from "@/lib/i18n/config";
-import { precios } from "@/lib/i18n/precios";
+import { mixRankingSentence, precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
 import Reveal from "@/components/site/Reveal";
 import { currencyByLocale, formatPrice, workedExamples } from "@/lib/pricing";
@@ -59,7 +59,9 @@ export default function MixExample({ locale }: { locale: Locale }) {
           <article className="mix-example">
             <span className="kicker">{d.exampleKicker}</span>
             <h3 className="mix-ex-title">{d.exampleTitle}</h3>
-            <p className="mix-ex-sub">{d.exampleSub}</p>
+            <p className="mix-ex-sub">
+              {mixRankingSentence(locale, example.modules)}
+            </p>
 
             <table className="mix-table">
               <caption className="sr-only">{d.figuresLabel}</caption>
