@@ -110,13 +110,13 @@ const en = {
   sectors: {
     kicker: "Industries",
     title: "The terrains we know.",
-    sub: "These are the domains we have built for and understand end to end. Every station on the map is part of the same terrain. The winery valley is the ground we work every week; the other stations stay open and reachable.",
+    sub: "This is the domain we have built for and understand end to end. The winery valley is the ground we work every week, and the two cases on the map are wineries we have already built for.",
     leadKicker: "Primary industry",
     leadTitle: "Wineries, Valle de Guadalupe and Ensenada.",
     leadBody:
       "This is the practice. We build the system a winery runs on, from harvest weights and lab results to the tasting room and the books, and we are down the road when it needs a hand.",
     leadCta: "Open the winery page",
-    foot: "Three stations built, two terrains ahead. In focus: **the winery valley.**",
+    foot: "Two cases built. In focus: **the winery valley.**",
   },
   /**
    * Pricing, wired to the module model (research/2026-09/pricing-modules.md).
@@ -201,12 +201,11 @@ const en = {
       ],
     },
     map: {
-      legend: "Survey of terrains: three stations, two survey sites",
+      legend: "Terrains we know: the winery valley and two cases",
       hub: "One system",
       scale: "Baja California and the US border",
       listAria: "Terrains we know",
       stationsHead: "Stations built",
-      surveyHead: "Survey sites",
       focus: "Focus terrain",
       caseStudy: "Case study:",
       wineryName: "Winery / Valle de Guadalupe",
@@ -336,13 +335,13 @@ const es: typeof en = {
   sectors: {
     kicker: "Sectores",
     title: "Los terrenos que conocemos.",
-    sub: "Estos son los terrenos en los que hemos construido y que entendemos de principio a fin. Cada estación del mapa es parte del mismo territorio. El valle de las bodegas es el terreno que trabajamos cada semana; las demás estaciones siguen abiertas.",
+    sub: "Este es el terreno en el que hemos construido y que entendemos de principio a fin. El valle de las bodegas es el terreno que trabajamos cada semana, y los dos casos del mapa son bodegas para las que ya construimos.",
     leadKicker: "Sector principal",
     leadTitle: "Bodegas del Valle de Guadalupe y Ensenada.",
     leadBody:
       "Aquí está el trabajo. Construimos el sistema con el que opera una bodega, desde los pesos de cosecha y los resultados de laboratorio hasta la sala de degustación y las cuentas, y estamos a unos minutos cuando hace falta una mano.",
     leadCta: "Ver la página de bodegas",
-    foot: "Tres estaciones construidas, dos terrenos por delante. En foco: **el valle de las bodegas.**",
+    foot: "Dos casos construidos. En foco: **el valle de las bodegas.**",
   },
   pricing: {
     kicker: "Lo que cuesta",
@@ -419,12 +418,11 @@ const es: typeof en = {
       ],
     },
     map: {
-      legend: "Reconocimiento de terrenos: tres estaciones, dos sitios en estudio",
+      legend: "Terrenos que conocemos: el valle de las bodegas y dos casos",
       hub: "Un sistema",
       scale: "Baja California y la frontera con Estados Unidos",
       listAria: "Terrenos que conocemos",
       stationsHead: "Estaciones construidas",
-      surveyHead: "Terrenos en estudio",
       focus: "Terreno en foco",
       caseStudy: "Caso de estudio:",
       wineryName: "Bodegas / Valle de Guadalupe",
