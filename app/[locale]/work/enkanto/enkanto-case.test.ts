@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
+import { showsPending } from "./pending";
 import { enkanto } from "../../../../lib/i18n/enkanto";
 import { locales } from "../../../../lib/i18n/config";
 
@@ -54,11 +55,39 @@ describe("the counts the basis paragraph is accountable for", () => {
 });
 
 describe("the result placeholder cannot reach the live site", () => {
-  it("is gated on the production deploy flag in the page", () => {
-    expect(pageSource).toContain(
-      'const isProductionDeploy = process.env.VERCEL_ENV === "production";',
-    );
-    expect(pageSource).toMatch(/isProductionDeploy \? null : \(/);
+  // The first gate hid the block when VERCEL_ENV was "production", so it
+  // PUBLISHED the block on any build where that variable was missing. These
+  // cases are the ones that failure mode walked through; the gate now has to
+  // hide by default and show only when something says so.
+  type Env = Record<string, string | undefined>;
+  const cases: Array<[string, Env, boolean]> = [
+    ["next dev", { NODE_ENV: "development" }, true],
+    ["a plain production build", { NODE_ENV: "production" }, false],
+    ["a Vercel production deploy", { NODE_ENV: "production", VERCEL_ENV: "production" }, false],
+    ["a Vercel preview deploy", { NODE_ENV: "production", VERCEL_ENV: "preview" }, false],
+    ["a production build with no deployment metadata at all", { NODE_ENV: "production" }, false],
+    ["an empty environment", {}, true],
+    ["a preview asked to show the gap", { NODE_ENV: "production", SHOW_CASE_PENDING: "1" }, true],
+  ];
+
+  for (const [name, env, expected] of cases) {
+    it(`${expected ? "shows" : "hides"} the placeholder on ${name}`, () => {
+      expect(showsPending(env)).toBe(expected);
+    });
+  }
+
+  it("hides it on every production-shaped environment, whatever else is set", () => {
+    for (const vercel of [undefined, "", "production", "preview", "development", "PRODUCTION"]) {
+      const env: Env = { NODE_ENV: "production" };
+      if (vercel !== undefined) env.VERCEL_ENV = vercel;
+      expect(showsPending(env)).toBe(false);
+    }
+  });
+
+  it("the page renders the block through that gate and no other", () => {
+    expect(pageSource).toContain("const showPending = showsPending(process.env);");
+    expect(pageSource).toMatch(/\{showPending \? \(/);
+    expect(pageSource).not.toMatch(/VERCEL_ENV/);
   });
 
   it("still carries a marker a reviewer cannot miss", () => {

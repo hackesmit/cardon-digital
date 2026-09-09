@@ -149,11 +149,11 @@ const en = {
       },
       {
         lead: "It reads OpenTable. It does not scrape it.",
-        body: "The table bookings live in OpenTable, whose data interface is open to approved partners and to nobody else. Until that account is connected the system takes the booking by hand and reconciles it against the export, matching on guest and time so the same booking never lands twice. It never touches the account behind the login, because the one who would pay for that is the restaurant.",
+        body: "The table bookings live in OpenTable, whose data interface is open to approved partners and to nobody else. Until that account is connected the system takes the booking by hand and reconciles it against the export, matching on guest and time so the export's copy folds onto the booking already captured instead of being filed as a second one. It never touches the account behind the login, because the one who would pay for that is the restaurant.",
       },
       {
         lead: "A bill is paid when the confirmation arrives.",
-        body: "A card at the table goes out as a payment link and its QR code, and the bill stays open until the confirmation comes back. If it does not arrive before the link expires, the bill reopens and is taken another way. Nothing is ever marked paid on optimism, because a till that lies about one night is a till nobody trusts again.",
+        body: "A card at the table goes out as a payment link and its QR code, and the bill sits in a started state, neither open nor paid, until the confirmation comes back. If it does not arrive before the link expires, the bill goes back to open and is taken another way. Nothing is ever marked paid on optimism, because a till that lies about one night is a till nobody trusts again.",
       },
       {
         lead: "It is built. It is not yet in service at En'kanto.",
@@ -163,9 +163,9 @@ const en = {
     demo: {
       kicker: "See it",
       title: "The system is open. Go through it yourself.",
-      body: "It runs as a public demonstration, dressed as a fictional winery. **It is assembled from a whitelist that leaves En'kanto's own data files out of the deployment, so there is nothing of theirs there to serve.** Open any of the three modules, pick any of the ten staff positions, and walk the screens that position gets.",
+      body: "It runs as a public demonstration, dressed as a fictional winery. **It is assembled from a whitelist that leaves En'kanto's own data files out of the deployment, so there is nothing of theirs there to serve.** Open any of the three modules, pick any of the ten staff positions, and walk the screens that position's menu opens.",
       cta: "Open the demo",
-      note: "Illustrative data under a fictional name. Nothing here belongs to a client.",
+      note: "Illustrative data under a fictional name. Nothing there belongs to a client, and the position picker is a shop window onto the screens, not a login.",
     },
   },
   pending: {
@@ -361,7 +361,7 @@ const es: typeof en = {
         num: "07",
         name: "Restaurante",
         title: "Una comanda, del teléfono del mesero al corte de caja.",
-        body: "Seis pantallas y una sola comanda que nunca se escribe dos veces. Nace en el teléfono del mesero, por mesa y por asiento, con modificadores, notas de línea y tiempos que se disparan cuando el mesero decide. Llega a la pantalla de cocina en orden de llegada, con su hora de captura, sus minutos transcurridos, su estación y su mesero, y se bumpea cuando está lista. El anfitrión trabaja un mapa de mesas con cubiertos, hora de llegada y duración de mesa. Se cobra en la mesa, dividiendo por asiento, en partes iguales o por monto, con la propina guardada aparte de la venta y los datos de factura capturados en el ticket. Y el día cierra dos veces: un resumen por categoría, por hora y por mesero, y un corte con fondo inicial, efectivo declarado y diferencia.",
+        body: "Seis pantallas y una sola comanda que nunca se escribe dos veces. Nace en el teléfono del mesero, por mesa y por asiento, con modificadores, notas de línea y tiempos de servicio que el mesero dispara cuando decide. Llega a la pantalla de cocina en orden de llegada, con su hora de captura, sus minutos transcurridos, su estación y su mesero, y se bumpea cuando está lista. El anfitrión trabaja un mapa de mesas con cubiertos, hora de llegada y duración de mesa. Se cobra en la mesa, dividiendo por asiento, en partes iguales o por monto, con la propina guardada aparte de la venta y los datos de factura capturados en el ticket. Y el día cierra dos veces: un resumen por categoría, por hora y por mesero, y un corte con fondo inicial, efectivo declarado y diferencia.",
         screens: ["Mesero", "Cocina", "Anfitrión", "Cobro", "Resumen del día", "Corte del día"],
       },
       {
@@ -381,11 +381,11 @@ const es: typeof en = {
       },
       {
         lead: "Lee OpenTable. No lo raspa.",
-        body: "Las reservas de mesa viven en OpenTable, cuya interfaz de datos está abierta a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, el sistema captura la reserva a mano y la concilia contra la exportación, casando por huésped y hora para que la misma reserva no caiga dos veces. Nunca toca la cuenta detrás del login, porque quien pagaría eso es el restaurante.",
+        body: "Las reservas de mesa viven en OpenTable, cuya interfaz de datos está abierta a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, el sistema captura la reserva a mano y la concilia contra la exportación, casando por huésped y hora para que la copia de la exportación caiga sobre la reserva ya capturada en lugar de archivarse como una segunda. Nunca toca la cuenta detrás del login, porque quien pagaría eso es el restaurante.",
       },
       {
         lead: "Una cuenta está pagada cuando llega la confirmación.",
-        body: "Una tarjeta en la mesa sale como link de pago con su código QR, y la cuenta queda abierta hasta que regresa la confirmación. Si no llega antes de que el link expire, la cuenta se reabre y se cobra por otro medio. Nada se marca pagado por optimismo, porque una caja que miente una noche es una caja en la que ya nadie vuelve a confiar.",
+        body: "Una tarjeta en la mesa sale como link de pago con su código QR, y la cuenta queda en estado iniciado, ni abierta ni pagada, hasta que regresa la confirmación. Si no llega antes de que el link expire, la cuenta vuelve a abierta y se cobra por otro medio. Nada se marca pagado por optimismo, porque una caja que miente una noche es una caja en la que ya nadie vuelve a confiar.",
       },
       {
         lead: "Está construido. Todavía no está en servicio en En'kanto.",
@@ -395,9 +395,9 @@ const es: typeof en = {
     demo: {
       kicker: "Véalo",
       title: "El sistema está abierto. Recórralo usted mismo.",
-      body: "Corre como una demostración pública, vestida de bodega ficticia. **Se arma con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto, así que ahí no hay nada suyo que servir.** Abra cualquiera de los tres módulos, elija cualquiera de los diez puestos, y recorra las pantallas que ese puesto recibe.",
+      body: "Corre como una demostración pública, vestida de bodega ficticia. **Se arma con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto, así que ahí no hay nada suyo que servir.** Abra cualquiera de los tres módulos, elija cualquiera de los diez puestos, y recorra las pantallas que abre el menú de ese puesto.",
       cta: "Abrir el demo",
-      note: "Datos ilustrativos bajo un nombre ficticio. Nada de aquí es de un cliente.",
+      note: "Datos ilustrativos bajo un nombre ficticio. Nada de ahí es de un cliente, y el selector de puesto es una vitrina de pantallas, no un inicio de sesión.",
     },
   },
   pending: {
