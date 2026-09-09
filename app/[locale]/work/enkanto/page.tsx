@@ -10,6 +10,7 @@ import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import { enkanto } from "@/lib/i18n/enkanto";
 import { allModules, demoHref, demoIsLive } from "@/lib/demo";
+import { showsPending } from "./pending";
 import "./enkanto-case.css";
 
 type Params = { params: { locale: string } };
@@ -18,20 +19,8 @@ function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-/**
- * True only on a Vercel production deployment, which is what gates the
- * placeholder below out of the live site.
- *
- * Daniel asked for the missing results section to be left on the page as a
- * clearly marked placeholder, so he can see the gap while reviewing. A marker
- * a reviewer can see is worth having; a marker the public can see is not. This
- * flag keeps both: the block renders locally and on preview deployments, and
- * a production build drops it, which lands the page on the "no outcome" form
- * the case-naming convention explicitly permits (6.2, form 4) rather than on
- * an internal note. Editorial care still has to close it; this only decides
- * what happens if editorial care does not.
- */
-const isProductionDeploy = process.env.VERCEL_ENV === "production";
+/** Fail-closed gate for the marked results placeholder. See ./pending.ts. */
+const showPending = showsPending(process.env);
 
 export function generateMetadata({ params }: Params): Metadata {
   const locale = localeOf(params);
@@ -509,7 +498,7 @@ export default function EnkantoCaseStudy({ params }: Params) {
         outcome framing rule (case-naming.md 6.2), or delete this section and
         its dictionary block. It must not reach production as it stands.
       */}
-      {isProductionDeploy ? null : (
+      {showPending ? (
         <section className="section pending-sec" aria-labelledby="pending-title">
           <div className="container">
             <div className="pending-block">
@@ -521,7 +510,7 @@ export default function EnkantoCaseStudy({ params }: Params) {
             </div>
           </div>
         </section>
-      )}
+      ) : null}
 
       {/* ============================ OUTCOME ============================ */}
       <section className="outcome" aria-labelledby="outcome-title">
