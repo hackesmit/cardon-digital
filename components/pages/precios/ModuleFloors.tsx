@@ -1,3 +1,4 @@
+import FloorChart from "@/components/pages/precios/FloorChart";
 import type { Locale } from "@/lib/i18n/config";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
@@ -20,6 +21,11 @@ import {
  * The order, the figures and the feature lists all come out of lib/pricing.ts.
  * Nothing here is typed in, so a bundle that gains a feature or a rate that
  * moves changes this section without anybody editing copy.
+ *
+ * Since bead hq-wrig5.13 the section opens with the three figures compared
+ * (./FloorChart) instead of leaving a reader to hold three cards in their head,
+ * and the sentence about what the monthly is made of is read once beneath that
+ * comparison rather than repeated on all three cards.
  */
 
 /** Localized bundle lines, with the multiplicity where a feature repeats. */
@@ -54,6 +60,14 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
             <span className="kicker">{d.kicker}</span>
             <h2 id="floors-title">{d.title}</h2>
             <p className="section-sub">{rich(d.sub)}</p>
+          </div>
+        </Reveal>
+
+        {/* the three figures next to each other, before the three cards */}
+        <Reveal delay={60}>
+          <div className="floor-vis">
+            <FloorChart locale={locale} />
+            <p className="floor-note">{d.monthlyNote}</p>
           </div>
         </Reveal>
 
@@ -92,8 +106,6 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
                     </p>
                     <p className="floor-alone mono">{d.aloneLabel}</p>
                   </div>
-
-                  <p className="floor-note">{d.monthlyNote}</p>
 
                   <p className="floor-bk mono">{d.buildLabel}</p>
                   <ul className="floor-list">

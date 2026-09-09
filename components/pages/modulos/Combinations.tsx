@@ -1,4 +1,5 @@
-import BridgeMap from "@/components/pages/modulos/BridgeMap";
+import { bridgeMask } from "@/components/pages/modulos/BridgeMap";
+import CombinationPicker from "@/components/pages/modulos/CombinationPicker";
 import Reveal from "@/components/site/Reveal";
 import type { Locale } from "@/lib/i18n/config";
 import { modulos } from "@/lib/i18n/modulos";
@@ -13,6 +14,13 @@ import { rich } from "@/lib/i18n/rich";
  * It was the tail of /modulos and it is a component because the showcase home
  * carries the same section (bead hq-wrig5.15), so the seven rows are written
  * once, in lib/i18n/modulos.ts, and rendered the same way on both surfaces.
+ *
+ * The map beside the list is a picker since bead hq-wrig5.13: the three nodes
+ * are toggles and the row that matches what is switched on is marked. The rows
+ * below are still rendered here, on the server, and handed to the picker as
+ * children; each one carries its own module mask so the marking is a CSS match
+ * against the mask the picker puts on the wrapper, rather than seven
+ * paragraphs of copy shipped to the browser to draw one border.
  */
 export default function Combinations({
   locale,
@@ -39,13 +47,14 @@ export default function Combinations({
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="combina-grid">
-            <div className="bridge-col">
-              <BridgeMap locale={locale} />
-            </div>
+          <CombinationPicker locale={locale}>
             <ol className="combina-list">
               {d.items.map((item) => (
-                <li className={"combina-item is-" + item.kind} key={item.key}>
+                <li
+                  className={"combina-item is-" + item.kind}
+                  data-combo={bridgeMask(item.modules)}
+                  key={item.key}
+                >
                   <span className="combina-kind mono">
                     {item.kind === "single"
                       ? d.single
@@ -58,7 +67,7 @@ export default function Combinations({
                 </li>
               ))}
             </ol>
-          </div>
+          </CombinationPicker>
         </Reveal>
 
         <Reveal delay={80}>

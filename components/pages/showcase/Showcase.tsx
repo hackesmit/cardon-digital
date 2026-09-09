@@ -4,6 +4,7 @@ import Combinations from "@/components/pages/modulos/Combinations";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
 import PricingDetails from "@/components/pages/precios/PricingDetails";
+import VintageCompare from "@/components/pages/showcase/VintageCompare";
 import Reveal from "@/components/site/Reveal";
 import { allModules, demoHref, demoIsLive } from "@/lib/demo";
 import { localePath, type Locale } from "@/lib/i18n/config";
@@ -128,6 +129,15 @@ export default function Showcase({ locale }: { locale: Locale }) {
             </div>
           </Reveal>
 
+          {/* The comparison the pitch names, drawn: the section that says the
+              question takes an afternoon shows what the answer looks like. */}
+          <Reveal delay={60}>
+            {/* The running season, read at build time and passed down rather
+                than read inside the client component, where the server and the
+                browser could disagree across a new year. */}
+            <VintageCompare locale={locale} year={new Date().getFullYear()} />
+          </Reveal>
+
           <ol className="sc-problem-list">
             {d.problem.items.map((item, i) => (
               <Reveal delay={i * 50} key={item.h}>
@@ -169,6 +179,12 @@ export default function Showcase({ locale }: { locale: Locale }) {
             module={m}
             alt={i % 2 === 1}
             demoHref={demoHref(locale, [m.id as ModuleId])}
+            /* The size lead is one sentence for all three modules, so it is
+               read once. The demo note is off entirely here: the demo row at
+               the top of this page already says the same thing, and saying it
+               again under each button is the third and fourth telling. */
+            showSizesLead={i === 0}
+            showDemoNote={false}
           />
         ))}
 

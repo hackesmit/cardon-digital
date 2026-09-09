@@ -168,15 +168,177 @@
   .pg-precios .combo-table tbody tr:last-child{border-bottom:0;}
   .pg-precios .combo-table tbody th{padding:0 0 8px;vertical-align:baseline;}
   .pg-precios .combo-table td{
-    display:flex;justify-content:space-between;align-items:baseline;
-    gap:14px;max-width:300px;
+    display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;
+    gap:0 14px;max-width:300px;
     padding:3px 0 0;border-bottom:0;text-align:right;
   }
+  .pg-precios .combo-bar{flex:0 0 100%;max-width:none;}
   .pg-precios .combo-cell-k{
     display:inline;font-family:var(--mono);font-size:0.62rem;
     letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
   }
 }
+
+/* ============================================================
+   THE FIGURES, DRAWN (bead hq-wrig5.13)
+
+   Colour is the module and never its rank, so a re-ranking never repaints a
+   series: Produccion --primary, Hospitalidad --secondary, Restaurante
+   --energy-bright, and the shared service base --muted because it is not a
+   module. --energy-bright rather than the raw --energy token because gold
+   against clay is the one pair the brand gets wrong for this job: as tokens
+   they sit a deuteranope delta E of 5.7 and a normal-vision delta E of 12.2
+   apart, both under the floor. Derived, the set resolves to #2E7D5C /
+   #B07E1E / #A1421C in light and #3FB58A / #D9A83A / #CA6941 in dark, and both
+   pass CVD separation, the normal-vision floor and contrast against their own
+   surface. The one check still failing is the chroma floor on the brand green,
+   which reads a little gray by design and is not this bead's to change; every
+   series is named in text as well, so nothing here is identified by colour
+   alone.
+
+   The build bar (data-part="setup") is not a module and was never meant to be
+   in the legend's four; drawing it in --primary was a bug, not a choice, since
+   it landed on the exact colour the legend assigns to Produccion (reviewer B1,
+   round two). The brand has only the three hues above to draw from and all
+   three are already spoken for, so the build bar and the legend's own "gray"
+   family are the only room left: a neutral text/panel mix, distinct in kind
+   (achromatic, not a fourth hue) from all three modules and from --muted so it
+   reads as its own thing rather than a repaint of the shared base. Lightness
+   alone carries the difference from --muted, which is unaffected by colour
+   vision deficiency the way a hue pair would be. Contrast against the card
+   surface: 5.96:1 light, 6.69:1 dark, both comfortably past the 3:1 floor the
+   rest of this set holds to. The legend note under the keys ties the legend to
+   the monthly blocks explicitly, so the build bar's own colour is never read
+   as one of the four.
+   ============================================================ */
+.pg-precios .combo-fill[data-part="setup"]{
+  background: color-mix(in srgb, var(--text) 78%, var(--panel) 22%);
+}
+
+.pg-precios .fc-bar[data-module="produccion"],
+.pg-precios .combo-fill[data-part="produccion"],
+.pg-precios .combo-key[data-part="produccion"] .combo-swatch{background:var(--primary);}
+.pg-precios .fc-bar[data-module="hospitalidad"],
+.pg-precios .combo-fill[data-part="hospitalidad"],
+.pg-precios .combo-key[data-part="hospitalidad"] .combo-swatch{background:var(--secondary);}
+.pg-precios .fc-bar[data-module="restaurante"],
+.pg-precios .combo-fill[data-part="restaurante"],
+.pg-precios .combo-key[data-part="restaurante"] .combo-swatch{background:var(--energy-bright);}
+.pg-precios .combo-fill[data-part="base"],
+.pg-precios .combo-key[data-part="base"] .combo-swatch{background:var(--muted);}
+
+/* ---- the three entry prices, compared ---- */
+.pg-precios .floor-vis{
+  display:flex;flex-direction:column;gap:14px;
+  margin:0 0 clamp(22px,3vw,32px);
+}
+.pg-precios .fc{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(18px,3vw,40px);max-width:900px;
+}
+.pg-precios .fc-group{margin:0;min-width:0;}
+.pg-precios .fc-cap{
+  font-size:0.66rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);
+  padding-bottom:10px;
+}
+.pg-precios .fc-bars{
+  margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;
+}
+.pg-precios .fc-row{
+  display:grid;grid-template-columns:minmax(5.5em,auto) 1fr auto;
+  align-items:center;gap:10px;
+}
+.pg-precios .fc-name{font-size:0.84rem;color:var(--text-dim);}
+.pg-precios .fc-track{
+  display:block;height:10px;border-radius:2px;
+  background:color-mix(in srgb, var(--text) 8%, transparent);
+}
+.pg-precios .fc-bar{
+  display:block;height:100%;border-radius:2px 3px 3px 2px;min-width:3px;
+}
+.pg-precios .fc-val{
+  font-size:0.82rem;color:var(--text-dim);font-variant-numeric:tabular-nums;
+}
+
+/* ---- the seven combinations, drawn under the figures they belong to ---- */
+.pg-precios .combo-legend{
+  margin:0 0 8px;padding:0;list-style:none;
+  display:flex;flex-wrap:wrap;gap:6px 8px;
+}
+.pg-precios .combo-legend-note{
+  margin:0 0 14px;color:var(--muted);font-size:0.76rem;line-height:1.5;max-width:60ch;
+}
+.pg-precios .combo-key{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line);border-radius:2px;background:transparent;
+  padding:5px 10px;font:inherit;font-size:0.78rem;color:var(--text-dim);
+  cursor:pointer;
+}
+.pg-precios .combo-key:hover{border-color:var(--primary-dim);}
+.pg-precios .combo-key[aria-pressed="true"]{
+  border-color:var(--primary);color:var(--text);background:var(--primary-faint);
+}
+.pg-precios .combo-swatch{
+  width:12px;height:12px;border-radius:2px;display:block;flex-shrink:0;
+}
+.pg-precios .combo-bar{
+  display:flex;width:100%;max-width:260px;height:8px;margin-top:6px;border-radius:2px;
+  background:color-mix(in srgb, var(--text) 8%, transparent);overflow:hidden;
+}
+.pg-precios .combo-fill{
+  display:block;height:100%;min-width:2px;
+  /* the 2px surface gap that keeps two stacked blocks from reading as one */
+  box-shadow:inset -2px 0 0 var(--panel);
+}
+.pg-precios .combo-fill:last-child{box-shadow:none;border-radius:0 2px 2px 0;}
+.pg-precios .combo-fill:first-child{border-radius:2px 0 0 2px;}
+/* holding one key up across all seven rows; nothing is hidden by it */
+.pg-precios .combo-vis[data-held] .combo-fill:not([data-part="setup"]){opacity:0.26;}
+.pg-precios .combo-vis[data-held="base"] .combo-fill[data-part="base"],
+.pg-precios .combo-vis[data-held="produccion"] .combo-fill[data-part="produccion"],
+.pg-precios .combo-vis[data-held="hospitalidad"] .combo-fill[data-part="hospitalidad"],
+.pg-precios .combo-vis[data-held="restaurante"] .combo-fill[data-part="restaurante"]{opacity:1;}
+
+@media (max-width:820px){
+  .pg-precios .fc{grid-template-columns:1fr;gap:20px;}
+}
+
+/* In forced-colours mode the fill of every block is replaced by one system
+   colour, so a stacked bar would read as one undivided block and the shared
+   base would stop being visible as the thing it is (Lucy 2026-09-09, third
+   finding). Background images do not survive that mode in Chromium either,
+   so the carrier is the one thing that does: border style. Each part takes a
+   border of its own, the bar grows enough for the pattern to read, and the
+   legend swatches take the same four borders so the key still matches. */
+@media (forced-colors:active){
+  /* The borders sit INSIDE each block and the track keeps its clip: added to
+     the outside they would push a bar whose parts already fill it past its own
+     cell, which at 360px is a collision (Lucy 2026-09-09 round two, third
+     finding). */
+  .pg-precios .combo-bar{height:16px;}
+  .pg-precios .combo-fill{
+    box-sizing:border-box;box-shadow:none;border:3px solid CanvasText;
+    border-radius:0;min-width:6px;
+  }
+  /* Setup is not one of the legend's four and never shares a track with them,
+     but it still needs a style of its own: unset it would default to the
+     shorthand's solid and collide with the shared base's key (below). */
+  .pg-precios .combo-fill[data-part="setup"]{border-style:ridge;}
+  .pg-precios .combo-fill[data-part="base"],
+  .pg-precios .combo-key[data-part="base"] .combo-swatch{border-style:solid;}
+  .pg-precios .combo-fill[data-part="produccion"],
+  .pg-precios .combo-key[data-part="produccion"] .combo-swatch{border-style:dashed;}
+  .pg-precios .combo-fill[data-part="hospitalidad"],
+  .pg-precios .combo-key[data-part="hospitalidad"] .combo-swatch{border-style:dotted;}
+  .pg-precios .combo-fill[data-part="restaurante"],
+  .pg-precios .combo-key[data-part="restaurante"] .combo-swatch{border-style:double;}
+  .pg-precios .combo-key .combo-swatch{
+    width:16px;height:16px;border-width:3px;border-color:CanvasText;
+  }
+  .pg-precios .fc-bar{border:1px solid CanvasText;}
+}
+
+
 
 /* ---- the monthly fee, the annual rule, the ads rule, the terms ---- */
 .pg-precios .pr-list{

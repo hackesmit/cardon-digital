@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ModuleScreen from "@/components/pages/modulos/ModuleScreen";
 import Reveal from "@/components/site/Reveal";
 import type { Locale } from "@/lib/i18n/config";
 import { modulos, type ModuleCopy } from "@/lib/i18n/modulos";
@@ -16,6 +17,14 @@ import { rich } from "@/lib/i18n/rich";
  *
  * `alt` is the banded background of the odd rows on /modulos. The showcase
  * passes it too, so the rhythm of the three blocks is the same on both pages.
+ *
+ * Since bead hq-wrig5.13 the block also carries that module's board, the
+ * screen the module actually is, so the description is read beside the thing
+ * it describes instead of on its own. Two sentences that were rendered once
+ * per module, and so three times on a page, moved to a flag: the size lead
+ * belongs to the first block and the demo note to the last, and the showcase
+ * passes false for the demo note because its own demo row already carries the
+ * same sentence at the top of the page.
  */
 export default function ModuleBlock({
   locale,
@@ -23,6 +32,8 @@ export default function ModuleBlock({
   alt,
   demoHref,
   sectionId,
+  showSizesLead = true,
+  showDemoNote = true,
 }: {
   locale: Locale;
   module: ModuleCopy;
@@ -30,6 +41,11 @@ export default function ModuleBlock({
   demoHref: string;
   /** Defaults to the module id, which is the anchor /modulos already uses. */
   sectionId?: string;
+  /** The lead under "the sizes": the same sentence for all three modules, so
+      a page renders it on the first block only. */
+  showSizesLead?: boolean;
+  /** The note under the demo button: likewise one per page, on the last. */
+  showDemoNote?: boolean;
 }) {
   const d = modulos[locale];
   const id = sectionId ?? m.id;
@@ -59,6 +75,13 @@ export default function ModuleBlock({
               <p className="mod-body">{m.problem.body}</p>
             </div>
             <p className="mod-answer">{rich(m.problem.answer)}</p>
+          </div>
+        </Reveal>
+
+        {/* the module's own board, drawn rather than described */}
+        <Reveal delay={60}>
+          <div className="mod-vis">
+            <ModuleScreen locale={locale} id={m.id} />
           </div>
         </Reveal>
 
@@ -108,7 +131,9 @@ export default function ModuleBlock({
         <Reveal delay={60}>
           <div className="mod-sizes">
             <h3 className="mod-h3">{m.sizes.h}</h3>
-            <p className="mod-sizes-lead">{d.sizesLead}</p>
+            {showSizesLead ? (
+              <p className="mod-sizes-lead">{d.sizesLead}</p>
+            ) : null}
             <dl className="size-list">
               {m.sizes.rows.map((row) => (
                 <div className="size-row" key={row.key}>
@@ -159,7 +184,9 @@ export default function ModuleBlock({
               <span>{m.demo}</span>
               <span className="demo-soon mono">{d.demoSoon}</span>
             </Link>
-            <p className="mod-note">{rich(d.demoNote)}</p>
+            {showDemoNote ? (
+              <p className="mod-note">{rich(d.demoNote)}</p>
+            ) : null}
           </div>
         </Reveal>
       </div>
