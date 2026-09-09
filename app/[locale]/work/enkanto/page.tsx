@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
-import ThreeLines from "@/components/pages/enkanto/ThreeLines";
 import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";
 import CaseFacts from "@/components/pages/case/CaseFacts";
 import { isLocale, type Locale } from "@/lib/i18n/config";
@@ -52,8 +51,6 @@ export default function EnkantoCaseStudy({ params }: Params) {
             <p className="hero-sub">{rich(d.hero.sub)}</p>
             <p className="brandline">{s.brandline}</p>
           </div>
-
-          <ThreeLines />
         </div>
       </section>
 
@@ -457,27 +454,6 @@ export default function EnkantoCaseStudy({ params }: Params) {
                 {d.system.demo.cta}
               </Link>
               <p className="sys-demo-note mono">{d.system.demo.note}</p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================ RESULT CALLOUTS ============================ */}
-      <section className="section results rule-top" aria-labelledby="results-title">
-        <div className="container">
-          <Reveal>
-            <div className="section-head">
-              <span className="kicker enk">{d.results.kicker}</span>
-              <h2 id="results-title">{d.results.title}</h2>
-            </div>
-            <div className="callouts">
-              {d.results.items.map((item, i) => (
-                <div className="callout" key={item.lead}>
-                  <span className="callout-idx mono">{"0" + (i + 1)}</span>
-                  <p className="callout-lead">{item.lead}</p>
-                  <p className="callout-body">{item.body}</p>
-                </div>
-              ))}
             </div>
           </Reveal>
         </div>

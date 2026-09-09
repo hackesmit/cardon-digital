@@ -23,7 +23,7 @@ const pageSource = readFileSync(
 );
 
 /** What the basis paragraph on the page claims, in one place. */
-const CLAIMED_SCREENS = 20;
+const CLAIMED_SCREENS = 19;
 const CLAIMED_MODULES = 3;
 
 describe("the counts the basis paragraph is accountable for", () => {
@@ -37,8 +37,8 @@ describe("the counts the basis paragraph is accountable for", () => {
     it(`${locale}: the module lists add up to the ${CLAIMED_SCREENS} screens claimed`, () => {
       const named = d.system.modules.flatMap((m) => m.screens);
       expect(named).toHaveLength(CLAIMED_SCREENS);
-      // and the basis paragraph states the shape of the split, five, six, nine
-      expect(d.system.modules.map((m) => m.screens.length)).toEqual([5, 6, 9]);
+      // and the basis paragraph states the shape of the split, five, five, nine
+      expect(d.system.modules.map((m) => m.screens.length)).toEqual([5, 5, 9]);
     });
 
     it(`${locale}: no screen is named twice`, () => {
