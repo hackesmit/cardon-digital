@@ -1246,6 +1246,18 @@ describe("(7) the published policy percentages come from mixDiscountByRank", () 
     // rate reads the other rate. formatPercent is the only place that decides.
     expect(formatPercent(locale, 0.15)).toBe("15");
     expect(formatPercent(locale, 0.125)).toBe("12.5");
+    // And it prints the rate that is applied, not a rounded neighbour of it: a
+    // 12.34 percent pass-through printed as "12.3" would be the same drift one
+    // decimal further out (cross-vendor review round two of this diff).
+    for (const rate of [0.1, 0.12, 0.1234, 0.075, 0.10125]) {
+      const printed = formatPercent(locale, rate);
+      expect(Number(printed) / 100).toBeCloseTo(rate, 12);
+    }
+    expect(formatPercent(locale, 0.1234)).toBe("12.34");
+    // A rate finer than the printed form can carry is refused, not rounded.
+    expect(() => formatPercent(locale, 0.123456789012)).toThrow(
+      "does not reproduce",
+    );
   });
 
   it.each(locales)("%s prices each combination row from its own lines", (locale) => {

@@ -44,11 +44,26 @@ export function formatPrice(locale: Locale, amount: number): string {
  * A policy rate as the percent number copy prints, so a page states 10 and 12
  * because `mixDiscountByRank` says so and not because somebody typed it. No
  * percent sign and no word: the dictionaries own how a locale says "percent".
+ *
+ * The printed figure must be the rate that is actually applied. Truncating it
+ * would recreate the drift this helper exists to remove, one decimal further
+ * out: a 0.1234 pass-through printed as "12.3" is a published policy the
+ * calculation does not follow. So the percent is derived exactly, with binary
+ * float noise cleaned off (0.1234 x 100 is 12.339999999999998), and a rate
+ * finer than the format can carry throws rather than publishing a wrong one.
  */
 export function formatPercent(locale: Locale, fraction: number): string {
+  const percent = Math.round(fraction * 1e9) / 1e7;
+  // The tolerance is division noise (about 1e-18), not a rounding allowance: a
+  // rate carrying more precision than the printed percent misses by 1e-11 or
+  // worse and is refused rather than published one decimal off.
+  if (Math.abs(percent / 100 - fraction) > 1e-12) {
+    throw new Error(`percent ${percent} does not reproduce the rate ${fraction}`);
+  }
   return new Intl.NumberFormat(groupLocale[locale], {
-    maximumFractionDigits: 1,
-  }).format(fraction * 100);
+    maximumFractionDigits: 7,
+    useGrouping: false,
+  }).format(percent);
 }
 
 /* ============================== RATES AND SIZES ==========================
