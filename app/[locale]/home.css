@@ -569,6 +569,151 @@
   line-height: 1.6;
 }
 
+/* ---- the vintage comparison, in the problem section ----
+   Emphasis form, not categorical: the running season is the point, so it takes
+   --primary and the two seasons before it are --muted, told apart from each
+   other by dash pattern. Identity is therefore never colour alone, which is
+   what keeps the figure readable under colour blindness, in forced-colours
+   mode and on a printout, and it keeps two more hues off a page whose module
+   and pricing sections already spend the brand gold and clay. */
+.pg-showcase .vc {
+  margin: clamp(24px, 3.5vw, 34px) 0 clamp(30px, 4vw, 44px);
+  max-width: 640px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  padding: clamp(12px, 2vw, 18px);
+}
+.pg-showcase .vc-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.pg-showcase .vc-title {
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: -0.01em;
+}
+.pg-showcase .vc-honest {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-showcase .vc-plot {
+  position: relative;
+}
+.pg-showcase .vc-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pg-showcase .vc-grid {
+  stroke: var(--line-soft);
+  stroke-width: 1;
+}
+.pg-showcase .vc-tick {
+  fill: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.pg-showcase .vc-cursor {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.pg-showcase .vc-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.pg-showcase .vc-line[data-series="now"] {
+  stroke: var(--primary);
+}
+.pg-showcase .vc-line[data-series="prev"] {
+  stroke: var(--muted);
+  stroke-dasharray: 6 4;
+}
+.pg-showcase .vc-line[data-series="prior"] {
+  stroke: var(--muted);
+  stroke-dasharray: 2 4;
+}
+.pg-showcase .vc-dot {
+  stroke: var(--panel);
+  stroke-width: 2;
+  fill: var(--muted);
+}
+.pg-showcase .vc-dot[data-series="now"] {
+  fill: var(--primary);
+}
+/* the hit layer: one full-height column per sampling, invisible on purpose */
+.pg-showcase .vc-hits {
+  position: absolute;
+  inset: var(--hit-t) var(--hit-r) var(--hit-b) var(--hit-l);
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+}
+.pg-showcase .vc-hit {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.pg-showcase .vc-hit[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+}
+.pg-showcase .vc-axes {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-showcase .vc-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.86rem;
+}
+.pg-showcase .vc-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.pg-showcase .vc-swatch {
+  width: 16px;
+  height: 0;
+  border-top: 2px dotted var(--muted);
+}
+.pg-showcase .vc-key[data-series="prev"] .vc-swatch {
+  border-top-style: dashed;
+}
+.pg-showcase .vc-key[data-series="now"] .vc-swatch {
+  border-top-style: solid;
+  border-top-color: var(--primary);
+}
+.pg-showcase .vc-key-l {
+  color: var(--muted);
+}
+.pg-showcase .vc-key[data-series="now"] .vc-key-l,
+.pg-showcase .vc-key[data-series="now"] .vc-key-v {
+  color: var(--text);
+  font-weight: 600;
+}
+.pg-showcase .vc-key-v {
+  color: var(--text-dim);
+}
+
 @media (max-width: 900px) {
   .pg-showcase .sc-problem-list {
     grid-template-columns: 1fr 1fr;

@@ -1,3 +1,4 @@
+import ComboVis from "@/components/pages/precios/ComboVis";
 import type { Locale } from "@/lib/i18n/config";
 import {
   bridgesSentence,
@@ -13,6 +14,7 @@ import {
   bridgeFeatures,
   currencyByLocale,
   formatPrice,
+  moduleIds,
   workedExamples,
 } from "@/lib/pricing";
 
@@ -37,6 +39,23 @@ import {
  * costs alone (memo 8.3). The two bridge features are in no standard bundle, so
  * none of these figures pays for one and the note under the table says so
  * rather than leaving the reader to assume they are included.
+ *
+ * Since bead hq-wrig5.13 the seven rows are drawn as well as printed: a bar
+ * for the build, and a stacked bar for the monthly that is one shared base
+ * plus one block per module bought. The drawing weights are pesos in both
+ * locales, so the two currencies get the same picture rather than a picture
+ * that changes shape with the exchange rate.
+ *
+ * The stacked bar carries NO printed split, on purpose. The base and each run
+ * cost are rounded to their own step in pesos and converted to dollars
+ * separately, so a printed split does not always add up to the printed total in
+ * either currency, and on the all-three row the quoted monthly takes a rounding
+ * increment the parts do not. Parts that fail a reader's arithmetic are worse
+ * than no parts, so the bar shows the shape and the cell beside it shows the
+ * figure; the bars are decoration for that reason and are hidden from assistive
+ * technology, with the table itself as the data view and the legend as the key.
+ * Nothing new is published either way: the shared base and every run cost are
+ * figures memo 8.2 already writes out in its worked examples.
  */
 export default function MixExample({ locale }: { locale: Locale }) {
   const d = precios[locale].mix;
@@ -56,6 +75,30 @@ export default function MixExample({ locale }: { locale: Locale }) {
   }
 
   const bridges = bridgeFeatures(example.modules);
+
+  /* Everything the drawing needs, resolved on the server so the dictionary and
+     the pricing module stay out of the client bundle. The weights are pesos
+     whichever currency is printed, so the bars are the same picture in both
+     locales; the printed figures are still the reader's own currency. */
+  const setupTop = Math.max(...combos.map((c) => c.quote.setup.MXN));
+  const monthlyTop = Math.max(
+    ...combos.map(
+      (c) =>
+        c.quote.sharedServiceBase +
+        c.quote.runCosts.reduce((sum, run) => sum + run.monthly, 0),
+    ),
+  );
+  /* The bars are drawn from pesos in both locales, so the two currencies get
+     the same picture rather than one that changes shape with the rate. */
+  const width = (weight: number, top: number) => (weight / top) * 100 + "%";
+
+  const legend = [
+    { key: "base", label: d.baseLabel },
+    ...moduleIds.map((id) => ({
+      key: id as string,
+      label: precios[locale].floors.modules[id].name,
+    })),
+  ];
 
   return (
     <section className="section mix" id="combinaciones" aria-labelledby="mix-title">
@@ -82,45 +125,71 @@ export default function MixExample({ locale }: { locale: Locale }) {
             <h3 className="mix-ex-title">{d.combosTitle}</h3>
             <p className="mix-ex-sub">{d.combosLead}</p>
 
-            <table className="mix-table combo-table">
-              <caption className="sr-only">{d.combosLabel}</caption>
-              <thead>
-                <tr>
-                  <th scope="col">{d.comboLabel}</th>
-                  <th scope="col" className="mono">
-                    {d.setupLabel}
-                  </th>
-                  <th scope="col" className="mono">
-                    {d.monthlyLabel}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {combos.map((combo) => (
-                  <tr key={combo.id}>
-                    <th scope="row">
-                      <span className="combo-name">
-                        {comboName(locale, combo.modules)}
-                      </span>
-                      <span className="combo-how">
-                        {comboPricingClause(locale, combo.quote.lines)}
-                      </span>
+            <ComboVis legend={legend}>
+              <table className="mix-table combo-table">
+                <caption className="sr-only">{d.combosLabel}</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">{d.comboLabel}</th>
+                    <th scope="col" className="mono">
+                      {d.setupLabel}
                     </th>
-                    {/* The label repeats inside the cell for the phone
-                        layout, where the table stacks and the column head is
-                        no longer beside the figure. */}
-                    <td>
-                      <span className="combo-cell-k">{d.setupLabel}</span>
-                      {formatPrice(locale, combo.quote.setup[currency])}
-                    </td>
-                    <td>
-                      <span className="combo-cell-k">{d.monthlyLabel}</span>
-                      {formatPrice(locale, combo.quote.monthly[currency])}
-                    </td>
+                    <th scope="col" className="mono">
+                      {d.monthlyLabel}
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {combos.map((combo) => (
+                    <tr key={combo.id}>
+                      <th scope="row">
+                        <span className="combo-name">
+                          {comboName(locale, combo.modules)}
+                        </span>
+                        <span className="combo-how">
+                          {comboPricingClause(locale, combo.quote.lines)}
+                        </span>
+                      </th>
+                      {/* The label repeats inside the cell for the phone
+                          layout, where the table stacks and the column head is
+                          no longer beside the figure. */}
+                      <td>
+                        <span className="combo-cell-k">{d.setupLabel}</span>
+                        {formatPrice(locale, combo.quote.setup[currency])}
+                        <span className="combo-bar" aria-hidden="true">
+                          <span
+                            className="combo-fill"
+                            data-part="setup"
+                            style={{ width: width(combo.quote.setup.MXN, setupTop) }}
+                          />
+                        </span>
+                      </td>
+                      <td>
+                        <span className="combo-cell-k">{d.monthlyLabel}</span>
+                        {formatPrice(locale, combo.quote.monthly[currency])}
+                        <span className="combo-bar" aria-hidden="true">
+                          <span
+                            className="combo-fill"
+                            data-part="base"
+                            style={{
+                              width: width(combo.quote.sharedServiceBase, monthlyTop),
+                            }}
+                          />
+                          {combo.quote.runCosts.map((run) => (
+                            <span
+                              className="combo-fill"
+                              key={run.module}
+                              data-part={run.module}
+                              style={{ width: width(run.monthly, monthlyTop) }}
+                            />
+                          ))}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </ComboVis>
 
             <p className="mix-note">{bridgesSentence(locale, bridges)}</p>
           </div>

@@ -133,9 +133,16 @@ const en = {
     ],
     combosKicker: "The seven combinations",
     combosTitle: "What each combination costs at the entry size.",
+    /* The tail this lead used to carry, that a line inside a combination is
+       priced on the hours actually built and is not the module's entry price,
+       is the third of the rules rendered immediately above the table and is
+       said again in the clause under every row name, so the caption no longer
+       says it a third time (bead hq-wrig5.13). */
     combosLead:
-      "Every module at its entry size, most expensive first. The build behind each row is the complete lists above, one for every module the row names, and each line inside a combination is priced on the hours that build actually takes, so it is not the entry price of the module inside it.",
+      "Every module at its entry size, most expensive first. The build behind each row is the complete lists above, one for every module the row names.",
     combosLabel: "The seven combinations at the entry size",
+    /** The first block of every stacked monthly bar, named in its legend. */
+    baseLabel: "Shared base",
     comboLabel: "What you buy",
     nameJoin: " and ",
     pricedOnLead: "Priced on the hours actually built:",
@@ -325,8 +332,9 @@ const es: typeof en = {
     combosKicker: "Las siete combinaciones",
     combosTitle: "Lo que cuesta cada combinación en el tamaño de entrada.",
     combosLead:
-      "Cada módulo en su tamaño de entrada, de mayor a menor. La construcción detrás de cada renglón son las listas completas de arriba, una por cada módulo que el renglón nombra, y cada línea dentro de una combinación se cotiza sobre las horas que esa construcción de verdad toma, así que no es el precio de entrada del módulo que la compone.",
+      "Cada módulo en su tamaño de entrada, de mayor a menor. La construcción detrás de cada renglón son las listas completas de arriba, una por cada módulo que el renglón nombra.",
     combosLabel: "Las siete combinaciones en el tamaño de entrada",
+    baseLabel: "Base compartida",
     comboLabel: "Lo que compra",
     nameJoin: " y ",
     pricedOnLead: "Cotizada sobre las horas que de verdad se construyen:",
