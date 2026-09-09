@@ -229,7 +229,9 @@ export default function ModulosPage({ params }: Params) {
                     <span className="combina-kind mono">
                       {item.kind === "single"
                         ? d.combina.single
-                        : d.combina.bridge}
+                        : item.variant === "shared"
+                          ? d.combina.shared
+                          : d.combina.bridge}
                     </span>
                     <h3>{item.key}</h3>
                     <p>{item.line}</p>

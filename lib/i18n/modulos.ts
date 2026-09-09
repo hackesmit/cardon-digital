@@ -36,10 +36,14 @@ export type ModuleCopy = {
   demo: string;
 };
 
-/** One line of the combinations list. A single module has no bridge. */
+/** One line of the combinations list. A single module has no bridge. Of the
+    three mixed pairs, only two carry a real bridge feature (the memo names
+    exactly two); the Produccion-Hospitalidad pair is a "shared" row, honest
+    about what buying both gives without claiming a bridge that isn't built. */
 export type CombinaItem = {
   key: string;
   kind: "single" | "mix";
+  variant?: "bridge" | "shared";
   line: string;
 };
 
@@ -56,7 +60,6 @@ const en = {
     t1: "Three modules. ",
     accent: "You buy the ones you run on.",
     sub: "Produccion is the record of what you grew, made and sold. Hospitalidad is every booking from every channel in one calendar. Restaurante is the point of sale, from the waiter's phone to the cash cut. **Each one is a whole system on its own, and each one is sized to the operation in front of it.**",
-    ctaDemo: "See the demos",
     ctaCombina: "How they combine",
   },
 
@@ -94,6 +97,7 @@ const en = {
             "Delivery and buyer record: loads by block and buyer, weights, sugar and pH at reception, price terms and payment status",
             "Applications and compliance log: sprays and doses, pre-harvest intervals, who applied, the evidence a certification audit asks for",
             "Irrigation and water register: irrigation events and water use, captured by hand when no controller exposes data",
+            "Historical season load: one prior season brought in from digital sources the grower already holds",
             "The report generator, the assistant, and the training and handover pack, the same as the cellar set",
           ],
           note: "**A weather station or an irrigation controller is read as a data source when it already exposes its data.** When it does not, the register is kept by hand. We do not buy, install, own or warrant hardware, and no quote carries a device that was not checked at the Diagnostico.",
@@ -216,7 +220,7 @@ const en = {
             "Automated follow-up on direct bookings, repeat guests and the wine club, from M",
             "A brochure or booking site wired to the stay record and to tracking, in Spanish and English",
             "Conversion tracking and GA4, owned by you",
-            "A Google Ads build and its monthly management, from M",
+            "A Google Ads build at any size, with its monthly management from M",
           ],
         },
       },
@@ -301,7 +305,7 @@ const en = {
           items: [
             "A brochure or booking site wired to the record and to tracking, in Spanish and English",
             "Conversion tracking and GA4, owned by you",
-            "A Google Ads build and its monthly management, from M",
+            "A Google Ads build at any size, with its monthly management from M",
           ],
         },
       },
@@ -342,6 +346,7 @@ const en = {
     sub: "Buy the modules you run on. **A bridge is only built when both of the modules it joins are bought**, and what each one adds is one sentence long.",
     single: "On its own",
     bridge: "The bridge",
+    shared: "One system",
     items: [
       {
         key: "Produccion",
@@ -361,22 +366,26 @@ const en = {
       {
         key: "Produccion and Hospitalidad",
         kind: "mix",
-        line: "The tasting room, the events and the club are booked in Hospitalidad, and those visits and direct sales sit next to production in the commercial record, so the season and what it sold are one record.",
+        variant: "shared",
+        line: "One system and one login for both, and the shared service base is priced once whichever modules you add it to. The tasting room, the events and the club are still booked in Hospitalidad, and those visits already sit in Produccion's own commercial record on its own.",
       },
       {
         key: "Produccion and Restaurante",
         kind: "mix",
+        variant: "bridge",
         line: "The house wine list reads live from the cellar by vintage and varietal, so what the dining room offers is what the cellar actually holds. It reads only: the cellar record stays the cellar's.",
       },
       {
         key: "Hospitalidad and Restaurante",
         kind: "mix",
+        variant: "bridge",
         line: "Charges from the restaurant post to the room, and a guest's table booking shows on their stay, so the host sees the guest and the stay sees the table.",
       },
       {
         key: "All three",
         kind: "mix",
-        line: "All three bridges at once: the guest arrives, books a table, charges dinner to the room and drinks a wine the cellar knows by vintage, and the tasting room visit lands next to the season that produced it.",
+        variant: "bridge",
+        line: "Both bridges at once, under one system: the guest arrives, books a table, charges dinner to the room and drinks a wine the cellar knows by vintage, while the tasting room visit still sits next to the season that produced it.",
       },
     ] as CombinaItem[],
     foot: "The service base is charged once whatever the mix, and a module added to a client we already serve is a smaller build than the same module bought alone, because the training, the assistant frame, the report and the environment are already standing.",
@@ -394,9 +403,9 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Los tres modulos",
+    title: "Los tres módulos",
     description:
-      "Produccion, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamano de la operacion, y los puentes entre ellos vienen con la combinacion.",
+      "Producción, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamaño de la operación, y los puentes entre ellos vienen con la combinación.",
   },
 
   hero: {
@@ -405,7 +414,6 @@ const es: typeof en = {
     t1: "Tres módulos. ",
     accent: "Usted compra los que opera.",
     sub: "Producción es el registro de lo que cultivó, elaboró y vendió. Hospitalidad es cada reserva de cada canal en un solo calendario. Restaurante es el punto de venta, del teléfono del mesero hasta el corte de caja. **Cada uno es un sistema completo por su cuenta, y cada uno se dimensiona a la operación que tiene enfrente.**",
-    ctaDemo: "Ver los demos",
     ctaCombina: "Cómo se combinan",
   },
 
@@ -443,6 +451,7 @@ const es: typeof en = {
             "Registro de entregas y compradores: cargas por parcela y por comprador, pesos, azúcar y pH en recepción, condiciones de precio y estado de pago",
             "Registro de aplicaciones y cumplimiento: aspersiones y dosis, intervalos de precosecha, quién aplicó, y la evidencia que pide una auditoría de certificación",
             "Registro de riego y agua: eventos de riego y consumo, capturados a mano cuando ningún controlador expone datos",
+            "Carga de temporada histórica: una temporada anterior traída de fuentes digitales que el productor ya tiene",
             "El generador del informe, el asistente y el paquete de capacitación y entrega, igual que en el conjunto de la bodega",
           ],
           note: "**Una estación meteorológica o un controlador de riego se leen como una fuente de datos cuando ya exponen su información.** Cuando no la exponen, el registro se lleva a mano. No compramos, instalamos, poseemos ni garantizamos equipo, y ninguna cotización trae un aparato que no se haya revisado en el Diagnóstico.",
@@ -565,7 +574,7 @@ const es: typeof en = {
             "Seguimiento automatizado a reservas directas, huéspedes que regresan y el club de vino, desde M",
             "Un sitio de presentación o de reservas conectado al registro de estancias y a la medición, en español e inglés",
             "Medición de conversiones y GA4, propiedad de usted",
-            "Construcción de Google Ads y su manejo mensual, desde M",
+            "Construcción de Google Ads en cualquier tamaño, con manejo mensual desde M",
           ],
         },
       },
@@ -650,7 +659,7 @@ const es: typeof en = {
           items: [
             "Un sitio de presentación o de reservas conectado al registro y a la medición, en español e inglés",
             "Medición de conversiones y GA4, propiedad de usted",
-            "Construcción de Google Ads y su manejo mensual, desde M",
+            "Construcción de Google Ads en cualquier tamaño, con manejo mensual desde M",
           ],
         },
       },
@@ -691,6 +700,7 @@ const es: typeof en = {
     sub: "Se compran los módulos que se operan. **Un puente solo se construye cuando se compran los dos módulos que une**, y lo que agrega cada uno cabe en una frase.",
     single: "Por su cuenta",
     bridge: "El puente",
+    shared: "Un solo sistema",
     items: [
       {
         key: "Producción",
@@ -710,22 +720,26 @@ const es: typeof en = {
       {
         key: "Producción y Hospitalidad",
         kind: "mix",
-        line: "La sala de degustación, los eventos y el club se reservan en Hospitalidad, y esas visitas y ventas directas quedan al lado de la producción en el registro comercial, así la temporada y lo que vendió son un mismo registro.",
+        variant: "shared",
+        line: "Un solo sistema y un solo inicio de sesión para ambos, y la base del servicio se cobra una sola vez sin importar a qué módulos se agregue. La sala de degustación, los eventos y el club se siguen reservando en Hospitalidad, y esas visitas ya quedan por su cuenta en el registro comercial de Producción.",
       },
       {
         key: "Producción y Restaurante",
         kind: "mix",
+        variant: "bridge",
         line: "La carta de vinos de la casa se lee viva desde la cava por añada y varietal, así lo que ofrece el comedor es lo que la cava realmente tiene. Es de solo lectura: el registro de la cava sigue siendo de la cava.",
       },
       {
         key: "Hospitalidad y Restaurante",
         kind: "mix",
+        variant: "bridge",
         line: "Los consumos del restaurante se cargan al cuarto, y la reservación de mesa de un huésped aparece en su estancia, así recepción ve al huésped y la estancia ve la mesa.",
       },
       {
         key: "Los tres",
         kind: "mix",
-        line: "Los tres puentes a la vez: el huésped llega, reserva mesa, carga la cena al cuarto y toma un vino que la cava conoce por añada, y la visita a la sala de degustación queda junto a la temporada que la produjo.",
+        variant: "bridge",
+        line: "Los dos puentes a la vez, bajo un solo sistema: el huésped llega, reserva mesa, carga la cena al cuarto y toma un vino que la cava conoce por añada, mientras la visita a la sala de degustación sigue junto a la temporada que la produjo.",
       },
     ] as CombinaItem[],
     foot: "La base del servicio se cobra una sola vez sea cual sea la combinación, y un módulo agregado a un cliente que ya atendemos es una construcción más chica que ese mismo módulo comprado solo, porque la capacitación, el marco del asistente, el informe y el ambiente ya están de pie.",

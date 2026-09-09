@@ -1,11 +1,12 @@
 import type { Locale } from "@/lib/i18n/config";
 
 /**
- * The three modules and the three bridges between them, drawn once at the head
- * of the combinations section. Decoration with labels: the sentences beside it
- * carry the meaning, so the whole figure is hidden from assistive technology
- * except for its title, and it holds its shape down to 360 px because the
- * viewBox scales rather than the text reflowing.
+ * The three modules, the two real bridges between them, and the one pair
+ * (Produccion-Hospitalidad) that only shares the system and the service base,
+ * drawn once at the head of the combinations section. Decoration with labels:
+ * the sentences beside it carry the meaning, so the whole figure is hidden
+ * from assistive technology except for its title, and it holds its shape down
+ * to 360 px because the viewBox scales rather than the text reflowing.
  */
 
 const label: Record<Locale, { p: string; h: string; r: string; title: string }> = {
@@ -13,13 +14,13 @@ const label: Record<Locale, { p: string; h: string; r: string; title: string }> 
     p: "Producción",
     h: "Hospitalidad",
     r: "Restaurante",
-    title: "Los tres módulos unidos por tres puentes",
+    title: "Los tres módulos: dos puentes, una base compartida",
   },
   en: {
     p: "Produccion",
     h: "Hospitalidad",
     r: "Restaurante",
-    title: "The three modules joined by three bridges",
+    title: "The three modules: two bridges, one shared base",
   },
 };
 
@@ -30,8 +31,9 @@ export default function BridgeMap({ locale }: { locale: Locale }) {
       <svg viewBox="0 0 320 214" className="bridge-svg" focusable="false">
         <title>{l.title}</title>
 
-        {/* the three bridges, drawn under the nodes */}
-        <line className="bg-edge" x1="60" y1="58" x2="260" y2="58" />
+        {/* Produccion-Hospitalidad: no bridge feature, only the shared system */}
+        <line className="bg-edge-shared" x1="60" y1="58" x2="260" y2="58" />
+        {/* the two real bridges, drawn under the nodes */}
         <line className="bg-edge" x1="60" y1="58" x2="160" y2="164" />
         <line className="bg-edge" x1="260" y1="58" x2="160" y2="164" />
 
