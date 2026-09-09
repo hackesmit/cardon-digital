@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1788935476.2620747,
-    "ast_hash": "306292433d60475461157605c0b634a4",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "eeb3ea754da4faa5c95a93e482c22288",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -565,8 +565,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/modulos/page.tsx": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "e8d8c38b5b6b36f366e3268760ef3585",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "05b27648878cfd4f8b71808801b6ecb2",
     "semantic_hash": ""
   },
   "components/pages/modulos/BridgeMap.tsx": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
-    "mtime": 1788914392.2193286,
-    "ast_hash": "21d590899b06f05763640077e80c76f0",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "a1c22a19349bf0eee4f8214d4a7ef890",
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "components/pages/showcase/Showcase.tsx": {
-    "mtime": 1788917957.6885836,
-    "ast_hash": "cf153111376ea640b5ef2820ef32937b",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "f65d4c96dfd3c1fb57cf0eae2360dfab",
     "semantic_hash": ""
   },
   "components/pages/showcase/flag.ts": {
@@ -615,13 +615,33 @@
     "semantic_hash": ""
   },
   "components/pages/showcase/showcase.test.ts": {
-    "mtime": 1788917957.6902468,
-    "ast_hash": "0f620cbb07487c9cf3e4b4569e6b1eb9",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "c9697489b91e48eea3a183621f584074",
     "semantic_hash": ""
   },
   "lib/i18n/showcase.ts": {
-    "mtime": 1788935476.2640197,
-    "ast_hash": "fcb694bcaec0b9598ef83b2080719ca5",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "f2e9b61e472deafee1486aea4fc3f235",
+    "semantic_hash": ""
+  },
+  "components/pages/modulos/Combinations.tsx": {
+    "mtime": 1788937733.2934594,
+    "ast_hash": "7dd13d55ce5266803827bd5fe64b4f3a",
+    "semantic_hash": ""
+  },
+  "components/pages/modulos/ModuleBlock.tsx": {
+    "mtime": 1788937733.2934594,
+    "ast_hash": "65858e58597a0686e4c5f148b0f27990",
+    "semantic_hash": ""
+  },
+  "components/pages/precios/PricingDetails.tsx": {
+    "mtime": 1788937733.2934594,
+    "ast_hash": "83aa0fb16751a840f78d5b7a6df26bf3",
+    "semantic_hash": ""
+  },
+  "lib/demo.ts": {
+    "mtime": 1788937733.2934594,
+    "ast_hash": "5b1014dc60f67b95abc1f055fe993b67",
     "semantic_hash": ""
   }
 }
