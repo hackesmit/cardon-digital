@@ -6,15 +6,15 @@ const en = {
   meta: {
     title: "Vinedo En'kanto case study",
     description:
-      "Through a season when the Valle de Guadalupe's overall visitor flow dipped, En'kanto's three revenue lines, wine, stays, and restaurant, each kept growing. Beside that season sat the work: a real online shop, structure and search repaired, payments and shipping made real, bilingual by design.",
+      "En'kanto runs three revenue lines from one property: the winery, the stays, and the restaurant. We rebuilt the online store in front of them, repaired the site structure and search, set up payments and shipping for how Mexico pays and ships, and made it bilingual by design. Then the system built for all three lines, nineteen screens across production, the restaurant point of sale and bookings, open to walk through screen by screen.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Case study / Winery",
-    t1: "The Valle's volume dropped that season. En'kanto's wine, stays, and tables kept ",
-    enk: "growing",
-    t2: ".",
-    sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. Across a season when the Valle's overall visitor flow dipped, all three kept growing. Beside that fact sits the work we did: a real online shop with cross-border-honest shipping, the site structure and search repaired, and optimization across the business. **Three lines growing, the season dropping, the work sitting beside both.**",
+    t1: "En'kanto runs on three revenue lines. We built the store in front and the system ",
+    enk: "behind",
+    t2: " them.",
+    sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. We rebuilt the online store in front of them, repaired the site structure and search, set up payments and shipping for how Mexico pays and ships, and made it bilingual by design. Then we built the system behind all three: wine production, the restaurant point of sale, and bookings, in one place. **This page describes what is built, and links a demo you can walk through screen by screen.**",
   },
   facts: {
     aria: "Case study facts: client, sector, place, scale, engagement, what we built, and the outcome",
@@ -23,18 +23,18 @@ const en = {
       { k: "Sector", v: "Winery, hotel and restaurant" },
       { k: "Place", v: "San Antonio de las Minas, Valle de Guadalupe" },
       { k: "Scale", v: "Three revenue lines: winery, stays, restaurant" },
-      { k: "Engagement", v: "Project" },
+      { k: "Engagement", v: "Build and ongoing work" },
       {
         k: "What we built",
-        v: "Online shop; site structure and search; payments for how Mexico pays; cross-border shipping; bilingual build",
+        v: "Online shop; site structure and search; payments for how Mexico pays; cross-border shipping; bilingual build; then the system for all three lines: wine production, restaurant point of sale, and bookings",
       },
       {
         k: "Outcome",
-        v: "Three revenue lines grew across a season when the Valle's visitor flow dipped",
+        v: "The online store is real and bilingual, and a single system for wine production, the restaurant and bookings is built and open to walk through, screen by screen",
       },
     ],
     basisK: "Basis",
-    basis: "The three revenue lines and the direction of the season come from En'kanto's own figures for the season this case covers. The Valle's visitor trend is a separate observation and stands on its own. We set the two side by side and claim no causal relationship between the work and the growth. No En'kanto revenue figures are published here.",
+    basis: "No En'kanto revenue figures are published here, and this page reports no result from the system's use, because it is not yet in service there. The system is described from the build itself and not from a plan. Every count here is a count of that build on 9 September 2026: three modules, the nineteen screens named one by one on this page in lists of five, five and nine, and the ten staff positions its own route table defines, with a suite of 305 checks across 28 files running green on that date.",
   },
   client: {
     kicker: "The client",
@@ -45,8 +45,8 @@ const en = {
   },
   work: {
     kicker: "The work",
-    title: "The work that sat underneath the season.",
-    p1: "Across the season this case study covers, the Valle's overall visitor flow dipped. Over the same months, the winery's wine sales, the stays, and the restaurant each kept growing. We state those two facts side by side and put nothing between them: the work below sat beside the growth, not on top of it.",
+    title: "The work in front of the three lines.",
+    p1: "The three revenue lines share one property: the winery, the stays, and the restaurant. The online presence is how each of them reaches a customer who has not arrived yet, and that front had real work waiting under it.",
     p2: "And there was real work to do. The online store existed in name only, products with no prices and no way to ship, and five homepages competed for the same visitor across two half-finished languages. **We rebuilt the groundwork under all three lines, one piece at a time.** Here is that work, and the line each piece serves.",
   },
   servesWine: "Serves the **wine line.**",
@@ -111,55 +111,74 @@ const en = {
     readWhole: "read whole in both",
     foundation: "one foundation, not a bolt-on",
   },
-  results: {
-    kicker: "The result",
-    title: "Three lines up, the season down.",
-    items: [
+  system: {
+    kicker: "The system",
+    title: "Three lines, one system, and it is built.",
+    p1: "The store, the structure and the payments put the three lines in front of people. Behind them ran three operations sharing one property and no shared record. The order went on a pad. The bookings arrived in as many places as there were channels. Nothing held the winery, the rooms and the dining room as one business, because nothing had been built to.",
+    p2: "So we built the one that does. One place, nineteen screens, and a set of screens per area instead of one screen for everybody: the cellar works from production, the dining room from the dining room, the front desk from the calendar, and administration sees the property whole. **Wine first, then the restaurant, then the bookings.**",
+    screensK: "Screens",
+    modules: [
       {
-        lead: "Wine, growing.",
-        body: "Across the season, the winery's wine sales kept rising. The shop and the cross-border-honest shipping lane sit beside that line.",
+        num: "06",
+        name: "Producción",
+        title: "The record of the vintage, from the block to the barrel.",
+        body: "Five screens for the people who make the wine. The vineyard and its blocks. A vintage history carrying rainfall, temperatures, degree days, frosts and heat waves, with the harvest window for each varietal. The harvest itself, with pick dates and lab analysis by lot, kilos, Brix, pH, total acidity and YAN, against the maturity curve from field sampling. Fermentation, with a pump-over sheet per tank, density and temperature curves, yeast and nutrient additions, and malolactic tracking. And the barrel room as a clickable map, French oak, American oak and steel, with a card for every barrel: what is in it, litres, time in barrel, cooper, toast, top-ups and batonnage.",
+        screens: ["Viñedo", "Añadas", "Cosecha", "Fermentación", "Crianza y Barricas"],
       },
       {
-        lead: "Stays, growing.",
-        body: "The hotel and Airbnb stays kept filling through the same months. The listings and the booking flow sit beside that line.",
+        num: "07",
+        name: "Restaurante",
+        title: "One order, from the waiter's phone to the cash cut.",
+        body: "Five screens and a single order that never gets written twice. It is born on the waiter's phone, by table and by seat, with modifiers, line notes and courses fired when the waiter decides. It lands on the kitchen screen in arrival order with its capture time, its elapsed minutes, its station and its waiter, and it bumps when it is ready. The host works a table map with covers, arrival time and turn time. Then the day closes twice over: a summary by category, by hour and by waiter, and a cash cut with the float, the declared cash and the difference.",
+        screens: ["Mesero", "Cocina", "Anfitrión", "Resumen del día", "Corte del día"],
       },
       {
-        lead: "Restaurant, growing.",
-        body: "The restaurant's tables kept rising over the season. The reservations and the follow-up sit beside that line.",
-      },
-      {
-        lead: "The season, dropping.",
-        body: "The Valle's overall visitor flow fell across the season. We put it on the same chart as the three lines and let the directions speak.",
+        num: "08",
+        name: "Hospedaje",
+        title: "Every booking in one calendar, and the day already counted.",
+        body: "Nine screens for the stays. Every channel read into one master calendar of units by day, coloured by channel. The day view the property opens each morning: who arrives, who leaves, which units stay occupied, which cleans are pending. Occupancy by month and by unit, and revenue by channel with the count of bookings still missing an amount kept visible rather than hidden. A guest record that belongs to the guest and not to the booking, so it survives between stays. A unit board, and housekeeping tasks generated from the departures, marked clean with one thumb from a phone. And the bridge to the dining room, showing a guest's table booking and their restaurant charges on the stay.",
+        screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
+    limitsKicker: "What it will not promise",
+    limitsTitle: "The honest edges, written into the screens.",
+    limits: [
+      {
+        lead: "It mirrors the channels. It does not write to them.",
+        body: "Airbnb publishes no open interface for a host, so the calendar reads the iCal feeds instead, which refresh in hours rather than in real time. The screen carries the time each channel was last read and warns when a feed has gone stale. Blocking a date here does not block it on Airbnb, and the interface says so, because the expensive mistake is assuming it does.",
+      },
+      {
+        lead: "It reads OpenTable. It does not scrape it.",
+        body: "The table bookings live in OpenTable, whose data interface is open to approved partners and to nobody else. Until that account is connected the system takes the booking by hand and reconciles it against the export, matching on guest and time so the export's copy folds onto the booking already captured instead of being filed as a second one. It never touches the account behind the login, because the one who would pay for that is the restaurant.",
+      },
+      {
+        lead: "A room bill adds up the restaurant's charges. It never writes one.",
+        body: "A guest's stay shows the restaurant charges posted to their room and the total, but the front desk only reads them: creating or changing a charge belongs to the restaurant, not to hospitality, and this screen has no way to do it. A charge counts toward the room total only when it is applied and carries an amount; one posted without an amount shows as pending and stays out of the total instead of being counted as zero. And while the restaurant is not yet posting real charges, the total is labelled as example data on the screen, so a stand-in number is never read as a real one.",
+      },
+      {
+        lead: "It is built. It is not yet in service at En'kanto.",
+        body: "Everything on this page is here because it is merged and it runs. Putting the system into the property's daily work is the next phase, and until that happens we describe what is built and claim nothing about what it changed. We would rather be a step behind our own page than a step in front of it.",
+      },
+    ],
+    demo: {
+      kicker: "See it",
+      title: "The system is open. Go through it yourself.",
+      body: "It runs as a public demonstration, dressed as a fictional winery. **It is assembled from a whitelist that leaves En'kanto's own data files out of the deployment, so there is nothing of theirs there to serve.** Open any of the three modules, pick any of the ten staff positions, and walk the screens that position's menu opens.",
+      cta: "Open the demo",
+      note: "Illustrative data under a fictional name. Nothing there belongs to a client, and the position picker is a shop window onto the screens, not a login.",
+    },
+  },
+  pending: {
+    marker: "PLACEHOLDER, not for publication",
+    title: "What the system changed for En'kanto goes here.",
+    body: "This block is deliberately empty. It stays empty until En'kanto's own figures are in hand: what a task took before and what it takes now, over a stated window. We do not estimate it, we do not round it, and we do not publish a number nobody measured. Fill this block or delete it before this page goes live.",
   },
   outcome: {
     kicker: "The outcome",
-    title: "Three lines, growing through a season that went down.",
-    p1: "Through a season when the Valle's overall flow dipped, En'kanto's wine, its stays, and its restaurant each kept growing. Beside those three lines sits the work: a shop that takes a real order, structure and search repaired, payments that clear, shipping that reaches the door, and one bilingual foundation under all of it.",
-    p2: "We state the work and we state the season, and we set them next to each other and claim no more than that. **We built the foundation. What grows on it belongs to the winery.**",
-  },
-  vis: {
-    legendMain: "Three lines vs the season",
-    legendSub: "direction, not scale",
-    honest: "illustrative direction, not client data",
-    backdropL1: "Valle visitor flow,",
-    backdropL2: "the season",
-    backdropOne: "Valle visitor flow, the season",
-    status: "kept growing through the season",
-    hotLabel:
-      "{name} kept growing through the season. The work beside it: {work}.",
-    plateStatus: "status",
-    plateAction: "the work",
-    fallback:
-      "A quiet chart. Three labeled lines, wine sales, stays, and the restaurant, rise gently against a faint dipping backdrop line marked Valle visitor flow, the season. It shows direction only, with no scale: the three lines grew across a season when the Valle's overall flow fell.",
-    caption:
-      "Wine, stays, and the restaurant rise; the Valle's visitor flow dips. Direction only, side by side, no scale.",
-    series: {
-      wine: { label: "Wine sales", work: "shop and cross-border shipping" },
-      stays: { label: "Stays", work: "listing and booking flow" },
-      restaurant: { label: "Restaurant", work: "reservations and follow-up" },
-    },
+    title: "The store in front, and the system behind it.",
+    p1: "En'kanto reaches its customers through a store that takes a real order, a structure and search that no longer fight each other, payments that clear the way Mexico pays, shipping that reaches a door inside Mexico, and one bilingual foundation under all of it.",
+    p2: "Then we built the system for those three lines. The cellar's record of the vintage, the dining room's order from the phone to the cash cut, and every booking in one calendar, in one place, with a set of screens per area. It is built, it is open to walk through, and it says plainly where it stops.",
+    p3: "We describe what is built and claim no more than that. **We built the foundation. What grows on it belongs to the winery.**",
   },
   diagDesc:
     "Ten business days looking at your store, your site, and your operations as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
@@ -175,15 +194,15 @@ const es: typeof en = {
   meta: {
     title: "Caso de estudio Viñedo En'kanto",
     description:
-      "En una temporada en la que el flujo de visitantes del Valle de Guadalupe bajó, las tres líneas de En'kanto, vino, hospedaje y restaurante, siguieron creciendo. Al lado de esa temporada está el trabajo: una tienda en línea de verdad, la estructura y la búsqueda reparadas, pagos y envíos reales, y una base bilingüe.",
+      "En'kanto vive de tres líneas de ingreso en una misma propiedad: la bodega, el hospedaje y el restaurante. Reconstruimos la tienda en línea frente a ellas, reparamos la estructura y la búsqueda del sitio, montamos pagos y envíos para como se paga y se envía en México, y la hicimos bilingüe desde el diseño. Después, el sistema construido para las tres líneas: diecinueve pantallas entre producción, el punto de venta del restaurante y las reservas, abierto para recorrerlo pantalla por pantalla.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Caso de estudio / Bodega",
-    t1: "El volumen del Valle bajó esa temporada. El vino, el hospedaje y las mesas de En'kanto siguieron ",
-    enk: "creciendo",
-    t2: ".",
-    sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. A lo largo de una temporada en la que el flujo general de visitantes del Valle bajó, las tres siguieron creciendo. Al lado de ese hecho está el trabajo que hicimos: una tienda en línea de verdad con un envío honesto respecto a la frontera, la estructura del sitio y la búsqueda reparadas, y mejoras en todo el negocio. **Tres líneas creciendo, la temporada bajando, el trabajo al lado de las dos cosas.**",
+    t1: "En'kanto vive de tres líneas de ingreso. Construimos la tienda de enfrente y el sistema ",
+    enk: "detrás",
+    t2: " de ellas.",
+    sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. Reconstruimos la tienda en línea frente a ellas, reparamos la estructura y la búsqueda del sitio, montamos pagos y envíos para como se paga y se envía en México, y la hicimos bilingüe desde el diseño. Después construimos el sistema detrás de las tres: producción de vino, el punto de venta del restaurante y las reservas, en un solo lugar. **Esta página describe lo que está construido, y enlaza un demo que usted puede recorrer pantalla por pantalla.**",
   },
   facts: {
     aria: "Datos del caso: cliente, sector, lugar, escala, relación, lo que construimos y el resultado",
@@ -192,18 +211,18 @@ const es: typeof en = {
       { k: "Sector", v: "Bodega, hotel y restaurante" },
       { k: "Lugar", v: "San Antonio de las Minas, Valle de Guadalupe" },
       { k: "Escala", v: "Tres líneas de ingreso: bodega, hospedaje, restaurante" },
-      { k: "Relación", v: "Proyecto" },
+      { k: "Relación", v: "Construcción y trabajo en curso" },
       {
         k: "Lo que construimos",
-        v: "Tienda en línea; estructura y búsqueda del sitio; pagos como se paga en México; envíos transfronterizos; construcción bilingüe",
+        v: "Tienda en línea; estructura y búsqueda del sitio; pagos como se paga en México; envíos transfronterizos; construcción bilingüe; y después el sistema para las tres líneas: producción de vino, punto de venta del restaurante y reservas",
       },
       {
         k: "Resultado",
-        v: "Las tres líneas de ingreso crecieron en una temporada en la que bajó el flujo de visitantes del Valle",
+        v: "La tienda en línea es real y bilingüe, y un solo sistema para la producción de vino, el restaurante y las reservas está construido y abierto para recorrerlo, pantalla por pantalla",
       },
     ],
     basisK: "Base",
-    basis: "Las tres líneas de ingreso y la dirección de la temporada salen de las cifras de la propia En'kanto para la temporada que cubre este caso. La tendencia de visitantes del Valle es una observación aparte y se sostiene sola. Ponemos las dos una al lado de la otra y no reclamamos ninguna relación de causa entre el trabajo y el crecimiento. Aquí no publicamos ninguna cifra de ingresos de En'kanto.",
+    basis: "Aquí no publicamos ninguna cifra de ingresos de En'kanto, y esta página no reporta ningún resultado del uso del sistema, porque todavía no está en servicio ahí. El sistema se describe desde la construcción misma y no desde un plan. Cada conteo de aquí es un conteo de esa construcción al 9 de septiembre de 2026: tres módulos, las diecinueve pantallas nombradas una por una en esta página en listas de cinco, cinco y nueve, y los diez puestos de personal que define su propia tabla de rutas, con una suite de 305 comprobaciones en 28 archivos que corre en verde en esa fecha.",
   },
   client: {
     kicker: "El cliente",
@@ -214,8 +233,8 @@ const es: typeof en = {
   },
   work: {
     kicker: "El trabajo",
-    title: "El trabajo que estuvo debajo de la temporada.",
-    p1: "A lo largo de la temporada que cubre este caso, el flujo general de visitantes del Valle bajó. En los mismos meses, la venta de vino de la bodega, el hospedaje y el restaurante siguieron creciendo cada uno. Ponemos los dos hechos lado a lado y no metemos nada entre ellos: el trabajo de abajo estuvo al lado del crecimiento, no encima de él.",
+    title: "El trabajo frente a las tres líneas.",
+    p1: "Las tres líneas de ingreso comparten una misma propiedad: la bodega, el hospedaje y el restaurante. La presencia en línea es la forma en que cada una llega a un cliente que todavía no llega, y ese frente tenía trabajo real esperando debajo.",
     p2: "Y sí había trabajo que hacer. La tienda en línea existía solo de nombre, con productos sin precio y sin manera de enviar, y cinco páginas de inicio competían por el mismo visitante en dos idiomas a medias. **Reconstruimos los cimientos debajo de las tres líneas, una pieza a la vez.** Aquí está ese trabajo, y la línea a la que sirve cada pieza.",
   },
   servesWine: "Sirve a la **línea de vino.**",
@@ -280,55 +299,74 @@ const es: typeof en = {
     readWhole: "completa en los dos",
     foundation: "un cimiento, no un añadido",
   },
-  results: {
-    kicker: "El resultado",
-    title: "Tres líneas arriba, la temporada abajo.",
-    items: [
+  system: {
+    kicker: "El sistema",
+    title: "Tres líneas, un sistema, y ya está construido.",
+    p1: "La tienda, la estructura y los pagos pusieron las tres líneas frente a la gente. Por detrás corrían tres operaciones que comparten una sola propiedad y ningún registro común. La comanda se escribía en papel. Las reservas llegaban a tantos lugares como canales había. Nada sostenía la bodega, los cuartos y el comedor como un solo negocio, porque nada se había construido para eso.",
+    p2: "Así que construimos el que sí lo hace. Un solo lugar, diecinueve pantallas, y un juego de pantallas por área en lugar de una sola pantalla para todos: la bodega trabaja desde producción, el comedor desde el comedor, la recepción desde el calendario, y administración ve la propiedad entera. **Primero el vino, luego el restaurante, luego las reservas.**",
+    screensK: "Pantallas",
+    modules: [
       {
-        lead: "Vino, creciendo.",
-        body: "A lo largo de la temporada, la venta de vino de la bodega siguió subiendo. La tienda y el carril de envío honesto respecto a la frontera están al lado de esa línea.",
+        num: "06",
+        name: "Producción",
+        title: "El registro de la añada, del cuartel a la barrica.",
+        body: "Cinco pantallas para quienes hacen el vino. El viñedo y sus cuarteles. La historia de añadas con lluvia, temperaturas, grados día, heladas y olas de calor, y la ventana de cosecha por variedad. La cosecha misma, con fechas de pizca y análisis de laboratorio por lote, kilos, Brix, pH, acidez total y YAN, contra la curva de madurez del muestreo en campo. La fermentación, con hoja de remontajes por tanque, curvas de densidad y temperatura, registro de levaduras y nutrientes, y seguimiento del malolático. Y la sala de barricas como un mapa clickeable, roble francés, roble americano e inox, con una ficha por barrica: qué tiene, litros, tiempo en barrica, tonelero, tostado, rellenados y bâtonnage.",
+        screens: ["Viñedo", "Añadas", "Cosecha", "Fermentación", "Crianza y Barricas"],
       },
       {
-        lead: "Hospedaje, creciendo.",
-        body: "El hotel y el hospedaje de Airbnb siguieron llenándose en los mismos meses. Las publicaciones y el flujo de reserva están al lado de esa línea.",
+        num: "07",
+        name: "Restaurante",
+        title: "Una comanda, del teléfono del mesero al corte de caja.",
+        body: "Cinco pantallas y una sola comanda que nunca se escribe dos veces. Nace en el teléfono del mesero, por mesa y por asiento, con modificadores, notas de línea y tiempos de servicio que el mesero dispara cuando decide. Llega a la pantalla de cocina en orden de llegada, con su hora de captura, sus minutos transcurridos, su estación y su mesero, y se bumpea cuando está lista. El anfitrión trabaja un mapa de mesas con cubiertos, hora de llegada y duración de mesa. Y el día cierra dos veces: un resumen por categoría, por hora y por mesero, y un corte con fondo inicial, efectivo declarado y diferencia.",
+        screens: ["Mesero", "Cocina", "Anfitrión", "Resumen del día", "Corte del día"],
       },
       {
-        lead: "Restaurante, creciendo.",
-        body: "Las mesas del restaurante siguieron subiendo durante la temporada. Las reservaciones y el seguimiento están al lado de esa línea.",
-      },
-      {
-        lead: "La temporada, bajando.",
-        body: "El flujo general de visitantes del Valle cayó a lo largo de la temporada. Lo pusimos en la misma gráfica que las tres líneas y dejamos que las direcciones hablen.",
+        num: "08",
+        name: "Hospedaje",
+        title: "Todas las reservas en un calendario, y el día ya contado.",
+        body: "Nueve pantallas para el hospedaje. Cada canal leído hacia un solo calendario maestro de unidades por día, con el bloque de cada reserva coloreado por canal. La vista del día que la propiedad abre cada mañana: quién llega, quién se va, qué unidades quedan ocupadas y qué limpiezas faltan. Ocupación por mes y por unidad, e ingreso por canal con el conteo de reservas sin importe a la vista en lugar de escondido. Una ficha de huésped que pertenece al huésped y no a la reserva, para que se conserve entre estancias. Un tablero de unidades, y tareas de limpieza generadas desde las salidas, que se marcan con un dedo desde el teléfono. Y el puente con el comedor, que muestra la reserva de mesa del huésped y sus cargos de restaurante en la estancia.",
+        screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
+    limitsKicker: "Lo que no promete",
+    limitsTitle: "Los bordes honestos, escritos en las pantallas.",
+    limits: [
+      {
+        lead: "Es un espejo de los canales. No les escribe.",
+        body: "Airbnb no publica una interfaz abierta para un anfitrión, así que el calendario lee los feeds iCal, que se refrescan en horas y no en tiempo real. La pantalla lleva la hora en que se leyó cada canal por última vez y avisa cuando un feed lleva demasiado sin refrescarse. Bloquear una fecha aquí no la bloquea en Airbnb, y la interfaz lo dice, porque el error caro es suponer que sí.",
+      },
+      {
+        lead: "Lee OpenTable. No lo raspa.",
+        body: "Las reservas de mesa viven en OpenTable, cuya interfaz de datos está abierta a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, el sistema captura la reserva a mano y la concilia contra la exportación, casando por huésped y hora para que la copia de la exportación caiga sobre la reserva ya capturada en lugar de archivarse como una segunda. Nunca toca la cuenta detrás del login, porque quien pagaría eso es el restaurante.",
+      },
+      {
+        lead: "La cuenta de la habitación suma los cargos del restaurante. Nunca escribe uno.",
+        body: "La estancia de un huésped muestra los cargos del restaurante aplicados a su habitación y el total, pero la recepción solo los lee: crear o cambiar un cargo le toca al restaurante, no al hospedaje, y esta pantalla no tiene manera de hacerlo. Un cargo suma al total de la habitación solo cuando está aplicado y trae importe; uno aplicado sin importe se muestra como pendiente y queda fuera del total en lugar de contarse como cero. Y mientras el restaurante todavía no aplica cargos reales, el total se marca como dato de ejemplo en la pantalla, para que un número de relleno nunca se lea como uno real.",
+      },
+      {
+        lead: "Está construido. Todavía no está en servicio en En'kanto.",
+        body: "Todo lo que está en esta página está porque ya se integró y corre. Meter el sistema al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase describimos lo construido y no reclamamos nada sobre lo que cambió. Preferimos ir un paso atrás de nuestra propia página que un paso adelante de ella.",
+      },
+    ],
+    demo: {
+      kicker: "Véalo",
+      title: "El sistema está abierto. Recórralo usted mismo.",
+      body: "Corre como una demostración pública, vestida de bodega ficticia. **Se arma con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto, así que ahí no hay nada suyo que servir.** Abra cualquiera de los tres módulos, elija cualquiera de los diez puestos, y recorra las pantallas que abre el menú de ese puesto.",
+      cta: "Abrir el demo",
+      note: "Datos ilustrativos bajo un nombre ficticio. Nada de ahí es de un cliente, y el selector de puesto es una vitrina de pantallas, no un inicio de sesión.",
+    },
+  },
+  pending: {
+    marker: "MARCADOR, no publicable",
+    title: "Aquí va lo que el sistema le cambió a En'kanto.",
+    body: "Este bloque está vacío a propósito. Se queda vacío hasta tener las cifras de la propia En'kanto: cuánto tomaba una tarea antes y cuánto toma ahora, sobre una ventana declarada. No lo estimamos, no lo redondeamos y no publicamos un número que nadie midió. Llene este bloque o bórrelo antes de que esta página salga en vivo.",
   },
   outcome: {
     kicker: "El desenlace",
-    title: "Tres líneas creciendo en una temporada que bajó.",
-    p1: "En una temporada en la que el flujo general del Valle bajó, el vino de En'kanto, su hospedaje y su restaurante siguieron creciendo cada uno. Al lado de esas tres líneas está el trabajo: una tienda que toma un pedido de verdad, la estructura y la búsqueda reparadas, pagos que se liberan, envíos que llegan a la puerta y un solo cimiento bilingüe debajo de todo.",
-    p2: "Decimos el trabajo y decimos la temporada, los ponemos uno al lado del otro y no reclamamos más que eso. **Nosotros construimos el cimiento. Lo que crece encima es de la bodega.**",
-  },
-  vis: {
-    legendMain: "Tres líneas contra la temporada",
-    legendSub: "dirección, no escala",
-    honest: "dirección ilustrativa, no son datos de cliente",
-    backdropL1: "Flujo de visitantes del Valle,",
-    backdropL2: "la temporada",
-    backdropOne: "Flujo de visitantes del Valle, la temporada",
-    status: "siguió creciendo toda la temporada",
-    hotLabel:
-      "{name} siguió creciendo toda la temporada. El trabajo al lado: {work}.",
-    plateStatus: "estado",
-    plateAction: "el trabajo",
-    fallback:
-      "Una gráfica tranquila. Tres líneas con nombre, venta de vino, hospedaje y restaurante, suben suave contra una línea de fondo tenue que baja, marcada Flujo de visitantes del Valle, la temporada. Muestra dirección y no escala: las tres líneas crecieron en una temporada en la que el flujo general del Valle cayó.",
-    caption:
-      "El vino, el hospedaje y el restaurante suben; el flujo de visitantes del Valle baja. Solo dirección, lado a lado, sin escala.",
-    series: {
-      wine: { label: "Venta de vino", work: "tienda y ruta de envío" },
-      stays: { label: "Hospedaje", work: "publicación y flujo de reserva" },
-      restaurant: { label: "Restaurante", work: "reservaciones y seguimiento" },
-    },
+    title: "La tienda de enfrente, y el sistema detrás de ella.",
+    p1: "En'kanto llega a sus clientes a través de una tienda que toma un pedido de verdad, una estructura y una búsqueda que ya no se pelean, pagos que se liberan como se paga en México, envíos que llegan a una puerta dentro de México, y un solo cimiento bilingüe debajo de todo.",
+    p2: "Después construimos el sistema para esas tres líneas. El registro de la añada en la bodega, la comanda del restaurante desde el teléfono hasta el corte de caja, y todas las reservas en un solo calendario, en un mismo lugar y con un juego de pantallas por área. Está construido, está abierto para recorrerlo y dice con claridad dónde se detiene.",
+    p3: "Describimos lo construido y no reclamamos más que eso. **Nosotros construimos el cimiento. Lo que crece encima es de la bodega.**",
   },
   diagDesc:
     "Diez días hábiles revisando su tienda, su sitio y su operación como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",
