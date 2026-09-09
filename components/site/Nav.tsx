@@ -33,10 +33,16 @@ export default function Nav() {
 
   const href = (path: string) => localePath(locale, path);
 
-  // Winery-led nav (2026-09-02): wineries is the practice, so it sits first as
-  // its own item. The other industries stay reachable behind one demoted
-  // dropdown rather than sharing the top line.
+  // Winery-led nav (2026-09-02): wineries is the practice, so it sits first
+  // among the industry items. The other industries stay reachable behind one
+  // demoted dropdown rather than sharing the top line.
+  //
+  // Modules and pricing lead the row ahead of it (2026-09-08, bead hq-wrig5.3):
+  // what we sell and what it costs are the two pages the site now routes a
+  // reader to first, and they are the two the showcase home links out to.
   const linksBefore = [
+    { href: href("/modulos"), label: t.modules },
+    { href: href("/precios"), label: t.pricing },
     { href: href("/industries/winery"), label: t.wineries },
     { href: href("/work/monte-xanic"), label: t.work },
   ];

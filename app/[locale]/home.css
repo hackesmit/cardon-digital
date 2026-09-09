@@ -435,3 +435,204 @@
     display: block;
   }
 }
+
+/* ============================================================
+   The temporary showcase home (bead hq-wrig5.3).
+
+   The showcase renders from the same route as the home, so it loads the same
+   stylesheet, and this block is appended rather than filed as its own file to
+   keep the swap one import and one flag. Everything is scoped under
+   .pg-showcase (the <main> root class) so it cannot leak into .pg-home or any
+   other route, and the whole block leaves with the showcase.
+   ============================================================ */
+
+.pg-showcase {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- the three modules, each with its own demo button ---- */
+.pg-showcase .sc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 22px);
+  align-items: start;
+}
+.pg-showcase .sc-grid > .reveal {
+  min-width: 0;
+  height: 100%;
+}
+.pg-showcase .sc-card {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--panel) 62%, transparent),
+    color-mix(in srgb, var(--ground) 22%, transparent)
+  );
+  padding: clamp(20px, 2.4vw, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.pg-showcase .sc-card:hover {
+  border-color: var(--primary-dim);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.pg-showcase .sc-num {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+.pg-showcase .sc-name {
+  font-size: 1.24rem;
+  letter-spacing: -0.02em;
+  line-height: 1.14;
+}
+.pg-showcase .sc-tag {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--line-soft);
+}
+/* One of the three tags runs to two lines in both locales, so the copy under
+   it starts on the same baseline across the row rather than stepping down in
+   the middle card. Same idiom as the scenario line on /precios. */
+@media (min-width: 901px) {
+  /* Two lines of the tag, plus its own padding and rule, measured in the tag's
+     own font size: box-sizing is border-box here, so the padding counts. */
+  .pg-showcase .sc-tag {
+    min-height: 3.9em;
+  }
+}
+.pg-showcase .sc-line {
+  color: var(--text-dim);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+/* The button sits on the bottom edge of every card, so three cards with copy
+   of different lengths still line their buttons up. */
+.pg-showcase .sc-card .sc-demo-btn {
+  margin-top: auto;
+  padding-top: 16px;
+}
+.pg-showcase .sc-demo-btn {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.96rem;
+  transition: color 0.2s ease;
+}
+.pg-showcase .sc-demo-btn:hover {
+  color: var(--primary-bright);
+}
+.pg-showcase .sc-soon {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  border: 1px solid color-mix(in srgb, var(--secondary) 46%, transparent);
+  border-radius: 2px;
+  padding: 3px 8px;
+  font-weight: 500;
+}
+
+.pg-showcase .sc-note {
+  margin-top: clamp(22px, 3vw, 32px);
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 78ch;
+}
+.pg-showcase .sc-note b {
+  color: var(--text);
+  font-weight: 600;
+}
+.pg-showcase .sc-more {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.pg-showcase .sc-more a {
+  color: var(--primary-bright);
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 44%, transparent);
+  transition: border-color 0.2s ease;
+}
+.pg-showcase .sc-more a:hover {
+  border-color: var(--primary);
+}
+
+/* ---- how pricing works: the rules, and the link to the figures ---- */
+.pg-showcase .sc-rules {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+.pg-showcase .sc-rules li {
+  position: relative;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.pg-showcase .sc-rules b {
+  color: var(--text);
+  font-weight: 600;
+}
+.pg-showcase .sc-pricing-foot {
+  margin-top: clamp(24px, 3vw, 34px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(16px, 3vw, 30px);
+}
+.pg-showcase .sc-pricing-foot .sc-note {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  flex: 1 1 34ch;
+}
+
+@media (max-width: 900px) {
+  .pg-showcase .sc-grid,
+  .pg-showcase .sc-rules {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  /* The long demo labels and the diagnostic CTA both run edge to edge on a
+     phone rather than wrapping into a ragged block. */
+  .pg-showcase .sc-demo-btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .pg-showcase .diag-actions,
+  .pg-showcase .sc-pricing-foot .cta {
+    width: 100%;
+  }
+  .pg-showcase .diag-actions .cta-lg,
+  .pg-showcase .diag-actions .btn-ghost,
+  .pg-showcase .sc-pricing-foot .cta {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}

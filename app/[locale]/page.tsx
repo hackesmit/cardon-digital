@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Showcase from "@/components/pages/showcase/Showcase";
+import { showcaseEnabled } from "@/components/pages/showcase/flag";
 import HeroAssembly from "@/components/pages/home/HeroAssembly";
 import OpsCompression from "@/components/pages/home/OpsCompression";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
@@ -7,6 +9,7 @@ import SectorMap from "@/components/pages/home/SectorMap";
 import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { home } from "@/lib/i18n/home";
+import { showcase } from "@/lib/i18n/showcase";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
@@ -18,12 +21,29 @@ function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
+/* The temporary home swap (bead hq-wrig5.3). With SHOWCASE=1 this route
+   renders the showcase: the three modules, a demo per module, how pricing
+   works and the diagnostic. With the variable unset it renders OfficialHome
+   below, unchanged, so bringing the official home back is one environment
+   change and a redeploy. Nothing about the official home is deleted or moved:
+   it is the function under this switch, and its metadata, its dictionary and
+   its visuals are all where they were. */
+
 export function generateMetadata({ params }: Params): Metadata {
   const locale = localeOf(params);
-  return pageMetadata(locale, "/", home[locale].meta, true);
+  const meta = showcaseEnabled()
+    ? showcase[locale].meta
+    : home[locale].meta;
+  return pageMetadata(locale, "/", meta, true);
 }
 
 export default function Home({ params }: Params) {
+  const locale = localeOf(params);
+  if (showcaseEnabled()) return <Showcase locale={locale} />;
+  return <OfficialHome params={params} />;
+}
+
+function OfficialHome({ params }: Params) {
   const locale = localeOf(params);
   const d = home[locale];
   const s = site[locale];
