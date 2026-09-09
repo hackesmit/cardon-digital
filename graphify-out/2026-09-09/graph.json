@@ -570,7 +570,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_privacy_page",
-      "community": 33,
+      "community": 6,
       "norm_label": "page.tsx"
     },
     {
@@ -580,7 +580,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_privacy_page_params",
-      "community": 33,
+      "community": 6,
       "norm_label": "params"
     },
     {
@@ -590,7 +590,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_privacy_page_localeof",
-      "community": 33,
+      "community": 6,
       "norm_label": "localeof()"
     },
     {
@@ -600,7 +600,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_privacy_page_generatemetadata",
-      "community": 33,
+      "community": 6,
       "norm_label": "generatemetadata()"
     },
     {
@@ -610,7 +610,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_privacy_page_privacypage",
-      "community": 33,
+      "community": 6,
       "norm_label": "privacypage()"
     },
     {
@@ -620,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_terms_page",
-      "community": 28,
+      "community": 6,
       "norm_label": "page.tsx"
     },
     {
@@ -630,7 +630,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_terms_page_params",
-      "community": 28,
+      "community": 6,
       "norm_label": "params"
     },
     {
@@ -640,7 +640,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_terms_page_localeof",
-      "community": 28,
+      "community": 6,
       "norm_label": "localeof()"
     },
     {
@@ -650,7 +650,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_terms_page_generatemetadata",
-      "community": 28,
+      "community": 6,
       "norm_label": "generatemetadata()"
     },
     {
@@ -660,7 +660,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_terms_page_termspage",
-      "community": 28,
+      "community": 6,
       "norm_label": "termspage()"
     },
     {
@@ -1130,7 +1130,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle",
-      "community": 9,
+      "community": 37,
       "norm_label": "berrytobottle.tsx"
     },
     {
@@ -1140,7 +1140,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle_berrytobottle",
-      "community": 9,
+      "community": 37,
       "norm_label": "berrytobottle()"
     },
     {
@@ -1150,7 +1150,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle_berrytobottledesktop",
-      "community": 9,
+      "community": 37,
       "norm_label": "berrytobottledesktop()"
     },
     {
@@ -1160,7 +1160,7 @@
       "source_location": "L271",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle_berrytobottlemobile",
-      "community": 9,
+      "community": 37,
       "norm_label": "berrytobottlemobile()"
     },
     {
@@ -1947,7 +1947,7 @@
       "label": "ModuleBlock()",
       "file_type": "code",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L29",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "components_pages_modulos_moduleblock_moduleblock",
       "community": 33,
@@ -2357,7 +2357,7 @@
       "label": "strings()",
       "file_type": "code",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L36",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "components_pages_showcase_showcase_test_strings",
       "community": 2,
@@ -2367,7 +2367,7 @@
       "label": "keyPaths()",
       "file_type": "code",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L46",
+      "source_location": "L51",
       "_origin": "ast",
       "id": "components_pages_showcase_showcase_test_keypaths",
       "community": 2,
@@ -2380,7 +2380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo",
-      "community": 9,
+      "community": 37,
       "norm_label": "assistantdemo.tsx"
     },
     {
@@ -2390,7 +2390,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_bars",
-      "community": 9,
+      "community": 37,
       "norm_label": "bars"
     },
     {
@@ -2400,7 +2400,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_cited_row",
-      "community": 9,
+      "community": 37,
       "norm_label": "cited_row"
     },
     {
@@ -2410,7 +2410,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_assistantdemo",
-      "community": 9,
+      "community": 37,
       "norm_label": "assistantdemo()"
     },
     {
@@ -2420,7 +2420,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_pricingbundles",
-      "community": 4,
+      "community": 33,
       "norm_label": "pricingbundles.tsx"
     },
     {
@@ -2430,7 +2430,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_pages_winery_pricingbundles_pricingbundles",
-      "community": 4,
+      "community": 33,
       "norm_label": "pricingbundles()"
     },
     {
@@ -2460,7 +2460,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield",
-      "community": 4,
+      "community": 37,
       "norm_label": "vinefield.tsx"
     },
     {
@@ -2470,7 +2470,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_rgb",
-      "community": 4,
+      "community": 37,
       "norm_label": "rgb"
     },
     {
@@ -2480,7 +2480,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_pt",
-      "community": 4,
+      "community": 37,
       "norm_label": "pt"
     },
     {
@@ -2490,7 +2490,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_trace",
-      "community": 4,
+      "community": 37,
       "norm_label": "trace"
     },
     {
@@ -2500,7 +2500,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_sourcekind",
-      "community": 4,
+      "community": 37,
       "norm_label": "sourcekind"
     },
     {
@@ -2510,7 +2510,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_source",
-      "community": 4,
+      "community": 37,
       "norm_label": "source"
     },
     {
@@ -2520,7 +2520,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_geom",
-      "community": 4,
+      "community": 37,
       "norm_label": "geom"
     },
     {
@@ -2530,7 +2530,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_vinefield",
-      "community": 4,
+      "community": 37,
       "norm_label": "vinefield()"
     },
     {
@@ -3637,7 +3637,7 @@
       "label": "demoHref()",
       "file_type": "code",
       "source_file": "lib/demo.ts",
-      "source_location": "L30",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "lib_demo_demohref",
       "community": 33,
@@ -3670,7 +3670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider",
-      "community": 9,
+      "community": 37,
       "norm_label": "localeprovider.tsx"
     },
     {
@@ -3680,7 +3680,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_localecontext",
-      "community": 9,
+      "community": 37,
       "norm_label": "localecontext"
     },
     {
@@ -3710,7 +3710,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_usedict",
-      "community": 9,
+      "community": 37,
       "norm_label": "usedict()"
     },
     {
@@ -4670,7 +4670,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_terms",
-      "community": 28,
+      "community": 6,
       "norm_label": "terms.ts"
     },
     {
@@ -4680,7 +4680,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_i18n_terms_en",
-      "community": 28,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -4690,7 +4690,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_i18n_terms_es",
-      "community": 28,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -4700,7 +4700,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "lib_i18n_terms_termsdict",
-      "community": 28,
+      "community": 6,
       "norm_label": "termsdict"
     },
     {
@@ -4710,7 +4710,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "lib_i18n_terms_terms",
-      "community": 28,
+      "community": 6,
       "norm_label": "terms"
     },
     {
@@ -4720,7 +4720,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_winery",
-      "community": 4,
+      "community": 37,
       "norm_label": "winery.ts"
     },
     {
@@ -4730,7 +4730,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "lib_i18n_winery_en",
-      "community": 4,
+      "community": 37,
       "norm_label": "en"
     },
     {
@@ -4740,7 +4740,7 @@
       "source_location": "L220",
       "_origin": "ast",
       "id": "lib_i18n_winery_es",
-      "community": 4,
+      "community": 37,
       "norm_label": "es"
     },
     {
@@ -4750,7 +4750,7 @@
       "source_location": "L420",
       "_origin": "ast",
       "id": "lib_i18n_winery_winerydict",
-      "community": 4,
+      "community": 37,
       "norm_label": "winerydict"
     },
     {
@@ -4760,7 +4760,7 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "lib_i18n_winery_winery",
-      "community": 4,
+      "community": 37,
       "norm_label": "winery"
     },
     {
@@ -5280,7 +5280,7 @@
       "source_location": "L545",
       "_origin": "ast",
       "id": "lib_pricing_featurehours",
-      "community": 11,
+      "community": 34,
       "norm_label": "featurehours()"
     },
     {
@@ -5290,7 +5290,7 @@
       "source_location": "L557",
       "_origin": "ast",
       "id": "lib_pricing_featuresetup",
-      "community": 11,
+      "community": 34,
       "norm_label": "featuresetup()"
     },
     {
@@ -5440,7 +5440,7 @@
       "source_location": "L751",
       "_origin": "ast",
       "id": "lib_pricing_addonof",
-      "community": 11,
+      "community": 35,
       "norm_label": "addonof()"
     },
     {
@@ -5450,7 +5450,7 @@
       "source_location": "L758",
       "_origin": "ast",
       "id": "lib_pricing_addonmonthly",
-      "community": 11,
+      "community": 35,
       "norm_label": "addonmonthly()"
     },
     {
@@ -5460,7 +5460,7 @@
       "source_location": "L766",
       "_origin": "ast",
       "id": "lib_pricing_addonavailable",
-      "community": 11,
+      "community": 35,
       "norm_label": "addonavailable()"
     },
     {
@@ -13968,7 +13968,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "components_pages_modulos_moduleblock_moduleblock",
@@ -14026,6 +14026,17 @@
       "source_location": "L4",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
+      "target": "lib_demo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/pages/modulos/ModuleBlock.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_config",
       "confidence_score": 1.0
     },
@@ -14034,7 +14045,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L4",
+      "source_location": "L5",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_config_locale",
@@ -14045,7 +14056,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_modulos",
@@ -14056,7 +14067,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_modulos_modulecopy",
@@ -14067,7 +14078,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L5",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_modulos_modulos",
@@ -14078,7 +14089,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_rich",
@@ -14089,7 +14100,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock",
       "target": "lib_i18n_rich_rich",
@@ -14112,7 +14123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pages/modulos/ModuleBlock.tsx",
-      "source_location": "L77",
+      "source_location": "L78",
       "weight": 1.0,
       "source": "components_pages_modulos_moduleblock_moduleblock",
       "target": "lib_i18n_rich_rich"
@@ -15423,7 +15434,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pages/showcase/Showcase.tsx",
-      "source_location": "L63",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_showcase",
       "target": "lib_demo_demohref"
@@ -15445,7 +15456,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pages/showcase/Showcase.tsx",
-      "source_location": "L88",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_showcase",
       "target": "lib_i18n_rich_rich"
@@ -15664,7 +15675,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L46",
+      "source_location": "L51",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "components_pages_showcase_showcase_test_keypaths",
@@ -15674,7 +15685,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L36",
+      "source_location": "L41",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "components_pages_showcase_showcase_test_strings",
@@ -15718,7 +15729,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L13",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_config",
@@ -15729,7 +15740,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L13",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_config_locale",
@@ -15740,7 +15751,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L13",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_config_locales",
@@ -15751,7 +15762,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L10",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_modulos",
@@ -15762,7 +15773,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L10",
+      "source_location": "L15",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_modulos_modulos",
@@ -15773,7 +15784,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L11",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_precios",
@@ -15784,7 +15795,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L11",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_precios_precios",
@@ -15795,7 +15806,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L5",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_showcase",
@@ -15806,7 +15817,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L5",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_showcase_problemitem",
@@ -15817,7 +15828,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L5",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_showcase_showcase",
@@ -15828,7 +15839,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L5",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_showcase_showcasemodule",
@@ -15839,7 +15850,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L12",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_site",
@@ -15850,7 +15861,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L12",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_i18n_site_site",
@@ -15861,7 +15872,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L14",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_pricing",
@@ -15872,7 +15883,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/showcase/showcase.test.ts",
-      "source_location": "L14",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "components_pages_showcase_showcase_test",
       "target": "lib_pricing_moduleids",
@@ -18542,7 +18553,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/demo.ts",
-      "source_location": "L30",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "lib_demo",
       "target": "lib_demo_demohref",
@@ -18620,7 +18631,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "lib/demo.ts",
-      "source_location": "L31",
+      "source_location": "L33",
       "weight": 1.0,
       "source": "lib_demo_demohref",
       "target": "lib_i18n_config_localepath"
@@ -23727,5 +23738,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a517d6768f746b006e340dd4ba4022e505af941a"
+  "built_at_commit": "04d09a26d0ed6f79fac966496eee483715208aac"
 }
