@@ -54,7 +54,7 @@ const en = {
     title: "One demo per module, with a single module switched on.",
     sub: "Each demo runs on a made-up brand with illustrative data, no signup and no password. **Nothing you see in one belongs to a client.**",
     soon: "coming",
-    note: "The demos open shortly. **The buttons are here so you know where they will be,** and each one lands on the address its demo will have. The demo host is not live yet, so none of them opens anything today.",
+    note: "The demos open shortly. **The buttons are here so you know where they will be.** The demo host is not live yet, so none of them opens anything today.",
     modulesLead: "Every feature, every size band and the seven ways they combine:",
     modulesCta: "See the three modules",
     modules: [
@@ -88,7 +88,7 @@ const en = {
   pricing: {
     kicker: "What it costs",
     title: "Every module has a published entry price.",
-    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **Pause the service and nothing switches off.**",
+    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **When the service ends, nothing moves between accounts.**",
     rules: [
       "One entry price per module, printed next to the complete build that produced it. **A figure goes where its list goes, so both live on the pricing page.**",
       "The shared service base is charged once per client, whether you buy one module or three. Each module adds only its own run cost on top.",
@@ -133,7 +133,7 @@ const es: typeof en = {
     title: "Un demo por módulo, con un solo módulo encendido.",
     sub: "Cada demo corre sobre una marca ficticia con datos ilustrativos, sin registro y sin contraseña. **Nada de lo que ve ahí es de un cliente.**",
     soon: "pronto",
-    note: "Los demos abren en breve. **Los botones están aquí para que sepa dónde van a estar,** y cada uno lleva a la dirección que va a tener su demo. El demo todavía no está arriba, así que hoy ninguno abre nada.",
+    note: "Los demos abren en breve. **Los botones están aquí para que sepa dónde van a estar.** El demo todavía no está arriba, así que hoy ninguno abre nada.",
     modulesLead:
       "Cada función, cada banda de tamaño y las siete formas en que se combinan:",
     modulesCta: "Ver los tres módulos",
@@ -168,7 +168,7 @@ const es: typeof en = {
   pricing: {
     kicker: "Lo que cuesta",
     title: "Cada módulo tiene su precio de entrada publicado.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Si la pausa, no se apaga nada.**",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Si el servicio termina, no se mueve nada entre cuentas.**",
     rules: [
       "Un precio de entrada por módulo, impreso junto a la construcción completa que lo produjo. **La cifra va a donde va su lista, así que las dos viven en la página de precios.**",
       "La base de servicio compartida se cobra una sola vez por cliente, compre un módulo o los tres. Cada módulo agrega encima nada más su propio costo de operación.",
