@@ -565,18 +565,18 @@
     "semantic_hash": ""
   },
   "app/[locale]/modulos/page.tsx": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "05b27648878cfd4f8b71808801b6ecb2",
+    "mtime": 1788953275.7337072,
+    "ast_hash": "a67940a620338c5aea342afde926314f",
     "semantic_hash": ""
   },
   "components/pages/modulos/BridgeMap.tsx": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "bb554e9843c977f52f6f80b151c7b5ee",
+    "mtime": 1788953275.7337072,
+    "ast_hash": "fd423b0722d6b87324c06f85a3c5f588",
     "semantic_hash": ""
   },
   "lib/i18n/modulos.ts": {
-    "mtime": 1788935476.2640197,
-    "ast_hash": "4dcad5f0ea4ecec9433ad21ca18084e3",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "3b9411a21ec32e7a0afa5d077708ceb5",
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
@@ -585,18 +585,18 @@
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
-    "mtime": 1788933334.3277194,
-    "ast_hash": "cbf1209bea58d401d7ebf316dc25817a",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "d37cb3032ee7dcfa2aafaa7f0f7c2476",
     "semantic_hash": ""
   },
   "components/pages/precios/ModuleFloors.tsx": {
-    "mtime": 1788914392.221754,
-    "ast_hash": "d830e5684e94bd17d3648da20ab5f6a8",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "22d7a2855696ac7be8850c47d0837853",
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1788933334.3277194,
-    "ast_hash": "61a31408b80f5b229734a1ff157b0d89",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "3b03ec2c2cfedee79fd1230a3a759a26",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "components/pages/showcase/Showcase.tsx": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "f65d4c96dfd3c1fb57cf0eae2360dfab",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "dcfb0144d417d9153666cdf051da88d5",
     "semantic_hash": ""
   },
   "components/pages/showcase/flag.ts": {
@@ -620,18 +620,18 @@
     "semantic_hash": ""
   },
   "lib/i18n/showcase.ts": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "f2e9b61e472deafee1486aea4fc3f235",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "3c55a8e55070addf8af9d79a53085900",
     "semantic_hash": ""
   },
   "components/pages/modulos/Combinations.tsx": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "7dd13d55ce5266803827bd5fe64b4f3a",
+    "mtime": 1788953275.7337072,
+    "ast_hash": "3ecd7634499a478ac7023c4a3dace4da",
     "semantic_hash": ""
   },
   "components/pages/modulos/ModuleBlock.tsx": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "65858e58597a0686e4c5f148b0f27990",
+    "mtime": 1788953275.7337072,
+    "ast_hash": "71694370864f8b2c944c8abcf486bcf5",
     "semantic_hash": ""
   },
   "components/pages/precios/PricingDetails.tsx": {
@@ -642,6 +642,36 @@
   "lib/demo.ts": {
     "mtime": 1788937733.2934594,
     "ast_hash": "5b1014dc60f67b95abc1f055fe993b67",
+    "semantic_hash": ""
+  },
+  "components/pages/modulos/BridgeMap.test.ts": {
+    "mtime": 1788953275.7337072,
+    "ast_hash": "6be0b33ac2ae32a477f09e150f7765a9",
+    "semantic_hash": ""
+  },
+  "components/pages/modulos/CombinationPicker.tsx": {
+    "mtime": 1788953275.7337072,
+    "ast_hash": "698280e674907688f6ec686170b4652e",
+    "semantic_hash": ""
+  },
+  "components/pages/modulos/ModuleScreen.tsx": {
+    "mtime": 1788953275.7337072,
+    "ast_hash": "7df278125b3dfec715a52a542abe85f0",
+    "semantic_hash": ""
+  },
+  "components/pages/precios/ComboVis.tsx": {
+    "mtime": 1788953275.7337072,
+    "ast_hash": "723488391e80e2abea249f27460422a2",
+    "semantic_hash": ""
+  },
+  "components/pages/precios/FloorChart.tsx": {
+    "mtime": 1788953275.7337072,
+    "ast_hash": "f25001f5053f29ef793b04fa87fd2af5",
+    "semantic_hash": ""
+  },
+  "components/pages/showcase/VintageCompare.tsx": {
+    "mtime": 1788953275.7353444,
+    "ast_hash": "e057974c71a8b0a3bcdd3ce8a52de4cb",
     "semantic_hash": ""
   }
 }
