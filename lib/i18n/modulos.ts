@@ -51,7 +51,7 @@ const en = {
   meta: {
     title: "The three modules",
     description:
-      "Produccion, Hospitalidad and Restaurante: the winery record, the lodging calendar and the point of sale. Buy one, two or three, at the size your operation is, and the bridges between them open up once both of the modules they join are bought.",
+      "Produccion, Hospitalidad and Restaurante: the winery record, the lodging calendar and the point of sale. Buy one, two or three, at the size your operation is, and each bridge between them can be quoted separately once both of the modules it joins are bought.",
   },
 
   hero: {
@@ -414,7 +414,7 @@ const es: typeof en = {
   meta: {
     title: "Los tres módulos",
     description:
-      "Producción, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamaño de la operación, y los puentes entre ellos se abren cuando se compran los dos módulos que unen.",
+      "Producción, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamaño de la operación, y cada puente entre ellos se puede cotizar aparte cuando se compran los dos módulos que une.",
   },
 
   hero: {
