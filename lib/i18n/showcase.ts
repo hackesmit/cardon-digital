@@ -59,7 +59,7 @@ const en = {
     all: "All of it together",
     allAria: "Open the demo with all three modules switched on",
     soon: "coming",
-    note: "Each demo runs on a made-up brand, with no signup and no password. **The demos open shortly; the buttons are here so you know where they will be.** The demo host is not up yet, so none of them opens anything today.",
+    note: "Each demo runs on a made-up brand, with no signup and no password. **Each button opens the live demo in a new tab, with that module switched on.**",
     modules: [
       {
         id: "produccion",
@@ -172,7 +172,7 @@ const es: typeof en = {
     all: "Todo junto",
     allAria: "Abrir el demo con los tres módulos encendidos",
     soon: "pronto",
-    note: "Cada demo corre sobre una marca ficticia, sin registro y sin contraseña. **Los demos abren en breve; los botones están aquí para que sepa dónde van a estar.** El demo todavía no está arriba, así que hoy ninguno abre nada.",
+    note: "Cada demo corre sobre una marca ficticia, sin registro y sin contraseña. **Cada botón abre el demo en vivo en una pestaña nueva, con ese módulo encendido.**",
     modules: [
       {
         id: "produccion",

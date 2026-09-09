@@ -79,7 +79,7 @@ const en = {
   priceCta: "See pricing",
 
   demoNote:
-    "The demos run on a made-up brand, and each one opens with a single module switched on. **They open shortly; the buttons are here so you know where they will be.**",
+    "The demos run on a made-up brand, and each one opens with a single module switched on. **Each button opens the live demo in a new tab.**",
   demoSoon: "coming",
 
   sizesLead: "Size is set per module, so an operation can be M on one and S on another.",
@@ -487,7 +487,7 @@ const es: typeof en = {
   priceCta: "Ver precios",
 
   demoNote:
-    "Los demos corren sobre una marca ficticia, y cada uno abre con un solo módulo encendido. **Abren en breve; los botones están aquí para que sepa dónde van a estar.**",
+    "Los demos corren sobre una marca ficticia, y cada uno abre con un solo módulo encendido. **Cada botón abre el demo en vivo en una pestaña nueva.**",
   demoSoon: "pronto",
 
   sizesLead:
