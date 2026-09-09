@@ -182,8 +182,9 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 .lang-switch .icon{width:15px;height:15px;display:block;opacity:0.8;}
 .lang-switch .lang-short{display:none;}
 /* Above the mobile menu the switch is a two-letter chip: the full word only
-   fits once the row has room for it again. */
-@media (max-width:1080px) and (min-width:821px){
+   fits once the row has room for it again. The band ends where the tightened
+   nav row below ends, at 1139px, because the two share the same budget. */
+@media (max-width:1139px) and (min-width:821px){
   .lang-switch .lang-full{display:none;}
   .lang-switch .lang-short{display:inline;}
 }
@@ -703,12 +704,18 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   .diag-inner{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr;}
 }
-/* The band between the mobile menu and a comfortable desktop row. Five items,
+/* The band between the mobile menu and a comfortable desktop row. Seven items,
    the language chip, the mode toggle and the action share one line here with a
    few dozen pixels to spare, so the gaps and the chips tighten instead of the
    row wrapping to a second one. Nothing may wrap: an item that breaks its own
-   label is what pushed the header from 65 to 86 px. */
-@media (max-width:1023px) and (min-width:821px){
+   label is what pushed the header from 65 to 86 px.
+
+   The band ended at 1023px while the row carried five items (2026-09-02). It
+   ends at 1139px now that Modulos and Precios are on it (2026-09-08, bead
+   hq-wrig5.3): at full size the Spanish row wrapped from 1024 to 1139px, and
+   1140px is the first width where it fits with the gaps and the language word
+   at full size. Measured across es and en at 17 widths, not estimated. */
+@media (max-width:1139px) and (min-width:821px){
   .bar{gap:12px;}
   .primary-nav{gap:12px;}
   .nav-menu{gap:12px;}
