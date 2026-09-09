@@ -104,6 +104,9 @@ const en = {
     hospitalidad: {
       title: "Master calendar",
       nights: "nights",
+      /** The day columns are a visual axis, so a stay's accessible name says
+          the range in words. {a} is the first day, {b} the last. */
+      dayRange: "days {a} to {b}",
       channels: {
         direct: "Direct",
         ota1: "Channel 1",
@@ -502,6 +505,7 @@ const es: typeof en = {
     hospitalidad: {
       title: "Calendario maestro",
       nights: "noches",
+      dayRange: "días {a} a {b}",
       channels: {
         direct: "Directo",
         ota1: "Canal 1",

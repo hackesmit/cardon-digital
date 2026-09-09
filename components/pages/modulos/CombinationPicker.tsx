@@ -79,10 +79,15 @@ export default function CombinationPicker({
                   aria-pressed={on.includes(id)}
                   aria-label={names[id]}
                   onClick={() => toggle(id)}
+                  /* Shares of the drawing rather than pixels, for the same
+                     reason the table map uses them: the svg scales and a fixed
+                     size only fits at one width. */
                   style={
                     {
                       "--x": (node.x / 320) * 100 + "%",
                       "--y": (node.y / 214) * 100 + "%",
+                      "--w": (26 / 320) * 100 + "%",
+                      "--h": (26 / 214) * 100 + "%",
                     } as React.CSSProperties
                   }
                 />

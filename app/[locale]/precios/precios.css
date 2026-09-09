@@ -291,9 +291,14 @@
    border of its own, the bar grows enough for the pattern to read, and the
    legend swatches take the same four borders so the key still matches. */
 @media (forced-colors:active){
-  .pg-precios .combo-bar{height:16px;gap:2px;overflow:visible;}
+  /* The borders sit INSIDE each block and the track keeps its clip: added to
+     the outside they would push a bar whose parts already fill it past its own
+     cell, which at 360px is a collision (Lucy 2026-09-09 round two, third
+     finding). */
+  .pg-precios .combo-bar{height:16px;}
   .pg-precios .combo-fill{
-    box-shadow:none;border:3px solid CanvasText;border-radius:0;
+    box-sizing:border-box;box-shadow:none;border:3px solid CanvasText;
+    border-radius:0;min-width:6px;
   }
   .pg-precios .combo-fill[data-part="base"],
   .pg-precios .combo-key[data-part="base"] .combo-swatch{border-style:solid;}
