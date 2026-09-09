@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "b9d4ea502a78e91fe7f122daea0f0ee2",
+    "mtime": 1788424941.2733243,
+    "ast_hash": "f951319d37ecae603975cf94c66c6d1f",
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
@@ -652,21 +652,6 @@
   "lib/pricing.test.ts": {
     "mtime": 1788911186.7143393,
     "ast_hash": "9cea8f28adf77b9f107a0a96bad5ec6c",
-    "semantic_hash": ""
-  },
-  "app/[locale]/modulos/page.tsx": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "e8d8c38b5b6b36f366e3268760ef3585",
-    "semantic_hash": ""
-  },
-  "components/pages/modulos/BridgeMap.tsx": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "bb554e9843c977f52f6f80b151c7b5ee",
-    "semantic_hash": ""
-  },
-  "lib/i18n/modulos.ts": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "29628ec7df39aa920bd51136fab96226",
     "semantic_hash": ""
   }
 }
