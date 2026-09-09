@@ -1,10 +1,14 @@
 {
   "0": "canvasKit.ts",
   "1": "compilerOptions",
+  "2": "site.ts",
   "3": "page.tsx",
+  "4": "config.ts",
   "5": "ModuleScreen.tsx",
   "6": "ClinicSchedule.tsx",
+  "7": "page.tsx",
   "8": "devDependencies",
+  "9": "pageMetadata",
   "10": "page.tsx",
   "11": "Agent Instructions",
   "12": "Project Instructions for AI Agents",
@@ -27,11 +31,15 @@
   "29": "next.config.mjs",
   "30": "postcss.config.mjs",
   "31": "tailwind.config.ts",
+  "32": "page.tsx",
   "33": "page.tsx",
   "34": "VineField.tsx",
   "35": "SitePlanVisual.tsx",
   "36": "localePath",
   "37": "page.tsx",
+  "38": "page.tsx",
   "39": "BridgeMap.tsx",
-  "41": ".eslintrc.json"
+  "40": "ModuleFloors.tsx",
+  "41": ".eslintrc.json",
+  "42": "localePath"
 }
