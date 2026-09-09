@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import ThreeLines from "@/components/pages/enkanto/ThreeLines";
 import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";
@@ -8,6 +9,7 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import { enkanto } from "@/lib/i18n/enkanto";
+import { allModules, demoHref, demoIsLive } from "@/lib/demo";
 import "./enkanto-case.css";
 
 type Params = { params: { locale: string } };
@@ -372,6 +374,90 @@ export default function EnkantoCaseStudy({ params }: Params) {
         </div>
       </section>
 
+      {/* ============================ THE SYSTEM ============================ */}
+      <section className="section rule-top" id="system" aria-labelledby="system-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker enk">{d.system.kicker}</span>
+              <h2 id="system-title">{d.system.title}</h2>
+            </div>
+            <div className="prose">
+              <p>{d.system.p1}</p>
+              <p>{rich(d.system.p2)}</p>
+            </div>
+          </Reveal>
+
+          <div className="sys-grid">
+            {d.system.modules.map((m, i) => (
+              <Reveal key={m.num} delay={i * 60}>
+                <article className="sys-card">
+                  <p className="sys-card-head">
+                    <span className="sys-card-num mono">{m.num}</span>
+                    <span className="sys-card-name mono">{m.name}</span>
+                  </p>
+                  <h3 className="sys-card-title">{m.title}</h3>
+                  <p className="sys-card-body">{m.body}</p>
+                  <p className="sys-screens-k mono">{d.system.screensK}</p>
+                  <ul className="sys-screens">
+                    {m.screens.map((screen) => (
+                      <li className="sys-screen mono" key={screen}>
+                        {screen}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ HONEST EDGES ============================ */}
+      <section className="section" aria-labelledby="limits-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker gold">{d.system.limitsKicker}</span>
+              <h2 id="limits-title">{d.system.limitsTitle}</h2>
+            </div>
+          </Reveal>
+          <div className="sys-limits">
+            {d.system.limits.map((limit, i) => (
+              <Reveal key={limit.lead} delay={i * 60}>
+                <div className="sys-limit">
+                  <p className="sys-limit-lead">{limit.lead}</p>
+                  <p className="sys-limit-body">{limit.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ THE DEMO ============================ */}
+      <section className="section sys-demo-sec" aria-labelledby="demo-title">
+        <div className="container">
+          <Reveal>
+            <div className="sys-demo">
+              <span className="kicker enk">{d.system.demo.kicker}</span>
+              <h2 id="demo-title">{d.system.demo.title}</h2>
+              <p className="sys-demo-body">{rich(d.system.demo.body)}</p>
+              <Link
+                className="cta cta-lg"
+                href={demoHref(locale, allModules)}
+                {...(demoIsLive
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                {d.system.demo.cta}
+              </Link>
+              <p className="sys-demo-note mono">{d.system.demo.note}</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ============================ RESULT CALLOUTS ============================ */}
       <section className="section results rule-top" aria-labelledby="results-title">
         <div className="container">
@@ -393,6 +479,33 @@ export default function EnkantoCaseStudy({ params }: Params) {
         </div>
       </section>
 
+      {/*
+        PLACEHOLDER, NOT PUBLISHABLE COPY.
+
+        Bead hq-cczm.25. Daniel's standing rule for this page is that any
+        statement about En'kanto's results needs his own figures, collected
+        before the copy is written. The request for them is console request
+        r-65e508c5, filed 2026-09-09 and unanswered when this branch was
+        written. Everything else on this page is stated from the merged build
+        or from figures already cleared for publication; this block is the one
+        gap, and it is marked on the page rather than filled with an estimate.
+
+        To close it: replace d.pending with a result section written to the
+        outcome framing rule (case-naming.md 6.2), or delete this section and
+        its dictionary block. It must not reach production as it stands.
+      */}
+      <section className="section pending-sec" aria-labelledby="pending-title">
+        <div className="container">
+          <div className="pending-block">
+            <p className="pending-marker mono">{d.pending.marker}</p>
+            <h2 id="pending-title" className="pending-title">
+              {d.pending.title}
+            </h2>
+            <p className="pending-body">{d.pending.body}</p>
+          </div>
+        </div>
+      </section>
+
       {/* ============================ OUTCOME ============================ */}
       <section className="outcome" aria-labelledby="outcome-title">
         <div className="container">
@@ -402,7 +515,8 @@ export default function EnkantoCaseStudy({ params }: Params) {
               <h2 id="outcome-title">{d.outcome.title}</h2>
               <div className="prose">
                 <p>{d.outcome.p1}</p>
-                <p>{rich(d.outcome.p2)}</p>
+                <p>{d.outcome.p2}</p>
+                <p>{rich(d.outcome.p3)}</p>
               </div>
             </div>
           </Reveal>
