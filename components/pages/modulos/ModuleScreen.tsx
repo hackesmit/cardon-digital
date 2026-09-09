@@ -139,6 +139,11 @@ function LotBoard({ locale, uid }: { locale: Locale; uid: string }) {
               className="ms-row"
               aria-pressed={i === picked}
               aria-controls={panel}
+              /* The column heads are a visual row and are hidden from assistive
+                 technology, so without this the button reads as four unlabelled
+                 tokens, "L-12 Cabernet T4 24.4", and nothing says which one is
+                 the tank (Lucy 2026-09-09, second finding). */
+              aria-label={`${d.lot} ${row.lot}, ${d.variety} ${row.variety}, ${d.tank} ${row.tank}, ${d.brix} ${row.brix[row.brix.length - 1]?.toFixed(1)}`}
               onClick={() => setPicked(i)}
             >
               <span className="ms-cell mono">{row.lot}</span>
@@ -157,7 +162,7 @@ function LotBoard({ locale, uid }: { locale: Locale; uid: string }) {
           reading, so the line itself is hidden from assistive technology. */}
       <div className="ms-detail" id={panel} aria-live="polite">
         <span className="ms-detail-k mono">
-          {lot.lot} · {lot.variety}
+          {lot.lot} · {lot.variety} · {lot.tank}
         </span>
         <Spark values={lot.brix} className="ms-spark" />
         <span className="ms-detail-v mono">

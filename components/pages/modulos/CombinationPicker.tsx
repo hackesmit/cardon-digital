@@ -43,10 +43,18 @@ export default function CombinationPicker({
   const names = bridgeLabels(locale);
   const [on, setOn] = useState<string[]>(MODULE_IDS.slice());
 
+  /* The last module on cannot be switched off. Zero modules is not one of the
+     seven combinations, so it would leave the list with nothing marked and the
+     map with nothing drawn, which is a state this section does not describe:
+     you buy the modules you run on, and running none is not a purchase. The
+     node stays pressed instead, which is the same shape as any "at least one"
+     filter (Lucy 2026-09-09, first finding). */
   const toggle = (id: string) =>
-    setOn((current) =>
-      current.includes(id) ? current.filter((m) => m !== id) : [...current, id],
-    );
+    setOn((current) => {
+      if (!current.includes(id)) return [...current, id];
+      if (current.length === 1) return current;
+      return current.filter((m) => m !== id);
+    });
 
   return (
     <div className="combina-grid" data-on={bridgeMask(on)}>
