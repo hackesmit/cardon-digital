@@ -3,10 +3,8 @@
   "1": "compilerOptions",
   "2": "FloorPlan.tsx",
   "3": "page.tsx",
-  "4": "package.json",
   "6": "ClinicSchedule.tsx",
   "8": "devDependencies",
-  "9": "layout.tsx",
   "10": "page.tsx",
   "11": "Agent Instructions",
   "12": "Project Instructions for AI Agents",
@@ -28,16 +26,10 @@
   "29": "next.config.mjs",
   "30": "postcss.config.mjs",
   "31": "tailwind.config.ts",
-  "32": "page.tsx",
   "33": "page.tsx",
   "34": "VineField.tsx",
   "35": "SitePlanVisual.tsx",
   "36": "localePath",
   "37": "page.tsx",
-  "38": "bundleHours",
-  "42": "Locale",
-  "44": "pageMetadata",
-  "45": "SiteShell.tsx",
-  "48": "page.tsx",
-  "49": "page.tsx"
+  "45": "SiteShell.tsx"
 }
