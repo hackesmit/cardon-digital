@@ -1,104 +1,130 @@
 import type { Dict } from "./rich";
 
 /**
- * The temporary showcase home (bead hq-wrig5.3). While this round runs, the
- * home route shows what we are opening: the three modules, a demo per module,
- * a summary of how pricing works, and the diagnostic. The official home stays
- * in the repo and comes back when the SHOWCASE flag is unset, so this
- * dictionary is written to be deletable in one commit and shares no strings
- * with lib/i18n/home.ts.
+ * The one feedback page (bead hq-wrig5.15). While this round runs, the home
+ * route with SHOWCASE=1 carries everything a reader would otherwise click
+ * around for: the pitch and the demo buttons, the six things that are wrong
+ * today, the three modules and the seven combinations, the whole pricing page,
+ * and the way to reach us. The official home stays in the repo and comes back
+ * when the flag is unset, so this dictionary is written to be deletable in one
+ * commit.
+ *
+ * Only the copy that belongs to THIS page lives here. The module descriptions
+ * come from lib/i18n/modulos.ts and the pricing copy from lib/i18n/precios.ts,
+ * rendered through the same components those pages use, because a second copy
+ * of a module description is a second thing to keep true.
  *
  * No figure lives in this file and none may ever be typed into it. A public
  * entry price never travels away from the feature list that produced it
  * (pricing-features.md 3.7 rule 3, restated in pricing-modules.md 8.1), and
- * that list is printed on /precios, which is the only page that carries the
- * figures. What this page may carry is the fee shape and the combination and
- * annual rules stated as policy, which is what it does.
+ * the figures this page shows are read out of lib/pricing.ts by the pricing
+ * components, never written down here.
  *
- * Module names, tags and one-line summaries are written here rather than read
- * out of the modules or pricing dictionaries, which is the house idiom: those
- * two files already carry their own copy for the same three modules, because
- * each surface says it in its own voice and at its own length.
+ * The competitor sentence in the problem list carries only what was checked on
+ * each vendor's own site on 2026-09-09; the source table is on the bead. The
+ * language claim of the original brief is not here on purpose, because the
+ * category leader ships a Spanish interface, and the region-lock claim is
+ * narrowed to the plan restriction Commerce7 actually publishes.
  */
 
-/** One module card: the name, what it is, and the button to its own demo. */
-export type ShowcaseModule = {
-  id: string;
-  num: string;
-  name: string;
-  tag: string;
-  line: string;
-  demo: string;
-};
+/**
+ * One demo button: which module it switches on, the short label the row shows,
+ * and the full label a screen reader gets. Nothing describes the module here.
+ * The descriptions are on the same page, rendered from lib/i18n/modulos.ts.
+ */
+export type ShowcaseModule = { id: string; name: string; demo: string };
+
+/** One of the six things that are wrong before we build anything. */
+export type ProblemItem = { h: string; body: string };
 
 const en = {
   meta: {
     title:
       "Cardon Digital | The three modules: Produccion, Hospitalidad and Restaurante",
     description:
-      "The winery record, the lodging calendar and the point of sale, as three modules you buy one, two or three of. A demo per module, a published entry price per module, and the diagnostic that sets the quote.",
+      "A growth-systems practice for wineries in Valle de Guadalupe and Ensenada. The system a winery runs on, in three modules with a demo each, the published entry price of every module, and the Growth Diagnostic that sets the quote.",
   },
 
+  /* The pitch, as given. Sentence one is the headline, the rest is the lead. */
   hero: {
     aria: "Introduction",
-    eyebrow: "The system, module by module",
-    t1: "Three modules. ",
-    accent: "Produccion, Hospitalidad and Restaurante.",
-    sub: "Produccion is the record of what you grew, made and sold. Hospitalidad is every booking from every channel in one calendar. Restaurante is the point of sale, from the waiter's phone to the cash cut. **You buy one, two or three, at the size of the operation in front of you.**",
-    ctaDemos: "See the demos",
-    ctaModules: "See the three modules",
+    eyebrow: "Cardon Digital",
+    t1: "A growth-systems practice ",
+    accent: "for wineries in Valle de Guadalupe and Ensenada.",
+    sub: "We build the system a winery runs on (harvest, lots, tanks, lab results, vintage comparison, weather data, sales and bookings) and keep it running, with an assistant that answers questions from the winery's own records. Around that system we run the marketing that fills the tasting room, the club and direct sales. **One senior team, flat fees, and the client owns what we build.**",
   },
 
   demos: {
-    kicker: "The demos",
-    title: "One demo per module, with a single module switched on.",
-    sub: "Each demo runs on a made-up brand, no signup and no password.",
+    label: "Open a demo",
+    all: "All of it together",
+    allAria: "Open the demo with all three modules switched on",
     soon: "coming",
-    note: "The demos open shortly. **The buttons are here so you know where they will be.** The demo host is not live yet, so none of them opens anything today.",
-    modulesLead: "Every feature, every size band and the seven ways they combine:",
-    modulesCta: "See the three modules",
+    note: "Each demo runs on a made-up brand, with no signup and no password. **The demos open shortly; the buttons are here so you know where they will be.** The demo host is not up yet, so none of them opens anything today.",
     modules: [
       {
         id: "produccion",
-        num: "01",
         name: "Produccion",
-        tag: "The record of the harvest, the cellar and the sale",
-        line: "Weights, lots, tanks, lab, barrel and bottling in one record, this vintage plotted beside the prior ones, and the commercial side sitting next to it.",
         demo: "Open the Produccion demo",
       },
       {
         id: "hospitalidad",
-        num: "02",
         name: "Hospitalidad",
-        tag: "Every booking in one calendar, and the day the property works from",
-        line: "Every channel in one calendar, the day view, the unit board with housekeeping on a phone, the guest kept between stays and revenue by channel.",
         demo: "Open the Hospitalidad demo",
       },
       {
         id: "restaurante",
-        num: "03",
         name: "Restaurante",
-        tag: "From the waiter's phone to the cash cut",
-        line: "The order on the phone, the kitchen screen, the table map, the bill split and paid, and a day that closes with a cut.",
         demo: "Open the Restaurante demo",
       },
     ] as ShowcaseModule[],
   },
 
+  /* The six points, as given. Point six carries only the competitor claims
+     that were checked on the vendor's own site; see the file header. */
+  problem: {
+    kicker: "Where it stands today",
+    title: "Six things that are true in almost every winery we walk into.",
+    sub: "None of them is about working harder. They are all about a record that was never kept in one place.",
+    items: [
+      {
+        h: "The record is spread across four places.",
+        body: "Field notebooks, tank cards, lab sheets and a spreadsheet somebody keeps. Gathering them takes longer than the decision they were meant to inform.",
+      },
+      {
+        h: "Past vintages are out of reach.",
+        body: "Three harvests ago is a box of paper. The Cabernet's total acidity in the two weeks before pick, 2023 against this year, takes an afternoon or never gets answered.",
+      },
+      {
+        h: "What worked cannot be repeated.",
+        body: "Without a comparable record there is no way to rebuild what was actually done, so each vintage starts again from memory.",
+      },
+      {
+        h: "Sales and hospitality run on tools that never talk.",
+        body: "Bookings, the club, the shop and distributors: four subscriptions, no single view, and follow-up that arrives late or not at all.",
+      },
+      {
+        h: "The reporting lands too late to act on.",
+        body: "Hours of manual work over the numbers, and by the time the report exists the month it describes is already closed.",
+      },
+      {
+        h: "The software market is not built for you.",
+        body: "The specialist winery systems all come from somewhere else. vintrace and InnoVint publish no price at all: you ask a salesperson for it. Commerce7 publishes its own in seven currencies and none of them is the peso, and its entry plan is capped to direct sales in the United States and Canada. None of them issues a CFDI, and an expense without a CFDI is not deductible. On the Mexican side, CONTPAQi and Aspel invoice correctly and their catalogues carry no winery product at all: they do not know what a lot, a tank or a vintage is.",
+      },
+    ] as ProblemItem[],
+  },
+
+  modules: {
+    kicker: "What we build",
+    title: "Three modules. You buy the ones you run on.",
+  },
+
   pricing: {
     kicker: "What it costs",
     title: "Every module has a published entry price.",
-    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the monthly report and the assistant. **When the service ends, nothing moves between accounts.**",
-    rules: [
-      "One entry price per module, printed next to the complete build that produced it. **A figure goes where its list goes, so both live on the pricing page.**",
-      "The shared service base is charged once per client, whether you buy one module or three. Each module adds only its own run cost on top.",
-      "In the build, the largest module goes at full price, the second is 10 percent less and the third 12 percent less. A year paid up front costs less than twelve monthly payments.",
-    ],
-    note: "An entry price only moves up: more sources, more units, more tables, more vintages, a connector, a second module. It never moves down. **The Growth Diagnostic sets the final quote.**",
-    cta: "See the entry prices",
   },
 
   close: {
+    kicker: "Talk to us",
     desc: "Which modules, at which size, and what gets built first is what the Diagnostic answers before anybody quotes anything. **Ten working days going through your data, your bookings, your floor and your numbers as one system.**",
     specs: [
       "**Day 1.** A working session over the operation you actually run, module by module.",
@@ -115,70 +141,86 @@ const es: typeof en = {
     title:
       "Cardon Digital | Los tres módulos: Producción, Hospitalidad y Restaurante",
     description:
-      "El registro de la bodega, el calendario del hospedaje y el punto de venta, en tres módulos de los que se compra uno, dos o tres. Un demo por módulo, un precio de entrada publicado por módulo, y el Diagnóstico que fija la cotización.",
+      "Una práctica de sistemas de crecimiento para bodegas del Valle de Guadalupe y Ensenada. El sistema con el que trabaja una bodega, en tres módulos con un demo cada uno, el precio de entrada publicado de cada módulo, y el Diagnóstico que fija la cotización.",
   },
 
   hero: {
     aria: "Presentación",
-    eyebrow: "El sistema, módulo por módulo",
-    t1: "Tres módulos. ",
-    accent: "Producción, Hospitalidad y Restaurante.",
-    sub: "Producción es el registro de lo que cultivó, elaboró y vendió. Hospitalidad es cada reserva de cada canal en un solo calendario. Restaurante es el punto de venta, del teléfono del mesero al corte de caja. **Se compra uno, dos o los tres, del tamaño de la operación que tiene enfrente.**",
-    ctaDemos: "Ver los demos",
-    ctaModules: "Ver los tres módulos",
+    eyebrow: "Cardon Digital",
+    t1: "Una práctica de sistemas de crecimiento ",
+    accent: "para bodegas del Valle de Guadalupe y Ensenada.",
+    sub: "Construimos el sistema con el que trabaja una bodega (cosecha, lotes, tanques, resultados de laboratorio, comparación de añadas, datos de clima, ventas y reservas) y lo mantenemos funcionando, con un asistente que responde preguntas desde el registro de la propia bodega. Alrededor de ese sistema operamos el marketing que llena la sala de degustación, el club y la venta directa. **Un solo equipo senior, cuotas fijas, y el cliente se queda con lo que construimos.**",
   },
 
   demos: {
-    kicker: "Los demos",
-    title: "Un demo por módulo, con un solo módulo encendido.",
-    sub: "Cada demo corre sobre una marca ficticia, sin registro y sin contraseña.",
+    label: "Abrir un demo",
+    all: "Todo junto",
+    allAria: "Abrir el demo con los tres módulos encendidos",
     soon: "pronto",
-    note: "Los demos abren en breve. **Los botones están aquí para que sepa dónde van a estar.** El demo todavía no está arriba, así que hoy ninguno abre nada.",
-    modulesLead:
-      "Cada función, cada banda de tamaño y las siete formas en que se combinan:",
-    modulesCta: "Ver los tres módulos",
+    note: "Cada demo corre sobre una marca ficticia, sin registro y sin contraseña. **Los demos abren en breve; los botones están aquí para que sepa dónde van a estar.** El demo todavía no está arriba, así que hoy ninguno abre nada.",
     modules: [
       {
         id: "produccion",
-        num: "01",
         name: "Producción",
-        tag: "El registro de la cosecha, la cava y la venta",
-        line: "Pesos, lotes, tanques, laboratorio, barrica y embotellado en un solo registro, esta añada junto a las anteriores, y la parte comercial al lado.",
         demo: "Abrir el demo de Producción",
       },
       {
         id: "hospitalidad",
-        num: "02",
         name: "Hospitalidad",
-        tag: "Cada reserva en un calendario, y el día desde el que trabaja la propiedad",
-        line: "Cada canal en un calendario, la vista del día, el tablero de unidades con la limpieza en el teléfono, el huésped guardado entre estancias y el ingreso por canal.",
         demo: "Abrir el demo de Hospitalidad",
       },
       {
         id: "restaurante",
-        num: "03",
         name: "Restaurante",
-        tag: "Del teléfono del mesero al corte de caja",
-        line: "La orden en el teléfono, la pantalla de cocina, el mapa de mesas, la cuenta dividida y cobrada, y el día que cierra con un corte.",
         demo: "Abrir el demo de Restaurante",
       },
     ] as ShowcaseModule[],
   },
 
+  problem: {
+    kicker: "Dónde está hoy",
+    title: "Seis cosas que son ciertas en casi toda bodega a la que entramos.",
+    sub: "Ninguna se arregla trabajando más. Todas vienen del mismo lugar: un registro que nunca se guardó junto.",
+    items: [
+      {
+        h: "El registro está repartido en cuatro lugares.",
+        body: "Libretas de campo, tarjetas de tanque, hojas de laboratorio y una hoja de cálculo que alguien mantiene. Juntarlos toma más tiempo que la decisión que iban a sostener.",
+      },
+      {
+        h: "Las añadas pasadas no se alcanzan.",
+        body: "Hace tres cosechas es una caja de papel. La acidez total del Cabernet en las dos semanas antes de la pizca, 2023 contra este año, toma una tarde o nunca se responde.",
+      },
+      {
+        h: "Lo que salió bien no se puede repetir.",
+        body: "Sin un registro comparable no hay forma de reconstruir qué se hizo de verdad, así que cada añada vuelve a empezar desde la memoria.",
+      },
+      {
+        h: "La venta y la hospitalidad corren en herramientas que no se hablan.",
+        body: "Reservas, club, tienda y distribuidores: cuatro suscripciones, ninguna vista única, y un seguimiento que llega tarde o no llega.",
+      },
+      {
+        h: "El informe llega tarde para poder actuar.",
+        body: "Horas de trabajo manual sobre los números, y para cuando el informe existe el mes que describe ya cerró.",
+      },
+      {
+        h: "El software del sector no está hecho para usted.",
+        body: "Los sistemas especializados de bodega vienen todos de fuera. vintrace e InnoVint no publican precio: hay que pedirlo a un vendedor. Commerce7 publica el suyo en siete monedas y ninguna es el peso, y su plan de entrada está limitado a la venta directa en Estados Unidos y Canadá. Ninguno emite un CFDI, y un gasto sin CFDI no es deducible. Del lado mexicano, CONTPAQi y Aspel facturan bien y en su catálogo no hay un solo producto para bodega: no saben qué es un lote, un tanque ni una añada.",
+      },
+    ] as ProblemItem[],
+  },
+
+  modules: {
+    kicker: "Qué construimos",
+    title: "Tres módulos. Se compran los que se operan.",
+  },
+
   pricing: {
     kicker: "Lo que cuesta",
     title: "Cada módulo tiene su precio de entrada publicado.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe mensual y el asistente. **Si el servicio termina, no se mueve nada entre cuentas.**",
-    rules: [
-      "Un precio de entrada por módulo, impreso junto a la construcción completa que lo produjo. **La cifra va a donde va su lista, así que las dos viven en la página de precios.**",
-      "La base de servicio compartida se cobra una sola vez por cliente, compre un módulo o los tres. Cada módulo agrega encima nada más su propio costo de operación.",
-      "En la construcción, el módulo más grande va a precio completo, el segundo lleva 10 por ciento menos y el tercero 12 por ciento menos. Y un año pagado por adelantado cuesta menos que doce mensualidades.",
-    ],
-    note: "Un precio de entrada solo se mueve hacia arriba: más fuentes, más unidades, más mesas, más añadas, un conector, un segundo módulo. Nunca hacia abajo. **El Diagnóstico fija la cotización final.**",
-    cta: "Ver los precios de entrada",
   },
 
   close: {
+    kicker: "Hablemos",
     desc: "Qué módulos, de qué tamaño y qué se construye primero es lo que responde el Diagnóstico antes de que nadie cotice nada. **Diez días hábiles revisando sus datos, sus reservas, su piso y sus números como un solo sistema.**",
     specs: [
       "**Día 1.** Una sesión de trabajo sobre la operación que de verdad corre, módulo por módulo.",
