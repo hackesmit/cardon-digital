@@ -1,5 +1,6 @@
 import type { Locale } from "./config";
 import type { Dict } from "./rich";
+import { formatPercent, mixDiscountByRank, type QuoteLine } from "../pricing";
 
 /**
  * Pricing page copy. Spanish is written first, as it is on every page here.
@@ -119,11 +120,34 @@ const en = {
     kicker: "More than one module",
     title: "Two modules, or three, and what changes.",
     sub: "The saving comes from two places and both are real. **The second module is a smaller build,** because the training, the assistant frame, the report generator and the environment are already standing. And one client is one relationship, so the shared part of the monthly fee is charged once however many modules you buy.",
+    /**
+     * The percentages are placeholders, filled from `mixDiscountByRank` by
+     * mixRules() below. A published policy figure that is typed here can drift
+     * from the calculation the day the data changes, which is the whole reason
+     * no figure lives in this file (Lucy 2026-09-08, seventh finding).
+     */
     rules: [
       "The shared service base is charged once, whatever the mix. Each module adds only its own run cost on top.",
-      "On the build, the largest module is at full price, the second is 10 percent off and the third 12 percent off.",
+      "On the build, the largest module is at full price, the second is {second} percent off and the third {third} percent off.",
       "Inside a mix each line is priced on the hours actually built, so a line can sit below what that module costs on its own. That is the point: it is less work, not a discount we invented.",
     ],
+    combosKicker: "The seven combinations",
+    combosTitle: "What each combination costs at the entry size.",
+    combosLead:
+      "Every module at its entry size, most expensive first. The build behind each row is the complete lists above, one for every module the row names, and each line inside a combination is priced on the hours that build actually takes, so it is not the entry price of the module inside it.",
+    combosLabel: "The seven combinations at the entry size",
+    comboLabel: "What you buy",
+    nameJoin: " and ",
+    pricedOnLead: "Priced on the hours actually built:",
+    discountFull: "{module} at full price",
+    discountOff: "{module} {percent} percent off",
+    /** In-sentence names for the cross-module features, keyed by catalogue id. */
+    bridgeNames: {
+      "restaurant-bridge": "the restaurant bridge",
+      "wine-list-wired-to-the-cellar": "the wine list wired to the cellar",
+    } as Record<string, string>,
+    bridgesNote:
+      "The bridges between modules are quoted on top of any of these figures, and only where both of the modules they join are bought: {list}. Neither one sits inside a standard build, so no figure above pays for it.",
     exampleKicker: "Worked example",
     exampleTitle: "A winery with six rooms and a restaurant.",
     // The ranking clause after the colon is composed from the quote's own
@@ -143,6 +167,17 @@ const en = {
     note: "The figures on this line are not entry prices for the modules inside them, and they are not a floor. They are what this configuration costs, priced on the hours the build actually takes.",
   },
 
+  /**
+   * The annual rule, as policy and only as policy. Memo 8.1 publishes "a year
+   * paid up front costs less, because one invoice a year costs us less than
+   * twelve" and then says in the same bullet: not the percentage, and not the
+   * arithmetic behind it. So `annualPrepayRate` and `annualPrepay()` stay off
+   * this surface on purpose, and the figure a client is quoted is the figure on
+   * their quote. Lucy's sixth finding of 2026-09-08 asked for the rate and its
+   * basis here; what the finding is actually right about is the claim on
+   * /modulos that the rules are "written out in full", which is corrected in
+   * lib/i18n/modulos.ts rather than answered by publishing a barred figure.
+   */
   annual: {
     kicker: "Paying a year up front",
     title: "A year paid in one payment costs less.",
@@ -284,9 +319,25 @@ const es: typeof en = {
     sub: "El ahorro viene de dos lados y los dos son reales. **El segundo módulo es una construcción más chica,** porque la capacitación, el marco del asistente, el generador del informe y el ambiente ya están de pie. Y un cliente es una sola relación, así que la parte compartida de la mensualidad se cobra una sola vez, compre los módulos que compre.",
     rules: [
       "La base de servicio compartida se cobra una sola vez, sea cual sea la combinación. Cada módulo agrega encima nada más su propio costo de operación.",
-      "En la construcción, el módulo más grande va a precio completo, el segundo lleva 10 por ciento menos y el tercero 12 por ciento menos.",
+      "En la construcción, el módulo más grande va a precio completo, el segundo lleva {second} por ciento menos y el tercero {third} por ciento menos.",
       "Dentro de una combinación cada línea se cotiza sobre las horas que de verdad se construyen, así que una línea puede quedar debajo de lo que ese módulo cuesta solo. De eso se trata: es menos trabajo, no un descuento que nos inventamos.",
     ],
+    combosKicker: "Las siete combinaciones",
+    combosTitle: "Lo que cuesta cada combinación en el tamaño de entrada.",
+    combosLead:
+      "Cada módulo en su tamaño de entrada, de mayor a menor. La construcción detrás de cada renglón son las listas completas de arriba, una por cada módulo que el renglón nombra, y cada línea dentro de una combinación se cotiza sobre las horas que esa construcción de verdad toma, así que no es el precio de entrada del módulo que la compone.",
+    combosLabel: "Las siete combinaciones en el tamaño de entrada",
+    comboLabel: "Lo que compra",
+    nameJoin: " y ",
+    pricedOnLead: "Cotizada sobre las horas que de verdad se construyen:",
+    discountFull: "{module} a precio completo",
+    discountOff: "{module} con {percent} por ciento menos",
+    bridgeNames: {
+      "restaurant-bridge": "el puente con el restaurante",
+      "wine-list-wired-to-the-cellar": "la carta de vinos conectada a la cava",
+    } as Record<string, string>,
+    bridgesNote:
+      "Los puentes entre módulos se cotizan aparte, encima de cualquiera de estas cifras, y solo donde se compran los dos módulos que unen: {list}. Ninguno de los dos va dentro de una construcción estándar, así que ninguna cifra de arriba lo paga.",
     exampleKicker: "Ejemplo trabajado",
     exampleTitle: "Una bodega con seis cuartos y restaurante.",
     exampleLead:
@@ -390,4 +441,100 @@ export function mixRankingSentence(
     })
     .join(", ");
   return `${d.exampleLead} ${clause}.`;
+}
+
+/**
+ * The combination rules, with every percentage filled from `mixDiscountByRank`.
+ * The dictionary carries the sentence and the calculation carries the number,
+ * so changing the pass-through in lib/pricing.ts changes what both locales
+ * promise instead of leaving a published policy behind (Lucy 2026-09-08,
+ * seventh finding). A rule that still holds a placeholder throws at build time
+ * rather than printing a brace on a public page.
+ */
+export function mixRules(locale: Locale): string[] {
+  const second = formatPercent(locale, mixDiscountByRank[1]);
+  const third = formatPercent(locale, mixDiscountByRank[2]);
+  return precios[locale].mix.rules.map((rule) => {
+    const filled = rule.replace("{second}", second).replace("{third}", third);
+    if (filled.includes("{")) {
+      throw new Error(`precios: unfilled placeholder in mix rule "${rule}"`);
+    }
+    return filled;
+  });
+}
+
+/** The localized name of a module, or a build failure rather than a slug. */
+function moduleName(locale: Locale, id: string): string {
+  const names = precios[locale].floors.modules;
+  const entry = names[id as keyof typeof names];
+  if (!entry) throw new Error(`precios: no module name for "${id}"`);
+  return entry.name;
+}
+
+/**
+ * What a combination is, named from the quote's own ranked module order rather
+ * than from a hand-kept list, so the row cannot name modules the figures beside
+ * it do not price.
+ */
+export function comboName(
+  locale: Locale,
+  rankedModuleIds: readonly string[],
+): string {
+  const names = rankedModuleIds.map((id) => moduleName(locale, id));
+  if (names.length < 2) return names.join("");
+  return (
+    names.slice(0, -1).join(", ") +
+    precios[locale].mix.nameJoin +
+    names[names.length - 1]
+  );
+}
+
+/**
+ * How a combination is priced, composed from its own quote lines: every line is
+ * priced on the hours actually built (memo 8.3), and each module carries the
+ * discount its rank earns, read out of the quote rather than typed here.
+ */
+export function comboPricingClause(
+  locale: Locale,
+  lines: readonly Pick<QuoteLine, "module" | "mixDiscount">[],
+): string {
+  const d = precios[locale].mix;
+  const clause = lines
+    .map((line) => {
+      const name = moduleName(locale, line.module);
+      return line.mixDiscount === 0
+        ? d.discountFull.replace("{module}", name)
+        : d.discountOff
+            .replace("{module}", name)
+            .replace("{percent}", formatPercent(locale, line.mixDiscount));
+    })
+    .join(", ");
+  return `${d.pricedOnLead} ${clause}.`;
+}
+
+/**
+ * The bridges a mix makes quotable, named as what they are: quoted on top of
+ * the figures above and in no standard build (memo 2.2, 2.3 and 8.2). The list
+ * comes from `bridgeFeatures()`, so a bridge that moved into a standard bundle
+ * would drop out of this sentence instead of leaving the page promising work
+ * the quote does not buy (Lucy 2026-09-08, first finding).
+ */
+export function bridgesSentence(
+  locale: Locale,
+  bridges: readonly { feature: string }[],
+): string {
+  const d = precios[locale].mix;
+  const list = bridges.map((bridge) => {
+    const name = d.bridgeNames[bridge.feature];
+    if (!name) {
+      throw new Error(`precios: no ${locale} name for bridge ${bridge.feature}`);
+    }
+    return name;
+  });
+  if (list.length === 0) return "";
+  const joined =
+    list.length < 2
+      ? list[0]
+      : list.slice(0, -1).join(", ") + d.nameJoin + list[list.length - 1];
+  return d.bridgesNote.replace("{list}", joined);
 }

@@ -1,25 +1,35 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  type AddOnId,
   type ModuleId,
+  type ModuleSelection,
   type Size,
   absorbedProviderCash,
   addOnAvailable,
   addOnMonthly,
   annualPrepay,
+  annualPrepayRate,
+  bridgeFeatures,
   buildOnly,
   bumpOffBareMultiple,
   bundleHours,
   ceilTo,
   combinations,
+  featureHours,
   featureSetup,
+  formatPercent,
   formatPrice,
   growerBundleHours,
   growerSetupS,
+  largestSize,
   legacyWineryBundles,
   legacyWinerySetupFloor,
+  mixDiscountByRank,
   moduleFloors,
   moduleIds,
+  modules,
+  priced,
   quote,
   round100,
   round500,
@@ -39,7 +49,14 @@ import {
   winerySetupFloor,
   workedExamples,
 } from "./pricing";
-import { mixRankingSentence, precios } from "./i18n/precios";
+import {
+  bridgesSentence,
+  comboName,
+  comboPricingClause,
+  mixRankingSentence,
+  mixRules,
+  precios,
+} from "./i18n/precios";
 
 /**
  * Every expected figure below is transcribed by hand from
@@ -59,6 +76,19 @@ const memoProviderCash: Record<Size, number> = { S: 1203, M: 1712, L: 2462 };
 const memoAdminHours: Record<Size, number> = { S: 0.68, M: 0.75, L: 0.85 };
 
 const allSizes: Size[] = ["S", "M", "L"];
+const allAddOnIds: AddOnId[] = [
+  "google-ads-management",
+  "content",
+  "on-site-visit",
+];
+
+/** Every subset of a list, empty set first, in the list's own order. */
+function subsetsOf(items: AddOnId[]): AddOnId[][] {
+  return items.reduce<AddOnId[][]>(
+    (acc, item) => acc.concat(acc.map((set) => [...set, item])),
+    [[]],
+  );
+}
 
 /** Daniel time plus absorbed provider cash a mix commits us to each month. */
 function serviceFloorMonthly(mix: ModuleId[], size: Size): number {
@@ -285,7 +315,9 @@ describe("add-ons", () => {
   it("adds a chosen add-on into the quoted monthly", () => {
     const q = quote(["restaurante"], "M", ["google-ads-management"]);
     // 14,800 + 5,700 + 5,500 is a bare 26,000, so the total takes its increment.
-    expect(q.addOns).toEqual([{ id: "google-ads-management", monthly: 5500 }]);
+    expect(q.addOns).toEqual([
+      { id: "google-ads-management", size: "M", monthly: 5500 },
+    ]);
     expect(q.monthlyBumped).toBe(true);
     expect(q.monthly.MXN).toBe(26100);
   });
@@ -485,16 +517,23 @@ describe("the seven combinations at S and at M", () => {
     expect(quote(["produccion", "hospitalidad"], "S").monthlyBumped).toBe(false);
   });
 
-  it("publishes only the four S examples memo 8.2 allows", () => {
+  it("publishes the seven S combinations memo 8.1 allows, and nothing above S", () => {
     const publishable = workedExamples.filter((e) => e.publishable);
     expect(publishable.map((e) => e.id).sort()).toEqual([
       "s-hospitalidad",
+      "s-hospitalidad-restaurante",
       "s-produccion",
+      "s-produccion-hospitalidad",
       "s-produccion-hospitalidad-restaurante",
+      "s-produccion-restaurante",
       "s-restaurante",
     ]);
-    // Examples vary the mix, never the size, so no reader can rebuild a row.
+    // 8.2's constraint is on the size and not on the count: examples vary the
+    // mix, never the size, so no reader can rebuild a row of the S/M/L table.
+    expect(publishable).toHaveLength(combinations.length);
     expect(publishable.every((e) => e.size === "S")).toBe(true);
+    expect(workedExamples.filter((e) => e.size !== "S").every((e) => !e.publishable))
+      .toBe(true);
   });
 
   it("the bought-separately row equals the sum of the entry cards in BOTH currencies", () => {
@@ -613,16 +652,130 @@ describe("paying a year up front", () => {
     },
   );
 
-  it("is the same concession whatever the mix, because it is 4 percent of the base", () => {
+  it("is the same concession whatever the mix, except where the paid year lands bare", () => {
+    // Memo 7.1: 4,400 at S, 7,100 at M, 10,900 at L, whatever the mix and
+    // whatever the add-ons, with the two rounding exceptions below. Produccion
+    // plus Restaurante at S is one of them, so it is asserted apart rather than
+    // allowed to widen the set the other six share (bead hq-ggot1.9).
+    const bumped: ModuleId[] = ["produccion", "restaurante"];
+    const isBumped = (mix: ModuleId[]) =>
+      mix.length === bumped.length && bumped.every((m) => mix.includes(m));
+    const flat: Record<Size, number> = { S: 4400, M: 7100, L: 10900 };
     for (const size of allSizes) {
-      const concessions = combinations.map(
-        (mix) => annualPrepay(size, quote(mix, size).monthly.MXN).concession.MXN,
-      );
-      expect(new Set(concessions).size).toBe(1);
+      const concessions = combinations
+        .filter((mix) => !(size === "S" && isBumped(mix)))
+        .map(
+          (mix) => annualPrepay(size, quote(mix, size).monthly.MXN).concession.MXN,
+        );
+      expect(new Set(concessions)).toEqual(new Set([flat[size]]));
     }
+    const exception = annualPrepay("S", quote(bumped, "S").monthly.MXN);
+    expect(exception.concession.MXN).toBe(4300);
+    // At M and L the same mix is unexceptional, which is the arithmetic 7.1
+    // writes out: 7,100 and 10,900 are not multiples of gcd(1,200, 10,000).
+    expect(annualPrepay("M", quote(bumped, "M").monthly.MXN).concession.MXN).toBe(7100);
+    expect(annualPrepay("L", quote(bumped, "L").monthly.MXN).concession.MXN).toBe(10900);
     // 4 percent of the L base year is 10,992, which rounds to a bare 11,000,
     // and a concession on a bare multiple moves down, towards the floor.
     expect(annualPrepay("L", 28100).concession.MXN).toBe(10900);
+  });
+
+  it("(6) is 4 percent of twelve months of the shared base, and of nothing else", () => {
+    // The rate and its basis live here and are pinned here. Memo 8.1 keeps both
+    // off every public surface: the annual rule is publishable as policy, "not
+    // the percentage, and not the arithmetic behind it" (Daniel, console
+    // r-576f5fc0, on Lucy's sixth finding of 2026-09-08).
+    expect(annualPrepayRate).toBe(0.04);
+    for (const size of allSizes) {
+      const fromRule = bumpOffBareMultiple(
+        round100(sharedServiceBase(size) * 12 * annualPrepayRate),
+        1000,
+        100,
+        "down",
+      );
+      const alone = annualPrepay(size, quote(["produccion"], size).monthly.MXN);
+      expect(alone.concession.MXN).toBe(fromRule);
+      // Never a share of the whole fee: three modules still make one invoice.
+      const three = annualPrepay(
+        size,
+        quote(["produccion", "hospitalidad", "restaurante"], size).monthly.MXN,
+      );
+      expect(three.concession.MXN).toBe(fromRule);
+      expect(three.paid.MXN).toBe(three.twelveMonths - fromRule);
+    }
+  });
+
+  it.each(["en", "es"] as const)(
+    "(6) keeps the rate and its arithmetic out of the %s copy",
+    (locale) => {
+      const annual = precios[locale].annual;
+      expect(`${annual.kicker} ${annual.title} ${annual.body}`).not.toMatch(/\d/);
+    },
+  );
+
+  it("moves the paid year off a bare multiple of 10,000, onto the concession line", () => {
+    // The two cases memo 7.1 names, transcribed from the memo rather than read
+    // back out of the module that has to produce them.
+    const first = quote(["produccion", "restaurante"], "S");
+    expect(first.monthly.MXN).toBe(13700);
+    const a = annualPrepay("S", first.monthly.MXN);
+    expect(a.twelveMonths).toBe(164400);
+    expect(a.concession.MXN).toBe(4300);
+    expect(a.paid.MXN).toBe(160100);
+
+    const second = quote(["hospitalidad", "restaurante"], "S", ["content"]);
+    expect(second.monthly.MXN).toBe(16200);
+    const b = annualPrepay("S", second.monthly.MXN);
+    expect(b.twelveMonths).toBe(194400);
+    expect(b.concession.MXN).toBe(4300);
+    expect(b.paid.MXN).toBe(190100);
+
+    // Before Content is bought the same mix is unexceptional, which is why the
+    // census has to run over add-on subsets and not over the seven mixes.
+    const plain = quote(["hospitalidad", "restaurante"], "S");
+    expect(plain.monthly.MXN).toBe(14400);
+    const c = annualPrepay("S", plain.monthly.MXN);
+    expect(c.concession.MXN).toBe(4400);
+    expect(c.paid.MXN).toBe(168400);
+
+    // The quote still adds up: paid is twelve months less the concession.
+    for (const prepay of [a, b, c]) {
+      expect(prepay.paid.MXN).toBe(prepay.twelveMonths - prepay.concession.MXN);
+    }
+  });
+
+  it("bites exactly twice across the 113 quotable configurations, both at S", () => {
+    // Memo section 1 puts add-ons inside the monthly and 7.1 prepays twelve
+    // months of that monthly, so the census is mix x size x available add-on
+    // subset and not the twenty-one module combinations (bead hq-ggot1.9).
+    const bumps: string[] = [];
+    let configurations = 0;
+    for (const size of allSizes) {
+      for (const mix of combinations) {
+        const available = allAddOnIds.filter((id) => addOnAvailable(id, mix, size));
+        for (const chosen of subsetsOf(available)) {
+          configurations += 1;
+          const q = quote(mix, size, chosen);
+          const prepay = annualPrepay(size, q.monthly.MXN);
+          // What the rule forbids, checked on the figure the client is quoted.
+          expect(prepay.paid.MXN % 10000).not.toBe(0);
+          // Invariant E in the same sentence: nor may the concession land bare.
+          expect(prepay.concession.MXN % 1000).not.toBe(0);
+          expect(prepay.paid.MXN).toBe(prepay.twelveMonths - prepay.concession.MXN);
+          if (prepay.concession.MXN !== 4400 && size === "S") {
+            bumps.push(`${size} ${mix.join("+")} ${chosen.join("+")}`);
+          }
+          if (size !== "S") {
+            expect(prepay.concession.MXN).toBe(size === "M" ? 7100 : 10900);
+          }
+        }
+      }
+    }
+    expect(configurations).toBe(113);
+    expect(bumps).toEqual([
+      "S produccion+restaurante ",
+      "S hospitalidad+restaurante content",
+    ]);
   });
 });
 
@@ -808,6 +961,306 @@ describe("the constraints from the memo review of 2026-09-08", () => {
     expect(produccionLine.hoursBuilt).toBeLessThan(
       moduleFloors.produccion.hours,
     );
+  });
+});
+
+describe("the Lucy findings of 2026-09-08, one test per finding", () => {
+  const allThree = quote(["produccion", "hospitalidad", "restaurante"], "S");
+  const allThreeExample = workedExamples.find(
+    (e) => e.id === "s-produccion-hospitalidad-restaurante",
+  )!;
+
+  it("(1) makes the two bridges quotable in a mix and buys neither of them", () => {
+    expect(bridgeFeatures(["produccion"])).toEqual([]);
+    expect(bridgeFeatures(["hospitalidad"])).toEqual([]);
+    // Produccion plus Hospitalidad share a system and no bridge feature.
+    expect(bridgeFeatures(["produccion", "hospitalidad"])).toEqual([]);
+    expect(bridgeFeatures(["hospitalidad", "restaurante"])).toEqual([
+      {
+        module: "hospitalidad",
+        feature: "restaurant-bridge",
+        requires: "restaurante",
+      },
+    ]);
+    expect(bridgeFeatures(["produccion", "restaurante"])).toEqual([
+      {
+        module: "restaurante",
+        feature: "wine-list-wired-to-the-cellar",
+        requires: "produccion",
+      },
+    ]);
+    const both = bridgeFeatures(["produccion", "hospitalidad", "restaurante"]);
+    expect(both.map((b) => b.feature).sort()).toEqual([
+      "restaurant-bridge",
+      "wine-list-wired-to-the-cellar",
+    ]);
+
+    // The published all-three example buys the three standard bundles and no
+    // bridge, which is the 141,500 of memo 6.4 and of 8.2's fourth example. So
+    // the page may not say the bridges come with that figure: they are quoted
+    // on top, the way 8.2's third example says it of the payment link.
+    expect(allThree.setup.MXN).toBe(141500);
+    const bought = allThree.lines.flatMap((line) =>
+      modules[line.module].bundles[line.size].map((item) => item.feature),
+    );
+    for (const bridge of both) expect(bought).not.toContain(bridge.feature);
+    expect(featureHours("hospitalidad", "restaurant-bridge", "S")).toBe(0.8);
+    expect(featureHours("restaurante", "wine-list-wired-to-the-cellar", "S")).toBe(
+      0.7,
+    );
+    // 17.3 + 19.6 + 26.8, the three standard bundles and not one hour more.
+    expect(allThree.lines.reduce((sum, l) => sum + l.bundleHours, 0)).toBeCloseTo(
+      63.7,
+      10,
+    );
+  });
+
+  it("(4) converts every saving from the rounded MXN saving", () => {
+    for (const example of workedExamples) {
+      expect(example.setupSaving).toEqual(
+        priced(example.setupIfAlone.MXN - example.quote.setup.MXN),
+      );
+      expect(example.monthlySaving).toEqual(
+        priced(example.monthlyIfAlone.MXN - example.quote.monthly.MXN),
+      );
+    }
+    // 172,500 less 141,500 is 31,000, whose conversion at 17.0 is 1,820 USD.
+    // Subtracting the printed USD totals gave 10,150 less 8,320 = 1,830, a
+    // figure no peso amount produces. Since hq-ggot1.13 the alone row reads
+    // 10,140, so on this one example the two agree and the /en column also
+    // subtracts, which is the check the page's own reader would run.
+    expect(allThreeExample.setupSaving).toEqual({ MXN: 31000, USD: 1820 });
+    expect(allThreeExample.monthlySaving).toEqual({ MXN: 18300, USD: 1080 });
+    for (const currency of ["MXN", "USD"] as const) {
+      expect(allThreeExample.setupSaving[currency]).toBe(
+        allThreeExample.setupIfAlone[currency] -
+          allThreeExample.quote.setup[currency],
+      );
+      expect(allThreeExample.monthlySaving[currency]).toBe(
+        allThreeExample.monthlyIfAlone[currency] -
+          allThreeExample.quote.monthly[currency],
+      );
+    }
+  });
+
+  it("(5) keeps every run cost within one rounding increment of its own hours", () => {
+    // Memo section 1 states the tolerance out loud: a line is the sum of its
+    // own rounded lines, so a run cost can sit a little under the service-rate
+    // amount for its hours, and the memo does not bump a fee to chase it.
+    for (const size of allSizes) {
+      for (const id of moduleIds) {
+        const own = runCostHours(id, size) * serviceRate * scopeFactor[size];
+        expect(runCost(id, size)).toBeGreaterThan(own - 100);
+      }
+    }
+    // The exact line Lucy flagged, and the size of the gap.
+    expect(runCostHours("restaurante", "S")).toBe(2.4);
+    expect(runCost("restaurante", "S")).toBe(2900);
+    expect(2.4 * serviceRate - runCost("restaurante", "S")).toBe(40);
+    // What the memo makes a floor is invariant B, on the quoted monthly, and a
+    // per-line floor here would move 2,900 in memo 5.2 and in worked example 3.
+    const restaurante = quote(["restaurante"], "S");
+    expect(restaurante.monthly.MXN).toBe(12100);
+    expect(restaurante.monthly.MXN).toBeGreaterThanOrEqual(
+      serviceFloorMonthly(["restaurante"], "S"),
+    );
+    for (const size of allSizes) {
+      for (const mix of combinations) {
+        expect(quote(mix, size).monthly.MXN).toBeGreaterThan(
+          serviceFloorMonthly(mix, size) - 100,
+        );
+      }
+    }
+  });
+});
+
+describe("(3) a size per module, which is what the Diagnostico sets", () => {
+  it("prices a mix identically whichever call shape names the size", () => {
+    for (const size of allSizes) {
+      for (const mix of combinations) {
+        const perModule: ModuleSelection[] = mix.map((module) => ({
+          module,
+          size,
+        }));
+        expect(quote(perModule)).toEqual(quote(mix, size));
+      }
+    }
+  });
+
+  it("charges the shared base at the largest module's size", () => {
+    const mixed = quote([
+      { module: "produccion", size: "M" },
+      { module: "hospitalidad", size: "S" },
+    ]);
+    expect(mixed.size).toBe("M");
+    expect(mixed.sharedServiceBase).toBe(sharedServiceBase("M"));
+    // 14,800 of base at M, 3,100 of Produccion at M, 2,300 of Hospitalidad at S.
+    expect(mixed.monthly.MXN).toBe(20200);
+    expect(mixed.runCosts).toEqual([
+      { module: "produccion", size: "M", monthly: 3100 },
+      { module: "hospitalidad", size: "S", monthly: 2300 },
+    ]);
+  });
+
+  it("ranks every module on its own size, so the order can change", () => {
+    // Produccion at M builds 99,500 against Hospitalidad at S on 53,000, so the
+    // module that takes the discount at one size takes full price here.
+    const mixed = quote([
+      { module: "hospitalidad", size: "S" },
+      { module: "produccion", size: "M" },
+    ]);
+    expect(mixed.modules).toEqual(["produccion", "hospitalidad"]);
+    expect(mixed.lines.map((l) => l.size)).toEqual(["M", "S"]);
+    expect(mixed.lines[0].mixDiscount).toBe(mixDiscountByRank[0]);
+    expect(mixed.lines[1].mixDiscount).toBe(mixDiscountByRank[1]);
+    // At one size the same pair ranks the other way round.
+    expect(quote(["produccion", "hospitalidad"], "S").modules).toEqual([
+      "hospitalidad",
+      "produccion",
+    ]);
+  });
+
+  it("holds the memo's floors on every mixed-size quote of the three", () => {
+    for (const a of allSizes) {
+      for (const b of allSizes) {
+        for (const c of allSizes) {
+          const q = quote([
+            { module: "produccion", size: a },
+            { module: "hospitalidad", size: b },
+            { module: "restaurante", size: c },
+          ]);
+          expect(q.size).toBe(largestSize([a, b, c]));
+          for (const line of q.lines) {
+            expect(line.packagedSetup).toBeGreaterThanOrEqual(line.costRecovery);
+          }
+          const lines =
+            sharedServiceBase(q.size) +
+            runCost("produccion", a) +
+            runCost("hospitalidad", b) +
+            runCost("restaurante", c);
+          expect(q.monthly.MXN).toBeGreaterThanOrEqual(lines);
+          expect(q.setup.MXN).toBe(
+            q.lines.reduce((sum, l) => sum + l.packagedSetup, 0) +
+              (q.setupBumped ? 500 : 0),
+          );
+        }
+      }
+    }
+  });
+
+  it("takes an add-on at the largest size among the modules it attaches to", () => {
+    const q = quote(
+      [
+        { module: "hospitalidad", size: "M" },
+        { module: "restaurante", size: "S" },
+      ],
+      ["google-ads-management"],
+    );
+    expect(q.addOns).toEqual([
+      { id: "google-ads-management", size: "M", monthly: 5500 },
+    ]);
+    // The visit is per client, so it takes the largest module's size instead.
+    const visit = quote(
+      [
+        { module: "produccion", size: "L" },
+        { module: "restaurante", size: "M" },
+      ],
+      ["on-site-visit"],
+    );
+    expect(visit.addOns).toEqual([
+      { id: "on-site-visit", size: "L", monthly: 5500 },
+    ]);
+  });
+
+  it("refuses a quote of module ids with no size", () => {
+    // @ts-expect-error the single-size form takes its size as its second argument
+    expect(() => quote(["produccion"])).toThrow("needs a size");
+    expect(() => quote([], "S")).toThrow("at least one module");
+  });
+});
+
+describe("(7) the published policy percentages come from mixDiscountByRank", () => {
+  const locales = ["en", "es"] as const;
+
+  it.each(locales)("%s types no percentage into the mix rules", (locale) => {
+    // The dictionary carries the sentence and the data carries the number, so
+    // a change to mixDiscountByRank cannot leave a published promise behind.
+    for (const rule of precios[locale].mix.rules) {
+      expect(rule).not.toMatch(/\d/);
+    }
+    expect(precios[locale].mix.rules.join(" ")).toContain("{second}");
+    expect(precios[locale].mix.rules.join(" ")).toContain("{third}");
+  });
+
+  it.each(locales)("%s renders 10 and 12 out of the data", (locale) => {
+    const rendered = mixRules(locale).join(" ");
+    expect(rendered).not.toContain("{");
+    expect(rendered).toContain(formatPercent(locale, mixDiscountByRank[1]));
+    expect(rendered).toContain(formatPercent(locale, mixDiscountByRank[2]));
+    expect(formatPercent(locale, mixDiscountByRank[1])).toBe("10");
+    expect(formatPercent(locale, mixDiscountByRank[2])).toBe("12");
+  });
+
+  it.each(locales)("%s follows the data when the pass-through moves", (locale) => {
+    // What a hardcoded 10 and 12 could not do: the same sentence with another
+    // rate reads the other rate. formatPercent is the only place that decides.
+    expect(formatPercent(locale, 0.15)).toBe("15");
+    expect(formatPercent(locale, 0.125)).toBe("12.5");
+  });
+
+  it.each(locales)("%s prices each combination row from its own lines", (locale) => {
+    const all = workedExamples.find(
+      (e) => e.id === "s-produccion-hospitalidad-restaurante",
+    )!;
+    const clause = comboPricingClause(locale, all.quote.lines);
+    const names = all.modules.map((id) => precios[locale].floors.modules[id].name);
+    // Named in the quote's own ranked order, most expensive build first.
+    const positions = names.map((n) => clause.indexOf(n));
+    expect(positions.every((p) => p >= 0)).toBe(true);
+    expect(positions).toEqual([...positions].sort((a, b) => a - b));
+    expect(clause).toContain(formatPercent(locale, mixDiscountByRank[1]));
+    expect(clause).toContain(formatPercent(locale, mixDiscountByRank[2]));
+    expect(clause).toContain(precios[locale].mix.pricedOnLead);
+
+    // A single module carries no discount clause at all, only full price.
+    const alone = workedExamples.find((e) => e.id === "s-produccion")!;
+    const soloClause = comboPricingClause(locale, alone.quote.lines);
+    expect(soloClause).not.toContain(formatPercent(locale, mixDiscountByRank[1]));
+    expect(soloClause).toContain(
+      precios[locale].mix.discountFull.replace(
+        "{module}",
+        precios[locale].floors.modules.produccion.name,
+      ),
+    );
+  });
+
+  it.each(locales)("%s names every publishable combination", (locale) => {
+    for (const example of workedExamples.filter((e) => e.publishable)) {
+      const name = comboName(locale, example.modules);
+      for (const id of example.modules) {
+        expect(name).toContain(precios[locale].floors.modules[id].name);
+      }
+      // Two names are joined by the locale's own word, three by comma then it.
+      if (example.modules.length > 1) {
+        expect(name).toContain(precios[locale].mix.nameJoin);
+      }
+    }
+    expect(comboName(locale, ["produccion"])).toBe(
+      precios[locale].floors.modules.produccion.name,
+    );
+  });
+
+  it.each(locales)("%s says the bridges are quoted on top, from the data", (locale) => {
+    const bridges = bridgeFeatures(["produccion", "hospitalidad", "restaurante"]);
+    const sentence = bridgesSentence(locale, bridges);
+    for (const bridge of bridges) {
+      expect(sentence).toContain(precios[locale].mix.bridgeNames[bridge.feature]);
+    }
+    expect(sentence).not.toContain("{list}");
+    // A mix with no bridge gets no sentence rather than an empty promise.
+    expect(bridgesSentence(locale, bridgeFeatures(["produccion"]))).toBe("");
+    // And an unnamed bridge fails the build instead of printing a slug.
+    expect(() => bridgesSentence(locale, [{ feature: "not-a-bridge" }])).toThrow();
   });
 });
 
