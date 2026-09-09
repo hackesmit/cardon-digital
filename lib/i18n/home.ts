@@ -126,58 +126,41 @@ const en = {
     secondaryNote: "Built for and kept open, not sold actively.",
     foot: "Three stations built, two terrains ahead. In focus: **the winery valley.**",
   },
+  /**
+   * Pricing, wired to the module model (research/2026-09/pricing-modules.md).
+   * The retired bundles and the placeholder floor slot are both gone: an entry
+   * price never travels away from the build that produced it, so the figures
+   * live on /precios and this section carries the shape and points at them.
+   * The modules read in catalogue order, matching /modulos, because with no
+   * figures beside them that is the order a reader meets them in.
+   */
   pricing: {
     kicker: "What it costs",
-    title: "Three scopes. Two fees, and the system is yours.",
-    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. **No quote before we have seen your numbers.**",
-    floorLabel: "Where it starts",
-    /** {setup} is the published floor. One figure on a public page, never a table. */
-    floor: "From **{setup}** to implement, plus the monthly service fee.",
-    /** Printed in place of the floor while the figures are unpublished. */
-    floorTbd: "Set in the diagnostic.",
-    /** Same three scopes as the winery page, most expensive first. */
-    scopes: [
+    title: "Three modules. Two fees, and the system is yours.",
+    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. **You buy the modules you run on, at the size your operation is.**",
+    modules: [
       {
-        name: "Cava",
-        scale: "Large winery",
-        time: "8 to 12 weeks",
-        body: "The whole operation, from the cellar floor to the books and the shop.",
-        features: [
-          "The Vendimia build at large-winery scale",
-          "Three more source connectors, four historical vintages",
-          "A prediction or classification model",
-          "Finance workflow automation",
-          "Online shop, age gate, and a monthly visit",
-        ],
+        name: "Produccion",
+        scale: "01",
+        time: "The record",
+        body: "What you grew, made and sold, dated and attributed, with the comparison, the report and the assistant built over it.",
       },
       {
-        name: "Vendimia",
-        scale: "Mid-size winery",
-        time: "5 to 7 weeks",
-        body: "Where most of our work lands: the system, and the demand side wired into it.",
-        features: [
-          "The Bitácora build at mid-winery scale",
-          "Two more source connectors, two historical vintages",
-          "Tasting room booking",
-          "Direct sales and wine club follow-up",
-          "Ad management and content, every month",
-        ],
+        name: "Hospitalidad",
+        scale: "02",
+        time: "The calendar",
+        body: "Every booking from every channel in one calendar, the day view the property works from, and the guest kept between stays.",
       },
       {
-        name: "Bitácora",
-        scale: "Small winery",
-        time: "3 to 4 weeks",
-        body: "One winery, one site: the record, the reports, and the assistant over them.",
-        features: [
-          "Production record and vintage comparison",
-          "Commercial record and report generator",
-          "The assistant over your own records",
-          "Site, GA4 and conversion tracking",
-          "Hosting, care and a weekly call, every month",
-        ],
+        name: "Restaurante",
+        scale: "03",
+        time: "The floor",
+        body: "The point of sale, from the waiter's phone to the cash cut, with the invoice request captured on the ticket.",
       },
     ],
-    more: "See what each scope includes, in full",
+    moreLead:
+      "Each module has a published entry price, setup and monthly, and the combination and annual rules are written out in full.",
+    more: "See pricing",
     foot: [
       {
         k: "The monthly fee",
@@ -185,7 +168,7 @@ const en = {
       },
       {
         k: "Ad management",
-        body: "It sits **inside the monthly service fee** from the Vendimia scope up, never a share of what you spend. The ad budget goes from you straight to Google.",
+        body: "It attaches to the Hospitalidad and Restaurante modules and sits **inside the monthly service fee**, never a share of what you spend. The ad budget goes from you straight to Google.",
       },
       {
         k: "Payment",
@@ -194,7 +177,7 @@ const en = {
     ],
     founding: {
       kicker: "Founding winery",
-      lead: "**One founding winery, through 31 December 2026: the Vendimia scope at Bitácora prices.**",
+      lead: "**One founding winery, through 31 December 2026: the Produccion module at the mid-size build, for its entry price.**",
       body: "One slot, not a running discount, and it does not stack with anything. In exchange we ask for two things, written into the agreement: a named case study with the real before-and-after numbers, and two introductions to other wineries in the Valle. Whoever signs first takes it, and this comes off the site.",
     },
   },
@@ -405,71 +388,49 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Tres alcances. Dos cuotas, y el sistema queda suyo.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual paga operarlo: hospedaje, cuidado, correcciones, el reporte y el asistente. **Sin cotización antes de haber visto sus números.**",
-    floorLabel: "De dónde parte",
-    floor: "Desde **{setup}** de implementación, más la cuota mensual del servicio.",
-    floorTbd: "Se fija en el diagnóstico.",
-    scopes: [
+    title: "Tres módulos. Dos cuotas, y el sistema es suyo.",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe y el asistente. **Usted compra los módulos que opera, del tamaño que es su operación.**",
+    modules: [
       {
-        name: "Cava",
-        scale: "Bodega grande",
-        time: "8 a 12 semanas",
-        body: "Toda la operación, del piso de la bodega a las cuentas y la tienda.",
-        features: [
-          "La construcción de Vendimia a escala de bodega grande",
-          "Tres conectores de origen más y cuatro añadas históricas",
-          "Un modelo de predicción o clasificación",
-          "Automatización del flujo financiero",
-          "Tienda en línea, control de edad y una visita mensual",
-        ],
+        name: "Producción",
+        scale: "01",
+        time: "El registro",
+        body: "Lo que cultivó, elaboró y vendió, fechado y atribuido, con la comparación, el informe y el asistente construidos encima.",
       },
       {
-        name: "Vendimia",
-        scale: "Bodega mediana",
-        time: "5 a 7 semanas",
-        body: "Aquí cae la mayor parte de nuestro trabajo: el sistema, y la demanda conectada a él.",
-        features: [
-          "La construcción de Bitácora a escala de bodega mediana",
-          "Dos conectores de origen más y dos añadas históricas",
-          "Reservas para la sala de degustación",
-          "Seguimiento de venta directa y club",
-          "Manejo de anuncios y contenido, cada mes",
-        ],
+        name: "Hospitalidad",
+        scale: "02",
+        time: "El calendario",
+        body: "Cada reserva de cada canal en un solo calendario, la vista del día desde la que trabaja la propiedad, y el huésped conservado entre estancias.",
       },
       {
-        name: "Bitácora",
-        scale: "Bodega chica",
-        time: "3 a 4 semanas",
-        body: "Una bodega, un sitio: el registro, los reportes y el asistente sobre ellos.",
-        features: [
-          "Registro de producción y comparación de añadas",
-          "Registro comercial y generador de reportes",
-          "El asistente sobre sus propios registros",
-          "Sitio, GA4 y medición de conversiones",
-          "Hospedaje, cuidado y una llamada semanal, cada mes",
-        ],
+        name: "Restaurante",
+        scale: "03",
+        time: "El piso",
+        body: "El punto de venta, del teléfono del mesero al corte de caja, con la solicitud de factura capturada en el ticket.",
       },
     ],
-    more: "Vea todo lo que incluye cada alcance",
+    moreLead:
+      "Cada módulo tiene su precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas completas.",
+    more: "Ver precios",
     foot: [
       {
         k: "La cuota mensual",
-        body: "Hospedaje, monitoreo, cuidado, correcciones, el reporte mensual y su lectura, y uso razonable del asistente. **Puede pausarla y no se apaga nada,** porque el sistema es suyo.",
+        body: "Hospedaje, monitoreo, cuidado, correcciones, el informe mensual y su lectura, y uso razonable del asistente. **Si la pausa no se apaga nada,** porque el sistema es suyo.",
       },
       {
         k: "Manejo de anuncios",
-        body: "Va **dentro de la cuota mensual del servicio** desde el alcance Vendimia, nunca como porcentaje de lo que usted invierte. La inversión en anuncios la paga usted directo a Google.",
+        body: "Se agrega a los módulos de Hospitalidad y Restaurante y va **dentro de la cuota mensual del servicio**, nunca como porcentaje de lo que usted invierte. La inversión en anuncios la paga usted directo a Google.",
       },
       {
-        k: "Pagos",
-        body: "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación, y la mitad de la firma se puede pagar en tres mensualidades sin recargo. La cuota mensual va mes con mes, con 30 días de aviso de cualquiera de las dos partes. **Cotizamos y cobramos en pesos, más IVA.**",
+        k: "Pago",
+        body: "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación, y la mitad de la firma puede ir en tres mensualidades sin recargo. La cuota del servicio va mes con mes, con 30 días de aviso de cualquiera de las dos partes. **Cotizado y facturado en pesos, más IVA.**",
       },
     ],
     founding: {
       kicker: "Bodega fundadora",
-      lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el alcance Vendimia al precio de Bitácora.**",
-      body: "Un solo lugar, no un descuento permanente, y no se acumula con nada. A cambio pedimos dos cosas, escritas en el acuerdo: un caso de estudio con su nombre y las cifras reales de antes y después, y dos presentaciones con otras bodegas del Valle. Quien firme primero se lo lleva, y esto sale del sitio.",
+      lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción con la construcción del tamaño mediano, al precio de entrada.**",
+      body: "Un solo lugar, no un descuento permanente, y no se acumula con nada. A cambio pedimos dos cosas, escritas en el acuerdo: un caso con nombre y los números reales de antes y después, y dos presentaciones con otras bodegas del Valle. Se lo lleva quien firme primero, y esto se quita del sitio.",
     },
   },
   vis: {

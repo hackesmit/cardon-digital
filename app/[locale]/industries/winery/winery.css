@@ -191,23 +191,10 @@
 @media (max-width:400px){
 }
 
-/* ---- pricing: one floor figure, three scopes as feature lists ----
-   The figure and the lists stay in one section on purpose (pricing memo 3.7
-   rule 3). While the numbers are unpublished the floor slot carries a sentence
-   instead, so the layout is identical either way and flipping the flag in
-   lib/pricing.ts needs no style change. */
-.pg-winery .price-floor{
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
-  margin:0 0 clamp(22px,3vw,32px);padding-bottom:18px;
-  border-bottom:1px solid var(--line);
-}
-.pg-winery .price-floor-k{
-  font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;
-  text-transform:uppercase;color:var(--muted);
-}
-.pg-winery .price-floor-v{font-size:clamp(1.05rem,1.7vw,1.32rem);color:var(--text-dim);}
-.pg-winery .price-floor-v b{color:var(--wine-bright);font-weight:600;}
-
+/* ---- pricing: the fee shape, the modules a winery buys, and the terms ----
+   No figure lives in this section: an entry price never travels away from the
+   build that produced it (pricing memo 3.7 rule 3), and that build is printed
+   on /precios. The floor slot the retired bundles used is gone with them. */
 .pg-winery .bundle-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);
   align-items:start;
@@ -223,8 +210,7 @@
 .pg-winery .bundle:hover{border-color:var(--primary-dim);transform:translateY(-3px);box-shadow:var(--shadow);}
 .pg-winery .bundle-lead{border-color:var(--wine-line);}
 .pg-winery .bundle-head{
-  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;
-  gap:6px 12px;position:relative;z-index:2;
+  display:flex;flex-direction:column;gap:5px;position:relative;z-index:2;
 }
 .pg-winery .bundle-name{font-size:1.24rem;letter-spacing:-0.02em;line-height:1.14;}
 .pg-winery .bundle-scale{
@@ -232,7 +218,7 @@
   text-transform:uppercase;color:var(--muted);
 }
 .pg-winery .bundle-k{
-  position:relative;z-index:2;margin-top:8px;
+  position:relative;z-index:2;margin:8px 0 12px;
   font-family:var(--mono);font-size:0.66rem;letter-spacing:0.16em;
   text-transform:uppercase;color:var(--wine-bright);
 }
@@ -249,6 +235,9 @@
   width:6px;height:1px;background:var(--wine-bright);opacity:0.7;
 }
 .pg-winery .bundle-list-service li::before{background:var(--muted);opacity:0.6;}
+.pg-winery .bundle-body{
+  position:relative;z-index:2;color:var(--text-dim);font-size:0.94rem;line-height:1.55;
+}
 
 .pg-winery .price-terms{
   margin-top:clamp(22px,3vw,32px);padding-top:18px;border-top:1px solid var(--line);
