@@ -450,8 +450,8 @@
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
-    "mtime": 1788911186.7143393,
-    "ast_hash": "9886a4344ab0bf89ab61c22c2825f1d8",
+    "mtime": 1788930472.5294266,
+    "ast_hash": "765564017a0f3e4c6394d94caa3f4615",
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "lib/pricing.test.ts": {
-    "mtime": 1788911186.7143393,
-    "ast_hash": "9cea8f28adf77b9f107a0a96bad5ec6c",
+    "mtime": 1788930472.5294266,
+    "ast_hash": "69b3e2e468a86ff4428faa4246c3a709",
     "semantic_hash": ""
   },
   "app/[locale]/modulos/page.tsx": {
@@ -675,8 +675,8 @@
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
-    "mtime": 1788914392.2212017,
-    "ast_hash": "339066478e5a2c1402f2bedf7a3ddbbf",
+    "mtime": 1788930472.5294266,
+    "ast_hash": "fbf800123c6c3a8c32d10cc35df7e857",
     "semantic_hash": ""
   },
   "components/pages/precios/ModuleFloors.tsx": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1788917952.8430674,
-    "ast_hash": "13a4efd04fa5c19445d67271a97ea412",
+    "mtime": 1788930472.5294266,
+    "ast_hash": "d6a707993781d99acde50db24da9c255",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
