@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "lib/demo.ts": {
-    "mtime": 1788961496.0536196,
-    "ast_hash": "99f3483f3688ad4764d46c3d00f407f3",
+    "mtime": 1788977333.5452964,
+    "ast_hash": "2a326f92fde13d09db3abd7d3fa2b692",
     "semantic_hash": ""
   },
   "components/pages/modulos/BridgeMap.test.ts": {
@@ -685,13 +685,18 @@
     "semantic_hash": ""
   },
   "app/[locale]/demo/page.test.tsx": {
-    "mtime": 1788975816.8839707,
-    "ast_hash": "41f609dcc7942596116364cedef0d84c",
+    "mtime": 1788977333.5452964,
+    "ast_hash": "736947181c8d0b8b539a7c92aec11c94",
     "semantic_hash": ""
   },
   "app/[locale]/demo/page.tsx": {
-    "mtime": 1788975816.8890545,
-    "ast_hash": "6aa20343c96112dcf57cc686e3dc7874",
+    "mtime": 1788977333.5452964,
+    "ast_hash": "2d0a3fbc4e5d5580907e0a5ddca835b2",
+    "semantic_hash": ""
+  },
+  "lib/i18n/demo.ts": {
+    "mtime": 1788977333.5452964,
+    "ast_hash": "770a480bd98a6d35a91d5397b3170f01",
     "semantic_hash": ""
   }
 }
