@@ -38,12 +38,6 @@ const en = {
       },
     ],
   },
-  operations: {
-    kicker: "01 / Operations",
-    title: "The hours come back, and they compound.",
-    sub: "Every operation has jobs that run every week and eat an afternoon: rekeying the same numbers between systems, chasing status, rebuilding a report someone already built. We find them, measure what they actually cost you in hours, and make them run on their own. Then we do it again with the next one. **Hours back every month, compounding.**",
-    note: "Measured before and after, so the saving is **provable, not claimed.**",
-  },
   tools: {
     kicker: "02 / Tools",
     title: "Tools your team actually runs, and owns.",
@@ -122,8 +116,6 @@ const en = {
     leadBody:
       "This is the practice. We build the system a winery runs on, from harvest weights and lab results to the tasting room and the books, and we are down the road when it needs a hand.",
     leadCta: "Open the winery page",
-    secondaryLabel: "Also reachable",
-    secondaryNote: "Built for and kept open, not sold actively.",
     foot: "Three stations built, two terrains ahead. In focus: **the winery valley.**",
   },
   /**
@@ -208,17 +200,6 @@ const en = {
         { k: "CLOSE", v: "current" },
       ],
     },
-    ops: {
-      tag: "Monte Xanic: about an hour of finance work, now about two minutes",
-      aria: "At Monte Xanic, about an hour of finance work compresses into one short clean automated pass of about two minutes, about 97 percent less time, refreshed through the day.",
-      manual: "MANUAL, EVERY WEEK",
-      auto: "AUTOMATED, RUNS ITSELF",
-      badge: "about 97% less time",
-      long: "about 1 hr",
-      short: "about 2 min",
-      unit: "min",
-      foot: "REFRESHED THROUGH THE DAY",
-    },
     map: {
       legend: "Survey of terrains: three stations, two survey sites",
       hub: "One system",
@@ -232,21 +213,6 @@ const en = {
       wineryDetail: "harvest and finances, one view",
       wineryAria:
         "Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page.",
-      constructionName: "Construction / Logistics",
-      constructionDetail: "field to office, one system",
-      constructionAria:
-        "Construction and Logistics. Field to office, one system. Open the logistics page.",
-      hiringName: "Hiring / HR",
-      hiringDetail: "from first click to hire",
-      hiringAria: "Hiring and HR. From first click to hire. Open the hiring page.",
-      clinicsName: "Clinics / Healthcare",
-      clinicsDetail: "defend and recapture patient flow",
-      clinicsAria:
-        "Clinics and healthcare. Focus terrain: defend and recapture patient flow. Open the clinics page.",
-      restaurantsName: "Restaurants / Hospitality",
-      restaurantsDetail: "surveying this terrain",
-      restaurantsAria:
-        "Restaurants and hospitality. Terrain we are surveying next. Open the restaurants page.",
       xanicAria: "Read the Monte Xanic case study, from berry to bottle.",
       enkantoAria: "Read the Vinedo En'kanto case study, the commerce side.",
     },
@@ -297,12 +263,6 @@ const es: typeof en = {
         body: "México y Estados Unidos, en español y en inglés. Ninguno es la traducción del otro.",
       },
     ],
-  },
-  operations: {
-    kicker: "01 / Operación",
-    title: "Las horas regresan, y se acumulan.",
-    sub: "Toda operación tiene tareas que vuelven cada semana y se comen una tarde: capturar otra vez los mismos números entre sistemas, perseguir en qué va algo, rehacer un reporte que alguien ya había hecho. Las encontramos, medimos lo que de verdad le cuestan en horas y las dejamos corriendo solas. Luego seguimos con la siguiente. **Horas de vuelta cada mes, una encima de la otra.**",
-    note: "Medimos antes y después, para que el ahorro sea **comprobable y no una promesa.**",
   },
   tools: {
     kicker: "02 / Herramientas",
@@ -382,8 +342,6 @@ const es: typeof en = {
     leadBody:
       "Aquí está el trabajo. Construimos el sistema con el que opera una bodega, desde los pesos de cosecha y los resultados de laboratorio hasta la sala de degustación y las cuentas, y estamos a unos minutos cuando hace falta una mano.",
     leadCta: "Ver la página de bodegas",
-    secondaryLabel: "También abiertos",
-    secondaryNote: "Terrenos en los que ya construimos; no los vendemos de forma activa.",
     foot: "Tres estaciones construidas, dos terrenos por delante. En foco: **el valle de las bodegas.**",
   },
   pricing: {
@@ -460,17 +418,6 @@ const es: typeof en = {
         { k: "CIERRE", v: "al corriente" },
       ],
     },
-    ops: {
-      tag: "Monte Xanic: como una hora de trabajo financiero, ahora como dos minutos",
-      aria: "En Monte Xanic, como una hora de trabajo financiero se comprime en un solo paso automático y limpio de como dos minutos, como 97 por ciento menos tiempo, y se actualiza durante el día.",
-      manual: "A MANO, CADA SEMANA",
-      auto: "AUTOMATIZADO, CORRE SOLO",
-      badge: "como 97% menos tiempo",
-      long: "como 1 hora",
-      short: "como 2 min",
-      unit: "min",
-      foot: "SE ACTUALIZA DURANTE EL DÍA",
-    },
     map: {
       legend: "Reconocimiento de terrenos: tres estaciones, dos sitios en estudio",
       hub: "Un sistema",
@@ -484,22 +431,6 @@ const es: typeof en = {
       wineryDetail: "cosecha y cuentas, una vista",
       wineryAria:
         "Bodegas, Valle de Guadalupe. Cosecha y cuentas en una sola vista. Abrir la página de bodegas.",
-      constructionName: "Construcción / Logística",
-      constructionDetail: "del campo a la oficina, un sistema",
-      constructionAria:
-        "Construcción y logística. Del campo a la oficina, un solo sistema. Abrir la página de construcción.",
-      hiringName: "Reclutamiento / Recursos humanos",
-      hiringDetail: "del primer clic a la contratación",
-      hiringAria:
-        "Reclutamiento y recursos humanos. Del primer clic a la contratación. Abrir la página de reclutamiento.",
-      clinicsName: "Clínicas / Salud",
-      clinicsDetail: "defender y recuperar el flujo de pacientes",
-      clinicsAria:
-        "Clínicas y salud. Terreno en foco: defender y recuperar el flujo de pacientes. Abrir la página de clínicas.",
-      restaurantsName: "Restaurantes / Hospitalidad",
-      restaurantsDetail: "terreno en estudio",
-      restaurantsAria:
-        "Restaurantes y hospitalidad. Terreno que estamos estudiando. Abrir la página de restaurantes.",
       xanicAria: "Lea el caso de Monte Xanic, de la baya a la botella.",
       enkantoAria: "Lea el caso de Viñedo En'kanto, el lado comercial.",
     },
