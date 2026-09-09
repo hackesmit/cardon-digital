@@ -178,7 +178,7 @@ const en = {
       },
     ],
     moreLead:
-      "Each module has a published entry price, setup and monthly, and the combination and annual rules are written out in full.",
+      "Each module has a published entry price, setup and monthly, and the combination and annual rules are stated as the policy they are.",
     moreCta: "See pricing",
     termsLabel: "Terms",
     terms: [
@@ -378,7 +378,7 @@ const es: typeof en = {
       },
     ],
     moreLead:
-      "Cada módulo tiene su precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas completas.",
+      "Cada módulo tiene su precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas como la política que son.",
     moreCta: "Ver precios",
     termsLabel: "Condiciones",
     terms: [
