@@ -44,6 +44,10 @@ export type CombinaItem = {
   key: string;
   kind: "single" | "mix";
   variant?: "bridge" | "shared";
+  /** Which modules this row is, by catalogue id. Written out rather than
+      inferred from the row order, so the bridge map beside the list cannot
+      light the wrong nodes the day a row moves (bead hq-wrig5.13). */
+  modules: string[];
   line: string;
 };
 
@@ -79,6 +83,44 @@ const en = {
   demoSoon: "coming",
 
   sizesLead: "Size is set per module, so an operation can be M on one and S on another.",
+
+  /**
+   * The labels on the three module boards (bead hq-wrig5.13). Only the words
+   * live here. What the boards show, the lots, the stays and the tables, is
+   * invented decoration shaped to read the way a real board reads, so it sits
+   * in the component beside the geometry it belongs to and never in a
+   * dictionary. Every frame carries `honest`, the same admission the
+   * case-study visuals make.
+   */
+  screens: {
+    honest: "illustrative view",
+    produccion: {
+      title: "Lots and tanks",
+      lot: "Lot",
+      variety: "Variety",
+      tank: "Tank",
+      brix: "Brix",
+    },
+    hospitalidad: {
+      title: "Master calendar",
+      nights: "nights",
+      channels: {
+        direct: "Direct",
+        ota1: "Channel 1",
+        ota2: "Channel 2",
+      },
+    },
+    restaurante: {
+      title: "Table map",
+      table: "Table",
+      covers: "covers",
+      states: {
+        free: "Free",
+        seated: "Seated",
+        check: "Check",
+      },
+    },
+  },
 
   modules: [
     {
@@ -352,7 +394,11 @@ const en = {
     // A bridge is in no standard bundle (memo 2.2 and 2.3), so it is quoted on
     // top of the two modules rather than carried by them, and this page may not
     // say it "comes with" a mix that does not pay for it (Lucy 2026-09-08).
-    sub: "Buy the modules you run on. **A bridge is only built when both of the modules it joins are bought**, it is quoted on top of the two, and what each one adds is one sentence long.",
+    /* The closing clause, that what each mix adds is one sentence long, was
+       describing the list rather than saying anything, and the bridge rule in
+       front of it is now also drawn: the map beside the rows lights an edge
+       only when both of its modules are switched on (bead hq-wrig5.13). */
+    sub: "Buy the modules you run on. **A bridge is only built when both of the modules it joins are bought**, and it is quoted on top of the two.",
     single: "On its own",
     bridge: "The bridge",
     shared: "One system",
@@ -360,40 +406,47 @@ const en = {
       {
         key: "Produccion",
         kind: "single",
+        modules: ["produccion"],
         line: "The record of what you grew, made and sold, the vintage comparison, the monthly report and the assistant over your own cellar.",
       },
       {
         key: "Hospitalidad",
         kind: "single",
+        modules: ["hospitalidad"],
         line: "Every channel in one calendar, the day view the property works from, the unit board, the guest kept between stays and revenue by channel.",
       },
       {
         key: "Restaurante",
         kind: "single",
+        modules: ["restaurante"],
         line: "The order on the phone, the kitchen screen, the table map, the table paid with the bill split, and a day that closes with a cut.",
       },
       {
         key: "Produccion and Hospitalidad",
         kind: "mix",
         variant: "shared",
+        modules: ["produccion", "hospitalidad"],
         line: "One system and one login for both, and the shared service base is priced once whichever modules you add it to. The tasting room, the events and the club are still booked in Hospitalidad, and those visits already sit in Produccion's own commercial record on its own.",
       },
       {
         key: "Produccion and Restaurante",
         kind: "mix",
         variant: "bridge",
+        modules: ["produccion", "restaurante"],
         line: "The house wine list reads live from the cellar by vintage and varietal, so what the dining room offers is what the cellar actually holds. It reads only: the cellar record stays the cellar's.",
       },
       {
         key: "Hospitalidad and Restaurante",
         kind: "mix",
         variant: "bridge",
+        modules: ["hospitalidad", "restaurante"],
         line: "Charges from the restaurant post to the room, and a guest's table booking shows on their stay, so the host sees the guest and the stay sees the table.",
       },
       {
         key: "All three",
         kind: "mix",
         variant: "bridge",
+        modules: ["produccion", "hospitalidad", "restaurante"],
         line: "Both bridges at once, under one system: the guest arrives, books a table, charges dinner to the room and drinks a wine the cellar knows by vintage, while the tasting room visit still sits next to the season that produced it.",
       },
     ] as CombinaItem[],
@@ -436,6 +489,36 @@ const es: typeof en = {
 
   sizesLead:
     "El tamaño se fija por módulo, así que una operación puede ser M en uno y S en otro.",
+
+  screens: {
+    honest: "vista ilustrativa",
+    produccion: {
+      title: "Lotes y tanques",
+      lot: "Lote",
+      variety: "Variedad",
+      tank: "Tanque",
+      brix: "Brix",
+    },
+    hospitalidad: {
+      title: "Calendario maestro",
+      nights: "noches",
+      channels: {
+        direct: "Directo",
+        ota1: "Canal 1",
+        ota2: "Canal 2",
+      },
+    },
+    restaurante: {
+      title: "Mapa de mesas",
+      table: "Mesa",
+      covers: "comensales",
+      states: {
+        free: "Libre",
+        seated: "Ocupada",
+        check: "Cuenta",
+      },
+    },
+  },
 
   modules: [
     {
@@ -706,7 +789,7 @@ const es: typeof en = {
   combina: {
     kicker: "Las siete combinaciones",
     title: "Uno, dos o tres, y lo que agregan los puentes.",
-    sub: "Se compran los módulos que se operan. **Un puente solo se construye cuando se compran los dos módulos que une**, se cotiza aparte, encima de los dos, y lo que agrega cada uno cabe en una frase.",
+    sub: "Se compran los módulos que se operan. **Un puente solo se construye cuando se compran los dos módulos que une**, y se cotiza aparte, encima de los dos.",
     single: "Por su cuenta",
     bridge: "El puente",
     shared: "Un solo sistema",
@@ -714,40 +797,47 @@ const es: typeof en = {
       {
         key: "Producción",
         kind: "single",
+        modules: ["produccion"],
         line: "El registro de lo que cultivó, elaboró y vendió, la comparación de añadas, el informe mensual y el asistente sobre su propia cava.",
       },
       {
         key: "Hospitalidad",
         kind: "single",
+        modules: ["hospitalidad"],
         line: "Cada canal en un calendario, la vista del día desde la que trabaja la propiedad, el tablero de unidades, el huésped conservado entre estancias e ingreso por canal.",
       },
       {
         key: "Restaurante",
         kind: "single",
+        modules: ["restaurante"],
         line: "La orden en el teléfono, la pantalla de cocina, el mapa de mesas, la mesa cobrada con la cuenta dividida, y un día que cierra con un corte.",
       },
       {
         key: "Producción y Hospitalidad",
         kind: "mix",
         variant: "shared",
+        modules: ["produccion", "hospitalidad"],
         line: "Un solo sistema y un solo inicio de sesión para ambos, y la base del servicio se cobra una sola vez sin importar a qué módulos se agregue. La sala de degustación, los eventos y el club se siguen reservando en Hospitalidad, y esas visitas ya quedan por su cuenta en el registro comercial de Producción.",
       },
       {
         key: "Producción y Restaurante",
         kind: "mix",
         variant: "bridge",
+        modules: ["produccion", "restaurante"],
         line: "La carta de vinos de la casa se lee viva desde la cava por añada y varietal, así lo que ofrece el comedor es lo que la cava realmente tiene. Es de solo lectura: el registro de la cava sigue siendo de la cava.",
       },
       {
         key: "Hospitalidad y Restaurante",
         kind: "mix",
         variant: "bridge",
+        modules: ["hospitalidad", "restaurante"],
         line: "Los consumos del restaurante se cargan al cuarto, y la reservación de mesa de un huésped aparece en su estancia, así recepción ve al huésped y la estancia ve la mesa.",
       },
       {
         key: "Los tres",
         kind: "mix",
         variant: "bridge",
+        modules: ["produccion", "hospitalidad", "restaurante"],
         line: "Los dos puentes a la vez, bajo un solo sistema: el huésped llega, reserva mesa, carga la cena al cuarto y toma un vino que la cava conoce por añada, mientras la visita a la sala de degustación sigue junto a la temporada que la produjo.",
       },
     ] as CombinaItem[],
