@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
+import PricingDetails from "@/components/pages/precios/PricingDetails";
 import Reveal from "@/components/site/Reveal";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import { sharedServiceBaseLines } from "@/lib/pricing";
 import "./precios.css";
 
 type Params = { params: { locale: string } };
@@ -78,98 +78,10 @@ export default function PreciosPage({ params }: Params) {
       {/* ==================== MORE THAN ONE MODULE ===================== */}
       <MixExample locale={locale} />
 
-      {/* ==================== THE MONTHLY SERVICE FEE =================== */}
-      <section
-        className="section pr-monthly"
-        id="mensualidad"
-        aria-labelledby="monthly-title"
-      >
-        <div className="container">
-          <Reveal>
-            <div className="section-head">
-              <span className="kicker">{d.monthly.kicker}</span>
-              <h2 id="monthly-title">{d.monthly.title}</h2>
-              <p className="section-sub">{d.monthly.sub}</p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={60}>
-            <ul className="pr-list">
-              {sharedServiceBaseLines.map((line) => {
-                const name = d.monthly.lines[line.id];
-                if (!name) {
-                  // A slug on a public page is a silent failure, so fail here.
-                  throw new Error(
-                    `precios: no ${locale} name for service line ${line.id}`,
-                  );
-                }
-                return <li key={line.id}>{name}</li>;
-              })}
-            </ul>
-          </Reveal>
-
-          <Reveal delay={60}>
-            <p className="pr-note">{rich(d.monthly.foot)}</p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ======================= PAYING A YEAR UP FRONT ================= */}
-      <section
-        className="section pr-annual"
-        id="anual"
-        aria-labelledby="annual-title"
-      >
-        <div className="container">
-          <Reveal>
-            <div className="pr-block">
-              <span className="kicker gold">{d.annual.kicker}</span>
-              <h2 id="annual-title">{d.annual.title}</h2>
-              <p className="pr-body">{rich(d.annual.body)}</p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================ ADS AND CONTENT ================== */}
-      <section
-        className="section pr-ads"
-        id="anuncios"
-        aria-labelledby="ads-title"
-      >
-        <div className="container">
-          <Reveal>
-            <div className="pr-block">
-              <span className="kicker">{d.ads.kicker}</span>
-              <h2 id="ads-title">{d.ads.title}</h2>
-              <p className="pr-body">{rich(d.ads.body)}</p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================ TERMS ============================ */}
-      <section
-        className="section pr-terms"
-        id="condiciones"
-        aria-labelledby="terms-title"
-      >
-        <div className="container">
-          <Reveal>
-            <div className="section-head">
-              <span className="kicker">{d.terms.kicker}</span>
-              <h2 id="terms-title">{d.terms.title}</h2>
-            </div>
-          </Reveal>
-          <Reveal delay={60}>
-            <ol className="pr-terms-list">
-              {d.terms.items.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ol>
-          </Reveal>
-        </div>
-      </section>
+      {/* ===== THE MONTHLY FEE, THE ANNUAL RULE, ADS, AND THE TERMS ===== */}
+      {/* The tail of this page, rendered by the component the showcase home
+          renders too (bead hq-wrig5.15), so the terms have one home. */}
+      <PricingDetails locale={locale} />
 
       {/* ============================ DIAGNOSTIC ======================= */}
       <section

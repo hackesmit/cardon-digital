@@ -23,6 +23,16 @@ export default function Nav() {
   // on screen and takes the clay only once none is. Without JS it stays quiet,
   // which is the correct state at the top of every page.
   const [navIsOnlyAction, setNavIsOnlyAction] = useState(false);
+  // The one feedback page (bead hq-wrig5.15): with SHOWCASE=1 the home carries
+  // the modules and the pricing as sections of itself, so those two nav items
+  // scroll instead of leaving the page. The flag is a server-only environment
+  // variable, and this is a client component, so the page announces itself with
+  // the class on its own <main> rather than the nav reading process.env, which
+  // would be "1" on the server and undefined in the browser and mismatch on
+  // hydration. Both sides therefore start on the page links and the effect
+  // swaps them in after mount; without JS they stay page links, which still
+  // reach the same copy on /modulos and /precios.
+  const [showcaseAnchors, setShowcaseAnchors] = useState(false);
   const pathname = usePathname();
   const locale = useLocale();
   const t = site[locale].nav;
@@ -39,8 +49,12 @@ export default function Nav() {
   // what we sell and what it costs are the two pages the site now routes a
   // reader to first, and they are the two the showcase home links out to.
   const linksBefore = [
-    { href: href("/modulos"), label: t.modules },
-    { href: href("/precios"), label: t.pricing },
+    showcaseAnchors
+      ? { href: "#modulos", label: t.modules }
+      : { href: href("/modulos"), label: t.modules },
+    showcaseAnchors
+      ? { href: "#precios", label: t.pricing }
+      : { href: href("/precios"), label: t.pricing },
     { href: href("/industries/winery"), label: t.wineries },
     { href: href("/work/monte-xanic"), label: t.work },
   ];
@@ -112,6 +126,11 @@ export default function Nav() {
     setMode(next);
     window.dispatchEvent(new CustomEvent("cardon-mode", { detail: next }));
   }
+
+  useEffect(() => {
+    // Only the showcase home carries #modulos and #precios as its own sections.
+    setShowcaseAnchors(!!document.querySelector("main.pg-showcase #modulos"));
+  }, [pathname]);
 
   useEffect(() => {
     const actions = Array.from(document.querySelectorAll("main .cta"));
