@@ -28,6 +28,7 @@ export function generateMetadata({ params }: Params): Metadata {
 const capGlyphs = [
   (
     <svg
+                        key="cap-glyph-0"
                         className="cap-glyph"
                         viewBox="0 0 34 34"
                         aria-hidden="true"
@@ -47,6 +48,7 @@ const capGlyphs = [
   ),
   (
     <svg
+                        key="cap-glyph-1"
                         className="cap-glyph"
                         viewBox="0 0 34 34"
                         aria-hidden="true"
@@ -64,6 +66,7 @@ const capGlyphs = [
   ),
   (
     <svg
+                        key="cap-glyph-2"
                         className="cap-glyph"
                         viewBox="0 0 34 34"
                         aria-hidden="true"
@@ -88,6 +91,7 @@ const capGlyphs = [
   ),
   (
     <svg
+                        key="cap-glyph-3"
                         className="cap-glyph"
                         viewBox="0 0 34 34"
                         aria-hidden="true"
@@ -108,6 +112,7 @@ const capGlyphs = [
   ),
   (
     <svg
+                        key="cap-glyph-4"
                         className="cap-glyph"
                         viewBox="0 0 34 34"
                         aria-hidden="true"
@@ -127,6 +132,7 @@ const capGlyphs = [
   ),
   (
     <svg
+                        key="cap-glyph-5"
                         className="cap-glyph"
                         viewBox="0 0 34 34"
                         aria-hidden="true"

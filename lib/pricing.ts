@@ -591,10 +591,10 @@ export function bridgeFeatures(
 
 /** Daniel hours a module's standard bundle at this size actually buys. */
 export function bundleHours(moduleId: ModuleId, size: Size): number {
-  const module = modules[moduleId];
+  const mod = modules[moduleId];
   return hours3(
-    module.bundles[size].reduce((total, item) => {
-      const h = featureOf(module, item.feature).hours[size];
+    mod.bundles[size].reduce((total, item) => {
+      const h = featureOf(mod, item.feature).hours[size];
       if (h === null) {
         throw new Error(`${moduleId} ${size} bundle: ${item.feature} is n/a`);
       }
@@ -817,13 +817,13 @@ export function sharedBuildHours(
 ): number {
   if (rank === 1) return 0;
   const w = rank === 2 ? overlapWeights.second : overlapWeights.third;
-  const module = modules[moduleId];
-  const h = (id: string) => featureOf(module, id).hours[size] ?? 0;
+  const mod = modules[moduleId];
+  const h = (id: string) => featureOf(mod, id).hours[size] ?? 0;
   return hours3(
     h("training-and-handover-pack") * w.training +
       h("the-assistant") * w.assistant +
       h("monthly-report-generator") * w.reportGenerator +
-      h(module.recordFeature) * w.recordFeature,
+      h(mod.recordFeature) * w.recordFeature,
   );
 }
 
