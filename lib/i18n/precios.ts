@@ -1,3 +1,4 @@
+import type { Locale } from "./config";
 import type { Dict } from "./rich";
 
 /**
@@ -125,8 +126,14 @@ const en = {
     ],
     exampleKicker: "Worked example",
     exampleTitle: "A winery with six rooms and a restaurant.",
-    exampleSub:
-      "All three modules, each at its entry size. The complete build is the three lists above, ranked by build price: Restaurante at full price, Hospitalidad second, Produccion third.",
+    // The ranking clause after the colon is composed from the quote's own
+    // module order by mixRankingSentence(), never typed here, so the sentence
+    // cannot name an order the table beside it does not have (bead hq-ggot1.14).
+    exampleLead:
+      "All three modules, each at its entry size. The complete build is the three lists above, ranked by build price:",
+    rankFull: "at full price",
+    rankSecond: "second",
+    rankThird: "third",
     figuresLabel: "The three modules together, at their entry size",
     setupLabel: "To implement",
     monthlyLabel: "Every month",
@@ -282,8 +289,11 @@ const es: typeof en = {
     ],
     exampleKicker: "Ejemplo trabajado",
     exampleTitle: "Una bodega con seis cuartos y restaurante.",
-    exampleSub:
-      "Los tres módulos, cada uno en su tamaño de entrada. La construcción completa son las tres listas de arriba, ordenadas por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercero.",
+    exampleLead:
+      "Los tres módulos, cada uno en su tamaño de entrada. La construcción completa son las tres listas de arriba, ordenadas por tamaño de obra:",
+    rankFull: "a precio completo",
+    rankSecond: "en segundo lugar",
+    rankThird: "en tercero",
     figuresLabel: "Los tres módulos juntos, en su tamaño de entrada",
     setupLabel: "Implementación",
     monthlyLabel: "Cada mes",
@@ -348,3 +358,36 @@ const es: typeof en = {
 };
 
 export const precios: Dict<typeof en> = { en, es };
+
+/**
+ * The worked example's ranking sentence, built from the quote's own module
+ * order rather than transcribed into the dict. `rankedModuleIds` arrives ranked
+ * by build price, most expensive first, exactly as `quote().modules` presents
+ * them, so the prose names the same order the table shows and cannot be left
+ * behind when the catalogue hours move (red-team hq-ggot1.6 finding 4,
+ * bead hq-ggot1.14). No figure is read here, only the order and the localized
+ * names; a module with no name or a position with no phrase throws at build
+ * time, the same way a missing feature name already does.
+ */
+export function mixRankingSentence(
+  locale: Locale,
+  rankedModuleIds: readonly string[],
+): string {
+  const d = precios[locale].mix;
+  const names = precios[locale].floors.modules;
+  const phrases = [d.rankFull, d.rankSecond, d.rankThird];
+  const clause = rankedModuleIds
+    .map((id, index) => {
+      const entry = names[id as keyof typeof names];
+      if (!entry) {
+        throw new Error(`precios: no module name for "${id}"`);
+      }
+      const phrase = phrases[index];
+      if (!phrase) {
+        throw new Error(`precios: no ranking phrase for position ${index}`);
+      }
+      return `${entry.name} ${phrase}`;
+    })
+    .join(", ");
+  return `${d.exampleLead} ${clause}.`;
+}
