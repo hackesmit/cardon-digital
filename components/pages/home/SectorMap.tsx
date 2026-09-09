@@ -22,9 +22,10 @@ import {
  * lights the active route on hover or focus, with a rare slow ambient pulse when
  * idle. Ported from the desert-tech-v2 home sectorMap IIFE. Paused offscreen and
  * when the document is hidden; static hub only under reduced motion; palette
- * re-read on the "cardon-mode" event. Only the three built stations light a
- * route; hovering a survey station clears lighting (and never throws on an
- * unknown route, which the original could).
+ * re-read on the "cardon-mode" event. The site sells three areas only now
+ * (bead hq-wrig5.11), so the map carries the winery station and the two case
+ * studies; the winery station lights its route, and setActive never throws on
+ * an unknown route.
  */
 
 interface Core {
@@ -101,16 +102,8 @@ export default function SectorMap() {
         id: "route-winery",
         pts: [[0.5, 0.5], [0.32, 0.5], [0.26, 0.44], [0.26, 0.38], [0.2, 0.35]],
       },
-      logistics: {
-        id: "route-logistics",
-        pts: [[0.5, 0.5], [0.66, 0.5], [0.72, 0.44], [0.72, 0.36], [0.8, 0.3]],
-      },
-      hiring: {
-        id: "route-hiring",
-        pts: [[0.5, 0.5], [0.5, 0.6], [0.54, 0.67], [0.52, 0.74]],
-      },
     };
-    const keys = ["winery", "logistics", "hiring"];
+    const keys = ["winery"];
     let active: string | null = null;
     const ambient: { key: string | null; L: number; at: number; aL: number } = {
       key: null,
@@ -148,21 +141,10 @@ export default function SectorMap() {
       }
     }
 
-    /* survey sites have no canvas flow, but their dashed SVG routes still light
-       via the shared .lit class, matching the approved page */
-    const SURVEY_ROUTES: Record<string, string> = {
-      restaurants: "route-restaurants",
-      clinics: "route-clinics",
-    };
-
     function setActive(key: string | null) {
       for (let i = 0; i < keys.length; i++) {
         const el = stage!.querySelector("#" + ROUTES[keys[i]].id);
         if (el) el.classList.toggle("lit", key === keys[i]);
-      }
-      for (const sk in SURVEY_ROUTES) {
-        const el = stage!.querySelector("#" + SURVEY_ROUTES[sk]);
-        if (el) el.classList.toggle("lit", key === sk);
       }
       active = key && ROUTES[key] ? key : null;
       ambient.aL = 0;
@@ -336,26 +318,6 @@ export default function SectorMap() {
           className="map-route"
           d="M500 280 L320 280 L260 246 L260 213 L200 196"
         />
-        <path
-          id="route-logistics"
-          className="map-route"
-          d="M500 280 L660 280 L720 246 L720 202 L800 168"
-        />
-        <path
-          id="route-hiring"
-          className="map-route"
-          d="M500 280 L500 336 L540 375 L520 414"
-        />
-        <path
-          id="route-restaurants"
-          className="map-route survey-route"
-          d="M500 280 L440 244 L440 160 L360 100"
-        />
-        <path
-          id="route-clinics"
-          className="map-route survey-route"
-          d="M500 280 L590 320 L660 320 L720 347"
-        />
         <circle className="map-hub-ring" cx="500" cy="280" r="6.5" strokeWidth="1.6" />
         <circle className="map-hub-core" cx="500" cy="280" r="2.4" />
       </svg>
@@ -414,71 +376,6 @@ export default function SectorMap() {
           {t.caseStudy} <b>En&apos;kanto</b>
         </span>
       </Link>
-
-      <Link
-        className="map-marker survey"
-        id="mk-restaurants"
-        href={href("/industries/restaurants")}
-        data-sector="restaurants"
-        data-route="route-restaurants"
-        style={{ left: "36%", top: "18%" }}
-        aria-label={t.restaurantsAria}
-      >
-        <MarkerCore full={false} />
-        <span className="marker-label">
-          <span className="marker-name">{t.restaurantsName}</span>
-          <span className="marker-detail">{t.restaurantsDetail}</span>
-        </span>
-      </Link>
-
-      <Link
-        className="map-marker survey"
-        id="mk-clinics"
-        href={href("/industries/clinics")}
-        data-sector="clinics"
-        data-route="route-clinics"
-        style={{ left: "72%", top: "62%" }}
-        aria-label={t.clinicsAria}
-      >
-        <MarkerCore full={false} />
-        <span className="marker-label">
-          <span className="marker-focus">{t.focus}</span>
-          <span className="marker-name">{t.clinicsName}</span>
-          <span className="marker-detail">{t.clinicsDetail}</span>
-        </span>
-      </Link>
-
-      <Link
-        className="map-marker m-right"
-        id="mk-logistics"
-        href={href("/industries/construction")}
-        data-sector="logistics"
-        data-route="route-logistics"
-        style={{ left: "80%", top: "30%" }}
-        aria-label={t.constructionAria}
-      >
-        <MarkerCore full />
-        <span className="marker-label">
-          <span className="marker-name">{t.constructionName}</span>
-          <span className="marker-detail">{t.constructionDetail}</span>
-        </span>
-      </Link>
-
-      <Link
-        className="map-marker m-up"
-        id="mk-hiring"
-        href={href("/industries/hiring")}
-        data-sector="hiring"
-        data-route="route-hiring"
-        style={{ left: "52%", top: "72%" }}
-        aria-label={t.hiringAria}
-      >
-        <MarkerCore full />
-        <span className="marker-label">
-          <span className="marker-name">{t.hiringName}</span>
-          <span className="marker-detail">{t.hiringDetail}</span>
-        </span>
-      </Link>
     </div>
 
     {/* Portrait-native version of the map: the geographic canvas does not
@@ -518,34 +415,6 @@ export default function SectorMap() {
           </span>
         </Link>
 
-        <Link
-          className="sector-card"
-          href={href("/industries/construction")}
-          aria-label={t.constructionAria}
-        >
-          <span className="sc-mark">
-            <MarkerCore full />
-          </span>
-          <span className="sc-body">
-            <span className="sc-name">{t.constructionName}</span>
-            <span className="sc-detail">{t.constructionDetail}</span>
-          </span>
-        </Link>
-
-        <Link
-          className="sector-card"
-          href={href("/industries/hiring")}
-          aria-label={t.hiringAria}
-        >
-          <span className="sc-mark">
-            <MarkerCore full />
-          </span>
-          <span className="sc-body">
-            <span className="sc-name">{t.hiringName}</span>
-            <span className="sc-detail">{t.hiringDetail}</span>
-          </span>
-        </Link>
-
         <div className="sl-cases">
           <Link className="sl-case" href={href("/work/monte-xanic")} aria-label={t.xanicAria}>
             <span className="dot" aria-hidden="true" />
@@ -556,39 +425,6 @@ export default function SectorMap() {
             <span>{t.caseStudy} <b>En&apos;kanto</b></span>
           </Link>
         </div>
-      </div>
-
-      <span className="sl-head mono">{t.surveyHead}</span>
-
-      <div className="sl-grid">
-        <Link
-          className="sector-card survey"
-          href={href("/industries/clinics")}
-          aria-label={t.clinicsAria}
-        >
-          <span className="sc-mark">
-            <MarkerCore full={false} />
-          </span>
-          <span className="sc-body">
-            <span className="sc-badge">{t.focus}</span>
-            <span className="sc-name">{t.clinicsName}</span>
-            <span className="sc-detail">{t.clinicsDetail}</span>
-          </span>
-        </Link>
-
-        <Link
-          className="sector-card survey"
-          href={href("/industries/restaurants")}
-          aria-label={t.restaurantsAria}
-        >
-          <span className="sc-mark">
-            <MarkerCore full={false} />
-          </span>
-          <span className="sc-body">
-            <span className="sc-name">{t.restaurantsName}</span>
-            <span className="sc-detail">{t.restaurantsDetail}</span>
-          </span>
-        </Link>
       </div>
     </div>
     </>

@@ -16,7 +16,7 @@ const en = {
   sections: [
     {
       h: "What this site is",
-      body: "Informational. The pages describe our services, our approach, and work we have done. Nothing here is a binding offer, a guarantee of results, or professional advice for your specific situation. Illustrative visuals are labeled as such and do not depict client data.",
+      body: "Informational. The pages describe our services, our approach, and work we have done. Nothing here is a binding offer, a guarantee of results, or professional advice for your specific situation. Illustrative visuals do not depict client data.",
     },
     {
       h: "The Growth Diagnostic and engagements",
@@ -58,7 +58,7 @@ const es: typeof en = {
   sections: [
     {
       h: "Qué es este sitio",
-      body: "Informativo. Las páginas describen nuestros servicios, nuestra forma de trabajar y trabajo que ya hicimos. Nada de lo que está aquí es una oferta vinculante, una garantía de resultados ni asesoría profesional para su situación particular. Las imágenes ilustrativas están señaladas como tales y no muestran datos de clientes.",
+      body: "Informativo. Las páginas describen nuestros servicios, nuestra forma de trabajar y trabajo que ya hicimos. Nada de lo que está aquí es una oferta vinculante, una garantía de resultados ni asesoría profesional para su situación particular. Las imágenes ilustrativas no muestran datos de clientes.",
     },
     {
       h: "El Diagnóstico de Crecimiento y los trabajos",

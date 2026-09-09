@@ -115,7 +115,6 @@ export default function AssistantDemo() {
       </div>
 
       <div className="ad-chat">
-        <p className="ad-label mono">{t.label}</p>
         {t.turns.map((turn, ti) => (
           <div className="ad-exchange" key={turn.q}>
             <p
