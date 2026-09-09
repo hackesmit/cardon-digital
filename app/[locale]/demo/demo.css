@@ -1,0 +1,46 @@
+/* ============================ DEMO HOLDING PAGE ============================
+   Page-scoped styles under .pg-demo (bead hq-wrig5.8). The shared layer
+   (globals.css) already provides the header, section, container, kicker, cta
+   and btn-ghost, so this file adds only the holding-page measure, the module
+   list and the action row. No accent of its own: it is a short holding page
+   and leans on the shared tokens. */
+
+.pg-demo{position:relative;z-index:1;}
+
+.pg-demo .demo-hold{padding-top:clamp(40px,7vw,88px);}
+.pg-demo .demo-inner{max-width:60ch;}
+
+.pg-demo h1{
+  margin-top:14px;font-size:clamp(1.9rem,4.6vw,3rem);
+  letter-spacing:-0.03em;line-height:1.1;
+}
+.pg-demo .demo-lead{
+  margin-top:20px;color:var(--text-dim);
+  font-size:clamp(1.02rem,1.4vw,1.16rem);line-height:1.6;
+}
+
+.pg-demo .demo-modules-lead{
+  margin-top:clamp(26px,3.5vw,40px);
+  font-weight:600;color:var(--text);
+}
+.pg-demo .demo-modules{
+  margin-top:14px;display:flex;flex-direction:column;gap:12px;
+  list-style:none;padding:0;
+}
+.pg-demo .demo-modules li{
+  display:flex;flex-direction:column;gap:3px;
+  padding-left:16px;border-left:2px solid var(--primary-dim);
+}
+.pg-demo .demo-module-name{
+  font-weight:600;color:var(--text);letter-spacing:-0.01em;
+}
+.pg-demo .demo-module-body{
+  color:var(--text-dim);font-size:0.98rem;line-height:1.55;
+}
+
+.pg-demo .demo-links-lead{
+  margin-top:clamp(26px,3.5vw,40px);color:var(--text-dim);
+}
+.pg-demo .demo-actions{
+  margin-top:16px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+}

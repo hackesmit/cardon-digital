@@ -24,10 +24,12 @@ export const allModules: readonly ModuleId[] = moduleIds;
 
 /**
  * The href for a demo of exactly these modules. Before the host is up this is
- * the locale-prefixed placeholder, so the button still lands somewhere on our
- * own site rather than on a dead external address. Once the host is set, an
- * empty module list means all three (the demo host's own default), so "all
- * three" is sent explicitly rather than relying on that default matching ours.
+ * the locale-prefixed placeholder /demo, which renders the holding page (it
+ * does not redirect while the host is cleared), so the button lands on our own
+ * site rather than on a dead external address or a redirect loop back to
+ * itself. Once the host is set, /demo redirects there and an empty module list
+ * would mean all three (the demo host's own default), so "all three" is sent
+ * explicitly rather than relying on that default matching ours.
  */
 export function demoHref(locale: Locale, modules: readonly ModuleId[]): string {
   if (!demoIsLive) return localePath(locale, DEMO_PATH);
