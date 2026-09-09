@@ -17,7 +17,6 @@ import {
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const [indOpen, setIndOpen] = useState(false);
   const [mode, setMode] = useState<"dark" | "light">("light");
   // Identity v3: clay marks the one action we want taken, so no viewport ever
   // holds two clay elements. The nav action stays quiet while a page action is
@@ -29,13 +28,12 @@ export default function Nav() {
   const t = site[locale].nav;
   const brandHome = site[locale].brandHome;
   const toggleBtn = useRef<HTMLButtonElement | null>(null);
-  const dropRef = useRef<HTMLLIElement | null>(null);
 
   const href = (path: string) => localePath(locale, path);
 
-  // Winery-led nav (2026-09-02): wineries is the practice, so it sits first
-  // among the industry items. The other industries stay reachable behind one
-  // demoted dropdown rather than sharing the top line.
+  // Winery-led nav (2026-09-02): wineries is the practice, so it sits with the
+  // industry items. The site now sells three areas only, so the other-industries
+  // dropdown is gone (bead hq-wrig5.11) and the row is a flat list.
   //
   // Modules and pricing lead the row ahead of it (2026-09-08, bead hq-wrig5.3):
   // what we sell and what it costs are the two pages the site now routes a
@@ -49,13 +47,6 @@ export default function Nav() {
   const linksAfter = [
     { href: href("/about"), label: t.about },
     { href: href("/contacto"), label: t.contact },
-  ];
-  const otherIndustryLinks = [
-    { href: href("/industries/construction"), label: t.construction },
-    { href: href("/industries/hiring"), label: t.hiring },
-    { href: href("/industries/restaurants"), label: t.restaurants },
-    { href: href("/industries/clinics"), label: t.clinics },
-    { href: href("/#sectors"), label: t.allIndustries },
   ];
 
   // The switch keeps the page you are on and remembers the choice, so the
@@ -88,10 +79,6 @@ export default function Nav() {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
-      if (indOpen) {
-        setIndOpen(false);
-        return;
-      }
       if (open) {
         setOpen(false);
         toggleBtn.current?.focus();
@@ -99,18 +86,7 @@ export default function Nav() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, indOpen]);
-
-  useEffect(() => {
-    if (!indOpen) return;
-    function onDown(e: PointerEvent) {
-      if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
-        setIndOpen(false);
-      }
-    }
-    document.addEventListener("pointerdown", onDown);
-    return () => document.removeEventListener("pointerdown", onDown);
-  }, [indOpen]);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
@@ -201,61 +177,6 @@ export default function Nav() {
                   </Link>
                 </li>
               ))}
-              <li
-                className={"has-drop" + (indOpen ? " drop-open" : "")}
-                ref={dropRef}
-                onMouseEnter={() => setIndOpen(true)}
-                onMouseLeave={() => setIndOpen(false)}
-              >
-                <button
-                  className="drop-trigger"
-                  type="button"
-                  aria-expanded={indOpen ? "true" : "false"}
-                  aria-controls="industries-menu"
-                  onClick={() => setIndOpen((v) => !v)}
-                >
-                  {t.otherIndustries}
-                  <svg
-                    className="drop-caret"
-                    viewBox="0 0 10 6"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <path
-                      d="M1 1 L5 5 L9 1"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                <Link
-                  className="drop-mobile-label"
-                  href={href("/#sectors")}
-                  onClick={() => setOpen(false)}
-                >
-                  {t.otherIndustries}
-                </Link>
-                <div className="nav-drop" id="industries-menu">
-                  <ul className="nav-drop-panel">
-                    {otherIndustryLinks.map((l) => (
-                      <li key={l.href}>
-                        <Link
-                          href={l.href}
-                          onClick={() => {
-                            setIndOpen(false);
-                            setOpen(false);
-                          }}
-                        >
-                          {l.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
               {linksAfter.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} onClick={() => setOpen(false)}>

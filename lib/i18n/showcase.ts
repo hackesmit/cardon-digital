@@ -52,7 +52,7 @@ const en = {
   demos: {
     kicker: "The demos",
     title: "One demo per module, with a single module switched on.",
-    sub: "Each demo runs on a made-up brand with illustrative data, no signup and no password. **Nothing you see in one belongs to a client.**",
+    sub: "Each demo runs on a made-up brand, no signup and no password.",
     soon: "coming",
     note: "The demos open shortly. **The buttons are here so you know where they will be.** The demo host is not live yet, so none of them opens anything today.",
     modulesLead: "Every feature, every size band and the seven ways they combine:",
@@ -131,7 +131,7 @@ const es: typeof en = {
   demos: {
     kicker: "Los demos",
     title: "Un demo por módulo, con un solo módulo encendido.",
-    sub: "Cada demo corre sobre una marca ficticia con datos ilustrativos, sin registro y sin contraseña. **Nada de lo que ve ahí es de un cliente.**",
+    sub: "Cada demo corre sobre una marca ficticia, sin registro y sin contraseña.",
     soon: "pronto",
     note: "Los demos abren en breve. **Los botones están aquí para que sepa dónde van a estar.** El demo todavía no está arriba, así que hoy ninguno abre nada.",
     modulesLead:
