@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-160.39 -484 382.58 757.6" role="img" aria-label="Cardon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-191.29 -484 382.58 757.6" role="img" aria-label="Cardon">
   <title>Cardon</title>
   <g fill="none" stroke="currentColor" stroke-width="23.61" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M-100 -51.41 V0 H161.8 V-213.22"/>
+    <path d="M-130.9 -51.41 V0 H130.9 V-213.22"/>
     <path d="M0 -375.02 V261.8"/>
   </g>
   <g stroke="currentColor" stroke-width="23.61">
     <circle cx="0" cy="-423.61" r="36.78" fill="currentColor"/>
-    <circle cx="-100" cy="-100" r="36.78" fill="currentColor"/>
-    <circle cx="161.8" cy="-261.8" r="36.78" fill="currentColor"/>
+    <circle cx="-130.9" cy="-100" r="36.78" fill="currentColor"/>
+    <circle cx="130.9" cy="-261.8" r="36.78" fill="currentColor"/>
   </g>
 </svg>

@@ -15,18 +15,18 @@ export default function Mark({
   return (
     <svg
       className={className}
-      viewBox="-167.69 -491.29 397.17 772.19"
+      viewBox="-198.59 -491.29 397.17 772.19"
       aria-hidden="true"
       focusable="false"
     >
       <g fill="none" stroke="var(--primary)" strokeWidth="38.2" strokeLinejoin="round" strokeLinecap="round">
-        <path d="M-100 -51.41 V0 H161.8 V-213.22" />
+        <path d="M-130.9 -51.41 V0 H130.9 V-213.22" />
         <path d="M0 -375.02 V261.8" />
       </g>
       <g stroke="var(--primary)" strokeWidth="38.2">
         <circle cx="0" cy="-423.61" r="29.49" fill="#546B0E" />
-        <circle cx="-100" cy="-100" r="29.49" fill="#546B0E" />
-        <circle cx="161.8" cy="-261.8" r="29.49" fill="#FF2EA7" />
+        <circle cx="-130.9" cy="-100" r="29.49" fill="#546B0E" />
+        <circle cx="130.9" cy="-261.8" r="29.49" fill="#FF2EA7" />
       </g>
     </svg>
   );
