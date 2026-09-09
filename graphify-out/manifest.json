@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1788912884.7108288,
-    "ast_hash": "b9d4ea502a78e91fe7f122daea0f0ee2",
+    "mtime": 1788914392.2212017,
+    "ast_hash": "69dcbcae1a5857dcc115840ebfd6cd35",
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1788427590.1661556,
-    "ast_hash": "00526d0720d9f2e2cdb1e682e9a9950a",
+    "mtime": 1788914392.2193286,
+    "ast_hash": "314d642d363cbc54962a066cf31e97b9",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1788719083.7162983,
-    "ast_hash": "a1c784091d2bb736aa24f092176c7abd",
+    "mtime": 1788914392.221754,
+    "ast_hash": "12fa465c3b9d3e12a2c732e776c42be0",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -445,8 +445,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1788430536.7166746,
-    "ast_hash": "e806a4355b704cf7d372852a74df1452",
+    "mtime": 1788914392.221754,
+    "ast_hash": "d5f0547cb75c189552a3532994b78ca6",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
@@ -525,8 +525,8 @@
     "semantic_hash": ""
   },
   "components/pages/winery/PricingBundles.tsx": {
-    "mtime": 1788424941.2777243,
-    "ast_hash": "f7cdf18d8c0cf04852d56a5a00c9489e",
+    "mtime": 1788914392.221754,
+    "ast_hash": "7261a60726c5e9964904dcb433808449",
     "semantic_hash": ""
   },
   "lib/i18n/about.ts": {
@@ -667,6 +667,26 @@
   "lib/i18n/modulos.ts": {
     "mtime": 1788912884.7108288,
     "ast_hash": "29628ec7df39aa920bd51136fab96226",
+    "semantic_hash": ""
+  },
+  "app/[locale]/precios/page.tsx": {
+    "mtime": 1788914392.2193286,
+    "ast_hash": "21d590899b06f05763640077e80c76f0",
+    "semantic_hash": ""
+  },
+  "components/pages/precios/MixExample.tsx": {
+    "mtime": 1788914392.2212017,
+    "ast_hash": "339066478e5a2c1402f2bedf7a3ddbbf",
+    "semantic_hash": ""
+  },
+  "components/pages/precios/ModuleFloors.tsx": {
+    "mtime": 1788914392.221754,
+    "ast_hash": "d830e5684e94bd17d3648da20ab5f6a8",
+    "semantic_hash": ""
+  },
+  "lib/i18n/precios.ts": {
+    "mtime": 1788914392.221754,
+    "ast_hash": "0a09325df01c4da9c7b7ca99f8ca9fd1",
     "semantic_hash": ""
   }
 }
