@@ -10,12 +10,6 @@ import { home } from "@/lib/i18n/home";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import {
-  formatPrice,
-  wineryBundles,
-  wineryPricingPlaceholder,
-  winerySetupFloor,
-} from "@/lib/pricing";
 import "./home.css";
 
 type Params = { params: { locale: string } };
@@ -37,16 +31,6 @@ export default function Home({ params }: Params) {
   const mailto =
     "mailto:daniel@cardondigital.com?subject=" +
     encodeURIComponent(s.diag.mailSubject);
-  // One floor figure for the whole page, behind the same flag the winery page
-  // reads (pricing memo 3.7 rule 4). While the flag is true the slot carries
-  // the diagnostic sentence and no figure reaches either locale.
-  const floor = wineryPricingPlaceholder
-    ? d.pricing.floorTbd
-    : d.pricing.floor.replace(
-        "{setup}",
-        formatPrice(locale, winerySetupFloor(locale)),
-      );
-
   return (
     <main id="main" className="pg-home">
       <span id="top" />
@@ -447,37 +431,23 @@ export default function Home({ params }: Params) {
             <p className="section-sub">{rich(d.pricing.sub)}</p>
           </div>
 
-          <p className="price-floor">
-            <span className="price-floor-k">{d.pricing.floorLabel}</span>
-            <span className="price-floor-v">{rich(floor)}</span>
-          </p>
-
+          {/* The modules carry no figure here: an entry price never travels
+              away from the build that produced it, and that build is printed
+              on /precios (pricing memo 3.7 rule 3). */}
           <div className="tiers">
-            {wineryBundles.map(({ id }, i) => {
-              const scope = d.pricing.scopes[i];
-              return (
-                <div
-                  className={"tier" + (i === 1 ? " tier-lead" : "")}
-                  key={id}
-                >
-                  <span className="tier-n">{scope.scale}</span>
-                  <h3 className="tier-name">{scope.name}</h3>
-                  <p className="tier-time">{scope.time}</p>
-                  <p className="tier-body">{scope.body}</p>
-                  <ul className="tier-list">
-                    {scope.features.map((feature) => (
-                      <li key={feature}>{feature}</li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+            {d.pricing.modules.map((module) => (
+              <div className="tier" key={module.name}>
+                <span className="tier-n">{module.scale}</span>
+                <h3 className="tier-name">{module.name}</h3>
+                <p className="tier-time">{module.time}</p>
+                <p className="tier-body">{module.body}</p>
+              </div>
+            ))}
           </div>
 
           <p className="pricing-more">
-            <Link href={href("/industries/winery") + "#pricing"}>
-              {d.pricing.more}
-            </Link>
+            {d.pricing.moreLead}{" "}
+            <Link href={href("/precios")}>{d.pricing.more}</Link>
           </p>
 
           <div className="pricing-foot">
