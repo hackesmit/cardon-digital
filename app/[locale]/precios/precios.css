@@ -180,3 +180,15 @@
   .pg-precios .mix-table thead th{font-size:0.6rem;letter-spacing:0.1em;}
   .pg-precios .mix-row-together td{font-size:0.86rem;}
 }
+
+@media (max-width:600px){
+  /* The diagnostic CTA carries a long label and .cta is white-space:nowrap, so
+     on a phone column it overflows its column and .diagnostic{overflow:hidden}
+     clips the label. Give it room as a full-width tap target that wraps to two
+     centered lines, the same fix the home page already applies. */
+  .pg-precios .diag-actions{width:100%;}
+  .pg-precios .diag-actions .cta-lg{
+    width:100%;padding:15px 18px;font-size:1rem;
+    white-space:normal;text-align:center;line-height:1.25;
+  }
+}
