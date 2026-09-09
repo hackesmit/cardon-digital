@@ -159,7 +159,7 @@ const en = {
   pricing: {
     kicker: "What it costs",
     title: "Two fees, no license, and the winery owns the build.",
-    sub: "The setup fee pays for the build, and the winery owns what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. Pause the service and nothing switches off.",
+    sub: "The setup fee pays for the build, and the winery owns what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. When the service ends, nothing moves between accounts: we promote the winery to owner, hand over the payment method and remove our access.",
     modulesLabel: "The modules a winery buys",
     modules: [
       {
@@ -360,7 +360,7 @@ const es: typeof en = {
   pricing: {
     kicker: "Lo que cuesta",
     title: "Dos cuotas, sin licencia, y la construcción queda de la bodega.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda de la bodega. La cuota mensual paga operarlo: hospedaje, cuidado, correcciones, el informe y el asistente. Si la pausa, no se apaga nada.",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda de la bodega. La cuota mensual paga operarlo: hospedaje, cuidado, correcciones, el informe y el asistente. Cuando el servicio termina, no se mueve nada entre cuentas: promovemos a la bodega como titular, le entregamos el método de pago y retiramos nuestro acceso.",
     modulesLabel: "Los módulos que compra una bodega",
     modules: [
       {
