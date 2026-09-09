@@ -8,10 +8,12 @@ import {
   addOnMonthly,
   annualPrepay,
   buildOnly,
+  bumpOffBareMultiple,
   bundleHours,
   ceilTo,
   combinations,
   featureSetup,
+  formatPrice,
   growerBundleHours,
   growerSetupS,
   legacyWineryBundles,
@@ -113,6 +115,23 @@ describe("rounding", () => {
     expect(usdFromMxn(300)).toBe(20);
     expect(usdFromMxn(1600)).toBe(95);
     expect(usdFromMxn(1700)).toBe(100);
+  });
+
+  it("never lets a negative zero or a negative bump reach the page", () => {
+    // A value under half a step rounds to zero, not to -0, so Intl cannot print
+    // "$-0". round100(50) is the smallest such case (red-team hq-ggot1.6 f.5).
+    expect(Object.is(round100(50), 0)).toBe(true);
+    expect(Object.is(round500(200), 0)).toBe(true);
+    expect(Object.is(usdFromMxn(0), 0)).toBe(true);
+    expect(formatPrice("es", usdFromMxn(0))).not.toContain("-");
+    expect(formatPrice("es", 0)).not.toContain("-");
+    expect(formatPrice("en", round100(50))).not.toContain("-");
+    // A downward bump on a bare multiple refuses to cross zero, so a zero-fee
+    // line or concession cannot print a minus price. 0 stays 0, not -100.
+    expect(bumpOffBareMultiple(0, 1000, 100, "down")).toBe(0);
+    expect(bumpOffBareMultiple(100, 100, 100, "down")).toBe(0);
+    // The legitimate downward bump the annual concession relies on is untouched.
+    expect(bumpOffBareMultiple(11000, 1000, 100, "down")).toBe(10900);
   });
 });
 

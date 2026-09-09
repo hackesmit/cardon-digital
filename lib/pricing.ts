@@ -100,7 +100,10 @@ const tieEpsilon = 1e-9;
 
 /** Rounds to the nearest `step`, an exact half going down. */
 export function roundHalfDown(value: number, step: number): number {
-  return Math.ceil(value / step - 0.5 - tieEpsilon) * step;
+  // A value under half a step lands on Math.ceil(-something) === -0, which
+  // formats as "-0" through Intl. Adding 0 normalises -0 to 0 and leaves every
+  // other result untouched (bead hq-ggot1.15).
+  return Math.ceil(value / step - 0.5 - tieEpsilon) * step + 0;
 }
 
 /** Setup figures take the nearest 500 MXN. */
@@ -131,7 +134,10 @@ export function bumpOffBareMultiple(
   direction: "up" | "down",
 ): number {
   if (value % bare !== 0) return value;
-  return direction === "up" ? value + increment : value - increment;
+  const bumped = direction === "up" ? value + increment : value - increment;
+  // A downward bump never carries a figure below zero: a zero-valued line or a
+  // zero-fee mix would otherwise print as a negative price (bead hq-ggot1.15).
+  return bumped < 0 ? value : bumped;
 }
 
 /**
