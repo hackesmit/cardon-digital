@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/modulos.ts": {
-    "mtime": 1788953275.7353444,
-    "ast_hash": "3b9411a21ec32e7a0afa5d077708ceb5",
+    "mtime": 1788961496.0536196,
+    "ast_hash": "f9115795f60c0de50034944c7740df7c",
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
@@ -605,8 +605,8 @@
     "semantic_hash": ""
   },
   "components/pages/showcase/Showcase.tsx": {
-    "mtime": 1788953275.7353444,
-    "ast_hash": "dcfb0144d417d9153666cdf051da88d5",
+    "mtime": 1788961496.0536196,
+    "ast_hash": "79d92cc1bdd4858c4871d5a7d7c41b35",
     "semantic_hash": ""
   },
   "components/pages/showcase/flag.ts": {
@@ -615,13 +615,13 @@
     "semantic_hash": ""
   },
   "components/pages/showcase/showcase.test.ts": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "c9697489b91e48eea3a183621f584074",
+    "mtime": 1788961496.0536196,
+    "ast_hash": "cc3586b8f211ebb5c56f23faa78619d8",
     "semantic_hash": ""
   },
   "lib/i18n/showcase.ts": {
-    "mtime": 1788953275.7353444,
-    "ast_hash": "3c55a8e55070addf8af9d79a53085900",
+    "mtime": 1788961496.0536196,
+    "ast_hash": "07aebbce11885ba8e286867a9441cdde",
     "semantic_hash": ""
   },
   "components/pages/modulos/Combinations.tsx": {
@@ -630,8 +630,8 @@
     "semantic_hash": ""
   },
   "components/pages/modulos/ModuleBlock.tsx": {
-    "mtime": 1788953275.7337072,
-    "ast_hash": "71694370864f8b2c944c8abcf486bcf5",
+    "mtime": 1788961496.0536196,
+    "ast_hash": "31999c218a9ceaee5cd944db7ff5eda2",
     "semantic_hash": ""
   },
   "components/pages/precios/PricingDetails.tsx": {
@@ -640,8 +640,8 @@
     "semantic_hash": ""
   },
   "lib/demo.ts": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "5b1014dc60f67b95abc1f055fe993b67",
+    "mtime": 1788961496.0536196,
+    "ast_hash": "99f3483f3688ad4764d46c3d00f407f3",
     "semantic_hash": ""
   },
   "components/pages/modulos/BridgeMap.test.ts": {
