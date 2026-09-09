@@ -69,13 +69,17 @@ export default function ModulosPage({ params }: Params) {
       {/* ============================ THE THREE MODULES ============================ */}
       {/* One block per module, rendered by the component the showcase home
           renders too (bead hq-wrig5.15), so the description has one home. */}
-      {d.modules.map((m, i) => (
+      {d.modules.map((m, i, all) => (
         <ModuleBlock
           key={m.id}
           locale={locale}
           module={m}
           alt={i % 2 === 1}
           demoHref={demoHref(locale, [m.id as ModuleId])}
+          /* Both sentences are the same for all three modules, so the page
+             renders each one once rather than three times over. */
+          showSizesLead={i === 0}
+          showDemoNote={i === all.length - 1}
         />
       ))}
 

@@ -118,6 +118,21 @@ const en = {
     title: "Three modules. You buy the ones you run on.",
   },
 
+  /**
+   * The labels on the vintage-comparison chart (bead hq-wrig5.13). The pitch
+   * names the comparison and the problem list says it takes an afternoon or
+   * never gets answered, so the section carries the picture of the answer.
+   * The seasons are years and need no translation, so only the axes, the
+   * title and the honest admission live here.
+   */
+  chart: {
+    title: "One measure, three seasons.",
+    aria: "Total acidity by days from veraison, this season beside the two before it",
+    y: "Total acidity g/L",
+    x: "Days from veraison",
+    honest: "illustrative view",
+  },
+
   pricing: {
     kicker: "What it costs",
     title: "Every module has a published entry price.",
@@ -212,6 +227,14 @@ const es: typeof en = {
   modules: {
     kicker: "Qué construimos",
     title: "Tres módulos. Se compran los que se operan.",
+  },
+
+  chart: {
+    title: "Una medida, tres temporadas.",
+    aria: "Acidez total por días desde envero, esta temporada junto a las dos anteriores",
+    y: "Acidez total g/L",
+    x: "Días desde envero",
+    honest: "vista ilustrativa",
   },
 
   pricing: {
