@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1788914392.2212017,
-    "ast_hash": "69dcbcae1a5857dcc115840ebfd6cd35",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "3027b02a5b47b25e01d50778f0fda2e4",
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
@@ -74,31 +74,6 @@
     "ast_hash": "41fef5eb752e5b771ca3dcb7bef2afaa",
     "semantic_hash": ""
   },
-  "components/pages/clinics/ClinicSchedule.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "0a855451d36324620a5635f2f92e6382",
-    "semantic_hash": ""
-  },
-  "components/pages/clinics/SpotlightFrames.tsx": {
-    "mtime": 1788335221.2883148,
-    "ast_hash": "cf95fa85c3242ab13ecada19ec6f9f09",
-    "semantic_hash": ""
-  },
-  "components/pages/construction/FleetMap.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "dfdde119b9b53b2a57b03f2e140283e8",
-    "semantic_hash": ""
-  },
-  "components/pages/construction/SitePlanVisual.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "1fdfcc79241df4e8cc4964a4da246aa0",
-    "semantic_hash": ""
-  },
-  "components/pages/construction/SpotlightFrames.tsx": {
-    "mtime": 1788335221.2883148,
-    "ast_hash": "4022244e688163ca50e0b1d17428bc88",
-    "semantic_hash": ""
-  },
   "components/pages/enkanto/SpotlightFrames.tsx": {
     "mtime": 1788335221.2883148,
     "ast_hash": "9e1fc12bb500867cae601930de46a314",
@@ -109,24 +84,9 @@
     "ast_hash": "46e2bc1aaf815ec1f1061c5e14cb834c",
     "semantic_hash": ""
   },
-  "components/pages/hiring/PipelineStage.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "b8b20b5d921f09ab496a0d9ee57a0a46",
-    "semantic_hash": ""
-  },
-  "components/pages/hiring/SpotlightFrames.tsx": {
-    "mtime": 1788335221.2883148,
-    "ast_hash": "5d0316c784b4e3a190e80f7acfb5c6f5",
-    "semantic_hash": ""
-  },
   "components/pages/home/HeroAssembly.tsx": {
     "mtime": 1788418222.5323,
     "ast_hash": "e6eeb81b37bf522eccc0416abcb9b282",
-    "semantic_hash": ""
-  },
-  "components/pages/home/OpsCompression.tsx": {
-    "mtime": 1788719083.7162983,
-    "ast_hash": "ae10c63375c4834bb45f1af7a91fb104",
     "semantic_hash": ""
   },
   "components/pages/home/PlayOnceVis.tsx": {
@@ -135,8 +95,8 @@
     "semantic_hash": ""
   },
   "components/pages/home/SectorMap.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "3fa48be6a7964e964709a8229e537269",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "99bb5c942df5b61f101139062865c423",
     "semantic_hash": ""
   },
   "components/pages/home/SpotlightFrames.tsx": {
@@ -147,16 +107,6 @@
   "components/pages/home/canvasKit.ts": {
     "mtime": 1788339346.3552597,
     "ast_hash": "05551d8394138b35dc12b75568d5a6a1",
-    "semantic_hash": ""
-  },
-  "components/pages/restaurants/FloorPlan.tsx": {
-    "mtime": 1788418222.5323,
-    "ast_hash": "5f1c1724ca292ad89f2910dd0418be24",
-    "semantic_hash": ""
-  },
-  "components/pages/restaurants/SpotlightFrames.tsx": {
-    "mtime": 1788335221.2883148,
-    "ast_hash": "3203c18354a5758584ebdb3d60c6bbc9",
     "semantic_hash": ""
   },
   "components/pages/winery/SpotlightFrames.tsx": {
@@ -175,13 +125,13 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1788424941.2777243,
-    "ast_hash": "e433f2fdfa08c3a05923304ec45beeab",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "c40ebd6b704b9c650fe2083545e0f08f",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1788917957.6902468,
-    "ast_hash": "d3c92d0ed26fa2bd56fbc6bf34c477a1",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "306292433d60475461157605c0b634a4",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -190,8 +140,8 @@
     "semantic_hash": ""
   },
   "middleware.ts": {
-    "mtime": 1788418222.5409694,
-    "ast_hash": "7ea8a791d3d966e24a57921e168ffd19",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "52f208605633b9044a4e69c058d32517",
     "semantic_hash": ""
   },
   "next.config.mjs": {
@@ -294,26 +244,6 @@
     "ast_hash": "1c82a69940b433fb5e471c37fb629cee",
     "semantic_hash": ""
   },
-  "app/[locale]/industries/clinics/page.tsx": {
-    "mtime": 1788418222.5236309,
-    "ast_hash": "eeae2cf1e3e1fea9bf43987f24c4eb06",
-    "semantic_hash": ""
-  },
-  "app/[locale]/industries/construction/page.tsx": {
-    "mtime": 1788418222.5236309,
-    "ast_hash": "2e8e01f4488b0712adfac496cf6f9d25",
-    "semantic_hash": ""
-  },
-  "app/[locale]/industries/hiring/page.tsx": {
-    "mtime": 1788418222.5236309,
-    "ast_hash": "ebe9d3ac76cf7bb22e9299b8cf3dfd77",
-    "semantic_hash": ""
-  },
-  "app/[locale]/industries/restaurants/page.tsx": {
-    "mtime": 1788418222.5236309,
-    "ast_hash": "5b604afe696437c84c93678587e247f8",
-    "semantic_hash": ""
-  },
   "app/[locale]/industries/winery/page.tsx": {
     "mtime": 1788424941.2733243,
     "ast_hash": "739656b437dbfa118253e87b78ceeddb",
@@ -325,8 +255,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1788917957.6885836,
-    "ast_hash": "8be8f08dbc62d0e5ced2f3dad1c94b76",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "2889191d8678c1e698b63fa59cf11ff7",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -374,11 +304,6 @@
     "ast_hash": "ce0eaabd4efc871d262f58ecac9c5a09",
     "semantic_hash": ""
   },
-  "lib/i18n/clinics.ts": {
-    "mtime": 1788429897.605347,
-    "ast_hash": "2c5fa6c1bd9eabaf9146231b32987c36",
-    "semantic_hash": ""
-  },
   "lib/i18n/coming-soon.ts": {
     "mtime": 1788418222.5366347,
     "ast_hash": "a33acebff823ee9582a58b06d090a0b8",
@@ -389,24 +314,14 @@
     "ast_hash": "2fb2ef74c4da6c16da5f025d38961d55",
     "semantic_hash": ""
   },
-  "lib/i18n/construction.ts": {
-    "mtime": 1788429897.605347,
-    "ast_hash": "18dd403ded48c03acc66d085d7cf0bc6",
-    "semantic_hash": ""
-  },
   "lib/i18n/enkanto.ts": {
     "mtime": 1788424941.2777243,
     "ast_hash": "407dc31f05ce5428d4bde2dfd5a737ba",
     "semantic_hash": ""
   },
-  "lib/i18n/hiring.ts": {
-    "mtime": 1788429897.605347,
-    "ast_hash": "d46d9997f44241d7c3b9c6b665c99e5a",
-    "semantic_hash": ""
-  },
   "lib/i18n/home.ts": {
-    "mtime": 1788914392.221754,
-    "ast_hash": "12fa465c3b9d3e12a2c732e776c42be0",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "7636573f9b884131a85b3942f9e33716",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -424,29 +339,24 @@
     "ast_hash": "d5bb87a65878f74fb57e96c8c6e9d2df",
     "semantic_hash": ""
   },
-  "lib/i18n/restaurants.ts": {
-    "mtime": 1788429897.605347,
-    "ast_hash": "535b5627e187fb767a8b8e38c35e06d9",
-    "semantic_hash": ""
-  },
   "lib/i18n/rich.tsx": {
     "mtime": 1788418222.5409694,
     "ast_hash": "351445a4cf591afb9a3053406d61d697",
     "semantic_hash": ""
   },
   "lib/i18n/site.ts": {
-    "mtime": 1788917957.6902468,
-    "ast_hash": "37f1e109d7d545c3a3cd0bbcdb686dc8",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "30913469dc2161d53551f8426ad8f4c2",
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
-    "mtime": 1788430536.7166746,
-    "ast_hash": "b8710380ea238470edcf18276c8c8f09",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "1efd19ebff555e05ce98bc96aeed18aa",
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1788917952.8430674,
-    "ast_hash": "a12040bbc8afe728cf8801e8fc845de4",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "a1b47b7ba0acdca9a03ce27acd5cedf6",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
@@ -520,8 +430,8 @@
     "semantic_hash": ""
   },
   "components/pages/winery/AssistantDemo.tsx": {
-    "mtime": 1788424941.2777243,
-    "ast_hash": "a8a2f2a28fc9895cff13de063bece09f",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "83da4eaef6e8a3e7a1809c45d07db726",
     "semantic_hash": ""
   },
   "components/pages/winery/PricingBundles.tsx": {
@@ -665,8 +575,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/modulos.ts": {
-    "mtime": 1788933334.3277194,
-    "ast_hash": "72dd70cab01c32451ea364a8231ba176",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "4dcad5f0ea4ecec9433ad21ca18084e3",
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
@@ -710,8 +620,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/showcase.ts": {
-    "mtime": 1788917957.6902468,
-    "ast_hash": "4937809a862f6dc4d34c1853d76a3e24",
+    "mtime": 1788935476.2640197,
+    "ast_hash": "fcb694bcaec0b9598ef83b2080719ca5",
     "semantic_hash": ""
   }
 }

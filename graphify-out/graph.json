@@ -306,226 +306,6 @@
     {
       "label": "page.tsx",
       "file_type": "code",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_locale_industries_clinics_page",
-      "community": 46,
-      "norm_label": "page.tsx"
-    },
-    {
-      "label": "Params",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "app_locale_industries_clinics_page_params",
-      "community": 46,
-      "norm_label": "params"
-    },
-    {
-      "label": "localeOf()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "app_locale_industries_clinics_page_localeof",
-      "community": 46,
-      "norm_label": "localeof()"
-    },
-    {
-      "label": "generateMetadata()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "app_locale_industries_clinics_page_generatemetadata",
-      "community": 46,
-      "norm_label": "generatemetadata()"
-    },
-    {
-      "label": "ClinicsPage()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "app_locale_industries_clinics_page_clinicspage",
-      "community": 46,
-      "norm_label": "clinicspage()"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_locale_industries_construction_page",
-      "community": 5,
-      "norm_label": "page.tsx"
-    },
-    {
-      "label": "Params",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "app_locale_industries_construction_page_params",
-      "community": 5,
-      "norm_label": "params"
-    },
-    {
-      "label": "localeOf()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "app_locale_industries_construction_page_localeof",
-      "community": 5,
-      "norm_label": "localeof()"
-    },
-    {
-      "label": "generateMetadata()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "app_locale_industries_construction_page_generatemetadata",
-      "community": 5,
-      "norm_label": "generatemetadata()"
-    },
-    {
-      "label": "capGlyphs",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "id": "app_locale_industries_construction_page_capglyphs",
-      "community": 5,
-      "norm_label": "capglyphs"
-    },
-    {
-      "label": "ConstructionPage()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L79",
-      "_origin": "ast",
-      "id": "app_locale_industries_construction_page_constructionpage",
-      "community": 5,
-      "norm_label": "constructionpage()"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_locale_industries_hiring_page",
-      "community": 51,
-      "norm_label": "page.tsx"
-    },
-    {
-      "label": "Params",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "app_locale_industries_hiring_page_params",
-      "community": 51,
-      "norm_label": "params"
-    },
-    {
-      "label": "localeOf()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "app_locale_industries_hiring_page_localeof",
-      "community": 51,
-      "norm_label": "localeof()"
-    },
-    {
-      "label": "generateMetadata()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "app_locale_industries_hiring_page_generatemetadata",
-      "community": 51,
-      "norm_label": "generatemetadata()"
-    },
-    {
-      "label": "capGlyphs",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "app_locale_industries_hiring_page_capglyphs",
-      "community": 51,
-      "norm_label": "capglyphs"
-    },
-    {
-      "label": "HiringPage()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L106",
-      "_origin": "ast",
-      "id": "app_locale_industries_hiring_page_hiringpage",
-      "community": 51,
-      "norm_label": "hiringpage()"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_locale_industries_restaurants_page",
-      "community": 49,
-      "norm_label": "page.tsx"
-    },
-    {
-      "label": "Params",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "app_locale_industries_restaurants_page_params",
-      "community": 49,
-      "norm_label": "params"
-    },
-    {
-      "label": "localeOf()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "app_locale_industries_restaurants_page_localeof",
-      "community": 49,
-      "norm_label": "localeof()"
-    },
-    {
-      "label": "generateMetadata()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "app_locale_industries_restaurants_page_generatemetadata",
-      "community": 49,
-      "norm_label": "generatemetadata()"
-    },
-    {
-      "label": "RestaurantsPage()",
-      "file_type": "code",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L27",
-      "_origin": "ast",
-      "id": "app_locale_industries_restaurants_page_restaurantspage",
-      "community": 49,
-      "norm_label": "restaurantspage()"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
       "source_file": "app/[locale]/industries/winery/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
@@ -590,7 +370,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_layout",
-      "community": 9,
+      "community": 2,
       "norm_label": "layout.tsx"
     },
     {
@@ -600,7 +380,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_locale_layout_generatestaticparams",
-      "community": 9,
+      "community": 2,
       "norm_label": "generatestaticparams()"
     },
     {
@@ -610,7 +390,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_locale_layout_generatemetadata",
-      "community": 9,
+      "community": 2,
       "norm_label": "generatemetadata()"
     },
     {
@@ -620,7 +400,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_locale_layout_localelayout",
-      "community": 9,
+      "community": 2,
       "norm_label": "localelayout()"
     },
     {
@@ -687,7 +467,7 @@
       "label": "Params",
       "file_type": "code",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "app_locale_page_params",
       "community": 33,
@@ -697,7 +477,7 @@
       "label": "localeOf()",
       "file_type": "code",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L20",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "app_locale_page_localeof",
       "community": 33,
@@ -707,7 +487,7 @@
       "label": "generateMetadata()",
       "file_type": "code",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L32",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "app_locale_page_generatemetadata",
       "community": 33,
@@ -717,7 +497,7 @@
       "label": "Home()",
       "file_type": "code",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L40",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "app_locale_page_home",
       "community": 33,
@@ -727,7 +507,7 @@
       "label": "OfficialHome()",
       "file_type": "code",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L46",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "app_locale_page_officialhome",
       "community": 33,
@@ -840,7 +620,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_terms_page",
-      "community": 40,
+      "community": 6,
       "norm_label": "page.tsx"
     },
     {
@@ -850,7 +630,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "app_locale_terms_page_params",
-      "community": 40,
+      "community": 6,
       "norm_label": "params"
     },
     {
@@ -860,7 +640,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_terms_page_localeof",
-      "community": 40,
+      "community": 6,
       "norm_label": "localeof()"
     },
     {
@@ -870,7 +650,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "app_locale_terms_page_generatemetadata",
-      "community": 40,
+      "community": 6,
       "norm_label": "generatemetadata()"
     },
     {
@@ -880,7 +660,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_terms_page_termspage",
-      "community": 40,
+      "community": 6,
       "norm_label": "termspage()"
     },
     {
@@ -1100,7 +880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_sitemap",
-      "community": 9,
+      "community": 2,
       "norm_label": "sitemap.ts"
     },
     {
@@ -1110,17 +890,17 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "app_sitemap_routes",
-      "community": 9,
+      "community": 2,
       "norm_label": "routes"
     },
     {
       "label": "sitemap()",
       "file_type": "code",
       "source_file": "app/sitemap.ts",
-      "source_location": "L22",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "app_sitemap_sitemap",
-      "community": 9,
+      "community": 2,
       "norm_label": "sitemap()"
     },
     {
@@ -1130,7 +910,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_consent_consentbanner",
-      "community": 41,
+      "community": 21,
       "norm_label": "consentbanner.tsx"
     },
     {
@@ -1140,7 +920,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "components_consent_consentbanner_consentbanner",
-      "community": 41,
+      "community": 21,
       "norm_label": "consentbanner()"
     },
     {
@@ -1350,7 +1130,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle",
-      "community": 41,
+      "community": 37,
       "norm_label": "berrytobottle.tsx"
     },
     {
@@ -1360,7 +1140,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle_berrytobottle",
-      "community": 41,
+      "community": 37,
       "norm_label": "berrytobottle()"
     },
     {
@@ -1370,7 +1150,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle_berrytobottledesktop",
-      "community": 41,
+      "community": 37,
       "norm_label": "berrytobottledesktop()"
     },
     {
@@ -1380,7 +1160,7 @@
       "source_location": "L271",
       "_origin": "ast",
       "id": "components_pages_case_berrytobottle_berrytobottlemobile",
-      "community": 41,
+      "community": 37,
       "norm_label": "berrytobottlemobile()"
     },
     {
@@ -1554,386 +1334,6 @@
       "norm_label": "vineyardmap()"
     },
     {
-      "label": "ClinicSchedule.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule",
-      "community": 39,
-      "norm_label": "clinicschedule.tsx"
-    },
-    {
-      "label": "RGB",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_rgb",
-      "community": 39,
-      "norm_label": "rgb"
-    },
-    {
-      "label": "Channel",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_channel",
-      "community": 39,
-      "norm_label": "channel"
-    },
-    {
-      "label": "Cell",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_cell",
-      "community": 39,
-      "norm_label": "cell"
-    },
-    {
-      "label": "Chip",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L30",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_chip",
-      "community": 39,
-      "norm_label": "chip"
-    },
-    {
-      "label": "Geo",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L40",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_geo",
-      "community": 39,
-      "norm_label": "geo"
-    },
-    {
-      "label": "Slot",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L63",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_slot",
-      "community": 39,
-      "norm_label": "slot"
-    },
-    {
-      "label": "ChipState",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L70",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_chipstate",
-      "community": 39,
-      "norm_label": "chipstate"
-    },
-    {
-      "label": "Palette",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L74",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_palette",
-      "community": 39,
-      "norm_label": "palette"
-    },
-    {
-      "label": "ClinicSchedule()",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L110",
-      "_origin": "ast",
-      "id": "components_pages_clinics_clinicschedule_clinicschedule",
-      "community": 39,
-      "norm_label": "clinicschedule()"
-    },
-    {
-      "label": "SpotlightFrames.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/SpotlightFrames.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_clinics_spotlightframes",
-      "community": 46,
-      "norm_label": "spotlightframes.tsx"
-    },
-    {
-      "label": "SpotlightFramesProps",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/SpotlightFrames.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "components_pages_clinics_spotlightframes_spotlightframesprops",
-      "community": 46,
-      "norm_label": "spotlightframesprops"
-    },
-    {
-      "label": "SpotlightFrames()",
-      "file_type": "code",
-      "source_file": "components/pages/clinics/SpotlightFrames.tsx",
-      "source_location": "L17",
-      "_origin": "ast",
-      "id": "components_pages_clinics_spotlightframes_spotlightframes",
-      "community": 46,
-      "norm_label": "spotlightframes()"
-    },
-    {
-      "label": "FleetMap.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap",
-      "community": 5,
-      "norm_label": "fleetmap.tsx"
-    },
-    {
-      "label": "RGB",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_rgb",
-      "community": 5,
-      "norm_label": "rgb"
-    },
-    {
-      "label": "Pt",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_pt",
-      "community": 5,
-      "norm_label": "pt"
-    },
-    {
-      "label": "Trace",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_trace",
-      "community": 5,
-      "norm_label": "trace"
-    },
-    {
-      "label": "SiteKey",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_sitekey",
-      "community": 5,
-      "norm_label": "sitekey"
-    },
-    {
-      "label": "Site",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_site",
-      "community": 5,
-      "norm_label": "site"
-    },
-    {
-      "label": "Vehicle",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_vehicle",
-      "community": 5,
-      "norm_label": "vehicle"
-    },
-    {
-      "label": "LogRow",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_logrow",
-      "community": 5,
-      "norm_label": "logrow"
-    },
-    {
-      "label": "Pulse",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_pulse",
-      "community": 5,
-      "norm_label": "pulse"
-    },
-    {
-      "label": "NODES",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L27",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_nodes",
-      "community": 5,
-      "norm_label": "nodes"
-    },
-    {
-      "label": "ROADS",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L38",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_roads",
-      "community": 5,
-      "norm_label": "roads"
-    },
-    {
-      "label": "SITES",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L43",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_sites",
-      "community": 5,
-      "norm_label": "sites"
-    },
-    {
-      "label": "ROUTES",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L50",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_routes",
-      "community": 5,
-      "norm_label": "routes"
-    },
-    {
-      "label": "FleetMap()",
-      "file_type": "code",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L70",
-      "_origin": "ast",
-      "id": "components_pages_construction_fleetmap_fleetmap",
-      "community": 5,
-      "norm_label": "fleetmap()"
-    },
-    {
-      "label": "SitePlanVisual.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual",
-      "community": 5,
-      "norm_label": "siteplanvisual.tsx"
-    },
-    {
-      "label": "ChipPlace",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L25",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_chipplace",
-      "community": 5,
-      "norm_label": "chipplace"
-    },
-    {
-      "label": "Conf",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_conf",
-      "community": 5,
-      "norm_label": "conf"
-    },
-    {
-      "label": "DESKTOP_CONF",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_desktop_conf",
-      "community": 5,
-      "norm_label": "desktop_conf"
-    },
-    {
-      "label": "PORTRAIT_CONF",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L44",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_portrait_conf",
-      "community": 5,
-      "norm_label": "portrait_conf"
-    },
-    {
-      "label": "PORTRAIT_PLOTS",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L59",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_portrait_plots",
-      "community": 5,
-      "norm_label": "portrait_plots"
-    },
-    {
-      "label": "PORTRAIT_LEADERS",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L68",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_portrait_leaders",
-      "community": 5,
-      "norm_label": "portrait_leaders"
-    },
-    {
-      "label": "PORTRAIT_CHIPS",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L77",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_portrait_chips",
-      "community": 5,
-      "norm_label": "portrait_chips"
-    },
-    {
-      "label": "SitePlanVisual()",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L87",
-      "_origin": "ast",
-      "id": "components_pages_construction_siteplanvisual_siteplanvisual",
-      "community": 5,
-      "norm_label": "siteplanvisual()"
-    },
-    {
-      "label": "SpotlightFrames.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SpotlightFrames.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_construction_spotlightframes",
-      "community": 5,
-      "norm_label": "spotlightframes.tsx"
-    },
-    {
-      "label": "SpotlightFrames()",
-      "file_type": "code",
-      "source_file": "components/pages/construction/SpotlightFrames.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "components_pages_construction_spotlightframes_spotlightframes",
-      "community": 5,
-      "norm_label": "spotlightframes()"
-    },
-    {
       "label": "SpotlightFrames.tsx",
       "file_type": "code",
       "source_file": "components/pages/enkanto/SpotlightFrames.tsx",
@@ -2054,136 +1454,6 @@
       "norm_label": "threelines()"
     },
     {
-      "label": "PipelineStage.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage",
-      "community": 7,
-      "norm_label": "pipelinestage.tsx"
-    },
-    {
-      "label": "Pt",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_pt",
-      "community": 7,
-      "norm_label": "pt"
-    },
-    {
-      "label": "Cand",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_cand",
-      "community": 7,
-      "norm_label": "cand"
-    },
-    {
-      "label": "Geom",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_geom",
-      "community": 7,
-      "norm_label": "geom"
-    },
-    {
-      "label": "Seg",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L22",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_seg",
-      "community": 7,
-      "norm_label": "seg"
-    },
-    {
-      "label": "Segs",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L33",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_segs",
-      "community": 7,
-      "norm_label": "segs"
-    },
-    {
-      "label": "Parked",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_parked",
-      "community": 7,
-      "norm_label": "parked"
-    },
-    {
-      "label": "RosterEntry",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_rosterentry",
-      "community": 7,
-      "norm_label": "rosterentry"
-    },
-    {
-      "label": "FrameCard",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L36",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_framecard",
-      "community": 7,
-      "norm_label": "framecard"
-    },
-    {
-      "label": "Sample",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L45",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_sample",
-      "community": 7,
-      "norm_label": "sample"
-    },
-    {
-      "label": "PipelineStage()",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L66",
-      "_origin": "ast",
-      "id": "components_pages_hiring_pipelinestage_pipelinestage",
-      "community": 7,
-      "norm_label": "pipelinestage()"
-    },
-    {
-      "label": "SpotlightFrames.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/SpotlightFrames.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_hiring_spotlightframes",
-      "community": 51,
-      "norm_label": "spotlightframes.tsx"
-    },
-    {
-      "label": "SpotlightFrames()",
-      "file_type": "code",
-      "source_file": "components/pages/hiring/SpotlightFrames.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "components_pages_hiring_spotlightframes_spotlightframes",
-      "community": 51,
-      "norm_label": "spotlightframes()"
-    },
-    {
       "label": "HeroAssembly.tsx",
       "file_type": "code",
       "source_file": "components/pages/home/HeroAssembly.tsx",
@@ -2244,26 +1514,6 @@
       "norm_label": "heroassembly()"
     },
     {
-      "label": "OpsCompression.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_home_opscompression",
-      "community": 0,
-      "norm_label": "opscompression.tsx"
-    },
-    {
-      "label": "OpsCompression()",
-      "file_type": "code",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "components_pages_home_opscompression_opscompression",
-      "community": 0,
-      "norm_label": "opscompression()"
-    },
-    {
       "label": "PlayOnceVis.tsx",
       "file_type": "code",
       "source_file": "components/pages/home/PlayOnceVis.tsx",
@@ -2297,7 +1547,7 @@
       "label": "Core",
       "file_type": "code",
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L30",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "components_pages_home_sectormap_core",
       "community": 0,
@@ -2307,7 +1557,7 @@
       "label": "MarkerCore()",
       "file_type": "code",
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L33",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "components_pages_home_sectormap_markercore",
       "community": 0,
@@ -2317,7 +1567,7 @@
       "label": "SectorMap()",
       "file_type": "code",
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L71",
+      "source_location": "L72",
       "_origin": "ast",
       "id": "components_pages_home_sectormap_sectormap",
       "community": 0,
@@ -2634,116 +1884,6 @@
       "norm_label": "modulefloors()"
     },
     {
-      "label": "FloorPlan.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan",
-      "community": 2,
-      "norm_label": "floorplan.tsx"
-    },
-    {
-      "label": "RGB",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_rgb",
-      "community": 2,
-      "norm_label": "rgb"
-    },
-    {
-      "label": "Palette",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_palette",
-      "community": 2,
-      "norm_label": "palette"
-    },
-    {
-      "label": "Reservation",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L28",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_reservation",
-      "community": 2,
-      "norm_label": "reservation"
-    },
-    {
-      "label": "Table",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L34",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_table",
-      "community": 2,
-      "norm_label": "table"
-    },
-    {
-      "label": "Geo",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L47",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_geo",
-      "community": 2,
-      "norm_label": "geo"
-    },
-    {
-      "label": "TableKind",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L63",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_tablekind",
-      "community": 2,
-      "norm_label": "tablekind"
-    },
-    {
-      "label": "READOUTS",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L71",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_readouts",
-      "community": 2,
-      "norm_label": "readouts"
-    },
-    {
-      "label": "FloorPlan()",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L102",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_floorplan_floorplan",
-      "community": 2,
-      "norm_label": "floorplan()"
-    },
-    {
-      "label": "SpotlightFrames.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/SpotlightFrames.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_spotlightframes",
-      "community": 49,
-      "norm_label": "spotlightframes.tsx"
-    },
-    {
-      "label": "SpotlightFrames()",
-      "file_type": "code",
-      "source_file": "components/pages/restaurants/SpotlightFrames.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "id": "components_pages_restaurants_spotlightframes_spotlightframes",
-      "community": 49,
-      "norm_label": "spotlightframes()"
-    },
-    {
       "label": "Showcase.tsx",
       "file_type": "code",
       "source_file": "components/pages/showcase/Showcase.tsx",
@@ -2760,7 +1900,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "components_pages_showcase_showcase_showcase",
-      "community": 9,
+      "community": 49,
       "norm_label": "showcase()"
     },
     {
@@ -2820,7 +1960,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo",
-      "community": 47,
+      "community": 37,
       "norm_label": "assistantdemo.tsx"
     },
     {
@@ -2830,7 +1970,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_bars",
-      "community": 47,
+      "community": 37,
       "norm_label": "bars"
     },
     {
@@ -2840,7 +1980,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_cited_row",
-      "community": 47,
+      "community": 37,
       "norm_label": "cited_row"
     },
     {
@@ -2850,7 +1990,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_assistantdemo",
-      "community": 47,
+      "community": 37,
       "norm_label": "assistantdemo()"
     },
     {
@@ -2860,7 +2000,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_pricingbundles",
-      "community": 9,
+      "community": 42,
       "norm_label": "pricingbundles.tsx"
     },
     {
@@ -2870,7 +2010,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_pages_winery_pricingbundles_pricingbundles",
-      "community": 9,
+      "community": 42,
       "norm_label": "pricingbundles()"
     },
     {
@@ -2900,7 +2040,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield",
-      "community": 43,
+      "community": 37,
       "norm_label": "vinefield.tsx"
     },
     {
@@ -2910,7 +2050,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_rgb",
-      "community": 43,
+      "community": 37,
       "norm_label": "rgb"
     },
     {
@@ -2920,7 +2060,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_pt",
-      "community": 43,
+      "community": 37,
       "norm_label": "pt"
     },
     {
@@ -2930,7 +2070,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_trace",
-      "community": 43,
+      "community": 37,
       "norm_label": "trace"
     },
     {
@@ -2940,7 +2080,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_sourcekind",
-      "community": 43,
+      "community": 37,
       "norm_label": "sourcekind"
     },
     {
@@ -2950,7 +2090,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_source",
-      "community": 43,
+      "community": 37,
       "norm_label": "source"
     },
     {
@@ -2960,7 +2100,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_geom",
-      "community": 43,
+      "community": 37,
       "norm_label": "geom"
     },
     {
@@ -2970,7 +2110,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "components_pages_winery_vinefield_vinefield",
-      "community": 43,
+      "community": 37,
       "norm_label": "vinefield()"
     },
     {
@@ -4090,7 +3230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider",
-      "community": 41,
+      "community": 10,
       "norm_label": "localeprovider.tsx"
     },
     {
@@ -4100,7 +3240,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_localecontext",
-      "community": 41,
+      "community": 10,
       "norm_label": "localecontext"
     },
     {
@@ -4110,7 +3250,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_localeprovider",
-      "community": 41,
+      "community": 10,
       "norm_label": "localeprovider()"
     },
     {
@@ -4130,7 +3270,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "lib_i18n_localeprovider_usedict",
-      "community": 41,
+      "community": 37,
       "norm_label": "usedict()"
     },
     {
@@ -4140,7 +3280,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_about",
-      "community": 52,
+      "community": 6,
       "norm_label": "about.ts"
     },
     {
@@ -4150,7 +3290,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "lib_i18n_about_en",
-      "community": 52,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -4160,7 +3300,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "lib_i18n_about_es",
-      "community": 52,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -4170,7 +3310,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "lib_i18n_about_aboutdict",
-      "community": 52,
+      "community": 6,
       "norm_label": "aboutdict"
     },
     {
@@ -4180,58 +3320,8 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "lib_i18n_about_about",
-      "community": 52,
+      "community": 6,
       "norm_label": "about"
-    },
-    {
-      "label": "clinics.ts",
-      "file_type": "code",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "lib_i18n_clinics",
-      "community": 39,
-      "norm_label": "clinics.ts"
-    },
-    {
-      "label": "en",
-      "file_type": "code",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "lib_i18n_clinics_en",
-      "community": 39,
-      "norm_label": "en"
-    },
-    {
-      "label": "es",
-      "file_type": "code",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L145",
-      "_origin": "ast",
-      "id": "lib_i18n_clinics_es",
-      "community": 39,
-      "norm_label": "es"
-    },
-    {
-      "label": "ClinicsDict",
-      "file_type": "code",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L286",
-      "_origin": "ast",
-      "id": "lib_i18n_clinics_clinicsdict",
-      "community": 39,
-      "norm_label": "clinicsdict"
-    },
-    {
-      "label": "clinics",
-      "file_type": "code",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L287",
-      "_origin": "ast",
-      "id": "lib_i18n_clinics_clinics",
-      "community": 39,
-      "norm_label": "clinics"
     },
     {
       "label": "coming-soon.ts",
@@ -4300,7 +3390,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "lib_i18n_config_locales",
-      "community": 9,
+      "community": 2,
       "norm_label": "locales"
     },
     {
@@ -4360,7 +3450,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "lib_i18n_config_oglocale",
-      "community": 9,
+      "community": 2,
       "norm_label": "oglocale"
     },
     {
@@ -4390,7 +3480,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "lib_i18n_config_localepath",
-      "community": 9,
+      "community": 42,
       "norm_label": "localepath()"
     },
     {
@@ -4400,7 +3490,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_consent",
-      "community": 50,
+      "community": 21,
       "norm_label": "consent.ts"
     },
     {
@@ -4410,7 +3500,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "lib_i18n_consent_en",
-      "community": 50,
+      "community": 21,
       "norm_label": "en"
     },
     {
@@ -4420,7 +3510,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "lib_i18n_consent_es",
-      "community": 50,
+      "community": 21,
       "norm_label": "es"
     },
     {
@@ -4430,7 +3520,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "lib_i18n_consent_consentdict",
-      "community": 50,
+      "community": 21,
       "norm_label": "consentdict"
     },
     {
@@ -4440,58 +3530,8 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "lib_i18n_consent_consent",
-      "community": 41,
+      "community": 21,
       "norm_label": "consent"
-    },
-    {
-      "label": "construction.ts",
-      "file_type": "code",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "lib_i18n_construction",
-      "community": 5,
-      "norm_label": "construction.ts"
-    },
-    {
-      "label": "en",
-      "file_type": "code",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "lib_i18n_construction_en",
-      "community": 5,
-      "norm_label": "en"
-    },
-    {
-      "label": "es",
-      "file_type": "code",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L156",
-      "_origin": "ast",
-      "id": "lib_i18n_construction_es",
-      "community": 5,
-      "norm_label": "es"
-    },
-    {
-      "label": "ConstructionDict",
-      "file_type": "code",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L307",
-      "_origin": "ast",
-      "id": "lib_i18n_construction_constructiondict",
-      "community": 5,
-      "norm_label": "constructiondict"
-    },
-    {
-      "label": "construction",
-      "file_type": "code",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L308",
-      "_origin": "ast",
-      "id": "lib_i18n_construction_construction",
-      "community": 5,
-      "norm_label": "construction"
     },
     {
       "label": "contact.ts",
@@ -4600,7 +3640,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_enkanto",
-      "community": 53,
+      "community": 6,
       "norm_label": "enkanto.ts"
     },
     {
@@ -4610,7 +3650,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_en",
-      "community": 53,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -4620,7 +3660,7 @@
       "source_location": "L174",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_es",
-      "community": 53,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -4630,7 +3670,7 @@
       "source_location": "L343",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_enkantodict",
-      "community": 53,
+      "community": 6,
       "norm_label": "enkantodict"
     },
     {
@@ -4640,58 +3680,8 @@
       "source_location": "L344",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_enkanto",
-      "community": 53,
+      "community": 6,
       "norm_label": "enkanto"
-    },
-    {
-      "label": "hiring.ts",
-      "file_type": "code",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "lib_i18n_hiring",
-      "community": 7,
-      "norm_label": "hiring.ts"
-    },
-    {
-      "label": "en",
-      "file_type": "code",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "lib_i18n_hiring_en",
-      "community": 7,
-      "norm_label": "en"
-    },
-    {
-      "label": "es",
-      "file_type": "code",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L117",
-      "_origin": "ast",
-      "id": "lib_i18n_hiring_es",
-      "community": 7,
-      "norm_label": "es"
-    },
-    {
-      "label": "HiringDict",
-      "file_type": "code",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L229",
-      "_origin": "ast",
-      "id": "lib_i18n_hiring_hiringdict",
-      "community": 7,
-      "norm_label": "hiringdict"
-    },
-    {
-      "label": "hiring",
-      "file_type": "code",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L230",
-      "_origin": "ast",
-      "id": "lib_i18n_hiring_hiring",
-      "community": 7,
-      "norm_label": "hiring"
     },
     {
       "label": "home.ts",
@@ -4717,7 +3707,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L265",
+      "source_location": "L230",
       "_origin": "ast",
       "id": "lib_i18n_home_es",
       "community": 0,
@@ -4727,7 +3717,7 @@
       "label": "HomeDict",
       "file_type": "code",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L518",
+      "source_location": "L447",
       "_origin": "ast",
       "id": "lib_i18n_home_homedict",
       "community": 0,
@@ -4737,7 +3727,7 @@
       "label": "home",
       "file_type": "code",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L519",
+      "source_location": "L448",
       "_origin": "ast",
       "id": "lib_i18n_home_home",
       "community": 0,
@@ -4750,7 +3740,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_metadata",
-      "community": 9,
+      "community": 2,
       "norm_label": "metadata.ts"
     },
     {
@@ -4760,7 +3750,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "lib_i18n_metadata_alternatesfor",
-      "community": 9,
+      "community": 2,
       "norm_label": "alternatesfor()"
     },
     {
@@ -4780,7 +3770,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_modulos",
-      "community": 28,
+      "community": 6,
       "norm_label": "modulos.ts"
     },
     {
@@ -4790,7 +3780,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "lib_i18n_modulos_modulecopy",
-      "community": 28,
+      "community": 6,
       "norm_label": "modulecopy"
     },
     {
@@ -4800,7 +3790,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "lib_i18n_modulos_combinaitem",
-      "community": 28,
+      "community": 6,
       "norm_label": "combinaitem"
     },
     {
@@ -4810,7 +3800,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "lib_i18n_modulos_en",
-      "community": 28,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -4820,7 +3810,7 @@
       "source_location": "L413",
       "_origin": "ast",
       "id": "lib_i18n_modulos_es",
-      "community": 28,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -4830,7 +3820,7 @@
       "source_location": "L767",
       "_origin": "ast",
       "id": "lib_i18n_modulos_modulosdict",
-      "community": 28,
+      "community": 6,
       "norm_label": "modulosdict"
     },
     {
@@ -4840,7 +3830,7 @@
       "source_location": "L768",
       "_origin": "ast",
       "id": "lib_i18n_modulos_modulos",
-      "community": 28,
+      "community": 6,
       "norm_label": "modulos"
     },
     {
@@ -5054,63 +4044,13 @@
       "norm_label": "privacy"
     },
     {
-      "label": "restaurants.ts",
-      "file_type": "code",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "lib_i18n_restaurants",
-      "community": 2,
-      "norm_label": "restaurants.ts"
-    },
-    {
-      "label": "en",
-      "file_type": "code",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "lib_i18n_restaurants_en",
-      "community": 2,
-      "norm_label": "en"
-    },
-    {
-      "label": "es",
-      "file_type": "code",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L129",
-      "_origin": "ast",
-      "id": "lib_i18n_restaurants_es",
-      "community": 2,
-      "norm_label": "es"
-    },
-    {
-      "label": "RestaurantsDict",
-      "file_type": "code",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L253",
-      "_origin": "ast",
-      "id": "lib_i18n_restaurants_restaurantsdict",
-      "community": 2,
-      "norm_label": "restaurantsdict"
-    },
-    {
-      "label": "restaurants",
-      "file_type": "code",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L254",
-      "_origin": "ast",
-      "id": "lib_i18n_restaurants_restaurants",
-      "community": 2,
-      "norm_label": "restaurants"
-    },
-    {
       "label": "rich.tsx",
       "file_type": "code",
       "source_file": "lib/i18n/rich.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_rich",
-      "community": 50,
+      "community": 6,
       "norm_label": "rich.tsx"
     },
     {
@@ -5120,7 +4060,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "lib_i18n_rich_richoptions",
-      "community": 50,
+      "community": 6,
       "norm_label": "richoptions"
     },
     {
@@ -5130,7 +4070,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "lib_i18n_rich_inline",
-      "community": 50,
+      "community": 6,
       "norm_label": "inline()"
     },
     {
@@ -5150,7 +4090,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "lib_i18n_rich_plain",
-      "community": 50,
+      "community": 6,
       "norm_label": "plain()"
     },
     {
@@ -5160,7 +4100,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "lib_i18n_rich_dict",
-      "community": 50,
+      "community": 6,
       "norm_label": "dict"
     },
     {
@@ -5170,7 +4110,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_showcase",
-      "community": 54,
+      "community": 6,
       "norm_label": "showcase.ts"
     },
     {
@@ -5180,7 +4120,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "lib_i18n_showcase_showcasemodule",
-      "community": 54,
+      "community": 6,
       "norm_label": "showcasemodule"
     },
     {
@@ -5190,7 +4130,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "lib_i18n_showcase_en",
-      "community": 54,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -5200,7 +4140,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "lib_i18n_showcase_es",
-      "community": 54,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -5210,7 +4150,7 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "lib_i18n_showcase_showcasedict",
-      "community": 54,
+      "community": 6,
       "norm_label": "showcasedict"
     },
     {
@@ -5247,7 +4187,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L79",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "lib_i18n_site_es",
       "community": 45,
@@ -5257,7 +4197,7 @@
       "label": "SiteDict",
       "file_type": "code",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L147",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "lib_i18n_site_sitedict",
       "community": 45,
@@ -5267,7 +4207,7 @@
       "label": "site",
       "file_type": "code",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L148",
+      "source_location": "L132",
       "_origin": "ast",
       "id": "lib_i18n_site_site",
       "community": 45,
@@ -5280,7 +4220,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_terms",
-      "community": 40,
+      "community": 6,
       "norm_label": "terms.ts"
     },
     {
@@ -5290,7 +4230,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "lib_i18n_terms_en",
-      "community": 40,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -5300,7 +4240,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "lib_i18n_terms_es",
-      "community": 40,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -5310,7 +4250,7 @@
       "source_location": "L89",
       "_origin": "ast",
       "id": "lib_i18n_terms_termsdict",
-      "community": 40,
+      "community": 6,
       "norm_label": "termsdict"
     },
     {
@@ -5320,7 +4260,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "lib_i18n_terms_terms",
-      "community": 40,
+      "community": 6,
       "norm_label": "terms"
     },
     {
@@ -5330,7 +4270,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_winery",
-      "community": 47,
+      "community": 37,
       "norm_label": "winery.ts"
     },
     {
@@ -5340,37 +4280,37 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "lib_i18n_winery_en",
-      "community": 47,
+      "community": 37,
       "norm_label": "en"
     },
     {
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L221",
+      "source_location": "L220",
       "_origin": "ast",
       "id": "lib_i18n_winery_es",
-      "community": 47,
+      "community": 37,
       "norm_label": "es"
     },
     {
       "label": "WineryDict",
       "file_type": "code",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L422",
+      "source_location": "L420",
       "_origin": "ast",
       "id": "lib_i18n_winery_winerydict",
-      "community": 47,
+      "community": 37,
       "norm_label": "winerydict"
     },
     {
       "label": "winery",
       "file_type": "code",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L423",
+      "source_location": "L421",
       "_origin": "ast",
       "id": "lib_i18n_winery_winery",
-      "community": 47,
+      "community": 37,
       "norm_label": "winery"
     },
     {
@@ -6337,17 +5277,27 @@
       "label": "config",
       "file_type": "code",
       "source_file": "middleware.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "middleware_config",
       "community": 9,
       "norm_label": "config"
     },
     {
+      "label": "REMOVED_INDUSTRIES",
+      "file_type": "code",
+      "source_file": "middleware.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "middleware_removed_industries",
+      "community": 9,
+      "norm_label": "removed_industries"
+    },
+    {
       "label": "middleware()",
       "file_type": "code",
       "source_file": "middleware.ts",
-      "source_location": "L31",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "middleware_middleware",
       "community": 9,
@@ -8413,1132 +7363,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "app_locale_industries_clinics_page_clinicspage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "app_locale_industries_clinics_page_generatemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "app_locale_industries_clinics_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "app_locale_industries_clinics_page_params",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "components_pages_clinics_clinicschedule",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "components_pages_clinics_clinicschedule_clinicschedule",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "components_pages_clinics_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "components_pages_clinics_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "components_site_reveal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "components_site_reveal_reveal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_clinics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_clinics_clinics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_config_locale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_metadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_metadata_pagemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_rich_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page",
-      "target": "lib_i18n_site_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page_clinicspage",
-      "target": "app_locale_industries_clinics_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page_generatemetadata",
-      "target": "app_locale_industries_clinics_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page_localeof",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page_generatemetadata",
-      "target": "lib_i18n_metadata_pagemetadata"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/clinics/page.tsx",
-      "source_location": "L46",
-      "weight": 1.0,
-      "source": "app_locale_industries_clinics_page_clinicspage",
-      "target": "lib_i18n_rich_rich"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "app_locale_industries_construction_page_capglyphs",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L79",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "app_locale_industries_construction_page_constructionpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "app_locale_industries_construction_page_generatemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "app_locale_industries_construction_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "app_locale_industries_construction_page_params",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "components_pages_construction_fleetmap",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "components_pages_construction_fleetmap_fleetmap",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "components_pages_construction_siteplanvisual",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "components_pages_construction_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "components_pages_construction_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_config_locale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_construction_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_metadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_metadata_pagemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_rich_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page",
-      "target": "lib_i18n_site_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L80",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page_constructionpage",
-      "target": "app_locale_industries_construction_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page_generatemetadata",
-      "target": "app_locale_industries_construction_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page_localeof",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page_generatemetadata",
-      "target": "lib_i18n_metadata_pagemetadata"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/construction/page.tsx",
-      "source_location": "L102",
-      "weight": 1.0,
-      "source": "app_locale_industries_construction_page_constructionpage",
-      "target": "lib_i18n_rich_rich"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "app_locale_industries_hiring_page_capglyphs",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "app_locale_industries_hiring_page_generatemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L106",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "app_locale_industries_hiring_page_hiringpage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "app_locale_industries_hiring_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "app_locale_industries_hiring_page_params",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "components_pages_hiring_pipelinestage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "components_pages_hiring_pipelinestage_pipelinestage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "components_pages_hiring_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "components_pages_hiring_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "components_site_reveal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "components_site_reveal_reveal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_config_locale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_hiring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_hiring_hiring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_metadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_metadata_pagemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_rich_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page",
-      "target": "lib_i18n_site_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page_generatemetadata",
-      "target": "app_locale_industries_hiring_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L107",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page_hiringpage",
-      "target": "app_locale_industries_hiring_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page_localeof",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page_generatemetadata",
-      "target": "lib_i18n_metadata_pagemetadata"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/hiring/page.tsx",
-      "source_location": "L128",
-      "weight": 1.0,
-      "source": "app_locale_industries_hiring_page_hiringpage",
-      "target": "lib_i18n_rich_rich"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L18",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "app_locale_industries_restaurants_page_generatemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "app_locale_industries_restaurants_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "app_locale_industries_restaurants_page_params",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L27",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "app_locale_industries_restaurants_page_restaurantspage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "components_pages_restaurants_floorplan",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "components_pages_restaurants_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "components_pages_restaurants_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "components_site_reveal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "components_site_reveal_reveal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_config_locale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_metadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_metadata_pagemetadata",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_restaurants",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_restaurants_restaurants",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_rich_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page",
-      "target": "lib_i18n_site_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page_generatemetadata",
-      "target": "app_locale_industries_restaurants_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page_localeof",
-      "target": "lib_i18n_config_islocale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page_restaurantspage",
-      "target": "app_locale_industries_restaurants_page_localeof",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L20",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page_generatemetadata",
-      "target": "lib_i18n_metadata_pagemetadata"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/[locale]/industries/restaurants/page.tsx",
-      "source_location": "L50",
-      "weight": 1.0,
-      "source": "app_locale_industries_restaurants_page_restaurantspage",
-      "target": "lib_i18n_rich_rich"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "app/[locale]/industries/winery/page.tsx",
       "source_location": "L28",
       "weight": 1.0,
@@ -10353,7 +8177,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L32",
+      "source_location": "L31",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "app_locale_page_generatemetadata",
@@ -10363,7 +8187,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L40",
+      "source_location": "L39",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "app_locale_page_home",
@@ -10373,7 +8197,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L20",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "app_locale_page_localeof",
@@ -10383,7 +8207,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L46",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "app_locale_page_officialhome",
@@ -10393,7 +8217,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L18",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "app_locale_page_params",
@@ -10429,7 +8253,7 @@
       "source_location": "L6",
       "weight": 1.0,
       "source": "app_locale_page",
-      "target": "components_pages_home_opscompression",
+      "target": "components_pages_home_playoncevis",
       "confidence_score": 1.0
     },
     {
@@ -10440,28 +8264,6 @@
       "source_location": "L6",
       "weight": 1.0,
       "source": "app_locale_page",
-      "target": "components_pages_home_opscompression_opscompression",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_page",
-      "target": "components_pages_home_playoncevis",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/[locale]/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "app_locale_page",
       "target": "components_pages_home_playoncevis_playoncevis",
       "confidence_score": 1.0
     },
@@ -10470,7 +8272,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L8",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "components_pages_home_sectormap",
@@ -10481,7 +8283,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L9",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "components_pages_home_spotlightframes",
@@ -10492,7 +8294,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L9",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "components_pages_home_spotlightframes_spotlightframes",
@@ -10536,7 +8338,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L10",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_config",
@@ -10547,7 +8349,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L10",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_config_islocale",
@@ -10558,7 +8360,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L10",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_config_locale",
@@ -10569,7 +8371,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L10",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_config_localepath",
@@ -10580,7 +8382,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L11",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_home",
@@ -10591,7 +8393,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L11",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_home_home",
@@ -10602,7 +8404,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_metadata",
@@ -10613,7 +8415,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_metadata_pagemetadata",
@@ -10624,7 +8426,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_rich",
@@ -10635,7 +8437,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L14",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_rich_rich",
@@ -10646,7 +8448,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L12",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_showcase",
@@ -10657,7 +8459,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L12",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_showcase_showcase",
@@ -10668,7 +8470,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_site",
@@ -10679,7 +8481,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "app_locale_page",
       "target": "lib_i18n_site_site",
@@ -10690,7 +8492,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L33",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "app_locale_page_generatemetadata",
       "target": "app_locale_page_localeof",
@@ -10701,7 +8503,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L41",
+      "source_location": "L40",
       "weight": 1.0,
       "source": "app_locale_page_home",
       "target": "app_locale_page_localeof",
@@ -10712,7 +8514,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L21",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "app_locale_page_localeof",
       "target": "lib_i18n_config_islocale",
@@ -10723,7 +8525,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L47",
+      "source_location": "L46",
       "weight": 1.0,
       "source": "app_locale_page_officialhome",
       "target": "app_locale_page_localeof",
@@ -10735,7 +8537,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L34",
+      "source_location": "L33",
       "weight": 1.0,
       "source": "app_locale_page_generatemetadata",
       "target": "components_pages_showcase_flag_showcaseenabled"
@@ -10746,7 +8548,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L37",
+      "source_location": "L36",
       "weight": 1.0,
       "source": "app_locale_page_generatemetadata",
       "target": "lib_i18n_metadata_pagemetadata"
@@ -10757,7 +8559,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L42",
+      "source_location": "L41",
       "weight": 1.0,
       "source": "app_locale_page_home",
       "target": "components_pages_showcase_flag_showcaseenabled"
@@ -10768,7 +8570,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L50",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "app_locale_page_officialhome",
       "target": "lib_i18n_config_localepath"
@@ -10779,7 +8581,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/page.tsx",
-      "source_location": "L68",
+      "source_location": "L67",
       "weight": 1.0,
       "source": "app_locale_page_officialhome",
       "target": "lib_i18n_rich_rich"
@@ -12388,7 +10190,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/sitemap.ts",
-      "source_location": "L22",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "app_sitemap",
       "target": "app_sitemap_sitemap",
@@ -12444,7 +10246,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/sitemap.ts",
-      "source_location": "L29",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "app_sitemap_sitemap",
       "target": "lib_i18n_config_localepath"
@@ -13983,523 +11785,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_cell",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_channel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L30",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_chip",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L70",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_chipstate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L110",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_clinicschedule",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L40",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_geo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L74",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_palette",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_rgb",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L63",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "components_pages_clinics_clinicschedule_slot",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "lib_i18n_clinics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "lib_i18n_clinics_clinics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/clinics/ClinicSchedule.tsx",
-      "source_location": "L111",
-      "weight": 1.0,
-      "source": "components_pages_clinics_clinicschedule_clinicschedule",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/SpotlightFrames.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "source": "components_pages_clinics_spotlightframes",
-      "target": "components_pages_clinics_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/clinics/SpotlightFrames.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_clinics_spotlightframes",
-      "target": "components_pages_clinics_spotlightframes_spotlightframesprops",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L70",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_fleetmap",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_logrow",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L27",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_nodes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_pt",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_pulse",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_rgb",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L38",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_roads",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L50",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_routes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_site",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_sitekey",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L43",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_sites",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_trace",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "components_pages_construction_fleetmap_vehicle",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "lib_i18n_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "lib_i18n_construction_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L327",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap_fleetmap",
-      "target": "components_pages_construction_fleetmap_sites"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/construction/FleetMap.tsx",
-      "source_location": "L71",
-      "weight": 1.0,
-      "source": "components_pages_construction_fleetmap_fleetmap",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_chipplace",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_conf",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_desktop_conf",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L77",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_portrait_chips",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L44",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_portrait_conf",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L68",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_portrait_leaders",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L59",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_portrait_plots",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L87",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_siteplanvisual",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "lib_i18n_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "lib_i18n_construction_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "references",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L678",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual_siteplanvisual",
-      "target": "components_pages_construction_siteplanvisual_portrait_chips"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/construction/SitePlanVisual.tsx",
-      "source_location": "L88",
-      "weight": 1.0,
-      "source": "components_pages_construction_siteplanvisual_siteplanvisual",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/construction/SpotlightFrames.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_pages_construction_spotlightframes",
-      "target": "components_pages_construction_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "components/pages/enkanto/SpotlightFrames.tsx",
       "source_location": "L11",
       "weight": 1.0,
@@ -14917,171 +12202,6 @@
       "target": "lib_i18n_localeprovider_usedict"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_cand",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_framecard",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_geom",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_parked",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L66",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_pipelinestage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_pt",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_rosterentry",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L45",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_sample",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_seg",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "components_pages_hiring_pipelinestage_segs",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "lib_i18n_hiring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "lib_i18n_hiring_hiring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/hiring/PipelineStage.tsx",
-      "source_location": "L67",
-      "weight": 1.0,
-      "source": "components_pages_hiring_pipelinestage_pipelinestage",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/hiring/SpotlightFrames.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_pages_hiring_spotlightframes",
-      "target": "components_pages_hiring_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -15374,104 +12494,6 @@
       "target": "lib_i18n_localeprovider_usedict"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "components_pages_home_canvaskit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "components_pages_home_canvaskit_clamp01",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "components_pages_home_canvaskit_easeinout",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "components_pages_home_opscompression_opscompression",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "lib_i18n_home",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "lib_i18n_home_home",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/home/OpsCompression.tsx",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "components_pages_home_opscompression_opscompression",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/home/PlayOnceVis.tsx",
@@ -15584,7 +12606,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0,
       "source": "components_pages_home_sectormap",
       "target": "components_pages_home_sectormap_core",
@@ -15594,7 +12616,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0,
       "source": "components_pages_home_sectormap",
       "target": "components_pages_home_sectormap_markercore",
@@ -15604,7 +12626,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L71",
+      "source_location": "L72",
       "weight": 1.0,
       "source": "components_pages_home_sectormap",
       "target": "components_pages_home_sectormap_sectormap",
@@ -15682,7 +12704,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L89",
+      "source_location": "L90",
       "weight": 1.0,
       "source": "components_pages_home_sectormap_sectormap",
       "target": "components_pages_home_canvaskit_readpalette"
@@ -15693,7 +12715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L74",
+      "source_location": "L75",
       "weight": 1.0,
       "source": "components_pages_home_sectormap_sectormap",
       "target": "lib_i18n_config_localepath"
@@ -15704,7 +12726,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/pages/home/SectorMap.tsx",
-      "source_location": "L72",
+      "source_location": "L73",
       "weight": 1.0,
       "source": "components_pages_home_sectormap_sectormap",
       "target": "lib_i18n_localeprovider_uselocale"
@@ -16562,151 +13584,6 @@
       "weight": 1.0,
       "source": "components_pages_precios_modulefloors_modulefloors",
       "target": "lib_pricing_formatprice"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L102",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_floorplan",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L47",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_geo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_palette",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L71",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_readouts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L28",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_reservation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_rgb",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_table",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L63",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "components_pages_restaurants_floorplan_tablekind",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "lib_i18n_restaurants",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan",
-      "target": "lib_i18n_restaurants_restaurants",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/restaurants/FloorPlan.tsx",
-      "source_location": "L103",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_floorplan_floorplan",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/restaurants/SpotlightFrames.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "components_pages_restaurants_spotlightframes",
-      "target": "components_pages_restaurants_spotlightframes_spotlightframes",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -17606,7 +14483,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Nav.tsx",
-      "source_location": "L34",
+      "source_location": "L32",
       "weight": 1.0,
       "source": "components_site_nav_nav",
       "target": "lib_i18n_config_localepath"
@@ -17617,7 +14494,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Nav.tsx",
-      "source_location": "L63",
+      "source_location": "L54",
       "weight": 1.0,
       "source": "components_site_nav_nav",
       "target": "lib_i18n_config_otherlocale"
@@ -17628,7 +14505,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Nav.tsx",
-      "source_location": "L64",
+      "source_location": "L55",
       "weight": 1.0,
       "source": "components_site_nav_nav",
       "target": "lib_i18n_config_striplocale"
@@ -17639,10 +14516,21 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Nav.tsx",
-      "source_location": "L28",
+      "source_location": "L27",
       "weight": 1.0,
       "source": "components_site_nav_nav",
       "target": "lib_i18n_localeprovider_uselocale"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "components/site/SiteShell.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "components_site_siteshell",
+      "target": "components_site_nav_nav",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -19809,68 +16697,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L287",
-      "weight": 1.0,
-      "source": "lib_i18n_clinics",
-      "target": "lib_i18n_clinics_clinics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L286",
-      "weight": 1.0,
-      "source": "lib_i18n_clinics",
-      "target": "lib_i18n_clinics_clinicsdict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "lib_i18n_clinics",
-      "target": "lib_i18n_clinics_en",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L145",
-      "weight": 1.0,
-      "source": "lib_i18n_clinics",
-      "target": "lib_i18n_clinics_es",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_clinics",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/clinics.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_clinics",
-      "target": "lib_i18n_rich_dict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "lib/i18n/coming-soon.ts",
       "source_location": "L28",
       "weight": 1.0,
@@ -20179,7 +17005,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middleware.ts",
-      "source_location": "L38",
+      "source_location": "L53",
       "weight": 1.0,
       "source": "middleware_middleware",
       "target": "lib_i18n_config_islocale"
@@ -20201,7 +17027,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middleware.ts",
-      "source_location": "L40",
+      "source_location": "L55",
       "weight": 1.0,
       "source": "middleware_middleware",
       "target": "lib_i18n_config_localefromcountry"
@@ -20234,10 +17060,32 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middleware.ts",
-      "source_location": "L34",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "middleware_middleware",
       "target": "lib_i18n_config_localefrompath"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "middleware.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "middleware",
+      "target": "lib_i18n_config_striplocale",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "middleware.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "middleware_middleware",
+      "target": "lib_i18n_config_striplocale"
     },
     {
       "relation": "imports",
@@ -20289,7 +17137,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "middleware.ts",
-      "source_location": "L42",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "middleware_middleware",
       "target": "lib_i18n_config_localepath"
@@ -20353,68 +17201,6 @@
       "source_location": "L1",
       "weight": 1.0,
       "source": "lib_i18n_consent",
-      "target": "lib_i18n_rich_dict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L308",
-      "weight": 1.0,
-      "source": "lib_i18n_construction",
-      "target": "lib_i18n_construction_construction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L307",
-      "weight": 1.0,
-      "source": "lib_i18n_construction",
-      "target": "lib_i18n_construction_constructiondict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "lib_i18n_construction",
-      "target": "lib_i18n_construction_en",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L156",
-      "weight": 1.0,
-      "source": "lib_i18n_construction",
-      "target": "lib_i18n_construction_es",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_construction",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/construction.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_construction",
       "target": "lib_i18n_rich_dict",
       "confidence_score": 1.0
     },
@@ -20595,68 +17381,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "lib_i18n_hiring",
-      "target": "lib_i18n_hiring_en",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L117",
-      "weight": 1.0,
-      "source": "lib_i18n_hiring",
-      "target": "lib_i18n_hiring_es",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L230",
-      "weight": 1.0,
-      "source": "lib_i18n_hiring",
-      "target": "lib_i18n_hiring_hiring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L229",
-      "weight": 1.0,
-      "source": "lib_i18n_hiring",
-      "target": "lib_i18n_hiring_hiringdict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_hiring",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/hiring.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_hiring",
-      "target": "lib_i18n_rich_dict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
       "source_location": "L5",
       "weight": 1.0,
@@ -20668,7 +17392,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L265",
+      "source_location": "L230",
       "weight": 1.0,
       "source": "lib_i18n_home",
       "target": "lib_i18n_home_es",
@@ -20678,7 +17402,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L519",
+      "source_location": "L448",
       "weight": 1.0,
       "source": "lib_i18n_home",
       "target": "lib_i18n_home_home",
@@ -20688,7 +17412,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/home.ts",
-      "source_location": "L518",
+      "source_location": "L447",
       "weight": 1.0,
       "source": "lib_i18n_home",
       "target": "lib_i18n_home_homedict",
@@ -21277,68 +18001,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "lib_i18n_restaurants",
-      "target": "lib_i18n_restaurants_en",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L129",
-      "weight": 1.0,
-      "source": "lib_i18n_restaurants",
-      "target": "lib_i18n_restaurants_es",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L254",
-      "weight": 1.0,
-      "source": "lib_i18n_restaurants",
-      "target": "lib_i18n_restaurants_restaurants",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L253",
-      "weight": 1.0,
-      "source": "lib_i18n_restaurants",
-      "target": "lib_i18n_restaurants_restaurantsdict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_restaurants",
-      "target": "lib_i18n_rich",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "lib/i18n/restaurants.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "lib_i18n_restaurants",
-      "target": "lib_i18n_rich_dict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "lib/i18n/rich.tsx",
       "source_location": "L56",
       "weight": 1.0,
@@ -21549,7 +18211,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L79",
+      "source_location": "L71",
       "weight": 1.0,
       "source": "lib_i18n_site",
       "target": "lib_i18n_site_es",
@@ -21559,7 +18221,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L148",
+      "source_location": "L132",
       "weight": 1.0,
       "source": "lib_i18n_site",
       "target": "lib_i18n_site_site",
@@ -21569,7 +18231,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/site.ts",
-      "source_location": "L147",
+      "source_location": "L131",
       "weight": 1.0,
       "source": "lib_i18n_site",
       "target": "lib_i18n_site_sitedict",
@@ -21629,7 +18291,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L221",
+      "source_location": "L220",
       "weight": 1.0,
       "source": "lib_i18n_winery",
       "target": "lib_i18n_winery_es",
@@ -21639,7 +18301,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L423",
+      "source_location": "L421",
       "weight": 1.0,
       "source": "lib_i18n_winery",
       "target": "lib_i18n_winery_winery",
@@ -21649,7 +18311,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/winery.ts",
-      "source_location": "L422",
+      "source_location": "L420",
       "weight": 1.0,
       "source": "lib_i18n_winery",
       "target": "lib_i18n_winery_winerydict",
@@ -23799,7 +20461,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "middleware.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "source": "middleware",
       "target": "middleware_config",
@@ -23809,11 +20471,32 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "middleware.ts",
-      "source_location": "L31",
+      "source_location": "L42",
       "weight": 1.0,
       "source": "middleware",
       "target": "middleware_middleware",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "middleware.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "middleware",
+      "target": "middleware_removed_industries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "middleware.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "middleware_middleware",
+      "target": "middleware_removed_industries"
     },
     {
       "relation": "contains",
@@ -24969,5 +21652,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "74a361d07d5d4ec6f5d8f7dadfd56f6c2cc26cf2"
+  "built_at_commit": "0cef9a9a8145b688f20e73fa940652634464e73d"
 }
