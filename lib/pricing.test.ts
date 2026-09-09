@@ -1172,6 +1172,46 @@ describe("(3) a size per module, which is what the Diagnostico sets", () => {
     ]);
   });
 
+  it("refuses a selection that names one module at two sizes", () => {
+    // Contradictory input from a Diagnostico: picking one of the two silently
+    // would quote a build nobody chose (cross-vendor review of this diff).
+    expect(() =>
+      quote([
+        { module: "produccion", size: "S" },
+        { module: "produccion", size: "L" },
+      ]),
+    ).toThrow("two sizes");
+    // The same module at the same size twice is one selection said twice.
+    const twice = quote([
+      { module: "produccion", size: "M" },
+      { module: "produccion", size: "M" },
+    ]);
+    expect(twice.lines).toHaveLength(1);
+    expect(twice).toEqual(quote(["produccion"], "M"));
+    // And the id form still collapses a repeat, as it did before per-module sizes.
+    expect(quote(["produccion", "produccion"], "M")).toEqual(
+      quote(["produccion"], "M"),
+    );
+  });
+
+  it("refuses the same add-on twice, in either call shape", () => {
+    // An add-on is a quote line charged once (memo 5.3), and the 113-config
+    // census counts subsets, so a repeated id would bill it twice.
+    expect(() =>
+      quote(["restaurante"], "M", [
+        "google-ads-management",
+        "google-ads-management",
+      ]),
+    ).toThrow("chosen twice");
+    expect(() =>
+      quote([{ module: "restaurante", size: "M" }], ["content", "content"]),
+    ).toThrow("chosen twice");
+    // One of each still prices as before.
+    expect(
+      quote(["restaurante"], "M", ["google-ads-management", "content"]).addOns,
+    ).toHaveLength(2);
+  });
+
   it("refuses a quote of module ids with no size", () => {
     // @ts-expect-error the single-size form takes its size as its second argument
     expect(() => quote(["produccion"])).toThrow("needs a size");

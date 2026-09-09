@@ -855,13 +855,38 @@ export type Quote = {
   pricedOn: "hours-actually-built";
 };
 
-/** One entry per module; a module named twice keeps the size named first. */
+/**
+ * One entry per module. A module named twice at the same size is the same
+ * selection said twice and collapses; named twice at DIFFERENT sizes it is
+ * contradictory input, and picking one of the two would quote a client for a
+ * build nobody chose, so it throws instead.
+ */
 function uniqueSelections(list: ModuleSelection[]): ModuleSelection[] {
   const seen = new Map<ModuleId, ModuleSelection>();
   for (const entry of list) {
-    if (!seen.has(entry.module)) seen.set(entry.module, entry);
+    const already = seen.get(entry.module);
+    if (already && already.size !== entry.size) {
+      throw new Error(
+        `${entry.module} is selected at two sizes, ${already.size} and ${entry.size}`,
+      );
+    }
+    if (!already) seen.set(entry.module, entry);
   }
   return Array.from(seen.values());
+}
+
+/**
+ * Add-ons are a set: section 5.3 quotes each one once, and the census of memo
+ * 7.1 runs over subsets. A list that repeats one would charge it twice, so it
+ * is refused rather than quietly collapsed.
+ */
+function readAddOns(chosen: AddOnId[]): AddOnId[] {
+  const seen = new Set<AddOnId>();
+  for (const id of chosen) {
+    if (seen.has(id)) throw new Error(`add-on ${id} is chosen twice`);
+    seen.add(id);
+  }
+  return chosen;
 }
 
 /**
@@ -885,12 +910,12 @@ function readSelections(
       selections: uniqueSelections(
         (bought as ModuleId[]).map((module) => ({ module, size })),
       ),
-      chosenAddOns: trailingAddOns,
+      chosenAddOns: readAddOns(trailingAddOns),
     };
   }
   return {
     selections: uniqueSelections(bought as ModuleSelection[]),
-    chosenAddOns: (sizeOrAddOns as AddOnId[] | undefined) ?? [],
+    chosenAddOns: readAddOns((sizeOrAddOns as AddOnId[] | undefined) ?? []),
   };
 }
 
