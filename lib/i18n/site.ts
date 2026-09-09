@@ -29,6 +29,10 @@ const en = {
     label: "Primary",
     menu: "Menu",
     closeMenu: "Close menu",
+    /* Modules and pricing lead the row: they are the two pages a reader has to
+       reach to know what we sell and what it costs (bead hq-wrig5.3). */
+    modules: "Modules",
+    pricing: "Pricing",
     wineries: "Wineries",
     work: "Work",
     otherIndustries: "Other industries",
@@ -95,6 +99,8 @@ const es: typeof en = {
     label: "Principal",
     menu: "Menú",
     closeMenu: "Cerrar el menú",
+    modules: "Módulos",
+    pricing: "Precios",
     wineries: "Bodegas",
     work: "Casos",
     otherIndustries: "Otros sectores",
@@ -103,7 +109,7 @@ const es: typeof en = {
     hiring: "Reclutamiento",
     restaurants: "Restaurantes",
     clinics: "Clínicas",
-    /* Short in the nav bar, where five items plus the switch and the CTA
+    /* Short in the nav bar, where seven items plus the switch and the CTA
        share one line above 820px; the footer keeps the full phrase. */
     about: "Nosotros",
     contact: "Contacto",
