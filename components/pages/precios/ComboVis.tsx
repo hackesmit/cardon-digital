@@ -19,10 +19,14 @@ import type { ReactNode } from "react";
  */
 export default function ComboVis({
   legend,
+  legendNote,
   children,
 }: {
   /** The four blocks a monthly bar is made of, the shared base first. */
   legend: { key: string; label: string }[];
+  /** Scopes the legend to the monthly bar so its colours are never read onto
+   *  the build bar beside it, which draws in a shade of its own. */
+  legendNote: string;
   children: ReactNode;
 }) {
   const [held, setHeld] = useState<string | null>(null);
@@ -45,6 +49,7 @@ export default function ComboVis({
           </li>
         ))}
       </ul>
+      <p className="combo-legend-note">{legendNote}</p>
       {children}
     </div>
   );

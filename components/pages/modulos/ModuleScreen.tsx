@@ -29,9 +29,10 @@ import { modulos } from "@/lib/i18n/modulos";
  * The site-wide disclaimer in lib/i18n/terms.ts covers the same ground.
  */
 
-/** One decimal, grouped the way the locale groups it, so a Spanish board reads
-    24,4 next to the Spanish prices rather than 24.4. It is not in lib/pricing.ts
-    because that module formats money and these are readings off a board. */
+/** One decimal, formatted the way the locale formats it (es-MX groups with a
+    decimal point same as en, so both boards read 24.4). It is not in
+    lib/pricing.ts because that module formats money and these are readings
+    off a board. */
 function oneDecimal(locale: Locale, value: number): string {
   return new Intl.NumberFormat(htmlLang[locale], {
     minimumFractionDigits: 1,

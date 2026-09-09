@@ -643,7 +643,13 @@
   display: flex;
   align-items: center;
   gap: 0;
-  height: 22px;
+  /* 28px of row pitch so the stay button below can clear the WCAG 2.2 SC
+     2.5.8 24px hit-area floor (top/bottom inset 2px each) without touching
+     the row above or below it (reviewer N1, bead hq-wrig5.13 round two: it
+     measured 16px at both 1280 and 360, adjacent rows overlapping). Rows
+     stack in normal flow, never absolutely, so a taller row never overlaps
+     its neighbours regardless of width. */
+  height: 28px;
 }
 .ms-cal-unit {
   width: 2.6em;
@@ -665,8 +671,8 @@
 }
 .ms-stay {
   position: absolute;
-  top: 3px;
-  bottom: 3px;
+  top: 2px;
+  bottom: 2px;
   left: calc((var(--start) - 1) / var(--days) * 100%);
   width: calc(var(--nights) / var(--days) * 100% - 2px);
   border: 1px solid transparent;

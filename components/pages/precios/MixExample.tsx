@@ -125,7 +125,7 @@ export default function MixExample({ locale }: { locale: Locale }) {
             <h3 className="mix-ex-title">{d.combosTitle}</h3>
             <p className="mix-ex-sub">{d.combosLead}</p>
 
-            <ComboVis legend={legend}>
+            <ComboVis legend={legend} legendNote={d.legendNote}>
               <table className="mix-table combo-table">
                 <caption className="sr-only">{d.combosLabel}</caption>
                 <thead>
