@@ -61,6 +61,12 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
           {ranked.map((id: ModuleId, i) => {
             const floor = moduleFloors[id];
             const m = d.modules[id];
+            const who = scenarios[id];
+            if (!who) {
+              // Same rule as a feature name: an empty slot on a public page is
+              // a silent failure, so a missing scenario fails the build.
+              throw new Error(`precios: no ${locale} scenario for ${id}`);
+            }
             return (
               <Reveal delay={i * 70} key={id}>
                 <article className="floor">
@@ -69,7 +75,7 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
                     <p className="floor-tag">{m.tag}</p>
                   </header>
 
-                  <p className="floor-who">{scenarios[id]}</p>
+                  <p className="floor-who">{who}</p>
 
                   <div className="floor-figs">
                     <p className="floor-fig">
