@@ -53,21 +53,22 @@ export function formatPrice(locale: Locale, amount: number): string {
  * finer than the format can carry throws rather than publishing a wrong one.
  */
 export function formatPercent(locale: Locale, fraction: number): string {
-  if (!Number.isFinite(fraction) || fraction < 0) {
+  // Adding 0 normalises a negative zero, which Intl would otherwise print as
+  // "-0" and which is not caught by `< 0`; the same trick roundHalfDown uses
+  // for the same reason (bead hq-ggot1.15).
+  const rate = fraction + 0;
+  if (!Number.isFinite(rate) || rate < 0) {
     // NaN and Infinity would sail through the comparison below, since every
     // comparison with NaN is false, and print "NaN" or the infinity sign on a
     // pricing page. A negative rate would publish a surcharge as a discount.
     throw new Error(`a policy rate is a finite non-negative fraction, not ${fraction}`);
   }
-  const percent = Math.round(fraction * 1e9) / 1e7;
-  // The tolerance is one ulp of division noise, not a rounding allowance: every
-  // rate the printed form can carry reproduces exactly, and one that carries
-  // more precision misses by 1e-13 or worse and is refused rather than
-  // published a decimal short.
-  if (
-    Math.abs(percent / 100 - fraction) >
-    Number.EPSILON * Math.max(1, fraction)
-  ) {
+  const percent = Math.round(rate * 1e9) / 1e7;
+  // The tolerance is one ulp, which is the rounding of the division itself and
+  // nothing more: every rate the printed form can carry reproduces exactly, and
+  // one that carries more precision than it misses by more than an ulp and is
+  // refused rather than published a decimal short.
+  if (Math.abs(percent / 100 - rate) > Number.EPSILON * rate) {
     throw new Error(`percent ${percent} does not reproduce the rate ${fraction}`);
   }
   return new Intl.NumberFormat(groupLocale[locale], {
