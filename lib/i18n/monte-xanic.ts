@@ -71,7 +71,7 @@ const en = {
   before: {
     kicker: "Before",
     title: "The harvest lived in three places and agreed in none.",
-    p1: "One of Mexico's most awarded wineries, in the Valle de Guadalupe. Decades of reputation, built on what goes in the bottle.",
+    p1: "Monte Xanic makes wine in the Valle de Guadalupe, and is meticulous about what goes in the bottle. The harvest behind it deserves the same clarity.",
     p2: "The numbers sat in a production system, in Excel files, and in paper notebooks out in the rows. Seeing the whole harvest meant gathering all three by hand, and by then the picture was old. A picking decision turns on a day or two.",
   },
   changed: {
@@ -87,13 +87,13 @@ const en = {
   number: {
     kicker: "The number",
     title: "An hour of finance work, now about two minutes.",
-    sub: "The same workflow, rebuilt to run itself, so the finance view is always current.",
+    sub: "The same workflow, rebuilt to run itself, and it refreshes through the day.",
     manual: "BY HAND",
     auto: "RUNS ITSELF",
     long: "about 1 hr",
     short: "about 2 min",
     less: "about 97 percent less",
-    refreshed: "REFRESHED ALL DAY",
+    refreshed: "REFRESHED THROUGH THE DAY",
     tag: "an hour, compressed to two minutes",
     aria: "A one hour manual workflow compresses to about two minutes.",
   },
@@ -221,7 +221,7 @@ const es: typeof en = {
   before: {
     kicker: "Antes",
     title: "La cosecha vivía en tres lugares y no coincidía en ninguno.",
-    p1: "Una de las bodegas más premiadas de México, en el Valle de Guadalupe. Décadas de reputación sobre lo que va en la botella.",
+    p1: "Monte Xanic hace vino en el Valle de Guadalupe y es meticulosa con lo que va en la botella. La cosecha detrás merece la misma claridad.",
     p2: "Los números estaban en un sistema de producción, en archivos de Excel y en libretas de campo allá en los surcos. Ver la cosecha completa obligaba a juntarlos a mano, y para entonces la imagen ya estaba vieja. Un corte se define por uno o dos días.",
   },
   changed: {
@@ -237,13 +237,13 @@ const es: typeof en = {
   number: {
     kicker: "El número",
     title: "Una hora de trabajo financiero, ahora unos dos minutos.",
-    sub: "El mismo flujo, reconstruido para correr solo, así que la vista financiera siempre está al corriente.",
+    sub: "El mismo flujo, reconstruido para correr solo, y se actualiza durante el día.",
     manual: "A MANO",
     auto: "SE HACE SOLO",
     long: "como 1 hora",
     short: "como 2 min",
     less: "como 97 por ciento menos",
-    refreshed: "SE ACTUALIZA TODO EL DÍA",
+    refreshed: "SE ACTUALIZA DURANTE EL DÍA",
     tag: "una hora, comprimida a dos minutos",
     aria: "Un flujo manual de una hora se comprime a unos dos minutos.",
   },
