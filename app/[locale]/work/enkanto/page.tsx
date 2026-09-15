@@ -229,23 +229,32 @@ export default function EnkantoCaseStudy({ params }: Params) {
               </div>
             </div>
 
-            {/* One diagram per change, in the order CHANGE_VISUALS declares
-                and the dictionary lists. A change with no diagram beside it is
-                a visual that went missing, so the suite asserts the two
-                lengths match rather than letting `map` swallow it. */}
-            <div className="changes">
-              {d.changed.items.map((item, i) => {
-                const vis = CHANGE_VISUALS[i];
-                return (
-                  <div className="change" key={item.lead}>
+          </Reveal>
+
+          {/* One diagram per change, in the order CHANGE_VISUALS declares and
+              the dictionary lists. A change with no diagram beside it is a
+              visual that went missing, so the suite counts frames on the
+              rendered page rather than letting `map` swallow it.
+
+              Each change reveals on its own with the same 60ms stagger the
+              module cards use. The old page gave each of these five diagrams a
+              section and a reveal of its own; folding them into one block was
+              the rewrite quietly spending four of them, which is motion coming
+              down with the words (doctrine section 8 rule 5). */}
+          <div className="changes">
+            {d.changed.items.map((item, i) => {
+              const vis = CHANGE_VISUALS[i];
+              return (
+                <Reveal key={item.lead} delay={i * 60}>
+                  <div className="change">
                     <p className="change-lead">{item.lead}</p>
                     <p className="change-body">{item.body}</p>
                     {vis ? vis(v) : null}
                   </div>
-                );
-              })}
-            </div>
-          </Reveal>
+                </Reveal>
+              );
+            })}
+          </div>
         </div>
       </section>
 
