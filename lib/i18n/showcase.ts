@@ -133,6 +133,30 @@ const en = {
     honest: "illustrative view",
   },
 
+  /**
+   * The section season (bead hq-qd9jh): two synced panels, one section's
+   * ripening over its own temperature, which is the picture that replaced
+   * the chart above in the problem section. The chart keys stay because
+   * VintageCompare.tsx stays; a visual on this rig is rewired, never
+   * deleted. The seasons and the numbers need no translation, so only the
+   * head, the tile labels, the hint and the written fallback live here. The
+   * honest label is the one the chart above already carries.
+   */
+  season: {
+    title: "Weather per section, on the same clock as the fruit.",
+    section: "Cabernet, section 4",
+    lead: "Brix and total acidity off the lab sheet, over the temperature recorded in that same section. Drag across either graph and both read the same day.",
+    aria: "Brix and total acidity of one section by days from veraison, over the daily high and low of the same section",
+    day: "Day {n} from veraison",
+    x: "days from veraison",
+    brix: "Brix",
+    acid: "Total acidity",
+    tmax: "Daily high",
+    tmin: "Daily low",
+    hint: "Drag across the graph, or use the arrow keys.",
+    fallback: "The graphs need scripts to draw. They follow one Cabernet section for 45 days from veraison: Brix climbing from about 14 to 24 and total acidity falling from about 11 to 6 g/L, over the section's daily high and low, with five days above 35 degrees around day 20 and a faster week in the fruit right after.",
+  },
+
   pricing: {
     kicker: "What it costs",
     title: "Every module has a published entry price.",
@@ -235,6 +259,21 @@ const es: typeof en = {
     y: "Acidez total g/L",
     x: "Días desde envero",
     honest: "vista ilustrativa",
+  },
+
+  season: {
+    title: "El clima por sección, en el mismo reloj que la fruta.",
+    section: "Cabernet, sección 4",
+    lead: "Brix y acidez total de la hoja de laboratorio, sobre la temperatura registrada en esa misma sección. Arrastre sobre cualquiera de las dos gráficas y las dos leen el mismo día.",
+    aria: "Brix y acidez total de una sección por días desde envero, sobre la máxima y la mínima diarias de la misma sección",
+    day: "Día {n} desde envero",
+    x: "días desde envero",
+    brix: "Brix",
+    acid: "Acidez total",
+    tmax: "Máxima del día",
+    tmin: "Mínima del día",
+    hint: "Arrastre sobre la gráfica, o use las flechas del teclado.",
+    fallback: "Las gráficas necesitan scripts para dibujarse. Siguen una sección de Cabernet durante 45 días desde envero: el Brix sube de unos 14 a 24 y la acidez total baja de unos 11 a 6 g/L, sobre la máxima y la mínima diarias de la sección, con cinco días arriba de 35 grados cerca del día 20 y una semana más rápida en la fruta justo después.",
   },
 
   pricing: {
