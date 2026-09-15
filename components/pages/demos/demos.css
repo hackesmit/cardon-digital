@@ -20,7 +20,16 @@
    never sees. Under 640px the readout strip is the whole reading and a tap
    moves it. */
 
+/* The figure is the query container, not the viewport. A demo dropped into a
+   500px column of a 1200px page is a phone floor plan (the component reflows
+   on the board's own width), and a viewport media query would hand that board
+   a desktop stylesheet: hover plates over a three-by-four plan and a 422px
+   placeholder under a 600px canvas (lucy, round two). Every rule below that
+   used to be @media on the viewport is now @container on this box, and the
+   component measures this same content box against the same 640px, so the two
+   cannot disagree. components/pages/demos/floor.ts owns the number. */
 .demo-figure {
+  container-type: inline-size;
   --demo-accent: var(--energy-bright);
   --demo-line: color-mix(in srgb, var(--demo-accent) 40%, transparent);
 
@@ -76,19 +85,20 @@
   position: relative;
 }
 /* Height is authoritative from the component, which sets it inline from the
-   measured width so the frame always fits the composition. These are only the
-   pre-hydration fallbacks, one per floor plan. They are not eyeballed: each is
-   bands() from components/pages/demos/floor.ts at the stage width that plan
-   renders at (724px inside a 760px figure, 328px on a 390px phone), and
-   demos.test.ts fails if the two ever disagree. A mount whose page padding
-   differs measures a pixel or two off these, which is the residual and not
-   worth a second breakpoint. Round one used 460px and 600px
-   against measured 422px and 558px, which is a 38px and a 44px jolt on first
-   layout (reviewer note 4). */
+   measured width so the frame always fits the composition. This is the
+   pre-hydration fallback, and it is not a guessed number: it is bands() from
+   components/pages/demos/floor.ts written in container-query units. 100cqw is
+   the figure's content box, which is the stage, which is the canvas, so every
+   term below is the term of the same name in bands() and the placeholder is
+   the height the component will measure at every width rather than at one.
+   Round one reserved a flat 460px against a measured 422px, a 38px jolt on
+   first layout, and a flat 600px on the phone against 558px. demos.test.ts
+   rebuilds this formula from the stylesheet and compares it to bands() across
+   a width sweep. */
 .demo-canvas {
   display: block;
   width: 100%;
-  height: 422px;
+  height: calc(60px + clamp(188px, 25cqw, 280px) + 34px + clamp(118px, 13cqw, 150px) + 22px);
   position: relative;
   z-index: 0;
 }
@@ -170,7 +180,8 @@
 
 /* Plates exist only where there is a pointer that can hover and room to put
    them. Everywhere else the strip below the board carries the same words. */
-@media (hover: hover) and (min-width: 640px) {
+@container (min-width: 640px) {
+@media (hover: hover) {
   /* The plate opening is the hover feedback. A tinted rectangle behind the
      hotspot only drew a grey square across the floor plan, which is the same
      reason the selected state is a ring on the board and not a box here. */
@@ -204,6 +215,7 @@
     top: auto;
     bottom: calc(100% + 8px);
   }
+}
 }
 
 /* ---------------------------- the readout strip -------------------------- */
@@ -258,9 +270,9 @@
    tables into three columns and four rows and grows the room to hold them.
    The only thing this file has to do is give the hotspots a touch target and
    get out of the way of the plates, which are already gone above. */
-@media (max-width: 639px) {
+@container (max-width: 639px) {
   .demo-canvas {
-    height: 558px;
+    height: calc(60px + clamp(330px, 92cqw, 380px) + 34px + clamp(110px, 34cqw, 140px) + 22px);
   }
   /* The head is three phrases and a phone is one column wide: stacked, they
      read; side by side they break mid-phrase. */
@@ -287,6 +299,10 @@
     gap: 6px;
   }
 }
+
+/* The component renders a <style> inside its <noscript>, which the parser
+   only applies when scripting is off: see RestauranteDemo.tsx. Nothing here
+   can do it, because CSS cannot ask whether JavaScript ran. */
 
 @media (prefers-reduced-motion: reduce) {
   .rd-plate {

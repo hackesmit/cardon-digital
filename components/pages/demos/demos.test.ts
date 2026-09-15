@@ -12,7 +12,7 @@ import {
   INTRO,
   PEAK_T,
   PEAK_V,
-  PLACEHOLDER_STAGE,
+  PHONE_MAX,
   READOUTS,
   RUN,
   RUSH_T,
@@ -251,17 +251,57 @@ describe("every demo component", () => {
 
 describe("the demos stylesheet", () => {
   const css = read("demos.css");
-  const height = (block: string) => {
-    const m = /\.demo-canvas\s*\{[^}]*height:\s*(\d+)px/.exec(block);
-    if (!m) throw new Error("no .demo-canvas height found");
-    return Number(m[1]);
-  };
-  const phoneBlock = /@media \(max-width: 639px\) \{([\s\S]*?)\n\}/.exec(css);
+  const phoneBlock = /@container \(max-width: 639px\) \{([\s\S]*?)\n\}/.exec(css);
 
-  it("places the canvas placeholder where the component will measure it", () => {
-    expect(height(css)).toBe(bands(PLACEHOLDER_STAGE.wide, false).height);
+  /** Rebuild the stylesheet's pre-hydration height as a function of the
+      container width, straight from its own numbers. 100cqw is the figure's
+      content box, which is the canvas width the component measures. */
+  const cssHeight = (block: string) => {
+    const m = /\.demo-canvas\s*\{[^}]*height:\s*calc\((\d+)px \+ clamp\((\d+)px, (\d+)cqw, (\d+)px\) \+ (\d+)px \+ clamp\((\d+)px, (\d+)cqw, (\d+)px\) \+ (\d+)px\)/.exec(block);
+    if (!m) throw new Error("no .demo-canvas calc height found");
+    const n = m.slice(1).map(Number);
+    const clamp = (lo: number, v: number, hi: number) => Math.min(Math.max(v, lo), hi);
+    return (w: number) =>
+      n[0] + clamp(n[1], (n[2] / 100) * w, n[3]) + n[4] + clamp(n[5], (n[6] / 100) * w, n[7]) + n[8];
+  };
+
+  it("holds exactly the height the component will measure, at every width", () => {
+    /* Round one reserved one flat number per plan, so the first layout jumped
+       38px on a desktop and 44px on a phone, and a demo in a narrow column
+       jumped further still (reviewer note 4, then lucy). */
     expect(phoneBlock).not.toBeNull();
-    expect(height(phoneBlock![1])).toBe(bands(PLACEHOLDER_STAGE.phone, true).height);
+    const wide = cssHeight(css);
+    const phone = cssHeight(phoneBlock![1]);
+    for (let w = 240; w <= 1200; w += 7) {
+      expect(Math.round(wide(w)), "wide at " + w).toBe(bands(w, false).height);
+      expect(Math.round(phone(w)), "phone at " + w).toBe(bands(w, true).height);
+    }
+  });
+
+  it("picks the floor plan on the figure, at the component's breakpoint", () => {
+    /* A viewport media query and a component that reflows on the board's own
+       width disagree for any demo narrower than the page it sits on, which is
+       a phone plan under a desktop stylesheet (lucy, round two). Both sides
+       now ask about the figure's content box, so the two numbers here are the
+       same number. */
+    expect(/\.demo-figure\s*\{[^}]*container-type:\s*inline-size/.test(css)).toBe(true);
+    const maxima = Array.from(css.matchAll(/@container \(max-width: (\d+)px\)/g)).map((m) => Number(m[1]));
+    const minima = Array.from(css.matchAll(/@container \(min-width: (\d+)px\)/g)).map((m) => Number(m[1]));
+    expect(maxima.length).toBeGreaterThan(0);
+    expect(minima.length).toBeGreaterThan(0);
+    maxima.forEach((n) => expect(n).toBe(PHONE_MAX - 1));
+    minima.forEach((n) => expect(n).toBe(PHONE_MAX));
+    /* and nothing left in here decides a layout on the viewport */
+    const widthMedia = Array.from(css.matchAll(/@media[^{]*\((?:min|max)-width[^{]*\{/g));
+    expect(widthMedia).toHaveLength(0);
+  });
+
+  it("hides the board and its hotspots when there is no JavaScript", () => {
+    const component = read("RestauranteDemo.tsx");
+    const noscript = /<noscript>([\s\S]*?)<\/noscript>/.exec(component);
+    expect(noscript).not.toBeNull();
+    expect(noscript![1]).toMatch(/<style>\{"[^"]*\.demo-canvas[^"]*\.rd-btn[^"]*display:\s*none[^"]*"\}<\/style>/);
+    expect(noscript![1]).toContain("demo-fallback");
   });
 });
 
@@ -327,6 +367,19 @@ describe("the palette contract against app/globals.css", () => {
       const pal = palette(mode, "energy");
       const expected = mix(hexToRgb(css.text), hexToRgb(css.panel), 1 - pct("muted"));
       expect(pal.muted).toBe(rgba(expected, 1));
+    });
+
+    it("treats a document with no data-mode as light", () => {
+      /* The shell ships data-mode="light", but an isolated mount has no
+         attribute at all, and the older visuals read that as dark (lucy,
+         round two). Light is the design default here. */
+      vi.stubGlobal("getComputedStyle", () => ({ getPropertyValue: () => "" }));
+      const el = {
+        ownerDocument: { documentElement: { getAttribute: () => null } },
+      } as unknown as HTMLElement;
+      const pal = readDemoPalette(el, "energy");
+      expect(pal.dark).toBe(false);
+      expect(pal.groundRgb).toEqual(hexToRgb(tokens("light").ground));
     });
 
     it("strokes hairlines at the alphas of --line and --line-soft", () => {
