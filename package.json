@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' && npm run copy:check:test",
     "copy:check": "node scripts/copy-check.mjs",
-    "copy:check:test": "node --test scripts/copy-check.test.mjs"
+    "copy:check:test": "node --test 'scripts/**/*.test.mjs'"
   },
   "dependencies": {
     "lenis": "^1.3.25",

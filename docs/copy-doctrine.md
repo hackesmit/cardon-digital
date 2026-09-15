@@ -13,32 +13,58 @@ call a bead done:
     node scripts/copy-check.mjs --all
 
 `scripts/copy-check.mjs` reads `lib/i18n/<page>.ts` and never edits it. It
-extracts the string literals out of the `en` and `es` objects and checks each
-locale on its own.
+extracts the string literals out of the `en` and `es` declarations, skips
+object keys and comments, and checks each locale on its own.
 
 ## What the checker blocks, and what it only reports
 
 Blocking (exit 1):
 
-- Word budget per locale. The budget table at the top of the script carries one
-  line per page. Budgets are seeded at today's count, so the rule is a ratchet:
-  a page may not grow. Each copy bead that rewrites a page lowers its budget
-  toward the `target` column, which is half of today's count, per section 7 rule 1.
-- Bold. At most three `**` spans per locale. An odd number of `**` markers is a
-  malformed span and fails too.
-- Definitional negative contrast. The `X, not Y` shapes: `, not `, `not just`,
-  `not another`, `never a`, `no es`, `no son`, `, sino `, `no otra`, `no otro`.
+- Word budget, one per locale. The budget table at the top of the script carries
+  two lines per page, because a single number for both locales hands the shorter
+  one free headroom. Each budget is half of what that locale measured on
+  2026-09-15, which is section 7 rule 1. Every page fails this rule today. That
+  is the point: the rewrite beads are what make them pass.
+- The ratchet, as its own rule. A locale that sits more than 25 words UNDER its
+  budget also fails, naming the number to write in the table. So a rewrite lands
+  with the budget line following the page down, and the words a page gives up
+  cannot come back later. The two word rules can never fire on the same locale.
+- Emphasis. At most three spans per locale, counting both of the markers
+  `lib/i18n/rich.tsx` renders: `**x**` becomes a `<b>` and `__x__` becomes a
+  coloured accent span. Counting only `**` would leave the rule one
+  `sed 's/[*][*]/__/g'` away from being bypassed with the page still shouting.
+  A marker left over after the spans are matched renders as literal asterisks or
+  underscores, so it fails too, reported per string with that string's line.
+- Definitional negative contrast. In English: `, not `, `not just`,
+  `not another`, `never a`, and `not <a|the|just|only|another> ... but`. In
+  Spanish: `no es` or `no son` followed by an article or `otro` (`No es otra
+  suscripcion`, `no son el precio de entrada`), plus `no solo`, `, sino `,
+  `no otra` and `no otro`.
 - Em dashes. Zero, per the repo hook.
+- Anything the extractor cannot read. A locale declaration whose initializer is
+  not a string, template, array or object literal fails loudly instead of
+  counting zero words silently.
 
-Advisory (reported, never blocks): `rather than` and `instead of`.
+Advisory (reported, never blocks): `rather than`, `instead of`, and any `no es`
+or `no son` that is NOT followed by an article.
 
-Those two are real tells and section 3 bans them, but they cannot be separated
-lexically from honest comparative prose. This doctrine's own worked example is
-the proof: "Close the till in four minutes instead of forty, and know the number
-is right" is the copy section 3 asks for, and a blocking rule would reject it.
-Per the bead's stop-when, they ship advisory rather than as a rule workers would
-learn to route around. Read every advisory hit and delete the ones that are
-defining a thing instead of comparing two numbers.
+Those are real tells that no lexical rule separates from honest prose.
+
+- `instead of`: this doctrine's own worked example is the proof. "Close the till
+  in four minutes instead of forty, and know the number is right" is the copy
+  section 3 asks for, and a blocking rule would reject it.
+- Bare `no es` and `no son`: this is ordinary Spanish negation, and blocking it
+  blocks true statements this site has to be able to make. All three of these
+  are live copy on the site today: "un gasto sin CFDI no es deducible" (a tax
+  fact), "no es algo que la ley permita" (a legal fact), and "vista ilustrativa,
+  no son datos de cliente" (the honesty disclaimer on a mock screenshot, which
+  is exactly the kind of line this doctrine wants kept). Followed by an article
+  the shape is definitional and blocks; bare it is reported, and the cost of
+  that choice is real: "no es administracion. Es la unica forma" is a
+  definitional contrast the blocking rule misses and only the advisory catches.
+
+Read every advisory hit. Delete the ones that are defining a thing instead of
+stating a fact or comparing two numbers.
 
 ## The deliberate contrast allowlist
 
@@ -46,13 +72,21 @@ A real contrast can be kept on purpose. `CONTRAST_ALLOWLIST` in the script takes
 the exact string, one per page per locale, and the script exits 2 if a page ever
 carries more than one. The exemption is in the diff where a reviewer sees it.
 
+The English shapes are precise where the Spanish ones are not, so this is where
+an honest English line ends up when it happens to be shaped like a contrast:
+"illustrative view, not client data" is the same disclaimer as its Spanish twin,
+and it is a real `X, not Y`. Allowlist it rather than weakening `, not `.
+
 ## A note on the counts
 
 Section 2 quotes word counts taken from the rendered pages. The checker reads
 `lib/i18n` only, per this bead's constraints, so its numbers differ: it sees
 dictionary keys that no component renders, and it cannot see the sentences
-`precios` composes at runtime out of `lib/pricing.ts`. The budget table records
-what the checker measures, because that is the number the ratchet has to move.
+`precios` composes at runtime out of `lib/pricing.ts`. It does not count object
+keys, which is why `precios` measures 66 words less than a naive read of the
+file: its keys are machine slugs such as `"kitchen-screen"`, not copy. The
+budget table records what the checker measures, because that is the number the
+ratchet has to move.
 
 ---
 
