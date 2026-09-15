@@ -12,7 +12,12 @@ import type { Dict } from "./rich";
  *     markup with their own class, so they need no marker here.
  *  2. One number, and it is accounted for. About an hour down to about two
  *     minutes, about 97 percent less, and `facts.basis` says where each of the
- *     three came from. Nothing else on the page is a measured result.
+ *     three came from. The percentage is hedged everywhere including in the
+ *     basis, because (60 - 2) / 60 is 96.67 and the paragraph that certifies a
+ *     number is the last place to round it up. The one other measured-sounding
+ *     claim on the page is the refresh cadence, and the basis now carries it
+ *     in the page's own words ("the view is refreshed through the day") rather
+ *     than leaving four surfaces stating a cadence nothing accounts for.
  *  3. Spanish is written for a Valle winemaker and English for a US owner.
  *     Neither is a translation of the other, so the two differ in rhythm and
  *     in idiom on purpose.
@@ -66,7 +71,7 @@ const en = {
     ],
     basisK: "Basis",
     basis:
-      "The hour was timed by hand before the build; the two minutes are the refresh the dashboard generates; 97 percent is the distance between them. No Monte Xanic production, sales or financial figure appears here.",
+      "The hour was timed by hand before the build; the two minutes are the dashboard's refresh, and the view is refreshed through the day; about 97 percent is the distance between them. No Monte Xanic production, sales or financial figure appears here.",
   },
   before: {
     kicker: "Before",
@@ -87,7 +92,7 @@ const en = {
   number: {
     kicker: "The number",
     title: "An hour of finance work, now about two minutes.",
-    sub: "The same workflow, rebuilt to run itself, and it refreshes through the day.",
+    sub: "The same workflow, rebuilt to refresh itself through the day.",
     manual: "BY HAND",
     auto: "RUNS ITSELF",
     long: "about 1 hr",
@@ -175,7 +180,7 @@ const es: typeof en = {
   meta: {
     title: "Caso Monte Xanic",
     description:
-      "Un flujo financiero de Monte Xanic toma como 97 por ciento menos tiempo: de una hora a unos dos minutos.",
+      "Un flujo financiero de Monte Xanic toma como 97 por ciento menos tiempo: de como una hora a unos dos minutos.",
   },
   hero: {
     aria: "Presentación",
@@ -216,7 +221,7 @@ const es: typeof en = {
     ],
     basisK: "Base",
     basis:
-      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización que genera el tablero; el 97 por ciento es la distancia entre las dos. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
+      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización del tablero, y la vista se actualiza durante el día; la distancia entre las dos cifras es como 97 por ciento. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
   },
   before: {
     kicker: "Antes",
@@ -237,7 +242,7 @@ const es: typeof en = {
   number: {
     kicker: "El número",
     title: "Una hora de trabajo financiero, ahora unos dos minutos.",
-    sub: "El mismo flujo, reconstruido para correr solo, y se actualiza durante el día.",
+    sub: "El mismo flujo, reconstruido para actualizarse solo durante el día.",
     manual: "A MANO",
     auto: "SE HACE SOLO",
     long: "como 1 hora",

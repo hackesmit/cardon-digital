@@ -8,9 +8,11 @@
    bottle strip, and the result callouts.
 
    Removed with the rewrite (hq-4pu0q.4): the two static mechanism diagrams and
-   their .d-* palette, the play-once prediction curve and its .pred-* rules, the
-   cursor spotlight on .vine-stage (SpotlightFrames is gone, so nothing wrote
-   --mx / --my), and the outcome block, which restated the callouts above it. */
+   their .d-* palette, the play-once prediction curve and its .pred-* rules, and
+   the outcome block, which restated the callouts above it. The cursor spotlight
+   on .vine-stage went with them and is back: SpotlightFrames was restored on
+   Daniel's ruling that a copy bead never deletes a visual, so --mx / --my are
+   written again and this rule is live. */
 
 .pg-case{
   position:relative;
@@ -97,6 +99,12 @@
   box-shadow:var(--shadow);
   aspect-ratio:1000/560;
 }
+.pg-case .vine-stage::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(230px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--primary) 12%, transparent), transparent 72%);
+}
+.pg-case .vine-stage:hover::after{opacity:1;}
 .pg-case .vine-base{position:absolute;inset:0;width:100%;height:100%;display:block;}
 .pg-case .vine-plots{position:absolute;inset:0;width:100%;height:100%;display:block;}
 .pg-case .plot{cursor:default;}
