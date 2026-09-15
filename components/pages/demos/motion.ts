@@ -22,8 +22,8 @@ import { clearsThreshold } from "@/lib/onscreen";
 /** How much of the figure has to be in view before it counts as on screen.
     Round two declared this and then stored entry.isIntersecting, which both
     reviews read as animating off a one pixel sliver. In Chromium it does not:
-    with a single scalar threshold the flag comes from the threshold index, and
-    the demo did not animate at 3 or 9 percent before this changed either.
+    at ratio 0.03 under a scalar 0.12 the flag comes back false, and the demo
+    did not animate at 3 or 9 percent before this changed either.
     @/lib/onscreen owns the reading anyway, for the reasons given there: one
     engine is not three, the coupling breaks the moment a threshold array is
     used, and a callback that names its threshold cannot be misread. */

@@ -10,13 +10,16 @@
  * element 3 percent in view, under an observer declaring 0.12 or 0.35,
  * delivers ratio 0.03 with isIntersecting FALSE, both on the initial
  * observation and on a crossing that happens in one frame, and the demo did
- * not animate at 3 or 9 percent before this module existed either. Blink
- * derives the flag from the threshold index.
+ * not animate at 3 or 9 percent before this module existed either. That row
+ * proves something on its own: the ratio was above zero, so the element did
+ * intersect, and the flag was false anyway, so in that engine the flag is not
+ * the geometric intersection.
  *
  * That is one engine. A cross-vendor reviewer reads the spec the other way,
  * that isIntersecting is geometric and the threshold governs only when the
- * callback fires, and this box has no Firefox or WebKit build to settle it
- * with (bead hq-3pfhe.6; the open question is carried on hq-2u86a). Which is
+ * callback fires, and disputes the measurement itself; this box has no Firefox
+ * or WebKit build to settle it (bead hq-3pfhe.6; the open question is carried
+ * on hq-2u86a). Which is
  * the whole argument for this function: a boolean whose meaning two careful
  * readers disagree about, and which this box can only check in one of the
  * three engines the site ships to, is not a boolean to gate behaviour on.
@@ -27,7 +30,7 @@
  *
  * Two more reasons, on top of the engine question:
  *
- *  1. Even in Blink the coupling holds only for a single scalar threshold.
+ *  1. Even in Chromium the coupling holds only for a single scalar threshold.
  *     Give the same observer a threshold ARRAY that starts at 0, which is the
  *     ordinary way to ask for progress updates, and isIntersecting tracks the
  *     LOWEST entry in the list instead of the one the callback cares about:

@@ -897,9 +897,12 @@ export default function RestauranteDemo() {
             table name is long enough to wrap at some container widths, so
             without this the figure grew 31px when the visitor tapped it and
             shrank again on the next tap: the caption defect with a different
-            trigger (cross-vendor review, round two). The live paragraph keeps
-            aria-live; the ghosts are invisible and out of the accessibility
-            tree, so nothing is announced twice. */}
+            trigger (cross-vendor review, round two). Thirteen rows in one grid
+            cell, then: the live one and a ghost for every readout INCLUDING
+            the selected one, because a ghost set that changed with the
+            selection would put the selection back into the box's size. The
+            live paragraph keeps aria-live; the twelve ghosts are invisible and
+            out of the accessibility tree, so nothing is announced twice. */}
         <div className="demo-pick-box">
           {pickRow(picked, false)}
           {READOUTS.map((_, i) => pickRow(i, true))}
