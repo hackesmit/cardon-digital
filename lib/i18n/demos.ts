@@ -27,7 +27,6 @@ const en = {
     rush: "the rush, visible an hour early",
     /** Where the evening has got to, read out beside the board. */
     captions: {
-      oneEvening: "one evening",
       begins: "service begins",
       filling: "filling",
       flagged: "the rush, flagged early",
@@ -35,7 +34,9 @@ const en = {
     },
     fallback:
       "A top-down floor plan of a dining room across one service, from 17:00 to 23:00. Reservations dock onto tables as small chips, tables warm as they seat and cool as they turn, and a quiet load line tracks covers over the evening. An hour before the peak, a calm marker shows the rush arriving, visible early rather than as a surprise.",
-    /** The table readouts overlaid on the floor. */
+    /** The table readouts overlaid on the floor. Each is the table's last
+        booking of the evening and says so, because the board is drawn at one
+        minute and that booking is usually still to come. */
     tables: {
       twoWindow: "Two-top / window",
       fourCenter: "Four-top / center",
@@ -44,25 +45,25 @@ const en = {
       largeTop: "Large top / six seats",
       twoLower: "Two-top / lower room",
     },
-    party: "party of {n}, seated {time}",
+    party: "last booking: party of {n} at {time}",
     tableAria: {
       twoWindow:
-        "Two-top by the window. Illustrative reservation: party of {n}, seated {time}.",
+        "Two-top by the window. Illustrative last booking of the evening: party of {n} at {time}.",
       fourCenter:
-        "Four-top. Illustrative reservation: party of {n}, seated {time}.",
+        "Four-top. Illustrative last booking of the evening: party of {n} at {time}.",
       banquette:
-        "Banquette, six seats. Illustrative reservation: party of {n}, seated {time}.",
+        "Banquette, six seats. Illustrative last booking of the evening: party of {n} at {time}.",
       fourLower:
-        "Four-top. Illustrative reservation: party of {n}, seated {time}.",
+        "Four-top. Illustrative last booking of the evening: party of {n} at {time}.",
       largeTop:
-        "Large table, six seats. Illustrative reservation: party of {n}, seated {time}.",
+        "Large table, six seats. Illustrative last booking of the evening: party of {n} at {time}.",
       twoLower:
-        "Two-top. Illustrative reservation: party of {n}, seated {time}.",
+        "Two-top. Illustrative last booking of the evening: party of {n} at {time}.",
     },
     /** The strip under the board, which is the whole readout on a phone where
         there is no hover to open a plate. */
     readoutLabel: "Selected table",
-    hint: "Select a table to read its booking.",
+    hint: "Select a table to read its last booking of the evening.",
   },
 };
 
@@ -78,10 +79,9 @@ const es: DemosDict = {
     covers: "COMENSALES DE LA NOCHE",
     illustrativeUpper: "ILUSTRATIVO",
     illustrative: "ilustrativo",
-    rushCompact: "la hora pico, con una hora",
-    rush: "la hora pico, visible con una hora",
+    rushCompact: "hora pico, una hora antes",
+    rush: "la hora pico, visible una hora antes",
     captions: {
-      oneEvening: "una noche",
       begins: "empieza el servicio",
       filling: "llenándose",
       flagged: "la hora pico, avisada temprano",
@@ -97,23 +97,23 @@ const es: DemosDict = {
       largeTop: "Mesa grande / seis lugares",
       twoLower: "Mesa de 2 / salón bajo",
     },
-    party: "mesa de {n}, sentados {time}",
+    party: "última reservación: mesa de {n} a las {time}",
     tableAria: {
       twoWindow:
-        "Mesa de dos junto a la ventana. Reservación ilustrativa: mesa de {n}, sentados a las {time}.",
+        "Mesa de dos junto a la ventana. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
       fourCenter:
-        "Mesa de cuatro. Reservación ilustrativa: mesa de {n}, sentados a las {time}.",
+        "Mesa de cuatro. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
       banquette:
-        "Banca de seis lugares. Reservación ilustrativa: mesa de {n}, sentados a las {time}.",
+        "Banca de seis lugares. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
       fourLower:
-        "Mesa de cuatro. Reservación ilustrativa: mesa de {n}, sentados a las {time}.",
+        "Mesa de cuatro. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
       largeTop:
-        "Mesa grande de seis lugares. Reservación ilustrativa: mesa de {n}, sentados a las {time}.",
+        "Mesa grande de seis lugares. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
       twoLower:
-        "Mesa de dos. Reservación ilustrativa: mesa de {n}, sentados a las {time}.",
+        "Mesa de dos. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
     },
     readoutLabel: "Mesa seleccionada",
-    hint: "Elige una mesa para leer su reservación.",
+    hint: "Elige una mesa para leer su última reservación de la noche.",
   },
 };
 

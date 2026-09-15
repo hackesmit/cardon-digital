@@ -15,6 +15,24 @@ import {
   rr,
   type DemoPalette,
 } from "./palette";
+import {
+  bands,
+  captionKeyFor,
+  clockLabel,
+  COV,
+  CYCLE,
+  cycleFrame,
+  MAX_COV,
+  PEAK_T,
+  PEAK_V,
+  READOUTS,
+  RUSH_T,
+  SERVICE,
+  TABLES,
+  type TableDef,
+} from "./floor";
+import { observeOnscreen, shouldAnimate } from "./motion";
+import "./demos.css";
 
 /**
  * Restaurante: a dining room filling across one service (bead hq-3pfhe.1).
@@ -25,10 +43,13 @@ import {
  *
  * A slow clock strip runs one service, 17:00 to 23:00. Reservations arrive as
  * chips that travel from the entrance and dock onto their table; a table warms
- * as it seats and cools as it turns. Underneath, a load line tracks covers
- * over the evening, and an hour before the peak a calm marker shows the rush
- * arriving, which is the whole argument the module makes: a full room is a
- * pattern you can see coming, not a surprise that lands on the floor.
+ * as it seats and cools as it turns. The playhead sweeps to the fullest
+ * minute of the evening and the loop holds there, on a full room: running it
+ * on to 23:00 would rest the payoff frame on a floor every party has already
+ * left. Underneath, a load line tracks covers over the evening, and an hour
+ * before the peak a calm marker shows the rush arriving, which is the whole
+ * argument the module makes: a full room is a pattern you can see coming, not
+ * a surprise that lands on the floor.
  *
  * What it costs to run, and when it does not run at all. One canvas, one
  * requestAnimationFrame loop throttled to about 30fps, device pixel ratio
@@ -38,6 +59,11 @@ import {
  * static peak-service frame instead, which is also what a paused instance
  * shows. No dependency beyond React, no network call, no image.
  *
+ * What this file is not. The room, the reservations, the covers curve, the
+ * loop's timeline and the stage's bands are ./floor.ts, and the three gates
+ * that decide whether it may animate are ./motion.ts. Both are pure and both
+ * are tested in demos.test.ts; this file measures, draws and listens.
+ *
  * Colour comes from components/pages/demos/palette.ts, which reads the live
  * theme tokens, so the demo recolours with the mode toggle instead of sitting
  * on the page as an embedded screenshot in last mode's colours. Light is the
@@ -45,113 +71,6 @@ import {
  *
  * Every number on this floor is invented. The frame says so.
  */
-
-/* ------------------------------ THE FLOOR ------------------------------ */
-
-type TableKind =
-  | "twoWindow"
-  | "fourCenter"
-  | "banquette"
-  | "fourLower"
-  | "largeTop"
-  | "twoLower";
-
-type Shape = "round" | "square" | "rectH" | "rectV";
-
-/** s: the minute of the service the party is seated, 0 being 17:00. d: how
-    long they hold the table. p: how many of them there are. */
-interface Reservation {
-  s: number;
-  d: number;
-  p: number;
-}
-
-/** Where a table sits: fx as a fraction of the canvas width, fy as a fraction
-    of the room band's height. Two of these per table, because a phone is not a
-    narrow desktop. */
-interface Spot {
-  fx: number;
-  fy: number;
-}
-
-interface TableDef {
-  kind: TableKind;
-  shape: Shape;
-  seats: number;
-  res: Reservation[];
-  /** 640px and up: the room as it was drawn, a window row, a centre block, a
-      banquette on the right wall and a lower room. */
-  wide: Spot;
-  /** Under 640px: the same twelve tables reflowed into three columns and four
-      rows, with the entrance moved to the bottom of the left wall. The room
-      gets taller rather than the tables getting smaller, because a floor plan
-      whose tables are 9px across is a picture of a floor plan. */
-  phone: Spot;
-}
-
-const TABLES: TableDef[] = [
-  { kind: "twoWindow", shape: "round", seats: 2, res: [{ s: 25, d: 80, p: 2 }, { s: 150, d: 80, p: 2 }], wide: { fx: 0.15, fy: 0.16 }, phone: { fx: 0.2, fy: 0.11 } },
-  { kind: "twoWindow", shape: "round", seats: 2, res: [{ s: 55, d: 75, p: 2 }, { s: 175, d: 70, p: 2 }], wide: { fx: 0.29, fy: 0.16 }, phone: { fx: 0.5, fy: 0.11 } },
-  { kind: "twoWindow", shape: "round", seats: 2, res: [{ s: 85, d: 80, p: 2 }], wide: { fx: 0.43, fy: 0.16 }, phone: { fx: 0.8, fy: 0.11 } },
-  { kind: "twoWindow", shape: "round", seats: 2, res: [{ s: 110, d: 80, p: 2 }, { s: 215, d: 65, p: 2 }], wide: { fx: 0.57, fy: 0.16 }, phone: { fx: 0.2, fy: 0.33 } },
-  { kind: "fourCenter", shape: "square", seats: 4, res: [{ s: 40, d: 95, p: 4 }, { s: 165, d: 90, p: 3 }], wide: { fx: 0.16, fy: 0.515 }, phone: { fx: 0.5, fy: 0.33 } },
-  { kind: "fourCenter", shape: "square", seats: 4, res: [{ s: 70, d: 95, p: 4 }], wide: { fx: 0.3, fy: 0.515 }, phone: { fx: 0.2, fy: 0.55 } },
-  { kind: "fourCenter", shape: "square", seats: 4, res: [{ s: 95, d: 100, p: 4 }, { s: 210, d: 85, p: 4 }], wide: { fx: 0.45, fy: 0.515 }, phone: { fx: 0.5, fy: 0.55 } },
-  { kind: "fourCenter", shape: "square", seats: 4, res: [{ s: 125, d: 95, p: 4 }], wide: { fx: 0.6, fy: 0.515 }, phone: { fx: 0.8, fy: 0.55 } },
-  { kind: "banquette", shape: "rectV", seats: 6, res: [{ s: 90, d: 120, p: 6 }], wide: { fx: 0.85, fy: 0.343 }, phone: { fx: 0.81, fy: 0.33 } },
-  { kind: "fourLower", shape: "square", seats: 4, res: [{ s: 135, d: 95, p: 4 }], wide: { fx: 0.19, fy: 0.86 }, phone: { fx: 0.2, fy: 0.77 } },
-  { kind: "largeTop", shape: "rectH", seats: 6, res: [{ s: 150, d: 110, p: 5 }], wide: { fx: 0.42, fy: 0.86 }, phone: { fx: 0.5, fy: 0.77 } },
-  { kind: "twoLower", shape: "round", seats: 2, res: [{ s: 60, d: 75, p: 2 }, { s: 175, d: 72, p: 2 }], wide: { fx: 0.62, fy: 0.86 }, phone: { fx: 0.8, fy: 0.77 } },
-];
-
-/** Minutes across the service, 17:00 to 23:00. */
-const SERVICE = 360;
-
-/** The loop: a beat before the evening starts, the evening itself, a hold on
-    the full room, then a short dip into the reset so the seam is not a jump. */
-const INTRO = 1.8;
-const RUN = 30;
-const HOLD = 5.5;
-const FADE = 1.2;
-const CYCLE = INTRO + RUN + HOLD + FADE;
-
-function clockLabel(m: number): string {
-  let mm = Math.round(m / 5) * 5;
-  if (mm > SERVICE) mm = SERVICE;
-  const h = 17 + Math.floor(mm / 60);
-  const r = mm % 60;
-  return h + ":" + (r < 10 ? "0" + r : r);
-}
-
-/** The covers curve for the whole service, its peak, and the minute the calm
-    marker sits on. Pure arithmetic over TABLES, so it is computed once for the
-    module rather than once per mount. */
-const COV = new Float32Array(SERVICE + 1);
-let peakV = 1;
-let peakT = 0;
-for (let t = 0; t <= SERVICE; t++) {
-  let c = 0;
-  for (const T of TABLES) {
-    for (const r of T.res) if (t >= r.s && t < r.s + r.d) c += r.p;
-  }
-  COV[t] = c;
-  if (c > peakV) {
-    peakV = c;
-    peakT = t;
-  }
-}
-/* Headroom above the peak, so the calm marker's label has somewhere to sit
-   that is not on top of the curve it is describing. */
-const MAX_COV = peakV * 1.34;
-const RUSH_T = Math.max(0, peakT - 60);
-
-/** What a table's readout says: its last booking of the evening. Derived here
-    rather than typed out beside the geometry, so the plate can never claim a
-    reservation the floor is not drawing. */
-const READOUTS = TABLES.map((T) => {
-  const last = T.res[T.res.length - 1];
-  return { kind: T.kind, n: last.p, time: clockLabel(last.s) };
-});
 
 /* ----------------------------- THE COMPONENT ---------------------------- */
 
@@ -217,27 +136,6 @@ export default function RestauranteDemo() {
     let cycT = 0;
 
     const clampN = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
-
-    /* Vertical layout as pixel bands derived from the measured width, so the
-       frame height fits the composition at every width: no fixed tall box and
-       no letterbox. One source of truth, used for both the canvas height and
-       the positions inside it. */
-    const bands = (w: number, isPhone: boolean) => {
-      const cy = 24;
-      const ry0 = cy + 36; /* the gap holds the playhead time label */
-      /* The phone room is taller than it is wide because it holds four rows of
-         three; the wide room is a shallow band because it holds three rows. */
-      const roomH = isPhone
-        ? clampN(w * 0.92, 330, 380)
-        : clampN(w * 0.25, 188, 280);
-      const ry1 = ry0 + roomH;
-      const lt = ry1 + 34; /* clear gap between the room and the covers label */
-      const covH = isPhone
-        ? clampN(w * 0.34, 110, 140)
-        : clampN(w * 0.13, 118, 150);
-      const lb = lt + covH;
-      return { cy, ry0, ry1, roomH, lt, lb, height: Math.round(lb + 22) };
-    };
 
     const layout = () => {
       const b = bands(W, phone);
@@ -504,7 +402,7 @@ export default function RestauranteDemo() {
 
     const drawLoad = (t: number) => {
       const n = Math.max(0, Math.min(SERVICE, Math.floor(t)));
-      const plotTop = covY(peakV);
+      const plotTop = covY(PEAK_V);
 
       ctx.font = "600 " + (phone ? 10 : 9) + "px " + MONO;
       ctx.textBaseline = "alphabetic";
@@ -521,7 +419,7 @@ export default function RestauranteDemo() {
       ctx.strokeStyle = PAL.lineSoft;
       ctx.lineWidth = 1;
       for (let k = 1; k <= 2; k++) {
-        const gy = covY((peakV * k) / 3);
+        const gy = covY((PEAK_V * k) / 3);
         line(ctx, x0, gy, x1, gy);
       }
       for (let h = 0; h <= 6; h++) {
@@ -576,7 +474,7 @@ export default function RestauranteDemo() {
          It is revealed as the evening reaches that point. */
       if (t >= RUSH_T) {
         const rx = timeX(RUSH_T);
-        const topY = covY(peakV) - 6;
+        const topY = covY(PEAK_V) - 6;
         ctx.save();
         ctx.setLineDash([4, 5]);
         ctx.strokeStyle = PAL.accentSoft;
@@ -587,15 +485,15 @@ export default function RestauranteDemo() {
         ctx.beginPath();
         ctx.arc(rx, covY(covAt(Math.min(t, RUSH_T))), 2.6, 0, Math.PI * 2);
         ctx.fill();
-        if (t >= peakT) {
+        if (t >= PEAK_T) {
           ctx.setLineDash([2, 5]);
           ctx.strokeStyle = PAL.accentLine;
           ctx.lineWidth = 1;
-          line(ctx, rx, topY, timeX(peakT), topY);
+          line(ctx, rx, topY, timeX(PEAK_T), topY);
           ctx.setLineDash([]);
           ctx.fillStyle = PAL.accentInk;
           ctx.beginPath();
-          ctx.arc(timeX(peakT), covY(peakV), 3.4, 0, Math.PI * 2);
+          ctx.arc(timeX(PEAK_T), covY(PEAK_V), 3.4, 0, Math.PI * 2);
           ctx.fill();
         }
         /* The label sits in the headroom above the peak, never on the curve.
@@ -630,30 +528,22 @@ export default function RestauranteDemo() {
       }
     };
 
-    const setCaption = (t: number, holding: boolean) => {
+    const setCaption = (t: number) => {
       /* Written straight to the DOM rather than through state: this runs about
          thirty times a second and a re-render per frame would be absurd. React
          owns this node's initial text and never rewrites it, because its
          children prop never changes. */
       if (!caption) return;
-      const c = vis.captions;
-      caption.textContent = holding
-        ? c.oneEvening
-        : t < 2
-          ? c.begins
-          : t < RUSH_T
-            ? c.filling
-            : t < peakT
-              ? c.flagged
-              : c.peak;
+      caption.textContent = vis.captions[captionKeyFor(t)];
     };
 
     /** The fullest point of the evening, curve drawn up to the peak and the
-        rush marker shown. This is reduced motion, and it is also what a paused
-        board shows. */
+        rush marker shown. This is reduced motion, it is what a paused board
+        shows, and it is the same minute the running loop holds on, so the demo
+        never has two different ideas of what its best frame is. */
     const resolved = () => {
-      setCaption(peakT, false);
-      drawScene(peakT, false, 1);
+      setCaption(PEAK_T);
+      drawScene(PEAK_T, false, 1);
     };
 
     const frame = (now: number) => {
@@ -666,31 +556,13 @@ export default function RestauranteDemo() {
       cycT += dt;
       if (cycT > CYCLE) cycT -= CYCLE;
 
-      let t;
-      let holding = false;
-      let fo = 1;
-      let showChips = true;
-      if (cycT < INTRO) {
-        t = 0;
-        showChips = false;
-      } else if (cycT < INTRO + RUN) {
-        t = ((cycT - INTRO) / RUN) * SERVICE;
-      } else {
-        t = SERVICE;
-        holding = true;
-        showChips = false;
-      }
-
-      /* a gentle dip at the loop seam so the reset is not a jump */
-      const fadeStart = INTRO + RUN + HOLD;
-      if (cycT >= fadeStart) fo = 1 - ((cycT - fadeStart) / FADE) * 0.85;
-      else if (cycT < 0.5) fo = 0.15 + (cycT / 0.5) * 0.85;
-
-      drawScene(t, showChips, fo);
-      setCaption(t, holding);
+      const f = cycleFrame(cycT);
+      drawScene(f.t, f.showChips, f.fade);
+      setCaption(f.t);
     };
 
-    const canRun = () => !reduced() && docVisible && onscreen;
+    const canRun = () =>
+      shouldAnimate({ reduced: reduced(), docVisible, onscreen });
     const start = () => {
       if (running || !canRun()) return;
       running = true;
@@ -735,59 +607,63 @@ export default function RestauranteDemo() {
       ctx = fitCanvas(canvas, W, H);
       layout();
       positionReadouts();
-      if (reduced() || !running) resolved();
+      if (!running) resolved();
     };
 
-    let io: IntersectionObserver | null = null;
     let rt = 0;
 
     const onResize = () => {
       window.clearTimeout(rt);
       rt = window.setTimeout(resize, 140);
     };
-    const onVisibility = () => {
-      docVisible = !document.hidden;
-      if (docVisible && onscreen) {
+    /* Every one of these asks the same question, canRun(), and answers it the
+       same way: animate, or stand on the static frame. */
+    const sync = () => {
+      if (canRun()) {
         start();
       } else {
-        stop();
-        if (!reduced()) resolved();
-      }
-    };
-    const onReduce = () => {
-      if (reduced()) {
         stop();
         resolved();
-      } else {
-        start();
       }
     };
+    const onVisibility = () => {
+      docVisible = !document.hidden;
+      sync();
+    };
+    const onReduce = sync;
     const onMode = () => {
       PAL = readDemoPalette(frameEl, "energy");
-      if (reduced() || !running) resolved();
+      if (!running) resolved();
     };
 
     resize();
 
-    if (reduced()) {
-      resolved();
-    } else if ("IntersectionObserver" in window) {
-      io = new IntersectionObserver(
-        (en) => {
-          onscreen = en[0].isIntersecting;
-          if (onscreen && docVisible) {
-            start();
-          } else {
-            stop();
-            resolved();
-          }
-        },
-        { threshold: 0.12 }
-      );
-      io.observe(frameEl);
-    } else {
-      onscreen = true;
-      start();
+    /* The observer is installed whatever the motion preference is. Being on
+       screen is a fact about the page, not an animation setting, and only
+       start() consults the preference, through canRun(). Building the observer
+       inside the reduced-motion branch is what left a page loaded under reduce
+       frozen for the rest of its life once the visitor turned reduce off: both
+       round-one reviews reproduced it, and ./motion.ts now owns this so the
+       mistake has nowhere to live. */
+    const unobserve = observeOnscreen(frameEl, (on) => {
+      onscreen = on;
+      sync();
+    });
+
+    /* Width can change without the window resizing: a demo in a column that
+       reflows, a panel opening beside it (reviewer note 5). Height changes are
+       ignored, because resize() sets the canvas height itself and answering
+       that would loop. */
+    let roW = W;
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver((entries) => {
+        const w = Math.round(entries[entries.length - 1].contentRect.width);
+        if (w === roW) return;
+        roW = w;
+        onResize();
+      });
+      ro.observe(canvas);
     }
 
     window.addEventListener("resize", onResize);
@@ -798,7 +674,8 @@ export default function RestauranteDemo() {
     return () => {
       stop();
       redrawRef.current = null;
-      if (io) io.disconnect();
+      unobserve();
+      if (ro) ro.disconnect();
       window.clearTimeout(rt);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
