@@ -3,7 +3,7 @@
  * copy-check: the runnable half of docs/copy-doctrine.md.
  *
  * Reads lib/i18n/<page>.ts, pulls the string literals out of the `en` and `es`
- * objects, and checks each locale on its own. It never writes to lib/i18n.
+ * declarations, and checks each locale on its own. It never writes to lib/i18n.
  *
  *   node scripts/copy-check.mjs home winery
  *   node scripts/copy-check.mjs --all
@@ -20,32 +20,45 @@ import { dirname, join, resolve } from "node:path";
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 /**
- * The budget table. One line per page.
+ * The budget table. One line per page, one budget per LOCALE, because a single
+ * number for both locales hands the shorter one free headroom.
  *
- * `budget` is the per-locale word ceiling. It is seeded at the larger of the
- * two locales as this script measures them today, so the seed is a ratchet
- * line (a page may not grow) rather than a failure that has nothing to do with
- * the bead that landed the doctrine. `target` is half of that, which is what
- * doctrine section 7 rule 1 actually asks for. Every copy bead that rewrites a
- * page lowers `budget` toward `target` in the same diff as the rewrite.
+ * `budget` is half of what the page measured when the doctrine landed, which is
+ * doctrine section 7 rule 1 ("half the words"). `measured` is that landing
+ * number, kept so a later reader can see where the page started.
  *
- * `measured` records what this script counted on 2026-09-14, en + es combined,
- * so a later reader can see whether the page moved. Doctrine section 2 quotes
- * different numbers because those were taken from the rendered pages; see the
- * note in the doctrine header.
+ * Two rules keep the table honest, and they cannot both fire on the same
+ * locale:
+ *
+ *   words         the locale is over its budget.
+ *   budget-slack  the locale is under its budget by more than RATCHET_SLACK
+ *                 words, so the budget line is stale and has to come down.
+ *
+ * The second one is what makes "ratchet" a fact instead of a promise: once a
+ * page is rewritten, its budget follows it down and the words it gave up
+ * cannot come back.
  */
 export const PAGES = {
-  home: { budget: 1570, target: 785, measured: 2961 },
-  winery: { budget: 1882, target: 941, measured: 3538 },
-  "monte-xanic": { budget: 1526, target: 763, measured: 2893 },
-  enkanto: { budget: 2553, target: 1277, measured: 4934 },
-  modulos: { budget: 3090, target: 1545, measured: 5898 },
-  precios: { budget: 1467, target: 734, measured: 2800 },
-  showcase: { budget: 673, target: 337, measured: 1322 },
-  about: { budget: 474, target: 237, measured: 935 },
-  contact: { budget: 576, target: 288, measured: 1121 },
+  home: { en: { budget: 696, measured: 1391 }, es: { budget: 785, measured: 1570 } },
+  winery: { en: { budget: 828, measured: 1656 }, es: { budget: 941, measured: 1882 } },
+  "monte-xanic": { en: { budget: 684, measured: 1367 }, es: { budget: 763, measured: 1526 } },
+  enkanto: { en: { budget: 1191, measured: 2381 }, es: { budget: 1277, measured: 2553 } },
+  modulos: { en: { budget: 1404, measured: 2808 }, es: { budget: 1545, measured: 3090 } },
+  precios: { en: { budget: 650, measured: 1300 }, es: { budget: 717, measured: 1434 } },
+  showcase: { en: { budget: 325, measured: 649 }, es: { budget: 337, measured: 673 } },
+  about: { en: { budget: 231, measured: 461 }, es: { budget: 237, measured: 474 } },
+  contact: { en: { budget: 288, measured: 576 }, es: { budget: 273, measured: 545 } },
 };
 
+/** How far a budget line may sit above the page it governs. */
+export const RATCHET_SLACK = 25;
+
+/**
+ * At most three emphasis spans per locale. Both of rich.tsx's markers count:
+ * `**x**` renders a <b> and `__x__` renders a coloured accent span, so a rule
+ * written against `**` alone is one `sed 's/[*][*]/__/g'` away from being
+ * bypassed while the page still shouts.
+ */
 export const MAX_BOLD = 3;
 
 /**
@@ -60,6 +73,14 @@ export const CONTRAST_ALLOWLIST = {
 export const ALLOWLIST_PER_LOCALE = 1;
 
 /**
+ * Spanish determiners. `no es` on its own is ordinary negation ("no es
+ * deducible", "no es algo que la ley permita"), but `no es` followed by an
+ * article or `otro` is the definitional shape the doctrine bans ("No es otra
+ * suscripcion", "no son el precio de entrada"). See the doctrine header.
+ */
+const ES_DETERMINER = "un|una|unos|unas|el|la|los|las|otro|otra|otros|otras";
+
+/**
  * The definitional shapes. Each is matched case-insensitively against the
  * dictionary string with the emphasis markers stripped.
  *
@@ -71,26 +92,42 @@ export const BLOCKING_SHAPES = [
   { id: "not just", locale: "en", re: /\bnot just\b/gi },
   { id: "not another", locale: "en", re: /\bnot another\b/gi },
   { id: "never a", locale: "en", re: /\bnever an?\b/gi },
-  { id: "no es", locale: "es", re: /\bno es\b/gi },
-  { id: "no son", locale: "es", re: /\bno son\b/gi },
+  { id: "not X but Y", locale: "en", re: /\bnot\s+(?:a|an|the|just|only|another)\b[^.;!?]{0,60}?\bbut\b/gi },
+  { id: "no es/son + article", locale: "es", re: new RegExp(`\\bno (?:es|son)\\s+(?:${ES_DETERMINER})\\b`, "gi") },
+  { id: "no solo", locale: "es", re: /\bno s[o\u00f3]lo\b/gi },
   { id: ", sino", locale: "es", re: /,\s+sino\b/gi },
   { id: "no otra", locale: "es", re: /\bno otra\b/gi },
   { id: "no otro", locale: "es", re: /\bno otro\b/gi },
 ];
 
 /**
- * Real tells, but not separable from honest comparative prose by any lexical
- * rule. "four minutes instead of forty" is the copy the doctrine asks for.
+ * Real tells, but not separable from honest prose by any lexical rule.
  * Reported on every run, never blocking. See the doctrine header.
+ *
+ * `rather than` / `instead of`: "four minutes instead of forty" is the copy
+ * the doctrine asks for.
+ * `no es` / `no son` without an article: "un gasto sin CFDI no es deducible"
+ * is a tax fact and "no son datos de cliente" is the honesty disclaimer the
+ * doctrine wants kept, but "no es administracion. Es la unica forma" is a
+ * definitional contrast. Spanish does not separate the two lexically, so a
+ * human reads every hit.
  */
 export const ADVISORY_SHAPES = [
   { id: "rather than", locale: "en", re: /\brather than\b/gi },
   { id: "instead of", locale: "en", re: /\binstead of\b/gi },
+  {
+    id: "no es/son (plain negation)",
+    locale: "es",
+    re: new RegExp(`\\bno (?:es|son)\\b(?!\\s+(?:${ES_DETERMINER})\\b)`, "gi"),
+  },
 ];
 
 export const EM_DASH = /\u2014/g;
 
-/** Markdown-ish emphasis markers that rich.tsx consumes, plus its line break. */
+/** rich.tsx renders these two markers, and `|` is its line break. */
+const BOLD_SPAN = /\*\*[^*]*\*\*/g;
+const ACCENT_SPAN = /__[^_]*__/g;
+
 function stripMarkers(text) {
   return text.replace(/\*\*|__/g, "").replace(/\|/g, " ");
 }
@@ -108,133 +145,233 @@ function decodeEscapes(raw) {
 }
 
 /**
- * Walks one `const <name> = { ... }` declaration and returns every string
- * literal inside it, with the line it starts on. Comments are skipped, so an
- * apostrophe in a prose comment cannot open a string, and template
- * substitutions are walked as code rather than as text.
+ * Finds the `=` that opens a declaration's initializer, starting just after the
+ * declaration name, so a type annotation carrying its own braces
+ * (`const en: Record<string, { h: string }> = {`) does not get scanned as if it
+ * were the copy. Returns the index just after the `=`, or -1.
  */
-function scanDeclaration(src, declStart) {
-  const strings = [];
-  const open = src.indexOf("{", declStart);
-  if (open === -1) return { strings, end: src.length };
-
-  let line = 1;
-  for (let k = 0; k < open; k++) if (src[k] === "\n") line++;
-
-  // Each frame is a brace depth we have to unwind: the object itself, then one
-  // per `${` we walk into.
+function findAssignment(src, from) {
   let depth = 0;
-  const tplStack = [];
-  let i = open;
-
+  let i = from;
   while (i < src.length) {
     const c = src[i];
-
-    if (c === "\n") { line++; i++; continue; }
-
     if (c === "/" && src[i + 1] === "/") {
       while (i < src.length && src[i] !== "\n") i++;
       continue;
     }
     if (c === "/" && src[i + 1] === "*") {
       i += 2;
-      while (i < src.length && !(src[i] === "*" && src[i + 1] === "/")) {
-        if (src[i] === "\n") line++;
-        i++;
-      }
+      while (i < src.length && !(src[i] === "*" && src[i + 1] === "/")) i++;
       i += 2;
       continue;
     }
-
-    if (c === '"' || c === "'") {
-      const startLine = line;
-      let j = i + 1;
-      let raw = "";
-      while (j < src.length && src[j] !== c) {
-        if (src[j] === "\\") { raw += src.slice(j, j + 2); j += 2; continue; }
-        if (src[j] === "\n") line++;
-        raw += src[j];
-        j++;
-      }
-      strings.push({ value: decodeEscapes(raw), line: startLine });
-      i = j + 1;
-      continue;
-    }
-
-    if (c === "`") {
-      const startLine = line;
-      let j = i + 1;
-      let raw = "";
-      let sub = false;
-      while (j < src.length) {
-        if (src[j] === "\\") { raw += src.slice(j, j + 2); j += 2; continue; }
-        if (src[j] === "$" && src[j + 1] === "{") { sub = true; break; }
-        if (src[j] === "`") break;
-        if (src[j] === "\n") line++;
-        raw += src[j];
-        j++;
-      }
-      strings.push({ value: decodeEscapes(raw), line: startLine });
-      if (sub) {
-        // Step into the substitution as code; the `}` handler pops back out.
-        tplStack.push(depth);
-        depth++;
-        i = j + 2;
-        continue;
-      }
-      i = j + 1;
-      continue;
-    }
-
-    if (c === "{") { depth++; i++; continue; }
-
-    if (c === "}") {
-      depth--;
+    if (c === '"' || c === "'" || c === "`") {
+      const quote = c;
       i++;
-      if (tplStack.length && depth === tplStack[tplStack.length - 1]) {
-        // Back out into the rest of the template literal.
-        tplStack.pop();
-        let j = i;
-        let raw = "";
-        const startLine = line;
-        let sub = false;
-        while (j < src.length) {
-          if (src[j] === "\\") { raw += src.slice(j, j + 2); j += 2; continue; }
-          if (src[j] === "$" && src[j + 1] === "{") { sub = true; break; }
-          if (src[j] === "`") break;
-          if (src[j] === "\n") line++;
-          raw += src[j];
-          j++;
-        }
-        strings.push({ value: decodeEscapes(raw), line: startLine });
-        if (sub) { tplStack.push(depth); depth++; i = j + 2; continue; }
-        i = j + 1;
-        continue;
-      }
-      if (depth === 0) return { strings, end: i };
+      while (i < src.length && src[i] !== quote) i += src[i] === "\\" ? 2 : 1;
+      i++;
       continue;
     }
-
+    if (c === "{" || c === "[" || c === "(") { depth++; i++; continue; }
+    if (c === "}" || c === "]" || c === ")") { depth--; i++; continue; }
+    if (c === ";" && depth === 0) return -1;
+    if (c === "=" && depth === 0 && src[i + 1] !== "=" && src[i + 1] !== ">" && !"=!<>".includes(src[i - 1])) {
+      return i + 1;
+    }
     i++;
   }
+  return -1;
+}
 
-  return { strings, end: src.length };
+/** A `/` here opens a regex literal rather than dividing. */
+function regexCanStart(prev) {
+  return prev === "" || "(,=:[!&|?{};+-*%~^<>".includes(prev);
+}
+
+/**
+ * Walks one declaration's initializer and returns every string literal that is
+ * in VALUE position, with the line it starts on.
+ *
+ * What it handles, because the rewrite beads own these files next:
+ *   - string, template, array and object initializers, at any nesting;
+ *   - quoted and computed object keys, which are not copy and are skipped;
+ *   - comments, so an apostrophe in prose cannot open a string and a banned
+ *     phrase in a comment cannot fail a page;
+ *   - template substitutions walked as code, including regex literals, so a
+ *     `}` inside `/}/g` does not end the substitution early.
+ * Anything else is a loud extraction error, never a silent zero.
+ */
+function scanInitializer(src, start, label) {
+  const strings = [];
+  const errors = [];
+  let line = 1;
+  for (let k = 0; k < start; k++) if (src[k] === "\n") line++;
+  let i = start;
+
+  const bump = (n = 1) => {
+    for (let k = 0; k < n && i < src.length; k++) {
+      if (src[i] === "\n") line++;
+      i++;
+    }
+  };
+
+  function skipTrivia() {
+    for (;;) {
+      if (i >= src.length) return;
+      const c = src[i];
+      if (c === " " || c === "\t" || c === "\r" || c === "\n") { bump(); continue; }
+      if (c === "/" && src[i + 1] === "/") {
+        while (i < src.length && src[i] !== "\n") bump();
+        continue;
+      }
+      if (c === "/" && src[i + 1] === "*") {
+        bump(2);
+        while (i < src.length && !(src[i] === "*" && src[i + 1] === "/")) bump();
+        bump(2);
+        continue;
+      }
+      return;
+    }
+  }
+
+  function readString(record) {
+    const quote = src[i];
+    const startLine = line;
+    bump();
+    let raw = "";
+    while (i < src.length && src[i] !== quote) {
+      if (src[i] === "\\") { raw += src.slice(i, i + 2); bump(2); continue; }
+      raw += src[i];
+      bump();
+    }
+    bump();
+    if (record) strings.push({ value: decodeEscapes(raw), line: startLine });
+  }
+
+  function readTemplate(record) {
+    bump();
+    for (;;) {
+      const startLine = line;
+      let raw = "";
+      while (i < src.length && src[i] !== "`" && !(src[i] === "$" && src[i + 1] === "{")) {
+        if (src[i] === "\\") { raw += src.slice(i, i + 2); bump(2); continue; }
+        raw += src[i];
+        bump();
+      }
+      if (record) strings.push({ value: decodeEscapes(raw), line: startLine });
+      if (i >= src.length) return;
+      if (src[i] === "`") { bump(); return; }
+      bump(2);
+      readExpression("}", record);
+      if (src[i] === "}") bump();
+    }
+  }
+
+  function readRegex() {
+    bump();
+    let inClass = false;
+    while (i < src.length) {
+      const c = src[i];
+      if (c === "\n") return;
+      if (c === "\\") { bump(2); continue; }
+      if (c === "[") inClass = true;
+      else if (c === "]") inClass = false;
+      else if (c === "/" && !inClass) { bump(); break; }
+      bump();
+    }
+    while (i < src.length && /[a-z]/.test(src[i])) bump();
+  }
+
+  /** Consumes code until one of `stop` at this depth. Leaves `i` on it. */
+  function readExpression(stop, record) {
+    let prev = "";
+    for (;;) {
+      skipTrivia();
+      if (i >= src.length) return;
+      const c = src[i];
+      if (stop.includes(c)) return;
+      if (c === '"' || c === "'") { readString(record); prev = '"'; continue; }
+      if (c === "`") { readTemplate(record); prev = "`"; continue; }
+      if (c === "{") { bump(); readObject(record); if (src[i] === "}") bump(); prev = "}"; continue; }
+      if (c === "[") { bump(); readArray(record); if (src[i] === "]") bump(); prev = "]"; continue; }
+      if (c === "(") { bump(); readExpression(")", record); if (src[i] === ")") bump(); prev = ")"; continue; }
+      if (c === "/" && regexCanStart(prev)) { readRegex(); prev = "x"; continue; }
+      prev = c;
+      bump();
+    }
+  }
+
+  /** Consumes one key. Keys are never copy, whatever quotes they wear. */
+  function readKey() {
+    skipTrivia();
+    const c = src[i];
+    if (c === '"' || c === "'") { readString(false); return; }
+    if (c === "`") { readTemplate(false); return; }
+    if (c === "[") { bump(); readExpression("]", false); if (src[i] === "]") bump(); return; }
+    while (i < src.length && !":,}".includes(src[i]) && !" \t\r\n".includes(src[i])) {
+      if (src[i] === "(") { bump(); readExpression(")", false); if (src[i] === ")") bump(); continue; }
+      bump();
+    }
+  }
+
+  function readObject(record) {
+    for (;;) {
+      skipTrivia();
+      if (i >= src.length || src[i] === "}") return;
+      if (src[i] === ",") { bump(); continue; }
+      readKey();
+      skipTrivia();
+      if (src[i] === ":") { bump(); readExpression(",}", record); continue; }
+      if (src[i] === "{") { bump(); readObject(record); if (src[i] === "}") bump(); continue; }
+    }
+  }
+
+  function readArray(record) {
+    for (;;) {
+      skipTrivia();
+      if (i >= src.length || src[i] === "]") return;
+      if (src[i] === ",") { bump(); continue; }
+      readExpression(",]", record);
+    }
+  }
+
+  skipTrivia();
+  const c = src[i];
+  if (c === '"' || c === "'") readString(true);
+  else if (c === "`") readTemplate(true);
+  else if (c === "{") { bump(); readObject(true); if (src[i] === "}") bump(); }
+  else if (c === "[") { bump(); readArray(true); if (src[i] === "]") bump(); }
+  else {
+    errors.push(
+      `${label}: the initializer is not a string, template, array or object literal, so copy-check cannot read it. Give the locale its copy as a literal, or rename the declaration so it is not read as copy.`,
+    );
+    readExpression(";", false);
+  }
+
+  return { strings, errors, end: i };
 }
 
 /**
  * Every top-level `const en...` / `const es...` declaration belongs to its
  * locale, so contact.ts's `enIntro` and `esDescription` are counted with the
- * page they feed.
+ * page they feed. `export const` counts too.
  */
-const DECL_RE = /^const (en|es)(?:[A-Z]\w*)?\b/gm;
+const DECL_RE = /^(?:export\s+)?const\s+(en|es)(?:[A-Z]\w*)?\b/gm;
 
 export function extractLocaleStrings(source) {
-  const byLocale = { en: [], es: [] };
+  const byLocale = { en: [], es: [], errors: [] };
   DECL_RE.lastIndex = 0;
   let m;
   while ((m = DECL_RE.exec(source)) !== null) {
-    const { strings, end } = scanDeclaration(source, m.index);
+    const label = m[0].replace(/^export\s+/, "").replace(/\s+/g, " ");
+    const eq = findAssignment(source, m.index + m[0].length);
+    if (eq === -1) {
+      byLocale.errors.push(`${label}: no "=" initializer found, so its copy cannot be read`);
+      continue;
+    }
+    const { strings, errors, end } = scanInitializer(source, eq, label);
     byLocale[m[1]].push(...strings);
+    byLocale.errors.push(...errors);
     DECL_RE.lastIndex = Math.max(DECL_RE.lastIndex, end);
   }
   return byLocale;
@@ -248,6 +385,30 @@ export function countWords(strings) {
     }
   }
   return n;
+}
+
+/**
+ * Counts emphasis the way rich.tsx renders it: a span is a marker pair with
+ * something between it, and any marker left over renders as literal asterisks
+ * or underscores on the page. Both are per string, because rich() runs per
+ * string and two separately malformed strings do not cancel out.
+ */
+export function countEmphasis(value) {
+  const spans = [];
+  for (const re of [BOLD_SPAN, ACCENT_SPAN]) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(value)) !== null) {
+      if (m[0].length > 4) spans.push(m[0]);
+      else re.lastIndex = m.index + 2;
+    }
+  }
+  let rest = value;
+  for (const re of [BOLD_SPAN, ACCENT_SPAN]) {
+    rest = rest.replace(re, (span) => (span.length > 4 ? "" : span));
+  }
+  const strays = (rest.match(/\*\*|__/g) ?? []).length;
+  return { spans: spans.length, strays };
 }
 
 function excerpt(text, index, length) {
@@ -282,6 +443,7 @@ function matchShapes(strings, shapes, locale, allowed) {
 export function checkSource(page, source, options = {}) {
   const limits = options.limits ?? PAGES[page];
   const allowlist = options.allowlist ?? CONTRAST_ALLOWLIST;
+  const ratchet = options.ratchet ?? true;
   if (!limits) throw new Error(`no budget line for page "${page}"`);
 
   const byLocale = extractLocaleStrings(source);
@@ -289,34 +451,50 @@ export function checkSource(page, source, options = {}) {
   const advisories = [];
   const stats = {};
 
+  for (const e of byLocale.errors) violations.push({ locale: "-", rule: "extract", text: e });
+
   for (const locale of ["en", "es"]) {
     const strings = byLocale[locale];
     const allowed = new Set(allowlist?.[page]?.[locale] ?? []);
     const words = countWords(strings);
-    stats[locale] = { strings: strings.length, words, bold: 0 };
+    const budget = limits[locale].budget;
+    stats[locale] = { strings: strings.length, words, bold: 0, budget };
 
     if (strings.length === 0) {
       violations.push({ locale, rule: "extract", text: `no ${locale} strings found; is there a "const ${locale} = {" block?` });
       continue;
     }
 
-    if (words > limits.budget) {
+    if (words > budget) {
       violations.push({
         locale,
         rule: "words",
-        text: `${words} words, budget ${limits.budget}, doctrine target ${limits.target}`,
+        text: `${words} words, budget ${budget} (half of the ${limits[locale].measured} this page carried when the doctrine landed)`,
+      });
+    } else if (ratchet && budget - words > RATCHET_SLACK) {
+      violations.push({
+        locale,
+        rule: "budget-slack",
+        text: `${words} words against a budget of ${budget}; the budget is a ratchet, so lower this page's ${locale} budget to ${words} in the same diff (at most ${RATCHET_SLACK} words of slack)`,
       });
     }
 
-    let markers = 0;
-    for (const s of strings) markers += (s.value.match(/\*\*/g) ?? []).length;
-    if (markers % 2 !== 0) {
-      violations.push({ locale, rule: "bold", text: `${markers} "**" markers, which is an odd number, so a bold span is unclosed` });
+    let bold = 0;
+    for (const s of strings) {
+      const { spans, strays } = countEmphasis(s.value);
+      bold += spans;
+      if (strays) {
+        violations.push({
+          locale,
+          rule: "bold",
+          line: s.line,
+          text: `${strays} stray "**" or "__" marker(s) in one string, so the marker renders as text: ${excerpt(s.value, 0, 60)}`,
+        });
+      }
     }
-    const bold = Math.floor(markers / 2);
     stats[locale].bold = bold;
     if (bold > MAX_BOLD) {
-      violations.push({ locale, rule: "bold", text: `${bold} bold spans, at most ${MAX_BOLD} allowed` });
+      violations.push({ locale, rule: "bold", text: `${bold} emphasis spans ("**" and "__" both render), at most ${MAX_BOLD} allowed` });
     }
 
     const { hits, used } = matchShapes(strings, BLOCKING_SHAPES, locale, allowed);
@@ -345,14 +523,36 @@ export function checkSource(page, source, options = {}) {
   return { violations, advisories, stats };
 }
 
+function describe(value) {
+  if (value === null) return "null";
+  if (Array.isArray(value)) return "an array";
+  return `a ${typeof value}`;
+}
+
+/** Never throws. Every malformed shape comes back as a message, and main exits 2. */
 export function validateAllowlist(allowlist) {
+  if (allowlist === null || typeof allowlist !== "object" || Array.isArray(allowlist)) {
+    return [`CONTRAST_ALLOWLIST must be an object keyed by page, got ${describe(allowlist)}`];
+  }
   const errors = [];
   for (const [page, locales] of Object.entries(allowlist)) {
     if (!PAGES[page]) errors.push(`CONTRAST_ALLOWLIST has an unknown page "${page}"`);
+    if (locales === null || typeof locales !== "object" || Array.isArray(locales)) {
+      errors.push(`CONTRAST_ALLOWLIST ${page} must be an object keyed by locale, got ${describe(locales)}`);
+      continue;
+    }
     for (const [locale, entries] of Object.entries(locales)) {
       if (locale !== "en" && locale !== "es") {
         errors.push(`CONTRAST_ALLOWLIST ${page} has an unknown locale "${locale}"`);
         continue;
+      }
+      if (!Array.isArray(entries)) {
+        errors.push(`CONTRAST_ALLOWLIST ${page}.${locale} must be an array of exact dictionary strings, got ${describe(entries)}`);
+        continue;
+      }
+      const bad = entries.findIndex((e) => typeof e !== "string");
+      if (bad !== -1) {
+        errors.push(`CONTRAST_ALLOWLIST ${page}.${locale} entry ${bad} must be an exact dictionary string, got ${describe(entries[bad])}`);
       }
       if (entries.length > ALLOWLIST_PER_LOCALE) {
         errors.push(
@@ -371,14 +571,15 @@ pages: ${Object.keys(PAGES).join(", ")}
 Checks lib/i18n/<page>.ts against docs/copy-doctrine.md.
 Exit 0 clean, 1 on a violation, 2 on a usage or config error.`;
 
-export function main(argv, out = console.log, err = console.error) {
+function run(argv, out, err, overrides) {
   const args = argv.filter((a) => a !== "--");
   if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
     err(USAGE);
     return 2;
   }
 
-  const configErrors = validateAllowlist(CONTRAST_ALLOWLIST);
+  const allowlist = overrides.allowlist ?? CONTRAST_ALLOWLIST;
+  const configErrors = validateAllowlist(allowlist);
   if (configErrors.length) {
     for (const e of configErrors) err(`config error: ${e}`);
     return 2;
@@ -410,12 +611,11 @@ export function main(argv, out = console.log, err = console.error) {
       return 2;
     }
 
-    const { violations, advisories, stats } = checkSource(page, source);
-    const limits = PAGES[page];
+    const { violations, advisories, stats } = checkSource(page, source, { allowlist });
 
     out(
-      `${file}  en ${stats.en.words}w/${stats.en.bold}b  es ${stats.es.words}w/${stats.es.bold}b` +
-        `  budget ${limits.budget}w  target ${limits.target}w`,
+      `${file}  en ${stats.en.words}w/${stats.en.bold}b of ${stats.en.budget}w` +
+        `  es ${stats.es.words}w/${stats.es.bold}b of ${stats.es.budget}w`,
     );
     for (const v of violations) {
       out(`  FAIL  ${file}  ${v.locale}  ${v.rule}${v.line ? `  line ${v.line}` : ""}  ${v.text}`);
@@ -432,6 +632,20 @@ export function main(argv, out = console.log, err = console.error) {
   }
   out(`\n${pages.length} page(s) clean`);
   return 0;
+}
+
+/**
+ * Exit 0 clean, 1 on a violation, 2 on a usage or config error. A thrown error
+ * is a config error too: the checker reports it and exits 2 rather than
+ * handing a worker a stack trace.
+ */
+export function main(argv, out = console.log, err = console.error, overrides = {}) {
+  try {
+    return run(argv, out, err, overrides);
+  } catch (e) {
+    err(`config error: ${e && e.message ? e.message : e}`);
+    return 2;
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
