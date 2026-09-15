@@ -190,31 +190,51 @@ other three: a 31px reflow twice per 38.5 second cycle, for the life of the
 page, at every width where the figure reaches its max-width, taking everything
 below it on the page with it.
 
-Two rules, and both are needed:
+Three rules, and all three are needed:
 
-- **Render every value the loop can write, stacked in one grid cell, with all
-  but the live one invisible** (`.demo-caption-box`, `visibility: hidden` on
-  the ghosts). The box is then the longest value's size at every container
-  width and in every locale. A reserved pixel height is right at one width, one
-  font size and one language; this is right everywhere. `CAPTION_KEYS` in
-  `floor.ts` is the list, so a fifth phase added to the timeline without a
-  ghost fails the test rather than reflowing the page.
+- **Render every value the box can hold, stacked in one grid cell, with all but
+  the live one invisible** (`.demo-caption-box`, `visibility: hidden` on the
+  ghosts). The box is then the longest value's size at every container width
+  and in every locale. A reserved pixel height is right at one width, one font
+  size and one language; this is right everywhere. `CAPTION_KEYS` in `floor.ts`
+  is the list, so a fifth phase added to the timeline without a ghost fails the
+  test rather than reflowing the page.
+- **Do the same for anything the visitor changes.** The selection readout is
+  not written by the loop, so the rule above does not reach it, and one of the
+  twelve table names is long enough to wrap where the others are not: tapping
+  it grew the figure 31px and the next tap shrank it again, at 8 of 57 widths
+  in Spanish and 3 in English. `.demo-pick-box` holds all twelve readouts the
+  same way. Keep the ghosts out of the accessibility tree: the live one is the
+  `aria-live` region, the other eleven are `aria-hidden`, and both spellings
+  come from one function so they cannot be styled apart.
 - **Give the readout strip a fixed row structure**, a one-column grid rather
-  than a wrapping row. Otherwise the strip is one line for a short selection
-  and two for a long one, and the frame moves when the visitor taps a table,
-  which is the same defect with a different trigger.
+  than a wrapping row, so the caption cannot displace the selection or sit
+  beside it depending on how long each happens to be.
 
 `state/review/s-0b4b/caption-box.mjs` drives the four captions at 141 widths in
-both locales and fails on any height difference.
+both locales, and `selection.mjs` taps all twelve tables at 57 widths in both
+locales; each fails on any height difference. Note what the second one taught:
+a 30ms settle after changing the container width measured the board mid-resize
+and reported 161 and 214px swings that were the probe's own doing. Wait past
+the component's 140ms debounce before believing a number.
 
 ## 8. The board fills its query container
 
-`resize()` takes the drawing width from the canvas rect, the floor plan from
-the figure's content box, and `demos.css` writes the pre-hydration height in
-`cqw` of that same content box. All three are the same number only while
-`.demo-stage` adds no padding, border or margin. Name the coupling rather than
-relying on it: `demos.test.ts` fails the `.demo-stage` rule if a box-affecting
-property appears in it.
+`resize()` takes the drawing width from `canvas.clientWidth`, the floor plan
+from the figure's fractional content box, and `demos.css` writes the
+pre-hydration height in `cqw` of that same content box. All three are the same
+number only while `.demo-stage` adds no padding, border or margin. Name the
+coupling rather than relying on it: `demos.test.ts` fails the `.demo-stage`
+rule if a box-affecting property appears in it.
+
+Both JS readings are **layout** measures, and that is the whole point.
+`getBoundingClientRect()` is the painted box, so under a scaled ancestor a
+642px composition would be drawn as 321px and stretched back across a 642px CSS
+box, with a height `bands()` derived from the same wrong number. A transform is
+paint; the canvas coordinate system is layout. `clientWidth` is right for the
+drawing width, which is an integer pixel grid, and wrong for the breakpoint,
+which needs the fraction: two different jobs, two different reads, and the
+comment at each one says which.
 
 The pre-hydration height itself is `bands()` written in container-query units,
 term for term, not a flat number. A flat placeholder can only be right at one
@@ -291,8 +311,9 @@ pure, each with its own tests, and a component that measures.
   | what it checks | rule |
   | --- | --- |
   | both sides of the breakpoint agree, fractional widths | 6 |
-  | the plan follows the layout box under a scaled ancestor | 6 |
+  | the plan and the board geometry follow the layout box under a scaled ancestor | 6, 8 |
   | the figure height is constant across every caption, both locales | 7 |
+  | the figure height is constant across every table the visitor can tap | 7 |
   | the hold frame is byte-identical to the reduced-motion frame | 5 |
   | the clock never runs backwards after a pause | 5 |
   | off screen and hidden tab pause, and both resume | 2 |

@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 import { clearsThreshold } from "./onscreen";
@@ -36,8 +37,11 @@ const root = fileURLToPath(new URL("../", import.meta.url));
  * engine, and hq-2u86a carries the open question of whether Firefox and WebKit
  * agree; if they do not, the visible consequence in those browsers is a
  * visual starting a little earlier than its threshold asked, which is why this
- * is a list rather than a blocker. components/site/Nav.tsx is here too,
- * declaring no threshold at all, where "any contact" is the whole meaning.
+ * is a list rather than a blocker. components/site/Nav.tsx is deliberately NOT
+ * here: it declares no threshold at all, where "any contact" is the whole
+ * meaning and isIntersecting is exactly the right read. That exemption is
+ * derived from the parsed options below rather than listed by hand, so it
+ * lapses by itself the day someone gives that observer a threshold.
  *
  * What the list buys today: any of these that later grows a threshold array
  * fails, because that is the combination where isIntersecting stops meaning
@@ -52,7 +56,6 @@ const READS_ISINTERSECTING = [
   "components/pages/home/SectorMap.tsx",
   "components/pages/winery/AssistantDemo.tsx",
   "components/pages/winery/VineField.tsx",
-  "components/site/Nav.tsx",
   "components/site/Reveal.tsx",
 ];
 
@@ -76,19 +79,87 @@ const sources = (() => {
 const read = (rel: string) => readFileSync(join(root, rel), "utf8");
 
 /**
- * The same file with its comments removed.
+ * Every `new IntersectionObserver(...)` in the repo, one row per observer.
  *
- * These checks are lexical, and every file the rule touches now explains the
- * rule in prose, naming isIntersecting in the sentence that says not to read
- * it. Checking the raw text would fail the fixed files for describing their own
- * fix, and would pass a broken file that had commented the line out. Line
- * comments are only stripped where they start a line, so a URL in a string
- * survives.
+ * Parsed rather than grepped. A substring check is bypassable three ways at
+ * once and a cross-vendor reviewer produced all three: a file-level match for
+ * "clearsThreshold" passes a file whose callback never calls it (a string
+ * constant is enough), a compliant file can hide a second broken observer
+ * behind its compliant one, and `new window.IntersectionObserver` is not
+ * found at all. The repo already depends on typescript, so the parser is free.
  */
-const code = (rel: string) =>
-  read(rel)
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/^\s*\/\/.*$/gm, "");
+interface ObserverSite {
+  file: string;
+  line: number;
+  /** the callback reads `.isIntersecting` off something */
+  readsIsIntersecting: boolean;
+  /** the callback calls clearsThreshold(...) */
+  callsClearsThreshold: boolean;
+  /** the options argument declares `threshold: [...]` */
+  thresholdIsArray: boolean;
+  /** the options argument declares a threshold at all */
+  declaresThreshold: boolean;
+}
+
+const observerSites = (): ObserverSite[] => {
+  const out: ObserverSite[] = [];
+  for (const file of sources) {
+    const src = read(file);
+    if (!src.includes("IntersectionObserver")) continue;
+    const sf = ts.createSourceFile(
+      file,
+      src,
+      ts.ScriptTarget.Latest,
+      true,
+      file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+    );
+    const named = (node: ts.Node) => {
+      /* the constructed name, whatever it is qualified with */
+      if (ts.isIdentifier(node)) return node.text;
+      if (ts.isPropertyAccessExpression(node)) return node.name.text;
+      return "";
+    };
+    const scan = (node: ts.Node, found: { ii: boolean; ct: boolean }) => {
+      if (ts.isPropertyAccessExpression(node) && node.name.text === "isIntersecting") found.ii = true;
+      if (
+        ts.isCallExpression(node) &&
+        ts.isIdentifier(node.expression) &&
+        node.expression.text === "clearsThreshold"
+      ) {
+        found.ct = true;
+      }
+      ts.forEachChild(node, (c) => scan(c, found));
+    };
+    const visit = (node: ts.Node) => {
+      if (ts.isNewExpression(node) && named(node.expression) === "IntersectionObserver") {
+        const args = node.arguments ?? ([] as unknown as ts.NodeArray<ts.Expression>);
+        const found = { ii: false, ct: false };
+        if (args[0]) scan(args[0], found);
+        let thresholdIsArray = false;
+        let declaresThreshold = false;
+        if (args[1] && ts.isObjectLiteralExpression(args[1])) {
+          for (const prop of args[1].properties) {
+            if (!ts.isPropertyAssignment(prop)) continue;
+            if (prop.name.getText(sf).replace(/["']/g, "") !== "threshold") continue;
+            declaresThreshold = true;
+            thresholdIsArray = ts.isArrayLiteralExpression(prop.initializer);
+          }
+        }
+        out.push({
+          file,
+          line: sf.getLineAndCharacterOfPosition(node.getStart(sf)).line + 1,
+          readsIsIntersecting: found.ii,
+          callsClearsThreshold: found.ct,
+          thresholdIsArray,
+          declaresThreshold,
+        });
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(sf);
+  }
+  return out;
+};
 
 describe("clearsThreshold, the one reading of an observer entry", () => {
   const entry = (intersectionRatio: number, isIntersecting = intersectionRatio > 0) => ({
@@ -122,53 +193,64 @@ describe("clearsThreshold, the one reading of an observer entry", () => {
 });
 
 describe("every IntersectionObserver in the repo keeps its threshold", () => {
-  const observers = sources.filter((f) => code(f).includes("new IntersectionObserver"));
+  const sites = observerSites();
+  const where = (o: ObserverSite) => o.file + ":" + o.line;
 
-  it("still finds the files it is checking", () => {
-    /* the whole check is vacuous if the walk stops finding source */
+  it("still finds the observers it is checking", () => {
+    /* the whole check is vacuous if the walk or the parse stops finding them */
     expect(sources.length).toBeGreaterThan(20);
-    expect(observers.length).toBeGreaterThan(READS_ISINTERSECTING.length);
+    expect(sites.length).toBeGreaterThan(READS_ISINTERSECTING.length);
+    /* and it finds the two this bead converted */
+    expect(sites.filter((o) => o.callsClearsThreshold).map((o) => o.file).sort()).toEqual([
+      "components/pages/demos/motion.ts",
+      "components/site/Media.tsx",
+    ]);
   });
 
-  /** The one combination that is a live bug. A scalar threshold makes
-      isIntersecting threshold-aware; a threshold array starting at 0 does not,
-      and then isIntersecting is true at any contact while the callback means
-      the number at the top of the list. */
-  it.each(observers)("%s does not read isIntersecting behind a threshold list", (file) => {
-    const src = code(file);
-    if (!src.includes("isIntersecting")) return;
-    const lists = Array.from(src.matchAll(/threshold\s*:\s*\[([^\]]*)\]/g));
+  /** The one combination that is a bug under either reading of the spec. A
+      scalar threshold makes isIntersecting threshold-aware in Chromium; a
+      threshold array starting at 0 does not, in any engine, and then
+      isIntersecting is true at any contact while the callback means the number
+      at the top of the list. */
+  it("has no observer reading isIntersecting behind a threshold list", () => {
+    const bad = sites.filter((o) => o.readsIsIntersecting && o.thresholdIsArray);
     expect(
-      lists.map((m) => m[1].trim()),
+      bad.map(where),
       "a threshold array read through isIntersecting: call clearsThreshold from @/lib/onscreen",
     ).toEqual([]);
   });
 
-  /** The ratchet on new code. An observer that reads the entry for itself has
-      to be one of the ones that already did; anything new comes through
-      clearsThreshold, which is the house reading. */
+  /** The ratchet on new code, per observer rather than per file, so a
+      compliant file cannot carry a second broken observer. */
   it("lets no new observer read an entry for itself", () => {
-    const escaped = observers.filter(
-      (f) => !code(f).includes("clearsThreshold") && !READS_ISINTERSECTING.includes(f),
+    const escaped = sites.filter(
+      (o) =>
+        !o.callsClearsThreshold &&
+        /* an observer with no threshold has no promise to keep: "any contact"
+           is the whole policy and isIntersecting says exactly that */
+        o.declaresThreshold &&
+        !READS_ISINTERSECTING.includes(o.file),
     );
-    expect(escaped.sort(), "call clearsThreshold from @/lib/onscreen").toEqual([]);
+    expect(escaped.map(where).sort(), "call clearsThreshold from @/lib/onscreen").toEqual([]);
   });
 
   it("carries no listed file that has since been converted, so the list only shrinks", () => {
-    const stale = READS_ISINTERSECTING.filter((f) => !code(f).includes("isIntersecting"));
-    expect(stale, "converted: take these off READS_ISINTERSECTING").toEqual([]);
+    const stale = READS_ISINTERSECTING.filter(
+      (f) => !sites.some((o) => o.file === f && !o.callsClearsThreshold && o.declaresThreshold),
+    );
+    expect(stale, "converted or thresholdless: take these off READS_ISINTERSECTING").toEqual([]);
   });
 
-  /* The two the reviews looked at, both now naming the threshold they keep:
-     the demo loop and the video slot. Named rather than derived, so deleting
-     the call from either one is a failure and not just a file dropping out of
-     a filter. */
+  /* The two the reviews looked at, both now naming the threshold they keep. */
   it.each(["components/pages/demos/motion.ts", "components/site/Media.tsx"])(
-    "%s gates on clearsThreshold",
+    "%s gates every observer on clearsThreshold",
     (file) => {
-      const src = code(file);
-      expect(src).toContain("clearsThreshold");
-      expect(src).not.toContain("isIntersecting");
+      const mine = sites.filter((o) => o.file === file);
+      expect(mine.length).toBeGreaterThan(0);
+      for (const o of mine) {
+        expect(o.callsClearsThreshold, where(o)).toBe(true);
+        expect(o.readsIsIntersecting, where(o)).toBe(false);
+      }
     },
   );
 });

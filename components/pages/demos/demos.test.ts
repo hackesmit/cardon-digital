@@ -454,7 +454,11 @@ describe("the demos stylesheet", () => {
     /* Half of the boundary bug was the rounding: clientWidth is an integer, so
        a real 639.25px content box read as 640 and picked the wide plan even
        where the two conditions do meet. */
-    expect(component).not.toContain("clientWidth");
+    /* clientWidth is right for the drawing width, which is an integer pixel
+       grid, and wrong for the plan: the plan needs the fraction. */
+    expect(component).toContain("W = Math.max(1, canvas.clientWidth)");
+    expect(component).not.toMatch(/isPhonePlan\([^)]*clientWidth/);
+    expect(component).not.toContain("canvas.getBoundingClientRect()");
     /* The authority is the ResizeObserver's contentRect, which is the LAYOUT
        content box, the one a container query measures. getBoundingClientRect
        is the painted box: under a scaled ancestor the two differ, and the
@@ -462,6 +466,9 @@ describe("the demos stylesheet", () => {
        again (cross-vendor review, this bead). */
     expect(component).toMatch(/contentW = exact/);
     expect(component).toMatch(/const figureContentWidth = \(\) => contentW \?\? rectContentWidth\(\)/);
+    /* and the observer's first delivery re-runs the layout synchronously,
+       because the mount's reading was a guess */
+    expect(component).toMatch(/if \(!roSeen\) \{[\s\S]{0,80}resize\(\);/);
     /* the rect form survives only as the pre-observer reading, and when it is
        used it takes off the border as well as the padding */
     const fallback = /const rectContentWidth = \(\) => \{([\s\S]*?)\n    \};/.exec(component);
@@ -521,6 +528,30 @@ describe("the demos stylesheet", () => {
     expect(css).toMatch(/\.demo-caption-ghost\s*\{[^}]*visibility:\s*hidden/);
     /* display:none would collapse the ghosts and reserve nothing */
     expect(/\.demo-caption-ghost\s*\{[^}]*display:\s*none/.test(css)).toBe(false);
+  });
+
+  it("sizes the selection box for every readout, not the selected one", () => {
+    /* Same rule, different trigger: one table name wraps where the others do
+       not, so tapping it grew the figure 31px and the next tap shrank it
+       again (cross-vendor review, round two). The strip's grid stops the
+       caption displacing the selection; it does nothing about the selection's
+       own wrap, which is what this holds open. */
+    const component = code("RestauranteDemo.tsx");
+    expect(component).toMatch(/className="demo-pick-box"/);
+    expect(component).toMatch(/\{pickRow\(picked, false\)\}/);
+    expect(component).toMatch(/READOUTS\.map\(\(_, i\) => pickRow\(i, true\)\)/);
+    /* one spelling for both, so the ghost cannot be styled differently from
+       the value it is reserving room for */
+    expect(component.match(/className="demo-pick-k mono"/g)).toHaveLength(1);
+    /* and the ghosts are out of the accessibility tree, so the live region
+       does not announce twelve readouts */
+    expect(component).toMatch(/aria-live=\{ghost \? undefined : "polite"\}/);
+    expect(component).toMatch(/aria-hidden=\{ghost \? true : undefined\}/);
+
+    expect(css).toMatch(/\.demo-pick-box\s*\{[^}]*display:\s*grid/);
+    expect(css).toMatch(/\.demo-pick-box\s*>\s*\*\s*\{[^}]*grid-area:\s*1\s*\/\s*1/);
+    expect(css).toMatch(/\.demo-pick-ghost\s*\{[^}]*visibility:\s*hidden/);
+    expect(/\.demo-pick-ghost\s*\{[^}]*display:\s*none/.test(css)).toBe(false);
   });
 
   it("draws its standing frame through the timeline, not beside it", () => {

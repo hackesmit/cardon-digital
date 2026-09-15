@@ -646,13 +646,22 @@ export default function RestauranteDemo() {
     const figureContentWidth = () => contentW ?? rectContentWidth();
 
     const resize = () => {
-      const rect = canvas.getBoundingClientRect();
-      W = Math.max(1, Math.round(rect.width));
-      /* The plan is decided on the figure's content box and nothing else,
-         because that is the box demos.css queries. The canvas rect above is
-         the drawing width, and the two are the same number only because
-         .demo-stage adds no padding or border: that coupling is named in
-         demos.css and checked by demos.test.ts (reviewer s-3b55, note 3). */
+      /* The drawing width is the canvas's own LAYOUT content box. clientWidth
+         is the right tool for exactly this and the wrong one for the plan
+         below: it is an integer, which is all a pixel grid needs, and it is a
+         layout measure, so it is the box the canvas's coordinate system is
+         stretched across. getBoundingClientRect would be the PAINTED width,
+         and under a scaled ancestor drawing a 321px composition into a 642px
+         CSS box stretches the board and squashes the composition against the
+         height bands() derived from the same wrong number (cross-vendor
+         review, round two). A transform is paint; the coordinate system is
+         layout. */
+      W = Math.max(1, canvas.clientWidth);
+      /* The plan is decided on the figure's fractional content box and nothing
+         else, because that is the box demos.css queries. It is the same number
+         as W only because .demo-stage adds no padding or border: that coupling
+         is named in demos.css and checked by demos.test.ts (reviewer s-3b55,
+         note 3). */
       phone = isPhonePlan(figureContentWidth());
       /* published so a probe or a test can read which plan the component
          chose and hold it against the plan the stylesheet applied */
@@ -744,21 +753,33 @@ export default function RestauranteDemo() {
        ignored, because resize() sets the canvas height itself and answering
        that would loop. */
     let roW = Math.round(figureContentWidth());
+    let roSeen = false;
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver((entries) => {
         /* contentRect.width is the fractional layout content box, the same
            number the container query judges by, so from here on it is what
-           figureContentWidth() returns. Rounding is enough to ignore
-           sub-pixel churn, except across the breakpoint, where 639.6 and
-           640.2 round to the same integer and are different floor plans: so
-           a plan change is a resize whatever the rounded width says. That
-           also covers the handover: if the mount's rect disagreed with the
-           real content box, the first callback differs in the rounded width
-           or in the plan, and resize() runs with the authoritative number. */
+           figureContentWidth() returns. */
         const exact = entries[entries.length - 1].contentRect.width;
         contentW = exact;
         const w = Math.round(exact);
+        /* The first delivery always re-runs the layout, synchronously. The
+           mount had to measure through the rect, which is the painted box, so
+           under a transformed ancestor it may have chosen the wrong plan
+           outright; routing the correction through the 140ms debounce, or
+           skipping it because the rounded width happened to match, leaves the
+           board visibly on the wrong stylesheet for that long (cross-vendor
+           review, round two). One extra redraw per mount is the price. */
+        if (!roSeen) {
+          roSeen = true;
+          roW = w;
+          resize();
+          return;
+        }
+        /* After that, rounding is enough to ignore sub-pixel churn, except
+           across the breakpoint, where 639.6 and 640.2 round to the same
+           integer and are different floor plans: so a plan change is a resize
+           whatever the rounded width says. */
         if (w === roW && isPhonePlan(exact) === phone) return;
         roW = w;
         onResize();
@@ -797,6 +818,23 @@ export default function RestauranteDemo() {
     vis.party
       .replace("{n}", String(READOUTS[i].n))
       .replace("{time}", READOUTS[i].time);
+
+  /** The selection readout for table `i`, live or as one of the ghosts that
+      hold its box open. Both spellings come from here so they cannot be styled
+      differently, which would defeat the whole point of measuring one against
+      the other. */
+  const pickRow = (i: number, ghost: boolean) => (
+    <p
+      key={ghost ? "ghost-" + i : "live"}
+      className={"demo-pick" + (ghost ? " demo-pick-ghost" : "")}
+      aria-live={ghost ? undefined : "polite"}
+      aria-hidden={ghost ? true : undefined}
+    >
+      <span className="demo-pick-k mono">{vis.readoutLabel}</span>
+      <span className="demo-pick-v">{vis.tables[READOUTS[i].kind]}</span>
+      <span className="demo-pick-d mono">{detail(i)}</span>
+    </p>
+  );
 
   return (
     <figure className="demo-figure" data-demo="restaurante" ref={figureRef}>
@@ -854,11 +892,18 @@ export default function RestauranteDemo() {
           reading: a tap moves the selection and the strip answers. It is
           resolved from the first render, so it is complete with no JS. */}
       <div className="demo-readout">
-        <p className="demo-pick" aria-live="polite">
-          <span className="demo-pick-k mono">{vis.readoutLabel}</span>
-          <span className="demo-pick-v">{vis.tables[READOUTS[picked].kind]}</span>
-          <span className="demo-pick-d mono">{detail(picked)}</span>
-        </p>
+        {/* The selection reads out in a box held open by all twelve readouts,
+            the same way the caption box is held open by all four captions. One
+            table name is long enough to wrap at some container widths, so
+            without this the figure grew 31px when the visitor tapped it and
+            shrank again on the next tap: the caption defect with a different
+            trigger (cross-vendor review, round two). The live paragraph keeps
+            aria-live; the ghosts are invisible and out of the accessibility
+            tree, so nothing is announced twice. */}
+        <div className="demo-pick-box">
+          {pickRow(picked, false)}
+          {READOUTS.map((_, i) => pickRow(i, true))}
+        </div>
         {/* The caption box holds every caption the loop can write, stacked in
             one grid cell with all but the live one invisible, so the strip is
             as wide and as tall as the longest caption at every container width
