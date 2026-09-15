@@ -174,6 +174,7 @@ const en = {
     rules: [
       "The shared service base is charged once, whatever the mix.",
       "On the build the largest module goes at full price, the second {second} percent off, the third {third} percent off.",
+      "A line inside a mix can sit below what that module costs alone, because it is priced on the hours actually built.",
     ],
     combosKicker: "The seven combinations",
     combosTitle: "What each combination costs at the entry size.",
@@ -226,7 +227,7 @@ const en = {
   annual: {
     kicker: "Paying a year up front",
     title: "A year in one payment costs less.",
-    body: "Twelve months paid at the start cost less than twelve payments: one invoice a year costs us less than twelve. Service fee only, never setup and never ad spend. The paid year runs to its end, so nothing more is invoiced and nothing refunded until the anniversary. Your quote carries the figure.",
+    body: "Twelve months paid at the start cost less than twelve payments: one invoice a year costs us less than twelve. Service fee only, never setup and never ad spend. The paid year runs to its end: stop halfway and there is nothing more to invoice and nothing to refund. The system stays on until the anniversary and you can leave there. Your quote carries the figure.",
   },
 
   monthly: {
@@ -247,8 +248,8 @@ const en = {
 
   ads: {
     kicker: "Ads and content",
-    title: "Ads attach to Hospitalidad and Restaurante.",
-    body: "On Produccion we do not build a winery's sales: there we organise data, control and automation. Content from the entry size, ad management from the middle size up, inside the monthly fee and never as a share of what you spend.",
+    title: "Ads and content attach to Hospitalidad and Restaurante.",
+    body: "Neither attaches to Produccion: there we organise data, control and automation, and we do not build a winery's sales. Content from the entry size, ad management from the middle size up, inside the monthly fee and never as a share of what you spend.",
   },
 
   terms: {
@@ -265,7 +266,7 @@ const en = {
   },
 
   close: {
-    desc: "The Diagnostic reads your numbers and sets the quote: which modules, at what size, and what first.",
+    desc: "Ten working days and a written memo, yours either way. The Diagnostic reads your numbers and sets the quote: which modules, at what size, and what first.",
   },
 };
 
@@ -279,8 +280,8 @@ const es: typeof en = {
   hero: {
     aria: "Presentación",
     eyebrow: "Lo que cuesta",
-    t1: "Dos cuotas, ",
-    accent: "y después el sistema es suyo.",
+    t1: "Dos cuotas. ",
+    accent: "Después, el sistema es suyo.",
     sub: "La implementación paga la construcción, que queda suya. La mensualidad paga operarla. **Al terminar el servicio no se mueve nada entre cuentas: lo dejamos a usted como titular, le entregamos el método de pago y retiramos nuestro acceso.**",
     proof: "Construido para Monte Xanic y Viñedo En'kanto.",
     ctaFloors: "Ver los precios de entrada",
@@ -382,6 +383,7 @@ const es: typeof en = {
     rules: [
       "La base de servicio compartida se cobra una sola vez, sea cual sea la combinación.",
       "En la construcción, el módulo más grande va a precio completo, el segundo con {second} por ciento menos, el tercero con {third} por ciento menos.",
+      "Dentro de una combinación, una línea puede quedar debajo de lo que ese módulo cuesta solo, porque se cotiza sobre las horas que de verdad se construyen.",
     ],
     combosKicker: "Las siete combinaciones",
     combosTitle: "Lo que cuesta cada combinación en tamaño de entrada.",
@@ -420,7 +422,7 @@ const es: typeof en = {
   annual: {
     kicker: "Pagar el año por adelantado",
     title: "Un año en una sola exhibición cuesta menos.",
-    body: "Doce meses pagados al arranque cuestan menos que doce mensualidades: una factura al año nos cuesta menos que doce. Solo la cuota del servicio, nunca la implementación ni los anuncios. El año pagado corre completo: nada que facturar y nada que devolver hasta el aniversario. La cifra va en su cotización.",
+    body: "Doce meses pagados al arranque cuestan menos que doce mensualidades: una factura al año nos cuesta menos que doce. Solo la cuota del servicio, nunca la implementación ni la inversión en anuncios. El año pagado corre completo: si se detiene a la mitad no hay nada más que facturar ni nada que devolver. El sistema sigue encendido hasta el aniversario y ahí puede irse. La cifra va en su cotización.",
   },
 
   monthly: {
@@ -441,8 +443,8 @@ const es: typeof en = {
 
   ads: {
     kicker: "Anuncios y contenido",
-    title: "Los anuncios se agregan a Hospitalidad y a Restaurante.",
-    body: "En Producción no construimos la venta de una bodega: ahí organizamos datos, control y automatización. El contenido va desde el tamaño de entrada y el manejo de anuncios desde el mediano, dentro de la cuota mensual y nunca como porcentaje de lo que usted invierte.",
+    title: "Los anuncios y el contenido se agregan a Hospitalidad y a Restaurante.",
+    body: "A Producción no se agrega ninguno de los dos: ahí organizamos datos, control y automatización, y no construimos la venta de una bodega. El contenido va desde el tamaño de entrada y el manejo de anuncios desde el mediano, dentro de la cuota mensual y nunca como porcentaje de lo que usted invierte.",
   },
 
   terms: {
@@ -451,7 +453,7 @@ const es: typeof en = {
     items: [
       "La implementación se paga 50 por ciento a la firma y 50 a la aceptación.",
       "La mitad de la firma se puede pagar en tres mensualidades, sin recargo.",
-      "La cuota mensual va por adelantado, mes con mes, con 30 días de aviso de ambas partes.",
+      "La cuota mensual va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
       "Si deja el servicio antes de doce mensualidades, facturamos la parte de la construcción que la cuota venía pagando, menos un doceavo por mensualidad pagada. Su cotización lo indica.",
       "Todos los precios son más IVA. Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
       "Cotizamos y facturamos en pesos mexicanos. Las cifras en dólares son conversiones redondeadas, así que una columna en dólares puede quedar a unos dólares de su propia suma.",
@@ -459,7 +461,7 @@ const es: typeof en = {
   },
 
   close: {
-    desc: "El Diagnóstico revisa sus números y fija la cotización: qué módulos, de qué tamaño y qué primero.",
+    desc: "Diez días hábiles y un informe escrito, suyo en cualquier caso. El Diagnóstico revisa sus números y fija la cotización: qué módulos, de qué tamaño y qué primero.",
   },
 };
 
