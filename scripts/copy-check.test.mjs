@@ -395,6 +395,47 @@ test("allowlist: the exact string is exempt and nothing else is", () => {
   assert.equal(without.violations.filter((v) => v.rule === "negative-contrast").length, 2);
 });
 
+test("allowlist: one deliberate line reused across entries counts once, not once per use", () => {
+  // Regression, round three review (s-1701, BLOCKING B). lib/i18n/monte-xanic.ts
+  // holds "Harvest timing anticipated, not guessed." at :89 and :130. That is one
+  // editorial decision used twice. Keying the exempt map by the string object
+  // counted it as two contrasts, so the one slot the doctrine grants failed the
+  // cap while a second slot failed config validation: the page had no green
+  // state, and the only file that could give it one was this script, which no
+  // rewrite bead owns.
+  const kept = "Harvest timing anticipated, not guessed.";
+  const source = [
+    "const en = {",
+    `  lede: ${JSON.stringify(kept)},`,
+    `  recap: ${JSON.stringify(kept)},`,
+    "};",
+    'const es: typeof en = { lede: "Limpio.", recap: "Limpio." };',
+  ].join("\n");
+
+  const result = check(source, { allowlist: { fixture: { en: [kept] } } });
+  assert.deepEqual(
+    result.violations.filter((v) => v.rule === "allowlist"),
+    [],
+    "one line used twice is one contrast and must not trip the per-locale cap",
+  );
+  assert.equal(result.violations.filter((v) => v.rule === "negative-contrast").length, 0);
+
+  // Control: two DIFFERENT deliberate contrasts are still two, and still capped.
+  const two = [
+    "const en = {",
+    `  lede: ${JSON.stringify(kept)},`,
+    '  recap: "A written memo, not a sales deck.",',
+    "};",
+    'const es: typeof en = { lede: "Limpio.", recap: "Limpio." };',
+  ].join("\n");
+  const capped = check(two, { allowlist: { fixture: { en: [kept, "A written memo, not a sales deck."] } } });
+  assert.ok(
+    capped.violations.some((v) => v.rule === "allowlist") ||
+      capped.configError,
+    "two distinct contrasts must still be caught by the cap or by config validation",
+  );
+});
+
 test("allowlist: an entry that no longer carries a contrast is reported as stale", () => {
   const result = check(dict("Clean prose now.", "Limpio."), {
     allowlist: { fixture: { en: ["A written memo, not a sales deck."] } },

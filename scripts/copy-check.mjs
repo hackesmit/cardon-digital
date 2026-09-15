@@ -558,9 +558,15 @@ function matchShapes(strings, shapes, locale, allowed) {
         if (m[0].length === 0) { shape.re.lastIndex++; continue; }
         if (allowed && allowed.has(s.value)) {
           used.add(s.value);
-          const ranges = exempt.get(s) ?? [];
+          // Keyed by the string VALUE, not the string object. A dictionary that
+          // repeats one allowlisted line (monte-xanic.ts holds "Harvest timing
+          // anticipated, not guessed." at :89 and :130) is one editorial
+          // decision used twice, not two contrasts. Keying by object counted it
+          // twice and left that page with no green state at all, since one slot
+          // failed the cap and two slots failed config validation.
+          const ranges = exempt.get(s.value) ?? [];
           ranges.push([m.index, m.index + m[0].length]);
-          exempt.set(s, ranges);
+          exempt.set(s.value, ranges);
           continue;
         }
         hits.push({ shape: shape.id, line: s.line, text: excerpt(text, m.index, m[0].length) });

@@ -35,9 +35,23 @@ Blocking (exit 1):
   is more than a clause away. In Spanish: `no es` or `no son` followed by an
   article or `otro` (`No es otra suscripcion`, `no son el precio de entrada`),
   plus `no solo`, `, sino `, `no otra` and `no otro`.
+  Known limitation, deliberate and recorded rather than quietly carried: every
+  multi-word shape is matched per extracted string, and a template substitution
+  splits its string in two. So `This is not ${product} but certainty.` reads to
+  the matcher as `This is not ` and ` but certainty.`, two unrelated fragments,
+  and passes clean in both languages. Fixing it properly means matching across
+  segment boundaries, which is a rewrite of the matcher rather than a patch. It
+  is not being fixed because the threat model does not need it: this linter
+  exists to catch Claudisms written without noticing, and those are written as
+  plain literals. Nobody reaches for a template substitution mid-sentence by
+  accident. If you find yourself writing one that happens to straddle a banned
+  shape, that is the moment to rewrite the sentence, not to route around the
+  gate.
 - More deliberate contrast than the allowlist allows. The cap is counted in
   occurrences, not in allowlist entries, so one allowlisted string cannot carry
-  three contrasts through.
+  three contrasts through. One string reused across several dictionary entries
+  is one editorial decision and counts once, however many times the page uses
+  it; identical strings merge before the count.
 - Em dashes. Zero, per the repo hook.
 - Anything the extractor cannot read, at any depth. A locale declaration whose
   initializer is not a string, template, array or object literal fails loudly
