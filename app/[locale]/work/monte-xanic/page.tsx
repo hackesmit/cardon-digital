@@ -5,6 +5,7 @@ import VineyardMap from "@/components/pages/case/VineyardMap";
 import BerryToBottle from "@/components/pages/case/BerryToBottle";
 import PlayOnceVis from "@/components/pages/case/PlayOnceVis";
 import CaseFacts from "@/components/pages/case/CaseFacts";
+import SpotlightFrames from "@/components/pages/case/SpotlightFrames";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -40,8 +41,14 @@ export function generateMetadata({ params }: Params): Metadata {
  * readiness curve was a fixed, non-interactive line that restated a claim the
  * copy already makes, and unlike the map it carried no honesty label on the
  * frame, so it was the one illustrative visual a reader could mistake for a
- * measurement. SpotlightFrames was a cursor-following glow on the frames:
- * decoration, a pointermove listener per frame, and nothing a visitor came for.
+ * measurement.
+ *
+ * SpotlightFrames was removed with them as decoration, and Daniel reversed
+ * that: a copy bead never deletes a visual, and retiring one is his decision
+ * alone. It is back, mounted below, with the .vine-stage glow it feeds
+ * restored in case.css. The two mechanism diagrams and the readiness curve are
+ * still out and are his call, not this bead's, so they are on the bead rather
+ * than quietly gone.
  *
  * The map's numbers stay invented and say so on the frame, which is the
  * doctrine's own rule for a demo (section 5) and the disclaimer it cites
@@ -286,6 +293,10 @@ export default function MonteXanicCaseStudy({ params }: Params) {
           </Reveal>
         </div>
       </section>
+
+      {/* Cursor-follow glow on every framed visual. Effect only, renders
+          nothing, and reads no dictionary key. */}
+      <SpotlightFrames />
     </main>
   );
 }
