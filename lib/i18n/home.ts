@@ -1,446 +1,308 @@
 import type { Dict } from "./rich";
 
-/** Home page copy. Spanish is written for a Valle winemaker, not translated. */
+/**
+ * Home page copy.
+ *
+ * The architecture is docs/copy-doctrine.md section 4: hero, proof bar, the
+ * Monte Xanic case, the objections, what you get, how it works, compare,
+ * pricing, diagnostic. Monte Xanic leads because it is the strongest asset on
+ * the site and it used to sit in section six inside a map.
+ *
+ * Two rules this file is read against, and both are easy to break by accident:
+ * every claim is the result the owner ends up with rather than the software we
+ * write, and the only figure published here is Monte Xanic's own (about an
+ * hour of finance work, about two minutes now, about 97 percent less), which
+ * lib/i18n/monte-xanic.ts already carries with its basis. No other number is
+ * ours to print.
+ *
+ * Spanish is written for a Valle winemaker and is the authoritative version.
+ * English is written for a US owner. Neither is a translation of the other.
+ *
+ * The primary call to action is site.ts `diag.cta`, used verbatim everywhere
+ * it appears, so the page repeats one action rather than four phrasings of it.
+ */
 
 const en = {
   meta: {
-    title: "Cardon Digital | Growth systems built to hold water",
+    title: "Cardon Digital | Your harvest and your books, current every morning",
     description:
-      "Ads, website, and operations wired into one connected system your team ends up owning. Bilingual growth systems for owner-run businesses in the US and Mexico.",
+      "Monte Xanic went from about an hour of finance work by hand to about two minutes. We build the system a Valle winery runs on and owns.",
   },
   hero: {
     aria: "Introduction",
-    eyebrow: "Automation studio, Baja California",
-    title: "Your harvest, your cellar, your books.",
-    titleAccent: "One living system.",
-    sub: "Weights, lab samples, tank moves, and the books usually live in notebooks and spreadsheets that never agree. We wire them into one connected system your winery reads from and ends up owning. **Make your numbers true, then compound.**",
-    cta: "Get the free Growth Diagnostic",
-    ctaGhost: "Built for wineries",
+    eyebrow: "Wineries, Valle de Guadalupe and Ensenada",
+    title: "Your harvest and your books,",
+    titleAccent: "current every morning.",
+    sub: "Monte Xanic spent about an hour assembling one financial view by hand. It takes about two minutes now, refreshed through the day. We build that for your winery, and you keep it.",
+    risk: "The diagnostic is free and the memo is yours either way.",
   },
-  value: {
-    aria: "What that is worth to you",
-    srTitle: "What it is worth to you",
+  proof: {
+    aria: "Wineries already built for",
+    read: "Read the case",
     items: [
       {
-        key: "Work that runs itself",
-        lead: "Manual routines, __turned into work that runs itself.__",
-        body: "We find the jobs your team does by hand every week, measure what they cost you in hours, and make them run on their own. Then we compound the hours you get back.",
+        name: "Monte Xanic",
+        place: "Valle de Guadalupe",
+        result: "An hour of finance work, now about two minutes",
       },
       {
-        key: "Yours to keep",
-        lead: "The system stays yours, __keys and all.__",
-        body: "Source, data, domains, credentials, and a team trained to run it. Pause the care retainer and nothing switches off, because you own it.",
-      },
-      {
-        key: "Both markets",
-        lead: "Two languages, __both written natively.__",
-        body: "The US and Mexico, in English and Spanish, not translated after the fact.",
+        name: "Vinedo En'kanto",
+        place: "San Antonio de las Minas",
+        result: "Store, restaurant and rooms on one system, built",
       },
     ],
   },
-  tools: {
-    kicker: "02 / Tools",
-    title: "Tools your team actually runs, and owns.",
-    sub1: "We build custom workflows and internal tools your team uses every day, **integrated end to end**, trained into the business, and yours to keep. Underneath them all sits one data warehouse: every channel, file, and system combined into clean, organized fields that feed everything you see. Where it helps, we add an assistant trained on your own data, so you can ask your business a question and get an answer from your numbers. Separate parts, spreadsheets, dashboards, and forms become one working board with no per-seat subscription to babysit.",
-    sub2: "The build is a **scoped fixed fee**, agreed before work starts. After handoff, most owners keep a monthly **care retainer**: corrections, refinements, and the changes that shape the system around how your team actually uses it. Pause it whenever you want; everything keeps running and stays yours.",
-    sub3: "That assistant answers in plain language and shows its work. Ask it what a lab number did last week and it returns the record it read, with the date and the lot. If the record does not exist, it says so. It never fills a gap with a plausible number, because a plausible number is worse than none.",
-    note: "Model: **trained in and owned,** not another subscription.",
-    visTag: "parts wired into one board",
-    visAria:
-      "Separate modular parts are placed and wired into one working board.",
+  xanic: {
+    kicker: "Case study",
+    title: "An hour of finance work, about two minutes now.",
+    body: "The harvest lived in a production system, spreadsheets and a field notebook, and someone assembled the picture by hand. Now Monte Xanic opens one live view of the season, tied to its own vineyard sections.",
+    stats: [
+      { n: "About 1 hour", k: "before, by hand" },
+      { n: "About 2 minutes", k: "now, refreshed through the day" },
+      { n: "About 97 percent less", k: "time on that one view" },
+    ],
+    basis: "Timed by hand before the build. No Monte Xanic production, sales or financial figures are published.",
+    read: "Read the Monte Xanic case",
+    cellarCap: "Taken once at the barrel, and the finance view is already current.",
+    cellarAlt: "A winemaker taking a reading on a tablet, at the barrel.",
+    tankCap: "Written at the tank in seconds, and never copied out again.",
+    tankAlt: "A hand writing a tank record on a tablet.",
+    play: "Play the clip",
+    pause: "Pause the clip",
   },
-  demand: {
-    kicker: "03 / Demand",
-    title: "Demand you can trust, before you optimize it.",
-    sub: "We run Google Ads with the rigor of the most sophisticated agencies, using what the platforms actually allow, and **paid for inside the monthly service fee**, never as a share of what you spend. Your ad budget goes from you straight to Google. Before anyone tunes a campaign, we check whether the numbers coming in are real, so every decision after that rests on something true. Offline conversions, call and chat tracking, structured testing with kill rules: the same measurement discipline the biggest performance shops run, sized for owner-run businesses.",
-    note: "Pricing: **inside the monthly service fee, never a share of your spend.** Your budget goes straight to Google.",
-    visTag: "measured before optimized",
-    visAria:
-      "A single reading is checked against a measured baseline and settles to a verified state.",
-    signalIn: "SIGNAL IN",
-    measured: "MEASURED",
-    checking: "checking the numbers",
-    verified: "verified, safe to optimize",
-    reading: "reading",
-    fee: "inside the monthly fee, not a share of spend",
-  },
-  compare: {
-    kicker: "Cardon vs the usual stack",
-    title: "Not another subscription.",
-    sub: "Most software rents you a seat and shapes your operation around itself; we build the system around how you already work, prove your numbers, and hand your team the keys.",
-    cardon: "Cardon",
-    usual: "The usual stack",
-    rows: [
+  familiar: {
+    kicker: "Objections",
+    title: "Sound familiar?",
+    items: [
       {
-        dim: "Ownership",
-        cardon: "You own the system, keys and all.",
-        usual: "You rent it forever.",
+        q: "The report I get is already a week old.",
+        a: "Yours refreshes through the day, so this morning's number is this morning's.",
       },
       {
-        dim: "Fit",
-        cardon: "Built around how your operation already works.",
-        usual: "Your operation bent around the tool.",
+        q: "My team will never take up another system.",
+        a: "The record is written once, where the work happens.",
       },
       {
-        dim: "Data",
-        cardon: "One warehouse of your numbers, and it is yours.",
-        usual: "Scattered across ten apps that do not talk.",
-      },
-      {
-        dim: "People",
-        cardon: "Senior hands on five accounts, who know yours.",
-        usual: "A ticket queue and a new name each time.",
-      },
-      {
-        dim: "Price shape",
-        cardon:
-          "A scoped setup fee, then one monthly service fee that includes the ads.",
-        usual: "Per-seat fees, every month, forever.",
-      },
-      {
-        dim: "Intelligence",
-        cardon: "An assistant trained on your own data.",
-        usual: "Generic features built for everyone.",
+        q: "I paid for software once and it left with the agency.",
+        a: "The code, the data and the keys are yours, and they stay yours.",
       },
     ],
-    footBefore: "Want to see which side your current stack is on? The ",
-    footLink: "free Growth Diagnostic",
-    footAfter: " shows you.",
   },
-  sectors: {
-    kicker: "Industries",
-    title: "The terrains we know.",
-    sub: "This is the domain we have built for and understand end to end. The winery valley is the ground we work every week, and the two cases on the map are wineries we have already built for.",
-    leadKicker: "Primary industry",
-    leadTitle: "Wineries, Valle de Guadalupe and Ensenada.",
-    leadBody:
-      "This is the practice. We build the system a winery runs on, from harvest weights and lab results to the tasting room and the books, and we are down the road when it needs a hand.",
-    leadCta: "Open the winery page",
-    foot: "Two cases built. In focus: **the winery valley.**",
-  },
-  /**
-   * Pricing, wired to the module model (research/2026-09/pricing-modules.md).
-   * The retired bundles and the placeholder floor slot are both gone: an entry
-   * price never travels away from the build that produced it, so the figures
-   * live on /precios and this section carries the shape and points at them.
-   * The modules read in catalogue order, matching /modulos, because with no
-   * figures beside them that is the order a reader meets them in.
-   */
-  pricing: {
-    kicker: "What it costs",
-    title: "Three modules. Two fees, and the system is yours.",
-    sub: "The setup fee pays for the build, and you own what we build. The monthly service fee pays for running it: hosting, care, corrections, the report, and the assistant. **You buy the modules you run on, at the size your operation is.**",
-    modules: [
+  gets: {
+    kicker: "What you get",
+    title: "Three parts of the operation, one record.",
+    items: [
       {
         name: "Produccion",
-        scale: "01",
-        time: "The record",
-        body: "What you grew, made and sold, dated and attributed, with the comparison, the report and the assistant built over it.",
+        title: "Know what you grew, made and sold",
+        body: "Every lot dated and attributed, from the block to the bottle.",
       },
       {
         name: "Hospitalidad",
-        scale: "02",
-        time: "The calendar",
-        body: "Every booking from every channel in one calendar, the day view the property works from, and the guest kept between stays.",
+        title: "Fill the rooms two calendars left empty",
+        body: "Every booking from every channel in one calendar.",
       },
       {
         name: "Restaurante",
-        scale: "03",
-        time: "The floor",
-        body: "The point of sale, from the waiter's phone to the cash cut, with the invoice request captured on the ticket.",
+        title: "Close the day with the cash already counted",
+        body: "The order starts on the waiter's phone and ends in the cash cut.",
       },
     ],
-    moreLead:
-      "Each module has a published entry price, setup and monthly, and the combination and annual rules are stated as the policy they are.",
-    more: "See pricing",
+    phoneCap: "The same record, written from the vineyard on the phone your team carries.",
+    phoneAlt: "A phone in the vineyard with the day's view on screen.",
+    more: "See the modules",
+  },
+  how: {
+    kicker: "How it works",
+    title: "From first session to a system your team runs.",
+    steps: [
+      { k: "01", body: "The diagnostic. Ten business days, one written memo." },
+      { k: "02", body: "The build. A scoped fixed fee, agreed before anyone starts." },
+      { k: "03", body: "The handover. Your team trained, the keys in your hands." },
+    ],
+  },
+  compare: {
+    kicker: "Compare",
+    title: "What you own when it is finished.",
+    cardon: "Cardon",
+    usual: "The usual stack",
+    yes: "Yes",
+    no: "No",
+    rows: [
+      { dim: "Ownership", cardon: "Yours, keys and all", usual: "Rented forever" },
+      { dim: "Fit", cardon: "Built around how you work", usual: "Your work bent to the tool" },
+      { dim: "Data", cardon: "One record, yours", usual: "Ten apps that disagree" },
+      { dim: "People", cardon: "The same hands", usual: "A ticket queue" },
+      { dim: "Price", cardon: "Setup once, then one monthly fee", usual: "Per seat, every month" },
+      { dim: "Answers", cardon: "An assistant that reads your records", usual: "Generic features" },
+    ],
+  },
+  pricing: {
+    kicker: "What it costs",
+    title: "Two fees, and the system is yours.",
+    sub: "The setup fee pays for the build, and you own it. The monthly fee pays for running it: hosting, care and corrections.",
     foot: [
       {
-        k: "The monthly fee",
-        body: "Hosting, monitoring, care, corrections, the monthly report and its readout, and fair use of the assistant. **Pause it and nothing switches off,** because you own the system.",
+        k: "Ads",
+        body: "Ad management attaches to Hospitalidad and Restaurante, inside the monthly fee. Your budget goes from you straight to Google.",
       },
       {
-        k: "Ad management",
-        body: "It attaches to the Hospitalidad and Restaurante modules and sits **inside the monthly service fee**, never a share of what you spend. The ad budget goes from you straight to Google.",
-      },
-      {
-        k: "Payment",
-        body: "Setup is 50 percent on signature and 50 percent on acceptance, and the signature half can go in three monthly payments at no extra cost. The service fee runs month to month, 30 days notice either way. **Quoted and billed in pesos, plus IVA.**",
+        k: "Terms",
+        body: "Quoted in pesos, plus IVA. Setup is half on signature and half on acceptance. The signature half can go in three monthly payments.",
       },
     ],
+    moreLead: "Every module has a published entry price.",
+    more: "See pricing",
     founding: {
       kicker: "Founding winery",
       lead: "**One founding winery, through 31 December 2026: the Produccion module at the mid-size build, for its entry price.**",
-      body: "One slot, not a running discount, and it does not stack with anything. In exchange we ask for two things, written into the agreement: a named case study with the real before-and-after numbers, and two introductions to other wineries in the Valle. Whoever signs first takes it, and this comes off the site.",
-    },
-  },
-  vis: {
-    hero: {
-      tagBefore: "notebooks in",
-      tagMid: "one view out",
-      connecting: "connecting",
-      oneSystem: "one system",
-      fallback:
-        "Scattered documents, spreadsheets, invoices, email, and messages settle into clean rows around one connected panel your team owns.",
-      panelTitle: "One system",
-      panelSummary: "SUMMARY",
-      docs: [
-        { name: "sales.xlsx", tag: "XLSX" },
-        { name: "leads.csv", tag: "CSV" },
-        { name: "expenses.xlsx", tag: "XLSX" },
-        { name: "invoice.pdf", tag: "PDF" },
-        { name: "receipt", tag: "RECEIPT" },
-        { name: "whatsapp", tag: "MSG" },
-      ],
-      rows: [
-        { k: "SALES", v: "live" },
-        { k: "LEADS", v: "ready" },
-        { k: "EXPENSES", v: "matched" },
-        { k: "PAYMENTS", v: "3 today" },
-        { k: "MARGIN", v: "34%" },
-        { k: "CLOSE", v: "current" },
-      ],
-    },
-    map: {
-      legend: "Terrains we know: the winery valley and two cases",
-      hub: "One system",
-      scale: "Baja California and the US border",
-      listAria: "Terrains we know",
-      stationsHead: "Stations built",
-      focus: "Focus terrain",
-      caseStudy: "Case study:",
-      wineryName: "Winery / Valle de Guadalupe",
-      wineryDetail: "harvest and finances, one view",
-      wineryAria:
-        "Winery, Valle de Guadalupe. Harvest and finances in one view. Open the winery page.",
-      xanicAria: "Read the Monte Xanic case study, from berry to bottle.",
-      enkantoAria: "Read the Vinedo En'kanto case study, the commerce side.",
+      body: "One slot. In exchange: a named case with the real before and after numbers, and two introductions in the Valle.",
     },
   },
   diagnostic: {
-    desc: "Ten business days looking at your ads, your site, and your operations as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
-    specs: [
-      "**Day 1.** A working session on your ads, your site, and your operations.",
-      "**Days 2 to 9.** We dig: accounts, measurement, workflows, the numbers behind the numbers.",
-      "**Day 10.** The memo lands: what is true, what is broken, what to build first.",
-      "**Free, with no strings.** Act on it with us or without us. If we build, pricing is agreed up front.",
-    ],
+    desc: "Ten business days on your ads, your site and your operation. A written memo: what is true, what is broken, what to build first.",
   },
 };
 
 const es: typeof en = {
   meta: {
-    title: "Cardon Digital | El sistema con el que trabaja su bodega",
+    title: "Cardon Digital | Su cosecha y sus cuentas, al corriente cada mañana",
     description:
-      "Cosecha, laboratorio, tanques y cuentas en un solo sistema que su bodega lee todos los días y termina siendo suyo. Hecho en Baja California, en español, para el Valle de Guadalupe y Ensenada.",
+      "Monte Xanic pasó de como una hora de trabajo financiero a mano a como dos minutos. Construimos el sistema con el que opera una bodega del Valle, y la bodega se queda con él.",
   },
   hero: {
     aria: "Presentación",
-    eyebrow: "Estudio de automatización, Baja California",
-    title: "Su cosecha, su bodega, sus cuentas.",
-    titleAccent: "Un solo sistema.",
-    sub: "Los pesos, las muestras de laboratorio, los movimientos de tanque y las cuentas viven en libretas y hojas de cálculo que nunca coinciden. Nosotros los reunimos en un solo sistema del que su bodega lee todos los días y que termina siendo suyo. **Primero los números ciertos. Lo demás se acumula.**",
-    cta: "Pida el Diagnóstico, sin costo",
-    ctaGhost: "Hecho para bodegas",
+    eyebrow: "Bodegas del Valle de Guadalupe y Ensenada",
+    title: "Su cosecha y sus cuentas,",
+    titleAccent: "al corriente cada mañana.",
+    sub: "A Monte Xanic le tomaba como una hora armar a mano una vista financiera. Hoy le toma como dos minutos y se actualiza durante el día. Eso construimos para su bodega, y se queda con usted.",
+    risk: "El diagnóstico va sin costo y el informe es suyo, construyamos o no.",
   },
-  value: {
-    aria: "Lo que esto vale para usted",
-    srTitle: "Lo que esto vale para usted",
+  proof: {
+    aria: "Bodegas para las que ya construimos",
+    read: "Ver el caso",
     items: [
       {
-        key: "Trabajo que se hace solo",
-        lead: "Las tareas manuales, __convertidas en trabajo que se hace solo.__",
-        body: "Buscamos las tareas que su equipo hace a mano cada semana, medimos cuántas horas le cuestan y las dejamos corriendo solas. Después seguimos con la siguiente, y las horas que recupera se van acumulando.",
+        name: "Monte Xanic",
+        place: "Valle de Guadalupe",
+        result: "Una hora de trabajo financiero, hoy como dos minutos",
       },
       {
-        key: "Suyo, y se queda",
-        lead: "El sistema es suyo, __con llaves y todo.__",
-        body: "El código, los datos, los dominios, los accesos y su equipo entrenado para operarlo. Si pausa el mantenimiento no se apaga nada, porque el sistema es de usted.",
-      },
-      {
-        key: "Los dos mercados",
-        lead: "Dos idiomas, __cada uno escrito por separado.__",
-        body: "México y Estados Unidos, en español y en inglés. Ninguno es la traducción del otro.",
+        name: "Viñedo En'kanto",
+        place: "San Antonio de las Minas",
+        result: "Tienda, restaurante y habitaciones en un sistema, ya construido",
       },
     ],
   },
-  tools: {
-    kicker: "02 / Herramientas",
-    title: "Herramientas que su equipo usa, y que son suyas.",
-    sub1: "Construimos los flujos de trabajo y las herramientas internas que su equipo abre todos los días, **integradas de principio a fin**, enseñadas al negocio y suyas para quedarse. Debajo de todas hay un solo almacén de datos: cada canal, archivo y sistema reunidos en campos limpios y ordenados que alimentan todo lo que usted ve. Donde ayuda, agregamos un asistente que responde sobre sus propios registros, para que pueda preguntarle a su negocio y la respuesta salga de sus números. Las piezas sueltas, las hojas de cálculo, los tableros y los formatos se vuelven un solo tablero de trabajo, sin suscripción por usuario que andar cuidando.",
-    sub2: "La construcción es una **cuota fija con alcance definido**, acordada antes de empezar. Después de la entrega, la mayoría de los dueños conserva un **mantenimiento mensual**: correcciones, ajustes y los cambios que le van dando forma al sistema según cómo lo usa su equipo. Puede pausarlo cuando quiera; todo sigue funcionando y sigue siendo suyo.",
-    sub3: "Ese asistente responde en lenguaje claro y enseña de dónde salió la respuesta. Pregúntele qué hizo un dato de laboratorio la semana pasada y le devuelve el registro que leyó, con fecha y lote. Si el registro no existe, lo dice. Nunca rellena un hueco con un número verosímil, porque un número verosímil es peor que ninguno.",
-    note: "El modelo: **enseñado a su equipo y suyo,** no otra suscripción.",
-    visTag: "piezas conectadas en un solo tablero",
-    visAria:
-      "Piezas sueltas se colocan y se conectan en un solo tablero de trabajo.",
+  xanic: {
+    kicker: "Caso de estudio",
+    title: "Una hora de trabajo financiero, hoy como dos minutos.",
+    body: "La cosecha vivía en un sistema de producción, en hojas de cálculo y en una libreta de campo, y alguien armaba la foto a mano. Hoy Monte Xanic abre una sola vista viva de la temporada, amarrada a sus propios cuadros.",
+    stats: [
+      { n: "Como 1 hora", k: "antes, a mano" },
+      { n: "Como 2 minutos", k: "hoy, actualizados durante el día" },
+      { n: "Como 97 por ciento menos", k: "tiempo en esa vista" },
+    ],
+    basis: "Cronometrado a mano antes de la construcción. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
+    read: "Ver el caso de Monte Xanic",
+    cellarCap: "Se toma una vez, en la barrica, y la vista financiera ya quedó al corriente.",
+    cellarAlt: "Un enólogo toma una lectura en una tableta, en la barrica.",
+    tankCap: "Se anota en el tanque en segundos y nadie lo vuelve a capturar.",
+    tankAlt: "Una mano anota el registro de un tanque en una tableta.",
+    play: "Reproducir el video",
+    pause: "Pausar el video",
   },
-  demand: {
-    kicker: "03 / Demanda",
-    title: "Demanda confiable, antes de ajustarla.",
-    sub: "Manejamos Google Ads con el rigor de las agencias más serias, con lo que las plataformas de verdad permiten, y **pagados dentro de la cuota mensual del servicio**, nunca como porcentaje de lo que usted invierte. Su inversión en anuncios la paga usted directo a Google. Antes de que alguien mueva una campaña revisamos si los números que entran son reales, para que toda decisión posterior descanse en algo cierto. Conversiones fuera de línea, seguimiento de llamadas y de chat, pruebas ordenadas con reglas de corte: la misma disciplina de medición de las agencias de resultados más grandes, a la medida de un negocio con dueño.",
-    note: "Precio: **dentro de la cuota mensual del servicio, nunca un porcentaje de su inversión.** Su presupuesto va directo a Google.",
-    visTag: "medido antes de ajustar",
-    visAria:
-      "Una lectura se compara contra una línea base medida y se asienta en un estado verificado.",
-    signalIn: "SEÑAL",
-    measured: "MEDIDO",
-    checking: "revisando los números",
-    verified: "verificado, ya se puede ajustar",
-    reading: "lectura",
-    fee: "dentro de la cuota mensual, no un porcentaje",
-  },
-  compare: {
-    kicker: "Cardon frente a lo de siempre",
-    title: "No es otra suscripción.",
-    sub: "Casi todo el software le renta un lugar y le acomoda la operación a su manera. Nosotros construimos el sistema alrededor de cómo usted ya trabaja, comprobamos sus números y le entregamos las llaves a su equipo.",
-    cardon: "Cardon",
-    usual: "Lo de siempre",
-    rows: [
+  familiar: {
+    kicker: "Objeciones",
+    title: "¿Le suena?",
+    items: [
       {
-        dim: "Propiedad",
-        cardon: "El sistema es suyo, con llaves y todo.",
-        usual: "Lo renta para siempre.",
+        q: "El reporte que me llega ya trae una semana encima.",
+        a: "El suyo se actualiza durante el día, así que el número de la mañana es de esa mañana.",
       },
       {
-        dim: "Ajuste",
-        cardon: "Hecho alrededor de cómo ya trabaja su operación.",
-        usual: "Su operación doblada al molde de la herramienta.",
+        q: "Mi gente nunca va a usar otro sistema.",
+        a: "El registro se anota una sola vez, donde ya se hace el trabajo.",
       },
       {
-        dim: "Datos",
-        cardon: "Un solo almacén con sus números, y es suyo.",
-        usual: "Repartidos en diez aplicaciones que no se hablan.",
-      },
-      {
-        dim: "Personas",
-        cardon: "Manos con experiencia en cinco cuentas, y conocen la suya.",
-        usual: "Una fila de reportes y un nombre distinto cada vez.",
-      },
-      {
-        dim: "Forma del precio",
-        cardon:
-          "Una cuota de implementación con alcance definido, y después una sola cuota mensual que incluye los anuncios.",
-        usual: "Una cuota por usuario, cada mes, para siempre.",
-      },
-      {
-        dim: "Inteligencia",
-        cardon: "Un asistente que responde sobre sus propios registros.",
-        usual: "Funciones genéricas hechas para cualquiera.",
+        q: "Ya pagué un software y se fue con la agencia.",
+        a: "El código, los datos y los accesos son suyos, y suyos se quedan.",
       },
     ],
-    footBefore: "¿Quiere saber de qué lado está lo que usa hoy? El ",
-    footLink: "Diagnóstico, sin costo",
-    footAfter: " se lo enseña.",
   },
-  sectors: {
-    kicker: "Sectores",
-    title: "Los terrenos que conocemos.",
-    sub: "Este es el terreno en el que hemos construido y que entendemos de principio a fin. El valle de las bodegas es el terreno que trabajamos cada semana, y los dos casos del mapa son bodegas para las que ya construimos.",
-    leadKicker: "Sector principal",
-    leadTitle: "Bodegas del Valle de Guadalupe y Ensenada.",
-    leadBody:
-      "Aquí está el trabajo. Construimos el sistema con el que opera una bodega, desde los pesos de cosecha y los resultados de laboratorio hasta la sala de degustación y las cuentas, y estamos a unos minutos cuando hace falta una mano.",
-    leadCta: "Ver la página de bodegas",
-    foot: "Dos casos construidos. En foco: **el valle de las bodegas.**",
-  },
-  pricing: {
-    kicker: "Lo que cuesta",
-    title: "Tres módulos. Dos cuotas, y el sistema es suyo.",
-    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La cuota mensual del servicio paga operarlo: hospedaje, cuidado, correcciones, el informe y el asistente. **Usted compra los módulos que opera, del tamaño que es su operación.**",
-    modules: [
+  gets: {
+    kicker: "Lo que se lleva",
+    title: "Tres partes de la operación, un solo registro.",
+    items: [
       {
         name: "Producción",
-        scale: "01",
-        time: "El registro",
-        body: "Lo que cultivó, elaboró y vendió, fechado y atribuido, con la comparación, el informe y el asistente construidos encima.",
+        title: "Sepa qué cultivó, qué elaboró y qué vendió",
+        body: "Cada lote fechado y atribuido, del cuartel a la botella.",
       },
       {
         name: "Hospitalidad",
-        scale: "02",
-        time: "El calendario",
-        body: "Cada reserva de cada canal en un solo calendario, la vista del día desde la que trabaja la propiedad, y el huésped conservado entre estancias.",
+        title: "Llene los cuartos que dos calendarios dejaron vacíos",
+        body: "Cada reserva de cada canal en un solo calendario.",
       },
       {
         name: "Restaurante",
-        scale: "03",
-        time: "El piso",
-        body: "El punto de venta, del teléfono del mesero al corte de caja, con la solicitud de factura capturada en el ticket.",
+        title: "Cierre el día con el efectivo ya contado",
+        body: "La comanda nace en el teléfono del mesero y termina en el corte.",
       },
     ],
-    moreLead:
-      "Cada módulo tiene su precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas como la política que son.",
-    more: "Ver precios",
+    phoneCap: "El mismo registro, anotado desde el viñedo en el teléfono que su gente trae.",
+    phoneAlt: "Un teléfono en el viñedo con la vista del día en pantalla.",
+    more: "Ver los módulos",
+  },
+  how: {
+    kicker: "Cómo funciona",
+    title: "De la primera sesión al sistema que opera su equipo.",
+    steps: [
+      { k: "01", body: "El diagnóstico. Diez días hábiles y un informe escrito." },
+      { k: "02", body: "La construcción. Cuota fija con alcance acordado antes de empezar." },
+      { k: "03", body: "La entrega. Su equipo entrenado y las llaves en su mano." },
+    ],
+  },
+  compare: {
+    kicker: "Comparar",
+    title: "Con qué se queda cuando terminamos.",
+    cardon: "Cardon",
+    usual: "Lo de siempre",
+    yes: "Sí",
+    no: "No",
+    rows: [
+      { dim: "Propiedad", cardon: "Suyo, con llaves y todo", usual: "Rentado para siempre" },
+      { dim: "Ajuste", cardon: "Hecho alrededor de cómo trabaja", usual: "Su trabajo doblado a la herramienta" },
+      { dim: "Datos", cardon: "Un solo registro, suyo", usual: "Diez aplicaciones que se contradicen" },
+      { dim: "Personas", cardon: "Siempre las mismas manos", usual: "Una fila de tickets" },
+      { dim: "Precio", cardon: "Implementación una vez y una cuota mensual", usual: "Una cuota por usuario, cada mes" },
+      { dim: "Respuestas", cardon: "Un asistente que lee sus registros", usual: "Funciones genéricas" },
+    ],
+  },
+  pricing: {
+    kicker: "Lo que cuesta",
+    title: "Dos cuotas, y el sistema es suyo.",
+    sub: "La cuota de implementación paga la construcción, y lo construido queda suyo. La mensual paga operarlo: hospedaje, cuidado y correcciones.",
     foot: [
       {
-        k: "La cuota mensual",
-        body: "Hospedaje, monitoreo, cuidado, correcciones, el informe mensual y su lectura, y uso razonable del asistente. **Si la pausa no se apaga nada,** porque el sistema es suyo.",
+        k: "Anuncios",
+        body: "El manejo de anuncios se agrega a Hospitalidad y Restaurante, dentro de la cuota mensual. Su inversión la paga usted directo a Google.",
       },
       {
-        k: "Manejo de anuncios",
-        body: "Se agrega a los módulos de Hospitalidad y Restaurante y va **dentro de la cuota mensual del servicio**, nunca como porcentaje de lo que usted invierte. La inversión en anuncios la paga usted directo a Google.",
-      },
-      {
-        k: "Pago",
-        body: "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación, y la mitad de la firma puede ir en tres mensualidades sin recargo. La cuota del servicio va mes con mes, con 30 días de aviso de cualquiera de las dos partes. **Cotizado y facturado en pesos, más IVA.**",
+        k: "Condiciones",
+        body: "Cotizado en pesos, más IVA. La implementación se paga mitad a la firma y mitad a la aceptación. La mitad de la firma puede ir en tres mensualidades.",
       },
     ],
+    moreLead: "Cada módulo tiene su precio de entrada publicado.",
+    more: "Ver precios",
     founding: {
       kicker: "Bodega fundadora",
-      lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción con la construcción del tamaño mediano, al precio de entrada.**",
-      body: "Un solo lugar, no un descuento permanente, y no se acumula con nada. A cambio pedimos dos cosas, escritas en el acuerdo: un caso con nombre y los números reales de antes y después, y dos presentaciones con otras bodegas del Valle. Se lo lleva quien firme primero, y esto se quita del sitio.",
-    },
-  },
-  vis: {
-    hero: {
-      tagBefore: "entran libretas",
-      tagMid: "sale una vista",
-      connecting: "conectando",
-      oneSystem: "un solo sistema",
-      fallback:
-        "Documentos sueltos, hojas de cálculo, facturas, correos y mensajes se acomodan en renglones limpios alrededor de un solo panel conectado que su equipo posee.",
-      panelTitle: "Un sistema",
-      panelSummary: "RESUMEN",
-      docs: [
-        { name: "ventas.xlsx", tag: "XLSX" },
-        { name: "prospectos.csv", tag: "CSV" },
-        { name: "gastos.xlsx", tag: "XLSX" },
-        { name: "factura.pdf", tag: "PDF" },
-        { name: "recibo", tag: "RECIBO" },
-        { name: "whatsapp", tag: "MSG" },
-      ],
-      rows: [
-        { k: "VENTAS", v: "al día" },
-        { k: "PROSPECTOS", v: "listos" },
-        { k: "GASTOS", v: "conciliados" },
-        { k: "PAGOS", v: "3 hoy" },
-        { k: "MARGEN", v: "34%" },
-        { k: "CIERRE", v: "al corriente" },
-      ],
-    },
-    map: {
-      legend: "Terrenos que conocemos: el valle de las bodegas y dos casos",
-      hub: "Un sistema",
-      scale: "Baja California y la frontera con Estados Unidos",
-      listAria: "Terrenos que conocemos",
-      stationsHead: "Estaciones construidas",
-      focus: "Terreno en foco",
-      caseStudy: "Caso de estudio:",
-      wineryName: "Bodegas / Valle de Guadalupe",
-      wineryDetail: "cosecha y cuentas, una vista",
-      wineryAria:
-        "Bodegas, Valle de Guadalupe. Cosecha y cuentas en una sola vista. Abrir la página de bodegas.",
-      xanicAria: "Lea el caso de Monte Xanic, de la baya a la botella.",
-      enkantoAria: "Lea el caso de Viñedo En'kanto, el lado comercial.",
+      lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción con la construcción mediana, a su precio de entrada.**",
+      body: "Un solo lugar. A cambio: un caso con nombre y los números reales de antes y después, y dos presentaciones en el Valle.",
     },
   },
   diagnostic: {
-    desc: "Diez días hábiles revisando sus anuncios, su sitio y su operación como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",
-    specs: [
-      "**Día 1.** Una sesión de trabajo sobre sus anuncios, su sitio y su operación.",
-      "**Días 2 a 9.** Escarbamos: cuentas, medición, flujos de trabajo y los números detrás de los números.",
-      "**Día 10.** Llega el informe: qué es cierto, qué está roto y qué construir primero.",
-      "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda desde el principio.",
-    ],
+    desc: "Diez días hábiles sobre sus anuncios, su sitio y su operación. Un informe escrito: qué es cierto, qué está roto y qué construir primero.",
   },
 };
 
