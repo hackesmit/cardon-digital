@@ -584,7 +584,7 @@ describe("the mix example's ranking sentence tracks the quote, not the dict", ()
    */
   const expected = {
     en: "All three at their entry size, ranked by build price: Restaurante at full price, Hospitalidad second, Produccion third.",
-    es: "Los tres en su tamaño de entrada, ordenados por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercero.",
+    es: "Los tres en su tamaño de entrada, ordenados por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercer lugar.",
   } as const;
 
   it.each(["en", "es"] as const)(
