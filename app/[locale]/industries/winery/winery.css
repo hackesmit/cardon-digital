@@ -67,13 +67,6 @@
 .pg-winery .cap-num{font-family:var(--mono);font-size:0.68rem;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;}
 .pg-winery .cap-card h3{font-size:1.16rem;letter-spacing:-0.02em;line-height:1.16;position:relative;z-index:2;}
 .pg-winery .cap-body{color:var(--text-dim);font-size:0.95rem;position:relative;z-index:2;}
-.pg-winery .cap-note{
-  margin-top:auto;padding-top:12px;border-top:1px solid var(--line-soft);position:relative;z-index:2;
-  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--muted);
-}
-.pg-winery .cap-note b{color:var(--primary);font-weight:600;}
-.pg-winery .cap-card.accent-gold .cap-note b{color:var(--secondary);}
-.pg-winery .cap-card.accent-wine .cap-note b{color:var(--wine-bright);}
 
 /* ---- what is leaking: the gap list ---- */
 .pg-winery .leak-grid{
@@ -97,10 +90,6 @@
 .pg-winery .leak-item h3{font-size:1.08rem;letter-spacing:-0.02em;line-height:1.18;position:relative;z-index:2;}
 .pg-winery .leak-item p{color:var(--text-dim);font-size:0.95rem;position:relative;z-index:2;}
 .pg-winery .leak-item p b{color:var(--text);font-weight:600;}
-.pg-winery .leak-foot{
-  margin-top:clamp(18px,2vw,24px);max-width:74ch;
-  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--muted);line-height:1.5;
-}
 
 /* ---- proof: the case study artifact ---- */
 .pg-winery .proof{overflow:hidden;}
@@ -129,7 +118,6 @@
 .pg-winery .btn-proof::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wine-ink);opacity:0.85;}
 .pg-winery .btn-proof:hover{background:var(--wine-bright);border-color:var(--wine-bright);box-shadow:0 0 0 4px var(--wine-faint);}
 .pg-winery .btn-proof:active{transform:translateY(1px);}
-.pg-winery .proof-meta{margin-top:14px;font-family:var(--mono);font-size:0.76rem;letter-spacing:0.04em;color:var(--muted);}
 
 /* the artifact: a sealed label medallion */
 .pg-winery .proof-art{position:relative;z-index:2;display:flex;justify-content:center;min-width:0;}
@@ -152,14 +140,20 @@
   position:absolute;inset:12px;border-radius:50%;border:1px dashed var(--wine-line);opacity:0.55;
 }
 
-/* ---- photo band ---- */
+/* ---- photography ----
+   Every slot is a <Media>, so the frame, the ratio and the caption come from
+   components/site/media.css and from the shot list in that component. Nothing
+   here restates a ratio: the slot owns it, which is what keeps the box the
+   page reserves and the file the shoot delivers the same shape. This file adds
+   only the placement. */
 .pg-winery .photo-slot{padding:clamp(10px,2vw,20px) 0 0;}
-.pg-winery .photoband{
-  position:relative;margin:0;overflow:hidden;
-  border:1px solid var(--line);border-radius:2px;
-  aspect-ratio:16 / 7;box-shadow:var(--shadow);
+.pg-winery .media-band .media-frame{box-shadow:var(--shadow);}
+/* The cellar and the tasting room sit side by side and keep their own ratios
+   (3 / 2 and 4 / 3), so the row is aligned at the top rather than stretched. */
+.pg-winery .media-pair{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,22px);
+  align-items:start;
 }
-.pg-winery .photoband-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 
 /* ============================ RESPONSIVE ============================ */
 @media (max-width:900px){
@@ -170,9 +164,7 @@
 @media (max-width:640px){
   .pg-winery .cap-grid{grid-template-columns:1fr;gap:16px;}
   .pg-winery .leak-grid{grid-template-columns:1fr;gap:14px;}
-  /* portrait-appropriate photo band: a designed, bounded frame, never a giant
-     empty panel. The aspect gives it shape and the max-height caps it. */
-  .pg-winery .photoband{aspect-ratio:4 / 3;max-height:min(56vh,420px);border-radius:2px;}
+  .pg-winery .media-pair{grid-template-columns:1fr;gap:18px;}
 }
 /* ---- hero visual: portrait compact composition (see VineField compact mode).
    The VineField JS switches to the compact composition when its measured canvas
