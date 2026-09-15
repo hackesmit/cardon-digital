@@ -17,18 +17,20 @@ import {
 } from "./palette";
 import {
   bands,
+  CAPTION_KEYS,
   captionKeyFor,
   clockLabel,
   COV,
   CYCLE,
   cycleFrame,
+  isPhonePlan,
   MAX_COV,
   PEAK_T,
   PEAK_V,
-  PHONE_MAX,
   READOUTS,
   RUSH_T,
   SERVICE,
+  STANDING_CYC,
   TABLES,
   type TableDef,
 } from "./floor";
@@ -543,16 +545,28 @@ export default function RestauranteDemo() {
     /** The fullest point of the evening, curve drawn up to the peak and the
         rush marker shown. This is reduced motion, it is what a paused board
         shows, and it is the same minute the running loop holds on, so the demo
-        never has two different ideas of what its best frame is. */
+        never has two different ideas of what its best frame is.
+
+        It parks the loop's clock on the frame it draws rather than drawing
+        PEAK_T behind the clock's back. Round two left cycT where the loop had
+        stopped, so scrolling away at 18:10 snapped the board forward to 19:55
+        and scrolling back jumped it to 18:10 again (reviewer s-3b55, note 4).
+        STANDING_CYC is the first frame of the hold, so a resumed loop holds
+        the room the visitor arrived on and then restarts, rather than dipping
+        to 15 percent opacity the moment it resumes. */
     const resolved = () => {
-      setCaption(PEAK_T);
-      drawScene(PEAK_T, false, 1);
+      cycT = STANDING_CYC;
+      const f = cycleFrame(cycT);
+      setCaption(f.t);
+      drawScene(f.t, f.showChips, f.fade);
     };
 
     const frame = (now: number) => {
       if (!running) return;
       raf = requestAnimationFrame(frame);
       if (now - last < 32) return;
+      /* the ratio can move under a running loop with no resize and no event */
+      if ((window.devicePixelRatio || 1) !== lastDpr) resize();
       let dt = (now - last) / 1000;
       last = now;
       if (dt > 0.05) dt = 0.05;
@@ -602,20 +616,34 @@ export default function RestauranteDemo() {
 
     /** The figure's content box, which is exactly what demos.css queries: its
         container-type is inline-size and a size query reads the content box,
-        so this is the one number both sides judge the plan by. */
+        so this is the one number both sides judge the plan by.
+
+        Fractional, from the border box rect. clientWidth is rounded to an
+        integer, which rounded a real 639.25px content box up to 640 and picked
+        the wide plan while the stylesheet, reading the fractional box, stayed
+        on the phone one (reviewer s-3b55, BLOCKING 2). The rect is the border
+        box, so the border comes off as well as the padding. */
     const figureContentWidth = () => {
       const cs = window.getComputedStyle(figureEl);
+      const px = (v: string) => parseFloat(v || "0") || 0;
       return (
-        figureEl.clientWidth -
-        parseFloat(cs.paddingLeft || "0") -
-        parseFloat(cs.paddingRight || "0")
+        figureEl.getBoundingClientRect().width -
+        px(cs.paddingLeft) -
+        px(cs.paddingRight) -
+        px(cs.borderLeftWidth) -
+        px(cs.borderRightWidth)
       );
     };
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
-      phone = figureContentWidth() < PHONE_MAX;
+      /* The plan is decided on the figure's content box and nothing else,
+         because that is the box demos.css queries. The canvas rect above is
+         the drawing width, and the two are the same number only because
+         .demo-stage adds no padding or border: that coupling is named in
+         demos.css and checked by demos.test.ts (reviewer s-3b55, note 3). */
+      phone = isPhonePlan(figureContentWidth());
       /* published so a probe or a test can read which plan the component
          chose and hold it against the plan the stylesheet applied */
       frameEl.dataset.plan = phone ? "phone" : "wide";
@@ -623,6 +651,7 @@ export default function RestauranteDemo() {
       H = bands(W, phone).height;
       canvas.style.height = H + "px";
       ctx = fitCanvas(canvas, W, H);
+      lastDpr = window.devicePixelRatio || 1;
       layout();
       positionReadouts();
       if (!running) resolved();
@@ -633,6 +662,37 @@ export default function RestauranteDemo() {
     const onResize = () => {
       window.clearTimeout(rt);
       rt = window.setTimeout(resize, 140);
+    };
+
+    /* Device pixel ratio can change without the window resizing: a laptop
+       moved to an external monitor, or the browser zoomed. fitCanvas caps the
+       ratio at 2 and is only called from resize(), so round two rasterised the
+       rest of the page's life at the old ratio, which is a blurry board on the
+       new screen (lucy, round two).
+
+       Two answers, because neither covers the other's case. A resolution media
+       query is the event the platform offers, and it has to be re-armed every
+       time because the query encodes the ratio it was built with; it is the
+       only thing that reaches a demo standing on its static frame. And the
+       running loop compares the ratio itself, which costs one property read
+       per frame and is the half a headless browser can actually demonstrate:
+       CDP's device metrics override moves devicePixelRatio and the media
+       query's own matches, but dispatches no change event, so the listener
+       path cannot be driven in a probe. state/review/s-0b4b/dpr.mjs is the
+       measurement and dpr-debug.mjs is why it drives the loop rather than the
+       listener. */
+    let lastDpr = window.devicePixelRatio || 1;
+    let dprMQ: MediaQueryList | null = null;
+    const onDpr = () => {
+      armDpr();
+      resize();
+    };
+    const armDpr = () => {
+      if (dprMQ) dprMQ.removeEventListener("change", onDpr);
+      dprMQ = window.matchMedia(
+        "(resolution: " + (window.devicePixelRatio || 1) + "dppx)"
+      );
+      dprMQ.addEventListener("change", onDpr);
     };
     /* Every one of these asks the same question, canRun(), and answers it the
        same way: animate, or stand on the static frame. */
@@ -655,6 +715,7 @@ export default function RestauranteDemo() {
     };
 
     resize();
+    armDpr();
 
     /* The observer is installed whatever the motion preference is. Being on
        screen is a fact about the page, not an animation setting, and only
@@ -676,8 +737,14 @@ export default function RestauranteDemo() {
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver((entries) => {
-        const w = Math.round(entries[entries.length - 1].contentRect.width);
-        if (w === roW) return;
+        /* contentRect.width is the fractional content box, the same number
+           the container query judges by. Rounding it is enough to ignore
+           sub-pixel churn, except across the breakpoint, where 639.6 and
+           640.2 round to the same integer and are different floor plans: so
+           a plan change is a resize whatever the rounded width says. */
+        const exact = entries[entries.length - 1].contentRect.width;
+        const w = Math.round(exact);
+        if (w === roW && isPhonePlan(exact) === phone) return;
         roW = w;
         onResize();
       });
@@ -700,6 +767,7 @@ export default function RestauranteDemo() {
       document.removeEventListener("visibilitychange", onVisibility);
       reduceMQ.removeEventListener("change", onReduce);
       window.removeEventListener("cardon-mode", onMode);
+      if (dprMQ) dprMQ.removeEventListener("change", onDpr);
     };
   }, [vis]);
 
@@ -759,7 +827,10 @@ export default function RestauranteDemo() {
               board is never drawn and the hotspots never answer, so the
               written description below is the whole figure rather than a
               caption under an empty canvas (lucy, round two). */}
-          <style>{".demo-canvas,.rd-btn{display:none}"}</style>
+          {/* The hint goes with them: it tells the visitor to choose a table
+              and this rule has just removed every table there is to choose
+              (reviewer s-3b55, note 2). */}
+          <style>{".demo-canvas,.rd-btn,.demo-hint{display:none}"}</style>
           <div className="demo-fallback">{vis.fallback}</div>
         </noscript>
       </div>
@@ -773,8 +844,23 @@ export default function RestauranteDemo() {
           <span className="demo-pick-v">{vis.tables[READOUTS[picked].kind]}</span>
           <span className="demo-pick-d mono">{detail(picked)}</span>
         </p>
-        <span className="demo-caption mono" ref={captionRef} aria-hidden="true">
-          {vis.captions.begins}
+        {/* The caption box holds every caption the loop can write, stacked in
+            one grid cell with all but the live one invisible, so the strip is
+            as wide and as tall as the longest caption at every container width
+            and in both locales. Round two wrote the live caption straight into
+            a wrapping flex row, and because the four phases are different
+            lengths the figure shrank 31px at one phase change and grew it back
+            at the next, twice per cycle, for the life of the page (reviewer
+            s-3b55, BLOCKING 1). */}
+        <span className="demo-caption-box mono" aria-hidden="true">
+          <span className="demo-caption" ref={captionRef}>
+            {vis.captions.begins}
+          </span>
+          {CAPTION_KEYS.map((k) => (
+            <span className="demo-caption-ghost" key={k}>
+              {vis.captions[k]}
+            </span>
+          ))}
         </span>
       </div>
       <p className="demo-hint mono">{vis.hint}</p>
