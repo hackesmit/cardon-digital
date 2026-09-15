@@ -178,23 +178,44 @@ describe("the copy doctrine, on the rendered page", () => {
   ]);
 
   function renderedText(locale: Locale): string {
-    const html = renderToStaticMarkup(
-      React.createElement(EnkantoCaseStudy, { params: { locale } }),
-    );
-    return html
+    const stripped = html(locale)
       // <svg> holds label text that is laid out, never flowed: keep each
       // label on its own line rather than running them into a sentence.
       .replace(/<(\/?)([a-z0-9-]+)[^>]*>/gi, (_m, _slash, tag: string) =>
         INLINE.has(tag.toLowerCase()) ? "" : "\n",
       )
+      .replace(/[ \t]+/g, " ")
+      .replace(/\n{2,}/g, "\n");
+    return decode(stripped);
+  }
+
+  function decode(value: string): string {
+    return value
       .replace(/&#x27;|&apos;/g, "'")
       .replace(/&quot;/g, '"')
       .replace(/&#x2F;/g, "/")
       .replace(/&lt;/g, "<")
       .replace(/&gt;/g, ">")
-      .replace(/&amp;/g, "&")
-      .replace(/[ \t]+/g, " ")
-      .replace(/\n{2,}/g, "\n");
+      .replace(/&amp;/g, "&");
+  }
+
+  function html(locale: Locale): string {
+    return renderToStaticMarkup(
+      React.createElement(EnkantoCaseStudy, { params: { locale } }),
+    );
+  }
+
+  /** Every alt, aria-label and title the page renders, decoded. */
+  function accessibleText(locale: Locale): string[] {
+    const found: string[] = [];
+    // exec in a loop rather than matchAll: this project's tsconfig target
+    // cannot iterate the iterator matchAll returns.
+    const re = /(?:alt|aria-label|title)="([^"]*)"/g;
+    const markup = html(locale);
+    for (let m = re.exec(markup); m !== null; m = re.exec(markup)) {
+      if (m[1].trim() !== "") found.push(decode(m[1]));
+    }
+    return found;
   }
 
   for (const locale of locales) {
@@ -206,7 +227,15 @@ describe("the copy doctrine, on the rendered page", () => {
       // in two neighbouring blocks: a case fact key and its value, an index and
       // a lead. Splitting on the line alone left that gap open while claiming
       // to close it (cross-vendor review, round one).
-      const runs = [...text.split("\n"), text.replace(/\n/g, " ")];
+      const runs = [
+        ...text.split("\n"),
+        text.replace(/\n/g, " "),
+        // Accessible names are copy too, and they are the one place a shape can
+        // be assembled out of sight of both gates: the dictionary checker sees
+        // the fragments and renderedText() throws attributes away with the tags
+        // (cross-vendor review, round two).
+        ...accessibleText(locale),
+      ];
       const hits: string[] = [];
       for (const shape of BLOCKING_SHAPES as Array<{
         id: string;
@@ -238,10 +267,8 @@ describe("the copy doctrine, on the rendered page", () => {
     });
 
     it(`${locale}: every photograph and video carries a caption`, () => {
-      const html = renderToStaticMarkup(
-        React.createElement(EnkantoCaseStudy, { params: { locale } }),
-      );
-      const figures = html.match(/<figure class="media[^]*?<\/figure>/g) ?? [];
+      const markup = html(locale);
+      const figures = markup.match(/<figure class="media[^]*?<\/figure>/g) ?? [];
       // the restaurant side, the lodging side, and the clip where they meet
       expect(figures).toHaveLength(3);
       for (const figure of figures) {
@@ -250,6 +277,12 @@ describe("the copy doctrine, on the rendered page", () => {
         );
         expect(caption?.[1]?.trim()).toBeTruthy();
       }
+      // and nothing else on the page is a picture. Counting the figures only
+      // proves the three slots are there; an uncaptioned <img> dropped in
+      // beside them, which is what this page carried before the rewrite,
+      // passed that count (cross-vendor review, round two).
+      const rest = markup.replace(/<figure class="media[^]*?<\/figure>/g, "");
+      expect(rest).not.toMatch(/<(img|video|picture)\b/);
     });
 
     it(`${locale}: one call to action, in the site's own words, repeated`, () => {

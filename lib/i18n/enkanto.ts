@@ -50,7 +50,7 @@ const en = {
       "The pass at service. The screen we built takes the order as the waiter wrote it, once, with its own clock.",
     passAlt: "A ticket going out at the pass, the screen in its working position.",
     videoCap:
-      "A restaurant charge lands on the room. The desk reads the total and never writes one.",
+      "A restaurant charge posted to a room, in the system we built. The desk reads that total and never writes one.",
     videoAlt: "A tablet at the table, then the guest folio at the desk.",
     honest:
       "Photographs of En'kanto. The system described in these captions is built and not yet in service there.",
@@ -75,12 +75,12 @@ const en = {
     ],
     basisK: "Basis",
     basis:
-      "No En'kanto revenue figure is published here, and no result from the system's use, because it is not in service there yet. The other numbers are counts of the build on 9 September 2026: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions, and the five homepages we unpublished.",
+      "No En'kanto revenue figure is published here, and no result from the system's use, because it is not in service there yet. The counts of the build on 9 September 2026 are: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions, and the five homepages we unpublished.",
   },
   before: {
     kicker: "Before",
     title: "Three businesses on one property, and nothing holding them together.",
-    p1: "Vinedo En'kanto sits in San Antonio de las Minas: a boutique winery, rooms for people who want to wake up in the Valle, and a restaurant. Three lines, one place.",
+    p1: "En'kanto sits in San Antonio de las Minas: a boutique winery, rooms for people who want to wake up in the Valle, and a restaurant. Three lines, one place.",
     p2: "Online, the store existed in name only: products with no price, no way to ship, five homepages competing for the same visitor. The order went on a pad and the bookings arrived in as many places as there were channels.",
   },
   changed: {
@@ -100,7 +100,7 @@ const en = {
       },
       {
         lead: "Paid the way people here pay.",
-        body: "Card and cash both reach a placed order, so the checkout stops being where a sale quietly dies.",
+        body: "Card and cash both reach a placed order, so the checkout stops being where a sale dies.",
       },
       {
         lead: "A bottle reaches a door inside Mexico.",
@@ -227,7 +227,7 @@ const es: typeof en = {
       "El pase en servicio. La pantalla que construimos recibe la comanda como la escribió el mesero, una sola vez, con su propio reloj.",
     passAlt: "Una comanda saliendo en el pase, con la pantalla en su lugar de trabajo.",
     videoCap:
-      "Un cargo del restaurante cae en la habitación. La recepción lee el total y nunca escribe uno.",
+      "Un cargo del restaurante aplicado a una habitación, en el sistema que construimos. La recepción lee ese total y nunca escribe uno.",
     videoAlt: "Una tableta en la mesa y luego la cuenta del huésped en recepción.",
     honest:
       "Fotos de En'kanto. El sistema que describen estos pies de foto está construido y todavía no está en servicio ahí.",
@@ -252,7 +252,7 @@ const es: typeof en = {
     ],
     basisK: "Base",
     basis:
-      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los demás números son de la construcción al 9 de septiembre de 2026: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal, y las cinco páginas de inicio que despublicamos.",
+      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los conteos de la construcción al 9 de septiembre de 2026 son: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal, y las cinco páginas de inicio que despublicamos.",
   },
   before: {
     kicker: "Antes",
