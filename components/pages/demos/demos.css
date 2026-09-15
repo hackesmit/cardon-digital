@@ -253,6 +253,20 @@
   border-top: 1px solid var(--line-soft);
   font-size: 0.86rem;
 }
+/* Held open by every readout at once, for the reason .demo-caption-box is:
+   the box a changing value is drawn in does not change size. The trigger here
+   is a tap rather than the loop, and "Mesa grande / seis lugares" is long
+   enough to wrap where the shorter names do not, which moved the figure 31px
+   under the visitor's finger. */
+.demo-pick-box {
+  display: grid;
+}
+.demo-pick-box > * {
+  grid-area: 1 / 1;
+}
+.demo-pick-ghost {
+  visibility: hidden;
+}
 .demo-pick {
   display: flex;
   align-items: baseline;
