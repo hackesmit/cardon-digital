@@ -56,7 +56,7 @@ const en = {
       alt: "Work in the cellar, the system within reach",
     },
     tasting: {
-      cap: "The guest who signed up here hears from you next week.",
+      cap: "The guest who signed up here still hears from you after the visit.",
       alt: "A tasting room in use, a pour in progress",
     },
   },
@@ -80,12 +80,12 @@ const en = {
       {
         num: "02",
         h: "The visit is the last they hear from you.",
-        body: "The club is won at the counter, with a glass in hand, and lost in the week after. By the time anyone writes, the visit has gone cold.",
+        body: "The club is won at the counter, with a glass in hand. Then nothing happens, and by the time anyone writes the visit has gone cold.",
       },
       {
         num: "03",
         h: "Four subscriptions that never talk.",
-        body: "Production tools, a club platform and a commerce plugin each bill every month, and you reconcile them by hand.",
+        body: "Production tools, a club platform, a reservations page and a commerce plugin each bill every month, and you reconcile them by hand.",
       },
     ],
   },
@@ -249,7 +249,7 @@ const es: typeof en = {
       alt: "Trabajo en la bodega, con el sistema a la mano",
     },
     tasting: {
-      cap: "El huésped que se dio de alta aquí sabe de usted a la semana.",
+      cap: "El huésped que se dio de alta aquí sigue sabiendo de usted después de la visita.",
       alt: "Una sala de degustación en uso, con una copa servida",
     },
   },
@@ -273,12 +273,12 @@ const es: typeof en = {
       {
         num: "02",
         h: "La visita es lo último que sabe de usted.",
-        body: "El club se gana en el mostrador, con la copa en la mano, y se pierde en la semana que sigue. Para cuando alguien escribe, la visita ya se enfrió.",
+        body: "El club se gana en el mostrador, con la copa en la mano. Después no pasa nada, y para cuando alguien escribe la visita ya se enfrió.",
       },
       {
         num: "03",
         h: "Cuatro suscripciones que nunca se hablan.",
-        body: "La herramienta de producción, la plataforma del club y la tienda cobran cada mes. Usted los concilia a mano, o nadie lo hace.",
+        body: "La herramienta de producción, la plataforma del club, la página de reservas y la tienda cobran cada mes. Usted los concilia a mano.",
       },
     ],
   },
