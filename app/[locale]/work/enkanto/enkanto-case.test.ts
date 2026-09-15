@@ -463,6 +463,22 @@ describe("the visuals this page may not lose", () => {
     return found;
   }
 
+  /**
+   * Only the parts of the page that ARE a visual: the frames with their
+   * diagrams, the honesty line the invented card carries, and the cellar band
+   * with its caption. This is the scope a visual's own strings have to appear
+   * in, because the page's prose says several of the same things in longer
+   * words and would vouch for a label that is no longer drawn.
+   */
+  function visualMarkup(locale: Locale): string {
+    const markup = html(locale);
+    return [
+      ...blocks(markup, 'vis-frame[^"]*'),
+      ...(markup.match(/<p class="vis-honest[^"]*">[^]*?<\/p>/g) ?? []),
+      ...(markup.match(/<figure class="photoband">[^]*?<\/figure>/g) ?? []),
+    ].join("\n");
+  }
+
   for (const locale of locales) {
     it(`${locale}: draws all ${DRAWN_VISUALS} diagrams, each in a frame with a name`, () => {
       const markup = html(locale);
@@ -667,7 +683,12 @@ describe("the visuals this page may not lose", () => {
         // sits somewhere else in the file and the gate stays green
         // (cross-vendor review). The source check stays as the second half,
         // because it is the one that names the key when a locale goes quiet.
-        const rendered = decodeEntities(html(locale));
+        //
+        // Scoped to the visuals rather than the whole page, which its own
+        // control forced: "personal allowance" is a label on the shipping
+        // diagram AND a phrase in the change body next to it, so deleting the
+        // label left the page still containing the string.
+        const rendered = decodeEntities(visualMarkup(locale));
         for (const path of paths(enkanto[locale].vis)) {
           const value = path
             .split(".")
