@@ -11,9 +11,20 @@
  * custom property like --muted or --energy-bright is declared as a color-mix(),
  * and getComputedStyle hands back the substituted token sequence, not an rgb
  * triple, so it cannot be parsed. Only the six raw hex tokens (ground, panel,
- * text, primary, secondary, energy) are readable. Everything else is mixed
- * again here with the same ratios app/globals.css uses, which is what keeps a
- * canvas value and its CSS twin identical.
+ * text, primary, secondary, energy) are readable, so everything derived is
+ * mixed again here.
+ *
+ * Which of those mixes are the CSS value and which are deliberately not, since
+ * this file is a contract the other two demos inherit and round one claimed
+ * more than it kept (reviewer note 1). --muted and the three --*-bright
+ * accents are the tokens: same ratios, byte-identical output, and
+ * demos.test.ts reads app/globals.css and fails if either side is edited
+ * alone. line and lineSoft take the alphas of --line and --line-soft, 0.22 and
+ * 0.12, over the canvas kit's hairline hue, which is what every other canvas
+ * visual on the site already strokes with, so the demos match the home visuals
+ * rather than a CSS border. axis, floor, plate, accentInk and the accent
+ * alphas have no CSS twin at all: a 9px mono label and a 1px stroke need their
+ * own contrast, and each says so on its field below.
  *
  * Light mode is the design default: the shell ships data-mode="light" on the
  * html element, so the fallbacks below are the light tokens and every derived
@@ -69,7 +80,10 @@ const BRIGHT_MIX: Record<DemoHue, number> = {
 };
 
 /** Token fallbacks, per mode, for the case where the element is not yet in a
-    styled tree. Light first, because light is the default the site ships. */
+    styled tree. Light first, because light is the default the site ships.
+    These are the six hex tokens of app/globals.css copied into JS, which is a
+    second source of truth by construction (reviewer note 2); demos.test.ts
+    parses globals.css and fails if a mode's six ever drift apart. */
 const FALLBACK: Record<"light" | "dark", Record<string, string>> = {
   light: {
     ground: "#EDE7D6",
@@ -119,6 +133,7 @@ export interface DemoPalette {
   muted: string;
 
   lineRgb: RGB;
+  /** The alphas of --line and --line-soft over the kit's hairline hue. */
   line: string;
   lineSoft: string;
 
@@ -158,6 +173,7 @@ export function readDemoPalette(el: HTMLElement, hue: DemoHue): DemoPalette {
   const accent = mix(token(hue), text, BRIGHT_MIX[hue]);
   const floor = mix(panel, text, 0.08);
   const plate = mix(panel, text, dark ? 0.18 : 0.15);
+  /* the hairline hue canvasKit.readPalette strokes the home visuals with */
   const lineRgb = mix(primary, text, 0.35);
 
   return {
@@ -175,8 +191,8 @@ export function readDemoPalette(el: HTMLElement, hue: DemoHue): DemoPalette {
     axis: rgba(mix(text, panel, 0.28), 1),
     muted: rgba(mix(text, panel, 0.48), 1),
     lineRgb,
-    line: rgba(lineRgb, 0.3),
-    lineSoft: rgba(lineRgb, 0.16),
+    line: rgba(lineRgb, 0.22),
+    lineSoft: rgba(lineRgb, 0.12),
     accentRgb: accent,
     accent: rgba(accent, 1),
     accentSoft: rgba(accent, 0.85),
