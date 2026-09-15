@@ -382,6 +382,14 @@
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
   gap:clamp(20px,3vw,40px);align-items:start;
 }
+/* The demo is a figure so its honest label can sit outside the role="img"
+   element, where a screen reader still reaches it. Same type as the label on
+   every other demo frame on the site (.demo-honest, .ms-honest). */
+.pg-winery .assist-figure{margin:0;min-width:0;}
+.pg-winery .assist-honest{
+  display:block;margin-bottom:10px;
+  font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
+}
 @media (max-width:900px){
   .pg-winery .assist-grid{grid-template-columns:1fr;}
 }

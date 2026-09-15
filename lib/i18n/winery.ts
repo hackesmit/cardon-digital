@@ -41,8 +41,8 @@ const en = {
     aria: "Winery introduction",
     eyebrow: "Industries / Winery",
     title: "You make the wine.",
-    titleAccent: "The system keeps the numbers.",
-    sub: "Stop rebuilding the season from memory. One view your winery reads from daily and ends up owning.",
+    titleAccent: "The season keeps itself.",
+    sub: "Stop rebuilding the harvest from memory. Read the season at a glance, and own the record.",
   },
   /** Every photograph on the page. The caption carries the result; the alt
    *  describes the frame for a reader who cannot see it. */
@@ -79,8 +79,8 @@ const en = {
       },
       {
         num: "02",
-        h: "The visit is the last the guest hears from you.",
-        body: "Over 90 percent of club signups happen in the tasting room, and follow-up inside 48 hours converts best. Most wineries answer late.",
+        h: "The visit is the last they hear from you.",
+        body: "The club is won at the counter, with a glass in hand, and lost in the week after. By the time anyone writes, the visit has gone cold.",
       },
       {
         num: "03",
@@ -91,7 +91,7 @@ const en = {
   },
   caps: {
     kicker: "What we build",
-    title: "What your winery has on day one.",
+    title: "What your winery ends up with.",
     cards: [
       {
         num: "01",
@@ -131,7 +131,7 @@ const en = {
       aria: "A winery dashboard and an assistant. Each answer names its record, and the second reports no data.",
       boardTitle: "Cellar view",
       live: "LIVE",
-      chartK: "Brix, Cabernet Sauvignon",
+      chartK: "Brix, Cabernet",
       chartV: "24.3 Bx",
       rows: [
         { k: "Berry sampling", v: "28 Aug 2026" },
@@ -204,7 +204,7 @@ const en = {
     tagBefore: "scattered records",
     tagMid: "wired into",
     tagAfter: "one view",
-    aria: "Notebooks, spreadsheets and a legacy system empty into one channel that fills a bottle, and the ledger turns live.",
+    aria: "Notebooks, spreadsheets and a legacy system empty into one channel that fills a bottle. The ledger turns live.",
     fallback: "Scattered records, wired into one cellar view.",
     header: "One cellar view",
     current: "CURRENT",
@@ -218,7 +218,7 @@ const en = {
     ledgerNowText: "one view, synced ",
   },
   diagDesc:
-    "Ten business days on your harvest data, your ads and your books as one system, and a memo: what is true, what is broken, what to build first.",
+    "Ten business days on your harvest data, your ads and your books, and a memo: what is true, what is broken, what to build first.",
   diagSpecs: [
     { k: "Day 1", v: "A working session on your vineyard, your cellar, your ads and your books." },
     { k: "Days 2 to 9", v: "We dig: the data, the measurement, the manual routines." },
@@ -236,8 +236,8 @@ const es: typeof en = {
     aria: "Presentación para bodegas",
     eyebrow: "Sectores / Bodegas",
     title: "El vino lo hace usted.",
-    titleAccent: "Los números los guarda el sistema.",
-    sub: "Deje de reconstruir la temporada de memoria. Una sola vista que su bodega lee a diario y termina siendo suya.",
+    titleAccent: "La temporada se lleva sola.",
+    sub: "Deje de reconstruir la cosecha de memoria. Lea la temporada de un vistazo, y quédese con el registro.",
   },
   media: {
     vineyard: {
@@ -272,8 +272,8 @@ const es: typeof en = {
       },
       {
         num: "02",
-        h: "La visita es lo último que el huésped sabe de usted.",
-        body: "Más del 90 por ciento de las altas al club pasan en la sala, y el seguimiento dentro de 48 horas convierte mejor. La mayoría contesta tarde.",
+        h: "La visita es lo último que sabe de usted.",
+        body: "El club se gana en el mostrador, con la copa en la mano, y se pierde en la semana que sigue. Para cuando alguien escribe, la visita ya se enfrió.",
       },
       {
         num: "03",
@@ -284,7 +284,7 @@ const es: typeof en = {
   },
   caps: {
     kicker: "Lo que construimos",
-    title: "Lo que su bodega tiene desde el primer día.",
+    title: "Con lo que se queda su bodega.",
     cards: [
       {
         num: "01",
@@ -324,7 +324,7 @@ const es: typeof en = {
       aria: "Un tablero de bodega y un asistente. Cada respuesta nombra su registro, y la segunda reporta que no hay dato.",
       boardTitle: "Vista de bodega",
       live: "AL DÍA",
-      chartK: "Brix, Cabernet Sauvignon",
+      chartK: "Brix, Cabernet",
       chartV: "24.3 Bx",
       rows: [
         { k: "Muestreo de bayas", v: "28 ago 2026" },
