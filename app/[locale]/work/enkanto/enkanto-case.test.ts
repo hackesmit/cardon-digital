@@ -695,8 +695,13 @@ describe("the visuals this page may not lose", () => {
             .reduce<unknown>((acc, k) => (acc as Record<string, unknown>)[k], enkanto[locale].vis);
           expect(typeof value, `${path} is not a string`).toBe("string");
           expect((value as string).trim(), `${path} is blank`).toBeTruthy();
-          expect(pageCode, `${path} is in the dictionary and nothing reads it`)
-            .toContain(`v.${path}`);
+          // As a JSX expression container, `{v.a.b}`, never as a mention.
+          // Control H replaces a drawn <text> with `{void v.shipping.allowance}`
+          // and a bare toContain passed it. The rendered half below passed it
+          // too, because that diagram's accessible name quotes the same phrase,
+          // which is the visual describing a label it no longer draws.
+          expect(pageCode, `${path} is in the dictionary and nothing draws it`)
+            .toContain(`{v.${path}}`);
           expect(rendered, `${path} is read by the page and never reaches it`)
             .toContain(value as string);
         }
