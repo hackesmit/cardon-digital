@@ -146,8 +146,10 @@ ffmpeg -i xanic/harvest-intake.mp4 -vframes 1 -q:v 2 /tmp/poster.png
 cwebp -q 80 /tmp/poster.png -o xanic/harvest-intake-poster.webp
 ```
 
-The poster frame is not optional. It is the whole of what a phone shows until
-the video is tapped, and the whole of what a reduced-motion visitor sees.
+The poster frame is not optional. It is what a phone shows until the video is
+tapped, and what a reduced-motion visitor sees until they press play. Either
+way it is the frame a lot of people will only ever see, so choose it as you
+would choose a still.
 
 Budgets, because the pages are read on phone data in the Valle: under 400 KB
 for a photograph, under 4 MB for a video, sRGB, no embedded colour profile

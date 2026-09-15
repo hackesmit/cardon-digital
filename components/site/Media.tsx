@@ -225,7 +225,7 @@ export function mediaFile(kind: MediaKind, slot: string): string {
   return `/media/${slot}.${kind === "video" ? "mp4" : "webp"}`;
 }
 
-/** The frame a video shows before it plays, and all a phone shows until a tap. */
+/** The frame a video shows before it plays, and what a phone shows until a tap. */
 export function posterFile(slot: string): string {
   return `/media/${slot}-poster.webp`;
 }
@@ -254,6 +254,32 @@ export function assertMediaText(slot: string, caption: string, alt: string): voi
         `reader who cannot see it. See public/media/README.md.`,
     );
   }
+}
+
+/**
+ * The control's two words, checked the same way the caption is.
+ *
+ * aria-label is the entire accessible name of the only control on a video, so
+ * a blank one ships a button a screen reader announces as nothing, and an
+ * `any` caller that omits labels altogether used to crash on a property of
+ * undefined rather than say what was wrong (cross-vendor review, round two).
+ */
+export function assertVideoLabels(slot: string, labels: VideoLabels | undefined): VideoLabels {
+  const play = labels?.play;
+  const pause = labels?.pause;
+  if (
+    typeof play !== "string" ||
+    typeof pause !== "string" ||
+    play.trim() === "" ||
+    pause.trim() === ""
+  ) {
+    throw new Error(
+      `Media slot "${slot}": the video control needs a play and a pause label, ` +
+        `in the language of the page. It is the whole accessible name of the ` +
+        `only control on the video.`,
+    );
+  }
+  return { play, pause };
 }
 
 /**
@@ -292,7 +318,16 @@ export function visibleSrc(
   src: string | undefined,
   failedSrc: string | null,
 ): string | undefined {
-  return src !== undefined && src !== failedSrc ? src : undefined;
+  // A wrapper that defaults an unavailable asset to "" would otherwise clear
+  // data-pending and render an empty source, which is neither the picture nor
+  // the brief (cross-vendor review, round two).
+  if (typeof src !== "string" || src.trim() === "") return undefined;
+  return src !== failedSrc ? src : undefined;
+}
+
+/** A blank poster is no poster, so the slot falls back to its own frame file. */
+export function posterFor(slot: string, poster: string | undefined): string {
+  return typeof poster === "string" && poster.trim() !== "" ? poster : posterFile(slot);
 }
 
 /** What the visitor has asked for. "auto" means they have not said. */
@@ -369,6 +404,7 @@ export function posterOverlay(c: {
 
 /** The element the press handler needs. Narrow on purpose, so a test can be one. */
 export type PlayableElement = {
+  readonly paused: boolean;
   play(): Promise<void> | undefined;
   pause(): void;
 };
@@ -417,7 +453,11 @@ export function pressVideo(
   playing: boolean,
   setIntent: (update: IntentUpdate) => void,
 ): void {
-  const { intent, command } = videoPress(playing);
+  // el.paused is authoritative and changes synchronously; the React flag can be
+  // one render behind, so two taps inside a single frame both read "not playing"
+  // and the second one fails to pause (cross-vendor review, round two). The
+  // flag is only the fallback for a press before the element exists.
+  const { intent, command } = videoPress(el ? !el.paused : playing);
   setIntent(intent);
   if (!el) return;
   if (command === "pause") {
@@ -445,6 +485,7 @@ export default function Media(props: MediaProps) {
   const { slot, caption, alt, tone = "tint", className, priority = false } = props;
   const spec = mediaSpec(slot);
   assertMediaText(slot, caption, alt);
+  if (spec.kind === "video") assertVideoLabels(slot, (props as MediaVideoProps).labels);
 
   // A file that 404s falls back to the placeholder rather than to a broken
   // image icon, so a wrong path looks like what it is: a slot still pending.
@@ -480,7 +521,7 @@ export default function Media(props: MediaProps) {
             ratio={spec.ratio}
             alt={alt}
             src={src}
-            poster={props.poster ?? posterFile(props.slot)}
+            poster={posterFor(props.slot, props.poster)}
             labels={props.labels}
             priority={priority}
             onFail={fail}
@@ -626,6 +667,40 @@ function MediaVideo({
     setStored((s) => (s.posterFailed ? s : { ...s, posterFailed: true }));
   }, []);
 
+  // The conditions the policy reads live in refs, not in the effect's closure,
+  // so re-applying the policy never means rebuilding the observers. Round one
+  // keyed the whole effect on the intent, so every press tore the
+  // IntersectionObserver down and rebuilt it with visible back at its initial
+  // value: apply() then paused the video for a frame before the observer said
+  // it was on screen again, which is a visible stutter and left el.paused
+  // lying about the state within that frame.
+  const intentRef = useRef(intent);
+  intentRef.current = intent;
+  const visibleRef = useRef(false);
+
+  const apply = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    const action = videoAction({
+      intent: intentRef.current,
+      visible: visibleRef.current,
+      documentHidden: document.hidden,
+      reduceMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      tapToPlay: window.matchMedia("(hover: none), (pointer: coarse)").matches,
+    });
+    if (action === "pause") {
+      el.pause();
+      return;
+    }
+    const started = el.play();
+    // A refusal (low power mode, an older policy) gives the intent back, so the
+    // control stays live. The poster is still up, and the caption has carried
+    // the claim all along.
+    if (started && typeof started.catch === "function") {
+      started.catch(() => setIntent(videoRefused));
+    }
+  }, [setIntent]);
+
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -644,36 +719,13 @@ function MediaVideo({
     // Without IntersectionObserver the slot counts as on screen, which leaves
     // the rest of the policy (reduced motion, touch, hidden tab) in force.
     const observed = "IntersectionObserver" in window;
-    let visible = !observed;
-
-    function apply() {
-      const el = ref.current;
-      if (!el) return;
-      const action = videoAction({
-        intent,
-        visible,
-        documentHidden: document.hidden,
-        reduceMotion: reduce.matches,
-        tapToPlay: touch.matches,
-      });
-      if (action === "pause") {
-        el.pause();
-        return;
-      }
-      const started = el.play();
-      // A refusal (low power mode, an older policy) gives the intent back, so
-      // the control stays live. The poster is still up, and the caption has
-      // carried the claim all along.
-      if (started && typeof started.catch === "function") {
-        started.catch(() => setIntent(videoRefused));
-      }
-    }
+    if (!observed) visibleRef.current = true;
 
     let io: IntersectionObserver | null = null;
     if (observed) {
       io = new IntersectionObserver(
         (entries) => {
-          for (const entry of entries) visible = entry.isIntersecting;
+          for (const entry of entries) visibleRef.current = entry.isIntersecting;
           apply();
         },
         { threshold: 0.35 },
@@ -692,7 +744,12 @@ function MediaVideo({
       reduce.removeEventListener("change", apply);
       touch.removeEventListener("change", apply);
     };
-  }, [intent, src, onFail, setIntent]);
+  }, [src, onFail, apply]);
+
+  // A change of intent re-applies the policy and nothing else.
+  useEffect(() => {
+    apply();
+  }, [intent, apply]);
 
   const overlay = posterOverlay({ playing, posterFailed });
 
