@@ -266,7 +266,7 @@ const en = {
   },
 
   close: {
-    desc: "Ten working days over your sources, your channels and your floor, and a written memo that is yours either way: what is true, what is broken, and which modules to build first, at what size.",
+    desc: "Ten business days over your sources, your channels and your floor, and a written memo that is yours either way: what is true, what is broken, and which modules to build first, at what size.",
   },
 };
 
