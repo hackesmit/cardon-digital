@@ -64,7 +64,7 @@ const en = {
 
   floors: {
     kicker: "Where each module starts",
-    title: "What each module costs, and what it buys.",
+    title: "What each module starts at, and what that buys.",
     aloneLabel: "bought on its own",
     setupLabel: "To implement",
     monthlyLabel: "Every month",
@@ -81,7 +81,7 @@ const en = {
     monthlyNote:
       "Each monthly is the shared base, charged once per client, plus that module's run cost.",
     demoNote: "The demos run on an invented brand, in a new tab.",
-    note: "An entry price only moves up, never down. **The Diagnostic sets the final quote.**",
+    note: "An entry price only moves up, never down. Below that build there is no system, only a report. **The Diagnostic sets the final quote.**",
     /**
      * Result first, mechanism second, in the home page's own words. `up` and
      * `limit` are what came across from lib/i18n/modulos.ts: the direction the
@@ -92,7 +92,7 @@ const en = {
       produccion: {
         name: "Produccion",
         tag: "Know what you grew, made and sold.",
-        up: "More sources, more origins, a model or finance automation move it up.",
+        up: "More sources, more origins, more prior vintages, a model or finance automation move it up.",
         limit:
           "A grape grower gets a different set at the same rates: blocks, applications, irrigation and deliveries.",
         demo: "Open the Produccion demo",
@@ -197,7 +197,7 @@ const en = {
       "wine-list-wired-to-the-cellar": "the wine list wired to the cellar",
     } as Record<string, string>,
     bridgesNote:
-      "A bridge is quoted on top of these figures, and only where both modules it joins are bought: {list}.",
+      "Each bridge is quoted on top of these figures, and only where both of the modules it joins are bought: {list}.",
     exampleKicker: "Worked example",
     exampleTitle: "A winery with six rooms and a restaurant.",
     // The ranking clause after the colon is composed from the quote's own
@@ -299,7 +299,7 @@ const es: typeof en = {
 
   floors: {
     kicker: "De dónde parte cada módulo",
-    title: "Lo que cuesta cada módulo, y lo que compra.",
+    title: "De cuánto parte cada módulo, y qué trae.",
     aloneLabel: "comprado solo",
     setupLabel: "Implementación",
     monthlyLabel: "Cada mes",
@@ -309,12 +309,12 @@ const es: typeof en = {
     monthlyNote:
       "Cada mensualidad es la base compartida, que se cobra una vez por cliente, más el costo del módulo.",
     demoNote: "Las demos corren sobre una marca inventada, en una pestaña nueva.",
-    note: "Un precio de entrada solo sube, nunca baja. **El Diagnóstico fija la cotización final.**",
+    note: "Un precio de entrada solo sube, nunca baja. Debajo de esa construcción no hay sistema, hay un informe. **El Diagnóstico fija la cotización final.**",
     modules: {
       produccion: {
         name: "Producción",
         tag: "Sepa qué cosechó, qué hizo y qué vendió.",
-        up: "Más fuentes, más orígenes, un modelo o automatización financiera lo suben.",
+        up: "Más fuentes, más orígenes, más añadas anteriores, un modelo o automatización financiera lo suben.",
         limit:
           "Un productor de uva lleva otro conjunto de funciones a las mismas tarifas: cuadros, aplicaciones, riego y entregas.",
         demo: "Abrir la demo de Producción",
@@ -379,7 +379,7 @@ const es: typeof en = {
   mix: {
     kicker: "Más de un módulo",
     title: "Dos módulos, o tres.",
-    sub: "El segundo módulo es una construcción más chica: la capacitación, el asistente, el informe y el ambiente ya están de pie.",
+    sub: "El segundo módulo es una construcción más chica: la capacitación, el asistente, el informe y el ambiente ya están montados.",
     rules: [
       "La base de servicio compartida se cobra una sola vez, sea cual sea la combinación.",
       "En la construcción, el módulo más grande va a precio completo, el segundo con {second} por ciento menos, el tercero con {third} por ciento menos.",
@@ -402,14 +402,14 @@ const es: typeof en = {
       "wine-list-wired-to-the-cellar": "la carta de vinos conectada a la cava",
     } as Record<string, string>,
     bridgesNote:
-      "Un puente se cotiza aparte, encima de estas cifras, y solo donde se compran los dos módulos que une: {list}.",
+      "Cada puente se cotiza aparte, encima de estas cifras, y solo donde se compran los dos módulos que une: {list}.",
     exampleKicker: "Ejemplo trabajado",
     exampleTitle: "Una bodega con seis cuartos y restaurante.",
     exampleLead:
       "Los tres en su tamaño de entrada, ordenados por tamaño de obra:",
     rankFull: "a precio completo",
     rankSecond: "en segundo lugar",
-    rankThird: "en tercero",
+    rankThird: "en tercer lugar",
     figuresLabel: "Los tres módulos juntos, en su tamaño de entrada",
     setupLabel: "Implementación",
     monthlyLabel: "Cada mes",
@@ -461,7 +461,7 @@ const es: typeof en = {
   },
 
   close: {
-    desc: "Diez días hábiles y un informe escrito, suyo en cualquier caso. El Diagnóstico revisa sus números y fija la cotización: qué módulos, de qué tamaño y qué primero.",
+    desc: "Diez días hábiles y un informe escrito, suyo en cualquier caso. El Diagnóstico revisa sus números y fija la cotización: qué módulos, de qué tamaño y qué se construye primero.",
   },
 };
 
