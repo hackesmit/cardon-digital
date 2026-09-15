@@ -1,31 +1,34 @@
 # Media credits
 
-Provenance for everything in this folder. Every file gets an entry before it
-ships, whether it was licensed, shot for us, or shot by the client. The shot
-list and the specifications are in README.md; this file is only the paper
-trail.
+Attribution for the files in this folder: who made a picture and under what
+licence it is used. That is all this file holds, and all it may hold, because
+`public/` is served on the open web and this file is one GET away from anyone
+who guesses its name.
+
+The clearance paperwork is a different thing and lives somewhere else. Release
+forms, the people named on them, where a signed form is filed, and which client
+contact approved which premises or which numbers on a screen are all recorded
+in `docs/media-clearances.md`, which ships in the repository and is never
+served. A file is not cleared to go live until it has an entry there; this file
+only says who to credit once it is.
 
 ## Our own material
 
 Photography and video shot by Cardon Digital is credited to Cardon Digital and
-needs no licence, but it does need clearance, and that is what an entry here
-records:
+needs no licence. An entry here is the credit line and the slot it fills:
 
 ```
 ## winery/cellar.webp
 
-- Shot by: Cardon Digital, 2026-10-04
-- Location: <winery>, Valle de Guadalupe
-- Release: people in frame, written permission held (file: <where>)
-- Client clearance: premises and on screen data approved by <name>, <date>
+- Credit: Cardon Digital
+- Year: 2026
 - Slot: winery/cellar
 ```
 
-Two clearances are separate and both are required before a file goes live. A
-recognisable person needs a release. A client needs to approve their premises,
-their staff, and anything of theirs visible on a screen, which on this site is
-usually their own production data. When a screen shows real numbers, say so in
-the entry and name who approved them.
+Nothing more. No names of people in frame, no client contacts, no location
+beyond what the site already says in its own copy, and no path to a release
+form. If you are about to write one of those into this file, it belongs in
+`docs/media-clearances.md` instead.
 
 ## Placeholder stock
 
@@ -51,4 +54,6 @@ both are replaced by slots on the list in README.md (`winery/vineyard` and the
 Both are licensed for commercial use with no attribution required. They are
 credited here anyway, because provenance is cheaper to keep than to reconstruct,
 and because a stock photograph of a French vineyard standing in for the Valle is
-exactly the kind of thing that has to be visible to be replaced.
+exactly the kind of thing that has to be visible to be replaced. A published
+photographer credit on a published stock photograph is attribution, not
+personal data, which is why these two entries are safe in a served file.
