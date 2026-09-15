@@ -46,6 +46,12 @@
    A brief, not a picture. Flat panel, hairline hatching, mono text, no
    gradient and no imagery, so it is never mistaken for the real shot at any
    size. It prints the file to produce and the size to shoot to. */
+/* Contrast, because this panel ships live until the files land and its text is
+   small: --muted reads 3.25:1 on the light ground at 11.2px, under the 4.5:1 AA
+   floor (measured, round two review), and --primary is 4.39:1 at 10.9px. Every
+   line here is therefore set from a token that clears AA in BOTH modes, and
+   each one states its own colour so an edit to the panel cannot silently drop a
+   line back onto a weak token. */
 .media-pending{
   position:absolute;inset:0;
   display:flex;
@@ -56,7 +62,7 @@
   padding:16px;
   text-align:center;
   font-family:var(--mono);
-  color:var(--muted);
+  color:var(--text-dim);
   background:
     repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 11px),
     var(--panel);
@@ -65,7 +71,7 @@
   font-size:0.68rem;
   letter-spacing:0.18em;
   text-transform:uppercase;
-  color:var(--primary);
+  color:var(--primary-bright);
 }
 .media-pending-file{
   font-size:0.82rem;
@@ -75,12 +81,25 @@
 .media-pending-spec{
   font-size:0.7rem;
   letter-spacing:0.08em;
+  color:var(--text-dim);
+}
+
+/* ============================ POSTER OVERLAY ============================
+   The poster attribute alone leaves a blank rectangle when the frame is missing
+   and fires no error anyone can observe, so the poster is loaded as a real
+   element on top of the video while it is paused, and its failure falls back to
+   the pending brief that names the file. It sits above the video and below the
+   control. */
+.media-poster{
+  position:absolute;inset:0;
+  z-index:1;
 }
 
 /* ============================ VIDEO CONTROL ============================
    A muted looping video still needs a way to stop it, and on a phone it is the
    way to start it. 44px is the tap target a phone needs. */
 .media-play{
+  z-index:2;
   position:absolute;
   right:12px;
   bottom:12px;
