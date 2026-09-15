@@ -382,9 +382,11 @@
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
   gap:clamp(20px,3vw,40px);align-items:start;
 }
-/* The demo is a figure so its honest label can sit outside the role="img"
-   element, where a screen reader still reaches it. Same type as the label on
-   every other demo frame on the site (.demo-honest, .ms-honest). */
+/* The demo is a figure so its honest label is the figure's caption, sitting
+   above the board and read before the invented numbers rather than after them.
+   Same type as the label on every other demo frame on the site (.demo-honest,
+   .ms-honest). The role="img" this comment used to describe is gone: the board
+   and the transcript are text and are read as text (AssistantDemo.tsx). */
 .pg-winery .assist-figure{margin:0;min-width:0;}
 .pg-winery .assist-honest{
   display:block;margin-bottom:10px;

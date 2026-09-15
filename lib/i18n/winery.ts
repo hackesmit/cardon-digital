@@ -16,6 +16,16 @@ import type { Dict } from "./rich";
  *  - One number, and it is ours. Monte Xanic's finance workflow went from about
  *    an hour by hand to about two minutes (lib/i18n/monte-xanic.ts, where the
  *    basis is stated). Nothing else on this page carries a figure we measured.
+ *  - Emphasis lives here, never in the page. The page component writes no <b>
+ *    of its own: every span a visitor sees comes from a ** marker in this file,
+ *    where scripts/copy-check.mjs counts it against the doctrine's cap of three
+ *    per page. Round one moved the three day labels into literal <b> in
+ *    page.tsx, which left the page shouting five spans while the checker read
+ *    one. The cap is met by cutting emphasis, not by moving it out of reach:
+ *    the only span this page's own copy keeps is the figure the practice owns,
+ *    and the second span a visitor sees is the site-wide "Free." in site.ts.
+ *    Two served, three allowed. Held by
+ *    app/[locale]/industries/winery/winery-page.test.ts.
  *  - No substitutions. Every value below is a plain string literal, so
  *    scripts/copy-check.mjs reads each sentence whole. A template substitution
  *    splits its string in two and every multi-word shape stops matching across
@@ -116,7 +126,7 @@ const en = {
       {
         num: "05",
         h: "Fill the tasting room, the club and DTC.",
-        body: "Bilingual ads inside the monthly fee, and the budget goes straight to Google.",
+        body: "Bilingual ads come with Hospitalidad and Restaurante, inside the monthly fee, and the budget goes straight to Google.",
       },
     ],
   },
@@ -218,11 +228,11 @@ const en = {
     ledgerNowText: "one view, synced ",
   },
   diagDesc:
-    "Ten business days on your harvest data, your ads and your books, and a memo: what is true, what is broken, what to build first.",
+    "Ten business days on your harvest data, ads and books, and a memo.",
   diagSpecs: [
-    { k: "Day 1", v: "A working session on your vineyard, your cellar, your ads and your books." },
-    { k: "Days 2 to 9", v: "We dig: the data, the measurement, the manual routines." },
-    { k: "Day 10", v: "The memo lands, and it is yours." },
+    "Day 1. A working session on your vineyard, your cellar, your ads and your books.",
+    "Days 2 to 9. We dig: the data, the measurement, the manual routines.",
+    "Day 10. The memo lands: what is true, what is broken, what to build first.",
   ],
 };
 
@@ -278,7 +288,7 @@ const es: typeof en = {
       {
         num: "03",
         h: "Cuatro suscripciones que nunca se hablan.",
-        body: "La herramienta de producción, la plataforma del club, la página de reservas y la tienda cobran cada mes. Usted los concilia a mano.",
+        body: "La herramienta de producción, la plataforma del club, la página de reservas y la tienda cobran cada mes. Usted las concilia a mano.",
       },
     ],
   },
@@ -309,7 +319,7 @@ const es: typeof en = {
       {
         num: "05",
         h: "Llene la sala, el club y la venta directa.",
-        body: "Anuncios en los dos idiomas dentro de la cuota mensual, y la inversión va directo a Google.",
+        body: "Los anuncios en los dos idiomas se agregan a Hospitalidad y a Restaurante, dentro de la cuota mensual, y la inversión va directo a Google.",
       },
     ],
   },
@@ -380,7 +390,7 @@ const es: typeof en = {
     moreCta: "Ver precios",
     termsLabel: "Condiciones",
     terms: [
-      "La cuota va por adelantado, mes con mes, con 30 días de aviso de cualquier parte.",
+      "La cuota va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
       "Si deja el servicio antes de doce meses, facturamos la parte de la construcción que la cuota venía pagando, menos un doceavo por mes pagado.",
       "Todos los precios más IVA.",
     ],
@@ -403,11 +413,11 @@ const es: typeof en = {
     ledgerNowText: "una vista, al día ",
   },
   diagDesc:
-    "Diez días hábiles sobre los datos de su cosecha, sus anuncios y sus cuentas, y un informe escrito: qué es cierto, qué está roto y qué construir primero.",
+    "Diez días hábiles sobre los datos de su cosecha, sus anuncios y sus cuentas, y un informe escrito.",
   diagSpecs: [
-    { k: "Día 1", v: "Una sesión de trabajo sobre su viñedo, su bodega, sus anuncios y sus cuentas." },
-    { k: "Días 2 a 9", v: "Escarbamos: los datos, la medición, las tareas manuales." },
-    { k: "Día 10", v: "Llega el informe, y es suyo." },
+    "Día 1. Una sesión de trabajo sobre su viñedo, su bodega, sus anuncios y sus cuentas.",
+    "Días 2 a 9. Escarbamos: los datos, la medición, las tareas manuales.",
+    "Día 10. Llega el informe: qué es cierto, qué está roto y qué construir primero.",
   ],
 };
 

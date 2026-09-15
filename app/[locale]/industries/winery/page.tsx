@@ -389,12 +389,10 @@ export default function WineryPage({ params }: Params) {
                 <p className="diag-price">{rich(s.diag.price)}</p>
               </div>
               <div className="diag-specs">
-                {d.diagSpecs.map((spec) => (
-                  <div className="spec" key={spec.k}>
+                {d.diagSpecs.map((spec, i) => (
+                  <div className="spec" key={i}>
                     <span className="spec-dot" />
-                    <span>
-                      <b>{spec.k}.</b> {spec.v}
-                    </span>
+                    <span>{rich(spec)}</span>
                   </div>
                 ))}
               </div>
