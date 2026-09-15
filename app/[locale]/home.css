@@ -8,10 +8,13 @@
    handful of blocks this page invented, scoped under .pg-home (the <main> root
    class) so nothing leaks into another route.
 
-   The canvas hero, the sector map and the two split visuals left with the
-   copy they read: the rewrite has no tools or demand section and no map, so
-   their dictionary keys are gone and the components with them. Recover any of
-   them with git show 4a2b9a1:<path> if a later page wants one. */
+   The canvas hero, the valley map and the two play-once panels stayed. Their
+   old dictionary keys went with the sections that were cut, so they read
+   `home.vis.*` now instead. A copy bead rewires a visual and never deletes it
+   (docs/copy-doctrine.md section 8), so what lives here is the page-scoped
+   half of their styling: the canvas sizing, the portrait station list that
+   stands in for the map below 900px, and the phone twin of the memo panel.
+   The frames, markers and SVG palettes themselves are in globals.css. */
 
 .pg-home {
   position: relative;
@@ -23,6 +26,29 @@
    the result sentence, the one action and the first proof card all have to be
    readable before a scroll, so the hero carries no visual and its vertical
    padding tightens on narrow screens rather than holding the desktop rhythm. */
+/* The hero canvas. The height is the one rule the source home concept sets
+   that globals.css does not. */
+.pg-home #heroCanvas {
+  display: block;
+  width: 100%;
+  height: clamp(360px, 44vw, 520px);
+}
+/* Portrait hero: the compact canvas composition (two card columns feeding a
+   central spine into a full-width panel) is designed tall, not letterboxed, and
+   serves the whole one-column range (measured width < 780, i.e. viewport up to
+   ~828). This is the pre-hydration fallback; on mount the component sets the
+   exact compact height from the measured width (single source of truth). */
+@media (max-width: 827px) {
+  .pg-home #heroCanvas {
+    height: clamp(432px, 78vw, 560px);
+  }
+  /* the compact panel already carries the "One system" title, so the status
+     caption is redundant here and would overlap the last lane; hide it */
+  .pg-home .stage-caption {
+    display: none;
+  }
+}
+
 .pg-home .hero-risk {
   margin-top: 14px;
   font-family: var(--mono);
@@ -84,6 +110,183 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--primary);
+}
+
+/* The valley map under the two cards. It is SectorMap's own stage above 900px
+   and the portrait station list below, never both: the media query at the end
+   of this block switches them, so the accessibility tree carries one copy and
+   the hidden canvas never intersects, which is what keeps its rAF loop from
+   ever starting. */
+.pg-home .proof-map {
+  margin-top: clamp(16px, 2.4vw, 26px);
+}
+.pg-home .sector-list {
+  display: none;
+}
+.pg-home .sl-hub {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 7px 15px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+.pg-home .sl-hub svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}
+.pg-home .sl-head {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 8px 0 2px;
+}
+.pg-home .sector-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 64px;
+  padding: 12px 15px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--scrim), transparent);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.pg-home .sector-card.focus {
+  border-color: var(--primary-dim);
+  background: linear-gradient(
+    180deg,
+    var(--primary-faint),
+    color-mix(in srgb, var(--panel) 62%, transparent)
+  );
+}
+.pg-home .sector-card:hover,
+.pg-home .sector-card:focus-visible {
+  border-color: var(--primary-dim);
+  box-shadow: 0 0 0 1px var(--primary-faint);
+}
+.pg-home .sc-mark {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+/* neutralize the map-absolute positioning so the marker sits inline */
+.pg-home .sector-card .marker-core {
+  position: static;
+  transform: none;
+  width: 40px;
+  height: 40px;
+}
+.pg-home .sector-card:hover .mk-core,
+.pg-home .sector-card:focus-visible .mk-core {
+  fill: var(--primary-bright);
+}
+.pg-home .sc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.pg-home .sc-badge {
+  align-self: flex-start;
+  font-family: var(--mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--energy);
+  border: 1px solid color-mix(in srgb, var(--energy) 45%, transparent);
+  border-radius: 2px;
+  padding: 1px 6px;
+  margin-bottom: 2px;
+}
+.pg-home .sc-name {
+  font-family: var(--mono);
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  line-height: 1.25;
+}
+.pg-home .sc-detail {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--primary);
+  line-height: 1.3;
+}
+.pg-home .sl-cases {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 8px;
+}
+.pg-home .sl-case {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--panel) 70%, transparent);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  min-height: 40px;
+  transition: border-color 0.2s ease;
+}
+.pg-home .sl-case:hover,
+.pg-home .sl-case:focus-visible {
+  border-color: var(--primary-dim);
+}
+.pg-home .sl-case .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--energy);
+  flex-shrink: 0;
+}
+.pg-home .sl-case b {
+  color: var(--primary);
+  font-weight: 600;
+}
+.pg-home .sl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+}
+/* The geographic map only stops colliding once its stage is about 812px wide
+   (measured), which happens at roughly a 860px viewport. Switch to the station
+   list below 900 (the same breakpoint the split reflows at) so no width ever
+   shows overlapping station cards. */
+@media (max-width: 899px) {
+  .pg-home .map-stage {
+    display: none;
+  }
+  .pg-home .sector-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: clamp(22px, 5vw, 32px);
+  }
+}
+/* Between roughly a phone and the map threshold the single column would
+   stretch, so the cards flow into two even columns. */
+@media (min-width: 560px) and (max-width: 899px) {
+  .pg-home .sl-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* ============================ THE CASE ============================
@@ -238,6 +441,16 @@
   line-height: 1.6;
   max-width: 48ch;
 }
+/* The board plays across the full block rather than in a column: the six
+   parts settle into one working board, and at a half-column width the
+   soldered traces between them are too fine to read. Capped so it does not
+   letterbox into a banner on a wide screen. */
+.pg-home .tools-vis {
+  margin-top: clamp(26px, 3.4vw, 42px);
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .pg-home .gets-more {
   margin-top: clamp(20px, 2.6vw, 30px);
   font-size: 0.92rem;
@@ -280,6 +493,50 @@
   color: var(--text-dim);
   font-size: 0.99rem;
   line-height: 1.6;
+}
+
+/* Beside the memo panel the three steps are a column, not a row of three:
+   half a container is not wide enough for three headed cards. */
+.pg-home .how-split {
+  margin-top: clamp(24px, 3.2vw, 38px);
+}
+.pg-home .how-split .steps {
+  grid-template-columns: 1fr;
+  gap: clamp(16px, 2.2vw, 26px);
+}
+/* The landscape memo panel (viewBox 520 wide) renders its labels too small in
+   a phone column. A portrait twin (360x340, larger type) swaps in on narrow
+   screens; it reuses the same CSS play/settle animation, and only the knob's
+   travel distance is geometry-specific. */
+.pg-home .demand-svg-m {
+  display: none;
+}
+@media (max-width: 600px) {
+  .pg-home .demand-svg-d {
+    display: none;
+  }
+  .pg-home .demand-svg-m {
+    display: block;
+  }
+  /* resolved / playing: knob travels start(30) to the measured gate(255) */
+  .pg-home .demand-vis .demand-svg-m .dm-knob {
+    transform: translateX(225px);
+  }
+  /* before state: knob waits at the start */
+  .pg-home .demand-vis[data-anim="pre"] .demand-svg-m .dm-knob {
+    transform: translateX(0);
+  }
+}
+/* In one-column layout the panel would stretch to the full container and
+   balloon its fixed-aspect SVG into a wide letterboxed banner. Present it
+   centered at its design size instead. Above 900 the split is two columns and
+   the visual is already ~390-490px, so the cap never bites. */
+@media (max-width: 900px) {
+  .pg-home .demand-vis {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* ============================ DIAGNOSTIC ============================
