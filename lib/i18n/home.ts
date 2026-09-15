@@ -48,7 +48,7 @@ const en = {
       {
         name: "Vinedo En'kanto",
         place: "San Antonio de las Minas",
-        result: "Store, restaurant and rooms on one system, built",
+        result: "Production, restaurant and bookings on one system, and a store in front of it",
       },
     ],
   },
@@ -61,7 +61,7 @@ const en = {
       { n: "About 2 minutes", k: "now, refreshed through the day" },
       { n: "About 97 percent less", k: "time on that one view" },
     ],
-    basis: "Timed by hand before the build. No Monte Xanic production, sales or financial figures are published.",
+    basis: "Timed by hand before the build, and the two minutes are the refresh the dashboard generates. No Monte Xanic production, sales or financial figures are published.",
     read: "Read the Monte Xanic case",
     cellarCap: "Taken once at the barrel, and the finance view is already current.",
     cellarAlt: "A winemaker taking a reading on a tablet, at the barrel.",
@@ -126,8 +126,8 @@ const en = {
     title: "What you own when it is finished.",
     cardon: "Cardon",
     usual: "The usual stack",
-    yes: "Yes",
-    no: "No",
+    yesSr: "Cardon: yes",
+    noSr: "The usual stack: no",
     rows: [
       { dim: "Ownership", cardon: "Yours, keys and all", usual: "Rented forever" },
       { dim: "Fit", cardon: "Built around how you work", usual: "Your work bent to the tool" },
@@ -156,7 +156,76 @@ const en = {
     founding: {
       kicker: "Founding winery",
       lead: "**One founding winery, through 31 December 2026: the Produccion module at the mid-size build, for its entry price.**",
-      body: "One slot. In exchange: a named case with the real before and after numbers, and two introductions in the Valle.",
+      body: "One slot, and it does not stack with anything. In exchange: a named case with the real before and after numbers, and two introductions in the Valle.",
+    },
+  },
+  /**
+   * The strings the page's visuals read: the hero canvas (HeroAssembly), the
+   * valley map (SectorMap) and the two play-once panels (PlayOnceVis).
+   *
+   * They live under one key on purpose. They are labels, legends, captions and
+   * accessible names rather than prose, so a word-budget audit can bucket them
+   * apart from the sections above, and a later rewrite can see at a glance
+   * which strings a visual would stop working without. Deleting one of these
+   * keys retires an animation, and that is Daniel's decision alone: see the
+   * binding rule in docs/copy-doctrine.md section 8.
+   */
+  vis: {
+    hero: {
+      tagBefore: "notebooks in",
+      tagMid: "one view out",
+      connecting: "connecting",
+      oneSystem: "one system",
+      fallback:
+        "Notebooks, spreadsheets, invoices and messages settle into clean rows around one panel the winery owns.",
+      panelTitle: "One system",
+      panelSummary: "SUMMARY",
+      docs: [
+        { name: "harvest.xlsx", tag: "XLSX" },
+        { name: "lab.csv", tag: "CSV" },
+        { name: "tanks.xlsx", tag: "XLSX" },
+        { name: "invoice.pdf", tag: "PDF" },
+        { name: "field book", tag: "NOTES" },
+        { name: "whatsapp", tag: "MSG" },
+      ],
+      rows: [
+        { k: "HARVEST", v: "live" },
+        { k: "LOTS", v: "dated" },
+        { k: "TANKS", v: "current" },
+        { k: "BOOKINGS", v: "synced" },
+        { k: "SERVICE", v: "counted" },
+        { k: "FINANCE", v: "current" },
+      ],
+    },
+    map: {
+      legend: "The valley we work in, and the wineries in it",
+      hub: "One system",
+      scale: "Valle de Guadalupe and Ensenada",
+      listAria: "The valley we work in",
+      stationsHead: "Built here",
+      focus: "Focus",
+      caseStudy: "Case:",
+      wineryName: "Wineries / Valle de Guadalupe",
+      wineryDetail: "harvest, rooms and service in one record",
+      wineryAria:
+        "Wineries, Valle de Guadalupe. Harvest, rooms and service in one record. Open the winery page.",
+      xanicAria: "Read the Monte Xanic case.",
+      enkantoAria: "Read the Vinedo En'kanto case.",
+    },
+    board: {
+      tag: "three parts, one board",
+      aria: "Separate parts are placed and wired into one working board.",
+    },
+    memo: {
+      tag: "read before it is trusted",
+      aria:
+        "A reading is checked against a measured baseline and settles to a written result.",
+      signalIn: "YOUR NUMBERS",
+      measured: "MEASURED",
+      checking: "ten business days",
+      verified: "the memo, in writing",
+      reading: "reading",
+      foot: "what is true, and what to build first",
     },
   },
   diagnostic: {
@@ -190,7 +259,7 @@ const es: typeof en = {
       {
         name: "Viñedo En'kanto",
         place: "San Antonio de las Minas",
-        result: "Tienda, restaurante y habitaciones en un sistema, ya construido",
+        result: "Producción, restaurante y reservas en un sistema, y una tienda enfrente",
       },
     ],
   },
@@ -203,7 +272,7 @@ const es: typeof en = {
       { n: "Como 2 minutos", k: "hoy, actualizados durante el día" },
       { n: "Como 97 por ciento menos", k: "tiempo en esa vista" },
     ],
-    basis: "Cronometrado a mano antes de la construcción. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
+    basis: "Cronometrado a mano antes de la construcción, y los dos minutos son la actualización que genera el tablero. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
     read: "Ver el caso de Monte Xanic",
     cellarCap: "Se toma una vez, en la barrica, y la vista financiera ya quedó al corriente.",
     cellarAlt: "Un enólogo toma una lectura en una tableta, en la barrica.",
@@ -237,7 +306,7 @@ const es: typeof en = {
       {
         name: "Producción",
         title: "Sepa qué cultivó, qué elaboró y qué vendió",
-        body: "Cada lote fechado y atribuido, del cuartel a la botella.",
+        body: "Cada lote fechado y atribuido, del cuadro a la botella.",
       },
       {
         name: "Hospitalidad",
@@ -268,8 +337,8 @@ const es: typeof en = {
     title: "Con qué se queda cuando terminamos.",
     cardon: "Cardon",
     usual: "Lo de siempre",
-    yes: "Sí",
-    no: "No",
+    yesSr: "Cardon: sí",
+    noSr: "Lo de siempre: no",
     rows: [
       { dim: "Propiedad", cardon: "Suyo, con llaves y todo", usual: "Rentado para siempre" },
       { dim: "Ajuste", cardon: "Hecho alrededor de cómo trabaja", usual: "Su trabajo doblado a la herramienta" },
@@ -298,7 +367,65 @@ const es: typeof en = {
     founding: {
       kicker: "Bodega fundadora",
       lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción con la construcción mediana, a su precio de entrada.**",
-      body: "Un solo lugar. A cambio: un caso con nombre y los números reales de antes y después, y dos presentaciones en el Valle.",
+      body: "Un solo lugar, y no se acumula con nada. A cambio: un caso con nombre y los números reales de antes y después, y dos presentaciones en el Valle.",
+    },
+  },
+  vis: {
+    hero: {
+      tagBefore: "entran libretas",
+      tagMid: "sale una vista",
+      connecting: "conectando",
+      oneSystem: "un solo sistema",
+      fallback:
+        "Libretas, hojas de cálculo, facturas y mensajes se acomodan en renglones limpios alrededor de un panel que es de la bodega.",
+      panelTitle: "Un solo sistema",
+      panelSummary: "RESUMEN",
+      docs: [
+        { name: "cosecha.xlsx", tag: "XLSX" },
+        { name: "lab.csv", tag: "CSV" },
+        { name: "tanques.xlsx", tag: "XLSX" },
+        { name: "factura.pdf", tag: "PDF" },
+        { name: "libreta", tag: "NOTAS" },
+        { name: "whatsapp", tag: "MSG" },
+      ],
+      rows: [
+        { k: "COSECHA", v: "al día" },
+        { k: "LOTES", v: "fechados" },
+        { k: "TANQUES", v: "al corriente" },
+        { k: "RESERVAS", v: "reunidas" },
+        { k: "SERVICIO", v: "contado" },
+        { k: "FINANZAS", v: "al corriente" },
+      ],
+    },
+    map: {
+      legend: "El valle en el que trabajamos, y las bodegas que hay en él",
+      hub: "Un solo sistema",
+      scale: "Valle de Guadalupe y Ensenada",
+      listAria: "El valle en el que trabajamos",
+      stationsHead: "Aquí construimos",
+      focus: "Enfoque",
+      caseStudy: "Caso:",
+      wineryName: "Bodegas / Valle de Guadalupe",
+      wineryDetail: "cosecha, cuartos y servicio en un registro",
+      wineryAria:
+        "Bodegas, Valle de Guadalupe. Cosecha, cuartos y servicio en un solo registro. Abrir la página de bodegas.",
+      xanicAria: "Ver el caso de Monte Xanic.",
+      enkantoAria: "Ver el caso de Viñedo En'kanto.",
+    },
+    board: {
+      tag: "tres partes, un solo tablero",
+      aria: "Piezas sueltas se colocan y se conectan en un solo tablero de trabajo.",
+    },
+    memo: {
+      tag: "se lee antes de confiar en ello",
+      aria:
+        "Una lectura se compara contra una línea base medida y se asienta en un resultado escrito.",
+      signalIn: "SUS NÚMEROS",
+      measured: "MEDIDO",
+      checking: "diez días hábiles",
+      verified: "el informe, por escrito",
+      reading: "lectura",
+      foot: "qué es cierto y qué construir primero",
     },
   },
   diagnostic: {

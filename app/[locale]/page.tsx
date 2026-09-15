@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import HeroAssembly from "@/components/pages/home/HeroAssembly";
+import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
+import SectorMap from "@/components/pages/home/SectorMap";
+import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
 import Showcase from "@/components/pages/showcase/Showcase";
 import { showcaseEnabled } from "@/components/pages/showcase/flag";
 import Media from "@/components/site/Media";
@@ -79,10 +83,22 @@ function OfficialHome({ params }: Params) {
       <span id="top" />
 
       {/* ============================ 1. HERO ============================
-          Copy only, and short on purpose: on a 390px screen the headline, the
-          result, the action and the first proof card all have to land without
-          a scroll (the four-second test). A visual here would push the proof
-          below the fold, so the photography starts at the case study. */}
+          The copy is short on purpose, so the headline, the result and the one
+          action land on a 390px screen without a scroll.
+
+          Under it runs HeroAssembly, the canvas this page has always opened
+          with: scattered notebooks, spreadsheets, invoices and messages glide
+          into clean rows around one "One system" panel. It is the argument the
+          headline makes, drawn, and it is not a Media slot's job. The rule is
+          in docs/copy-doctrine.md section 8: a copy bead rewires a visual to
+          its new keys and never deletes it, and retiring an animation is
+          Daniel's decision alone. Its strings live under `home.vis.hero`.
+
+          What that costs, measured rather than assumed: at 390x844 the canvas
+          pushes the proof cards below the fold, so the fourth of the four
+          questions ("who already uses it") is answered on the first scroll
+          rather than at rest. Three of the four are still answered at rest,
+          and the canvas answers "what is this" in pictures while it does. */}
       <section className="hero" aria-label={d.hero.aria}>
         <div className="container">
           <div className="hero-copy">
@@ -100,13 +116,23 @@ function OfficialHome({ params }: Params) {
             </div>
             <p className="hero-risk">{d.hero.risk}</p>
           </div>
+
+          <HeroAssembly />
         </div>
       </section>
 
       {/* ============================ 2. PROOF BAR ============================
           Both wineries named with what we actually have: Monte Xanic's real
           numbers, and for En'kanto what was built, because no En'kanto figure
-          has been measured and published yet. */}
+          has been measured and published yet.
+
+          SectorMap, the valley map that used to carry the buried section six,
+          belongs here rather than nowhere: it draws the terrain the two named
+          cards sit in, with the focus marker on the Valle and a lit route to
+          the hub. Above 900px it is the geographic canvas; below, the same
+          stations render as the portrait list (the component ships both and
+          the CSS shows exactly one, so the accessibility tree has no
+          duplicates and the hidden canvas never starts its loop). */}
       <section className="proof" aria-label={d.proof.aria}>
         <div className="container proof-grid">
           {d.proof.items.map((item, i) => (
@@ -117,6 +143,10 @@ function OfficialHome({ params }: Params) {
               <span className="proof-read">{d.proof.read}</span>
             </Link>
           ))}
+        </div>
+
+        <div className="container proof-map">
+          <SectorMap />
         </div>
       </section>
 
@@ -213,6 +243,95 @@ function OfficialHome({ params }: Params) {
             />
           </div>
 
+          {/* The board: six separate parts are placed and soldered into one
+              working board, played once when it scrolls into view and reset
+              when it leaves. It is this section's own sentence drawn ("three
+              parts of the operation, one record"), which is why it lives here
+              now that the tools section it was built for is gone. Its strings
+              are `home.vis.board`. */}
+          <PlayOnceVis className="tools-vis" tag={d.vis.board.tag}>
+            <svg
+              className="tools-svg"
+              viewBox="0 0 520 250"
+              role="img"
+              aria-label={d.vis.board.aria}
+            >
+              <rect className="tl-board" x="40" y="30" width="440" height="190" rx="2" />
+              <g className="solder tl-solder" fill="none" strokeWidth="1.3" opacity="0.5">
+                <path d="M238 63 L 252 63" />
+                <path d="M148 90 L 148 78" />
+                <path d="M357 90 L 357 78" />
+                <path d="M148 202 L 148 218 L 357 218 L 357 202" />
+                <path d="M302 154 L 302 142" />
+                <path d="M412 154 L 412 142" />
+              </g>
+              <g className="blk blk-a">
+                <rect className="tl-card" x="58" y="48" width="180" height="30" rx="2" />
+                <circle className="tl-primary" cx="76" cy="63" r="5" />
+                <rect className="tl-muted" x="90" y="59" width="120" height="8" rx="2" opacity="0.55" />
+                <g className="solder tl-secondary">
+                  <circle cx="64" cy="74" r="2" />
+                  <circle cx="232" cy="74" r="2" />
+                </g>
+              </g>
+              <g className="blk blk-b">
+                <rect className="tl-card" x="252" y="48" width="210" height="30" rx="2" />
+                <rect className="tl-secondary" x="266" y="58" width="60" height="10" rx="2" opacity="0.9" />
+                <rect className="tl-muted" x="336" y="59" width="112" height="8" rx="2" opacity="0.5" />
+                <g className="solder tl-secondary">
+                  <circle cx="258" cy="74" r="2" />
+                  <circle cx="456" cy="74" r="2" />
+                </g>
+              </g>
+              <g className="blk blk-c">
+                <rect className="tl-card" x="58" y="90" width="180" height="112" rx="2" />
+                <g className="screen-detail">
+                  <rect className="tl-primary" x="76" y="170" width="18" height="18" rx="2" opacity="0.85" />
+                  <rect className="tl-primary" x="102" y="152" width="18" height="36" rx="2" opacity="0.7" />
+                  <rect className="tl-primary" x="128" y="134" width="18" height="54" rx="2" />
+                  <rect className="tl-secondary" x="154" y="120" width="18" height="68" rx="2" />
+                  <rect className="tl-primary" x="180" y="146" width="18" height="42" rx="2" opacity="0.7" />
+                  <line
+                    className="tl-stroke-muted"
+                    x1="70"
+                    y1="112"
+                    x2="150"
+                    y2="112"
+                    strokeWidth="6"
+                    strokeLinecap="round"
+                    opacity="0.5"
+                  />
+                </g>
+              </g>
+              <g className="blk blk-d">
+                <rect className="tl-card" x="252" y="90" width="210" height="52" rx="2" />
+                <g
+                  className="screen-detail tl-stroke-secondary"
+                  fill="none"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M266 126 L 300 110 L 334 118 L 368 98 L 402 104 L 448 88" />
+                </g>
+              </g>
+              <g className="blk blk-e">
+                <rect className="tl-card" x="252" y="154" width="100" height="48" rx="2" />
+                <g className="screen-detail">
+                  <rect className="tl-muted" x="266" y="166" width="60" height="9" rx="2" opacity="0.5" />
+                  <rect className="tl-primary" x="266" y="182" width="40" height="12" rx="2" />
+                </g>
+              </g>
+              <g className="blk blk-f">
+                <rect className="tl-card" x="362" y="154" width="100" height="48" rx="2" />
+                <g className="screen-detail">
+                  <rect className="tl-muted" x="376" y="166" width="60" height="9" rx="2" opacity="0.5" />
+                  <rect className="tl-secondary" x="376" y="182" width="52" height="12" rx="2" />
+                </g>
+              </g>
+            </svg>
+          </PlayOnceVis>
+
           <p className="gets-more">
             <Link href={href("/modulos")}>{d.gets.more}</Link>
           </p>
@@ -221,21 +340,146 @@ function OfficialHome({ params }: Params) {
         </div>
       </section>
 
-      {/* ============================ 6. HOW IT WORKS ============================ */}
+      {/* ============================ 6. HOW IT WORKS ============================
+          The measurement panel beside the three steps: a reading travels a
+          track, passes a gate marked MEASURED, and the caption settles from
+          "ten business days" to "the memo, in writing". It was built for the
+          demand section, whose argument moved off this page, so it is rewired
+          rather than dropped: what it draws is what the diagnostic does, and
+          its foot line is `diagnostic.desc`'s own three clauses. Strings are
+          `home.vis.memo`. The `demand-*` and `dm-*` class names are the CSS
+          contract in app/globals.css and app/[locale]/home.css, so they stay
+          as they are. A portrait twin swaps in under 600px, where the
+          landscape viewBox renders its labels too small to read. */}
       <section className="section how" aria-labelledby="how-title">
         <div className="container">
           <div className="section-head">
             <span className="kicker">{d.how.kicker}</span>
             <h2 id="how-title">{d.how.title}</h2>
           </div>
-          <ol className="steps">
-            {d.how.steps.map((step) => (
-              <li className="step" key={step.k}>
-                <span className="step-n mono">{step.k}</span>
-                <p className="step-body">{step.body}</p>
-              </li>
-            ))}
-          </ol>
+          <div className="split how-split">
+            <div className="split-copy">
+              <ol className="steps">
+                {d.how.steps.map((step) => (
+                  <li className="step" key={step.k}>
+                    <span className="step-n mono">{step.k}</span>
+                    <p className="step-body">{step.body}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="split-vis">
+              <PlayOnceVis className="demand-vis" tag={d.vis.memo.tag}>
+                <svg
+                  className="demand-svg demand-svg-d"
+                  viewBox="0 0 520 300"
+                  role="img"
+                  aria-label={d.vis.memo.aria}
+                >
+                  <text className="dm-in-lab mono" x="46" y="120" fontSize="11" letterSpacing="1.5">
+                    {d.vis.memo.signalIn}
+                  </text>
+                  <line className="dm-track" x1="60" y1="150" x2="440" y2="150" />
+                  <line className="dm-tick" x1="60" y1="144" x2="60" y2="156" />
+                  <line className="dm-tick" x1="150" y1="145" x2="150" y2="155" />
+                  <line className="dm-tick" x1="240" y1="145" x2="240" y2="155" />
+                  <line className="dm-tick" x1="330" y1="145" x2="330" y2="155" />
+                  <line className="dm-gate" x1="360" y1="118" x2="360" y2="182" />
+                  <text
+                    className="dm-gate-lab mono"
+                    x="360"
+                    y="200"
+                    textAnchor="middle"
+                    fontSize="10"
+                    letterSpacing="1.5"
+                  >
+                    {d.vis.memo.measured}
+                  </text>
+                  <g className="dm-knob">
+                    <circle className="dm-knob-halo" cx="60" cy="150" r="14" />
+                    <circle className="dm-knob-core" cx="60" cy="150" r="6" />
+                  </g>
+                  <g className="dm-badge">
+                    <circle className="dm-badge-ring" cx="360" cy="96" r="16" />
+                    <path className="dm-badge-check" d="M352 96 L358 102 L369 90" />
+                  </g>
+                  <text className="dm-lab-pre mono" x="60" y="250" fontSize="14" letterSpacing="0.5">
+                    {d.vis.memo.checking}
+                  </text>
+                  <text className="dm-lab-ok mono" x="60" y="250" fontSize="14" letterSpacing="0.5">
+                    {d.vis.memo.verified}
+                  </text>
+                  <text
+                    className="dm-value mono"
+                    x="440"
+                    y="120"
+                    textAnchor="end"
+                    fontSize="13"
+                    fontWeight="600"
+                  >
+                    {d.vis.memo.reading}
+                  </text>
+                  <text className="dm-fee mono" x="60" y="278" fontSize="11" letterSpacing="0.8">
+                    {d.vis.memo.foot}
+                  </text>
+                </svg>
+
+                <svg
+                  className="demand-svg demand-svg-m"
+                  viewBox="0 0 360 340"
+                  role="img"
+                  aria-label={d.vis.memo.aria}
+                >
+                  <text className="dm-in-lab mono" x="30" y="120" fontSize="13" letterSpacing="1.5">
+                    {d.vis.memo.signalIn}
+                  </text>
+                  <line className="dm-track" x1="30" y1="166" x2="330" y2="166" />
+                  <line className="dm-tick" x1="30" y1="159" x2="30" y2="173" />
+                  <line className="dm-tick" x1="105" y1="160" x2="105" y2="172" />
+                  <line className="dm-tick" x1="180" y1="160" x2="180" y2="172" />
+                  <line className="dm-tick" x1="255" y1="160" x2="255" y2="172" />
+                  <line className="dm-gate" x1="255" y1="128" x2="255" y2="204" />
+                  <text
+                    className="dm-gate-lab mono"
+                    x="255"
+                    y="222"
+                    textAnchor="middle"
+                    fontSize="12"
+                    letterSpacing="1.5"
+                  >
+                    {d.vis.memo.measured}
+                  </text>
+                  <g className="dm-knob">
+                    <circle className="dm-knob-halo" cx="30" cy="166" r="15" />
+                    <circle className="dm-knob-core" cx="30" cy="166" r="6.5" />
+                  </g>
+                  <g className="dm-badge">
+                    <circle className="dm-badge-ring" cx="255" cy="100" r="17" />
+                    <path className="dm-badge-check" d="M246 100 L253 107 L265 93" />
+                  </g>
+                  <text
+                    className="dm-value mono"
+                    x="330"
+                    y="150"
+                    textAnchor="end"
+                    fontSize="15"
+                    fontWeight="600"
+                  >
+                    {d.vis.memo.reading}
+                  </text>
+                  <text className="dm-lab-pre mono" x="24" y="268" fontSize="16" letterSpacing="0.4">
+                    {d.vis.memo.checking}
+                  </text>
+                  <text className="dm-lab-ok mono" x="24" y="268" fontSize="16" letterSpacing="0.4">
+                    {d.vis.memo.verified}
+                  </text>
+                  <text className="dm-fee mono" x="24" y="304" fontSize="12" letterSpacing="0.2">
+                    {d.vis.memo.foot}
+                  </text>
+                </svg>
+              </PlayOnceVis>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -264,14 +508,14 @@ function OfficialHome({ params }: Params) {
                 <div className="cmp-cell cmp-cardon">
                   <span className="cmp-tag">{d.compare.cardon}</span>
                   <p>
-                    <Mark kind="yes" label={d.compare.yes} />
+                    <Mark kind="yes" label={d.compare.yesSr} />
                     {row.cardon}
                   </p>
                 </div>
                 <div className="cmp-cell cmp-usual">
                   <span className="cmp-tag">{d.compare.usual}</span>
                   <p>
-                    <Mark kind="no" label={d.compare.no} />
+                    <Mark kind="no" label={d.compare.noSr} />
                     {row.usual}
                   </p>
                 </div>
@@ -334,6 +578,11 @@ function OfficialHome({ params }: Params) {
           </div>
         </div>
       </section>
+
+      {/* Behaviour only, renders nothing: writes --mx / --my on every
+          .vis-frame so the CSS highlight follows the cursor. It is the last
+          child because it queries the frames above it on mount. */}
+      <SpotlightFrames />
     </main>
   );
 }
