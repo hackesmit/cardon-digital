@@ -440,6 +440,33 @@ describe("the visuals this page may not lose", () => {
     );
   }
 
+  /**
+   * Every `<div class="NAME">` block, walked to its own closing tag.
+   *
+   * Not a regex with a lookahead at the next sibling: that form needs a
+   * terminator for the last block in the list, so it is written against
+   * whatever markup happens to follow it today and goes quietly wrong the
+   * first time a wrapper changes. Wrapping each change in a Reveal did exactly
+   * that. Counting div depth works whatever encloses the block.
+   */
+  function blocks(markup: string, name: string): string[] {
+    const open = new RegExp(`<div class="${name}"[^>]*>`, "g");
+    const found: string[] = [];
+    for (let m = open.exec(markup); m !== null; m = open.exec(markup)) {
+      let depth = 0;
+      const tag = /<\/?div\b[^>]*>/g;
+      tag.lastIndex = m.index;
+      for (let t = tag.exec(markup); t !== null; t = tag.exec(markup)) {
+        depth += t[0].startsWith("</") ? -1 : 1;
+        if (depth === 0) {
+          found.push(markup.slice(m.index, tag.lastIndex));
+          break;
+        }
+      }
+    }
+    return found;
+  }
+
   for (const locale of locales) {
     it(`${locale}: draws all ${DRAWN_VISUALS} diagrams, each in a frame with a name`, () => {
       const markup = html(locale);
@@ -460,7 +487,7 @@ describe("the visuals this page may not lose", () => {
 
     it(`${locale}: every change carries the diagram that argues it`, () => {
       const markup = html(locale);
-      const changes = markup.match(/<div class="change">[^]*?(?=<div class="change">|<\/div><\/div><\/section>)/g) ?? [];
+      const changes = blocks(markup, "change");
       expect(changes).toHaveLength(CHANGE_VISUALS);
       expect(enkanto[locale].changed.items).toHaveLength(CHANGE_VISUALS);
       for (const change of changes) {
@@ -469,6 +496,14 @@ describe("the visuals this page may not lose", () => {
           `a change with no diagram: ${change.slice(0, 90)}`,
         ).toBe(1);
       }
+      // each one reveals on its own, staggered. The old page gave every
+      // diagram a section and a reveal of its own, so folding the four into
+      // one block would spend three of them without deleting anything a count
+      // of diagrams would notice.
+      const staggers = blocks(markup, "reveal")
+        .filter((r) => r.includes('class="change"'))
+        .map((r) => r.match(/transition-delay:(\d+)ms/)?.[1] ?? "0");
+      expect(staggers).toEqual(["0", "60", "120", "180"]);
     });
 
     it(`${locale}: the cellar band is on the page, captioned and described`, () => {

@@ -125,7 +125,12 @@
   display:grid;grid-template-columns:repeat(2,1fr);
   gap:clamp(22px,3vw,38px);
 }
-.pg-enkanto .change{padding-left:16px;border-left:2px solid var(--enk-accent);min-width:0;}
+/* height:100% because each change is wrapped in a Reveal, so the grid item is
+   the .reveal div and the border would stop short of the cell without it.
+   Same shape as .sys-card and .sys-limit above. */
+.pg-enkanto .change{
+  height:100%;padding-left:16px;border-left:2px solid var(--enk-accent);min-width:0;
+}
 /* The frame sits under the two lines it illustrates, at the width of the cell. */
 .pg-enkanto .change-vis{margin-top:clamp(14px,1.8vw,20px);}
 .pg-enkanto .change-lead{
