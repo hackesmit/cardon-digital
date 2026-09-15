@@ -37,9 +37,16 @@ export function generateMetadata({ params }: Params): Metadata {
  * Three things were removed rather than rewritten. The three-sources-into-one
  * dashboard diagram and the row-bound-to-a-polygon diagram both drew our
  * plumbing, and the map does the second one better with real geometry. The
- * readiness curve drew invented data to illustrate a claim the copy already
- * makes. SpotlightFrames was a cursor-following glow on the frames: decoration,
- * a pointermove listener per frame, and nothing a visitor came for.
+ * readiness curve was a fixed, non-interactive line that restated a claim the
+ * copy already makes, and unlike the map it carried no honesty label on the
+ * frame, so it was the one illustrative visual a reader could mistake for a
+ * measurement. SpotlightFrames was a cursor-following glow on the frames:
+ * decoration, a pointermove listener per frame, and nothing a visitor came for.
+ *
+ * The map's numbers stay invented and say so on the frame, which is the
+ * doctrine's own rule for a demo (section 5) and the disclaimer it cites
+ * approvingly. "No invented metric" governs what the page CLAIMS; it is not a
+ * ban on a labelled illustrative visual (cross-vendor review, round one).
  *
  * The call to action is `site.diag.cta`, the same words the home page uses,
  * repeated verbatim after the hero, after the number and in the closing block.
