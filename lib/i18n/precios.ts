@@ -126,27 +126,27 @@ const en = {
     "production-record": "Production record",
     "vintage-comparison": "Vintage comparison",
     "commercial-record": "Commercial record",
-    "historical-vintage-load": "One prior vintage",
+    "historical-vintage-load": "One historical vintage loaded",
     "unit-and-stay-record": "Unit and stay record",
     "channel-feed-connector": "Booking channel connector",
     "master-calendar": "Master calendar",
     "day-view": "Day view",
-    "unit-status-board": "Unit board and housekeeping view",
+    "unit-status-board": "Unit status board and housekeeping phone view",
     "guest-record": "Guest record",
     "occupancy-and-revenue-by-channel": "Occupancy and revenue by channel",
     "menu-categories-and-modifiers": "Menu, categories and modifiers",
-    "order-taking-on-the-phone": "Order on the phone",
-    "send-to-kitchen-and-course-firing": "Send to kitchen, fire by course",
+    "order-taking-on-the-phone": "Order taking on the waiter's phone",
+    "send-to-kitchen-and-course-firing": "Send to kitchen and course firing",
     "kitchen-screen": "Kitchen screen",
     "table-map-and-host-screen": "Table map and host screen",
-    "checkout-with-split-and-tip": "Checkout, split and tip",
-    "cash-and-manually-recorded-card": "Cash and card by hand",
+    "checkout-with-split-and-tip": "Checkout with split and tip",
+    "cash-and-manually-recorded-card": "Cash and card recorded by hand",
     "invoice-request-capture": "Invoice request capture",
     "cancellations-and-comps-log": "Cancellations and comps log",
     "daily-summary": "Daily summary",
     "cash-cut": "Cash cut",
     "monthly-report-generator": "Monthly report generator",
-    "the-assistant": "The assistant over your records",
+    "the-assistant": "The assistant over your own records",
     "training-and-handover-pack": "Training and handover pack",
   } as Record<string, string>,
 
@@ -156,7 +156,7 @@ const en = {
   /** The configuration each published entry price buys, card by card. */
   examples: {
     produccion:
-      "One site, one brand, two data sources, one prior vintage.",
+      "One production site, one brand, two data sources, one prior vintage.",
     hospitalidad: "A six-unit property on two booking channels.",
     restaurante: "Twelve tables, one station, four phones, one kitchen screen.",
   } as Record<string, string>,
@@ -238,7 +238,7 @@ const en = {
       "hosting-monitoring-and-backups": "Hosting, monitoring and backups",
       "the-assistants-provider-account":
         "The assistant's provider account, paid by us",
-      "care-queue-and-judgement": "Care and corrections",
+      "care-queue-and-judgement": "Care, corrections and the calls they need",
       "weekly-call-and-whatsapp": "A weekly call and WhatsApp",
       "report-assembly-and-readout": "The monthly report and its readout",
       "client-admin-and-case-study": "Your invoicing and account admin",
@@ -248,7 +248,7 @@ const en = {
 
   ads: {
     kicker: "Ads and content",
-    title: "Ads and content attach to Hospitalidad and Restaurante.",
+    title: "Google Ads management and content attach to Hospitalidad and Restaurante.",
     body: "Neither attaches to Produccion: there we organise data, control and automation, and we do not build a winery's sales. Content from the entry size, ad management from the middle size up, inside the monthly fee and never as a share of what you spend.",
   },
 
@@ -259,14 +259,14 @@ const en = {
       "Setup is half on signature and half on acceptance.",
       "The signature half can go in three monthly payments at no extra cost.",
       "The service fee runs month to month, paid in advance, 30 days notice either way.",
-      "Leave inside the first twelve months and we invoice the part of the build the service fee was funding, less one twelfth per month paid. Your quote states it.",
+      "Leave inside the first twelve months and we invoice the part of the build the service fee was funding, less one twelfth per month paid. How much depends on the configuration, and your quote states it.",
       "All prices are plus IVA. Your ad budget goes straight to Google, never through us.",
       "We quote and invoice in Mexican pesos. Dollar figures are rounded conversions, so a dollar column can sit a few dollars off its sum.",
     ],
   },
 
   close: {
-    desc: "Ten working days and a written memo, yours either way. The Diagnostic reads your numbers and sets the quote: which modules, at what size, and what first.",
+    desc: "Ten working days over your sources, your channels and your floor, and a written memo that is yours either way: what is true, what is broken, and which modules to build first, at what size.",
   },
 };
 
@@ -342,35 +342,35 @@ const es: typeof en = {
     "production-record": "Registro de producción",
     "vintage-comparison": "Comparación de añadas",
     "commercial-record": "Registro comercial",
-    "historical-vintage-load": "Una añada anterior",
+    "historical-vintage-load": "Una añada histórica cargada",
     "unit-and-stay-record": "Registro de unidades y estancias",
     "channel-feed-connector": "Conector de canal de reservas",
     "master-calendar": "Calendario maestro",
     "day-view": "Vista del día",
-    "unit-status-board": "Tablero de unidades y limpieza",
+    "unit-status-board": "Tablero de unidades y vista de limpieza en teléfono",
     "guest-record": "Registro del huésped",
     "occupancy-and-revenue-by-channel": "Ocupación e ingreso por canal",
     "menu-categories-and-modifiers": "Menú, categorías y modificadores",
-    "order-taking-on-the-phone": "Orden en el teléfono",
-    "send-to-kitchen-and-course-firing": "Envío a cocina por tiempos",
+    "order-taking-on-the-phone": "Toma de orden en el teléfono del mesero",
+    "send-to-kitchen-and-course-firing": "Envío a cocina y disparo de tiempos",
     "kitchen-screen": "Pantalla de cocina",
     "table-map-and-host-screen": "Mapa de mesas y pantalla de anfitrión",
-    "checkout-with-split-and-tip": "Cobro con división y propina",
+    "checkout-with-split-and-tip": "Cobro con división de cuenta y propina",
     "cash-and-manually-recorded-card": "Efectivo y tarjeta anotada a mano",
     "invoice-request-capture": "Captura de la solicitud de factura",
-    "cancellations-and-comps-log": "Cancelaciones y cortesías",
+    "cancellations-and-comps-log": "Registro de cancelaciones y cortesías",
     "daily-summary": "Resumen del día",
     "cash-cut": "Corte de caja",
     "monthly-report-generator": "Generador del informe mensual",
-    "the-assistant": "El asistente sobre sus registros",
-    "training-and-handover-pack": "Capacitación y entrega",
+    "the-assistant": "El asistente sobre sus propios registros",
+    "training-and-handover-pack": "Paquete de capacitación y entrega",
   } as Record<string, string>,
 
   countSuffix: " x {n}",
 
   examples: {
     produccion:
-      "Un sitio, una marca, dos fuentes de datos, una añada anterior.",
+      "Un sitio de producción, una marca, dos fuentes de datos, una añada anterior.",
     hospitalidad: "Una propiedad de seis unidades en dos canales de reserva.",
     restaurante:
       "Doce mesas, una estación, cuatro teléfonos, una pantalla de cocina.",
@@ -433,7 +433,8 @@ const es: typeof en = {
       "hosting-monitoring-and-backups": "Hospedaje, monitoreo y respaldos",
       "the-assistants-provider-account":
         "La cuenta de proveedor del asistente, pagada por nosotros",
-      "care-queue-and-judgement": "Cuidado y correcciones",
+      "care-queue-and-judgement":
+        "Cuidado, correcciones y las decisiones que piden",
       "weekly-call-and-whatsapp": "Una llamada semanal y WhatsApp",
       "report-assembly-and-readout": "El informe mensual y su lectura",
       "client-admin-and-case-study": "Su facturación y la administración de su cuenta",
@@ -443,7 +444,7 @@ const es: typeof en = {
 
   ads: {
     kicker: "Anuncios y contenido",
-    title: "Los anuncios y el contenido se agregan a Hospitalidad y a Restaurante.",
+    title: "El manejo de Google Ads y el contenido se agregan a Hospitalidad y a Restaurante.",
     body: "A Producción no se agrega ninguno de los dos: ahí organizamos datos, control y automatización, y no construimos la venta de una bodega. El contenido va desde el tamaño de entrada y el manejo de anuncios desde el mediano, dentro de la cuota mensual y nunca como porcentaje de lo que usted invierte.",
   },
 
@@ -451,17 +452,17 @@ const es: typeof en = {
     kicker: "Condiciones",
     title: "Las condiciones.",
     items: [
-      "La implementación se paga 50 por ciento a la firma y 50 a la aceptación.",
+      "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación.",
       "La mitad de la firma se puede pagar en tres mensualidades, sin recargo.",
       "La cuota mensual va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Si deja el servicio antes de doce mensualidades, facturamos la parte de la construcción que la cuota venía pagando, menos un doceavo por mensualidad pagada. Su cotización lo indica.",
+      "Si deja el servicio antes de doce mensualidades, facturamos la parte de la construcción que la cuota venía pagando, menos un doceavo por mensualidad pagada. Cuánto es depende de la configuración, y su cotización lo indica.",
       "Todos los precios son más IVA. Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
       "Cotizamos y facturamos en pesos mexicanos. Las cifras en dólares son conversiones redondeadas, así que una columna en dólares puede quedar a unos dólares de su propia suma.",
     ],
   },
 
   close: {
-    desc: "Diez días hábiles y un informe escrito, suyo en cualquier caso. El Diagnóstico revisa sus números y fija la cotización: qué módulos, de qué tamaño y qué se construye primero.",
+    desc: "Diez días hábiles sobre sus fuentes, sus canales y su piso, y un informe escrito que es suyo en cualquier caso: qué es cierto, qué está roto y qué módulos construir primero, de qué tamaño.",
   },
 };
 
