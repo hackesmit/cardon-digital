@@ -81,7 +81,7 @@ const en = {
     monthlyNote:
       "Each monthly is the shared base, charged once per client, plus that module's run cost.",
     demoNote: "The demos run on an invented brand, in a new tab.",
-    note: "An entry price only moves up, never down. Below that build there is no system, only a report. **The Diagnostic sets the final quote.**",
+    note: "An entry price only moves up, never down: more sources, more units, more tables, more vintages, a connector, a second module. Below that build there is no system, only a report. **The Diagnostic sets the final quote.**",
     /**
      * Result first, mechanism second, in the home page's own words. `up` and
      * `limit` are what came across from lib/i18n/modulos.ts: the direction the
@@ -110,7 +110,7 @@ const en = {
         tag: "Close the day with the cash already counted.",
         up: "More tables, stations or covers a day move it up, to 60 tables.",
         limit:
-          "Cash and a card written down work from day one. A payment link is a connector on your own provider account, and your provider stamps the invoice.",
+          "Cash and a card written down work from day one. A payment link is a connector on your own provider account, quoted on top, one per provider, and your provider stamps the invoice.",
         demo: "Open the Restaurante demo",
       },
     },
@@ -185,7 +185,7 @@ const en = {
     baseLabel: "Shared base",
     /** Scopes the legend to the monthly bar, so its colours are never read
      *  onto the build bar beside it (reviewer B1, bead hq-wrig5.13 round two). */
-    legendNote: "The colours key the monthly blocks only.",
+    legendNote: "The colours key the monthly blocks only. Each row's build bar draws in a shade of its own, outside these four.",
     comboLabel: "What you buy",
     nameJoin: " and ",
     pricedOnLead: "Priced on the hours actually built:",
@@ -249,7 +249,7 @@ const en = {
   ads: {
     kicker: "Ads and content",
     title: "Google Ads management and content attach to Hospitalidad and Restaurante.",
-    body: "Neither attaches to Produccion: there we organise data, control and automation, and we do not build a winery's sales. Content from the entry size, ad management from the middle size up, inside the monthly fee and never as a share of what you spend.",
+    body: "Neither attaches to Produccion: there we organise data, control and automation, and we do not build a winery's sales. Content from the entry size, ad management from the middle size up. Ad management is inside the monthly fee, never as a share of what you spend, and both are quoted on top of the figures above.",
   },
 
   terms: {
@@ -308,8 +308,8 @@ const es: typeof en = {
     limitLabel: "Para tenerlo claro",
     monthlyNote:
       "Cada mensualidad es la base compartida, que se cobra una vez por cliente, más el costo del módulo.",
-    demoNote: "Las demos corren sobre una marca inventada, en una pestaña nueva.",
-    note: "Un precio de entrada solo sube, nunca baja. Debajo de esa construcción no hay sistema, hay un informe. **El Diagnóstico fija la cotización final.**",
+    demoNote: "Los demos corren sobre una marca inventada, en una pestaña nueva.",
+    note: "Un precio de entrada solo sube, nunca baja: más fuentes, más unidades, más mesas, más añadas, un conector, un segundo módulo. Debajo de esa construcción no hay sistema, hay un informe. **El Diagnóstico fija la cotización final.**",
     modules: {
       produccion: {
         name: "Producción",
@@ -317,7 +317,7 @@ const es: typeof en = {
         up: "Más fuentes, más orígenes, más añadas anteriores, un modelo o automatización financiera lo suben.",
         limit:
           "Un productor de uva lleva otro conjunto de funciones a las mismas tarifas: cuadros, aplicaciones, riego y entregas.",
-        demo: "Abrir la demo de Producción",
+        demo: "Abrir el demo de Producción",
       },
       hospitalidad: {
         name: "Hospitalidad",
@@ -325,15 +325,15 @@ const es: typeof en = {
         up: "Más unidades, más canales o un channel manager lo suben, hasta 40 unidades.",
         limit:
           "La construcción de entrada lee el calendario de cada canal, así que nombres e importes se capturan a mano hasta contratar un channel manager.",
-        demo: "Abrir la demo de Hospitalidad",
+        demo: "Abrir el demo de Hospitalidad",
       },
       restaurante: {
         name: "Restaurante",
         tag: "Cierre el día con el efectivo ya contado.",
         up: "Más mesas, estaciones o comensales al día lo suben, hasta 60 mesas.",
         limit:
-          "Efectivo y tarjeta anotada a mano funcionan desde el día uno. El enlace de pago es un conector sobre su propia cuenta de proveedor, y su proveedor timbra la factura.",
-        demo: "Abrir la demo de Restaurante",
+          "Efectivo y tarjeta anotada a mano funcionan desde el día uno. El enlace de pago es un conector sobre su propia cuenta de proveedor, que se cotiza aparte, uno por proveedor, y su proveedor timbra la factura.",
+        demo: "Abrir el demo de Restaurante",
       },
     },
   },
@@ -391,7 +391,7 @@ const es: typeof en = {
       "De mayor a menor, y cada renglón trae la construcción completa de cada módulo que nombra.",
     combosLabel: "Las siete combinaciones en el tamaño de entrada",
     baseLabel: "Base compartida",
-    legendNote: "El color marca solo los bloques mensuales.",
+    legendNote: "El color marca solo los bloques mensuales. La barra de arranque de cada renglón usa un tono propio, ninguno de estos cuatro.",
     comboLabel: "Lo que compra",
     nameJoin: " y ",
     pricedOnLead: "Cotizada sobre las horas que de verdad se construyen:",
@@ -445,7 +445,7 @@ const es: typeof en = {
   ads: {
     kicker: "Anuncios y contenido",
     title: "El manejo de Google Ads y el contenido se agregan a Hospitalidad y a Restaurante.",
-    body: "A Producción no se agrega ninguno de los dos: ahí organizamos datos, control y automatización, y no construimos la venta de una bodega. El contenido va desde el tamaño de entrada y el manejo de anuncios desde el mediano, dentro de la cuota mensual y nunca como porcentaje de lo que usted invierte.",
+    body: "A Producción no se agrega ninguno de los dos: ahí organizamos datos, control y automatización, y no construimos la venta de una bodega. El contenido va desde el tamaño de entrada y el manejo de anuncios desde el mediano. El manejo de anuncios va dentro de la cuota mensual, nunca como porcentaje de lo que usted invierte, y los dos se cotizan aparte de las cifras de arriba.",
   },
 
   terms: {
