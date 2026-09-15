@@ -20,23 +20,25 @@ import { dirname, join, resolve } from "node:path";
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 /**
- * The budget table. One line per page, one budget per LOCALE, because a single
- * number for both locales hands the shorter one free headroom.
+ * The word target table. One line per page, one target per LOCALE, because a
+ * single number for both locales hands the shorter one free headroom.
  *
- * `budget` is half of what the page measured when the doctrine landed, which is
- * doctrine section 7 rule 1 ("half the words"). `measured` is that landing
- * number, kept so a later reader can see where the page started.
+ * `budget` is half of what that locale measured when the doctrine landed,
+ * which is doctrine section 7 rule 1 ("half the words"). `measured` is that
+ * landing number, kept so a later reader can see where the page started.
  *
- * Two rules keep the table honest, and they cannot both fire on the same
- * locale:
+ * ADVISORY, never blocking (Daniel's decision on escalation hq-9qqdm). A
+ * locale over its target is reported as a note and the page still exits 0.
  *
- *   words         the locale is over its budget.
- *   budget-slack  the locale is under its budget by more than RATCHET_SLACK
- *                 words, so the budget line is stale and has to come down.
- *
- * The second one is what makes "ratchet" a fact instead of a promise: once a
- * page is rewritten, its budget follows it down and the words it gave up
- * cannot come back.
+ * Why it is not a blocking ratchet. It used to be, in both directions: over
+ * the number failed, and so did a page more than 25 words UNDER it, which
+ * printed the lower number to write into this table. A rewritten page hit the
+ * second rule, and writing the number it printed then failed the suite, which
+ * pins every line here to half of `measured`. No value of this table let a
+ * rewritten page pass both, and the only file that could resolve it is this
+ * one, which no rewrite bead owns. Half the words is still the target; it is
+ * carried where a human can judge it, in each rewrite bead's own Definition of
+ * Done. This checker does not claim a ratchet it cannot enforce.
  */
 export const PAGES = {
   home: { en: { budget: 696, measured: 1391 }, es: { budget: 785, measured: 1570 } },
@@ -50,9 +52,6 @@ export const PAGES = {
   contact: { en: { budget: 288, measured: 576 }, es: { budget: 273, measured: 545 } },
 };
 
-/** How far a budget line may sit above the page it governs. */
-export const RATCHET_SLACK = 25;
-
 /**
  * At most three emphasis spans per locale. Both of rich.tsx's markers count:
  * `**x**` renders a <b> and `__x__` renders a coloured accent span, so a rule
@@ -64,7 +63,10 @@ export const MAX_BOLD = 3;
 /**
  * One deliberate contrast per page per locale, kept on purpose. The entry is
  * the exact dictionary string that carries it, so the exemption reads in the
- * diff. More than one entry for a page and locale is a config error.
+ * diff. More than one entry for a page and locale is a config error, and the
+ * cap is counted a second time in OCCURRENCES while the page is checked:
+ * `ALLOWLIST_PER_LOCALE` entries used to exempt any number of contrasts,
+ * because one string can carry several and the cap counted array entries.
  */
 export const CONTRAST_ALLOWLIST = {
   // home: { en: ["..."], es: ["..."] },
@@ -87,12 +89,32 @@ const ES_DETERMINER = "un|una|unos|unas|el|la|los|las|otro|otra|otros|otras";
  * The Spanish shapes carry word boundaries so "mano es" and "camino otro" do
  * not read as "no es" and "no otro".
  */
+/**
+ * "not X but Y" in the general form, which is the headline Claudism and the
+ * whole point of this linter. It used to permit only a|an|the|just|only|
+ * another after "not", so "This is not software but certainty." walked
+ * straight through the rule written to catch it.
+ *
+ * Two things keep it off honest prose. It never crosses a clause boundary
+ * (`.`, `;`, `:`, `!`, `?`), so "We do not guess. But we do measure." is clean,
+ * and the two halves have to be close: at most 60 characters apart, which is
+ * about the distance a replacement stays readable over. "You will not wait
+ * sixty days for the invoice, because the module files it the same afternoon,
+ * but that is a different page." is clean for that reason. `n't` counts,
+ * because "It isn't a report but a decision." is the same sentence.
+ *
+ * Today it hits nothing on any of the nine pages, honest or otherwise. An
+ * honest English line that really is shaped this way goes in
+ * CONTRAST_ALLOWLIST, where a reviewer sees it, exactly like `, not `.
+ */
+const NOT_BUT = /\b(?:not|\w+n['\u2019]t)\b[^.;:!?]{0,60}?\bbut\b/gi;
+
 export const BLOCKING_SHAPES = [
   { id: ", not", locale: "en", re: /,\s+not\s/gi },
   { id: "not just", locale: "en", re: /\bnot just\b/gi },
   { id: "not another", locale: "en", re: /\bnot another\b/gi },
   { id: "never a", locale: "en", re: /\bnever an?\b/gi },
-  { id: "not X but Y", locale: "en", re: /\bnot\s+(?:a|an|the|just|only|another)\b[^.;!?]{0,60}?\bbut\b/gi },
+  { id: "not X but Y", locale: "en", re: NOT_BUT },
   { id: "no es/son + article", locale: "es", re: new RegExp(`\\bno (?:es|son)\\s+(?:${ES_DETERMINER})\\b`, "gi") },
   { id: "no solo", locale: "es", re: /\bno s[o\u00f3]lo\b/gi },
   { id: ", sino", locale: "es", re: /,\s+sino\b/gi },
@@ -183,6 +205,9 @@ function findAssignment(src, from) {
   return -1;
 }
 
+/** Values that are not copy and never were: a dictionary may hold them. */
+const SCALAR = /^(?:-?(?:\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?|0[xXbBoO][\da-fA-F_]+)n?|true|false|null|undefined)$/;
+
 /** A `/` here opens a regex literal rather than dividing. */
 function regexCanStart(prev) {
   return prev === "" || "(,=:[!&|?{};+-*%~^<>".includes(prev);
@@ -199,11 +224,15 @@ function regexCanStart(prev) {
  *     phrase in a comment cannot fail a page;
  *   - template substitutions walked as code, including regex literals, so a
  *     `}` inside `/}/g` does not end the substitution early.
- * Anything else is a loud extraction error, never a silent zero.
+ * Anything else is a loud extraction error, never a silent zero. That holds at
+ * every depth: `body: buildCopy(x)` two levels into a dictionary is copy this
+ * checker cannot read, exactly like `const enCopy = buildCopy(x)` at the top,
+ * and it used to be swallowed in silence while the page measured short.
  */
-function scanInitializer(src, start, label) {
+function scanInitializer(src, start, label, known = new Set()) {
   const strings = [];
   const errors = [];
+  let substDepth = 0;
   let line = 1;
   for (let k = 0; k < start; k++) if (src[k] === "\n") line++;
   let i = start;
@@ -262,7 +291,9 @@ function scanInitializer(src, start, label) {
       if (i >= src.length) return;
       if (src[i] === "`") { bump(); return; }
       bump(2);
+      substDepth++;
       readExpression("}", record);
+      substDepth--;
       if (src[i] === "}") bump();
     }
   }
@@ -301,17 +332,60 @@ function scanInitializer(src, start, label) {
     }
   }
 
-  /** Consumes one key. Keys are never copy, whatever quotes they wear. */
+  /** Consumes one key and returns its source text. Keys are never copy. */
   function readKey() {
     skipTrivia();
+    const from = i;
     const c = src[i];
-    if (c === '"' || c === "'") { readString(false); return; }
-    if (c === "`") { readTemplate(false); return; }
-    if (c === "[") { bump(); readExpression("]", false); if (src[i] === "]") bump(); return; }
+    if (c === '"' || c === "'") { readString(false); return src.slice(from, i); }
+    if (c === "`") { readTemplate(false); return src.slice(from, i); }
+    if (c === "[") { bump(); readExpression("]", false); if (src[i] === "]") bump(); return src.slice(from, i); }
     while (i < src.length && !":,}".includes(src[i]) && !" \t\r\n".includes(src[i])) {
       if (src[i] === "(") { bump(); readExpression(")", false); if (src[i] === ")") bump(); continue; }
       bump();
     }
+    return src.slice(from, i);
+  }
+
+  /**
+   * One value in a dictionary: an object property's value or an array entry.
+   * Here, unlike anywhere else in the walk, copy has to BE a literal, because a
+   * value assembled somewhere else is copy this checker cannot see. Numbers,
+   * booleans and null are not copy and pass quietly; anything else is a loud
+   * error naming the key and the line.
+   *
+   * Template substitutions are ordinary code and are exempt (`substDepth`):
+   * `${plural(n, { one: "dia" })}` is not a dictionary. So is a reference to
+   * another locale declaration in the same file, because that declaration is
+   * scanned in its own right: contact.ts writes `description: enDescription`
+   * and those words are counted once, at `const enDescription`.
+   */
+  function readValue(stop, record, what) {
+    skipTrivia();
+    const startLine = line;
+    const from = i;
+    const c = src[i];
+    let literal = true;
+    if (c === '"' || c === "'") readString(record);
+    else if (c === "`") readTemplate(record);
+    else if (c === "{") { bump(); readObject(record); if (src[i] === "}") bump(); }
+    else if (c === "[") { bump(); readArray(record); if (src[i] === "]") bump(); }
+    else literal = false;
+
+    if (literal) {
+      skipTrivia();
+      if (i >= src.length || stop.includes(src[i])) return;
+      // `["a"] as const` and `{ ... } satisfies Dict` are still literal copy.
+      if (/^(?:as|satisfies)\b/.test(src.slice(i, i + 10))) { readExpression(stop, false); return; }
+    }
+
+    readExpression(stop, false);
+    if (!record || substDepth > 0) return;
+    const text = src.slice(from, i).trim().replace(/\s+/g, " ");
+    if (SCALAR.test(text) || known.has(text)) return;
+    errors.push(
+      `${label} (line ${startLine}): ${what} is not a string, template, array or object literal, so copy-check cannot read it: ${text.slice(0, 60)}. Give the locale its copy as a literal.`,
+    );
   }
 
   function readObject(record) {
@@ -319,9 +393,15 @@ function scanInitializer(src, start, label) {
       skipTrivia();
       if (i >= src.length || src[i] === "}") return;
       if (src[i] === ",") { bump(); continue; }
-      readKey();
+      const keyLine = line;
+      const key = readKey();
+      if (record && substDepth === 0 && key.startsWith("...")) {
+        errors.push(
+          `${label} (line ${keyLine}): a spread (${key.slice(0, 40)}) can carry copy copy-check cannot read. Write the strings into this dictionary.`,
+        );
+      }
       skipTrivia();
-      if (src[i] === ":") { bump(); readExpression(",}", record); continue; }
+      if (src[i] === ":") { bump(); readValue(",}", record, `the value of ${key.trim() || "a key"}`); continue; }
       if (src[i] === "{") { bump(); readObject(record); if (src[i] === "}") bump(); continue; }
     }
   }
@@ -331,7 +411,7 @@ function scanInitializer(src, start, label) {
       skipTrivia();
       if (i >= src.length || src[i] === "]") return;
       if (src[i] === ",") { bump(); continue; }
-      readExpression(",]", record);
+      readValue(",]", record, "an array entry");
     }
   }
 
@@ -356,10 +436,18 @@ function scanInitializer(src, start, label) {
  * locale, so contact.ts's `enIntro` and `esDescription` are counted with the
  * page they feed. `export const` counts too.
  */
-const DECL_RE = /^(?:export\s+)?const\s+(en|es)(?:[A-Z]\w*)?\b/gm;
+const DECL_RE = /^(?:export\s+)?const\s+(en|es)([A-Z]\w*)?\b/gm;
 
 export function extractLocaleStrings(source) {
   const byLocale = { en: [], es: [], errors: [] };
+
+  // Every locale declaration in the file, gathered first: one of them naming
+  // another (`intro: enIntro`) is copy this checker already counts.
+  const known = new Set();
+  DECL_RE.lastIndex = 0;
+  let d;
+  while ((d = DECL_RE.exec(source)) !== null) known.add(d[1] + (d[2] ?? ""));
+
   DECL_RE.lastIndex = 0;
   let m;
   while ((m = DECL_RE.exec(source)) !== null) {
@@ -369,7 +457,7 @@ export function extractLocaleStrings(source) {
       byLocale.errors.push(`${label}: no "=" initializer found, so its copy cannot be read`);
       continue;
     }
-    const { strings, errors, end } = scanInitializer(source, eq, label);
+    const { strings, errors, end } = scanInitializer(source, eq, label, known);
     byLocale[m[1]].push(...strings);
     byLocale.errors.push(...errors);
     DECL_RE.lastIndex = Math.max(DECL_RE.lastIndex, end);
@@ -417,9 +505,14 @@ function excerpt(text, index, length) {
   return (from > 0 ? "..." : "") + text.slice(from, to).trim() + (to < text.length ? "..." : "");
 }
 
+/**
+ * Returns every blocking hit, plus `used`: how many OCCURRENCES each allowlist
+ * entry suppressed. The count is what the cap is applied to, because one
+ * string can carry several contrasts.
+ */
 function matchShapes(strings, shapes, locale, allowed) {
   const hits = [];
-  const used = new Set();
+  const used = new Map();
   for (const s of strings) {
     const text = stripMarkers(s.value);
     for (const shape of shapes) {
@@ -428,7 +521,7 @@ function matchShapes(strings, shapes, locale, allowed) {
       let m;
       while ((m = shape.re.exec(text)) !== null) {
         if (m[0].length === 0) { shape.re.lastIndex++; continue; }
-        if (allowed && allowed.has(s.value)) { used.add(s.value); continue; }
+        if (allowed && allowed.has(s.value)) { used.set(s.value, (used.get(s.value) ?? 0) + 1); continue; }
         hits.push({ shape: shape.id, line: s.line, text: excerpt(text, m.index, m[0].length) });
       }
     }
@@ -443,7 +536,6 @@ function matchShapes(strings, shapes, locale, allowed) {
 export function checkSource(page, source, options = {}) {
   const limits = options.limits ?? PAGES[page];
   const allowlist = options.allowlist ?? CONTRAST_ALLOWLIST;
-  const ratchet = options.ratchet ?? true;
   if (!limits) throw new Error(`no budget line for page "${page}"`);
 
   const byLocale = extractLocaleStrings(source);
@@ -466,16 +558,10 @@ export function checkSource(page, source, options = {}) {
     }
 
     if (words > budget) {
-      violations.push({
+      advisories.push({
         locale,
         rule: "words",
-        text: `${words} words, budget ${budget} (half of the ${limits[locale].measured} this page carried when the doctrine landed)`,
-      });
-    } else if (ratchet && budget - words > RATCHET_SLACK) {
-      violations.push({
-        locale,
-        rule: "budget-slack",
-        text: `${words} words against a budget of ${budget}; the budget is a ratchet, so lower this page's ${locale} budget to ${words} in the same diff (at most ${RATCHET_SLACK} words of slack)`,
+        text: `${words} words against a target of ${budget} (half of the ${limits[locale].measured} this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.`,
       });
     }
 
@@ -500,6 +586,15 @@ export function checkSource(page, source, options = {}) {
     const { hits, used } = matchShapes(strings, BLOCKING_SHAPES, locale, allowed);
     for (const h of hits) {
       violations.push({ locale, rule: "negative-contrast", line: h.line, text: `"${h.shape}" in: ${h.text}` });
+    }
+    let exempted = 0;
+    for (const n of used.values()) exempted += n;
+    if (exempted > ALLOWLIST_PER_LOCALE) {
+      violations.push({
+        locale,
+        rule: "allowlist",
+        text: `the allowlist exempts ${exempted} contrast occurrences here; the doctrine allows ${ALLOWLIST_PER_LOCALE} deliberate contrast per page per locale, and the cap counts hits, not entries`,
+      });
     }
     for (const entry of allowed) {
       if (!used.has(entry)) {
@@ -614,8 +709,8 @@ function run(argv, out, err, overrides) {
     const { violations, advisories, stats } = checkSource(page, source, { allowlist });
 
     out(
-      `${file}  en ${stats.en.words}w/${stats.en.bold}b of ${stats.en.budget}w` +
-        `  es ${stats.es.words}w/${stats.es.bold}b of ${stats.es.budget}w`,
+      `${file}  en ${stats.en.words}w/${stats.en.bold}b (target ${stats.en.budget}w)` +
+        `  es ${stats.es.words}w/${stats.es.bold}b (target ${stats.es.budget}w)`,
     );
     for (const v of violations) {
       out(`  FAIL  ${file}  ${v.locale}  ${v.rule}${v.line ? `  line ${v.line}` : ""}  ${v.text}`);

@@ -16,7 +16,6 @@ import { dirname, join, resolve } from "node:path";
 import {
   PAGES,
   MAX_BOLD,
-  RATCHET_SLACK,
   CONTRAST_ALLOWLIST,
   ALLOWLIST_PER_LOCALE,
   extractLocaleStrings,
@@ -48,12 +47,8 @@ function dict(enLine, esLine) {
   ].join("\n");
 }
 
-/**
- * The ratchet is off by default here: a one-line fixture is always far under a
- * 100 word budget, and the budget-slack rule has its own tests below.
- */
 function check(source, options = {}) {
-  return checkSource("fixture", source, { limits: LIMITS, allowlist: {}, ratchet: false, ...options });
+  return checkSource("fixture", source, { limits: LIMITS, allowlist: {}, ...options });
 }
 
 function rules(result, locale) {
@@ -211,13 +206,13 @@ test("words: a page at its locale budget passes", () => {
   assert.deepEqual(rules(result), []);
 });
 
-test("words: a page over the budget fails and names both numbers", () => {
+test("words: a page over its target is reported with both numbers", () => {
   const line = Array.from({ length: 101 }, () => "palabra").join(" ");
   const result = check(dict(line, line));
-  assert.deepEqual(rules(result, "en"), ["words"]);
-  const v = result.violations.find((x) => x.rule === "words");
-  assert.match(v.text, /101 words/);
-  assert.match(v.text, /budget 100/);
+  assert.deepEqual(rules(result, "en"), []);
+  const note = result.advisories.find((x) => x.rule === "words" && x.locale === "en");
+  assert.match(note.text, /101 words/);
+  assert.match(note.text, /target of 100/);
 });
 
 test("words: each locale carries its own budget, so the shorter one gets no headroom", () => {
@@ -227,29 +222,8 @@ test("words: each locale carries its own budget, so the shorter one gets no head
   const en = Array.from({ length: 60 }, () => "word").join(" ");
   const es = Array.from({ length: 60 }, () => "palabra").join(" ");
   const result = check(dict(en, es), { limits });
-  assert.deepEqual(rules(result, "en"), ["words"]);
-  assert.deepEqual(rules(result, "es"), []);
-});
-
-test("ratchet: a page well under its budget fails until the budget line comes down", () => {
-  const line = Array.from({ length: 40 }, () => "word").join(" ");
-  const result = check(dict(line, line), { ratchet: true });
-  assert.deepEqual(rules(result, "en"), ["budget-slack"]);
-  const v = result.violations.find((x) => x.rule === "budget-slack");
-  assert.match(v.text, /lower this page's en budget to 40/);
-});
-
-test(`ratchet: up to ${RATCHET_SLACK} words of slack is allowed`, () => {
-  const exact = Array.from({ length: 100 - RATCHET_SLACK }, () => "word").join(" ");
-  assert.deepEqual(rules(check(dict(exact, exact), { ratchet: true })), []);
-  const one = Array.from({ length: 100 - RATCHET_SLACK - 1 }, () => "word").join(" ");
-  assert.deepEqual(rules(check(dict(one, one), { ratchet: true }), "en"), ["budget-slack"]);
-});
-
-test("ratchet: words and budget-slack never fire on the same locale", () => {
-  const over = Array.from({ length: 300 }, () => "word").join(" ");
-  const result = check(dict(over, over), { ratchet: true });
-  assert.deepEqual(rules(result, "en"), ["words"]);
+  assert.deepEqual(result.advisories.filter((a) => a.locale === "en").map((a) => a.rule), ["words"]);
+  assert.deepEqual(result.advisories.filter((a) => a.locale === "es").map((a) => a.rule), []);
 });
 
 // --- emphasis ---------------------------------------------------------------
@@ -540,12 +514,144 @@ test("budget table: every page has a dictionary with both locales", () => {
   }
 });
 
-test("budget table: no page can grow past what it measured when the doctrine landed", () => {
-  // The ratchet, stated as the doctrine states it. Every page is over budget
-  // today; this asserts the budgets themselves never drift back up.
+test("budget table: every target is below what its page measured when the doctrine landed", () => {
+  // Half the words, as a number a reviewer can read. The table is advisory, so
+  // this is the only thing holding it to the doctrine's own target.
   for (const [page, limits] of Object.entries(PAGES)) {
     for (const locale of ["en", "es"]) {
       assert.ok(limits[locale].budget < limits[locale].measured, `${page}.${locale} budget is not below its seed`);
     }
   }
+});
+
+// --- round three ------------------------------------------------------------
+// Four behaviours Daniel scoped on escalation hq-9qqdm. Each of these fails
+// against the code as it stood before round three, which is what makes them
+// regression tests rather than decoration.
+
+test("words: the budget is advisory, so a page over it reports and never blocks", () => {
+  const line = Array.from({ length: 140 }, () => "word").join(" ");
+  const result = checkSource("fixture", dict(line, line), { limits: LIMITS, allowlist: {} });
+  assert.deepEqual(rules(result), []);
+  const note = result.advisories.find((a) => a.rule === "words" && a.locale === "en");
+  assert.ok(note, JSON.stringify(result.advisories));
+  assert.match(note.text, /140 words/);
+  assert.match(note.text, /target of 100/);
+});
+
+test("words: a rewritten page is clean and is never told to edit the budget table", () => {
+  // The deadlock this round exists to kill. A compliant rewrite sits far under
+  // its target; the checker used to fail it and name a table edit that the
+  // suite then rejected.
+  const line = Array.from({ length: 40 }, () => "word").join(" ");
+  const result = checkSource("fixture", dict(line, line), { limits: LIMITS, allowlist: {} });
+  assert.deepEqual(rules(result), []);
+  assert.deepEqual(result.advisories.map((a) => a.rule), []);
+});
+
+test("negative contrast: not X but Y blocks in its general form", () => {
+  for (const line of [
+    "This is not software but certainty.",
+    "We are not a dashboard vendor but the people who close your till.",
+    "It isn't a report but a decision.",
+  ]) {
+    assert.deepEqual(rules(check(dict(line, "Limpio.")), "en"), ["negative-contrast"], line);
+  }
+});
+
+test("negative contrast: the widened rule stays inside one clause", () => {
+  for (const line of [
+    "We do not guess. But we do measure.",
+    "The till does not close itself; but it tells you when the count is off.",
+    "You will not wait sixty days for the invoice, because the module files it the same afternoon, but that is a different page.",
+  ]) {
+    assert.deepEqual(rules(check(dict(line, "Limpio.")), "en"), [], line);
+  }
+});
+
+test("allowlist: the cap counts contrast occurrences, not array entries", () => {
+  const one = "Illustrative view, not client data.";
+  const two = "Illustrative view, not client data, not a live board.";
+  const src = (line) =>
+    ["const en = {", `  a: ${JSON.stringify(line)},`, "};", 'const es: typeof en = { a: "Limpio." };'].join("\n");
+
+  assert.deepEqual(rules(check(src(one), { allowlist: { fixture: { en: [one] } } })), []);
+
+  const over = check(src(two), { allowlist: { fixture: { en: [two] } } });
+  assert.deepEqual(rules(over, "en"), ["allowlist"]);
+  assert.match(over.violations.find((v) => v.rule === "allowlist").text, /2 contrast occurrence/);
+});
+
+test("extraction: a nested value that is not a literal is a loud error", () => {
+  const src = [
+    "const en = {",
+    '  lede: "Clean copy.",',
+    "  body: buildCopy(source),",
+    "};",
+    'const es: typeof en = { lede: "Limpio.", body: "Limpio." };',
+  ].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.equal(x.errors.length, 1, JSON.stringify(x.errors));
+  assert.match(x.errors[0], /body/);
+  assert.match(x.errors[0], /not a string, template, array or object literal/);
+  assert.ok(rules(check(src)).includes("extract"), JSON.stringify(check(src).violations));
+});
+
+test("extraction: a spread inside a dictionary is a loud error", () => {
+  const src = [
+    "const en = {",
+    "  ...shared,",
+    '  lede: "Clean copy.",',
+    "};",
+    'const es: typeof en = { lede: "Limpio." };',
+  ].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.equal(x.errors.length, 1, JSON.stringify(x.errors));
+  assert.match(x.errors[0], /spread/);
+});
+
+test("extraction: numbers, booleans and null are not copy and read clean", () => {
+  const src = [
+    "const en = {",
+    '  lede: "Clean copy.",',
+    "  seats: 24,",
+    "  live: true,",
+    "  note: null,",
+    '  items: ["One.", "Two."],',
+    "};",
+    'const es: typeof en = { lede: "Limpio.", seats: 24, live: true, note: null, items: ["Uno.", "Dos."] };',
+  ].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.deepEqual(x.errors, []);
+  assert.deepEqual(x.en.map((s) => s.value), ["Clean copy.", "One.", "Two."]);
+  assert.deepEqual(x.es.map((s) => s.value), ["Limpio.", "Uno.", "Dos."]);
+});
+
+test("extraction: a dictionary naming another locale declaration is not an error", () => {
+  // contact.ts's real shape. The words are counted once, at `const enIntro`,
+  // so the reference is not unreadable copy.
+  const src = [
+    'const enIntro = "Clean intro.";',
+    'const en = { meta: { description: enIntro }, lede: "Clean copy." };',
+    'const es: typeof en = { meta: { description: "Limpio." }, lede: "Limpio." };',
+  ].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.deepEqual(x.errors, []);
+  assert.deepEqual(x.en.map((s) => s.value), ["Clean intro.", "Clean copy."]);
+});
+
+test("extraction: an array entry is held to the same rule as a key's value", () => {
+  const src = ['const en = { items: ["One.", buildTwo()] };', 'const es: typeof en = { items: ["Uno."] };'].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.equal(x.errors.length, 1, JSON.stringify(x.errors));
+  assert.match(x.errors[0], /an array entry is not a string/);
+});
+
+test("extraction: a template substitution is code, not a dictionary", () => {
+  // The value rule must not reach inside `${...}`: that is ordinary JavaScript
+  // and calling a function there is not unreadable copy.
+  const src = ["const en = { a: `Ready in ${plural(n, { one: \"dia\" })}.` };", 'const es: typeof en = { a: "Listo." };'].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.deepEqual(x.errors, []);
+  assert.deepEqual(x.en.map((s) => s.value), ["Ready in ", "dia", "."]);
 });
