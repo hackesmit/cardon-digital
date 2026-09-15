@@ -20,11 +20,18 @@ const CITED_ROW = [0, 1];
  *
  * Every reading on the board and in the transcript is invented, so the frame
  * carries the same admission the module demos and the case visuals carry
- * (lib/i18n/demos.ts `honest`, doctrine section 5). It sits in the figcaption
- * rather than inside the role="img" element, because a screen reader does not
- * read the descendants of an image and the admission has to reach everyone. It
- * sits above the board, as it does on every other demo frame here, so it is
- * read before the numbers rather than after them.
+ * (lib/i18n/demos.ts `honest`, doctrine section 5). It is the figure's caption
+ * and it sits above the board, as it does on every other demo frame here, so
+ * it is read before the numbers rather than after them.
+ *
+ * This used to be one element with role="img" and `aria` as its label, which
+ * hid the whole board and transcript from a screen reader and replaced them
+ * with a one sentence summary (cross-vendor review, round two). The board and
+ * the transcript are text, so they are now read as text and the summary is
+ * kept as a visually hidden lead: a reader who cannot see the frame gets what
+ * the frame is FOR, then the same two exchanges everyone else reads, including
+ * the "no data" answer, which is the entire argument of this section. The bar
+ * sparkline stays aria-hidden, because it is the one part that is decoration.
  *
  * Motion follows the house play-once idiom (see the PlayOnceVis wrappers): the
  * rendered markup IS the resolved state, so with no JS, with reduced motion,
@@ -89,7 +96,8 @@ export default function AssistantDemo() {
   return (
     <figure className="assist-figure">
       <figcaption className="assist-honest mono">{honest}</figcaption>
-      <div className="assist-demo" ref={ref} role="img" aria-label={t.aria}>
+      <div className="assist-demo" ref={ref}>
+        <p className="sr-only">{t.aria}</p>
         <div className="ad-board">
           <div className="ad-board-head">
             <span className="ad-board-title">{t.boardTitle}</span>
