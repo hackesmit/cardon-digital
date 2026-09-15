@@ -145,7 +145,7 @@ const en = {
   season: {
     title: "Weather per section, on the same clock as the fruit.",
     section: "Cabernet, section 4",
-    lead: "Brix and total acidity off the lab sheet, over the temperature recorded in that same section. Drag across either graph and both read the same day.",
+    lead: "The Brix and total acidity a lab sheet carries, over what the section's own sensor records. Drag across either graph and both read the same day.",
     aria: "Brix and total acidity of one section by days from veraison, over the daily high and low of the same section",
     day: "Day {n} from veraison",
     x: "days from veraison",
@@ -264,7 +264,7 @@ const es: typeof en = {
   season: {
     title: "El clima por sección, en el mismo reloj que la fruta.",
     section: "Cabernet, sección 4",
-    lead: "Brix y acidez total de la hoja de laboratorio, sobre la temperatura registrada en esa misma sección. Arrastre sobre cualquiera de las dos gráficas y las dos leen el mismo día.",
+    lead: "El Brix y la acidez total que trae una hoja de laboratorio, sobre lo que registra el sensor de esa misma sección. Arrastre sobre cualquiera de las dos gráficas y las dos leen el mismo día.",
     aria: "Brix y acidez total de una sección por días desde envero, sobre la máxima y la mínima diarias de la misma sección",
     day: "Día {n} desde envero",
     x: "días desde envero",

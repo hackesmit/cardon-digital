@@ -17,6 +17,7 @@ import {
   PHONE_MAX,
   plan,
   RESPONSE,
+  responseOf,
   TEMP_RANGE,
   TMAX,
   TMIN,
@@ -322,8 +323,12 @@ describe("the section season data", () => {
     // acid falls at least twice as fast as in the seven days before the run,
     // and both settle again in the seven days after the window.
     const run = heatRuns(TMAX, HEAT_LINE)[0]!;
-    const w0 = run.start + LAG;
-    const w1 = w0 + RESPONSE;
+    // responseOf is the window the drawing washes in the fruit panel, so
+    // the shaded days and the days the numbers move are one definition.
+    const { start: w0, end } = responseOf(run);
+    const w1 = end + 1;
+    expect(w0).toBe(run.start + LAG);
+    expect(w1 - w0).toBe(RESPONSE);
     const before = { brix: slope(BRIX, run.start - 7, run.start), acid: slope(ACID, run.start - 7, run.start) };
     const during = { brix: slope(BRIX, w0, w1), acid: slope(ACID, w0, w1) };
     const after = { brix: slope(BRIX, w1, w1 + 7), acid: slope(ACID, w1, w1 + 7) };
@@ -362,7 +367,10 @@ describe("the shared scrub", () => {
 describe("the two layout plans", () => {
   it("is a phone plan under the breakpoint and a wide plan at it", () => {
     expect(plan(PHONE_MAX - 1).phone).toBe(true);
+    expect(plan(PHONE_MAX - 0.5).phone).toBe(true);
+    expect(plan(PHONE_MAX - 0.001).phone).toBe(true);
     expect(plan(PHONE_MAX).phone).toBe(false);
+    expect(plan(PHONE_MAX + 0.5).phone).toBe(false);
     expect(plan(342).phone).toBe(true);
     expect(plan(1132).phone).toBe(false);
   });
@@ -383,7 +391,23 @@ describe("the two layout plans", () => {
     const css = readRepo("app/[locale]/home.css");
     expect(css).toContain(`--ss-h: ${plan(1132).height}px`);
     expect(css).toContain(`--ss-h: ${plan(342).height}px`);
-    expect(css).toMatch(new RegExp(`@container \\(max-width: ${PHONE_MAX - 1}px\\)`));
+    // Range syntax, so the stylesheet's "under 640" is the same predicate as
+    // plan()'s, including at a fractional width (lucy, round one).
+    expect(css).toContain(`@container (width < ${PHONE_MAX}px)`);
+    // The rule form, never the bare value: the comment over the query says
+    // why max-width is not used, and a bare-value assertion failed on it.
+    expect(css).not.toContain(`@container (max-width: ${PHONE_MAX - 1}px)`);
+  });
+
+  it("hides the canvas in CSS when the component cannot draw", () => {
+    // hidden={noCanvas} on its own is a no-op here: .pg-showcase .ss-canvas
+    // sets display:block at (0,2,0), which beats the UA [hidden] rule at
+    // (0,1,0), so the reader got a blank reserved box over the written
+    // fallback (review s-4302). The stylesheet has to say it at the same
+    // specificity or higher.
+    const css = readRepo("app/[locale]/home.css");
+    const rule = css.match(/\.pg-showcase \.ss-canvas\[hidden\] \{([^}]*)\}/)?.[1] ?? "";
+    expect(rule).toContain("display: none");
   });
 
   it("lets the figure fill its band", () => {
