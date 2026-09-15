@@ -539,16 +539,23 @@ function shippingVis(v: VisDict) {
         <text className="e-ink mono" x="262" y="206" fontSize="12">{v.shipping.carrier}</text>
         <text className="e-muted mono" x="262" y="224" fontSize="10.5">{v.shipping.packaging}</text>
 
-        <line className="e-divider" x1="392" y1="54" x2="392" y2="246" />
-        <text className="e-lab mono" x="404" y="82" fontSize="9.5" letterSpacing="0.3">{v.shipping.acrossBorder}</text>
-        <circle className="e-guest" cx="418" cy="150" r="6" />
-        <path className="e-carry" d="M426 150 L 466 150" />
+        {/* The carry-home lane sits 12 units further left than the drawing it
+            came from, and its heading spends less letter spacing. Measured, not
+            eyeballed: state/review/s-6fb6/shots.mjs walks every <text> in every
+            frame and compares its rect with the frame's, and CRUZANDO LA
+            FRONTERA ran 3px past the right edge at both 1440 and 390 while the
+            shorter English heading fit. An SVG label is neither wrapped nor
+            clipped by its box, so that overflow draws over the frame border. */}
+        <line className="e-divider" x1="380" y1="54" x2="380" y2="246" />
+        <text className="e-lab mono" x="392" y="82" fontSize="9.5" letterSpacing="0.2">{v.shipping.acrossBorder}</text>
+        <circle className="e-guest" cx="406" cy="150" r="6" />
+        <path className="e-carry" d="M414 150 L 454 150" />
         <path
           className="e-home"
-          d="M470 150 L 482 140 L 494 150 M474 148 L474 162 L490 162 L490 148"
+          d="M458 150 L 470 140 L 482 150 M462 148 L462 162 L478 162 L478 148"
         />
-        <text className="e-muted mono" x="404" y="192" fontSize="9.5">{v.shipping.carried}</text>
-        <text className="e-muted mono" x="404" y="208" fontSize="9.5">{v.shipping.allowance}</text>
+        <text className="e-muted mono" x="392" y="192" fontSize="9.5">{v.shipping.carried}</text>
+        <text className="e-muted mono" x="392" y="208" fontSize="9.5">{v.shipping.allowance}</text>
       </svg>
     </div>
   );
