@@ -41,10 +41,13 @@ Blocking (exit 1):
 - Em dashes. Zero, per the repo hook.
 - Anything the extractor cannot read, at any depth. A locale declaration whose
   initializer is not a string, template, array or object literal fails loudly
-  instead of counting zero words silently, and so does a value inside one:
-  `body: buildCopy(x)` and a `...spread` are copy this checker cannot see.
-  Numbers, booleans and a reference to another locale declaration in the same
-  file (`intro: enIntro`, which is counted at its own declaration) are fine.
+  instead of counting zero words silently, and so does a value inside one.
+  `body: buildCopy(x)`, an array entry, a shorthand `{ body }`, a backticked
+  `` `${buildCopy(x)}` `` carrying no words of its own, and a `...spread` are
+  all copy this checker cannot see. What is fine: numbers and booleans, which
+  are not copy, and a reference to another declaration of the SAME locale in
+  the same file (`intro: enIntro`, counted at its own declaration). A reference
+  across locales is not, because it would read English under the Spanish rules.
 
 Advisory (reported, never blocks): the word target, `rather than`, `instead of`,
 and any `no es` or `no son` that is NOT followed by an article.
@@ -88,7 +91,10 @@ carries more than one. The exemption is in the diff where a reviewer sees it.
 The cap is applied twice, because an entry is not the same thing as a contrast:
 once to the entries when the config is read, and again to the OCCURRENCES those
 entries exempt while the page is checked. One allowlisted line carrying two
-contrasts is a violation naming the count, not a way to keep both.
+contrasts is a violation naming the count, not a way to keep both. A contrast
+is a stretch of words rather than a rule name, so two rules matching over the
+same words ("It is not just a dashboard but a decision." trips `not just` and
+`not X but Y`) stay one contrast.
 
 The English shapes are precise where the Spanish ones are not, so this is where
 an honest English line ends up when it happens to be shaped like a contrast:
