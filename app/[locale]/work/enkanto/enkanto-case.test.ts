@@ -1,7 +1,8 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import React from "react";
+import ts from "typescript";
 import { renderToStaticMarkup } from "react-dom/server";
 
 // vitest transforms this app's JSX with the classic runtime, so the page's
@@ -44,41 +45,39 @@ const pageSource = readFileSync(
  * The same source with its comments removed, which is what every assertion
  * about the page's CODE reads.
  *
- * Its own control found this: removing `<SpotlightFrames />` from the JSX left
- * the guard green, because the header comment of the diagram section ends "the
- * moment <SpotlightFrames /> is mounted" and a raw-source match cannot tell a
- * mount from a sentence about one. A comment vouching for code that is no
- * longer there is the exact failure this file exists to stop, so no assertion
- * here reads a comment. Quotes are tracked rather than skipped, so a `//`
- * inside a string stays code.
+ * Its own control found the need for it: removing `<SpotlightFrames />` from
+ * the JSX left the guard green, because the header comment of the diagram
+ * section ends "the moment <SpotlightFrames /> is mounted" and a match against
+ * raw source cannot tell a mount from a sentence about one. A comment vouching
+ * for code that is no longer there is the exact failure this file exists to
+ * stop, so no assertion here reads a comment.
+ *
+ * TypeScript does the stripping, rather than the hand-written scanner this
+ * started as. That scanner tracked quotes but had no idea what a regex literal
+ * is, so `/\/\//` read as the start of a line comment and silently ate the
+ * rest of the line (cross-vendor review). `jsx: Preserve` keeps the JSX
+ * verbatim, so a mount still looks like a mount here.
  */
 export function stripComments(source: string): string {
-  let out = "";
-  let quote: string | null = null;
-  for (let i = 0; i < source.length; i++) {
-    const c = source[i];
-    const next = source[i + 1];
-    if (quote) {
-      out += c;
-      if (c === "\\") { out += next ?? ""; i++; continue; }
-      if (c === quote) quote = null;
-      continue;
-    }
-    if (c === '"' || c === "'" || c === "`") { quote = c; out += c; continue; }
-    if (c === "/" && next === "/") {
-      while (i < source.length && source[i] !== "\n") i++;
-      out += "\n";
-      continue;
-    }
-    if (c === "/" && next === "*") {
-      i += 2;
-      while (i < source.length && !(source[i] === "*" && source[i + 1] === "/")) i++;
-      i++;
-      continue;
-    }
-    out += c;
-  }
-  return out;
+  return ts.transpileModule(source, {
+    compilerOptions: {
+      jsx: ts.JsxEmit.Preserve,
+      module: ts.ModuleKind.ESNext,
+      target: ts.ScriptTarget.ESNext,
+      removeComments: true,
+    },
+  }).outputText;
+}
+
+/** HTML entities back to the characters the dictionary actually holds. */
+export function decodeEntities(value: string): string {
+  return value
+    .replace(/&#x27;|&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&#x2F;/g, "/")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
 }
 
 /** What the page actually does, with every sentence about it removed. */
@@ -230,17 +229,7 @@ describe("the copy doctrine, on the rendered page", () => {
       )
       .replace(/[ \t]+/g, " ")
       .replace(/\n{2,}/g, "\n");
-    return decode(stripped);
-  }
-
-  function decode(value: string): string {
-    return value
-      .replace(/&#x27;|&apos;/g, "'")
-      .replace(/&quot;/g, '"')
-      .replace(/&#x2F;/g, "/")
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">")
-      .replace(/&amp;/g, "&");
+    return decodeEntities(stripped);
   }
 
   function html(locale: Locale): string {
@@ -270,7 +259,7 @@ describe("the copy doctrine, on the rendered page", () => {
     const re = /(?:alt|aria-label|title)="([^"]*)"/g;
     const markup = html(locale);
     for (let m = re.exec(markup); m !== null; m = re.exec(markup)) {
-      if (m[1].trim() !== "") found.push(decode(m[1]));
+      if (m[1].trim() !== "") found.push(decodeEntities(m[1]));
     }
     return found;
   }
@@ -340,8 +329,15 @@ describe("the copy doctrine, on the rendered page", () => {
       // that had deleted the cellar band and would have failed the page that
       // brought it back captioned (bead hq-4pu0q.5, review s-74ef). The
       // promise was always the caption, so that is what is asserted.
-      for (const picture of markup.match(/<(?:img|video|picture)\b[^>]*>/g) ?? []) {
-        const figure = enclosingFigure(markup, markup.indexOf(picture));
+      // exec in a loop for the INDEX, never `markup.indexOf(picture)`: two
+      // identical <img> tags serialize identically, so indexOf hands the
+      // second one the first one's position and a duplicate dropped outside
+      // any figure inherits the caption of the one inside it (cross-vendor
+      // review). This project's tsconfig target cannot iterate matchAll.
+      const pictures = /<(?:img|video|picture)\b[^>]*>/g;
+      for (let m = pictures.exec(markup); m !== null; m = pictures.exec(markup)) {
+        const picture = m[0];
+        const figure = enclosingFigure(markup, m.index);
         expect(
           figure,
           `a picture outside any figure: ${picture.slice(0, 80)}`,
@@ -471,7 +467,12 @@ describe("the visuals this page may not lose", () => {
     it(`${locale}: draws all ${DRAWN_VISUALS} diagrams, each in a frame with a name`, () => {
       const markup = html(locale);
       const frames = markup.match(/<div class="vis-frame[^"]*">[^]*?<\/svg>/g) ?? [];
-      expect(frames).toHaveLength(DRAWN_VISUALS);
+      // A FLOOR, which is what the header above promises. It said counts may
+      // go up freely while asserting an exact length, so adding a sixth
+      // diagram failed the guard written to protect diagrams (cross-vendor
+      // review). Exact correspondence is enforced where it is real, one
+      // diagram per changed.items entry, in the next case.
+      expect(frames.length).toBeGreaterThanOrEqual(DRAWN_VISUALS);
       for (const frame of frames) {
         // a diagram a screen reader cannot read is decoration, so the name is
         // part of the visual and is counted with it
@@ -482,7 +483,7 @@ describe("the visuals this page may not lose", () => {
       }
       // and every diagram on the page is inside one of those frames, so a
       // drawing that loses its frame loses the spotlight rather than the count
-      expect(markup.match(/class="mini-svg"/g) ?? []).toHaveLength(DRAWN_VISUALS);
+      expect(markup.match(/class="mini-svg"/g) ?? []).toHaveLength(frames.length);
     });
 
     it(`${locale}: every change carries the diagram that argues it`, () => {
@@ -504,6 +505,21 @@ describe("the visuals this page may not lose", () => {
         .filter((r) => r.includes('class="change"'))
         .map((r) => r.match(/transition-delay:(\d+)ms/)?.[1] ?? "0");
       expect(staggers).toEqual(["0", "60", "120", "180"]);
+    });
+
+    it(`${locale}: the cellar band's file is on disk and is a real image`, () => {
+      // The markup guards below all pass while production serves a 404: an
+      // <img> with a dead src renders, reserves its box and answers every
+      // selector. `next build` does not check public/, and bead hq-4pu0q.11 is
+      // open and says in as many words to delete this file, so the hazard is
+      // scheduled rather than hypothetical (cross-vendor review).
+      const file = join(process.cwd(), "public", BAND_SRC);
+      expect(existsSync(file), `${BAND_SRC} is not in public/`).toBe(true);
+      expect(statSync(file).size).toBeGreaterThan(1024);
+      // and it is a webp rather than a renamed placeholder
+      const head = readFileSync(file).subarray(0, 12);
+      expect(head.subarray(0, 4).toString("latin1")).toBe("RIFF");
+      expect(head.subarray(8, 12).toString("latin1")).toBe("WEBP");
     });
 
     it(`${locale}: the cellar band is on the page, captioned and described`, () => {
@@ -530,6 +546,15 @@ describe("the visuals this page may not lose", () => {
       const src = " * the moment <SpotlightFrames /> is mounted.\n";
       expect(stripComments(`/*${src}*/\nconst x = 1;`)).not.toContain("SpotlightFrames");
       expect(stripComments("// <SpotlightFrames />\nconst x = 1;")).toContain("const x = 1;");
+    });
+
+    it("leaves a regex literal alone, which the hand-written version did not", () => {
+      // `/\/\//` ends in an escaped slash followed by the closing delimiter.
+      // Reading it left to right without knowing what a regex is, that tail
+      // looks like `//` and eats the rest of the line.
+      const out = stripComments("const c = /\\/\\//;\nconst kept = 1; // gone\n");
+      expect(out).toContain("const kept = 1");
+      expect(out).not.toContain("gone");
     });
 
     it("leaves a slash inside a string as code", () => {
@@ -591,7 +616,7 @@ describe("the visuals this page may not lose", () => {
       expect(reached.has("vis-frame")).toBe(true);
       for (const locale of locales) {
         const classes = html(locale).match(/<div class="(vis-frame[^"]*)"/g) ?? [];
-        expect(classes).toHaveLength(DRAWN_VISUALS);
+        expect(classes.length).toBeGreaterThanOrEqual(DRAWN_VISUALS);
         for (const found of classes) {
           const list = (found.match(/class="([^"]*)"/) as RegExpMatchArray)[1].split(" ");
           expect(
@@ -636,14 +661,23 @@ describe("the visuals this page may not lose", () => {
 
     for (const locale of locales) {
       it(`${locale}: every visual string is non-empty and is drawn by the page`, () => {
+        // Against the RENDERED page, never against the source. `pageCode`
+        // containing `v.shipping.allowance` proves a reference survives, which
+        // a dead one does too; a diagram can lose a label while the reference
+        // sits somewhere else in the file and the gate stays green
+        // (cross-vendor review). The source check stays as the second half,
+        // because it is the one that names the key when a locale goes quiet.
+        const rendered = decodeEntities(html(locale));
         for (const path of paths(enkanto[locale].vis)) {
           const value = path
             .split(".")
             .reduce<unknown>((acc, k) => (acc as Record<string, unknown>)[k], enkanto[locale].vis);
           expect(typeof value, `${path} is not a string`).toBe("string");
           expect((value as string).trim(), `${path} is blank`).toBeTruthy();
-          expect(pageCode, `${path} is in the dictionary and nothing draws it`)
+          expect(pageCode, `${path} is in the dictionary and nothing reads it`)
             .toContain(`v.${path}`);
+          expect(rendered, `${path} is read by the page and never reaches it`)
+            .toContain(value as string);
         }
       });
     }
