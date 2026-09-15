@@ -25,6 +25,7 @@ import {
   MAX_COV,
   PEAK_T,
   PEAK_V,
+  PHONE_MAX,
   READOUTS,
   RUSH_T,
   SERVICE,
@@ -77,6 +78,7 @@ import "./demos.css";
 export default function RestauranteDemo() {
   const d = useDict(demos);
   const vis = d.restaurante;
+  const figureRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const captionRef = useRef<HTMLSpanElement | null>(null);
@@ -91,10 +93,11 @@ export default function RestauranteDemo() {
   const redrawRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
+    const figureEl = figureRef.current;
     const frameEl = frameRef.current;
     const canvas = canvasRef.current;
     const caption = captionRef.current;
-    if (!frameEl || !canvas || !canvas.getContext) return;
+    if (!figureEl || !frameEl || !canvas || !canvas.getContext) return;
     const ctx0 = canvas.getContext("2d");
     if (!ctx0) return;
     let ctx: CanvasRenderingContext2D = ctx0;
@@ -597,10 +600,25 @@ export default function RestauranteDemo() {
       }
     };
 
+    /** The figure's content box, which is exactly what demos.css queries: its
+        container-type is inline-size and a size query reads the content box,
+        so this is the one number both sides judge the plan by. */
+    const figureContentWidth = () => {
+      const cs = window.getComputedStyle(figureEl);
+      return (
+        figureEl.clientWidth -
+        parseFloat(cs.paddingLeft || "0") -
+        parseFloat(cs.paddingRight || "0")
+      );
+    };
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
       W = Math.max(1, Math.round(rect.width));
-      phone = W < 640;
+      phone = figureContentWidth() < PHONE_MAX;
+      /* published so a probe or a test can read which plan the component
+         chose and hold it against the plan the stylesheet applied */
+      frameEl.dataset.plan = phone ? "phone" : "wide";
       /* the composition sets its own height, so the frame always fits it */
       H = bands(W, phone).height;
       canvas.style.height = H + "px";
@@ -654,7 +672,7 @@ export default function RestauranteDemo() {
        reflows, a panel opening beside it (reviewer note 5). Height changes are
        ignored, because resize() sets the canvas height itself and answering
        that would loop. */
-    let roW = W;
+    let roW = Math.round(figureContentWidth());
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver((entries) => {
@@ -663,7 +681,8 @@ export default function RestauranteDemo() {
         roW = w;
         onResize();
       });
-      ro.observe(canvas);
+      /* the figure, because that is the box the plan is decided on */
+      ro.observe(figureEl);
     }
 
     window.addEventListener("resize", onResize);
@@ -697,7 +716,7 @@ export default function RestauranteDemo() {
       .replace("{time}", READOUTS[i].time);
 
   return (
-    <figure className="demo-figure" data-demo="restaurante">
+    <figure className="demo-figure" data-demo="restaurante" ref={figureRef}>
       <figcaption className="demo-head">
         <span className="demo-title">
           {vis.title}
@@ -735,6 +754,12 @@ export default function RestauranteDemo() {
         ))}
 
         <noscript>
+          {/* Applied only when scripting is off: the parser treats noscript
+              content as markup then and as text otherwise. With no JS the
+              board is never drawn and the hotspots never answer, so the
+              written description below is the whole figure rather than a
+              caption under an empty canvas (lucy, round two). */}
+          <style>{".demo-canvas,.rd-btn{display:none}"}</style>
           <div className="demo-fallback">{vis.fallback}</div>
         </noscript>
       </div>

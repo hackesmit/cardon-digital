@@ -219,10 +219,22 @@ export function bands(w: number, isPhone: boolean): Bands {
 }
 
 /**
- * The stage widths the pre-hydration canvas heights in demos.css are computed
- * at: a 760px figure at its widest padding, and the same figure on a 390px
- * phone. demos.test.ts asserts the two stylesheet heights are still what
- * bands() returns here, so the placeholder cannot drift away from the height
- * the component measures and the first layout stays still.
+ * The one breakpoint the demos have: under this the floor reflows to the phone
+ * plan. It is measured on the figure's content box, which is the box
+ * demos.css makes its query container, so the stylesheet and the component
+ * always pick the same plan. Round two's cross-vendor review found the old
+ * pair, a canvas-width check in JS against a viewport media query in CSS,
+ * disagreeing for any demo in a column narrower than the page: a phone floor
+ * plan drawn under a desktop stylesheet, with hover plates and a placeholder
+ * 180px short of the canvas it was holding space for.
  */
-export const PLACEHOLDER_STAGE = { wide: 724, phone: 328 } as const;
+export const PHONE_MAX = 640;
+
+/*
+ * demos.css carries this same arithmetic as the canvas's pre-hydration height,
+ * written in cqw against the figure's content box, so the placeholder is the
+ * measured height at every width instead of a single reference width that is
+ * wrong everywhere else. demos.test.ts parses the stylesheet's two formulas
+ * and compares them to bands() across a width sweep, which is what keeps the
+ * two copies honest.
+ */

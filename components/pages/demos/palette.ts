@@ -157,7 +157,12 @@ export interface DemoPalette {
  */
 export function readDemoPalette(el: HTMLElement, hue: DemoHue): DemoPalette {
   const root = el.ownerDocument.documentElement;
-  const dark = root.getAttribute("data-mode") !== "light";
+  /* Light is the default the site ships, so only "dark" is dark. The older
+     canvas visuals (canvasKit.readPalette, ContourField, VineyardMap) read
+     this as !== "light" from when dark was the default, which makes an
+     isolated mount with no data-mode dark against a light surface. The demos
+     do not inherit that. */
+  const dark = root.getAttribute("data-mode") === "dark";
   const fb = FALLBACK[dark ? "dark" : "light"];
   const style = getComputedStyle(el);
   const token = (name: string) =>
