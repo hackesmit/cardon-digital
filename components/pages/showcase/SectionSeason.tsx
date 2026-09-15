@@ -32,6 +32,7 @@ import {
   HEAT_LINE,
   heatRuns,
   plan,
+  responseOf,
   TEMP_RANGE,
   TEMP_TICKS,
   TMAX,
@@ -52,11 +53,14 @@ import {
  * What it argues. The upper panel is Brix climbing with total acidity as its
  * counter-curve, the lower panel is the same section's daily high and low
  * with a heat line at 35 degrees and the area over it filled. A five day run
- * over the line is washed across both panels, and two days into it the sugar
- * turns up and the acid turns down for a week. Nothing labels that: the
- * curve shows it, which is the point, and showcase.test.ts pins it as a
- * property of the numbers in ./season.ts. The numbers are invented and the
- * frame says so.
+ * over the line is washed in the lower panel, and the wash leans to the
+ * right as it crosses the gap into the upper panel, where it covers the
+ * week, two days on, in which the sugar turns up and the acid turns down.
+ * The lean is the lag: the eye follows the heat up and to the right into
+ * the fruit and finds the curve bending there, so no caption is needed and
+ * none is drawn. showcase.test.ts pins the window as a property of the
+ * numbers in ./season.ts and the wash uses the same definition. The numbers
+ * are invented and the frame says so.
  *
  * How it is drawn. One canvas, no animation loop, redrawn on demand: on
  * layout, on the mode toggle and when the scrub moves. Colour is read off
@@ -70,10 +74,12 @@ import {
  * the one keyboard target. A hover, a drag, or a finger moving across either
  * panel moves the crosshair on both and the tiles beside them; touch-action
  * pan-y leaves a vertical swipe to the page. The stage is a slider to a
- * screen reader, arrow keys move it a day and Home and End jump, and the
- * tiles are the live region that answers. The tiles are resolved on the
- * server for the last day of the season, so the reading is complete before
- * hydration, and with scripts off a written fallback replaces the canvas.
+ * screen reader, arrow keys move it a day and Home and End jump, and its
+ * aria-valuetext carries the whole reading on every step, so the tiles are
+ * not a second live region (one made every step speak twice). The tiles are
+ * resolved on the server for the last day of the season, so the reading is
+ * complete before hydration, and with scripts off, or with no 2d context,
+ * a written fallback replaces the canvas.
  *
  * Which box decides the plan. The stylesheet's container query and this
  * component both read the figure's content width against the same number
@@ -95,6 +101,11 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
 
   const [day, setDay] = useState(DAYS - 1);
   const dayRef = useRef(DAYS - 1);
+  /** True when the canvas cannot draw with scripts on: no 2d context (a
+      browser or privacy setting that blocks canvas), or a context lost
+      after the first draw. The written season then replaces the canvas,
+      the same text the noscript branch carries (lucy, round one). */
+  const [noCanvas, setNoCanvas] = useState(false);
   /** Set by the canvas effect: redraw for the current day. */
   const redrawRef = useRef<(() => void) | null>(null);
   /** The plot box in stage pixels, written on every draw, read by the
@@ -105,8 +116,11 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
     const figureEl = figureRef.current;
     const stageEl = stageRef.current;
     const canvas = canvasRef.current;
-    if (!figureEl || !stageEl || !canvas || !canvas.getContext) return;
-    if (!canvas.getContext("2d")) return;
+    if (!figureEl || !stageEl || !canvas) return;
+    if (!canvas.getContext || !canvas.getContext("2d")) {
+      setNoCanvas(true);
+      return;
+    }
 
     let fruit: DemoPalette = readDemoPalette(stageEl, "primary");
     let heat: DemoPalette = readDemoPalette(stageEl, "energy");
@@ -155,13 +169,32 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
       c.fillRect(x0, F.y0, x1 - x0, F.y1 - F.y0);
       c.fillRect(x0, T.y0, x1 - x0, T.y1 - T.y0);
 
-      /* the heat run, washed across both panels and the gap between them:
-         this is the one mark that says the two panels share a clock */
+      /* the heat run, washed over the weather, then leaning to the right
+         across the gap and into the fruit, where it covers the week the
+         fruit answers in. One shape through both panels says they share a
+         clock; the lean says the answer comes later. It fades as it rises,
+         so the heat reads as the cause and the fruit's week as the echo. */
+      const wash = c.createLinearGradient(0, T.y1, 0, F.y0);
+      wash.addColorStop(0, heat.accentFaint);
+      wash.addColorStop(1, rgba(heat.accentRgb, heat.dark ? 0.1 : 0.08));
       for (const run of heatRuns(TMAX, HEAT_LINE)) {
+        const echo = responseOf(run);
         const l = X(run.start) - half;
         const r = X(run.end) + half;
-        c.fillStyle = heat.accentFaint;
-        c.fillRect(l, F.y0, r - l, T.y1 - F.y0);
+        const el = X(echo.start) - half;
+        const er = X(echo.end) + half;
+        c.beginPath();
+        c.moveTo(l, T.y1);
+        c.lineTo(r, T.y1);
+        c.lineTo(r, T.y0);
+        c.lineTo(er, F.y1);
+        c.lineTo(er, F.y0);
+        c.lineTo(el, F.y0);
+        c.lineTo(el, F.y1);
+        c.lineTo(l, T.y0);
+        c.closePath();
+        c.fillStyle = wash;
+        c.fill();
       }
 
       /* grids and ticks */
@@ -348,6 +381,12 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
       });
       ro.observe(figureEl);
     }
+    /* A lost context blanks the canvas; show the written season until the
+       browser hands the context back, then draw again. */
+    const onLost = () => setNoCanvas(true);
+    const onRestored = () => setNoCanvas(false);
+    canvas.addEventListener("contextlost", onLost);
+    canvas.addEventListener("contextrestored", onRestored);
     window.addEventListener("resize", onResize);
     window.addEventListener("cardon-mode", onMode);
 
@@ -355,10 +394,17 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
       redrawRef.current = null;
       if (ro) ro.disconnect();
       window.clearTimeout(rt);
+      canvas.removeEventListener("contextlost", onLost);
+      canvas.removeEventListener("contextrestored", onRestored);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("cardon-mode", onMode);
     };
   }, [locale]);
+
+  /* Back from a lost context: the canvas is visible again, so draw into it. */
+  useEffect(() => {
+    if (!noCanvas) redrawRef.current?.();
+  }, [noCanvas]);
 
   /* The scrub has to show on the canvas too, and nothing redraws it on its
      own. */
@@ -435,7 +481,13 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
           onPointerMove={onPointerMove}
           onKeyDown={onKeyDown}
         >
-          <canvas className="ss-canvas" ref={canvasRef} aria-hidden="true" />
+          <canvas
+            className="ss-canvas"
+            ref={canvasRef}
+            aria-hidden="true"
+            hidden={noCanvas}
+          />
+          {noCanvas ? <div className="ss-fallback">{d.fallback}</div> : null}
           <noscript>
             {/* Applied only when scripting is off, the same way the module
                 demos do it: with no JS the canvas is never drawn, so the
@@ -447,8 +499,10 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
 
         {/* The reading, and the legend: each tile carries the swatch of the
             line it reads. Resolved on the server for the last day, so it is
-            complete before hydration and with no JS. */}
-        <div className="ss-rail" aria-live="polite">
+            complete before hydration and with no JS. Not a live region: the
+            slider's aria-valuetext already speaks every value on each step,
+            and a live rail made each step speak twice (review s-4302). */}
+        <div className="ss-rail">
           <p className="ss-day mono">{dayLine}</p>
           <dl className="ss-stats">
             <div className="ss-stat" data-k="brix">

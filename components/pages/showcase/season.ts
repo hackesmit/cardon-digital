@@ -63,12 +63,24 @@ export const ACID: readonly number[] = [
     at a glance and one warm day that stays under it does not. */
 export const HEAT_LINE = 35;
 
+export interface Run {
+  start: number;
+  end: number;
+}
+
 /** How many days after a run starts the fruit starts moving faster, and for
-    how many days it keeps that pace. The test reads the data against these;
-    the drawing does not mark them, because the point is that the curve shows
-    it on its own. */
+    how many days it keeps that pace. The test reads the data against these,
+    and the drawing washes the same window in the fruit panel, joined to the
+    run below it by a wash that leans to the right across the gap: the lean
+    is the lag, drawn, so the reader sees "later" without a caption. */
 export const LAG = 2;
 export const RESPONSE = 7;
+
+/** The days the fruit answers a heat run: LAG days after it starts, for
+    RESPONSE days, inclusive at both ends like the run itself. */
+export function responseOf(run: Run): Run {
+  return { start: run.start + LAG, end: run.start + LAG + RESPONSE - 1 };
+}
 
 /** The axis of each panel, [low, high], with the ticks drawn on it. */
 export const BRIX_RANGE = [12, 25] as const;
@@ -78,11 +90,6 @@ export const ACID_TICKS = [6, 8, 10] as const;
 export const TEMP_RANGE = [10, 42] as const;
 export const TEMP_TICKS = [15, 25, 35] as const;
 export const DAY_TICKS = [0, 10, 20, 30, 40] as const;
-
-export interface Run {
-  start: number;
-  end: number;
-}
 
 /** Every maximal stretch of consecutive days whose high is at or over `line`. */
 export function heatRuns(high: readonly number[], line: number): Run[] {

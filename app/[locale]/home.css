@@ -805,6 +805,13 @@
   width: 100%;
   height: var(--ss-h);
 }
+/* The component sets hidden when it cannot draw (no 2d context, a lost
+   context). The attribute alone does nothing against the rule above, since
+   .pg-showcase .ss-canvas at (0,2,0) beats the UA [hidden] at (0,1,0), and
+   the reader got a blank reserved box over the written season. */
+.pg-showcase .ss-canvas[hidden] {
+  display: none;
+}
 /* The readout: the day, four tiles, the hint. The tiles carry the swatches,
    so they are the legend as well as the reading, and every value is mono
    tabular so a tile never changes width as the scrub moves. */
@@ -860,10 +867,11 @@
 .pg-showcase .ss-stat[data-k="tmax"] .ss-swatch {
   border-top-color: var(--ss-heat);
 }
+/* the low is drawn as a thin line at 0.35 alpha under the range band, so
+   its swatch is that line, not a block that reads as the band */
 .pg-showcase .ss-stat[data-k="tmin"] .ss-swatch {
-  height: 8px;
-  border: 0;
-  background: color-mix(in srgb, var(--ss-heat) 22%, transparent);
+  border-top-width: 1px;
+  border-top-color: color-mix(in srgb, var(--ss-heat) 35%, transparent);
 }
 .pg-showcase .ss-stat dd {
   margin: 4px 0 0;
@@ -907,7 +915,11 @@
     gap: 10px;
   }
 }
-@container (max-width: 639px) {
+/* Range syntax, not max-width: 639px. The component's plan is "under 640",
+   and (max-width: 639px) is "at most 639", which disagree on a fractional
+   width such as 639.5px (browser zoom, a fractional grid track) and would
+   reserve the wide height for the phone plan there (lucy, round one). */
+@container (width < 640px) {
   /* On the stage, never on .ss: a container query is evaluated against an
      ANCESTOR container of the element it styles, so a rule on the container
      itself never matches, and the phone height sat unused while the canvas
