@@ -23,6 +23,11 @@ import type { Dict } from "./rich";
  *     charge and never writes one, built and not yet in service.
  *  4. Spanish is written for a Valle winemaker and English for a US owner.
  *     Neither is a translation of the other.
+ *  5. The drawn visuals keep their own strings under `vis`, apart from the
+ *     prose, because docs/copy-doctrine.md section 8 rule 5 says a word budget
+ *     is a prose operation and a diagram's labels are its working parts. The
+ *     rewrite that halved this page moved them there rather than deleting
+ *     them with the keys the old chapter blocks used to carry.
  */
 
 const en = {
@@ -87,12 +92,6 @@ const en = {
     kicker: "What changed",
     title: "The store takes the order, and the wine gets to the door.",
     sub: "Real products with a price, a weight and an image, and a checkout that completes.",
-    tag: "empty in name, then built out",
-    aria: "An empty product card becomes a real one with an image, name, price and weight.",
-    honest: "Illustrative card, invented product.",
-    inNameOnly: "IN NAME ONLY",
-    builtOut: "BUILT OUT",
-    add: "add",
     items: [
       {
         lead: "One address for the whole business.",
@@ -111,6 +110,67 @@ const en = {
         body: "English and Spanish on one foundation, so a guest from the Valle and one from the north meet the same business.",
       },
     ],
+  },
+  /**
+   * THE WORKING PARTS OF THE DRAWN VISUALS, and why they live apart.
+   *
+   * docs/copy-doctrine.md section 8 rule 5: halving a page's words is a prose
+   * operation, so the strings a diagram cannot run without (its frame tag, its
+   * accessible name, the labels inside it) are kept here rather than trimmed
+   * to hit a word target. Five diagrams, in the order the page draws them:
+   * the before and after card beside the what-changed lead, then one per
+   * change in that list, then the band standing in for the cellar photograph.
+   */
+  vis: {
+    card: {
+      tag: "empty in name, then built out",
+      aria: "An empty product card becomes a real one with an image, name, price and weight.",
+      honest: "Illustrative card, invented product.",
+      inNameOnly: "IN NAME ONLY",
+      builtOut: "BUILT OUT",
+      add: "add",
+    },
+    structure: {
+      tag: "five front doors, then one",
+      aria: "Five competing homepages resolve to one canonical store page, with the sitemap and the robots file clean.",
+      homepages: "HOMEPAGES",
+      unpublished: "unpublished",
+      canonical: "canonical store",
+      clean: "clean",
+      descriptions: "descriptions written",
+    },
+    payments: {
+      tag: "cards and cash, one checkout",
+      aria: "Card, cash and transfer feed one checkout that reaches a placed order.",
+      card: "Card",
+      cash: "Cash",
+      transfer: "Transfer",
+      placed: "Order placed",
+      clears: "the order clears",
+    },
+    shipping: {
+      tag: "pickup, domestic, and an honest carry-home",
+      aria: "An order splits to pickup at the winery and to a domestic carrier. A dashed lane apart shows guests carrying wine home themselves under the personal allowance.",
+      order: "Order",
+      pickup: "Pickup",
+      atWinery: "at the winery",
+      carrier: "Domestic carrier",
+      packaging: "compliant packaging",
+      acrossBorder: "ACROSS THE BORDER",
+      carried: "carried in person,",
+      allowance: "personal allowance",
+    },
+    bilingual: {
+      tag: "EN and ES, one foundation",
+      aria: "English and Spanish rails converge into one store foundation.",
+      oneStore: "One store",
+      readWhole: "read whole in both",
+      foundation: "one foundation under both",
+    },
+    band: {
+      alt: "Oak barrels stacked in a winery cellar",
+      caption: "Stock photograph, standing in until En'kanto's own cellar shot lands.",
+    },
   },
   system: {
     kicker: "The system",
@@ -264,12 +324,6 @@ const es: typeof en = {
     kicker: "Lo que cambió",
     title: "La tienda toma el pedido y el vino llega a la puerta.",
     sub: "Productos de verdad con precio, peso e imagen, y un pago que se completa.",
-    tag: "vacía de nombre, después construida",
-    aria: "Una tarjeta de producto vacía se vuelve una real con imagen, nombre, precio y peso.",
-    honest: "Tarjeta ilustrativa, producto inventado.",
-    inNameOnly: "SOLO DE NOMBRE",
-    builtOut: "CONSTRUIDA",
-    add: "agregar",
     items: [
       {
         lead: "Una sola dirección para todo el negocio.",
@@ -288,6 +342,57 @@ const es: typeof en = {
         body: "Español e inglés sobre un mismo cimiento, para que un huésped del Valle y uno del norte encuentren el mismo negocio.",
       },
     ],
+  },
+  vis: {
+    card: {
+      tag: "vacía de nombre, después construida",
+      aria: "Una tarjeta de producto vacía se vuelve una real con imagen, nombre, precio y peso.",
+      honest: "Tarjeta ilustrativa, producto inventado.",
+      inNameOnly: "SOLO DE NOMBRE",
+      builtOut: "CONSTRUIDA",
+      add: "agregar",
+    },
+    structure: {
+      tag: "cinco puertas, después una",
+      aria: "Cinco páginas de inicio que competían se resuelven en una sola página de tienda, con el sitemap y el robots limpios.",
+      homepages: "PÁGINAS DE INICIO",
+      unpublished: "despublicada",
+      canonical: "tienda canónica",
+      clean: "limpio",
+      descriptions: "descripciones escritas",
+    },
+    payments: {
+      tag: "tarjeta y efectivo, un solo pago",
+      aria: "Tarjeta, efectivo y transferencia alimentan un solo pago que llega a pedido realizado.",
+      card: "Tarjeta",
+      cash: "Efectivo",
+      transfer: "Transferencia",
+      placed: "Pedido realizado",
+      clears: "el pedido se libera",
+    },
+    shipping: {
+      tag: "recolección, envío nacional y un traslado honesto",
+      aria: "Un pedido se abre a recolección en la bodega y a paquetería nacional. Un carril punteado aparte muestra a los huéspedes llevándose el vino ellos mismos bajo la franquicia personal.",
+      order: "Pedido",
+      pickup: "Recolección",
+      atWinery: "en la bodega",
+      carrier: "Paquetería nacional",
+      packaging: "empaque que cumple",
+      acrossBorder: "CRUZANDO LA FRONTERA",
+      carried: "llevado en persona,",
+      allowance: "franquicia personal",
+    },
+    bilingual: {
+      tag: "ES y EN, un solo cimiento",
+      aria: "Los carriles de español y de inglés convergen en un solo cimiento de tienda.",
+      oneStore: "Una tienda",
+      readWhole: "completa en los dos",
+      foundation: "un cimiento para los dos",
+    },
+    band: {
+      alt: "Barricas de roble apiladas en la cava de una bodega",
+      caption: "Fotografía de archivo, mientras llega la toma de la cava de En'kanto.",
+    },
   },
   system: {
     kicker: "El sistema",

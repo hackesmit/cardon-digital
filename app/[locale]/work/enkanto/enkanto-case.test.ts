@@ -205,6 +205,19 @@ describe("the copy doctrine, on the rendered page", () => {
     );
   }
 
+  /**
+   * The <figure> a picture sits in, or null. Plain scan rather than a regex
+   * across the whole document: figures do not nest on this page and a lazy
+   * `[^]*?` between two tags matches the wrong pair as soon as one does.
+   */
+  function enclosingFigure(markup: string, at: number): string | null {
+    const open = markup.lastIndexOf("<figure", at);
+    if (open === -1) return null;
+    const close = markup.indexOf("</figure>", open);
+    if (close === -1 || close < at) return null;
+    return markup.slice(open, close + "</figure>".length);
+  }
+
   /** Every alt, aria-label and title the page renders, decoded. */
   function accessibleText(locale: Locale): string[] {
     const found: string[] = [];
@@ -277,12 +290,26 @@ describe("the copy doctrine, on the rendered page", () => {
         );
         expect(caption?.[1]?.trim()).toBeTruthy();
       }
-      // and nothing else on the page is a picture. Counting the figures only
-      // proves the three slots are there; an uncaptioned <img> dropped in
-      // beside them, which is what this page carried before the rewrite,
-      // passed that count (cross-vendor review, round two).
-      const rest = markup.replace(/<figure class="media[^]*?<\/figure>/g, "");
-      expect(rest).not.toMatch(/<(img|video|picture)\b/);
+      // and every other picture on the page is captioned too. This used to
+      // read "no <img> outside a Media figure", which is a rule against
+      // photographs rather than against uncaptioned ones: it passed the page
+      // that had deleted the cellar band and would have failed the page that
+      // brought it back captioned (bead hq-4pu0q.5, review s-74ef). The
+      // promise was always the caption, so that is what is asserted.
+      for (const picture of markup.match(/<(?:img|video|picture)\b[^>]*>/g) ?? []) {
+        const figure = enclosingFigure(markup, markup.indexOf(picture));
+        expect(
+          figure,
+          `a picture outside any figure: ${picture.slice(0, 80)}`,
+        ).toBeTruthy();
+        const caption = (figure as string).match(
+          /<figcaption[^>]*>([^]*?)<\/figcaption>/,
+        );
+        expect(
+          caption?.[1]?.replace(/<[^>]*>/g, "").trim(),
+          `an uncaptioned picture: ${picture.slice(0, 80)}`,
+        ).toBeTruthy();
+      }
     });
 
     it(`${locale}: one call to action, in the site's own words, repeated`, () => {
@@ -324,5 +351,195 @@ describe("the doctrine, on the dictionary", () => {
     // The rule it names is to rewrite the sentence rather than route around
     // the gate, so this file simply has no substitution to route around.
     expect(dictSource).not.toContain("${");
+  });
+});
+
+/**
+ * THE VISUALS THIS PAGE MAY NOT LOSE.
+ *
+ * docs/copy-doctrine.md section 8 is binding and it has a runnable half,
+ * `scripts/visuals-check.mjs`, which compares the set of files under
+ * `components/pages/` at the merge base against the set on disk. That catches
+ * a deleted component. It is blind to two thirds of this page's visuals,
+ * because a case page draws most of them as inline <svg> in page.tsx and as an
+ * <img> band, and neither is a file under `components/pages/` (review s-74ef:
+ * the gate caught the one deleted component and missed four diagrams and the
+ * band going with them).
+ *
+ * This block is the other half, and it is written against the rendered page
+ * rather than the source, so a diagram that is imported and never mounted
+ * fails the same way a deleted one does. The counts below are the page's
+ * inventory. They may go UP freely. Lowering one is retiring a visual, which
+ * is Daniel's decision alone (doctrine 8.3), and lowering the number here is
+ * the diff where that decision has to be visible.
+ */
+describe("the visuals this page may not lose", () => {
+  /** Frames that draw a diagram: the before and after card, then one per change. */
+  const DRAWN_VISUALS = 5;
+  /** One diagram per entry in `changed.items`. */
+  const CHANGE_VISUALS = 4;
+  /** The cellar band, licensed stock standing in for En'kanto's own photograph. */
+  const BAND_SRC = "/media/enkanto-valle.webp";
+
+  const spotlightPath = "components/pages/enkanto/SpotlightFrames.tsx";
+
+  // Read inside the cases, never in the describe body. A deleted visual is
+  // exactly the state these guards exist to catch, and a readFileSync at
+  // collection time turns that into a suite that fails to load: one red line
+  // naming a path, no test names, and every other guard in this file silently
+  // not run. Lazy, each finding keeps its own failing test.
+  const read = (path: string) => readFileSync(join(process.cwd(), path), "utf8");
+
+  function html(locale: Locale): string {
+    return renderToStaticMarkup(
+      React.createElement(EnkantoCaseStudy, { params: { locale } }),
+    );
+  }
+
+  for (const locale of locales) {
+    it(`${locale}: draws all ${DRAWN_VISUALS} diagrams, each in a frame with a name`, () => {
+      const markup = html(locale);
+      const frames = markup.match(/<div class="vis-frame[^"]*">[^]*?<\/svg>/g) ?? [];
+      expect(frames).toHaveLength(DRAWN_VISUALS);
+      for (const frame of frames) {
+        // a diagram a screen reader cannot read is decoration, so the name is
+        // part of the visual and is counted with it
+        const name = frame.match(/aria-label="([^"]*)"/);
+        expect(name?.[1]?.trim(), `frame with no accessible name: ${frame.slice(0, 90)}`)
+          .toBeTruthy();
+        expect(frame).toContain('class="mini-svg"');
+      }
+      // and every diagram on the page is inside one of those frames, so a
+      // drawing that loses its frame loses the spotlight rather than the count
+      expect(markup.match(/class="mini-svg"/g) ?? []).toHaveLength(DRAWN_VISUALS);
+    });
+
+    it(`${locale}: every change carries the diagram that argues it`, () => {
+      const markup = html(locale);
+      const changes = markup.match(/<div class="change">[^]*?(?=<div class="change">|<\/div><\/div><\/section>)/g) ?? [];
+      expect(changes).toHaveLength(CHANGE_VISUALS);
+      expect(enkanto[locale].changed.items).toHaveLength(CHANGE_VISUALS);
+      for (const change of changes) {
+        expect(
+          (change.match(/class="vis-frame change-vis"/g) ?? []).length,
+          `a change with no diagram: ${change.slice(0, 90)}`,
+        ).toBe(1);
+      }
+    });
+
+    it(`${locale}: the cellar band is on the page, captioned and described`, () => {
+      const markup = html(locale);
+      const img = markup.match(new RegExp(`<img[^>]*src="${BAND_SRC}"[^>]*>`));
+      expect(img, `the band is gone: ${BAND_SRC}`).toBeTruthy();
+      expect(img?.[0].match(/alt="([^"]*)"/)?.[1]?.trim()).toBeTruthy();
+      const band = markup.match(/<figure class="photoband">[^]*?<\/figure>/);
+      expect(band?.[0]).toContain(BAND_SRC);
+      expect(
+        band?.[0].match(/<figcaption[^>]*>([^]*?)<\/figcaption>/)?.[1]?.trim(),
+      ).toBeTruthy();
+    });
+  }
+
+  /**
+   * The spotlight, which is the one class of visual a screenshot cannot check
+   * (a still frame of a hover state that follows a cursor looks identical
+   * whether or not anything writes the coordinates). So it is checked as the
+   * contract it is: something writes --mx / --my, something reads them, and
+   * what writes them reaches every frame this page draws.
+   */
+  describe("the cursor spotlight", () => {
+    it("still has its component on disk", () => {
+      expect(() => read(spotlightPath)).not.toThrow();
+    });
+
+    it("is mounted, and from this page's own component", () => {
+      expect(pageSource).toContain(
+        'import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames"',
+      );
+      expect(pageSource).toMatch(/<SpotlightFrames \/>/);
+    });
+
+    it("writes the two custom properties the shared frame rule reads", () => {
+      expect(read(spotlightPath)).toContain('setProperty("--mx"');
+      expect(read(spotlightPath)).toContain('setProperty("--my"');
+      expect(read(spotlightPath)).toContain("pointermove");
+      // the other end of the contract, in globals.css: without this the
+      // writes go nowhere, and without the writes the glow sits at the 50%
+      // fallback while the sibling case page tracks the cursor (review s-74ef)
+      const rule = read("app/globals.css").match(/\.vis-frame::after\{[^}]*\}/);
+      expect(rule?.[0]).toContain("var(--mx,50%)");
+      expect(rule?.[0]).toContain("var(--my,50%)");
+    });
+
+    it("reaches every framed visual this page renders", () => {
+      // the selector, as the component actually writes it
+      const selector = read(spotlightPath).match(/querySelectorAll\(\s*"([^"]*)"/)?.[1];
+      expect(selector).toBeTruthy();
+      const reached = new Set(
+        (selector as string)
+          .split(",")
+          .map((part) => part.trim())
+          .filter((part) => part.startsWith(".pg-enkanto "))
+          .map((part) => part.slice(".pg-enkanto ".length).replace(/^\./, "")),
+      );
+      expect(reached.has("vis-frame")).toBe(true);
+      for (const locale of locales) {
+        const classes = html(locale).match(/<div class="(vis-frame[^"]*)"/g) ?? [];
+        expect(classes).toHaveLength(DRAWN_VISUALS);
+        for (const found of classes) {
+          const list = (found.match(/class="([^"]*)"/) as RegExpMatchArray)[1].split(" ");
+          expect(
+            list.some((name) => reached.has(name)),
+            `a frame the spotlight never reaches: ${found}`,
+          ).toBe(true);
+        }
+      }
+    });
+  });
+
+  /**
+   * Doctrine 8.5: a diagram's labels are its working parts, so they live under
+   * the dictionary's `vis` key rather than in the prose that a word budget
+   * reaches into. Two ways a rewire goes half done, both caught here: a key
+   * that survives in the dictionary with nothing drawing it (the visual is
+   * gone and only its vocabulary is left), and a key one locale has and the
+   * other does not (one language loses the label).
+   */
+  describe("the visual strings, kept where the doctrine puts them", () => {
+    /** Leaf paths of an object, as `a.b.c`. */
+    function paths(value: unknown, prefix = "", out: string[] = []): string[] {
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        for (const [k, v] of Object.entries(value)) paths(v, prefix ? `${prefix}.${k}` : k, out);
+      } else {
+        out.push(prefix);
+      }
+      return out;
+    }
+
+    it("both locales carry the same visual vocabulary", () => {
+      // `vis` itself first. Without this the comparison is vacuous when the
+      // key is gone in both locales, which is the state a rewrite that deleted
+      // the diagrams leaves behind: two undefineds compare equal.
+      for (const locale of locales) {
+        const vis = enkanto[locale].vis as unknown;
+        expect(vis && typeof vis === "object", `${locale} has no vis block`).toBe(true);
+        expect(paths(vis).length).toBeGreaterThanOrEqual(DRAWN_VISUALS);
+      }
+      expect(paths(enkanto.en.vis).sort()).toEqual(paths(enkanto.es.vis).sort());
+    });
+
+    for (const locale of locales) {
+      it(`${locale}: every visual string is non-empty and is drawn by the page`, () => {
+        for (const path of paths(enkanto[locale].vis)) {
+          const value = path
+            .split(".")
+            .reduce<unknown>((acc, k) => (acc as Record<string, unknown>)[k], enkanto[locale].vis);
+          expect(typeof value, `${path} is not a string`).toBe("string");
+          expect((value as string).trim(), `${path} is blank`).toBeTruthy();
+          expect(pageSource, `${path} is in the dictionary and nothing draws it`)
+            .toContain(`v.${path}`);
+        }
+      });
+    }
   });
 });
