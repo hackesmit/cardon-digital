@@ -40,6 +40,50 @@ const pageSource = readFileSync(
   "utf8",
 );
 
+/**
+ * The same source with its comments removed, which is what every assertion
+ * about the page's CODE reads.
+ *
+ * Its own control found this: removing `<SpotlightFrames />` from the JSX left
+ * the guard green, because the header comment of the diagram section ends "the
+ * moment <SpotlightFrames /> is mounted" and a raw-source match cannot tell a
+ * mount from a sentence about one. A comment vouching for code that is no
+ * longer there is the exact failure this file exists to stop, so no assertion
+ * here reads a comment. Quotes are tracked rather than skipped, so a `//`
+ * inside a string stays code.
+ */
+export function stripComments(source: string): string {
+  let out = "";
+  let quote: string | null = null;
+  for (let i = 0; i < source.length; i++) {
+    const c = source[i];
+    const next = source[i + 1];
+    if (quote) {
+      out += c;
+      if (c === "\\") { out += next ?? ""; i++; continue; }
+      if (c === quote) quote = null;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === "`") { quote = c; out += c; continue; }
+    if (c === "/" && next === "/") {
+      while (i < source.length && source[i] !== "\n") i++;
+      out += "\n";
+      continue;
+    }
+    if (c === "/" && next === "*") {
+      i += 2;
+      while (i < source.length && !(source[i] === "*" && source[i + 1] === "/")) i++;
+      i++;
+      continue;
+    }
+    out += c;
+  }
+  return out;
+}
+
+/** What the page actually does, with every sentence about it removed. */
+const pageCode = stripComments(pageSource);
+
 /** What the basis paragraph on the page claims, in one place. */
 const CLAIMED_SCREENS = 19;
 const CLAIMED_MODULES = 3;
@@ -103,9 +147,9 @@ describe("the result placeholder cannot reach the live site", () => {
   });
 
   it("the page renders the block through that gate and no other", () => {
-    expect(pageSource).toContain("const showPending = showsPending(process.env);");
-    expect(pageSource).toMatch(/\{showPending \? \(/);
-    expect(pageSource).not.toMatch(/VERCEL_ENV/);
+    expect(pageCode).toContain("const showPending = showsPending(process.env);");
+    expect(pageCode).toMatch(/\{showPending \? \(/);
+    expect(pageCode).not.toMatch(/VERCEL_ENV/);
   });
 
   it("still carries a marker a reviewer cannot miss", () => {
@@ -441,6 +485,32 @@ describe("the visuals this page may not lose", () => {
   }
 
   /**
+   * stripComments is load bearing now, so it is checked rather than trusted:
+   * it has to remove the sentence that made the mount guard vacuous, and it
+   * has to leave a `//` inside a string alone, or it would quietly rewrite the
+   * code every other assertion here reads.
+   */
+  describe("the comment stripper the code assertions depend on", () => {
+    it("removes a comment that talks about the code", () => {
+      const src = " * the moment <SpotlightFrames /> is mounted.\n";
+      expect(stripComments(`/*${src}*/\nconst x = 1;`)).not.toContain("SpotlightFrames");
+      expect(stripComments("// <SpotlightFrames />\nconst x = 1;")).toContain("const x = 1;");
+    });
+
+    it("leaves a slash inside a string as code", () => {
+      expect(stripComments('const u = "https://example.com/a";')).toContain(
+        "https://example.com/a",
+      );
+      expect(stripComments('const s = "/* not a comment */";')).toContain("not a comment");
+    });
+
+    it("leaves this page's own mount and imports standing", () => {
+      expect(pageCode).toContain("<SpotlightFrames />");
+      expect(pageCode).toContain("/media/enkanto-valle.webp");
+    });
+  });
+
+  /**
    * The spotlight, which is the one class of visual a screenshot cannot check
    * (a still frame of a hover state that follows a cursor looks identical
    * whether or not anything writes the coordinates). So it is checked as the
@@ -453,10 +523,11 @@ describe("the visuals this page may not lose", () => {
     });
 
     it("is mounted, and from this page's own component", () => {
-      expect(pageSource).toContain(
+      expect(pageCode).toContain(
         'import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames"',
       );
-      expect(pageSource).toMatch(/<SpotlightFrames \/>/);
+      // in the JSX the component returns, which is the only place a mount is
+      expect(pageCode).toMatch(/<SpotlightFrames \/>\s*<\/main>/);
     });
 
     it("writes the two custom properties the shared frame rule reads", () => {
@@ -536,7 +607,7 @@ describe("the visuals this page may not lose", () => {
             .reduce<unknown>((acc, k) => (acc as Record<string, unknown>)[k], enkanto[locale].vis);
           expect(typeof value, `${path} is not a string`).toBe("string");
           expect((value as string).trim(), `${path} is blank`).toBeTruthy();
-          expect(pageSource, `${path} is in the dictionary and nothing draws it`)
+          expect(pageCode, `${path} is in the dictionary and nothing draws it`)
             .toContain(`v.${path}`);
         }
       });
