@@ -420,20 +420,23 @@ test("allowlist: one deliberate line reused across entries counts once, not once
   );
   assert.equal(result.violations.filter((v) => v.rule === "negative-contrast").length, 0);
 
-  // Control: two DIFFERENT deliberate contrasts are still two, and still capped.
-  const two = [
+  // Control for the merge itself. Merging by value must not merge two DISTINCT
+  // contrasts that happen to sit in the same allowlisted string: that string
+  // carries two, and the cap must still say so. Asserting on configError here
+  // would prove nothing, because two allowlist entries trip config validation
+  // on their own (cross-vendor review of this commit caught exactly that in an
+  // earlier version of this control).
+  const twoInOne = "Anticipated, not guessed, and measured, not estimated.";
+  const carried = [
     "const en = {",
-    `  lede: ${JSON.stringify(kept)},`,
-    '  recap: "A written memo, not a sales deck.",',
+    `  lede: ${JSON.stringify(twoInOne)},`,
     "};",
-    'const es: typeof en = { lede: "Limpio.", recap: "Limpio." };',
+    'const es: typeof en = { lede: "Limpio." };',
   ].join("\n");
-  const capped = check(two, { allowlist: { fixture: { en: [kept, "A written memo, not a sales deck."] } } });
-  assert.ok(
-    capped.violations.some((v) => v.rule === "allowlist") ||
-      capped.configError,
-    "two distinct contrasts must still be caught by the cap or by config validation",
-  );
+  const capped = check(carried, { allowlist: { fixture: { en: [twoInOne] } } });
+  const alViolations = capped.violations.filter((v) => v.rule === "allowlist");
+  assert.equal(alViolations.length, 1, "one string carrying two contrasts must still trip the cap");
+  assert.match(alViolations[0].text ?? alViolations[0].detail ?? "", /2/);
 });
 
 test("allowlist: an entry that no longer carries a contrast is reported as stale", () => {

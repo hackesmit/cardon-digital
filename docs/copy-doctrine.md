@@ -41,12 +41,17 @@ Blocking (exit 1):
   the matcher as `This is not ` and ` but certainty.`, two unrelated fragments,
   and passes clean in both languages. Fixing it properly means matching across
   segment boundaries, which is a rewrite of the matcher rather than a patch. It
-  is not being fixed because the threat model does not need it: this linter
-  exists to catch Claudisms written without noticing, and those are written as
-  plain literals. Nobody reaches for a template substitution mid-sentence by
-  accident. If you find yourself writing one that happens to straddle a banned
-  shape, that is the moment to rewrite the sentence, not to route around the
-  gate.
+  is not being fixed because, checked rather than assumed, no locale declaration
+  on any of the nine pages contains a substitution: the eight in the repo all
+  sit in helper functions in `precios.ts`, outside what the extractor reads.
+  The linter exists to catch Claudisms written without noticing, and those are
+  written as plain literals. If you do write a substitution that straddles a
+  banned shape, rewrite the sentence rather than route around the gate.
+  The wider version of the same gap is worth knowing and is NOT theoretical:
+  `precios.ts` assembles some sentences at runtime from dictionary parts
+  (`${d.exampleLead} ${clause}.`), so the checker only ever sees those parts
+  separately and can never see the sentence a visitor reads. No automated rule
+  covers runtime-assembled copy. Read those assembled sentences by eye.
 - More deliberate contrast than the allowlist allows. The cap is counted in
   occurrences, not in allowlist entries, so one allowlisted string cannot carry
   three contrasts through. One string reused across several dictionary entries
