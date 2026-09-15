@@ -22,15 +22,15 @@ const en = {
   meta: {
     title: "Monte Xanic case history",
     description:
-      "An hour of finance work at Monte Xanic now takes about two minutes, and the harvest reads in one live view.",
+      "One finance workflow at Monte Xanic now takes about 97 percent less time: about an hour down to about two minutes.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Case history",
-    t1: "An hour of finance work at Monte Xanic now takes ",
-    accent: "about two minutes",
-    t2: ".",
-    sub: "The harvest used to be gathered by hand from a production system, spreadsheets and field notebooks. Now the winery opens one live view.",
+    t1: "One finance workflow at Monte Xanic now takes ",
+    accent: "about 97 percent less",
+    t2: " time.",
+    sub: "About an hour of assembly by hand, now about two minutes, refreshed through the day. The harvest behind it reads in one live view.",
   },
   /** The before and after pair, and the one moving picture. Captions are read
    *  by about twice as many people as this body copy, so each one carries the
@@ -66,7 +66,7 @@ const en = {
     ],
     basisK: "Basis",
     basis:
-      "The hour was timed by hand before the build; the two minutes are the refresh the dashboard generates; 97 percent is the distance between them. No Monte Xanic figure is published here.",
+      "The hour was timed by hand before the build; the two minutes are the refresh the dashboard generates; 97 percent is the distance between them. No Monte Xanic production, sales or financial figure appears here.",
   },
   before: {
     kicker: "Before",
@@ -87,7 +87,7 @@ const en = {
   number: {
     kicker: "The number",
     title: "An hour of finance work, now about two minutes.",
-    sub: "One financial workflow took about an hour of assembly by hand. It now takes about two minutes and refreshes through the day.",
+    sub: "The same workflow, rebuilt to run itself, so the finance view is always current.",
     manual: "BY HAND",
     auto: "RUNS ITSELF",
     long: "about 1 hr",
@@ -110,7 +110,7 @@ const en = {
         body: "It reads like the land it is walked on.",
       },
       {
-        lead: "Readiness arrives early.",
+        lead: "You see readiness coming.",
         body: "Scored against your winery's own standard, before the pick.",
       },
       {
@@ -175,15 +175,15 @@ const es: typeof en = {
   meta: {
     title: "Caso Monte Xanic",
     description:
-      "Una hora de trabajo financiero en Monte Xanic ahora toma unos dos minutos, y la cosecha se lee en una sola vista.",
+      "Un flujo financiero de Monte Xanic toma como 97 por ciento menos tiempo: de una hora a unos dos minutos.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Caso",
-    t1: "Una hora de trabajo financiero en Monte Xanic ahora toma ",
-    accent: "unos dos minutos",
-    t2: ".",
-    sub: "La cosecha se juntaba a mano entre un sistema de producción, hojas de cálculo y libretas de campo. Hoy la bodega abre una sola vista al día.",
+    t1: "Un flujo financiero de Monte Xanic ahora toma ",
+    accent: "como 97 por ciento menos",
+    t2: " tiempo.",
+    sub: "Como una hora de armado a mano, ahora unos dos minutos, con actualización durante el día. La cosecha detrás se lee en una sola vista.",
   },
   media: {
     beforeCap:
@@ -211,12 +211,12 @@ const es: typeof en = {
       },
       {
         k: "Resultado",
-        v: "Una hora de trabajo financiero, ahora unos dos minutos, actualizados durante el día",
+        v: "De una hora de trabajo financiero a unos dos minutos, con actualización durante el día",
       },
     ],
     basisK: "Base",
     basis:
-      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización que genera el tablero; el 97 por ciento es la distancia entre las dos. Aquí no se publica ninguna cifra de Monte Xanic.",
+      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización que genera el tablero; el 97 por ciento es la distancia entre las dos. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
   },
   before: {
     kicker: "Antes",
@@ -237,7 +237,7 @@ const es: typeof en = {
   number: {
     kicker: "El número",
     title: "Una hora de trabajo financiero, ahora unos dos minutos.",
-    sub: "Un flujo financiero tomaba como una hora de armado a mano. Ahora toma unos dos minutos y se refresca durante el día.",
+    sub: "El mismo flujo, reconstruido para correr solo, así que la vista financiera siempre está al corriente.",
     manual: "A MANO",
     auto: "SE HACE SOLO",
     long: "como 1 hora",
