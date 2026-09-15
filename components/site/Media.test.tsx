@@ -16,11 +16,13 @@ import Media, {
   MEDIA_RATIOS,
   MEDIA_SLOTS,
   assertMediaText,
+  assertVideoLabels,
   exportWidth,
   mediaFile,
   mediaSlots,
   mediaSpec,
   posterFile,
+  posterFor,
   posterOverlay,
   pressVideo,
   videoAction,
@@ -148,6 +150,64 @@ describe("D: a blank caption is rejected where the value actually is", () => {
     expect(() => assertMediaText("enkanto/front-desk", "", "alt")).toThrow(
       /enkanto\/front-desk/,
     );
+  });
+});
+
+/**
+ * aria-label is the whole accessible name of the only control on a video, so a
+ * blank one ships a button a screen reader announces as nothing, and the `any`
+ * caller that omitted labels crashed on a property of undefined instead of
+ * saying what was wrong (cross-vendor review, round two).
+ */
+describe("the video control cannot ship without its two words", () => {
+  const good = { play: "Reproducir el video", pause: "Pausar el video" };
+
+  it("accepts a real pair", () => {
+    expect(assertVideoLabels("xanic/harvest-intake", good)).toEqual(good);
+  });
+
+  it.each([
+    ["missing altogether", undefined],
+    ["empty play", { play: "", pause: "Pausar" }],
+    ["whitespace play", { play: "  ", pause: "Pausar" }],
+    ["empty pause", { play: "Reproducir", pause: "" }],
+    ["whitespace pause", { play: "Reproducir", pause: "\n" }],
+    ["not strings at all", { play: 1, pause: 2 } as unknown as typeof good],
+  ])("refuses labels that are %s", (_name, labels) => {
+    expect(() => assertVideoLabels("xanic/harvest-intake", labels)).toThrow(
+      /needs a play and a pause label/,
+    );
+  });
+
+  it("throws out of the component, naming the slot", () => {
+    const blank = {
+      slot: "xanic/harvest-intake",
+      caption: "La entrada de uva se captura una vez.",
+      alt: "Captura de la entrada de uva",
+      labels: { play: " ", pause: "" },
+    } as unknown as MediaProps;
+    expect(() => renderToStaticMarkup(<Media {...blank} />)).toThrow(
+      /xanic\/harvest-intake[\s\S]*needs a play and a pause label/,
+    );
+  });
+
+  it("throws rather than crashing when an any-typed caller omits them", () => {
+    const missing = {
+      slot: "xanic/harvest-intake",
+      caption: "La entrada de uva se captura una vez.",
+      alt: "Captura de la entrada de uva",
+    } as unknown as MediaProps;
+    expect(() => renderToStaticMarkup(<Media {...missing} />)).toThrow(
+      /needs a play and a pause label/,
+    );
+  });
+
+  it("does not ask a photo slot for them", () => {
+    expect(() =>
+      renderToStaticMarkup(
+        <Media slot="winery/cellar" caption="Una frase real." alt="Alt real." />,
+      ),
+    ).not.toThrow();
   });
 });
 
@@ -417,6 +477,39 @@ describe("E: a failed source does not condemn its replacement", () => {
     expect(visibleSrc(undefined, null)).toBeUndefined();
     expect(visibleSrc(undefined, "/media/winery/cellar.webp")).toBeUndefined();
   });
+
+  /**
+   * A wrapper defaulting an unavailable asset to "" would otherwise clear
+   * data-pending and render an empty source: neither the picture nor the brief.
+   */
+  it.each(["", " ", "   ", "\n"])("treats a blank src %j as no src at all", (src) => {
+    expect(visibleSrc(src, null)).toBeUndefined();
+  });
+
+  it("renders the pending panel for a blank src, not an empty asset", () => {
+    const html = render({ ...PHOTO, src: "   " });
+    expect(html).toContain('data-pending="true"');
+    expect(html).not.toContain("<img");
+  });
+});
+
+describe("a blank poster falls back to the slot's own frame file", () => {
+  it.each(["", "  ", undefined])("replaces %j with the slot's poster path", (poster) => {
+    expect(posterFor("xanic/harvest-intake", poster)).toBe(
+      posterFile("xanic/harvest-intake"),
+    );
+  });
+
+  it("keeps a poster the page really named", () => {
+    expect(posterFor("xanic/harvest-intake", "/media/frame-12.webp")).toBe(
+      "/media/frame-12.webp",
+    );
+  });
+
+  it("uses it in the markup rather than an empty poster attribute", () => {
+    const html = render({ ...VIDEO, src: "/media/xanic/harvest-intake.mp4", poster: " " });
+    expect(html).toContain('poster="/media/xanic/harvest-intake-poster.webp"');
+  });
 });
 
 /* ============================ the src swap ============================ */
@@ -654,7 +747,26 @@ describe("A: the control survives a browser that refuses play()", () => {
     expect(store.read()).toBe("pause");
   });
 
-  it("does the same with no element yet, without throwing", () => {
+  /**
+   * Two taps inside one frame both read the React flag, which is still false
+   * because the play event has not been processed, so the second press used to
+   * call play() again instead of pausing (cross-vendor review, round two).
+   * el.paused is authoritative and changes synchronously.
+   */
+  it("reads the element, so a rapid second tap pauses instead of replaying", async () => {
+    const el = fakeVideo(0);
+    const store = intentStore();
+    pressVideo(el, false, store.set);
+    await settle();
+    expect(el.paused).toBe(false);
+    // React has not re-rendered yet, so the stale flag still says "not playing".
+    pressVideo(el, false, store.set);
+    expect(el.pauses, "the second tap pauses").toBe(1);
+    expect(el.plays, "and does not ask to play again").toBe(1);
+    expect(store.read()).toBe("pause");
+  });
+
+  it("falls back to the React flag only when there is no element", () => {
     const store = intentStore();
     expect(() => pressVideo(null, false, store.set)).not.toThrow();
     expect(store.read()).toBe("play");
@@ -786,6 +898,21 @@ describe("public/media/README.md, which is the shot list", () => {
     expect(README, "the round one overstatement").not.toContain("only ever sees the poster");
     expect(README).toContain("never autoplayed at");
     expect(README).toMatch(/own press on the control still\s+plays/);
+  });
+
+  /**
+   * The brief said the rule twice and the second telling still promised the
+   * poster and nothing else, which is the round one overstatement surviving in
+   * another section (cross-vendor review, round two). Every sentence in the
+   * file that mentions a reduced-motion visitor has to carry the opt-in.
+   */
+  it("says the same thing everywhere it mentions a reduced-motion visitor", () => {
+    const sentences = README.replace(/\n/g, " ").split(/(?<=\.)\s+/);
+    const mentions = sentences.filter((line) => /reduced.motion visitor/i.test(line));
+    expect(mentions.length, "the brief mentions them at all").toBeGreaterThan(0);
+    for (const line of mentions) {
+      expect(line, line).toMatch(/press|until they press play/i);
+    }
   });
 
   it("does not claim the caption guarantee is compile-time alone", () => {
