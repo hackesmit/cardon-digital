@@ -37,21 +37,23 @@ const en = {
     t1: "A bottle can now leave En'kanto's own store, ",
     accent: "paid and shipped",
     t2: ".",
-    sub: "The catalog had no prices and no way to ship. The checkout completes now, and the wine reaches a door inside Mexico. Behind the winery, the rooms and the dining room, one system is built and open to walk through.",
+    sub: "The checkout completes now, and the wine reaches a door inside Mexico. Behind the winery, the rooms and the dining room, one system is built and open to walk through.",
   },
   /** Captions are read by about twice as many people as this body copy, so each
    *  one carries the result its picture is evidence for. The video caption says
    *  in words what the footage shows, so the clip never carries a claim alone. */
   media: {
     deskCap:
-      "The front desk at En'kanto. It gets one calendar with every channel on it, and the day already counted.",
+      "The front desk at En'kanto. The calendar we built puts every channel on one screen, with the day already counted.",
     deskAlt: "Check in at the front desk, guest side of the counter.",
     passCap:
-      "The pass at service. The order reaches it as the waiter wrote it, once, with its own clock.",
+      "The pass at service. The screen we built takes the order as the waiter wrote it, once, with its own clock.",
     passAlt: "A ticket going out at the pass, the screen in its working position.",
     videoCap:
       "A restaurant charge lands on the room. The desk reads the total and never writes one.",
     videoAlt: "A tablet at the table, then the guest folio at the desk.",
+    honest:
+      "Photographs of En'kanto. The system described in these captions is built and not yet in service there.",
     play: "Play",
     pause: "Pause",
   },
@@ -94,7 +96,7 @@ const en = {
     items: [
       {
         lead: "One address for the whole business.",
-        body: "The duplicates came down, one page stands for the wine, the stays and the restaurant, and search reads the site the way a visitor does.",
+        body: "The duplicates came down, one page stands for the wine, the stays and the restaurant, and search reads it the way a visitor does.",
       },
       {
         lead: "Paid the way people here pay.",
@@ -113,7 +115,7 @@ const en = {
   system: {
     kicker: "The system",
     title: "One record for the winery, the dining room and the rooms.",
-    p1: "Three operations shared a property and no shared record. We built the one they share: nineteen screens, a set per area, so each part of the business works from its own.",
+    p1: "Three operations shared a property and no shared record. We built the one they share: nineteen screens, a set per area, so each part works from its own.",
     screensK: "Screens",
     modules: [
       {
@@ -169,7 +171,7 @@ const en = {
   pending: {
     marker: "PLACEHOLDER. Not for publication.",
     title: "What the system changed for En'kanto goes here.",
-    body: "Empty until En'kanto's own figures are in hand: what a task took before, what it takes now, over a stated window. Fill it or delete it before this page ships.",
+    body: "Empty until En'kanto's own figures are in hand: what a task took before, what it takes now, over a stated window.",
   },
   result: {
     kicker: "For your property",
@@ -215,18 +217,20 @@ const es: typeof en = {
     t1: "Hoy una botella puede salir de la tienda de la bodega, ",
     accent: "pagada y enviada",
     t2: ".",
-    sub: "El catálogo no tenía precios ni manera de enviar. Hoy el pago se completa y el vino llega a una puerta dentro de México. Detrás de la bodega, los cuartos y el comedor hay un sistema construido y abierto para recorrerlo.",
+    sub: "Hoy el pago se completa y el vino llega a una puerta dentro de México. Detrás de la bodega, los cuartos y el comedor hay un sistema construido y abierto para recorrerlo.",
   },
   media: {
     deskCap:
-      "La recepción de En'kanto. Recibe un solo calendario con todos los canales, y el día ya contado.",
+      "La recepción de En'kanto. El calendario que construimos junta todos los canales en una sola pantalla, con el día ya contado.",
     deskAlt: "Registro de llegada en la recepción, del lado del huésped.",
     passCap:
-      "El pase en servicio. La comanda le llega como la escribió el mesero, una sola vez, con su propio reloj.",
+      "El pase en servicio. La pantalla que construimos recibe la comanda como la escribió el mesero, una sola vez, con su propio reloj.",
     passAlt: "Una comanda saliendo en el pase, con la pantalla en su lugar de trabajo.",
     videoCap:
       "Un cargo del restaurante cae en la habitación. La recepción lee el total y nunca escribe uno.",
     videoAlt: "Una tableta en la mesa y luego la cuenta del huésped en recepción.",
+    honest:
+      "Fotos de En'kanto. El sistema que describen estos pies de foto está construido y todavía no está en servicio ahí.",
     play: "Reproducir",
     pause: "Pausar",
   },
@@ -344,7 +348,7 @@ const es: typeof en = {
   pending: {
     marker: "MARCADOR. No publicable.",
     title: "Aquí va lo que el sistema le cambió a En'kanto.",
-    body: "Vacío hasta tener las cifras de la propia En'kanto: cuánto tomaba una tarea antes, cuánto toma ahora, sobre una ventana declarada. Llénelo o bórrelo antes de que esta página salga en vivo.",
+    body: "Vacío hasta tener las cifras de la propia En'kanto: cuánto tomaba una tarea antes, cuánto toma ahora, sobre una ventana declarada.",
   },
   result: {
     kicker: "Para su propiedad",

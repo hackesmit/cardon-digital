@@ -110,6 +110,12 @@ export default function EnkantoCaseStudy({ params }: Params) {
               priority
             />
           </div>
+          {/* The captions describe what the built system gives the place in the
+              photographs, and the place is a working property that is not
+              running it yet. The basis paragraph says so too, but a caption is
+              read by about twice as many people as body copy, so the state is
+              stated where the captions are (cross-vendor review, round one). */}
+          <p className="pair-honest mono">{d.media.honest}</p>
         </div>
       </section>
 
