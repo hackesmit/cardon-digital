@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import Media from "@/components/site/Media";
+import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";
 import CaseFacts from "@/components/pages/case/CaseFacts";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import { enkanto } from "@/lib/i18n/enkanto";
+import { enkanto, type EnkantoDict } from "@/lib/i18n/enkanto";
 import { allModules, demoHref, demoIsLive } from "@/lib/demo";
 import { showsPending } from "./pending";
 import "./enkanto-case.css";
@@ -38,23 +39,30 @@ export function generateMetadata({ params }: Params): Metadata {
  * beat is the system itself, and the results block stays a marked placeholder
  * until En'kanto's own before and after figures land (bead hq-cczm.26).
  *
- * Four of the five chapter diagrams are gone rather than rewritten. They drew
- * our mechanism (five homepages resolving to one, three payment methods
- * feeding a checkout, a shipping fan-out, two language rails converging), and
- * the sentence beside each one already said it in fewer words than the diagram
- * took to draw. The one that survives is the one that is evidence rather than
- * illustration: an empty product card becoming a real one, which is the
- * before and after Ogilvy rates above every other format, and it carries the
- * honesty label a made-up card needs.
+ * All five drawn visuals stay, rewired rather than deleted (docs/copy-doctrine
+ * .md section 8, and Daniel's correction on bead hq-4pu0q.5). The old page hung
+ * one diagram off each of five chapter blocks; the rewrite has no chapters, so
+ * the before and after card now sits beside the what-changed lead and the other
+ * four sit one per change in the list under it, which is where each one was
+ * always arguing. Their labels moved with them, into the dictionary's `vis`
+ * key, so halving the prose never reaches a diagram's working parts.
  *
- * The photographs are the new argument. The two hero slots are the restaurant
- * and the lodging side, which is what this case carries that Monte Xanic does
- * not, and the clip is the room charge, the one place the two touch. Every
- * caption carries the result and none of them is the only carrier of a claim.
+ * The cellar band stays too, and it now carries a caption saying what it is.
+ * It is licensed stock standing in until En'kanto's own photograph lands
+ * (public/media/CREDITS.md), and a real photograph with an honest caption
+ * beats a pending placeholder in the same place.
  *
- * SpotlightFrames went with them: a pointermove listener per frame writing a
- * cursor-following glow, which is decoration and which nothing else on the
- * page needed.
+ * The photographs are the addition, never the trade. The two hero slots are
+ * the restaurant and the lodging side, which is what this case carries that
+ * Monte Xanic does not, and the clip is the room charge, the one place the two
+ * touch. Every caption carries the result and none of them is the only carrier
+ * of a claim.
+ *
+ * SpotlightFrames is mounted last: a pointermove listener per frame writing
+ * --mx / --my, which is what the shared .vis-frame::after highlight reads.
+ * Without it every frame on this page keeps the glow pinned to its centre by
+ * the 50% fallback while the sibling case page tracks the cursor, which is one
+ * convention pretending to be two.
  *
  * The primary call to action is `site.diag.cta`, the same words as the home
  * page and the Monte Xanic case, repeated verbatim in the hero, under the
@@ -65,6 +73,7 @@ export function generateMetadata({ params }: Params): Metadata {
 export default function EnkantoCaseStudy({ params }: Params) {
   const locale = localeOf(params);
   const d = enkanto[locale];
+  const v = d.vis;
   const s = site[locale];
   const mailto =
     "mailto:daniel@cardondigital.com?subject=" +
@@ -142,6 +151,26 @@ export default function EnkantoCaseStudy({ params }: Params) {
         </div>
       </section>
 
+      {/* ============================ THE CELLAR BAND ============================
+          Licensed stock standing in until En'kanto's own cellar photograph
+          lands (public/media/CREDITS.md). It is captioned rather than silent,
+          because an uncaptioned photograph is inventory carrying no argument
+          and because a stand-in has to say that it is one. */}
+      <section className="photo-slot">
+        <div className="container">
+          <figure className="photoband">
+            <img
+              className="photoband-img"
+              src="/media/enkanto-valle.webp"
+              alt={v.band.alt}
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption className="photoband-cap mono">{v.band.caption}</figcaption>
+          </figure>
+        </div>
+      </section>
+
       {/* ============================ WHAT CHANGED ============================
           The store work, with the one surviving diagram: the placeholder card
           that became a product with a price, a weight and a way to leave the
@@ -157,14 +186,14 @@ export default function EnkantoCaseStudy({ params }: Params) {
               </div>
               <div className="split-vis">
                 <div className="vis-frame">
-                  <span className="vis-tag">{d.changed.tag}</span>
+                  <span className="vis-tag">{v.card.tag}</span>
                   <svg
                     className="mini-svg"
                     viewBox="0 0 520 258"
                     role="img"
-                    aria-label={d.changed.aria}
+                    aria-label={v.card.aria}
                   >
-                    <text className="e-lab mono" x="40" y="52" fontSize="11" letterSpacing="1.5">{d.changed.inNameOnly}</text>
+                    <text className="e-lab mono" x="40" y="52" fontSize="11" letterSpacing="1.5">{v.card.inNameOnly}</text>
                     <rect className="e-card" x="40" y="66" width="176" height="176" rx="2" />
                     <rect className="e-dash" x="58" y="84" width="46" height="46" rx="2" />
                     <line className="e-dash" x1="118" y1="94" x2="196" y2="94" />
@@ -175,7 +204,7 @@ export default function EnkantoCaseStudy({ params }: Params) {
                     <path className="e-conn-enk" d="M226 154 C 252 154, 258 154, 288 154" />
                     <circle className="e-enk" cx="288" cy="154" r="3" />
 
-                    <text className="e-lab mono" x="304" y="52" fontSize="11" letterSpacing="1.5">{d.changed.builtOut}</text>
+                    <text className="e-lab mono" x="304" y="52" fontSize="11" letterSpacing="1.5">{v.card.builtOut}</text>
                     <rect className="e-card e-card-live" x="304" y="66" width="176" height="176" rx="2" />
                     <rect className="e-img" x="322" y="84" width="52" height="52" rx="2" />
                     <path
@@ -193,20 +222,28 @@ export default function EnkantoCaseStudy({ params }: Params) {
                       750 ml
                     </text>
                     <rect className="e-add" x="408" y="170" width="54" height="22" rx="2" />
-                    <text className="e-primary mono" x="435" y="185" fontSize="11" fontWeight="600" textAnchor="middle">{d.changed.add}</text>
+                    <text className="e-primary mono" x="435" y="185" fontSize="11" fontWeight="600" textAnchor="middle">{v.card.add}</text>
                   </svg>
                 </div>
-                <p className="vis-honest mono">{d.changed.honest}</p>
+                <p className="vis-honest mono">{v.card.honest}</p>
               </div>
             </div>
 
+            {/* One diagram per change, in the order CHANGE_VISUALS declares
+                and the dictionary lists. A change with no diagram beside it is
+                a visual that went missing, so the suite asserts the two
+                lengths match rather than letting `map` swallow it. */}
             <div className="changes">
-              {d.changed.items.map((item) => (
-                <div className="change" key={item.lead}>
-                  <p className="change-lead">{item.lead}</p>
-                  <p className="change-body">{item.body}</p>
-                </div>
-              ))}
+              {d.changed.items.map((item, i) => {
+                const vis = CHANGE_VISUALS[i];
+                return (
+                  <div className="change" key={item.lead}>
+                    <p className="change-lead">{item.lead}</p>
+                    <p className="change-body">{item.body}</p>
+                    {vis ? vis(v) : null}
+                  </div>
+                );
+              })}
             </div>
           </Reveal>
         </div>
@@ -384,6 +421,177 @@ export default function EnkantoCaseStudy({ params }: Params) {
           </Reveal>
         </div>
       </section>
+
+      <SpotlightFrames />
     </main>
   );
 }
+
+/**
+ * THE FOUR CHANGE DIAGRAMS, one per entry in `changed.items`.
+ *
+ * They are the drawings the old page hung off chapters two to five, rewired to
+ * the `vis` keys the rewrite gave them and moved beside the sentence each one
+ * was always arguing. Every label comes from the dictionary, so both locales
+ * draw in their own words, and each frame carries an accessible name because a
+ * diagram a screen reader cannot read is decoration.
+ *
+ * `.vis-frame` is the shared frame in globals.css, which means each of these
+ * inherits the cursor spotlight the moment <SpotlightFrames /> is mounted.
+ */
+type VisDict = EnkantoDict["vis"];
+
+/** Five front doors resolving to one, with the sitemap and robots clean. */
+function structureVis(v: VisDict) {
+  return (
+    <div className="vis-frame change-vis">
+      <span className="vis-tag">{v.structure.tag}</span>
+      <svg className="mini-svg" viewBox="0 0 520 238" role="img" aria-label={v.structure.aria}>
+        <text className="e-lab mono" x="34" y="44" fontSize="11" letterSpacing="1.2">{v.structure.homepages}</text>
+        <g>
+          <rect className="e-page-off" x="34" y="58" width="190" height="26" rx="2" />
+          <text className="e-muted mono" x="46" y="75" fontSize="11">{v.structure.unpublished}</text>
+          <rect className="e-page-off" x="34" y="92" width="190" height="26" rx="2" />
+          <text className="e-muted mono" x="46" y="109" fontSize="11">{v.structure.unpublished}</text>
+          <rect className="e-page-live" x="34" y="126" width="190" height="26" rx="2" />
+          <text className="e-ink mono" x="46" y="143" fontSize="11" fontWeight="600">{v.structure.canonical}</text>
+          <rect className="e-page-off" x="34" y="160" width="190" height="26" rx="2" />
+          <text className="e-muted mono" x="46" y="177" fontSize="11">{v.structure.unpublished}</text>
+          <rect className="e-page-off" x="34" y="194" width="190" height="26" rx="2" />
+          <text className="e-muted mono" x="46" y="211" fontSize="11">{v.structure.unpublished}</text>
+        </g>
+
+        <path className="e-conn-enk" d="M224 139 C 258 139, 262 139, 296 139" />
+        <circle className="e-enk" cx="296" cy="139" r="3" />
+
+        <rect className="e-panel" x="304" y="96" width="182" height="108" rx="2" />
+        <text className="e-lab mono" x="322" y="122" fontSize="11" letterSpacing="1">
+          sitemap.xml
+        </text>
+        <text className="e-primary mono" x="468" y="122" fontSize="11" textAnchor="end">{v.structure.clean}</text>
+        <line className="e-line-soft" x1="322" y1="138" x2="468" y2="138" />
+        <text className="e-lab mono" x="322" y="164" fontSize="11" letterSpacing="1">
+          robots.txt
+        </text>
+        <text className="e-primary mono" x="468" y="164" fontSize="11" textAnchor="end">{v.structure.clean}</text>
+        <line className="e-line-soft" x1="322" y1="180" x2="468" y2="180" />
+        <text className="e-muted mono" x="322" y="196" fontSize="10.5">{v.structure.descriptions}</text>
+      </svg>
+    </div>
+  );
+}
+
+/** Card, cash and transfer feeding one checkout that reaches a placed order. */
+function paymentsVis(v: VisDict) {
+  return (
+    <div className="vis-frame change-vis">
+      <span className="vis-tag">{v.payments.tag}</span>
+      <svg className="mini-svg" viewBox="0 0 520 230" role="img" aria-label={v.payments.aria}>
+        <g>
+          <rect className="e-chip" x="34" y="70" width="128" height="34" rx="2" />
+          <text className="e-val mono" x="54" y="92" fontSize="13">{v.payments.card}</text>
+          <rect className="e-chip" x="34" y="122" width="128" height="34" rx="2" />
+          <text className="e-val mono" x="54" y="144" fontSize="13">{v.payments.cash}</text>
+          <rect className="e-chip" x="34" y="174" width="128" height="34" rx="2" />
+          <text className="e-val mono" x="54" y="196" fontSize="13">{v.payments.transfer}</text>
+        </g>
+        <g className="e-conn">
+          <path d="M162 87 C 210 87, 220 138, 268 138" />
+          <path d="M162 139 L 268 139" />
+          <path d="M162 191 C 210 191, 220 140, 268 140" />
+        </g>
+        <circle className="e-enk" cx="268" cy="139" r="3" />
+
+        <rect className="e-panel" x="300" y="82" width="186" height="132" rx="2" />
+        <text className="e-lab mono" x="318" y="110" fontSize="11" letterSpacing="1">
+          TOTAL
+        </text>
+        <text className="e-ink mono" x="468" y="110" fontSize="14" fontWeight="600" textAnchor="end">
+          $ 520
+        </text>
+        <rect className="e-track" x="318" y="126" width="150" height="6" rx="2" />
+        <rect className="e-fill" x="318" y="126" width="150" height="6" rx="2" />
+        <text className="e-clay mono" x="318" y="170" fontSize="14" fontWeight="600">{v.payments.placed}</text>
+        <circle className="e-clay-ring" cx="452" cy="165" r="10" />
+        <circle className="e-clay" cx="452" cy="165" r="3.4" />
+        <text className="e-muted mono" x="318" y="196" fontSize="10.5">{v.payments.clears}</text>
+      </svg>
+    </div>
+  );
+}
+
+/** Pickup and a domestic carrier, with the carry-home lane drawn apart. */
+function shippingVis(v: VisDict) {
+  return (
+    <div className="vis-frame change-vis">
+      <span className="vis-tag">{v.shipping.tag}</span>
+      <svg className="mini-svg" viewBox="0 0 520 240" role="img" aria-label={v.shipping.aria}>
+        <circle className="e-node-live" cx="96" cy="150" r="9" />
+        <text className="e-ink mono" x="96" y="184" fontSize="12" textAnchor="middle">{v.shipping.order}</text>
+        <path className="e-conn-enk" d="M105 145 C 150 128, 190 100, 236 92" />
+        <path className="e-conn-enk" d="M105 155 C 150 172, 190 200, 236 208" />
+
+        <circle className="e-node-live" cx="244" cy="90" r="7" />
+        <text className="e-ink mono" x="262" y="86" fontSize="12">{v.shipping.pickup}</text>
+        <text className="e-muted mono" x="262" y="104" fontSize="10.5">{v.shipping.atWinery}</text>
+
+        <circle className="e-node-live" cx="244" cy="210" r="7" />
+        <text className="e-ink mono" x="262" y="206" fontSize="12">{v.shipping.carrier}</text>
+        <text className="e-muted mono" x="262" y="224" fontSize="10.5">{v.shipping.packaging}</text>
+
+        <line className="e-divider" x1="392" y1="54" x2="392" y2="246" />
+        <text className="e-lab mono" x="404" y="82" fontSize="9.5" letterSpacing="0.3">{v.shipping.acrossBorder}</text>
+        <circle className="e-guest" cx="418" cy="150" r="6" />
+        <path className="e-carry" d="M426 150 L 466 150" />
+        <path
+          className="e-home"
+          d="M470 150 L 482 140 L 494 150 M474 148 L474 162 L490 162 L490 148"
+        />
+        <text className="e-muted mono" x="404" y="192" fontSize="9.5">{v.shipping.carried}</text>
+        <text className="e-muted mono" x="404" y="208" fontSize="9.5">{v.shipping.allowance}</text>
+      </svg>
+    </div>
+  );
+}
+
+/** Two language rails converging on one store foundation. */
+function bilingualVis(v: VisDict) {
+  return (
+    <div className="vis-frame change-vis">
+      <span className="vis-tag">{v.bilingual.tag}</span>
+      <svg className="mini-svg" viewBox="0 0 520 186" role="img" aria-label={v.bilingual.aria}>
+        <rect className="e-chip e-chip-live" x="40" y="46" width="70" height="40" rx="2" />
+        <text className="e-ink mono" x="75" y="71" fontSize="15" fontWeight="600" textAnchor="middle">
+          EN
+        </text>
+        <rect className="e-chip e-chip-live" x="40" y="130" width="70" height="40" rx="2" />
+        <text className="e-ink mono" x="75" y="155" fontSize="15" fontWeight="600" textAnchor="middle">
+          ES
+        </text>
+
+        <path className="e-conn-enk" d="M110 66 C 180 66, 200 108, 268 108" />
+        <path className="e-conn-enk" d="M110 150 C 180 150, 200 108, 268 108" />
+        <circle className="e-enk" cx="268" cy="108" r="3" />
+
+        <rect className="e-panel" x="300" y="56" width="198" height="104" rx="2" />
+        <text className="e-ink mono" x="318" y="86" fontSize="14" fontWeight="600">{v.bilingual.oneStore}</text>
+        <text className="e-muted mono" x="318" y="110" fontSize="11">{v.bilingual.readWhole}</text>
+        <text className="e-primary mono" x="318" y="140" fontSize="10.5">{v.bilingual.foundation}</text>
+      </svg>
+    </div>
+  );
+}
+
+/**
+ * In the order `changed.items` lists them: one address for the business,
+ * paid the way people here pay, a bottle reaching a door, one store in two
+ * languages. A Next.js page file may export nothing but its own route hooks,
+ * so the guard that keeps the two lists in step reads the rendered page: every
+ * `.change` has to carry exactly one framed diagram.
+ */
+const CHANGE_VISUALS: Array<(v: VisDict) => JSX.Element> = [
+  structureVis,
+  paymentsVis,
+  shippingVis,
+  bilingualVis,
+];
