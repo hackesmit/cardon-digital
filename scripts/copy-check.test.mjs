@@ -579,7 +579,7 @@ test("allowlist: the cap counts contrast occurrences, not array entries", () => 
 
   const over = check(src(two), { allowlist: { fixture: { en: [two] } } });
   assert.deepEqual(rules(over, "en"), ["allowlist"]);
-  assert.match(over.violations.find((v) => v.rule === "allowlist").text, /2 contrast occurrence/);
+  assert.match(over.violations.find((v) => v.rule === "allowlist").text, /exempts 2 contrasts/);
 });
 
 test("extraction: a nested value that is not a literal is a loud error", () => {
@@ -654,4 +654,58 @@ test("extraction: a template substitution is code, not a dictionary", () => {
   const x = extractLocaleStrings(src);
   assert.deepEqual(x.errors, []);
   assert.deepEqual(x.en.map((s) => s.value), ["Ready in ", "dia", "."]);
+});
+
+// --- round three, cross-vendor follow-ups -----------------------------------
+// Five holes gpt-5.6 found in the round-three code itself. Each fails against
+// the first round-three commit.
+
+test("allowlist: two shapes matching the same words are one contrast", () => {
+  // "not just" and "not X but Y" both match here. One deliberate contrast is
+  // one deliberate contrast, whatever the rule list calls it.
+  const line = "It is not just a dashboard but a decision.";
+  const src = ["const en = {", `  a: ${JSON.stringify(line)},`, "};", 'const es: typeof en = { a: "Limpio." };'].join("\n");
+  assert.deepEqual(rules(check(src, { allowlist: { fixture: { en: [line] } } })), []);
+});
+
+test("extraction: a template that is nothing but a substitution is a loud error", () => {
+  const src = [
+    "const en = {",
+    '  lede: "Visible.",',
+    "  body: `${buildCopy(source)}`,",
+    "};",
+    'const es: typeof en = { lede: "Limpio.", body: "Limpio." };',
+  ].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.equal(x.errors.length, 1, JSON.stringify(x.errors));
+  assert.match(x.errors[0], /body/);
+});
+
+test("extraction: a shorthand property is held to the same rule as a written one", () => {
+  const hidden = ["const en = { lede: \"Clean.\", body };", 'const es: typeof en = { lede: "Limpio." };'].join("\n");
+  const errors = extractLocaleStrings(hidden).errors;
+  assert.equal(errors.length, 1, JSON.stringify(errors));
+  assert.match(errors[0], /body/);
+
+  const declared = ['const enBody = "Clean body.";', "const en = { lede: \"Clean.\", enBody };", 'const es: typeof en = { lede: "Limpio." };'].join("\n");
+  const x = extractLocaleStrings(declared);
+  assert.deepEqual(x.errors, []);
+  assert.deepEqual(x.en.map((s) => s.value), ["Clean body.", "Clean."]);
+});
+
+test("extraction: a locale may only name its own declarations", () => {
+  const src = [
+    'const esPayload = "This is not software but certainty.";',
+    "const en = { body: esPayload };",
+    'const es: typeof en = { body: "Limpio." };',
+  ].join("\n");
+  const errors = extractLocaleStrings(src).errors;
+  assert.equal(errors.length, 1, JSON.stringify(errors));
+  assert.match(errors[0], /esPayload/);
+});
+
+test("extraction: decimal numbers are not copy either", () => {
+  const src = ["const en = { ratio: .5, trailing: 1., exact: 1.25, lede: \"Clean.\" };", 'const es: typeof en = { lede: "Limpio." };'].join("\n");
+  const x = extractLocaleStrings(src);
+  assert.deepEqual(x.errors, []);
 });

@@ -206,7 +206,7 @@ function findAssignment(src, from) {
 }
 
 /** Values that are not copy and never were: a dictionary may hold them. */
-const SCALAR = /^(?:-?(?:\d[\d_]*(?:\.\d[\d_]*)?(?:[eE][+-]?\d+)?|0[xXbBoO][\da-fA-F_]+)n?|true|false|null|undefined)$/;
+const SCALAR = /^(?:-?(?:(?:\d[\d_]*\.?[\d_]*|\.\d[\d_]*)(?:[eE][+-]?\d+)?|0[xXbBoO][\da-fA-F_]+)n?|true|false|null|undefined)$/;
 
 /** A `/` here opens a regex literal rather than dividing. */
 function regexCanStart(prev) {
@@ -356,9 +356,11 @@ function scanInitializer(src, start, label, known = new Set()) {
    *
    * Template substitutions are ordinary code and are exempt (`substDepth`):
    * `${plural(n, { one: "dia" })}` is not a dictionary. So is a reference to
-   * another locale declaration in the same file, because that declaration is
-   * scanned in its own right: contact.ts writes `description: enDescription`
-   * and those words are counted once, at `const enDescription`.
+   * another declaration OF THE SAME LOCALE in this file, because that
+   * declaration is scanned in its own right: contact.ts writes
+   * `description: enDescription` and those words are counted once, at
+   * `const enDescription`. A reference across locales is not exempt: it would
+   * put English through the Spanish rules.
    */
   function readValue(stop, record, what) {
     skipTrivia();
@@ -367,7 +369,16 @@ function scanInitializer(src, start, label, known = new Set()) {
     const c = src[i];
     let literal = true;
     if (c === '"' || c === "'") readString(record);
-    else if (c === "`") readTemplate(record);
+    else if (c === "`") {
+      const before = strings.length;
+      readTemplate(record);
+      // `${buildCopy(x)}` is a call wearing backticks: no copy of its own.
+      if (record && substDepth === 0 && !strings.slice(before).some((t) => /\S/.test(t.value))) {
+        errors.push(
+          `${label} (line ${startLine}): ${what} is a template carrying no copy of its own, so its text is built somewhere copy-check cannot read. Give the locale its copy as a literal.`,
+        );
+      }
+    }
     else if (c === "{") { bump(); readObject(record); if (src[i] === "}") bump(); }
     else if (c === "[") { bump(); readArray(record); if (src[i] === "]") bump(); }
     else literal = false;
@@ -403,6 +414,12 @@ function scanInitializer(src, start, label, known = new Set()) {
       skipTrivia();
       if (src[i] === ":") { bump(); readValue(",}", record, `the value of ${key.trim() || "a key"}`); continue; }
       if (src[i] === "{") { bump(); readObject(record); if (src[i] === "}") bump(); continue; }
+      // `{ body }` is a value written as a key, and it is copy just the same.
+      if (record && substDepth === 0 && /^[A-Za-z_$][\w$]*$/.test(key) && !known.has(key)) {
+        errors.push(
+          `${label} (line ${keyLine}): the shorthand property ${key} is copy built somewhere copy-check cannot read. Give the locale its copy as a literal.`,
+        );
+      }
     }
   }
 
@@ -441,12 +458,14 @@ const DECL_RE = /^(?:export\s+)?const\s+(en|es)([A-Z]\w*)?\b/gm;
 export function extractLocaleStrings(source) {
   const byLocale = { en: [], es: [], errors: [] };
 
-  // Every locale declaration in the file, gathered first: one of them naming
-  // another (`intro: enIntro`) is copy this checker already counts.
-  const known = new Set();
+  // Every locale declaration in the file, gathered first and kept per locale:
+  // `intro: enIntro` inside `const en` is copy this checker already counts,
+  // while `body: esPayload` inside `const en` is English that would only ever
+  // be read as Spanish.
+  const known = { en: new Set(), es: new Set() };
   DECL_RE.lastIndex = 0;
   let d;
-  while ((d = DECL_RE.exec(source)) !== null) known.add(d[1] + (d[2] ?? ""));
+  while ((d = DECL_RE.exec(source)) !== null) known[d[1]].add(d[1] + (d[2] ?? ""));
 
   DECL_RE.lastIndex = 0;
   let m;
@@ -457,7 +476,7 @@ export function extractLocaleStrings(source) {
       byLocale.errors.push(`${label}: no "=" initializer found, so its copy cannot be read`);
       continue;
     }
-    const { strings, errors, end } = scanInitializer(source, eq, label, known);
+    const { strings, errors, end } = scanInitializer(source, eq, label, known[m[1]]);
     byLocale[m[1]].push(...strings);
     byLocale.errors.push(...errors);
     DECL_RE.lastIndex = Math.max(DECL_RE.lastIndex, end);
@@ -505,14 +524,30 @@ function excerpt(text, index, length) {
   return (from > 0 ? "..." : "") + text.slice(from, to).trim() + (to < text.length ? "..." : "");
 }
 
+/** Overlapping matches are one contrast: `[[0,9],[4,20]]` counts as 1. */
+function countClusters(ranges) {
+  const sorted = [...ranges].sort((a, b) => a[0] - b[0]);
+  let n = 0;
+  let end = -1;
+  for (const [from, to] of sorted) {
+    if (from >= end) n++;
+    end = Math.max(end, to);
+  }
+  return n;
+}
+
 /**
- * Returns every blocking hit, plus `used`: how many OCCURRENCES each allowlist
- * entry suppressed. The count is what the cap is applied to, because one
- * string can carry several contrasts.
+ * Returns every blocking hit, `used` (the allowlist entries that suppressed
+ * something, for the stale check) and `exempted`: how many CONTRASTS the
+ * allowlist let through. A contrast is a stretch of words, not a rule name, so
+ * "It is not just a dashboard but a decision." is one even though `not just`
+ * and `not X but Y` both match it, and one string carrying two separate
+ * contrasts is two.
  */
 function matchShapes(strings, shapes, locale, allowed) {
   const hits = [];
-  const used = new Map();
+  const used = new Set();
+  const exempt = new Map();
   for (const s of strings) {
     const text = stripMarkers(s.value);
     for (const shape of shapes) {
@@ -521,12 +556,20 @@ function matchShapes(strings, shapes, locale, allowed) {
       let m;
       while ((m = shape.re.exec(text)) !== null) {
         if (m[0].length === 0) { shape.re.lastIndex++; continue; }
-        if (allowed && allowed.has(s.value)) { used.set(s.value, (used.get(s.value) ?? 0) + 1); continue; }
+        if (allowed && allowed.has(s.value)) {
+          used.add(s.value);
+          const ranges = exempt.get(s) ?? [];
+          ranges.push([m.index, m.index + m[0].length]);
+          exempt.set(s, ranges);
+          continue;
+        }
         hits.push({ shape: shape.id, line: s.line, text: excerpt(text, m.index, m[0].length) });
       }
     }
   }
-  return { hits, used };
+  let exempted = 0;
+  for (const ranges of exempt.values()) exempted += countClusters(ranges);
+  return { hits, used, exempted };
 }
 
 /**
@@ -583,17 +626,15 @@ export function checkSource(page, source, options = {}) {
       violations.push({ locale, rule: "bold", text: `${bold} emphasis spans ("**" and "__" both render), at most ${MAX_BOLD} allowed` });
     }
 
-    const { hits, used } = matchShapes(strings, BLOCKING_SHAPES, locale, allowed);
+    const { hits, used, exempted } = matchShapes(strings, BLOCKING_SHAPES, locale, allowed);
     for (const h of hits) {
       violations.push({ locale, rule: "negative-contrast", line: h.line, text: `"${h.shape}" in: ${h.text}` });
     }
-    let exempted = 0;
-    for (const n of used.values()) exempted += n;
     if (exempted > ALLOWLIST_PER_LOCALE) {
       violations.push({
         locale,
         rule: "allowlist",
-        text: `the allowlist exempts ${exempted} contrast occurrences here; the doctrine allows ${ALLOWLIST_PER_LOCALE} deliberate contrast per page per locale, and the cap counts hits, not entries`,
+        text: `the allowlist exempts ${exempted} contrasts here; the doctrine allows ${ALLOWLIST_PER_LOCALE} deliberate contrast per page per locale, and the cap counts contrasts rather than allowlist entries`,
       });
     }
     for (const entry of allowed) {
