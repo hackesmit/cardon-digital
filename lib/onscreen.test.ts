@@ -8,20 +8,18 @@ import { clearsThreshold } from "./onscreen";
 /**
  * The on-screen rule and its repo-wide enforcement (bead hq-3pfhe.6).
  *
- * Read @/lib/onscreen first: the reported defect, that a callback storing
- * entry.isIntersecting animates off a one pixel sliver, does not reproduce,
- * because the spec and Chromium both set isIntersecting from the threshold
- * index. What IS real is that the coupling holds only for a single scalar
- * threshold: with a threshold array starting at 0, isIntersecting tracks the
- * lowest entry and reports true at 3 percent under an observer declaring 0.35.
+ * Read @/lib/onscreen first. The short version: the reported defect, that a
+ * callback storing entry.isIntersecting animates off a one pixel sliver, does
+ * not reproduce in Chromium, which derives the flag from the threshold index.
+ * Whether the other two engines agree is open (hq-2u86a): this box has no
+ * Firefox or WebKit build, and a cross-vendor reviewer reads the spec the
+ * other way. What IS settled in every reading is that the coupling breaks with
+ * a threshold array starting at 0, where isIntersecting tracks the lowest
+ * entry and reports true at 3 percent under an observer declaring 0.35.
  *
- * The two checks below follow that, and only that. Every observer on the site
- * declares a scalar threshold today, so every one of them is correct as
- * written; a list demanding nine correct files be rewritten would be
- * make-work. What cannot be allowed to appear is the combination that IS a
- * bug, a threshold array read through isIntersecting, and that is what the
- * ratchet fails. The demos and the video slot additionally go through
- * clearsThreshold so the reference implementations say what they keep.
+ * So the checks below fail the combination that is a bug under every reading,
+ * and hold the line on new code, and do not demand that nine merged canvas
+ * visuals be rewritten on the strength of a single-engine measurement.
  */
 
 /* A plain filesystem path, not a URL: app/ holds directories such as
@@ -32,17 +30,18 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 /**
  * Observers that read isIntersecting rather than calling clearsThreshold.
  *
- * Every one declares a single scalar threshold, which makes isIntersecting
- * threshold-aware and each of these callbacks correct as written (measured in
- * state/review/s-0b4b/isintersecting-semantics3.mjs). They are listed so the
- * ratchet below can tell an existing reading from a new one, not because they
- * are defects: rewriting nine reviewed canvas visuals to change no behaviour
- * is not work worth doing. components/site/Nav.tsx is here too, declaring no
- * threshold at all, where "any contact" is the whole meaning.
+ * Each declares a single scalar threshold, which in Chromium makes
+ * isIntersecting threshold-aware and each of these callbacks correct as
+ * written (state/review/s-0b4b/isintersecting-semantics3.mjs). That is one
+ * engine, and hq-2u86a carries the open question of whether Firefox and WebKit
+ * agree; if they do not, the visible consequence in those browsers is a
+ * visual starting a little earlier than its threshold asked, which is why this
+ * is a list rather than a blocker. components/site/Nav.tsx is here too,
+ * declaring no threshold at all, where "any contact" is the whole meaning.
  *
- * What the list buys: any of these that later grows a threshold array fails,
- * because that is the combination where isIntersecting stops meaning what the
- * callback wants.
+ * What the list buys today: any of these that later grows a threshold array
+ * fails, because that is the combination where isIntersecting stops meaning
+ * what the callback wants under any reading of the spec.
  */
 const READS_ISINTERSECTING = [
   "components/pages/case/BerryToBottle.tsx",

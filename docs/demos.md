@@ -63,34 +63,47 @@ builds its own observer instead of calling it.
 Gate on `intersectionRatio` through `clearsThreshold` in `lib/onscreen.ts`,
 never on `entry.isIntersecting` directly.
 
-Be precise about why, because the reported reason is wrong and the next person
-to read the code deserves the measured one. Both reviews said a callback
-storing `isIntersecting` animates off a one pixel sliver, since `isIntersecting`
-is true for any positive intersection. It is not. The spec sets it from the
-threshold index, and Chromium agrees: an element 3 percent in view, under an
-observer declaring 0.12 or 0.35, delivers ratio 0.03 with `isIntersecting`
-**false**, on the initial observation and on a crossing that happens in a
-single frame. Measured in `state/review/s-0b4b/isintersecting-semantics.mjs`
-and its two companions; `sliver.mjs` confirms the demo did not animate at 3 or
-9 percent before the change either.
+Be precise about why, because the reported reason does not survive contact
+with a browser and the next person to read the code deserves the measured one.
+Both reviews said a callback storing `isIntersecting` animates off a one pixel
+sliver, since `isIntersecting` is true for any positive intersection. In
+Chromium it is not. An element 3 percent in view, under an observer declaring
+0.12 or 0.35, delivers ratio 0.03 with `isIntersecting` **false**, on the
+initial observation and on a crossing that happens in a single frame; Blink
+derives the flag from the threshold index. Measured in
+`state/review/s-0b4b/isintersecting-semantics.mjs` and its two companions;
+`sliver.mjs` confirms the demo did not animate at 3 or 9 percent before the
+change either.
 
-What is real:
+That is one engine, and the site ships to three. A cross-vendor reviewer reads
+the spec the other way, that `isIntersecting` is geometric and the threshold
+governs only when the callback fires; this box has no Firefox or WebKit build
+to settle it, and bead hq-2u86a carries the open question. Do not resolve it by
+picking the reading you prefer.
 
-- The coupling holds only for a **single scalar threshold**. Give the observer
-  a threshold array starting at 0, which is the ordinary way to ask for
-  progress updates, and `isIntersecting` tracks the lowest entry in the list:
-  `[0, 0.35]` reports true at ratio 0.03. A callback reading `isIntersecting`
-  is correct only until someone adds a threshold, and that someone gets no
-  warning.
+What is settled:
+
+- **A ratio comparison is the same answer in every engine.** That alone is the
+  argument for `clearsThreshold`: a boolean whose meaning two careful readers
+  disagree about, and which we can only check in one of three engines, is not a
+  boolean to gate behaviour on.
+- Even in Chromium, the coupling holds only for a **single scalar threshold**.
+  Give the observer a threshold array starting at 0, which is the ordinary way
+  to ask for progress updates, and `isIntersecting` tracks the lowest entry in
+  the list: `[0, 0.35]` reports true at ratio 0.03. A callback reading
+  `isIntersecting` is correct only until someone adds a threshold, and that
+  someone gets no warning.
 - Nothing at the callsite says which number is being kept. Two authors and two
   reviewers read these callbacks and came away with different beliefs about
-  what they did, which is how a non-defect cost two review rounds.
+  what they did, which is how a defect nobody could reproduce cost two review
+  rounds.
 
 `lib/onscreen.test.ts` enforces the part that is genuinely a bug, repo-wide: no
 observer may read `isIntersecting` while declaring a threshold array, and any
-new observer has to come through `clearsThreshold`. The nine existing callsites
-that read `isIntersecting` behind a scalar threshold are listed there as
-correct-as-written, not as a backlog.
+new observer has to come through `clearsThreshold`. The nine existing callsites that read
+`isIntersecting` behind a scalar threshold are listed there as measured-correct
+in Chromium and unverified elsewhere, which is what hq-2u86a is for. They are
+not a backlog you should clear on your own reading of the spec.
 
 ## 4. The device pixel ratio is capped at 2, and it is not fixed for the page
 
@@ -148,9 +161,17 @@ the payoff frame fade to 15 percent opacity and refill.
   three by four phone board with 54px hotspots under the desktop stylesheet
   against a 422px placeholder. A 214px first-layout shift in a window about
   half a pixel wide.
-- **Read the fractional content box in JS too.** `clientWidth` is rounded, so a
-  real 639.25px box reads as 640 and picks the far side of its own breakpoint.
-  Take `getBoundingClientRect().width` and subtract padding *and* border.
+- **Read the same box in JS, fractional and untransformed.** Two ways to get
+  this wrong, and the fix has to dodge both. `clientWidth` is rounded, so a real
+  639.25px box reads as 640 and picks the far side of its own breakpoint. And
+  `getBoundingClientRect()` is the *painted* box: under a scaled ancestor it
+  disagrees with the container query, which measures the unscaled layout box,
+  and subtracting unscaled computed padding from a scaled rect is not
+  arithmetic either. The authority is `ResizeObserverEntry.contentRect.width`,
+  which is the fractional layout content box, exactly what the query reads.
+  A rect-derived value is fine only as the reading before the observer has
+  spoken, which is the synchronous mount; the observer's first callback then
+  corrects it.
 - **A plan change is a resize.** The `ResizeObserver` rounds the width to
   ignore sub-pixel churn, and 639.6 and 640.2 round to the same integer while
   being different floor plans, so the plan is compared as well as the number.
@@ -255,14 +276,35 @@ pure, each with its own tests, and a component that measures.
 
 ## Before you call a demo done
 
-- `npx vitest run` and `npx tsc --noEmit` both exit 0.
-- `npx next build` exits 0, and the demo's stylesheet is in the built bundle.
-  Round one shipped `demos.css` with no importer at all: the canvas fell back
-  to its 300px intrinsic width and all twelve hotspots landed off the board.
-  The component imports its own stylesheet and the test asserts it.
-- The browser probes in `state/review/s-3b55` and `state/review/s-0b4b` exit 0
-  against a build of your branch. They need two probe routes, one mounting the
-  demo alone and one in a resizable column; the reviewers wrote them into an
-  archived copy of the tree rather than committing them.
+- `npm test` and `npx tsc --noEmit` both exit 0.
+- `npx next build` exits 0, **and the demo's stylesheet is in the built
+  bundle**. Round one shipped `demos.css` with no importer at all: the canvas
+  fell back to its 300px intrinsic width and all twelve hotspots landed off the
+  board. The component imports its own stylesheet and the test asserts it.
+- Every rule above that is about layout, paint or platform behaviour is
+  measured in a real browser against a build of your branch, with the branch
+  you started from served alongside as the control. A unit test cannot tell you
+  that a container query and a component agree at 639.25px, that a caption
+  change moved the figure 31px, or what `isIntersecting` does. The reference
+  set is:
+
+  | what it checks | rule |
+  | --- | --- |
+  | both sides of the breakpoint agree, fractional widths | 6 |
+  | the plan follows the layout box under a scaled ancestor | 6 |
+  | the figure height is constant across every caption, both locales | 7 |
+  | the hold frame is byte-identical to the reduced-motion frame | 5 |
+  | the clock never runs backwards after a pause | 5 |
+  | off screen and hidden tab pause, and both resume | 2 |
+  | reduced motion turned off starts the loop | 2 |
+  | the backing store refits when the ratio changes | 4 |
+  | no JavaScript leaves prose, not an empty frame | 9 |
+
+  The implementations live outside the repo, in `state/review/s-3b55` (round
+  two's reviewer) and `state/review/s-0b4b` (this bead), because each needs two
+  probe routes that are not committed: one mounting the demo alone, one putting
+  it in a resizable column. Copy them into an archived build of your branch
+  rather than writing them again. If they have gone stale, the table above is
+  the contract and the scripts are only one way to satisfy it.
 - Four screenshots captured and read back: light desktop, dark desktop, 390px,
   reduced motion. Read them. A shot nobody looked at is not evidence.

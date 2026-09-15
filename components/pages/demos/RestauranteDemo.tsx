@@ -616,14 +616,23 @@ export default function RestauranteDemo() {
 
     /** The figure's content box, which is exactly what demos.css queries: its
         container-type is inline-size and a size query reads the content box,
-        so this is the one number both sides judge the plan by.
+        so this is the one number both sides judge the plan by. It has to be
+        fractional: clientWidth is rounded to an integer, which rounded a real
+        639.25px content box up to 640 and picked the wide plan while the
+        stylesheet, reading the fractional box, stayed on the phone one
+        (reviewer s-3b55, BLOCKING 2).
 
-        Fractional, from the border box rect. clientWidth is rounded to an
-        integer, which rounded a real 639.25px content box up to 640 and picked
-        the wide plan while the stylesheet, reading the fractional box, stayed
-        on the phone one (reviewer s-3b55, BLOCKING 2). The rect is the border
-        box, so the border comes off as well as the padding. */
-    const figureContentWidth = () => {
+        The authority is the ResizeObserver's contentRect, which reports the
+        LAYOUT content box: the same box a container query measures, and
+        unaffected by transforms. Deriving it from getBoundingClientRect
+        instead is wrong under a scaled ancestor, where the rect is the painted
+        box while the container query still sees the unscaled one, and
+        subtracting unscaled computed padding from a scaled rect is not even
+        arithmetic (cross-vendor review, this bead). The rect form survives
+        only as the reading before the observer has spoken, which is the
+        synchronous mount, and the observer's first callback corrects it. */
+    let contentW: number | null = null;
+    const rectContentWidth = () => {
       const cs = window.getComputedStyle(figureEl);
       const px = (v: string) => parseFloat(v || "0") || 0;
       return (
@@ -634,6 +643,7 @@ export default function RestauranteDemo() {
         px(cs.borderRightWidth)
       );
     };
+    const figureContentWidth = () => contentW ?? rectContentWidth();
 
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -737,12 +747,17 @@ export default function RestauranteDemo() {
     let ro: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver((entries) => {
-        /* contentRect.width is the fractional content box, the same number
-           the container query judges by. Rounding it is enough to ignore
+        /* contentRect.width is the fractional layout content box, the same
+           number the container query judges by, so from here on it is what
+           figureContentWidth() returns. Rounding is enough to ignore
            sub-pixel churn, except across the breakpoint, where 639.6 and
            640.2 round to the same integer and are different floor plans: so
-           a plan change is a resize whatever the rounded width says. */
+           a plan change is a resize whatever the rounded width says. That
+           also covers the handover: if the mount's rect disagreed with the
+           real content box, the first callback differs in the rounded width
+           or in the plan, and resize() runs with the authoritative number. */
         const exact = entries[entries.length - 1].contentRect.width;
+        contentW = exact;
         const w = Math.round(exact);
         if (w === roW && isPhonePlan(exact) === phone) return;
         roW = w;

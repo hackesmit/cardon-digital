@@ -336,11 +336,12 @@ export function posterFor(slot: string, poster: string | undefined): string {
  *
  * Read through @/lib/onscreen rather than off entry.isIntersecting. Not
  * because isIntersecting was autoplaying clips off a one pixel sliver, which
- * was reported and does not reproduce: against a single scalar threshold the
- * spec and Chromium both make isIntersecting threshold aware. It is because
- * that coupling is invisible at the callsite and holds only while the
- * threshold stays a scalar, and because the callback should say which number
- * it is keeping. docs/demos.md carries the rule and the measurement.
+ * was reported and does not reproduce in Chromium, where the flag comes from
+ * the threshold index. It is because that coupling is invisible at the
+ * callsite, is only checked here in one of the three engines this site ships
+ * to, and holds only while the threshold stays a scalar. A ratio comparison is
+ * the same answer everywhere. docs/demos.md carries the rule and the
+ * measurement.
  */
 export const MEDIA_VISIBLE = 0.35;
 

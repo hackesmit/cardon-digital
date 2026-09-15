@@ -50,10 +50,10 @@ import { demos, type DemosDict } from "../../../lib/i18n/demos";
  *   5. the palette derived its structural hairline from --primary whatever hue
  *      the demo wore;
  *   6. the observer declared a threshold and then read isIntersecting. Both
- *      reviews called it a sliver starting the loop; measured, that does not
- *      reproduce, and the real trap is narrower. The reading now lives in
- *      @/lib/onscreen and lib/onscreen.test.ts enforces the part that is
- *      genuinely a bug, repo-wide, including components/site/Media.tsx;
+ *      reviews called it a sliver starting the loop; in Chromium that does not
+ *      reproduce, and whether the other engines agree is open. The reading now
+ *      lives in @/lib/onscreen, which is the same answer in every engine, and
+ *      lib/onscreen.test.ts enforces it repo-wide including Media.tsx;
  *   7. the caption strip's height followed the caption's length, so the figure
  *      reflowed 31px twice per cycle.
  *
@@ -65,6 +65,16 @@ import { demos, type DemosDict } from "../../../lib/i18n/demos";
 
 const here = new URL("./", import.meta.url);
 const read = (rel: string, base: URL = here) => readFileSync(new URL(rel, base), "utf8");
+
+/** The same file with its comments removed. Every lexical check below is about
+    the code, and these files now explain in prose exactly what they used to
+    get wrong, naming the old spelling in the sentence that rejects it: reading
+    the raw text fails a fixed file for describing its own fix, and passes a
+    broken one that commented the line out. */
+const code = (rel: string, base: URL = here) =>
+  read(rel, base)
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/^\s*\/\/.*$/gm, "");
 
 /** The three brand hues, one per demo: Produccion, Hospitalidad, Restaurante. */
 const HUES = ["primary", "secondary", "energy"] as const satisfies readonly DemoHue[];
@@ -322,7 +332,7 @@ describe("every demo component", () => {
   });
 
   it.each(components)("%s takes its gates from ./motion", (file) => {
-    const src = read(file);
+    const src = code(file);
     expect(src).toContain("observeOnscreen(");
     /* An observer built by hand can be built inside a reduced-motion branch,
        which is exactly the bug. observeOnscreen has no motion argument. */
@@ -439,17 +449,25 @@ describe("the demos stylesheet", () => {
     },
   );
 
-  it("reads the fractional content box, since the queries do", () => {
-    /* the other half of the same bug: clientWidth is rounded, so a real
-       639.25px content box read as 640 and picked the wide plan even where the
-       two conditions do meet */
-    const component = read("RestauranteDemo.tsx");
-    const measure = /const figureContentWidth = \(\) => \{([\s\S]*?)\n    \};/.exec(component);
-    expect(measure).not.toBeNull();
-    expect(measure![1]).toContain("getBoundingClientRect");
-    expect(measure![1]).not.toContain("clientWidth");
-    /* border as well as padding: the rect is the border box */
-    expect(measure![1]).toContain("borderLeftWidth");
+  it("reads the same box the queries read, fractional and untransformed", () => {
+    const component = code("RestauranteDemo.tsx");
+    /* Half of the boundary bug was the rounding: clientWidth is an integer, so
+       a real 639.25px content box read as 640 and picked the wide plan even
+       where the two conditions do meet. */
+    expect(component).not.toContain("clientWidth");
+    /* The authority is the ResizeObserver's contentRect, which is the LAYOUT
+       content box, the one a container query measures. getBoundingClientRect
+       is the painted box: under a scaled ancestor the two differ, and the
+       component would pick the phone plan under the wide stylesheet all over
+       again (cross-vendor review, this bead). */
+    expect(component).toMatch(/contentW = exact/);
+    expect(component).toMatch(/const figureContentWidth = \(\) => contentW \?\? rectContentWidth\(\)/);
+    /* the rect form survives only as the pre-observer reading, and when it is
+       used it takes off the border as well as the padding */
+    const fallback = /const rectContentWidth = \(\) => \{([\s\S]*?)\n    \};/.exec(component);
+    expect(fallback).not.toBeNull();
+    expect(fallback![1]).toContain("getBoundingClientRect");
+    expect(fallback![1]).toContain("borderLeftWidth");
     /* and the plan comes from floor.ts rather than from a second comparison */
     expect(component).toContain("isPhonePlan(figureContentWidth())");
     expect(component).not.toMatch(/<\s*PHONE_MAX/);
@@ -491,7 +509,7 @@ describe("the demos stylesheet", () => {
        invisible, so the box is the longest caption's size at every width and
        in both locales. A reserved pixel height would be right at one width,
        one font size and one language. */
-    const component = read("RestauranteDemo.tsx");
+    const component = code("RestauranteDemo.tsx");
     expect(component).toMatch(/className="demo-caption-box mono"/);
     expect(component).toMatch(/CAPTION_KEYS\.map/);
     expect(component).toMatch(/className="demo-caption-ghost"/);
@@ -506,7 +524,7 @@ describe("the demos stylesheet", () => {
   });
 
   it("draws its standing frame through the timeline, not beside it", () => {
-    const component = read("RestauranteDemo.tsx");
+    const component = code("RestauranteDemo.tsx");
     expect(component).toContain("cycT = STANDING_CYC");
     /* the old form drew PEAK_T straight and left the clock behind */
     expect(component).not.toMatch(/drawScene\(PEAK_T/);
