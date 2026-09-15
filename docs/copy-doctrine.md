@@ -20,15 +20,6 @@ object keys and comments, and checks each locale on its own.
 
 Blocking (exit 1):
 
-- Word budget, one per locale. The budget table at the top of the script carries
-  two lines per page, because a single number for both locales hands the shorter
-  one free headroom. Each budget is half of what that locale measured on
-  2026-09-15, which is section 7 rule 1. Every page fails this rule today. That
-  is the point: the rewrite beads are what make them pass.
-- The ratchet, as its own rule. A locale that sits more than 25 words UNDER its
-  budget also fails, naming the number to write in the table. So a rewrite lands
-  with the budget line following the page down, and the words a page gives up
-  cannot come back later. The two word rules can never fire on the same locale.
 - Emphasis. At most three spans per locale, counting both of the markers
   `lib/i18n/rich.tsx` renders: `**x**` becomes a `<b>` and `__x__` becomes a
   coloured accent span. Counting only `**` would leave the rule one
@@ -36,19 +27,42 @@ Blocking (exit 1):
   A marker left over after the spans are matched renders as literal asterisks or
   underscores, so it fails too, reported per string with that string's line.
 - Definitional negative contrast. In English: `, not `, `not just`,
-  `not another`, `never a`, and `not <a|the|just|only|another> ... but`. In
-  Spanish: `no es` or `no son` followed by an article or `otro` (`No es otra
-  suscripcion`, `no son el precio de entrada`), plus `no solo`, `, sino `,
-  `no otra` and `no otro`.
+  `not another`, `never a`, and `not X but Y` in its general form. That last one
+  is the headline tell, so the rule is general: any `not` or `n't`, then up to
+  60 characters that do not cross a clause boundary, then `but`. "This is not
+  software but certainty." and "It isn't a report but a decision." both fail.
+  "We do not guess. But we do measure." does not, and neither does a `but` that
+  is more than a clause away. In Spanish: `no es` or `no son` followed by an
+  article or `otro` (`No es otra suscripcion`, `no son el precio de entrada`),
+  plus `no solo`, `, sino `, `no otra` and `no otro`.
+- More deliberate contrast than the allowlist allows. The cap is counted in
+  occurrences, not in allowlist entries, so one allowlisted string cannot carry
+  three contrasts through.
 - Em dashes. Zero, per the repo hook.
-- Anything the extractor cannot read. A locale declaration whose initializer is
-  not a string, template, array or object literal fails loudly instead of
-  counting zero words silently.
+- Anything the extractor cannot read, at any depth. A locale declaration whose
+  initializer is not a string, template, array or object literal fails loudly
+  instead of counting zero words silently, and so does a value inside one:
+  `body: buildCopy(x)` and a `...spread` are copy this checker cannot see.
+  Numbers, booleans and a reference to another locale declaration in the same
+  file (`intro: enIntro`, which is counted at its own declaration) are fine.
 
-Advisory (reported, never blocks): `rather than`, `instead of`, and any `no es`
-or `no son` that is NOT followed by an article.
+Advisory (reported, never blocks): the word target, `rather than`, `instead of`,
+and any `no es` or `no son` that is NOT followed by an article.
 
-Those are real tells that no lexical rule separates from honest prose.
+The word target is the one rule here that was demoted on purpose, by Daniel, on
+escalation hq-9qqdm. The table at the top of the script still carries half of
+what each locale measured on 2026-09-15, which is section 7 rule 1, and every
+page is over it today. What changed is that being over it is a note instead of
+an exit 1. It was blocking in both directions, and the pair had no green state:
+a rewritten page came in far UNDER its line, which failed as a stale budget and
+printed the lower number to write into the table, and writing that number failed
+the unit test that pins every line to half of `measured`. No value of the table
+satisfied both, and the file is owned by no rewrite bead. Half the words is
+still the target, and it is carried where a human can judge the result: in each
+rewrite bead's own Definition of Done. A checker should not claim a ratchet it
+cannot enforce.
+
+The rest are real tells that no lexical rule separates from honest prose.
 
 - `instead of`: this doctrine's own worked example is the proof. "Close the till
   in four minutes instead of forty, and know the number is right" is the copy
@@ -63,7 +77,7 @@ Those are real tells that no lexical rule separates from honest prose.
   that choice is real: "no es administracion. Es la unica forma" is a
   definitional contrast the blocking rule misses and only the advisory catches.
 
-Read every advisory hit. Delete the ones that are defining a thing instead of
+Read every advisory shape hit. Delete the ones that are defining a thing instead of
 stating a fact or comparing two numbers.
 
 ## The deliberate contrast allowlist
@@ -71,6 +85,10 @@ stating a fact or comparing two numbers.
 A real contrast can be kept on purpose. `CONTRAST_ALLOWLIST` in the script takes
 the exact string, one per page per locale, and the script exits 2 if a page ever
 carries more than one. The exemption is in the diff where a reviewer sees it.
+The cap is applied twice, because an entry is not the same thing as a contrast:
+once to the entries when the config is read, and again to the OCCURRENCES those
+entries exempt while the page is checked. One allowlisted line carrying two
+contrasts is a violation naming the count, not a way to keep both.
 
 The English shapes are precise where the Spanish ones are not, so this is where
 an honest English line ends up when it happens to be shaped like a contrast:
@@ -85,8 +103,8 @@ dictionary keys that no component renders, and it cannot see the sentences
 `precios` composes at runtime out of `lib/pricing.ts`. It does not count object
 keys, which is why `precios` measures 66 words less than a naive read of the
 file: its keys are machine slugs such as `"kitchen-screen"`, not copy. The
-budget table records what the checker measures, because that is the number the
-ratchet has to move.
+target table records what the checker measures, because that is the number a
+rewrite is read against.
 
 ---
 
