@@ -1,380 +1,379 @@
 import type { Dict } from "./rich";
 
-/** Vinedo En'kanto case study, including the labels inside its SVG visuals. */
+/** Vinedo En'kanto case history, the companion to lib/i18n/monte-xanic.ts.
+ *
+ *  The two case pages are written to one shape (case-naming.md 6.1): the same
+ *  header fields in the same order, a basis paragraph that accounts for every
+ *  number above it, and the same closing offer. Monte Xanic carries the one
+ *  measured figure this company owns. This page carries none, and that is the
+ *  whole editorial problem it solves: it sells the result without borrowing a
+ *  number, because the system is built and is not yet in service at En'kanto.
+ *
+ *  Four things here are deliberate and load bearing:
+ *
+ *  1. Zero emphasis markers, which is docs/copy-doctrine.md's bold rule. The
+ *     two real labels on the page (the case fact keys and the diagnostic day
+ *     markers) are labels in the markup with their own class.
+ *  2. No figure of En'kanto's, and no claim about what the system changed
+ *     there. The results block stays a marked placeholder until Daniel's own
+ *     before and after numbers land (bead hq-cczm.26).
+ *  3. The honest edges keep their exact scope. Every limit that was gated
+ *     before this rewrite is still gated, in the same words where the words
+ *     were the policy: mirrors the channels, reads OpenTable, reads a room
+ *     charge and never writes one, built and not yet in service.
+ *  4. Spanish is written for a Valle winemaker and English for a US owner.
+ *     Neither is a translation of the other.
+ */
 
 const en = {
   meta: {
-    title: "Vinedo En'kanto case study",
+    title: "En'kanto case history",
     description:
-      "En'kanto runs three revenue lines from one property: the winery, the stays, and the restaurant. We rebuilt the online store in front of them, repaired the site structure and search, set up payments and shipping for how Mexico pays and ships, and made it bilingual by design. Then the system built for all three lines, nineteen screens across production, the restaurant point of sale and bookings, open to walk through screen by screen.",
+      "A bottle can now leave En'kanto's own store paid and shipped, in both languages. Behind the three lines, one system is built and open to walk through.",
   },
   hero: {
     aria: "Introduction",
-    eyebrow: "Case study / Winery",
-    t1: "En'kanto runs on three revenue lines. We built the store in front and the system ",
-    enk: "behind",
-    t2: " them.",
-    sub: "En'kanto runs three revenue lines out of San Antonio de las Minas: the winery, the stays, and the restaurant. We rebuilt the online store in front of them, repaired the site structure and search, set up payments and shipping for how Mexico pays and ships, and made it bilingual by design. Then we built the system behind all three: wine production, the restaurant point of sale, and bookings, in one place. **This page describes what is built, and links a demo you can walk through screen by screen.**",
+    eyebrow: "Case history",
+    t1: "A bottle can now leave En'kanto's own store, ",
+    accent: "paid and shipped",
+    t2: ".",
+    sub: "The catalog had no prices and no way to ship. The checkout completes now, and the wine reaches a door inside Mexico. Behind the winery, the rooms and the dining room, one system is built and open to walk through.",
+  },
+  /** Captions are read by about twice as many people as this body copy, so each
+   *  one carries the result its picture is evidence for. The video caption says
+   *  in words what the footage shows, so the clip never carries a claim alone. */
+  media: {
+    deskCap:
+      "The front desk at En'kanto. It gets one calendar with every channel on it, and the day already counted.",
+    deskAlt: "Check in at the front desk, guest side of the counter.",
+    passCap:
+      "The pass at service. The order reaches it as the waiter wrote it, once, with its own clock.",
+    passAlt: "A ticket going out at the pass, the screen in its working position.",
+    videoCap:
+      "A restaurant charge lands on the room. The desk reads the total and never writes one.",
+    videoAlt: "A tablet at the table, then the guest folio at the desk.",
+    play: "Play",
+    pause: "Pause",
   },
   facts: {
-    aria: "Case study facts: client, sector, place, scale, engagement, what we built, and the outcome",
+    aria: "Case facts and their basis",
     rows: [
       { k: "Client", v: "Vinedo En'kanto" },
       { k: "Sector", v: "Winery, hotel and restaurant" },
       { k: "Place", v: "San Antonio de las Minas, Valle de Guadalupe" },
-      { k: "Scale", v: "Three revenue lines: winery, stays, restaurant" },
       { k: "Engagement", v: "Build and ongoing work" },
       {
         k: "What we built",
-        v: "Online shop; site structure and search; payments for how Mexico pays; cross-border shipping; bilingual build; then the system for all three lines: wine production, restaurant point of sale, and bookings",
+        v: "Online store, structure and search, payments and shipping for how Mexico pays and ships, a bilingual build, then one system for the three lines",
       },
       {
         k: "Outcome",
-        v: "The online store is real and bilingual, and a single system for wine production, the restaurant and bookings is built and open to walk through, screen by screen",
+        v: "The store takes a real order in both languages; the system for the three lines is built and open to walk through",
       },
     ],
     basisK: "Basis",
-    basis: "No En'kanto revenue figures are published here, and this page reports no result from the system's use, because it is not yet in service there. The system is described from the build itself and not from a plan. Every count here is a count of that build on 9 September 2026: three modules, the nineteen screens named one by one on this page in lists of five, five and nine, and the ten staff positions its own route table defines, with a suite of 305 checks across 28 files running green on that date.",
+    basis:
+      "No En'kanto revenue figure is published here, and no result from the system's use, because it is not in service there yet. The other numbers are counts of the build on 9 September 2026: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions, and the five homepages we unpublished.",
   },
-  client: {
-    kicker: "The client",
-    title: "Vinedo En'kanto, San Antonio de las Minas.",
-    p1: "Vinedo En'kanto is a boutique winery, hotel, and restaurant in San Antonio de las Minas, in the Valle de Guadalupe. Three revenue lines share one place: bottles from the winery, hotel and Airbnb stays for guests who want to wake up in the Valle, and a restaurant table for the ones who come to eat.",
-    p2: "Those three lines are the business. The online presence is how each of them reaches people who have not arrived yet, so a bottle, a booking, or a reservation can begin before anyone sets foot on the property.",
-    photoAlt: "Oak barrels stacked in a winery cellar",
+  before: {
+    kicker: "Before",
+    title: "Three businesses on one property, and nothing holding them together.",
+    p1: "Vinedo En'kanto sits in San Antonio de las Minas: a boutique winery, rooms for people who want to wake up in the Valle, and a restaurant. Three lines, one place.",
+    p2: "Online, the store existed in name only: products with no price, no way to ship, five homepages competing for the same visitor. The order went on a pad and the bookings arrived in as many places as there were channels.",
   },
-  work: {
-    kicker: "The work",
-    title: "The work in front of the three lines.",
-    p1: "The three revenue lines share one property: the winery, the stays, and the restaurant. The online presence is how each of them reaches a customer who has not arrived yet, and that front had real work waiting under it.",
-    p2: "And there was real work to do. The online store existed in name only, products with no prices and no way to ship, and five homepages competed for the same visitor across two half-finished languages. **We rebuilt the groundwork under all three lines, one piece at a time.** Here is that work, and the line each piece serves.",
-  },
-  servesWine: "Serves the **wine line.**",
-  servesAll: "Serves **all three lines.**",
-  ch1: {
-    kicker: "01 / The store, made real",
-    title: "Products you can actually buy, and a checkout that completes.",
-    sub: "We built the catalog into real products, each with a price, a weight, and an image, and wired a checkout that carries an order through instead of stalling at a full cart. The store stops being a demonstration and **starts being a place that takes an order**.",
+  changed: {
+    kicker: "What changed",
+    title: "The store takes the order, and the wine gets to the door.",
+    sub: "Real products with a price, a weight and an image, and a checkout that completes.",
     tag: "empty in name, then built out",
-    aria: "An empty placeholder product card becomes a real product card with an image, name, price, and weight.",
+    aria: "An empty product card becomes a real one with an image, name, price and weight.",
+    honest: "Illustrative card, invented product.",
     inNameOnly: "IN NAME ONLY",
     builtOut: "BUILT OUT",
     add: "add",
-  },
-  ch2: {
-    kicker: "02 / Structure, repaired page by page",
-    title: "One clear site, not five homepages.",
-    sub: "We unpublished the duplicate homepages so one canonical page stands for the business, wrote the missing descriptions, and cleaned the sitemap and robots so search reads the site the way a visitor does. The structure stops fighting itself, and the whole business, the wine, the stays, and the restaurant, **is found in one place**.",
-    tag: "five front doors, then one",
-    aria: "Five competing homepages resolve to one canonical page, with the sitemap and robots cleaned.",
-    homepages: "HOMEPAGES",
-    unpublished: "unpublished",
-    canonical: "canonical store",
-    clean: "clean",
-    descriptions: "descriptions written",
-  },
-  ch3: {
-    kicker: "03 / Payments for how Mexico pays",
-    title: "Set up for the ways people here actually pay.",
-    sub: "We set up payments around how Mexico pays, cards and cash, so a guest checks out the way that suits them and the order clears. Paying stops being **the place an order quietly dies**.",
-    tag: "cards and cash, one checkout",
-    aria: "Card, cash, and transfer methods feed one checkout that reaches an order placed state.",
-    card: "Card",
-    cash: "Cash",
-    transfer: "Transfer",
-    total: "TOTAL",
-    placed: "Order placed",
-    clears: "the order clears",
-  },
-  ch4: {
-    kicker: "04 / Shipping, made real",
-    title: "A real way to get the wine to the buyer.",
-    sub: "We set up a domestic carrier path with packaging that meets the rules, so a bottle bought online reaches a door inside Mexico. Selling across the border as a Mexican winery is not something the law allows, so the store sells pickup and domestic delivery, and guests visiting from the United States **carry wine home themselves under the personal allowance**. It only promises what it can keep.",
-    tag: "pickup, domestic, and an honest carry-home",
-    aria: "An order splits to pickup at the winery and a domestic carrier; a separate dashed lane shows US guests carrying wine home in person under the personal allowance.",
-    order: "Order",
-    pickup: "Pickup",
-    atWinery: "at the winery",
-    carrier: "Domestic carrier",
-    packaging: "compliant packaging",
-    acrossBorder: "ACROSS THE BORDER",
-    carried: "carried in person,",
-    allowance: "personal allowance",
-  },
-  ch5: {
-    kicker: "05 / Bilingual by design",
-    title: "One store in two languages, not one bolted onto the other.",
-    sub: "We built English and Spanish as one foundation, so the same site reads whole in either language instead of one being a thinner copy of the other. A guest from the Valle and a guest from across the border **meet the same business, each in their own words**.",
-    tag: "EN and ES, one foundation",
-    aria: "English and Spanish rails converge into a single store foundation.",
-    oneStore: "One store",
-    readWhole: "read whole in both",
-    foundation: "one foundation, not a bolt-on",
+    items: [
+      {
+        lead: "One address for the whole business.",
+        body: "The duplicates came down, one page stands for the wine, the stays and the restaurant, and search reads the site the way a visitor does.",
+      },
+      {
+        lead: "Paid the way people here pay.",
+        body: "Card and cash both reach a placed order, so the checkout stops being where a sale quietly dies.",
+      },
+      {
+        lead: "A bottle reaches a door inside Mexico.",
+        body: "A domestic carrier and packaging that meets the rules. Selling across the border as a Mexican winery is outside what the law allows, so guests from the north carry wine home under the personal allowance, and the store says so.",
+      },
+      {
+        lead: "One store, read whole in two languages.",
+        body: "English and Spanish on one foundation, so a guest from the Valle and one from the north meet the same business.",
+      },
+    ],
   },
   system: {
     kicker: "The system",
-    title: "Three lines, one system, and it is built.",
-    p1: "The store, the structure and the payments put the three lines in front of people. Behind them ran three operations sharing one property and no shared record. The order went on a pad. The bookings arrived in as many places as there were channels. Nothing held the winery, the rooms and the dining room as one business, because nothing had been built to.",
-    p2: "So we built the one that does. One place, nineteen screens, and a set of screens per area instead of one screen for everybody: the cellar works from production, the dining room from the dining room, the front desk from the calendar, and administration sees the property whole. **Wine first, then the restaurant, then the bookings.**",
+    title: "One record for the winery, the dining room and the rooms.",
+    p1: "Three operations shared a property and no shared record. We built the one they share: nineteen screens, a set per area, so each part of the business works from its own.",
     screensK: "Screens",
     modules: [
       {
-        num: "06",
-        name: "Producción",
-        title: "The record of the vintage, from the block to the barrel.",
-        body: "Five screens for the people who make the wine. The vineyard and its blocks. A vintage history carrying rainfall, temperatures, degree days, frosts and heat waves, with the harvest window for each varietal. The harvest itself, with pick dates and lab analysis by lot, kilos, Brix, pH, total acidity and YAN, against the maturity curve from field sampling. Fermentation, with a pump-over sheet per tank, density and temperature curves, yeast and nutrient additions, and malolactic tracking. And the barrel room as a clickable map, French oak, American oak and steel, with a card for every barrel: what is in it, litres, time in barrel, cooper, toast, top-ups and batonnage.",
+        num: "01",
+        name: "Produccion",
+        title: "The vintage on the record, block to barrel.",
+        body: "The vineyard and its blocks, the season and the harvest window, pick dates and lab analysis by lot, fermentation by tank, and the barrel room card by card.",
         screens: ["Viñedo", "Añadas", "Cosecha", "Fermentación", "Crianza y Barricas"],
       },
       {
-        num: "07",
+        num: "02",
         name: "Restaurante",
         title: "One order, from the waiter's phone to the cash cut.",
-        body: "Five screens and a single order that never gets written twice. It is born on the waiter's phone, by table and by seat, with modifiers, line notes and courses fired when the waiter decides. It lands on the kitchen screen in arrival order with its capture time, its elapsed minutes, its station and its waiter, and it bumps when it is ready. The host works a table map with covers, arrival time and turn time. Then the day closes twice over: a summary by category, by hour and by waiter, and a cash cut with the float, the declared cash and the difference.",
+        body: "Written once at the table, timed on the kitchen screen, seated from a table map, and closed on a summary and a cash cut with the difference.",
         screens: ["Mesero", "Cocina", "Anfitrión", "Resumen del día", "Corte del día"],
       },
       {
-        num: "08",
+        num: "03",
         name: "Hospedaje",
         title: "Every booking in one calendar, and the day already counted.",
-        body: "Nine screens for the stays. Every channel read into one master calendar of units by day, coloured by channel. The day view the property opens each morning: who arrives, who leaves, which units stay occupied, which cleans are pending. Occupancy by month and by unit, and revenue by channel with the count of bookings still missing an amount kept visible rather than hidden. A guest record that belongs to the guest and not to the booking, so it survives between stays. A unit board, and housekeeping tasks generated from the departures, marked clean with one thumb from a phone. And the bridge to the dining room, showing a guest's table booking and their restaurant charges on the stay.",
+        body: "Every channel in one calendar, the day's arrivals and departures, occupancy and revenue by channel, a guest record that outlives the booking, and housekeeping from a phone.",
         screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
     limitsKicker: "What it will not promise",
-    limitsTitle: "The honest edges, written into the screens.",
+    limitsTitle: "The edges, written into the screens.",
     limits: [
       {
         lead: "It mirrors the channels. It does not write to them.",
-        body: "Airbnb publishes no open interface for a host, so the calendar reads the iCal feeds instead, which refresh in hours rather than in real time. The screen carries the time each channel was last read and warns when a feed has gone stale. Blocking a date here does not block it on Airbnb, and the interface says so, because the expensive mistake is assuming it does.",
+        body: "Airbnb publishes no open interface for a host, so the calendar reads the iCal feeds, which refresh in hours. A date blocked here stays open there, and the screen says so.",
       },
       {
         lead: "It reads OpenTable. It does not scrape it.",
-        body: "The table bookings live in OpenTable, whose data interface is open to approved partners and to nobody else. Until that account is connected the system takes the booking by hand and reconciles it against the export, matching on guest and time so the export's copy folds onto the booking already captured instead of being filed as a second one. It never touches the account behind the login, because the one who would pay for that is the restaurant.",
+        body: "Table bookings live in OpenTable, open to approved partners and to nobody else. Until that account is connected, the booking is taken by hand and reconciled against the export on guest and time, so one stays one.",
       },
       {
         lead: "A room bill adds up the restaurant's charges. It never writes one.",
-        body: "A guest's stay shows the restaurant charges posted to their room and the total, but the front desk only reads them: creating or changing a charge belongs to the restaurant, not to hospitality, and this screen has no way to do it. A charge counts toward the room total only when it is applied and carries an amount; one posted without an amount shows as pending and stays out of the total instead of being counted as zero. And while the restaurant is not yet posting real charges, the total is labelled as example data on the screen, so a stand-in number is never read as a real one.",
+        body: "The front desk only reads them: creating or changing a charge belongs to the restaurant. A charge with no amount shows as pending and stays out of the total, and an example is labelled as one.",
       },
       {
         lead: "It is built. It is not yet in service at En'kanto.",
-        body: "Everything on this page is here because it is merged and it runs. Putting the system into the property's daily work is the next phase, and until that happens we describe what is built and claim nothing about what it changed. We would rather be a step behind our own page than a step in front of it.",
+        body: "Everything here is merged and running. Putting it into the property's daily work is the next phase, and until then we claim nothing about what it changed.",
       },
     ],
     demo: {
       kicker: "See it",
-      title: "The system is open. Go through it yourself.",
-      body: "It runs as a public demonstration, dressed as a fictional winery. **It is assembled from a whitelist that leaves En'kanto's own data files out of the deployment, so there is nothing of theirs there to serve.** Open any of the three modules, pick any of the ten staff positions, and walk the screens that position's menu opens.",
+      title: "The system is open. Walk it yourself.",
+      body: "It runs as a public demonstration under a fictional name, assembled from a whitelist that leaves En'kanto's own data files out of the deployment. Open a module, pick any of the ten positions, walk its screens.",
       cta: "Open the demo",
-      note: "Illustrative data under a fictional name. Nothing there belongs to a client, and the position picker is a shop window onto the screens, not a login.",
+      note: "Illustrative data under a fictional name. Nothing there belongs to a client.",
     },
   },
   pending: {
-    marker: "PLACEHOLDER, not for publication",
+    marker: "PLACEHOLDER. Not for publication.",
     title: "What the system changed for En'kanto goes here.",
-    body: "This block is deliberately empty. It stays empty until En'kanto's own figures are in hand: what a task took before and what it takes now, over a stated window. We do not estimate it, we do not round it, and we do not publish a number nobody measured. Fill this block or delete it before this page goes live.",
+    body: "Empty until En'kanto's own figures are in hand: what a task took before, what it takes now, over a stated window. Fill it or delete it before this page ships.",
   },
-  outcome: {
-    kicker: "The outcome",
-    title: "The store in front, and the system behind it.",
-    p1: "En'kanto reaches its customers through a store that takes a real order, a structure and search that no longer fight each other, payments that clear the way Mexico pays, shipping that reaches a door inside Mexico, and one bilingual foundation under all of it.",
-    p2: "Then we built the system for those three lines. The cellar's record of the vintage, the dining room's order from the phone to the cash cut, and every booking in one calendar, in one place, with a set of screens per area. It is built, it is open to walk through, and it says plainly where it stops.",
-    p3: "We describe what is built and claim no more than that. **We built the foundation. What grows on it belongs to the winery.**",
+  result: {
+    kicker: "For your property",
+    title: "What this changes if you run more than one line.",
+    items: [
+      {
+        lead: "The sale completes.",
+        body: "A price, a weight, a way to ship, and a checkout that ends in a placed order.",
+      },
+      {
+        lead: "The order is written once.",
+        body: "From the phone at the table to the cash cut, with nobody copying it out again.",
+      },
+      {
+        lead: "The system is yours.",
+        body: "The code, the data and the keys stay with the property.",
+      },
+    ],
   },
   diagDesc:
-    "Ten business days looking at your store, your site, and your operations as one system. You get a written memo, not a sales deck, telling you what is true, what is broken, and what to build first.",
+    "Ten business days on your store, your site and your operation, and a written memo at the end.",
+  /** `d` is a real label and is styled as one, so it needs no emphasis marker. */
   diagSpecs: [
-    "**Day 1.** A working session on your store, your site, and your operations.",
-    "**Days 2 to 9.** We dig: the catalog, payments, shipping, measurement, the numbers behind the numbers.",
-    "**Day 10.** The memo lands: what is true, what is broken, what to build first.",
-    "**Free, with no strings.** Act on it with us or without us. If we build, pricing is agreed up front.",
+    { d: "Day 1", t: "A working session on all three." },
+    { d: "Days 2 to 9", t: "We dig into the numbers behind the numbers." },
+    {
+      d: "Day 10",
+      t: "The memo lands: what is true, what is broken, what to build first.",
+    },
+    { d: "After", t: "We propose the build, or you take the memo and go." },
   ],
 };
 
 const es: typeof en = {
   meta: {
-    title: "Caso de estudio Viñedo En'kanto",
+    title: "Caso Viñedo En'kanto",
     description:
-      "En'kanto vive de tres líneas de ingreso en una misma propiedad: la bodega, el hospedaje y el restaurante. Reconstruimos la tienda en línea frente a ellas, reparamos la estructura y la búsqueda del sitio, montamos pagos y envíos para como se paga y se envía en México, y la hicimos bilingüe desde el diseño. Después, el sistema construido para las tres líneas: diecinueve pantallas entre producción, el punto de venta del restaurante y las reservas, abierto para recorrerlo pantalla por pantalla.",
+      "Hoy una botella puede salir de la tienda de En'kanto pagada y enviada, en los dos idiomas. Detrás de las tres líneas hay un sistema construido y abierto para recorrerlo.",
   },
   hero: {
     aria: "Presentación",
-    eyebrow: "Caso de estudio / Bodega",
-    t1: "En'kanto vive de tres líneas de ingreso. Construimos la tienda de enfrente y el sistema ",
-    enk: "detrás",
-    t2: " de ellas.",
-    sub: "En'kanto opera tres líneas de ingreso en San Antonio de las Minas: la bodega, el hospedaje y el restaurante. Reconstruimos la tienda en línea frente a ellas, reparamos la estructura y la búsqueda del sitio, montamos pagos y envíos para como se paga y se envía en México, y la hicimos bilingüe desde el diseño. Después construimos el sistema detrás de las tres: producción de vino, el punto de venta del restaurante y las reservas, en un solo lugar. **Esta página describe lo que está construido, y enlaza un demo que usted puede recorrer pantalla por pantalla.**",
+    eyebrow: "Caso",
+    t1: "Hoy una botella puede salir de la tienda de la bodega, ",
+    accent: "pagada y enviada",
+    t2: ".",
+    sub: "El catálogo no tenía precios ni manera de enviar. Hoy el pago se completa y el vino llega a una puerta dentro de México. Detrás de la bodega, los cuartos y el comedor hay un sistema construido y abierto para recorrerlo.",
+  },
+  media: {
+    deskCap:
+      "La recepción de En'kanto. Recibe un solo calendario con todos los canales, y el día ya contado.",
+    deskAlt: "Registro de llegada en la recepción, del lado del huésped.",
+    passCap:
+      "El pase en servicio. La comanda le llega como la escribió el mesero, una sola vez, con su propio reloj.",
+    passAlt: "Una comanda saliendo en el pase, con la pantalla en su lugar de trabajo.",
+    videoCap:
+      "Un cargo del restaurante cae en la habitación. La recepción lee el total y nunca escribe uno.",
+    videoAlt: "Una tableta en la mesa y luego la cuenta del huésped en recepción.",
+    play: "Reproducir",
+    pause: "Pausar",
   },
   facts: {
-    aria: "Datos del caso: cliente, sector, lugar, escala, relación, lo que construimos y el resultado",
+    aria: "Datos del caso y su base",
     rows: [
       { k: "Cliente", v: "Viñedo En'kanto" },
       { k: "Sector", v: "Bodega, hotel y restaurante" },
       { k: "Lugar", v: "San Antonio de las Minas, Valle de Guadalupe" },
-      { k: "Escala", v: "Tres líneas de ingreso: bodega, hospedaje, restaurante" },
-      { k: "Relación", v: "Construcción y trabajo en curso" },
+      { k: "Relación", v: "Construcción y trabajo continuo" },
       {
         k: "Lo que construimos",
-        v: "Tienda en línea; estructura y búsqueda del sitio; pagos como se paga en México; envíos transfronterizos; construcción bilingüe; y después el sistema para las tres líneas: producción de vino, punto de venta del restaurante y reservas",
+        v: "Tienda en línea, estructura y búsqueda, pagos y envíos como se paga y se envía en México, construcción bilingüe, y un solo sistema para las tres líneas",
       },
       {
         k: "Resultado",
-        v: "La tienda en línea es real y bilingüe, y un solo sistema para la producción de vino, el restaurante y las reservas está construido y abierto para recorrerlo, pantalla por pantalla",
+        v: "La tienda toma un pedido de verdad en los dos idiomas; el sistema de las tres líneas está construido y abierto para recorrerlo",
       },
     ],
     basisK: "Base",
-    basis: "Aquí no publicamos ninguna cifra de ingresos de En'kanto, y esta página no reporta ningún resultado del uso del sistema, porque todavía no está en servicio ahí. El sistema se describe desde la construcción misma y no desde un plan. Cada conteo de aquí es un conteo de esa construcción al 9 de septiembre de 2026: tres módulos, las diecinueve pantallas nombradas una por una en esta página en listas de cinco, cinco y nueve, y los diez puestos de personal que define su propia tabla de rutas, con una suite de 305 comprobaciones en 28 archivos que corre en verde en esa fecha.",
+    basis:
+      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los demás números son de la construcción al 9 de septiembre de 2026: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal, y las cinco páginas de inicio que despublicamos.",
   },
-  client: {
-    kicker: "El cliente",
-    title: "Viñedo En'kanto, San Antonio de las Minas.",
-    p1: "Viñedo En'kanto es una bodega, hotel y restaurante boutique en San Antonio de las Minas, en el Valle de Guadalupe. Tres líneas de ingreso comparten un mismo lugar: botellas de la bodega, hospedaje de hotel y de Airbnb para quien quiere amanecer en el Valle, y una mesa de restaurante para quien viene a comer.",
-    p2: "Esas tres líneas son el negocio. La presencia en línea es la forma en que cada una llega a quien todavía no llega, para que una botella, una reserva o una mesa empiecen antes de que alguien ponga un pie en la propiedad.",
-    photoAlt: "Barricas de roble apiladas en la cava de una bodega",
+  before: {
+    kicker: "Antes",
+    title: "Tres negocios en una propiedad, y nada que los sostuviera juntos.",
+    p1: "Viñedo En'kanto está en San Antonio de las Minas: una bodega boutique, cuartos para quien quiere amanecer en el Valle y un restaurante. Tres líneas, un mismo lugar.",
+    p2: "En línea, la tienda existía solo de nombre: productos sin precio, sin manera de enviar, cinco páginas de inicio peleándose al mismo visitante. La comanda se escribía en papel y las reservas llegaban a tantos lugares como canales había.",
   },
-  work: {
-    kicker: "El trabajo",
-    title: "El trabajo frente a las tres líneas.",
-    p1: "Las tres líneas de ingreso comparten una misma propiedad: la bodega, el hospedaje y el restaurante. La presencia en línea es la forma en que cada una llega a un cliente que todavía no llega, y ese frente tenía trabajo real esperando debajo.",
-    p2: "Y sí había trabajo que hacer. La tienda en línea existía solo de nombre, con productos sin precio y sin manera de enviar, y cinco páginas de inicio competían por el mismo visitante en dos idiomas a medias. **Reconstruimos los cimientos debajo de las tres líneas, una pieza a la vez.** Aquí está ese trabajo, y la línea a la que sirve cada pieza.",
-  },
-  servesWine: "Sirve a la **línea de vino.**",
-  servesAll: "Sirve a **las tres líneas.**",
-  ch1: {
-    kicker: "01 / La tienda, hecha de verdad",
-    title: "Productos que sí se pueden comprar, y un pago que se completa.",
-    sub: "Convertimos el catálogo en productos reales, cada uno con precio, peso e imagen, y conectamos un pago que lleva el pedido hasta el final en vez de atorarse con el carrito lleno. La tienda deja de ser una demostración y **empieza a ser un lugar que toma un pedido**.",
+  changed: {
+    kicker: "Lo que cambió",
+    title: "La tienda toma el pedido y el vino llega a la puerta.",
+    sub: "Productos de verdad con precio, peso e imagen, y un pago que se completa.",
     tag: "vacía de nombre, después construida",
-    aria: "Una tarjeta de producto vacía se convierte en una tarjeta real con imagen, nombre, precio y peso.",
+    aria: "Una tarjeta de producto vacía se vuelve una real con imagen, nombre, precio y peso.",
+    honest: "Tarjeta ilustrativa, producto inventado.",
     inNameOnly: "SOLO DE NOMBRE",
     builtOut: "CONSTRUIDA",
     add: "agregar",
-  },
-  ch2: {
-    kicker: "02 / Estructura, reparada página por página",
-    title: "Un solo sitio claro, no cinco páginas de inicio.",
-    sub: "Despublicamos las páginas de inicio duplicadas para que una sola página represente al negocio, escribimos las descripciones que faltaban y limpiamos el sitemap y el robots para que la búsqueda lea el sitio como lo lee un visitante. La estructura deja de pelearse consigo misma, y todo el negocio, el vino, el hospedaje y el restaurante, **se encuentra en un solo lugar**.",
-    tag: "cinco puertas, después una",
-    aria: "Cinco páginas de inicio que competían se resuelven en una sola página canónica, con el sitemap y el robots limpios.",
-    homepages: "PÁGINAS DE INICIO",
-    unpublished: "despublicada",
-    canonical: "tienda canónica",
-    clean: "limpio",
-    descriptions: "descripciones escritas",
-  },
-  ch3: {
-    kicker: "03 / Pagos como se paga en México",
-    title: "Preparado para las formas en que aquí sí se paga.",
-    sub: "Configuramos los pagos alrededor de cómo se paga en México, tarjeta y efectivo, para que un huésped pague como le acomode y el pedido se libere. Pagar deja de ser **el lugar donde un pedido se muere en silencio**.",
-    tag: "tarjeta y efectivo, un solo pago",
-    aria: "Tarjeta, efectivo y transferencia alimentan un solo pago que llega al estado de pedido realizado.",
-    card: "Tarjeta",
-    cash: "Efectivo",
-    transfer: "Transferencia",
-    total: "TOTAL",
-    placed: "Pedido realizado",
-    clears: "el pedido se libera",
-  },
-  ch4: {
-    kicker: "04 / Envíos, hechos de verdad",
-    title: "Una forma real de llevar el vino a quien lo compra.",
-    sub: "Montamos una ruta con paquetería nacional y un empaque que cumple las reglas, para que una botella comprada en línea llegue a una puerta dentro de México. Vender del otro lado de la frontera siendo una bodega mexicana no es algo que la ley permita, así que la tienda vende recolección y entrega nacional, y los huéspedes que vienen de Estados Unidos **se llevan el vino ellos mismos bajo la franquicia personal**. Solo promete lo que puede cumplir.",
-    tag: "recolección, envío nacional y un traslado honesto",
-    aria: "Un pedido se abre a recolección en la bodega y a paquetería nacional; un carril punteado aparte muestra a los huéspedes de Estados Unidos llevándose el vino en persona bajo la franquicia personal.",
-    order: "Pedido",
-    pickup: "Recolección",
-    atWinery: "en la bodega",
-    carrier: "Paquetería nacional",
-    packaging: "empaque que cumple",
-    acrossBorder: "CRUZANDO LA FRONTERA",
-    carried: "llevado en persona,",
-    allowance: "franquicia personal",
-  },
-  ch5: {
-    kicker: "05 / Bilingüe desde el diseño",
-    title: "Una tienda en dos idiomas, no uno pegado encima del otro.",
-    sub: "Construimos el español y el inglés como un solo cimiento, para que el mismo sitio se lea completo en cualquiera de los dos y no que uno sea una copia más delgada del otro. Un huésped del Valle y uno del otro lado de la frontera **se encuentran con el mismo negocio, cada quien en sus palabras**.",
-    tag: "ES y EN, un solo cimiento",
-    aria: "Los carriles de español y de inglés convergen en un solo cimiento de tienda.",
-    oneStore: "Una tienda",
-    readWhole: "completa en los dos",
-    foundation: "un cimiento, no un añadido",
+    items: [
+      {
+        lead: "Una sola dirección para todo el negocio.",
+        body: "Las duplicadas se bajaron, una sola página representa al vino, el hospedaje y el restaurante, y la búsqueda lee el sitio como lo lee un visitante.",
+      },
+      {
+        lead: "Se paga como aquí se paga.",
+        body: "Tarjeta y efectivo llegan los dos a un pedido realizado, y el carrito deja de ser donde una venta se muere sola.",
+      },
+      {
+        lead: "Una botella llega a una puerta dentro de México.",
+        body: "Paquetería nacional y empaque que cumple. Vender del otro lado de la frontera siendo una bodega mexicana no es algo que la ley permita, así que los huéspedes del norte se llevan su vino bajo la franquicia personal, y la tienda lo dice.",
+      },
+      {
+        lead: "Una tienda completa en dos idiomas.",
+        body: "Español e inglés sobre un mismo cimiento, para que un huésped del Valle y uno del norte encuentren el mismo negocio.",
+      },
+    ],
   },
   system: {
     kicker: "El sistema",
-    title: "Tres líneas, un sistema, y ya está construido.",
-    p1: "La tienda, la estructura y los pagos pusieron las tres líneas frente a la gente. Por detrás corrían tres operaciones que comparten una sola propiedad y ningún registro común. La comanda se escribía en papel. Las reservas llegaban a tantos lugares como canales había. Nada sostenía la bodega, los cuartos y el comedor como un solo negocio, porque nada se había construido para eso.",
-    p2: "Así que construimos el que sí lo hace. Un solo lugar, diecinueve pantallas, y un juego de pantallas por área en lugar de una sola pantalla para todos: la bodega trabaja desde producción, el comedor desde el comedor, la recepción desde el calendario, y administración ve la propiedad entera. **Primero el vino, luego el restaurante, luego las reservas.**",
+    title: "Un solo registro para la bodega, el comedor y los cuartos.",
+    p1: "Tres operaciones compartían la propiedad y ningún registro. Construimos el que sí comparten: diecinueve pantallas, con un juego por área, para que cada parte del negocio trabaje desde la suya.",
     screensK: "Pantallas",
     modules: [
       {
-        num: "06",
+        num: "01",
         name: "Producción",
         title: "El registro de la añada, del cuartel a la barrica.",
-        body: "Cinco pantallas para quienes hacen el vino. El viñedo y sus cuarteles. La historia de añadas con lluvia, temperaturas, grados día, heladas y olas de calor, y la ventana de cosecha por variedad. La cosecha misma, con fechas de pizca y análisis de laboratorio por lote, kilos, Brix, pH, acidez total y YAN, contra la curva de madurez del muestreo en campo. La fermentación, con hoja de remontajes por tanque, curvas de densidad y temperatura, registro de levaduras y nutrientes, y seguimiento del malolático. Y la sala de barricas como un mapa clickeable, roble francés, roble americano e inox, con una ficha por barrica: qué tiene, litros, tiempo en barrica, tonelero, tostado, rellenados y bâtonnage.",
+        body: "El viñedo y sus cuarteles, la temporada y la ventana de cosecha, fechas de pizca y análisis por lote, fermentación por tanque, y la sala de barricas ficha por ficha.",
         screens: ["Viñedo", "Añadas", "Cosecha", "Fermentación", "Crianza y Barricas"],
       },
       {
-        num: "07",
+        num: "02",
         name: "Restaurante",
         title: "Una comanda, del teléfono del mesero al corte de caja.",
-        body: "Cinco pantallas y una sola comanda que nunca se escribe dos veces. Nace en el teléfono del mesero, por mesa y por asiento, con modificadores, notas de línea y tiempos de servicio que el mesero dispara cuando decide. Llega a la pantalla de cocina en orden de llegada, con su hora de captura, sus minutos transcurridos, su estación y su mesero, y se bumpea cuando está lista. El anfitrión trabaja un mapa de mesas con cubiertos, hora de llegada y duración de mesa. Y el día cierra dos veces: un resumen por categoría, por hora y por mesero, y un corte con fondo inicial, efectivo declarado y diferencia.",
+        body: "Se escribe una sola vez en la mesa, se cronometra en cocina, se sienta desde el mapa de mesas, y el día cierra con resumen y corte.",
         screens: ["Mesero", "Cocina", "Anfitrión", "Resumen del día", "Corte del día"],
       },
       {
-        num: "08",
+        num: "03",
         name: "Hospedaje",
         title: "Todas las reservas en un calendario, y el día ya contado.",
-        body: "Nueve pantallas para el hospedaje. Cada canal leído hacia un solo calendario maestro de unidades por día, con el bloque de cada reserva coloreado por canal. La vista del día que la propiedad abre cada mañana: quién llega, quién se va, qué unidades quedan ocupadas y qué limpiezas faltan. Ocupación por mes y por unidad, e ingreso por canal con el conteo de reservas sin importe a la vista en lugar de escondido. Una ficha de huésped que pertenece al huésped y no a la reserva, para que se conserve entre estancias. Un tablero de unidades, y tareas de limpieza generadas desde las salidas, que se marcan con un dedo desde el teléfono. Y el puente con el comedor, que muestra la reserva de mesa del huésped y sus cargos de restaurante en la estancia.",
+        body: "Cada canal en un solo calendario, las llegadas y salidas del día, ocupación e ingreso por canal, una ficha de huésped que dura más que la reserva, y limpieza desde el teléfono.",
         screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
     limitsKicker: "Lo que no promete",
-    limitsTitle: "Los bordes honestos, escritos en las pantallas.",
+    limitsTitle: "Los bordes, escritos en las pantallas.",
     limits: [
       {
         lead: "Es un espejo de los canales. No les escribe.",
-        body: "Airbnb no publica una interfaz abierta para un anfitrión, así que el calendario lee los feeds iCal, que se refrescan en horas y no en tiempo real. La pantalla lleva la hora en que se leyó cada canal por última vez y avisa cuando un feed lleva demasiado sin refrescarse. Bloquear una fecha aquí no la bloquea en Airbnb, y la interfaz lo dice, porque el error caro es suponer que sí.",
+        body: "Airbnb no publica una interfaz abierta para un anfitrión, así que el calendario lee los feeds iCal, que se refrescan en horas. Una fecha bloqueada aquí sigue abierta allá, y la pantalla lo dice.",
       },
       {
         lead: "Lee OpenTable. No lo raspa.",
-        body: "Las reservas de mesa viven en OpenTable, cuya interfaz de datos está abierta a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, el sistema captura la reserva a mano y la concilia contra la exportación, casando por huésped y hora para que la copia de la exportación caiga sobre la reserva ya capturada en lugar de archivarse como una segunda. Nunca toca la cuenta detrás del login, porque quien pagaría eso es el restaurante.",
+        body: "Las reservas de mesa viven en OpenTable, abierto a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reserva se captura a mano y se concilia contra la exportación por huésped y hora, para que una siga siendo una.",
       },
       {
         lead: "La cuenta de la habitación suma los cargos del restaurante. Nunca escribe uno.",
-        body: "La estancia de un huésped muestra los cargos del restaurante aplicados a su habitación y el total, pero la recepción solo los lee: crear o cambiar un cargo le toca al restaurante, no al hospedaje, y esta pantalla no tiene manera de hacerlo. Un cargo suma al total de la habitación solo cuando está aplicado y trae importe; uno aplicado sin importe se muestra como pendiente y queda fuera del total en lugar de contarse como cero. Y mientras el restaurante todavía no aplica cargos reales, el total se marca como dato de ejemplo en la pantalla, para que un número de relleno nunca se lea como uno real.",
+        body: "La recepción solo los lee: crear o cambiar un cargo le toca al restaurante. Un cargo sin importe se muestra como pendiente y queda fuera del total, y un ejemplo se marca como ejemplo.",
       },
       {
         lead: "Está construido. Todavía no está en servicio en En'kanto.",
-        body: "Todo lo que está en esta página está porque ya se integró y corre. Meter el sistema al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase describimos lo construido y no reclamamos nada sobre lo que cambió. Preferimos ir un paso atrás de nuestra propia página que un paso adelante de ella.",
+        body: "Todo lo de esta página ya está integrado y corre. Meterlo al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase no reclamamos nada sobre lo que cambió.",
       },
     ],
     demo: {
       kicker: "Véalo",
       title: "El sistema está abierto. Recórralo usted mismo.",
-      body: "Corre como una demostración pública, vestida de bodega ficticia. **Se arma con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto, así que ahí no hay nada suyo que servir.** Abra cualquiera de los tres módulos, elija cualquiera de los diez puestos, y recorra las pantallas que abre el menú de ese puesto.",
+      body: "Corre como demostración pública bajo un nombre ficticio, armada con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto. Abra un módulo, elija uno de los diez puestos, recorra sus pantallas.",
       cta: "Abrir el demo",
-      note: "Datos ilustrativos bajo un nombre ficticio. Nada de ahí es de un cliente, y el selector de puesto es una vitrina de pantallas, no un inicio de sesión.",
+      note: "Datos ilustrativos bajo un nombre ficticio. Nada de ahí es de un cliente.",
     },
   },
   pending: {
-    marker: "MARCADOR, no publicable",
+    marker: "MARCADOR. No publicable.",
     title: "Aquí va lo que el sistema le cambió a En'kanto.",
-    body: "Este bloque está vacío a propósito. Se queda vacío hasta tener las cifras de la propia En'kanto: cuánto tomaba una tarea antes y cuánto toma ahora, sobre una ventana declarada. No lo estimamos, no lo redondeamos y no publicamos un número que nadie midió. Llene este bloque o bórrelo antes de que esta página salga en vivo.",
+    body: "Vacío hasta tener las cifras de la propia En'kanto: cuánto tomaba una tarea antes, cuánto toma ahora, sobre una ventana declarada. Llénelo o bórrelo antes de que esta página salga en vivo.",
   },
-  outcome: {
-    kicker: "El desenlace",
-    title: "La tienda de enfrente, y el sistema detrás de ella.",
-    p1: "En'kanto llega a sus clientes a través de una tienda que toma un pedido de verdad, una estructura y una búsqueda que ya no se pelean, pagos que se liberan como se paga en México, envíos que llegan a una puerta dentro de México, y un solo cimiento bilingüe debajo de todo.",
-    p2: "Después construimos el sistema para esas tres líneas. El registro de la añada en la bodega, la comanda del restaurante desde el teléfono hasta el corte de caja, y todas las reservas en un solo calendario, en un mismo lugar y con un juego de pantallas por área. Está construido, está abierto para recorrerlo y dice con claridad dónde se detiene.",
-    p3: "Describimos lo construido y no reclamamos más que eso. **Nosotros construimos el cimiento. Lo que crece encima es de la bodega.**",
+  result: {
+    kicker: "Para su propiedad",
+    title: "Lo que cambia si usted vive de más de una línea.",
+    items: [
+      {
+        lead: "La venta se completa.",
+        body: "Precio, peso, manera de enviar, y un pago que termina en pedido realizado.",
+      },
+      {
+        lead: "La comanda se escribe una sola vez.",
+        body: "Del teléfono en la mesa al corte de caja, sin que nadie la vuelva a capturar.",
+      },
+      {
+        lead: "El sistema es suyo.",
+        body: "El código, los datos y los accesos se quedan en la propiedad.",
+      },
+    ],
   },
   diagDesc:
-    "Diez días hábiles revisando su tienda, su sitio y su operación como un solo sistema. Usted recibe un informe escrito, no una presentación de ventas: qué es cierto, qué está roto y qué conviene construir primero.",
+    "Diez días hábiles sobre su tienda, su sitio y su operación, y al final un informe escrito.",
   diagSpecs: [
-    "**Día 1.** Una sesión de trabajo sobre su tienda, su sitio y su operación.",
-    "**Días 2 a 9.** Escarbamos: el catálogo, los pagos, los envíos, la medición y los números detrás de los números.",
-    "**Día 10.** Llega el informe: qué es cierto, qué está roto y qué construir primero.",
-    "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda desde el principio.",
+    { d: "Día 1", t: "Una sesión de trabajo sobre los tres." },
+    { d: "Días 2 a 9", t: "Escarbamos en los números detrás de los números." },
+    {
+      d: "Día 10",
+      t: "Llega el informe: qué es cierto, qué está roto y qué construir primero.",
+    },
+    { d: "Después", t: "Proponemos la construcción, o usted se lleva el informe." },
   ],
 };
 
