@@ -16,6 +16,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
 import { locales, type Locale } from "../../../../lib/i18n/config";
 import { precios } from "../../../../lib/i18n/precios";
+import { site } from "../../../../lib/i18n/site";
 import { winery } from "../../../../lib/i18n/winery";
 
 /**
@@ -66,12 +67,28 @@ function captures(pattern: string, flags: string, text: string): string[] {
   return out;
 }
 
-/** Every ** span declared in the dictionaries this page renders from. */
-function declaredSpans(): string[] {
+/** Every string in a value, however deeply nested. */
+function strings(value: unknown, out: string[] = []): string[] {
+  if (typeof value === "string") out.push(value);
+  else if (Array.isArray(value)) value.forEach((v) => strings(v, out));
+  else if (value && typeof value === "object")
+    Object.keys(value).forEach((k) =>
+      strings((value as Record<string, unknown>)[k], out),
+    );
+  return out;
+}
+
+/**
+ * Every emphasis span THIS LOCALE declares, read off the dictionary objects the
+ * page renders from rather than off the file text, so the es half can never
+ * vouch for a span served in en. Both markers count, because both render
+ * emphasis and the doctrine counts both.
+ */
+function declaredSpans(locale: Locale): string[] {
   const out: string[] = [];
-  for (const file of ["lib/i18n/winery.ts", "lib/i18n/site.ts"]) {
-    const src = readFileSync(join(process.cwd(), file), "utf8");
-    for (const span of captures("\\*\\*([^*]+)\\*\\*", "g", src)) out.push(span.trim());
+  for (const text of strings(winery[locale]).concat(strings(site[locale]))) {
+    for (const span of captures("\\*\\*([^*]+)\\*\\*", "g", text)) out.push(span.trim());
+    for (const span of captures("__([^_]+)__", "g", text)) out.push(span.trim());
   }
   return out;
 }
@@ -87,9 +104,25 @@ async function serve(locale: Locale): Promise<string> {
   );
 }
 
-/** The text inside every <b> the page serves, markup stripped. */
+/**
+ * The text inside every element the page serves as emphasis, markup stripped.
+ * <b> is what lib/i18n/rich.tsx renders, and <strong> and <em> are here because
+ * the defect this guards against was emphasis written by hand in a component,
+ * where the tag is whatever the author reached for.
+ */
 function servedSpans(html: string): string[] {
-  return captures("<b(?: [^>]*)?>([\\s\\S]*?)</b>", "g", html).map((inner) =>
+  return captures("<(?:b|strong|em)(?: [^>]*)?>([\\s\\S]*?)</(?:b|strong|em)>", "g", html).map(
+    (inner) =>
+      inner
+        .replace(/<!--[\s\S]*?-->/g, "")
+        .replace(/<[^>]*>/g, "")
+        .trim(),
+  );
+}
+
+/** The body of every capability card, as the page serves it. */
+function servedCapBodies(html: string): string[] {
+  return captures('<p class="cap-body"(?: [^>]*)?>([\\s\\S]*?)</p>', "g", html).map((inner) =>
     inner
       .replace(/<!--[\s\S]*?-->/g, "")
       .replace(/<[^>]*>/g, "")
@@ -107,7 +140,7 @@ describe("the emphasis a visitor actually sees", () => {
     });
 
     it(`${locale}: every span it serves is one the copy checker can see`, async () => {
-      const declared = declaredSpans();
+      const declared = declaredSpans(locale);
       const spans = servedSpans(await serve(locale));
       expect(spans.filter((s) => declared.indexOf(s) < 0)).toEqual([]);
     });
@@ -120,30 +153,54 @@ describe("the emphasis a visitor actually sees", () => {
 });
 
 describe("the ads card carries the condition precios sets", () => {
-  /** The claim, the condition that makes it true, and precios' own rule. */
-  const claims: Record<Locale, { claim: RegExp; condition: RegExp; rule: RegExp }> = {
+  /**
+   * The claim, the two modules that make it true, the module it must never be
+   * offered on, and precios' own sentence. Read against the SERVED card bodies,
+   * because a claim moved into the component would leave the dictionary clean
+   * and the visitor still promised the thing.
+   */
+  const claims: Record<
+    Locale,
+    { claim: RegExp; modules: RegExp; excluded: RegExp; rule: RegExp }
+  > = {
     en: {
-      claim: /ads[\s\S]*inside the monthly(?: service)? fee/i,
-      condition: /Hospitalidad and Restaurante/,
+      claim: /ads[^.]*inside the monthly(?: service)? fee/i,
+      modules: /Hospitalidad and Restaurante/,
+      excluded: /Producci[o\u00f3]n/i,
       rule: /never attach to Produccion/,
     },
     es: {
-      claim: /[Aa]nuncios[\s\S]*dentro de la cuota mensual/,
-      condition: /Hospitalidad y a? ?Restaurante/,
-      rule: /A Producción nunca/,
+      claim: /[Aa]nuncios[^.]*dentro de la cuota mensual/,
+      modules: /Hospitalidad y a? ?Restaurante/,
+      excluded: /Producci[o\u00f3]n/i,
+      rule: /A Producci\u00f3n nunca/,
     },
   };
 
   for (const locale of locales) {
-    const { claim, condition, rule } = claims[locale];
+    const { claim, modules, excluded, rule } = claims[locale];
 
     it(`${locale}: precios still states the rule this card is held to`, () => {
       expect(precios[locale].ads.body).toMatch(rule);
     });
 
-    it(`${locale}: no card claims ads inside the fee without naming the modules`, () => {
+    it(`${locale}: the served page claims ads inside the fee exactly once`, async () => {
+      const claiming = servedCapBodies(await serve(locale)).filter((b) => claim.test(b));
+      expect(claiming).toHaveLength(1);
+    });
+
+    it(`${locale}: that claim names both modules and offers Produccion none`, async () => {
+      const card = servedCapBodies(await serve(locale)).filter((b) => claim.test(b))[0];
+      expect(card, "no card claims ads inside the fee").toBeDefined();
+      expect(card).toMatch(modules);
+      // precios: ads attach to Hospitalidad and Restaurante, "never to
+      // Produccion". Naming the third module beside the claim would offer it.
+      expect(card).not.toMatch(excluded);
+    });
+
+    it(`${locale}: no dictionary card makes the claim without the condition`, () => {
       const bad = winery[locale].caps.cards.filter(
-        (c) => claim.test(c.body) && !condition.test(c.body),
+        (c) => claim.test(c.body) && !modules.test(c.body),
       );
       expect(bad.map((c) => c.body)).toEqual([]);
     });
@@ -158,5 +215,11 @@ describe("the pricing terms say what precios says", () => {
     expect(notice).toBeDefined();
     expect(notice).toMatch(/cualquiera de las dos partes/);
     expect(precios.es.terms.items.join(" ")).toMatch(/cualquiera de las dos partes/);
+  });
+
+  it("es: four feminine antecedents take las, not los", () => {
+    const item = winery.es.leak.items.filter((i) => /concilia a mano/.test(i.body))[0];
+    expect(item, "the leak card about reconciling by hand").toBeDefined();
+    expect(item.body).toMatch(/las concilia a mano/);
   });
 });
