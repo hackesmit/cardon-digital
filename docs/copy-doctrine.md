@@ -435,16 +435,38 @@ and it overrides anything in a bead description that implies otherwise.
 
 A rule with no mechanism is not captured, so this one is runnable:
 
-    node scripts/visuals-check.mjs        # or: npm run copy:check
+    node scripts/visuals-check.mjs        # or: npm run copy:check, or npm test
 
-It takes the set of files under `components/pages/` at the merge base with the default
-branch, takes the same set at the working tree, and fails on any path that was in the
-first and is not in the second. It is a set difference on paths rather than a diff
-filter, so a deletion dressed as a `git mv` out of the tree fails the same way a plain
-`rm` does. `npm run copy:check` runs it before the copy checker, so a copy bead that
-deletes a visual cannot reach a green copy check.
+It runs inside `node scripts/copy-check.mjs <page>` as well, because that is the command
+every copy bead's Definition of Done names, and a guard wired only into a sibling script
+is voluntary: measured on hq-4pu0q.3, with all four home visuals deleted, that command
+printed "1 page(s) clean" and exited 0. The guard prints nothing there when it is happy.
+
+It compares `components/pages/` at the merge base with the default branch against the
+working tree, and fails four ways, each of which is a visual gone:
+
+1. **The path left the tree.** A set difference on paths rather than a diff filter, so a
+   deletion dressed as a `git mv` out of the tree fails the same way a plain `rm` does,
+   staged or not.
+2. **But a move inside the tree passes.** A path that left is matched against the paths
+   that arrived by shared source lines, at git's own 50 percent rename threshold, and a
+   match is reported as a move. Renaming or reorganising a visual is not retiring it.
+3. **The file was emptied in place.** A zero byte file and a `// visual retired` stub are
+   both deletions with the name left behind, and the path set cannot see either.
+4. **The component was gutted.** A file that carried JSX or SVG markup at the base and
+   carries none now is a deletion too. Anything short of that is reported as a shrink
+   note and never blocks, because a visual can legitimately get smaller and a guard that
+   argues with every rewrite gets deleted.
+
+Every failure names the file and its line count at the base, since the line count is what
+got noticed, and says to rewire rather than delete.
+
+Replayed over the last fourteen commits of this repo, each against its own parent, it
+fires exactly once: on 11d43c3, the commit that deleted the four home visuals. Zero false
+positives on real work.
 
 The escape hatch is the rule, written down. `RETIRED` in that script is a list of exact
 paths, each with the date and the reason Daniel approved it. Adding an entry is how a
-visual is retired, and the entry is what a reviewer reads. An entry that no longer
-matches a removed file is reported as stale, so the list cannot quietly grow.
+visual is retired, and the entry is what a reviewer reads, and it covers that path being
+emptied or gutted as well as removed. An entry that no longer matches a removed file is
+reported as stale, so the list cannot quietly grow.
