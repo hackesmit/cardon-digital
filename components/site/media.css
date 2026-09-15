@@ -1,0 +1,129 @@
+/* Photograph and video slots.
+
+   Identity v3, as documented in globals.css: one full colour photograph per
+   page (tone "full"), everything else pulled toward the palette (tone "tint"),
+   so photography and line work read as one material. Every value here is a
+   theme token, so light mode (the design default) and dark mode both follow
+   from the same rules.
+
+   The frame carries its aspect ratio inline, from the ratio the slot declares,
+   because that value belongs to the slot and not to a stylesheet. Everything
+   inside the frame is absolutely positioned, so the pending state and the
+   finished asset occupy the same box to the pixel. */
+
+.media{margin:0;display:block;}
+
+.media-frame{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:var(--panel-2);
+}
+
+.media-asset{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.media--tint .media-asset{filter:sepia(0.26) saturate(0.82) contrast(1.02);}
+.media--full .media-asset{filter:none;}
+
+/* The caption is the most read line near any photograph, so it is set to be
+   read: sans, sentence case, measured. The mono uppercase annotation style the
+   rest of the site uses is for labels, and a caption here is an argument. */
+.media-cap{
+  margin-top:10px;
+  max-width:62ch;
+  color:var(--text-dim);
+  font-size:0.88rem;
+  line-height:1.5;
+}
+
+/* ============================ PENDING SLOT ============================
+   A brief, not a picture. Flat panel, hairline hatching, mono text, no
+   gradient and no imagery, so it is never mistaken for the real shot at any
+   size. It prints the file to produce and the size to shoot to. */
+.media-pending{
+  position:absolute;inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:16px;
+  text-align:center;
+  font-family:var(--mono);
+  color:var(--muted);
+  background:
+    repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 11px),
+    var(--panel);
+}
+.media-pending-tag{
+  font-size:0.68rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--primary);
+}
+.media-pending-file{
+  font-size:0.82rem;
+  color:var(--text-dim);
+  overflow-wrap:anywhere;
+}
+.media-pending-spec{
+  font-size:0.7rem;
+  letter-spacing:0.08em;
+}
+
+/* ============================ VIDEO CONTROL ============================
+   A muted looping video still needs a way to stop it, and on a phone it is the
+   way to start it. 44px is the tap target a phone needs. */
+.media-play{
+  position:absolute;
+  right:12px;
+  bottom:12px;
+  width:44px;height:44px;
+  display:grid;
+  place-items:center;
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:color-mix(in srgb, var(--ground) 74%, transparent);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  cursor:pointer;
+  transition:border-color .2s ease, background .2s ease;
+}
+.media-play:hover{
+  border-color:var(--primary-dim);
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+}
+
+/* Drawn in CSS: a triangle while paused, two bars while playing. No icon font
+   and no glyph, so both modes take their colour from the text token. */
+.media-play-glyph{
+  width:0;height:0;
+  margin-left:3px;
+  border-left:11px solid var(--text);
+  border-top:7px solid transparent;
+  border-bottom:7px solid transparent;
+}
+.media-play[data-playing="true"] .media-play-glyph{
+  width:11px;height:13px;
+  margin-left:0;
+  border:0;
+  background:linear-gradient(
+    to right,
+    var(--text) 0 4px,
+    transparent 4px 7px,
+    var(--text) 7px 11px
+  );
+}
+
+@media (max-width:640px){
+  .media-play{right:10px;bottom:10px;}
+  .media-cap{font-size:0.85rem;}
+  .media-pending-file{font-size:0.76rem;}
+}
