@@ -3,13 +3,16 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
   bands,
+  CAPTION_KEYS,
   captionKeyFor,
   clockLabel,
   COV,
+  CYCLE,
   cycleFrame,
   FADE,
   HOLD,
   INTRO,
+  isPhonePlan,
   PEAK_T,
   PEAK_V,
   PHONE_MAX,
@@ -17,6 +20,7 @@ import {
   RUN,
   RUSH_T,
   SERVICE,
+  STANDING_CYC,
   TABLES,
 } from "./floor";
 import { observeOnscreen, ONSCREEN_THRESHOLD, shouldAnimate } from "./motion";
@@ -38,13 +42,32 @@ import { demos, type DemosDict } from "../../../lib/i18n/demos";
  *   3. the loop held for five and a half seconds on minute 360 of the service,
  *      which is an empty room: every booking has ended by 295.
  *
+ * Round two's own survivors (bead hq-3pfhe.6) are pinned the same way, each
+ * one closed before Produccion and Hospitalidad copy this frame:
+ *
+ *   4. the stylesheet and the component disagreed about the floor plan in the
+ *      open interval (639, 640), a 214px first-layout shift;
+ *   5. the palette derived its structural hairline from --primary whatever hue
+ *      the demo wore;
+ *   6. the observer declared a threshold and then read isIntersecting. Both
+ *      reviews called it a sliver starting the loop; measured, that does not
+ *      reproduce, and the real trap is narrower. The reading now lives in
+ *      @/lib/onscreen and lib/onscreen.test.ts enforces the part that is
+ *      genuinely a bug, repo-wide, including components/site/Media.tsx;
+ *   7. the caption strip's height followed the caption's length, so the figure
+ *      reflowed 31px twice per cycle.
+ *
  * The non-blocking notes that were worth fixing are pinned here too: the
  * pre-hydration canvas height, the palette's claim about the theme tokens, the
- * six hex tokens copied into JS, and the placeholders in the copy.
+ * six hex tokens copied into JS, the standing frame agreeing with the loop's
+ * clock, the board adding no box of its own, and the placeholders in the copy.
  */
 
 const here = new URL("./", import.meta.url);
 const read = (rel: string, base: URL = here) => readFileSync(new URL(rel, base), "utf8");
+
+/** The three brand hues, one per demo: Produccion, Hospitalidad, Restaurante. */
+const HUES = ["primary", "secondary", "energy"] as const satisfies readonly DemoHue[];
 
 /* -------- 1. the loop's payoff frame is a full room, not an empty one ------ */
 
@@ -92,6 +115,38 @@ describe("the loop holds on the fullest minute of the evening", () => {
     expect(captionKeyFor(RUSH_T - 1)).toBe("filling");
     expect(captionKeyFor(RUSH_T)).toBe("flagged");
     expect(clockLabel(PEAK_T)).toBe("19:55");
+  });
+
+  /** Reviewer s-3b55, note 4: the standing frame was drawn from PEAK_T while
+      the loop's clock stayed wherever it had stopped, so scrolling away at
+      18:10 snapped the board to 19:55 and scrolling back jumped it to 18:10.
+      STANDING_CYC makes the standing frame a frame OF the loop, so parking and
+      resuming are the same arithmetic. */
+  it("stands on a frame of the loop, identical to the one the hold rests on", () => {
+    expect(cycleFrame(STANDING_CYC)).toEqual({
+      t: PEAK_T,
+      showChips: false,
+      fade: 1,
+    });
+    /* the FIRST frame of the hold: same pixels as the last one, but a resume
+       holds the room the visitor arrived on instead of dipping straight into
+       the seam, which would read as a flash */
+    expect(STANDING_CYC).toBe(holdStart);
+    expect(STANDING_CYC).toBeLessThan(CYCLE);
+  });
+
+  it("never runs backwards when it resumes from the standing frame", () => {
+    let previous = cycleFrame(STANDING_CYC).t;
+    /* the rest of the hold and the whole seam dip: the room the visitor
+       arrived on stays put until the cycle restarts */
+    for (let k = 0; k < HOLD + FADE; k += 0.02) {
+      const t = cycleFrame(STANDING_CYC + k).t;
+      expect(t, "at +" + k.toFixed(2) + "s").toBe(previous);
+      previous = t;
+    }
+    /* and the frame after the seam is the top of the next cycle, not a jump
+       back into the middle of the sweep */
+    expect(cycleFrame(0).t).toBe(0);
   });
 
   it("dips only at the loop seam", () => {
@@ -147,7 +202,7 @@ describe("the motion gates", () => {
 
     expect(shouldAnimate(state)).toBe(false);
     /* the observer is installed under reduce, which is the whole fix */
-    observer.instance().report(true);
+    observer.instance().report(1);
     expect(state.onscreen).toBe(true);
     expect(shouldAnimate(state)).toBe(false);
 
@@ -162,12 +217,34 @@ describe("the motion gates", () => {
     const observer = stubObserver();
     const seen: boolean[] = [];
     observeOnscreen({} as Element, (on) => seen.push(on));
-    observer.instance().report(true);
-    observer.instance().report(false);
-    observer.instance().report(true);
+    observer.instance().report(1);
+    observer.instance().report(0);
+    observer.instance().report(1);
     expect(seen).toEqual([true, false, true]);
     expect(observer.instance().options.threshold).toBe(ONSCREEN_THRESHOLD);
     expect(observer.instance().observed).toHaveLength(1);
+  });
+
+  /** The gate keeps the number it declared whatever the entry looks like,
+      which is what makes a threshold array safe here: see @/lib/onscreen for
+      why the browser's own isIntersecting is not enough on its own. Just below
+      the threshold and exactly at it are the two cases that tell them apart,
+      so the stub reports ratios rather than a bare boolean. */
+  it("waits for the threshold it declared, not for a sliver", () => {
+    const observer = stubObserver();
+    const seen: boolean[] = [];
+    observeOnscreen({} as Element, (on) => seen.push(on));
+    /* a sliver: intersecting, well under the threshold */
+    observer.instance().report(0.001);
+    observer.instance().report(ONSCREEN_THRESHOLD - 0.0001);
+    expect(seen).toEqual([false, false]);
+    /* exactly at it, and past it */
+    observer.instance().report(ONSCREEN_THRESHOLD);
+    observer.instance().report(0.9);
+    expect(seen).toEqual([false, false, true, true]);
+    /* gone: ratio 0 and not intersecting at all */
+    observer.instance().report(0, false);
+    expect(seen[4]).toBe(false);
   });
 
   it("assumes it is on screen where there is no IntersectionObserver", () => {
@@ -183,7 +260,10 @@ interface FakeObserver {
   observed: Element[];
   options: { threshold: number };
   disconnected: boolean;
-  report: (isIntersecting: boolean) => void;
+  /** Report a ratio, the way a real entry does. isIntersecting follows the
+      spec rather than the threshold: it is true for any contact at all, which
+      is exactly why a callback cannot read it and call it on screen. */
+  report: (ratio: number, isIntersecting?: boolean) => void;
 }
 
 /** An IntersectionObserver that records what it was asked to watch and lets a
@@ -194,14 +274,17 @@ function stubObserver(): { instance: () => FakeObserver } {
     "IntersectionObserver",
     class {
       constructor(
-        cb: (entries: { isIntersecting: boolean }[]) => void,
+        cb: (
+          entries: { isIntersecting: boolean; intersectionRatio: number }[],
+        ) => void,
         options: { threshold: number },
       ) {
         made = {
           observed: [],
           options,
           disconnected: false,
-          report: (isIntersecting: boolean) => cb([{ isIntersecting }]),
+          report: (ratio: number, isIntersecting = ratio > 0) =>
+            cb([{ isIntersecting, intersectionRatio: ratio }]),
         };
       }
       observe(el: Element) {
@@ -250,8 +333,14 @@ describe("every demo component", () => {
 /* --------- the pre-hydration canvas height is the measured height -------- */
 
 describe("the demos stylesheet", () => {
-  const css = read("demos.css");
-  const phoneBlock = /@container \(max-width: 639px\) \{([\s\S]*?)\n\}/.exec(css);
+  /* The rules, without the prose. Every check below is lexical, and this file
+     now explains in comments what its queries used to get wrong, naming the
+     old (max-width: 639px) pair in the sentence that rejects it. Reading the
+     raw stylesheet made the header comment itself a match. */
+  const css = read("demos.css").replace(/\/\*[\s\S]*?\*\//g, "");
+  const phoneBlock = new RegExp(
+    "@container \\(width < " + PHONE_MAX + "px\\) \\{([\\s\\S]*?)\\n\\}",
+  ).exec(css);
 
   /** Rebuild the stylesheet's pre-hydration height as a function of the
       container width, straight from its own numbers. 100cqw is the figure's
@@ -278,30 +367,149 @@ describe("the demos stylesheet", () => {
     }
   });
 
-  it("picks the floor plan on the figure, at the component's breakpoint", () => {
+  it("picks the floor plan on the figure, not on the viewport", () => {
     /* A viewport media query and a component that reflows on the board's own
        width disagree for any demo narrower than the page it sits on, which is
        a phone plan under a desktop stylesheet (lucy, round two). Both sides
-       now ask about the figure's content box, so the two numbers here are the
-       same number. */
+       now ask about the figure's content box. */
     expect(/\.demo-figure\s*\{[^}]*container-type:\s*inline-size/.test(css)).toBe(true);
-    const maxima = Array.from(css.matchAll(/@container \(max-width: (\d+)px\)/g)).map((m) => Number(m[1]));
-    const minima = Array.from(css.matchAll(/@container \(min-width: (\d+)px\)/g)).map((m) => Number(m[1]));
-    expect(maxima.length).toBeGreaterThan(0);
-    expect(minima.length).toBeGreaterThan(0);
-    maxima.forEach((n) => expect(n).toBe(PHONE_MAX - 1));
-    minima.forEach((n) => expect(n).toBe(PHONE_MAX));
     /* and nothing left in here decides a layout on the viewport */
     const widthMedia = Array.from(css.matchAll(/@media[^{]*\((?:min|max)-width[^{]*\{/g));
     expect(widthMedia).toHaveLength(0);
   });
 
-  it("hides the board and its hotspots when there is no JavaScript", () => {
+  /**
+   * Every @container condition in the file, as a predicate over the container's
+   * content width, plus which side of the breakpoint it claims.
+   *
+   * Round two's test asserted the two sides were one apart (maxima ===
+   * PHONE_MAX - 1, minima === PHONE_MAX), which is the bug written down as a
+   * requirement: (max-width: 639px) and (min-width: 640px) both reject every
+   * width in the open interval (639, 640), and a container query reads the
+   * fractional content box, so a figure at 639.25px got the phone board under
+   * the desktop stylesheet and a 214px first-layout shift (reviewer s-3b55,
+   * BLOCKING 2, reproduced by state/review/s-3b55/breakpoint.mjs). This asks
+   * the only thing worth asking instead: at every width, does the stylesheet
+   * agree with floor.ts?
+   */
+  const conditions = (() => {
+    const found = Array.from(css.matchAll(/@container \(([^)]*)\)/g)).map((m) => m[1].trim());
+    return found.map((text) => {
+      const range = /^width\s*(<=|<|>=|>)\s*([\d.]+)px$/.exec(text);
+      if (range) {
+        const v = Number(range[2]);
+        const ops: Record<string, (w: number) => boolean> = {
+          "<": (w) => w < v,
+          "<=": (w) => w <= v,
+          ">": (w) => w > v,
+          ">=": (w) => w >= v,
+        };
+        return { text, holds: ops[range[1]], claims: range[1][0] === "<" ? "phone" : "wide" };
+      }
+      const legacy = /^(max|min)-width:\s*([\d.]+)px$/.exec(text);
+      if (legacy) {
+        const v = Number(legacy[2]);
+        return legacy[1] === "max"
+          ? { text, holds: (w: number) => w <= v, claims: "phone" }
+          : { text, holds: (w: number) => w >= v, claims: "wide" };
+      }
+      throw new Error("unrecognised @container condition: (" + text + ")");
+    });
+  })();
+
+  it("has a query for each side of the breakpoint", () => {
+    expect(conditions.filter((c) => c.claims === "phone").length).toBeGreaterThan(0);
+    expect(conditions.filter((c) => c.claims === "wide").length).toBeGreaterThan(0);
+  });
+
+  it.each(conditions.map((c) => [c.text, c] as const))(
+    "(%s) agrees with isPhonePlan() at every fractional width",
+    (_text, c) => {
+      /* quarter pixels across the boundary, because the half-pixel window is
+         the whole defect and an integer sweep cannot see it */
+      for (let w = PHONE_MAX - 4; w <= PHONE_MAX + 4; w += 0.25) {
+        const phone = isPhonePlan(w);
+        expect(c.holds(w), c.text + " at " + w).toBe(c.claims === "phone" ? phone : !phone);
+      }
+      /* and out in the ordinary widths a demo actually gets */
+      for (let w = 240; w <= 1200; w += 0.5) {
+        const phone = isPhonePlan(w);
+        expect(c.holds(w), c.text + " at " + w).toBe(c.claims === "phone" ? phone : !phone);
+      }
+    },
+  );
+
+  it("reads the fractional content box, since the queries do", () => {
+    /* the other half of the same bug: clientWidth is rounded, so a real
+       639.25px content box read as 640 and picked the wide plan even where the
+       two conditions do meet */
+    const component = read("RestauranteDemo.tsx");
+    const measure = /const figureContentWidth = \(\) => \{([\s\S]*?)\n    \};/.exec(component);
+    expect(measure).not.toBeNull();
+    expect(measure![1]).toContain("getBoundingClientRect");
+    expect(measure![1]).not.toContain("clientWidth");
+    /* border as well as padding: the rect is the border box */
+    expect(measure![1]).toContain("borderLeftWidth");
+    /* and the plan comes from floor.ts rather than from a second comparison */
+    expect(component).toContain("isPhonePlan(figureContentWidth())");
+    expect(component).not.toMatch(/<\s*PHONE_MAX/);
+  });
+
+  it("gives the board no box of its own, so three measurements stay one number", () => {
+    /* resize() takes the drawing width from the canvas rect and the floor plan
+       from the figure's content box, and demos.css writes the pre-hydration
+       height in cqw of that same content box. All three are the same number
+       only while .demo-stage adds nothing (reviewer s-3b55, note 3). */
+    const stage = /\.demo-stage\s*\{([^}]*)\}/.exec(css);
+    expect(stage).not.toBeNull();
+    expect(stage![1]).not.toMatch(/padding|border|margin|width|box-sizing|transform|zoom/);
+  });
+
+  it("hides the board, its hotspots and its hint when there is no JavaScript", () => {
     const component = read("RestauranteDemo.tsx");
     const noscript = /<noscript>([\s\S]*?)<\/noscript>/.exec(component);
     expect(noscript).not.toBeNull();
-    expect(noscript![1]).toMatch(/<style>\{"[^"]*\.demo-canvas[^"]*\.rd-btn[^"]*display:\s*none[^"]*"\}<\/style>/);
+    const style = /<style>\{"([^"]*)"\}<\/style>/.exec(noscript![1]);
+    expect(style).not.toBeNull();
+    const hidden = style![1].split("{")[0].split(",").map((s) => s.trim());
+    /* The hint tells the visitor to choose a table and this rule removes every
+       table there is to choose, so it goes with them (reviewer s-3b55,
+       note 2). Read as a selector list rather than a substring, so a rule that
+       hides three things and forgets the fourth cannot pass. */
+    expect(hidden.sort()).toEqual([".demo-canvas", ".demo-hint", ".rd-btn"]);
+    expect(style![1]).toMatch(/display:\s*none/);
     expect(noscript![1]).toContain("demo-fallback");
+  });
+
+  it("sizes the caption box for the longest caption, not the current one", () => {
+    /* setCaption() writes one of four phases into the strip every frame, and
+       in a wrapping flex row the four different lengths made the figure 579px
+       tall at one phase and 610px at the other three: a 31px reflow twice per
+       cycle, forever, at every width where the figure reaches its max-width,
+       moving everything below it on the page (reviewer s-3b55, BLOCKING 1).
+       All four captions are rendered into one grid cell with three of them
+       invisible, so the box is the longest caption's size at every width and
+       in both locales. A reserved pixel height would be right at one width,
+       one font size and one language. */
+    const component = read("RestauranteDemo.tsx");
+    expect(component).toMatch(/className="demo-caption-box mono"/);
+    expect(component).toMatch(/CAPTION_KEYS\.map/);
+    expect(component).toMatch(/className="demo-caption-ghost"/);
+    /* the live caption is still its own node, so the loop writes one of them */
+    expect(component).toMatch(/className="demo-caption"[\s\S]{0,40}ref=\{captionRef\}/);
+
+    expect(css).toMatch(/\.demo-caption-box\s*\{[^}]*display:\s*grid/);
+    expect(css).toMatch(/\.demo-caption-box\s*>\s*\*\s*\{[^}]*grid-area:\s*1\s*\/\s*1/);
+    expect(css).toMatch(/\.demo-caption-ghost\s*\{[^}]*visibility:\s*hidden/);
+    /* display:none would collapse the ghosts and reserve nothing */
+    expect(/\.demo-caption-ghost\s*\{[^}]*display:\s*none/.test(css)).toBe(false);
+  });
+
+  it("draws its standing frame through the timeline, not beside it", () => {
+    const component = read("RestauranteDemo.tsx");
+    expect(component).toContain("cycT = STANDING_CYC");
+    /* the old form drew PEAK_T straight and left the clock behind */
+    expect(component).not.toMatch(/drawScene\(PEAK_T/);
   });
 });
 
@@ -353,7 +561,7 @@ describe("the palette contract against app/globals.css", () => {
       );
     });
 
-    it.each(["primary", "secondary", "energy"] as const)(
+    it.each(HUES)(
       "mixes %s exactly as --*-bright does",
       (hue) => {
         const pal = palette(mode, hue);
@@ -389,6 +597,102 @@ describe("the palette contract against app/globals.css", () => {
       expect(pal.line).toBe(rgba(pal.lineRgb, pct("line")));
       expect(pal.lineSoft).toBe(rgba(pal.lineRgb, pct("line-soft")));
     });
+
+    it.each(HUES)("strokes the %s demo's hairline in its own hue", (hue) => {
+      /* Round two mixed --primary here whatever hue was asked for, so
+         Restaurante drew every structural line on its floor in Produccion's
+         green while its accents were red, and Hospitalidad would have
+         inherited it (lucy, round two). */
+      const pal = palette(mode, hue);
+      expect(pal.lineRgb).toEqual(mix(hexToRgb(css[hue]), hexToRgb(css.text), 0.35));
+    });
+  });
+});
+
+/* ------------- one hue means one hue, across all three demos -------------- */
+
+describe("the single-hue contract", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  /** Which fields carry the demo's hue and which are the neutral surface.
+      Every field of DemoPalette has to be in exactly one list, so a field
+      added for Produccion or Hospitalidad cannot be left unclassified. */
+  const HUE_BEARING = [
+    "accent",
+    "accentFaint",
+    "accentInk",
+    "accentLine",
+    "accentRgb",
+    "accentSoft",
+    "line",
+    "lineRgb",
+    "lineSoft",
+  ];
+  const NEUTRAL = [
+    "axis",
+    "dark",
+    "floor",
+    "floorRgb",
+    "ground",
+    "groundRgb",
+    "ink",
+    "muted",
+    "panel",
+    "panelRgb",
+    "plate",
+    "plateRgb",
+    "textRgb",
+  ];
+
+  /** readDemoPalette against an unstyled tree, recording every custom
+      property it asks for. The FALLBACK path returns the six hex tokens, and
+      the log is the evidence about which ones were even consulted. */
+  const readWithLog = (mode: "light" | "dark", hue: DemoHue) => {
+    const asked: string[] = [];
+    vi.stubGlobal("getComputedStyle", () => ({
+      getPropertyValue: (name: string) => {
+        asked.push(name);
+        return "";
+      },
+    }));
+    const el = {
+      ownerDocument: { documentElement: { getAttribute: () => mode } },
+    } as unknown as HTMLElement;
+    return { pal: readDemoPalette(el, hue), asked };
+  };
+
+  it("classifies every field of the palette as hue-bearing or neutral", () => {
+    const { pal } = readWithLog("light", "energy");
+    expect(Object.keys(pal).sort()).toEqual([...HUE_BEARING, ...NEUTRAL].sort());
+  });
+
+  describe.each(["light", "dark"] as const)("%s mode", (mode) => {
+    it.each(HUES)("reads no brand token but the one %s asked for", (hue) => {
+      const { asked } = readWithLog(mode, hue);
+      expect(asked).toContain("--" + hue);
+      for (const other of HUES.filter((h) => h !== hue)) {
+        expect(asked, "read --" + other + " while wearing " + hue).not.toContain("--" + other);
+      }
+    });
+
+    it.each([
+      ["primary", "secondary"],
+      ["primary", "energy"],
+      ["secondary", "energy"],
+    ] as [DemoHue, DemoHue][])("changing the hue from %s to %s moves every hue-bearing field", (a, b) => {
+      const left = readWithLog(mode, a).pal as unknown as Record<string, unknown>;
+      const right = readWithLog(mode, b).pal as unknown as Record<string, unknown>;
+      for (const field of HUE_BEARING) {
+        expect(JSON.stringify(right[field]), field + " did not move").not.toBe(
+          JSON.stringify(left[field]),
+        );
+      }
+      for (const field of NEUTRAL) {
+        expect(JSON.stringify(right[field]), field + " should not have moved").toBe(
+          JSON.stringify(left[field]),
+        );
+      }
+    });
   });
 });
 
@@ -420,11 +724,15 @@ describe("the demos dictionary", () => {
     const captions = demos[locale].restaurante.captions as DemosDict["restaurante"]["captions"];
     /* Every key the timeline can resolve to, and nothing the board can never
        show: the hold used to carry a fifth caption of its own. */
-    expect(Object.keys(captions).sort()).toEqual(["begins", "filling", "flagged", "peak"]);
+    expect(Object.keys(captions).sort()).toEqual([...CAPTION_KEYS].sort());
     const reached = new Set(
       Array.from({ length: SERVICE + 1 }, (_, t) => captionKeyFor(t)),
     );
-    expect(Array.from(reached).sort()).toEqual(["begins", "filling", "flagged", "peak"]);
+    expect(Array.from(reached).sort()).toEqual([...CAPTION_KEYS].sort());
+    /* CAPTION_KEYS is also what the strip reserves room for, so a fifth phase
+       added to the timeline without a ghost in the box would reflow the figure
+       the moment it was reached */
+    expect(CAPTION_KEYS).toHaveLength(4);
   });
 
   it.each(["en", "es"] as const)("%s names the booking the plate reads", (locale) => {
