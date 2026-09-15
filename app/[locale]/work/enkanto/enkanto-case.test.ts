@@ -201,6 +201,12 @@ describe("the copy doctrine, on the rendered page", () => {
     const text = renderedText(locale);
 
     it(`${locale}: the rendered page trips none of the blocking shapes`, () => {
+      // Twice over. Per block, which is how the text reads, and then over the
+      // whole page joined into one run, which catches a shape whose halves sit
+      // in two neighbouring blocks: a case fact key and its value, an index and
+      // a lead. Splitting on the line alone left that gap open while claiming
+      // to close it (cross-vendor review, round one).
+      const runs = [...text.split("\n"), text.replace(/\n/g, " ")];
       const hits: string[] = [];
       for (const shape of BLOCKING_SHAPES as Array<{
         id: string;
@@ -211,8 +217,8 @@ describe("the copy doctrine, on the rendered page", () => {
         // A fresh regex: the shared ones carry /g, so lastIndex would leak
         // between locales and drop every other hit.
         const re = new RegExp(shape.re.source, shape.re.flags);
-        for (const line of text.split("\n")) {
-          if (re.test(line)) hits.push(`${shape.id}: ${line.trim()}`);
+        for (const run of runs) {
+          if (re.test(run)) hits.push(`${shape.id}: ${run.trim().slice(0, 120)}`);
           re.lastIndex = 0;
         }
       }

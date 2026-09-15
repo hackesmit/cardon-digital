@@ -80,6 +80,11 @@
   display:grid;grid-template-columns:repeat(2,1fr);
   gap:clamp(16px,2.4vw,26px);align-items:start;
 }
+/* The state of the thing in the photographs, under the pair that carries them. */
+.pg-enkanto .pair-honest{
+  margin:clamp(12px,1.6vw,18px) 0 0;max-width:70ch;
+  font-size:0.68rem;letter-spacing:0.04em;line-height:1.5;color:var(--muted);
+}
 /* A 16 / 9 slot runs the full container width otherwise, which is taller than
    anything else on the page. */
 .pg-enkanto .case-media-wide{
