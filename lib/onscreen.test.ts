@@ -43,21 +43,27 @@ const root = fileURLToPath(new URL("../", import.meta.url));
  * derived from the parsed options below rather than listed by hand, so it
  * lapses by itself the day someone gives that observer a threshold.
  *
+ * It is a count per file rather than a set of filenames, because a filename
+ * exemption covers observers that do not exist yet: a listed file could add a
+ * second reading and be waved through (cross-vendor review, round three).
+ * The count is checked for equality, so converting one without updating the
+ * number fails too, and the number can only fall.
+ *
  * What the list buys today: any of these that later grows a threshold array
  * fails, because that is the combination where isIntersecting stops meaning
  * what the callback wants under any reading of the spec.
  */
-const READS_ISINTERSECTING = [
-  "components/pages/case/BerryToBottle.tsx",
-  "components/pages/case/PlayOnceVis.tsx",
-  "components/pages/case/VineyardMap.tsx",
-  "components/pages/home/HeroAssembly.tsx",
-  "components/pages/home/PlayOnceVis.tsx",
-  "components/pages/home/SectorMap.tsx",
-  "components/pages/winery/AssistantDemo.tsx",
-  "components/pages/winery/VineField.tsx",
-  "components/site/Reveal.tsx",
-];
+const READS_ISINTERSECTING: Record<string, number> = {
+  "components/pages/case/BerryToBottle.tsx": 2,
+  "components/pages/case/PlayOnceVis.tsx": 1,
+  "components/pages/case/VineyardMap.tsx": 1,
+  "components/pages/home/HeroAssembly.tsx": 1,
+  "components/pages/home/PlayOnceVis.tsx": 1,
+  "components/pages/home/SectorMap.tsx": 1,
+  "components/pages/winery/AssistantDemo.tsx": 1,
+  "components/pages/winery/VineField.tsx": 1,
+  "components/site/Reveal.tsx": 1,
+};
 
 const sources = (() => {
   const out: string[] = [];
@@ -99,6 +105,9 @@ interface ObserverSite {
   thresholdIsArray: boolean;
   /** the options argument declares a threshold at all */
   declaresThreshold: boolean;
+  /** an options argument was passed that this check could not read: a
+      variable, a spread, a call. Never treated as thresholdless. */
+  optionsUnresolved: boolean;
 }
 
 const observerSites = (): ObserverSite[] => {
@@ -113,10 +122,15 @@ const observerSites = (): ObserverSite[] => {
       true,
       file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
     );
-    const named = (node: ts.Node) => {
-      /* the constructed name, whatever it is qualified with */
+    const named = (node: ts.Node): string => {
+      /* the constructed name, however it is reached: IntersectionObserver,
+         window.IntersectionObserver, window["IntersectionObserver"] */
       if (ts.isIdentifier(node)) return node.text;
       if (ts.isPropertyAccessExpression(node)) return node.name.text;
+      if (ts.isElementAccessExpression(node)) {
+        const arg = node.argumentExpression;
+        return ts.isStringLiteralLike(arg) ? arg.text : "";
+      }
       return "";
     };
     const scan = (node: ts.Node, found: { ii: boolean; ct: boolean }) => {
@@ -137,12 +151,30 @@ const observerSites = (): ObserverSite[] => {
         if (args[0]) scan(args[0], found);
         let thresholdIsArray = false;
         let declaresThreshold = false;
-        if (args[1] && ts.isObjectLiteralExpression(args[1])) {
-          for (const prop of args[1].properties) {
-            if (!ts.isPropertyAssignment(prop)) continue;
-            if (prop.name.getText(sf).replace(/["']/g, "") !== "threshold") continue;
-            declaresThreshold = true;
-            thresholdIsArray = ts.isArrayLiteralExpression(prop.initializer);
+        let optionsUnresolved = false;
+        if (args[1]) {
+          if (ts.isObjectLiteralExpression(args[1])) {
+            for (const prop of args[1].properties) {
+              if (!ts.isPropertyAssignment(prop)) {
+                /* a spread or a shorthand: the threshold could be in there */
+                optionsUnresolved = true;
+                continue;
+              }
+              if (prop.name.getText(sf).replace(/["']/g, "") !== "threshold") continue;
+              declaresThreshold = true;
+              if (ts.isArrayLiteralExpression(prop.initializer)) {
+                thresholdIsArray = true;
+              } else if (!ts.isNumericLiteral(prop.initializer)) {
+                /* a named constant is fine and common, but this check cannot
+                   see whether it is an array */
+                optionsUnresolved = true;
+              }
+            }
+          } else {
+            /* options passed as a variable or a call: unreadable from here,
+               and the permissive branch below must not claim it is
+               thresholdless (cross-vendor review, round three) */
+            optionsUnresolved = true;
           }
         }
         out.push({
@@ -152,6 +184,7 @@ const observerSites = (): ObserverSite[] => {
           callsClearsThreshold: found.ct,
           thresholdIsArray,
           declaresThreshold,
+          optionsUnresolved,
         });
       }
       ts.forEachChild(node, visit);
@@ -199,12 +232,13 @@ describe("every IntersectionObserver in the repo keeps its threshold", () => {
   it("still finds the observers it is checking", () => {
     /* the whole check is vacuous if the walk or the parse stops finding them */
     expect(sources.length).toBeGreaterThan(20);
-    expect(sites.length).toBeGreaterThan(READS_ISINTERSECTING.length);
-    /* and it finds the two this bead converted */
-    expect(sites.filter((o) => o.callsClearsThreshold).map((o) => o.file).sort()).toEqual([
-      "components/pages/demos/motion.ts",
-      "components/site/Media.tsx",
-    ]);
+    expect(sites.length).toBeGreaterThan(Object.keys(READS_ISINTERSECTING).length);
+    /* and it finds the two this bead converted. A containment check, not an
+       equality one: a new compliant observer must be able to land without
+       failing the test that exists to encourage it. */
+    const converted = sites.filter((o) => o.callsClearsThreshold).map((o) => o.file);
+    expect(converted).toContain("components/pages/demos/motion.ts");
+    expect(converted).toContain("components/site/Media.tsx");
   });
 
   /** The one combination that is a bug under either reading of the spec. A
@@ -220,25 +254,42 @@ describe("every IntersectionObserver in the repo keeps its threshold", () => {
     ).toEqual([]);
   });
 
-  /** The ratchet on new code, per observer rather than per file, so a
-      compliant file cannot carry a second broken observer. */
+  /** Compliance, per observer. Calling the helper is not enough: a callback
+      can call it, drop the result and go on reading isIntersecting, which is
+      exactly the behaviour the check exists to stop (cross-vendor review,
+      round three). So a compliant observer calls clearsThreshold AND does not
+      read isIntersecting at all. */
+  const compliant = (o: ObserverSite) => o.callsClearsThreshold && !o.readsIsIntersecting;
+
+  /** An observer with no threshold has no promise to keep: "any contact" is
+      the whole policy and isIntersecting says exactly that. An options
+      argument this check could not read is NOT thresholdless. */
+  const thresholdless = (o: ObserverSite) => !o.declaresThreshold && !o.optionsUnresolved;
+
+  /** What the grandfather count counts: a reading that is neither compliant
+      nor exempt, and so has to be on the list to be allowed. */
+  const owed = (o: ObserverSite) => !compliant(o) && !thresholdless(o);
+
   it("lets no new observer read an entry for itself", () => {
-    const escaped = sites.filter(
-      (o) =>
-        !o.callsClearsThreshold &&
-        /* an observer with no threshold has no promise to keep: "any contact"
-           is the whole policy and isIntersecting says exactly that */
-        o.declaresThreshold &&
-        !READS_ISINTERSECTING.includes(o.file),
-    );
-    expect(escaped.map(where).sort(), "call clearsThreshold from @/lib/onscreen").toEqual([]);
+    const perFile: Record<string, number> = {};
+    for (const o of sites.filter(owed)) {
+      perFile[o.file] = (perFile[o.file] ?? 0) + 1;
+    }
+    const escaped: string[] = [];
+    for (const [file, n] of Object.entries(perFile)) {
+      const allowed = READS_ISINTERSECTING[file] ?? 0;
+      if (n > allowed) escaped.push(file + ": " + n + " readings, " + allowed + " grandfathered");
+    }
+    expect(escaped.sort(), "call clearsThreshold from @/lib/onscreen").toEqual([]);
   });
 
-  it("carries no listed file that has since been converted, so the list only shrinks", () => {
-    const stale = READS_ISINTERSECTING.filter(
-      (f) => !sites.some((o) => o.file === f && !o.callsClearsThreshold && o.declaresThreshold),
-    );
-    expect(stale, "converted or thresholdless: take these off READS_ISINTERSECTING").toEqual([]);
+  it("keeps the grandfather count exact, so it can only fall", () => {
+    const stale: string[] = [];
+    for (const [file, allowed] of Object.entries(READS_ISINTERSECTING)) {
+      const n = sites.filter((o) => o.file === file && owed(o)).length;
+      if (n !== allowed) stale.push(file + ": " + n + " readings against " + allowed + " listed");
+    }
+    expect(stale.sort(), "update READS_ISINTERSECTING to what the files now do").toEqual([]);
   });
 
   /* The two the reviews looked at, both now naming the threshold they keep. */
@@ -250,6 +301,7 @@ describe("every IntersectionObserver in the repo keeps its threshold", () => {
       for (const o of mine) {
         expect(o.callsClearsThreshold, where(o)).toBe(true);
         expect(o.readsIsIntersecting, where(o)).toBe(false);
+        expect(compliant(o), where(o)).toBe(true);
       }
     },
   );

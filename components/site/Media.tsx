@@ -336,8 +336,8 @@ export function posterFor(slot: string, poster: string | undefined): string {
  *
  * Read through @/lib/onscreen rather than off entry.isIntersecting. Not
  * because isIntersecting was autoplaying clips off a one pixel sliver, which
- * was reported and does not reproduce in Chromium, where the flag comes from
- * the threshold index. It is because that coupling is invisible at the
+ * was reported and does not reproduce in Chromium, where ratio 0.03 under a
+ * scalar 0.35 comes back false. It is because that coupling is invisible at the
  * callsite, is only checked here in one of the three engines this site ships
  * to, and holds only while the threshold stays a scalar. A ratio comparison is
  * the same answer everywhere. docs/demos.md carries the rule and the

@@ -63,23 +63,28 @@ builds its own observer instead of calling it.
 Gate on `intersectionRatio` through `clearsThreshold` in `lib/onscreen.ts`,
 never on `entry.isIntersecting` directly.
 
-Be precise about why, because the reported reason does not survive contact
-with a browser and the next person to read the code deserves the measured one.
-Both reviews said a callback storing `isIntersecting` animates off a one pixel
+Be precise about why, because the reported reason does not survive contact with
+a browser and the next person to read the code deserves the measured one. Both
+reviews said a callback storing `isIntersecting` animates off a one pixel
 sliver, since `isIntersecting` is true for any positive intersection. In
 Chromium it is not. An element 3 percent in view, under an observer declaring
-0.12 or 0.35, delivers ratio 0.03 with `isIntersecting` **false**, on the
-initial observation and on a crossing that happens in a single frame; Blink
-derives the flag from the threshold index. Measured in
+0.12 or 0.35, delivers **ratio 0.03 with `isIntersecting` false**, on the
+initial observation and on a crossing that happens in a single frame. Note what
+that single row proves on its own: the ratio is above zero, so the element did
+intersect, and the flag was false anyway. Whatever the flag is in that engine,
+it is not the geometric intersection. Measured in
 `state/review/s-0b4b/isintersecting-semantics.mjs` and its two companions;
-`sliver.mjs` confirms the demo did not animate at 3 or 9 percent before the
-change either.
+`sliver.mjs` is the behavioural control, and the demo did not animate at 3 or 9
+percent before the change either.
 
 That is one engine, and the site ships to three. A cross-vendor reviewer reads
-the spec the other way, that `isIntersecting` is geometric and the threshold
-governs only when the callback fires; this box has no Firefox or WebKit build
-to settle it, and bead hq-2u86a carries the open question. Do not resolve it by
-picking the reading you prefer.
+the spec the other way and disputes the measurement itself, not just its
+interpretation; this box has no Firefox or WebKit build to settle it, and bead
+hq-2u86a carries the question. Do not resolve it by picking the reading you
+prefer. Note that the unit test's fake observer deliberately models the
+**pessimistic** reading, defaulting `isIntersecting` to `ratio > 0`: a stub that
+baked in the disputed behaviour would be testing the belief rather than the
+gate.
 
 What is settled:
 
@@ -204,9 +209,12 @@ Three rules, and all three are needed:
   twelve table names is long enough to wrap where the others are not: tapping
   it grew the figure 31px and the next tap shrank it again, at 8 of 57 widths
   in Spanish and 3 in English. `.demo-pick-box` holds all twelve readouts the
-  same way. Keep the ghosts out of the accessibility tree: the live one is the
-  `aria-live` region, the other eleven are `aria-hidden`, and both spellings
-  come from one function so they cannot be styled apart.
+  same way: thirteen rows in one cell, the live one plus a ghost for every
+  readout including the selected one, because a ghost set that changed with the
+  selection would put the selection back into the box's size. Keep the ghosts
+  out of the accessibility tree: the live one is the `aria-live` region, all
+  twelve ghosts are `aria-hidden`, and both spellings come from one function so
+  they cannot be styled apart.
 - **Give the readout strip a fixed row structure**, a one-column grid rather
   than a wrapping row, so the caption cannot displace the selection or sit
   beside it depending on how long each happens to be.
