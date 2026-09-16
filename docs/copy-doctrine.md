@@ -489,14 +489,30 @@ Four things decide WHERE a visual is measured, which is the other half of the ru
 A faculty that turns up in another file under the same tree MOVED rather than died, and
 is a note: extracting a drawing into a helper takes paint to zero in the file that had it
 and loses nothing. The lines have to actually still be there, and be new there, so a line
-four other visuals already have vouches for nothing. Anything short of a failure, a
+four other visuals already have vouches for nothing. They also have to be somewhere the
+visual can still BE a visual, which is the same pair of tests a rename has to pass: a
+file the build compiles, and a file the index records. A copy parked as `SectorMap.old
+.txt`, or an untracked sibling nobody else will ever get, is a parking space and not the
+drawing's new home. Without that pair the counterweight excused the gutting it exists to
+distinguish, and said so in its own output. Anything short of a failure, a
 faculty down but not collapsed, is a shrink note that never blocks, because a visual can
 legitimately get smaller and a guard that argues with every rewrite gets deleted.
+
+Shrink notes are measured on every faculty and not just the line count, and they read the
+faculty first: a visual can lose two thirds of its elements while the file gets four lines
+shorter, and the band that passes must not pass in silence.
 
 Every failure names the file, its line count at the base and every faculty it lost, since
 the line count is what got noticed, and says to rewire rather than delete. `VISUALS_BASE`
 overrides the baseline and announces itself on stderr when it does, because a baseline of
 `HEAD` passes anything and a receipt that does not say so looks identical to one that ran.
+
+What it cannot do, said plainly so nobody reads more into a green run than is there: it
+reads source as TEXT and cannot tell live code from dead code. A body kept as an uncalled
+function with a stub exported in its place, or paint calls aimed at a no-op object, keep
+every faculty while nothing renders, and this check stays quiet. Closing that class means
+asking the BUILD what renders rather than asking the source what it says, which is a
+different measurement with its own Definition of Done: hq-4pu0q.23.
 
 Two controls, both runnable. Replayed over the last fourteen commits of this repo, each
 against its own parent, it fires exactly once: on 11d43c3, the commit that deleted the
