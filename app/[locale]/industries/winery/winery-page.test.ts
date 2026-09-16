@@ -15,6 +15,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 
 import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
 import { locales, type Locale } from "../../../../lib/i18n/config";
+import { addOnAvailable, addOnMonthly } from "../../../../lib/pricing";
 import { precios } from "../../../../lib/i18n/precios";
 import { site } from "../../../../lib/i18n/site";
 import { winery } from "../../../../lib/i18n/winery";
@@ -96,7 +97,15 @@ function declaredSpans(locale: Locale): string[] {
 /** The page as a visitor gets it: server-rendered markup, one locale. */
 async function serve(locale: Locale): Promise<string> {
   const WineryPage = (await import("./page")).default;
+  // LocaleProvider's own props declare `children` as REQUIRED, so the third
+  // argument form does not typecheck (TS2769) and the prop form is the correct
+  // call. react/no-children-prop is a JSX idiom rule and fires here anyway, and
+  // under next/core-web-vitals it is an ERROR, which fails `next build` after a
+  // clean compile (bead hq-a4sy5 R1). Suppressed by name, and the rule does
+  // resolve from the lockfile: removing this line puts the error back. That is
+  // the difference from hq-4h26y, where the suppressed rule did not exist.
   return renderToStaticMarkup(
+    // eslint-disable-next-line react/no-children-prop
     React.createElement(LocaleProvider, {
       locale,
       children: React.createElement(WineryPage, { params: { locale } }),
@@ -161,24 +170,39 @@ describe("the ads card carries the condition precios sets", () => {
    */
   const claims: Record<
     Locale,
-    { claim: RegExp; modules: RegExp; excluded: RegExp; rule: RegExp }
+    {
+      claim: RegExp;
+      modules: RegExp;
+      excluded: RegExp;
+      rule: RegExp;
+      sizeCondition: RegExp;
+      policyVerb: RegExp;
+      inclusionVerb: RegExp;
+    }
   > = {
     en: {
       claim: /ads[^.]*inside the monthly(?: service)? fee/i,
       modules: /Hospitalidad and Restaurante/,
       excluded: /Producci[o\u00f3]n/i,
       rule: /never attach to Produccion/,
+      sizeCondition: /middle size|medium size|from the middle/i,
+      policyVerb: /attach(?:es)? to/i,
+      inclusionVerb: /come[s]? with|included in|part of/i,
     },
     es: {
       claim: /[Aa]nuncios[^.]*dentro de la cuota mensual/,
       modules: /Hospitalidad y a? ?Restaurante/,
       excluded: /Producci[o\u00f3]n/i,
       rule: /A Producci\u00f3n nunca/,
+      sizeCondition: /tama\u00f1o mediano|desde el mediano/i,
+      policyVerb: /se agrega[n]? a/i,
+      inclusionVerb: /vienen? con|incluid[oa]s? en|forma[n]? parte de/i,
     },
   };
 
   for (const locale of locales) {
-    const { claim, modules, excluded, rule } = claims[locale];
+    const { claim, modules, excluded, rule, sizeCondition, policyVerb, inclusionVerb } =
+      claims[locale];
 
     it(`${locale}: precios still states the rule this card is held to`, () => {
       expect(precios[locale].ads.body).toMatch(rule);
@@ -203,6 +227,44 @@ describe("the ads card carries the condition precios sets", () => {
         (c) => claim.test(c.body) && !modules.test(c.body),
       );
       expect(bad.map((c) => c.body)).toEqual([]);
+    });
+
+    it(`${locale}: that claim carries the size condition while pricing refuses ads at the entry size`, async () => {
+      // hq-a4sy5 R2 and A2. lib/pricing.ts gives google-ads-management hours
+      // { S: null, M: 3, L: 3.5 }, so addOnAvailable at the entry size is false,
+      // and floorFor() builds the published entry price this same page
+      // advertises out of quote([module], "S"). A card that promises ads with no
+      // size condition therefore sells, at the entry price, a thing pricing
+      // refuses at the entry size. precios.ts carries the condition in words:
+      // "ad management from the middle size up" / "desde el tamano mediano".
+      //
+      // Derived from pricing, not asserted flat: if ads ever become available at
+      // S, this case stops demanding the condition instead of going stale.
+      const availableAtEntry = addOnAvailable(
+        "google-ads-management",
+        ["hospitalidad"],
+        "S",
+      );
+      const card = servedCapBodies(await serve(locale)).filter((b) => claim.test(b))[0];
+      expect(card, "no card claims ads inside the fee").toBeDefined();
+      if (!availableAtEntry) expect(card).toMatch(sizeCondition);
+    });
+
+    it(`${locale}: that claim uses the policy's verb, never an inclusion verb`, async () => {
+      // hq-a4sy5 R2. The fix round restored the module condition but changed the
+      // English verb from precios' "attach to" to "come with", while the Spanish
+      // half of the same commit kept "se agregan a". lib/pricing.ts prices
+      // google-ads-management as an add-on with its own monthly line, so a
+      // module does not come with it, and the two locales were left promising a
+      // different relationship.
+      const card = servedCapBodies(await serve(locale)).filter((b) => claim.test(b))[0];
+      expect(card, "no card claims ads inside the fee").toBeDefined();
+      expect(card).toMatch(policyVerb);
+      expect(card).not.toMatch(inclusionVerb);
+      expect(
+        addOnMonthly("google-ads-management", "M"),
+        "ads are no longer an add-on line, so the verb rule needs rethinking",
+      ).not.toBeNull();
     });
   }
 });

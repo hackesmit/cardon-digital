@@ -126,7 +126,7 @@ const en = {
       {
         num: "05",
         h: "Fill the tasting room, the club and DTC.",
-        body: "Bilingual ads come with Hospitalidad and Restaurante, inside the monthly fee, and the budget goes straight to Google.",
+        body: "Bilingual ads attach to Hospitalidad and Restaurante, from the middle size up, inside the monthly fee, and the budget goes straight to Google.",
       },
     ],
   },
@@ -319,7 +319,7 @@ const es: typeof en = {
       {
         num: "05",
         h: "Llene la sala, el club y la venta directa.",
-        body: "Los anuncios en los dos idiomas se agregan a Hospitalidad y a Restaurante, dentro de la cuota mensual, y la inversión va directo a Google.",
+        body: "Los anuncios en los dos idiomas se agregan a Hospitalidad y a Restaurante, desde el tamaño mediano, dentro de la cuota mensual, y la inversión va directo a Google.",
       },
     ],
   },
