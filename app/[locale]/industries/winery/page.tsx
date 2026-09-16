@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
 import VineField from "@/components/pages/winery/VineField";
 import SpotlightFrames from "@/components/pages/winery/SpotlightFrames";
@@ -122,26 +123,6 @@ const capGlyphs = [
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <path d="M6 9 h14" opacity="0.5" />
-                        <path d="M6 14 h10" opacity="0.5" />
-                        <path d="M6 19 h13" opacity="0.5" />
-                        <path d="M6 24 h8" opacity="0.5" />
-                        <path d="M22 8 C 30 12, 30 22, 22 26" />
-                        <circle cx="26" cy="17" r="2.4" fill="currentColor" stroke="none" />
-                      </svg>
-  ),
-  (
-    <svg
-                        key="cap-glyph-5"
-                        className="cap-glyph"
-                        viewBox="0 0 34 34"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
                         <circle cx="11" cy="17" r="2.6" fill="currentColor" stroke="none" />
                         <path d="M16 11 C 19 13, 19 21, 16 23" />
                         <path d="M20 7 C 26 11, 26 23, 20 27" opacity="0.7" />
@@ -158,6 +139,18 @@ export default function WineryPage({ params }: Params) {
   const mailto =
     "mailto:daniel@cardondigital.com?subject=" +
     encodeURIComponent(s.diag.mailSubject);
+
+  /* One primary call to action, in the hero and again in the closing block,
+     and it is the home page's words (site.diag.cta) rather than a variant
+     written for this page. */
+  const cta = (
+    <a className="cta" href="#diagnostic">
+      {s.diag.cta}
+    </a>
+  );
+
+  /* The accent runs on the second and fourth card, as it did across six. */
+  const capAccent = ["", " accent-gold", "", " accent-wine", ""];
 
   return (
     <main id="main" className="pg-winery">
@@ -176,11 +169,9 @@ export default function WineryPage({ params }: Params) {
               </h1>
               <p className="hero-sub">{rich(d.hero.sub)}</p>
               <div className="hero-actions">
-                <a className="cta" href="#diagnostic">
-                  {s.diag.cta}
-                </a>
+                {cta}
                 <Link className="btn-ghost" href={href("/work/monte-xanic")}>
-                  {d.hero.ctaCase}
+                  {d.proof.ctaXanic}
                 </Link>
               </div>
               <p className="brandline">{s.brandline}</p>
@@ -193,92 +184,84 @@ export default function WineryPage({ params }: Params) {
         </div>
       </section>
 
-      {/* ============================ PHOTO BAND ============================ */}
+      {/* ============================ VINEYARD BAND ============================
+          The one full colour photograph on the page, at the top, per the
+          identity rule in components/site/media.css. The stock frame standing
+          in here is recorded in public/media/CREDITS.md; the caption is written
+          for the shot the brief asks for and does not describe the stand-in. */}
       <section className="photo-slot">
         <div className="container">
-          <figure className="photoband">
-            <img
-              className="photoband-img"
-              src="/media/valle-vineyard.webp"
-              alt={d.hero.photoAlt}
-            />
-          </figure>
+          <Media
+            className="media-band"
+            slot="winery/vineyard"
+            src="/media/valle-vineyard.webp"
+            tone="full"
+            priority
+            caption={d.media.vineyard.cap}
+            alt={d.media.vineyard.alt}
+          />
         </div>
       </section>
 
-      {/* ============================ CAPABILITIES ============================ */}
-      <section className="section" id="services" aria-labelledby="cap-title">
+      {/* ============================ PROOF / CASE STUDY ============================
+          Monte Xanic leads, because a named winery with a real number outsells
+          anything this page can claim about itself (doctrine section 1). */}
+      <section className="section proof" id="proof" aria-labelledby="proof-title">
         <div className="container">
           <Reveal>
-            <div className="section-head">
-              <span className="kicker">{d.caps.kicker}</span>
-              <h2 id="cap-title">{d.caps.title}</h2>
-              <p className="section-sub">{d.caps.sub}</p>
-            </div>
-          </Reveal>
-
-          <Reveal>
-            <div className="cap-grid">
-              <article className="cap-card spot">
-                <div className="cap-top">
-                  {capGlyphs[0]}
-                  <span className="cap-num">{d.caps.cards[0].num}</span>
+            <div className="proof-card spot">
+              <div className="proof-lead">
+                <span className="kicker wine">{d.proof.kicker}</span>
+                <h2 id="proof-title">{d.proof.title}</h2>
+                <p className="proof-desc">{rich(d.proof.desc)}</p>
+                <div className="proof-actions">
+                  <Link className="btn-proof" href={href("/work/monte-xanic")}>
+                    {d.proof.ctaXanic}
+                  </Link>
+                  <Link className="btn-proof" href={href("/work/enkanto")}>
+                    {d.proof.ctaEnkanto}
+                  </Link>
                 </div>
-                <h3>{d.caps.cards[0].h}</h3>
-                <p className="cap-body">{d.caps.cards[0].body}</p>
-                <p className="cap-note">{rich(d.caps.cards[0].note)}</p>
-              </article>
-
-              <article className="cap-card spot accent-gold">
-                <div className="cap-top">
-                  {capGlyphs[1]}
-                  <span className="cap-num">{d.caps.cards[1].num}</span>
+              </div>
+              <div className="proof-art" aria-hidden="true">
+                <div className="seal">
+                  <span className="seal-ring" />
+                  <svg className="seal-mark" viewBox="0 0 26 26" focusable="false">
+                    <line
+                      className="bm-line"
+                      x1="13"
+                      y1="20"
+                      x2="6"
+                      y2="8"
+                      strokeWidth="1.2"
+                      opacity="0.8"
+                    />
+                    <line
+                      className="bm-line"
+                      x1="13"
+                      y1="20"
+                      x2="20"
+                      y2="8"
+                      strokeWidth="1.2"
+                      opacity="0.8"
+                    />
+                    <line
+                      className="bm-line"
+                      x1="6"
+                      y1="8"
+                      x2="20"
+                      y2="8"
+                      strokeWidth="1.2"
+                      opacity="0.55"
+                    />
+                    <circle className="bm-ring" cx="6" cy="8" r="3" strokeWidth="1.4" />
+                    <circle className="bm-ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
+                    <circle className="bm-dot" cx="13" cy="20" r="3.4" />
+                  </svg>
+                  <span className="seal-label">Monte Xanic</span>
+                  <span className="seal-sub">{d.proof.sealSub}</span>
                 </div>
-                <h3>{d.caps.cards[1].h}</h3>
-                <p className="cap-body">{d.caps.cards[1].body}</p>
-                <p className="cap-note">{rich(d.caps.cards[1].note)}</p>
-              </article>
-
-              <article className="cap-card spot">
-                <div className="cap-top">
-                  {capGlyphs[2]}
-                  <span className="cap-num">{d.caps.cards[2].num}</span>
-                </div>
-                <h3>{d.caps.cards[2].h}</h3>
-                <p className="cap-body">{d.caps.cards[2].body}</p>
-                <p className="cap-note">{rich(d.caps.cards[2].note)}</p>
-              </article>
-
-              <article className="cap-card spot accent-wine">
-                <div className="cap-top">
-                  {capGlyphs[3]}
-                  <span className="cap-num">{d.caps.cards[3].num}</span>
-                </div>
-                <h3>{d.caps.cards[3].h}</h3>
-                <p className="cap-body">{d.caps.cards[3].body}</p>
-                <p className="cap-note">{rich(d.caps.cards[3].note)}</p>
-              </article>
-
-              <article className="cap-card spot">
-                <div className="cap-top">
-                  {capGlyphs[4]}
-                  <span className="cap-num">{d.caps.cards[4].num}</span>
-                </div>
-                <h3>{d.caps.cards[4].h}</h3>
-                <p className="cap-body">{d.caps.cards[4].body}</p>
-                <p className="cap-note">{rich(d.caps.cards[4].note)}</p>
-              </article>
-
-              <article className="cap-card spot accent-gold">
-                <div className="cap-top">
-                  {capGlyphs[5]}
-                  <span className="cap-num">{d.caps.cards[5].num}</span>
-                </div>
-                <h3>{d.caps.cards[5].h}</h3>
-                <p className="cap-body">{d.caps.cards[5].body}</p>
-                <p className="cap-note">{rich(d.caps.cards[5].note)}</p>
-              </article>
-
+              </div>
             </div>
           </Reveal>
         </div>
@@ -291,7 +274,6 @@ export default function WineryPage({ params }: Params) {
             <div className="section-head">
               <span className="kicker wine">{d.leak.kicker}</span>
               <h2 id="leak-title">{d.leak.title}</h2>
-              <p className="section-sub">{d.leak.sub}</p>
             </div>
           </Reveal>
 
@@ -305,8 +287,56 @@ export default function WineryPage({ params }: Params) {
                 </li>
               ))}
             </ol>
-            <p className="leak-foot">{d.leak.foot}</p>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ CAPABILITIES ============================ */}
+      <section className="section" id="services" aria-labelledby="cap-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker">{d.caps.kicker}</span>
+              <h2 id="cap-title">{d.caps.title}</h2>
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="cap-grid">
+              {d.caps.cards.map((card, i) => (
+                <article className={"cap-card spot" + capAccent[i]} key={card.num}>
+                  <div className="cap-top">
+                    {capGlyphs[i]}
+                    <span className="cap-num">{card.num}</span>
+                  </div>
+                  <h3>{card.h}</h3>
+                  <p className="cap-body">{card.body}</p>
+                </article>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ THE WORK, PHOTOGRAPHED ============================
+          Two slots, tinted, each one evidence for the claim its caption makes:
+          the cellar for the assistant block below it, the tasting room for the
+          follow-up the leak block named. Both are pending files, so they ship
+          as the brief until the shoot lands. */}
+      <section className="photo-slot">
+        <div className="container">
+          <div className="media-pair">
+            <Media
+              slot="winery/cellar"
+              caption={d.media.cellar.cap}
+              alt={d.media.cellar.alt}
+            />
+            <Media
+              slot="winery/tasting-room"
+              caption={d.media.tasting.cap}
+              alt={d.media.tasting.alt}
+            />
+          </div>
         </div>
       </section>
 
@@ -326,72 +356,8 @@ export default function WineryPage({ params }: Params) {
                 {d.assist.body.map((para) => (
                   <p key={para}>{para}</p>
                 ))}
-                <p className="assist-note">{rich(d.assist.note)}</p>
               </div>
               <AssistantDemo />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================ PROOF / CASE STUDY ============================ */}
-      <section className="section proof" id="proof" aria-labelledby="proof-title">
-        <div className="container">
-          <Reveal>
-            <div className="proof-card spot">
-              <div className="proof-lead">
-                <span className="kicker wine">{d.proof.kicker}</span>
-                <h2 id="proof-title">{d.proof.title}</h2>
-                <p className="proof-desc">{rich(d.proof.desc)}</p>
-                <div className="proof-actions">
-                  <Link className="btn-proof" href={href("/work/monte-xanic")}>
-                    {d.proof.ctaXanic}
-                  </Link>
-                  <Link className="btn-proof" href={href("/work/enkanto")}>
-                    {d.proof.ctaEnkanto}
-                  </Link>
-                </div>
-                <p className="proof-meta">{d.proof.meta}</p>
-              </div>
-              <div className="proof-art" aria-hidden="true">
-                <div className="seal">
-                  <span className="seal-ring" />
-                  <svg className="seal-mark" viewBox="0 0 26 26" focusable="false">
-                                      <line
-                                        className="bm-line"
-                                        x1="13"
-                                        y1="20"
-                                        x2="6"
-                                        y2="8"
-                                        strokeWidth="1.2"
-                                        opacity="0.8"
-                                      />
-                                      <line
-                                        className="bm-line"
-                                        x1="13"
-                                        y1="20"
-                                        x2="20"
-                                        y2="8"
-                                        strokeWidth="1.2"
-                                        opacity="0.8"
-                                      />
-                                      <line
-                                        className="bm-line"
-                                        x1="6"
-                                        y1="8"
-                                        x2="20"
-                                        y2="8"
-                                        strokeWidth="1.2"
-                                        opacity="0.55"
-                                      />
-                                      <circle className="bm-ring" cx="6" cy="8" r="3" strokeWidth="1.4" />
-                                      <circle className="bm-ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
-                                      <circle className="bm-dot" cx="13" cy="20" r="3.4" />
-                                    </svg>
-                  <span className="seal-label">Monte Xanic</span>
-                  <span className="seal-sub">{d.proof.sealSub}</span>
-                </div>
-              </div>
             </div>
           </Reveal>
         </div>
