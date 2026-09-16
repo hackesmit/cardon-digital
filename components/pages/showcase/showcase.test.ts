@@ -1,4 +1,6 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
 import { showcaseEnabled } from "./flag";
@@ -250,6 +252,8 @@ describe("the nav", () => {
 const here = new URL("./", import.meta.url);
 const readRepo = (rel: string) =>
   readFileSync(new URL("../../../" + rel, here), "utf8");
+/** The repo root as a path, for the guards that have to walk the tree. */
+const repoRoot = () => fileURLToPath(new URL("../../../", here));
 
 /** Mean day-to-day change of a series over [from, to). */
 function slope(series: readonly number[], from: number, to: number): number {
@@ -410,17 +414,24 @@ describe("the two layout plans", () => {
     expect(rule).toContain("display: none");
   });
 
-  it("hides the canvas with scripts off, at a specificity that actually wins", () => {
-    // Round two of hq-qd9jh blocked here, four lines from the [hidden] fix
-    // above and for the same reason (review s-00e2). The scripts-off branch
-    // said ".ss-canvas{display:none}" at (0,1,0) and lost to
-    // ".pg-showcase .ss-canvas{display:block}" at (0,2,0), so a reader with
-    // scripts off got the blank reserved box sitting over the written season.
-    // Specificity beats source order, so being later in the document did not
-    // save it, and round one had called this branch unaffected.
+  it("hides the canvas with scripts off, with a rule nothing in the cascade can outrank", () => {
+    // Round three of hq-qd9jh scoped the noscript selector to .pg-showcase so it
+    // would out-specify the (0,2,0) rule in home.css, and guarded that with a
+    // function that weighed selectors by counting classes, attributes and
+    // pseudo-classes in a regex. Round four's review (s-6d27) took that apart.
+    // Seven shapes kept the guard GREEN and put the 472px canvas back over the
+    // written season: an id selector (the showcase root IS main#main, so it is
+    // the most natural future edit), canvas.ss-canvas, !important, an upper-case
+    // DISPLAY: BLOCK, a second display declaration in the same block, CSS
+    // nesting (which ships unflattened and weighs (0,3,0)), and the same rule
+    // placed in modulos.css, which the guard never read. It also overcounted the
+    // other way, failing on :where(.a .b .c) .ss-canvas, which cannot win.
     //
-    // Written as a comparison rather than a string match, so the next rule
-    // someone adds to home.css has to lose to the scripts-off rule too.
+    // The lesson is that out-specifying is a race with no finish line, and a
+    // guard that models the cascade with a regex is a guard that lies. With no
+    // JavaScript the canvas is never drawn, so there is no case where it should
+    // be visible: the rule is made UNBEATABLE instead, and this case checks that
+    // property rather than re-deriving specificity.
     const component = readRepo("components/pages/showcase/SectionSeason.tsx");
     const noscript = /<noscript>([\s\S]*?)<[/]noscript>/.exec(component);
     expect(noscript, "the scripts-off branch is gone").not.toBeNull();
@@ -428,42 +439,49 @@ describe("the two layout plans", () => {
     const declared = /<style>\{"([^"]*)"\}<[/]style>/.exec(body);
     expect(declared, "the scripts-off branch declares no style").not.toBeNull();
     const rule = declared![1];
-    expect(rule).toMatch(/\.ss-canvas\s*\{[^}]*display:\s*none/);
-    expect(body).toContain("ss-fallback");
 
-    /** Classes, attributes and pseudo-classes in one selector. */
-    const weight = (selector: string) =>
-      (selector.match(/\.[a-zA-Z_-][\w-]*|\[[^\]]*\]|:[a-z-]+/g) ?? []).length;
-
-    const noscriptWeight = weight(rule.slice(0, rule.indexOf("{")));
-
-    // Every stylesheet rule that would make this canvas VISIBLE. A rule that
-    // also hides it is no threat however specific it is, which is why the
-    // [hidden] rule above is not a contender. Comments are stripped first:
-    // home.css explains the cascade in prose beside the rule, and a comment
-    // naming a selector is not a selector.
-    const css = readRepo("app/[locale]/home.css").replace(/\/\*[\s\S]*?\*\//g, "");
-    // exec in a loop rather than [...matchAll]: this project's tsconfig target
-    // does not allow iterating a RegExp iterator (TS2802).
-    const contenders: string[] = [];
-    const rules = /([^{}]+)\{([^{}]*)\}/g;
-    for (let m = rules.exec(css); m !== null; m = rules.exec(css)) {
-      const [, selector, decls] = m;
-      if (!selector.includes(".ss-canvas")) continue;
-      const shown = /(^|;)\s*display\s*:\s*([a-z-]+)/.exec(decls);
-      if (shown !== null && shown[2] !== "none") contenders.push(selector.trim());
-    }
-
+    expect(body, "the scripts-off branch no longer renders the written season").toContain("ss-fallback");
+    expect(rule, "the scripts-off rule no longer hides the canvas").toMatch(
+      /\.ss-canvas\s*\{[^}]*display:\s*none/,
+    );
     expect(
-      contenders.length,
-      "nothing in home.css makes .ss-canvas visible any more, so this guard is reading the wrong file",
-    ).toBeGreaterThan(0);
+      rule,
+      "the scripts-off rule is only more specific, not unbeatable: any id selector, added !important, or nested rule in any stylesheet puts the canvas back (review s-6d27)",
+    ).toMatch(/display:\s*none\s*!important/);
+    expect(
+      rule,
+      "the scripts-off rule is unscoped, so it would reach a .ss-canvas on any other page",
+    ).toContain(".pg-showcase");
 
-    for (const selector of contenders) {
-      expect(
-        noscriptWeight,
-        `the scripts-off rule (${rule}) is less specific than "${selector}", which sets display on the same canvas, so it loses`,
-      ).toBeGreaterThanOrEqual(weight(selector));
+    // The one thing that CAN outrank it is another !important, so no stylesheet
+    // anywhere in the repo may declare display on this canvas that way. EVERY
+    // css file is walked, not a named list: "the same rule placed in modulos.css"
+    // was one of the seven shapes precisely because the old guard read only
+    // home.css. Cheap and exact, with no specificity model, just the conflict.
+    const sheets: string[] = [];
+    const walk = (dir: string) => {
+      for (const entry of readdirSync(dir, { withFileTypes: true })) {
+        if (entry.name === "node_modules" || entry.name.startsWith(".")) continue;
+        const full = join(dir, entry.name);
+        if (entry.isDirectory()) walk(full);
+        else if (entry.name.endsWith(".css")) sheets.push(full);
+      }
+    };
+    walk(repoRoot());
+    expect(sheets.length, "no stylesheet found at all, so this guard is reading the wrong tree").toBeGreaterThan(3);
+
+    for (const full of sheets) {
+      const css = readFileSync(full, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+      if (!css.includes(".ss-canvas")) continue;
+      const rules = /([^{}]+)\{([^{}]*)\}/g;
+      for (let m = rules.exec(css); m !== null; m = rules.exec(css)) {
+        const [, selector, decls] = m;
+        if (!selector.includes(".ss-canvas")) continue;
+        expect(
+          decls,
+          `${full} declares display on .ss-canvas with !important ("${selector.trim()}"), which can outrank the scripts-off rule`,
+        ).not.toMatch(/display:[^;]*!important/i);
+      }
     }
   });
 
