@@ -240,8 +240,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/page.tsx": {
-    "mtime": 1788974449.6573439,
-    "ast_hash": "531c0bd7bd79791d33453d7cc0345f16",
+    "mtime": 1789533055.883218,
+    "ast_hash": "bbb1b7da2ad2986007a7e88ebde20e01",
     "semantic_hash": ""
   },
   "app/[locale]/layout.tsx": {
@@ -350,8 +350,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1788975816.8890545,
-    "ast_hash": "9c67ea3f7a272d1712f3d421c6717509",
+    "mtime": 1789533055.883218,
+    "ast_hash": "ddfb7a3479ecd96ab99b2346cdd28046",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "components/pages/winery/AssistantDemo.tsx": {
-    "mtime": 1788935476.2620747,
-    "ast_hash": "83da4eaef6e8a3e7a1809c45d07db726",
+    "mtime": 1789533055.883218,
+    "ast_hash": "ee682fbf0d11cbde009250703528e4a3",
     "semantic_hash": ""
   },
   "components/pages/winery/PricingBundles.tsx": {
@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "lib/pricing.test.ts": {
-    "mtime": 1788933334.3277194,
-    "ast_hash": "253ec7f4129342993d10ee2794af419f",
+    "mtime": 1789533155.8071942,
+    "ast_hash": "f72b43b4cbdec95b2817c5f6b18409bc",
     "semantic_hash": ""
   },
   "app/[locale]/modulos/page.tsx": {
@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
-    "mtime": 1788937733.2934594,
-    "ast_hash": "a1c22a19349bf0eee4f8214d4a7ef890",
+    "mtime": 1789533155.8071942,
+    "ast_hash": "1349cff3295b8e4cb436591125c42b9e",
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
@@ -585,18 +585,18 @@
     "semantic_hash": ""
   },
   "components/pages/precios/ModuleFloors.tsx": {
-    "mtime": 1788953275.7353444,
-    "ast_hash": "22d7a2855696ac7be8850c47d0837853",
+    "mtime": 1789533155.8071942,
+    "ast_hash": "a78f635d317d350589b0fb4419cad169",
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1788953275.7353444,
-    "ast_hash": "3b03ec2c2cfedee79fd1230a3a759a26",
+    "mtime": 1789533155.8071942,
+    "ast_hash": "c578101cf6a038dc1eec4373f1aeab30",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
-    "mtime": 1788917952.8430674,
-    "ast_hash": "cac01ebdcd97d6890f57c63122a1229f",
+    "mtime": 1789533155.8071942,
+    "ast_hash": "03b85a124e2dfbae6f06b764e4c9a3c3",
     "semantic_hash": ""
   },
   "components/pages/showcase/Showcase.tsx": {
@@ -700,13 +700,13 @@
     "semantic_hash": ""
   },
   "components/site/Media.test.tsx": {
-    "mtime": 1789457713.0963469,
-    "ast_hash": "bda94df4506e8dbbab414a29f40dcd7c",
+    "mtime": 1789526437.075531,
+    "ast_hash": "511f17e09882bd7153917543b4f1134d",
     "semantic_hash": ""
   },
   "components/site/Media.tsx": {
-    "mtime": 1789457713.0963469,
-    "ast_hash": "a5659eaf1ef083a02d6500245f612796",
+    "mtime": 1789533155.8071942,
+    "ast_hash": "726435ca7c7464709f15832a3e83ad3a",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -720,8 +720,8 @@
     "semantic_hash": ""
   },
   "public/media/README.md": {
-    "mtime": 1789457713.0963469,
-    "ast_hash": "582666652cdf3007358a957165ffa638",
+    "mtime": 1789533155.8111985,
+    "ast_hash": "ef9b1f3e62e9468cdb2a3a407ad5c6e8",
     "semantic_hash": ""
   },
   "components/pages/demos/RestauranteDemo.tsx": {
@@ -777,6 +777,11 @@
   "scripts/visuals-check.test.mjs": {
     "mtime": 1789512198.4996107,
     "ast_hash": "4f2f854c592cc10e693d7655f8e7377f",
+    "semantic_hash": ""
+  },
+  "app/[locale]/industries/winery/winery-page.test.ts": {
+    "mtime": 1789533055.883218,
+    "ast_hash": "0ad92d14acb0e3457912e08e878fb6db",
     "semantic_hash": ""
   }
 }
