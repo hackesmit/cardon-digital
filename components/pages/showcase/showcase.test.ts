@@ -410,6 +410,63 @@ describe("the two layout plans", () => {
     expect(rule).toContain("display: none");
   });
 
+  it("hides the canvas with scripts off, at a specificity that actually wins", () => {
+    // Round two of hq-qd9jh blocked here, four lines from the [hidden] fix
+    // above and for the same reason (review s-00e2). The scripts-off branch
+    // said ".ss-canvas{display:none}" at (0,1,0) and lost to
+    // ".pg-showcase .ss-canvas{display:block}" at (0,2,0), so a reader with
+    // scripts off got the blank reserved box sitting over the written season.
+    // Specificity beats source order, so being later in the document did not
+    // save it, and round one had called this branch unaffected.
+    //
+    // Written as a comparison rather than a string match, so the next rule
+    // someone adds to home.css has to lose to the scripts-off rule too.
+    const component = readRepo("components/pages/showcase/SectionSeason.tsx");
+    const noscript = /<noscript>([\s\S]*?)<[/]noscript>/.exec(component);
+    expect(noscript, "the scripts-off branch is gone").not.toBeNull();
+    const body = noscript![1];
+    const declared = /<style>\{"([^"]*)"\}<[/]style>/.exec(body);
+    expect(declared, "the scripts-off branch declares no style").not.toBeNull();
+    const rule = declared![1];
+    expect(rule).toMatch(/\.ss-canvas\s*\{[^}]*display:\s*none/);
+    expect(body).toContain("ss-fallback");
+
+    /** Classes, attributes and pseudo-classes in one selector. */
+    const weight = (selector: string) =>
+      (selector.match(/\.[a-zA-Z_-][\w-]*|\[[^\]]*\]|:[a-z-]+/g) ?? []).length;
+
+    const noscriptWeight = weight(rule.slice(0, rule.indexOf("{")));
+
+    // Every stylesheet rule that would make this canvas VISIBLE. A rule that
+    // also hides it is no threat however specific it is, which is why the
+    // [hidden] rule above is not a contender. Comments are stripped first:
+    // home.css explains the cascade in prose beside the rule, and a comment
+    // naming a selector is not a selector.
+    const css = readRepo("app/[locale]/home.css").replace(/\/\*[\s\S]*?\*\//g, "");
+    // exec in a loop rather than [...matchAll]: this project's tsconfig target
+    // does not allow iterating a RegExp iterator (TS2802).
+    const contenders: string[] = [];
+    const rules = /([^{}]+)\{([^{}]*)\}/g;
+    for (let m = rules.exec(css); m !== null; m = rules.exec(css)) {
+      const [, selector, decls] = m;
+      if (!selector.includes(".ss-canvas")) continue;
+      const shown = /(^|;)\s*display\s*:\s*([a-z-]+)/.exec(decls);
+      if (shown !== null && shown[2] !== "none") contenders.push(selector.trim());
+    }
+
+    expect(
+      contenders.length,
+      "nothing in home.css makes .ss-canvas visible any more, so this guard is reading the wrong file",
+    ).toBeGreaterThan(0);
+
+    for (const selector of contenders) {
+      expect(
+        noscriptWeight,
+        `the scripts-off rule (${rule}) is less specific than "${selector}", which sets display on the same canvas, so it loses`,
+      ).toBeGreaterThanOrEqual(weight(selector));
+    }
+  });
+
   it("lets the figure fill its band", () => {
     // The fault Daniel named: the old card was capped at 640px inside a
     // full-bleed section. The new figure declares no max-width and is its

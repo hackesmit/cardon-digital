@@ -491,8 +491,16 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
           <noscript>
             {/* Applied only when scripting is off, the same way the module
                 demos do it: with no JS the canvas is never drawn, so the
-                written season below is the figure. */}
-            <style>{".ss-canvas{display:none}"}</style>
+                written season below is the figure.
+
+                The selector carries .pg-showcase for the same reason the
+                [hidden] rule in home.css does. A bare .ss-canvas is (0,1,0)
+                and loses to .pg-showcase .ss-canvas at (0,2,0), whatever the
+                source order, so the scripts-off reader got a blank 472px box
+                sitting over the written season (review s-00e2). The module
+                demos can use a bare selector because nothing outscopes theirs;
+                this one cannot. */}
+            <style>{".pg-showcase .ss-canvas{display:none}"}</style>
             <div className="ss-fallback">{d.fallback}</div>
           </noscript>
         </div>
