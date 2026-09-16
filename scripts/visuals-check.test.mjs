@@ -3,11 +3,12 @@
  *
  *   node --test scripts/visuals-check.test.mjs
  *
- * The rule is a set difference, so most of it is tested on plain arrays of
- * paths with no git and no filesystem in the way. The two that do need a repo
- * build one in a temp directory and commit into it, because "a rename out of
- * the tree is still a deletion" is a claim about git's behaviour and a fake
- * cannot prove it.
+ * The rule has a path half and a substance half. The path half is tested on
+ * plain arrays with no git and no filesystem in the way; the substance half on
+ * pairs of sources. The ones that need a repo build one in a temp directory and
+ * commit into it, because "a rename out of the tree is still a deletion", "a
+ * `git rm --cached` is a deletion" and "an unstaged cp plus rm is not one" are
+ * claims about git's behaviour and a fake cannot prove them.
  */
 
 import { test } from "node:test";
@@ -25,9 +26,22 @@ import {
   validateRetired,
   findRemovals,
   classify,
+  COLLAPSE,
+  COLLAPSE_FLOOR,
+  CODE_FLOOR,
   lineCount,
   substance,
+  stripComments,
   markupCount,
+  paintCount,
+  canvasCount,
+  motionCounts,
+  lostLines,
+  facultyMoved,
+  MARKUP_TAG,
+  profile,
+  isLiveSource,
+  compareVisual,
   similarity,
   main,
 } from "./visuals-check.mjs";
@@ -390,9 +404,457 @@ test("an emptied file fails against real git, naming the file and the line count
   const text = out.join("\n");
   assert.ok(text.includes(B), "names the file");
   const lines = lineCount(visualSource("SectorMap"));
-  assert.ok(text.includes(`emptied in place (${lines} lines of source, 1 left)`), text);
+  assert.ok(text.includes("was emptied in place"), text);
+  assert.ok(text.includes(`${lines} lines of source at the base, 1 left`), text);
   assert.match(text, /REWIRES a visual/, "tells the worker to rewire rather than delete");
   assert.match(text, /Daniel's decision alone/, "and whose decision retiring one is");
+});
+
+
+/* ---------- substance: a path kept is not a visual kept ----------
+
+   Every case below is one of the seven shapes review s-48db walked through the
+   round-one rule (state/review/s-48db/cases.txt, 7 of 13 exit 0), or a sibling
+   of one. They share a single defect: the file measured its own existence, and
+   a visual can lose its substance without losing its path.                  */
+
+/** A visual with a canvas, an animation loop and some elements in it. */
+function animatedSource(name, elements = 6, filler = 0) {
+  const tags = Array.from(
+    { length: elements },
+    (_, i) => `      <span className="tick" key={${i}} />`,
+  ).join("\n");
+  const body = Array.from({ length: filler }, (_, i) => `    const step${i} = ${i} * 3 + 1;`).join("\n");
+  return [
+    `"use client";`,
+    `import { useEffect, useRef } from "react";`,
+    ``,
+    `export default function ${name}() {`,
+    `  const ref = useRef(null);`,
+    `  useEffect(() => {`,
+    `    const ctx = ref.current.getContext("2d");`,
+    ...(filler ? [body] : []),
+    `    let raf = 0;`,
+    `    const frame = () => {`,
+    `      ctx.clearRect(0, 0, 100, 100);`,
+    `      ctx.beginPath();`,
+    `      ctx.arc(50, 50, 20, 0, Math.PI * 2);`,
+    `      ctx.fill();`,
+    `      raf = requestAnimationFrame(frame);`,
+    `    };`,
+    `    raf = requestAnimationFrame(frame);`,
+    `    return () => cancelAnimationFrame(raf);`,
+    `  }, []);`,
+    `  return (`,
+    `    <figure className="vis-frame">`,
+    `      <canvas ref={ref} width={100} height={100} />`,
+    tags,
+    `    </figure>`,
+    `  );`,
+    `}`,
+  ].join("\n");
+}
+
+/** classify() over one file changed in place, which is most of what follows. */
+function inPlace(before, after, extra = {}) {
+  return classify({
+    basePaths: [B],
+    nowPaths: [B],
+    baseText: new Map([[B, before]]),
+    nowText: new Map([[B, after]]),
+    retired: [],
+    ...extra,
+  });
+}
+
+test("the four faculties are read off a real visual", () => {
+  const p = profile(animatedSource("SectorMap"));
+  assert.equal(p.markup, 8, "figure, canvas and six ticks");
+  assert.equal(p.canvas, 1);
+  assert.equal(p.paint, 4, "clearRect, beginPath, arc, fill");
+  assert.equal(p.motion.requestAnimationFrame, 2);
+  assert.ok(p.code > 0);
+});
+
+test("a stub that keeps ONE element does not clear the rule (s-48db case E)", () => {
+  // The named root cause: the round-one rule fired only at markupCount === 0,
+  // so one surviving tag cleared it and a 402-line visual collapsed to three
+  // lines fell through to a shrink note, which never blocks.
+  const before = animatedSource("SectorMap");
+  const after = `export default function SectorMap() {\n  return <div className="vis-frame" aria-hidden="true" />;\n}\n`;
+  assert.notEqual(markupCount(after), 0, "control: the round-one rule only fired at zero markup");
+  assert.notEqual(substance(after), "", "control: and it is not empty either");
+  const { failures } = inPlace(before, after);
+  assert.deepEqual(failures.map((f) => [f.kind, f.path]), [["gutted", B]]);
+  assert.ok(failures[0].detail.some((d) => d.includes("elements at the base")), failures[0].detail);
+});
+
+test("...and neither does one that keeps THREE", () => {
+  // The sibling four lines away. A fix that special-cased one element would
+  // leave this alive, which is this rig's most repeated failure.
+  const before = animatedSource("SectorMap");
+  const after = [
+    `export default function SectorMap() {`,
+    `  return (`,
+    `    <figure className="vis-frame">`,
+    `      <figcaption>Valle de Guadalupe</figcaption>`,
+    `      <div className="vis-tag" />`,
+    `    </figure>`,
+    `  );`,
+    `}`,
+  ].join("\n");
+  assert.equal(markupCount(after), 3);
+  const { failures } = inPlace(before, after);
+  assert.deepEqual(failures.map((f) => f.kind), ["gutted"]);
+});
+
+test("a re-export in place of a component is the same hole (s-48db case F)", () => {
+  const before = animatedSource("SectorMap");
+  const after = `import Placeholder from "@/components/Placeholder";\nexport default function SectorMap() {\n  return <Placeholder />;\n}\n`;
+  const { failures } = inPlace(before, after);
+  assert.deepEqual(failures.map((f) => f.kind), ["gutted"]);
+});
+
+test("a small visual is judged by what it lost, never by a ratio", () => {
+  // COLLAPSE_FLOOR is why one element of three reads as an edit and one of
+  // seventy-four as a deleted drawing.
+  assert.ok(1 / (COLLAPSE_FLOOR - 1) >= COLLAPSE, "control: below the floor no ratio can trip");
+  const tiny = `export default function Tag() {\n  return <p><b>x</b><i>y</i></p>;\n}\n`;
+  const smaller = `export default function Tag() {\n  return <p>x</p>;\n}\n`;
+  assert.equal(markupCount(tiny), 3, "control: three opening tags");
+  assert.equal(markupCount(smaller), 1);
+  const { failures } = inPlace(tiny, smaller);
+  assert.deepEqual(failures, []);
+});
+
+test("killing the animation loop is a deletion, with every line kept (s-48db case G)", () => {
+  // Two lines changed, 0 lines lost, all the markup intact, and round one did
+  // not even print a note. There was no animation predicate in the file at all.
+  const before = animatedSource("SectorMap");
+  const after = before.split("raf = requestAnimationFrame(frame);").join("raf = 0;");
+  assert.equal(lineCount(after), lineCount(before), "control: the line count did not move");
+  assert.equal(markupCount(after), markupCount(before), "control: every element is still there");
+  assert.equal(paintCount(after), paintCount(before), "control: it still draws");
+  const { failures } = inPlace(before, after);
+  assert.deepEqual(failures.map((f) => [f.kind, f.path]), [["stilled", B]]);
+  assert.match(failures[0].detail.join(" "), /requestAnimationFrame/);
+});
+
+test("an animation driver is counted on its own, never pooled into a total", () => {
+  // SectorMap.tsx debounces its resize handler with a setTimeout four lines
+  // from the loop. A single motion total would let the loop hide behind it.
+  const before = animatedSource("SectorMap") + '\nconst spin = "@keyframes spin { to { opacity: 1; } }";\n';
+  const after = before.split("raf = requestAnimationFrame(frame);").join("raf = 0;");
+  assert.equal(motionCounts(after)["@keyframes"], motionCounts(before)["@keyframes"], "control: another driver survives");
+  assert.ok(motionCounts(before)["@keyframes"] > 0);
+  const { failures } = inPlace(before, after);
+  assert.deepEqual(failures.map((f) => f.kind), ["stilled"]);
+});
+
+test("a canvas that stops taking a context has lost its drawing", () => {
+  const before = animatedSource("SectorMap");
+  const after = before.split("\n").filter((l) => !/getContext|ctx\./.test(l)).join("\n");
+  assert.equal(canvasCount(after), 0);
+  assert.equal(markupCount(after), markupCount(before), "control: the <canvas> element is still there");
+  const { failures } = inPlace(before, after);
+  assert.deepEqual(failures.map((f) => f.kind), ["gutted"]);
+});
+
+test("commenting a component out is deleting it, not keeping it", () => {
+  // Every faculty but the line count is measured on comment-stripped source,
+  // because a commented-out visual still counts its tags and its frames as text
+  // and the line count goes UP.
+  const before = animatedSource("SectorMap");
+  const after = `/*\n${before}\n*/\nexport default function SectorMap() {\n  return <div className="vis-frame" />;\n}\n`;
+  assert.ok(lineCount(after) > lineCount(before), "control: the file got longer");
+  assert.equal(markupCount(stripComments(after)), 1);
+  assert.equal(motionCounts(stripComments(after)).requestAnimationFrame, 0);
+  const { failures } = inPlace(before, after);
+  assert.equal(failures.length, 1);
+  assert.equal(failures[0].path, B);
+});
+
+test("a body that collapses to a fraction of itself is gutted, markup or not", () => {
+  const before = "export const steps = [\n" +
+    Array.from({ length: 120 }, (_, i) => `  { id: ${i}, label: "step ${i}", x: ${i * 3}, y: ${i * 5} },`).join("\n") +
+    "\n];\n";
+  assert.ok(substance(before).length >= CODE_FLOOR, "control: big enough to judge by ratio");
+  assert.equal(markupCount(before), 0, "control: no markup, so only the body rule can catch this");
+  const after = "export const steps = [\n  { id: 0, label: \"step 0\", x: 0, y: 0 },\n];\n";
+  const helper = `${WATCHED}/demos/steps.ts`;
+  const { failures } = classify({
+    basePaths: [helper],
+    nowPaths: [helper],
+    baseText: new Map([[helper, before]]),
+    nowText: new Map([[helper, after]]),
+    retired: [],
+  });
+  assert.deepEqual(failures.map((f) => f.kind), ["gutted"]);
+});
+
+test("a faculty that moved to another file under the tree is a note, not a failure", () => {
+  // Extracting a drawing into a helper takes paint to zero in the file that had
+  // it and loses nothing. The lines have to actually be there, and be NEW there.
+  const helper = `${WATCHED}/home/canvasKit.ts`;
+  const before = animatedSource("SectorMap");
+  const drawing = before
+    .split("\n")
+    .filter((l) => /ctx\.|getContext/.test(l))
+    .map((l) => l.trim());
+  const after = before.split("\n").filter((l) => !/ctx\.|getContext/.test(l)).join("\n");
+  const helperAfter = `export function draw(ctx) {\n  ${drawing.join("\n  ")}\n}\n`;
+  const { failures, notes } = classify({
+    basePaths: [B, helper],
+    nowPaths: [B, helper],
+    baseText: new Map([[B, before], [helper, "export function draw() {}\n"]]),
+    nowText: new Map([[B, after], [helper, helperAfter]]),
+    retired: [],
+  });
+  assert.deepEqual(failures, [], notes.map((n) => n.text).join("\n"));
+  assert.ok(notes.some((n) => n.kind === "moved" && n.text.includes(helper)), notes.map((n) => n.text).join("\n"));
+});
+
+test("...and a line the other file always had rescues nothing", () => {
+  // `raf = requestAnimationFrame(frame);` is a line four other visuals already
+  // have. Only lines the destination GAINED count, or every loop in the tree
+  // vouches for every loop that was cut out of it.
+  const other = `${WATCHED}/winery/VineField.tsx`;
+  const before = animatedSource("SectorMap");
+  const after = before.split("raf = requestAnimationFrame(frame);").join("raf = 0;");
+  const unchanged = animatedSource("VineField");
+  const { failures } = classify({
+    basePaths: [B, other],
+    nowPaths: [B, other],
+    baseText: new Map([[B, before], [other, unchanged]]),
+    nowText: new Map([[B, after], [other, unchanged]]),
+    retired: [],
+  });
+  assert.deepEqual(failures.map((f) => f.kind), ["stilled"]);
+});
+
+test("lostLines is the unit a faculty moves in, and facultyMoved needs it to be new", () => {
+  const before = "<figure>\n<canvas />\n<span />\nconst x = 1;";
+  const after = "const x = 1;";
+  const lost = lostLines(before, after, MARKUP_TAG);
+  assert.deepEqual(lost.sort(), ["<canvas />", "<figure>", "<span />"]);
+  assert.equal(facultyMoved(lost, [{ path: "p", before: "", after }]), null, "nothing gained them");
+  assert.equal(facultyMoved(lost, [{ path: "p", before, after: before }]), null, "it always had them");
+  assert.equal(facultyMoved(lost, [{ path: "p", before: "", after: before }]).to, "p");
+});
+
+/* ---------- a path kept is not a repository entry kept ---------- */
+
+test("a file on this disk and out of the index is gone (s-48db case K)", () => {
+  // `git rm --cached` plus a .gitignore line takes the visual out of every
+  // clone and every other worktree, and leaves this machine's copy behind.
+  const { failures } = classify({
+    basePaths: [A, B],
+    nowPaths: [A, B],
+    trackedNow: [A],
+    baseText: new Map([[B, animatedSource("SectorMap")]]),
+    retired: [],
+  });
+  assert.deepEqual(failures.map((f) => [f.kind, f.path]), [["untracked", B]]);
+  assert.match(failures[0].detail, /every clone/);
+});
+
+test("an unstaged rm is still a removal, which is why the disk is read at all", () => {
+  const { failures } = classify({
+    basePaths: [A, B],
+    nowPaths: [A],
+    trackedNow: [A, B],
+    baseText: new Map([[B, animatedSource("SectorMap")]]),
+    retired: [],
+  });
+  assert.deepEqual(failures.map((f) => [f.kind, f.path]), [["removed", B]]);
+});
+
+/* ---------- a rename is a move only where a visual can still be one ---------- */
+
+test("a rename onto a dead extension is a deletion (s-48db cases H and I)", () => {
+  // Round one printed "100% of its lines kept; a move inside components/pages/
+  // is not a deletion" for exactly this, and exited 0. A .tsx.bak is never
+  // compiled, never imported and never rendered.
+  const text = animatedSource("SectorMap");
+  for (const parked of [`${WATCHED}/home/SectorMap.tsx.bak`, `${WATCHED}/home/SectorMap.old.txt`]) {
+    assert.equal(isLiveSource(parked), false, parked);
+    const { failures } = classify({
+      basePaths: [B],
+      nowPaths: [parked],
+      trackedNow: [parked],
+      baseText: new Map([[B, text]]),
+      nowText: new Map([[parked, text]]),
+      retired: [],
+    });
+    assert.deepEqual(failures.map((f) => [f.kind, f.path]), [["removed", B]], parked);
+  }
+});
+
+test("isLiveSource is about what the build compiles", () => {
+  for (const live of ["a/b.tsx", "a/b.ts", "a/b.jsx", "a/b.mjs", "a/b.svg", "a/b.css"]) {
+    assert.equal(isLiveSource(live), true, live);
+  }
+  for (const dead of ["a/b.tsx.bak", "a/b.old.txt", "a/b.md", "a/b", "a/.keep", "a/b.tsx~"]) {
+    assert.equal(isLiveSource(dead), false, dead);
+  }
+});
+
+test("a recorded deletion needs a recorded arrival, an unstaged one does not", () => {
+  // The false positive to avoid is a move made by hand mid-edit: cp then rm,
+  // nothing staged, both ends untracked. The hole to close is a COMMITTED
+  // deletion excused by a file nobody else will ever get.
+  const moved = `${WATCHED}/home/SectorDiagram.tsx`;
+  const text = animatedSource("SectorMap");
+  const shared = {
+    basePaths: [B],
+    nowPaths: [moved],
+    baseText: new Map([[B, text]]),
+    nowText: new Map([[moved, text]]),
+    retired: [],
+  };
+
+  const byHand = classify({ ...shared, trackedNow: [B] });
+  assert.deepEqual(byHand.failures, [], "cp + rm, nothing staged: the index still has the source");
+  assert.deepEqual(byHand.notes.map((n) => n.kind), ["moved"]);
+
+  const committed = classify({ ...shared, trackedNow: [] });
+  assert.deepEqual(committed.failures.map((f) => f.kind), ["removed"], "the deletion is recorded, the arrival is not");
+});
+
+test("a rescued move is measured at its destination (s-48db case J)", () => {
+  // Round one stopped looking once a removal was called a move, so `git mv`
+  // plus stripping every markup line scored 84% and passed, while the identical
+  // content left under its own name failed as gutted. Renaming is not a
+  // discount: 84% because a 300-line component is only 49 lines of markup.
+  const moved = `${WATCHED}/home/SectorDiagram.tsx`;
+  const before = animatedSource("SectorMap", 6, 80);
+  const after = before.split("\n").filter((l) => !new RegExp(MARKUP_TAG.source).test(l)).join("\n");
+  assert.ok(
+    similarity(before, after) >= RENAME_THRESHOLD,
+    `control: git would still call this a rename (${similarity(before, after)})`,
+  );
+  const { failures, notes } = classify({
+    basePaths: [B],
+    nowPaths: [moved],
+    trackedNow: [moved],
+    baseText: new Map([[B, before]]),
+    nowText: new Map([[moved, after]]),
+    retired: [],
+  });
+  assert.deepEqual(failures.map((f) => [f.kind, f.path]), [["gutted", B]]);
+  assert.equal(failures[0].at, moved, "and it says where it measured");
+  assert.ok(notes.some((n) => n.kind === "moved"));
+});
+
+test("RETIRED still covers every shape, which is the only way out", () => {
+  const retired = [{ path: B, date: "2026-09-15", reason: "Daniel approved it" }];
+  const before = animatedSource("SectorMap");
+  const stub = `export default function SectorMap() {\n  return <div />;\n}\n`;
+  const stilled = before.split("raf = requestAnimationFrame(frame);").join("raf = 0;");
+  for (const [what, after] of [["gutted", stub], ["stilled", stilled], ["emptied", ""]]) {
+    const { failures } = inPlace(before, after, { retired });
+    assert.deepEqual(failures, [], what);
+  }
+  const gone = classify({ basePaths: [B], nowPaths: [], baseText: new Map([[B, before]]), retired });
+  assert.deepEqual(gone.failures, [], "removed");
+});
+
+/* ---------- and the same shapes against real git ---------- */
+
+/** A throwaway repo whose visual is a real component with a loop in it. */
+function repoWithAnimation() {
+  const dir = mkdtempSync(join(tmpdir(), "visuals-check-anim-"));
+  const git = (...args) => execFileSync("git", args, { cwd: dir, stdio: "ignore" });
+  git("init", "-q", "-b", "main");
+  git("config", "user.email", "test@example.com");
+  git("config", "user.name", "test");
+  mkdirSync(join(dir, WATCHED, "home"), { recursive: true });
+  writeFileSync(join(dir, B), animatedSource("SectorMap", 6, 80));
+  git("add", "-A");
+  git("commit", "-qm", "one animated visual");
+  return dir;
+}
+
+const runIn = (dir, argv = ["--base", "HEAD"]) => {
+  const out = [];
+  const code = main(argv, (m) => out.push(m), (m) => out.push(m), { cwd: dir, retired: [] });
+  return { code, text: out.join("\n") };
+};
+
+test("git rm --cached plus a .gitignore line fails against real git", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+
+  execFileSync("git", ["rm", "-q", "--cached", B], { cwd: dir, stdio: "ignore" });
+  writeFileSync(join(dir, ".gitignore"), `${B}\n`);
+  execFileSync("git", ["add", ".gitignore"], { cwd: dir, stdio: "ignore" });
+  execFileSync("git", ["commit", "-qm", "untrack it"], { cwd: dir, stdio: "ignore" });
+  assert.ok(readFileSync(join(dir, B), "utf8").length > 0, "control: the file is still on this disk");
+
+  const { code, text } = runIn(dir, ["--base", "HEAD^"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(B), text);
+  assert.match(text, /removed from the repository/);
+});
+
+test("a git mv onto .tsx.bak fails against real git", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+
+  execFileSync("git", ["mv", B, `${B}.bak`], { cwd: dir, stdio: "ignore" });
+  execFileSync("git", ["commit", "-qm", "retire it"], { cwd: dir, stdio: "ignore" });
+
+  const { code, text } = runIn(dir, ["--base", "HEAD^"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(B), text);
+});
+
+test("an unstaged cp then rm still passes against real git", (t) => {
+  // The bead's own constraint, and the false positive a stricter rename rule
+  // would introduce: a move made by hand, with nothing staged at either end.
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+
+  copyFileSync(join(dir, B), join(dir, WATCHED, "home", "SectorDiagram.tsx"));
+  rmSync(join(dir, B));
+
+  const { code, text } = runIn(dir);
+  assert.equal(code, 0, text);
+  assert.match(text, /moved to/);
+});
+
+test("the animation cut out in place fails against real git", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+
+  const src = readFileSync(join(dir, B), "utf8");
+  writeFileSync(join(dir, B), src.split("raf = requestAnimationFrame(frame);").join("raf = 0;"));
+
+  const { code, text } = runIn(dir);
+  assert.equal(code, 1, text);
+  assert.match(text, /lost its animation/);
+  assert.match(text, /Daniel's decision alone/);
+});
+
+test("VISUALS_BASE says so, because it is an off switch", (t) => {
+  // Undocumented in round one: with visuals deleted and committed,
+  // VISUALS_BASE=HEAD made the whole suite green and nothing printed why.
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  execFileSync("git", ["rm", "-q", B], { cwd: dir, stdio: "ignore" });
+  execFileSync("git", ["commit", "-qm", "delete it"], { cwd: dir, stdio: "ignore" });
+
+  const before = process.env.VISUALS_BASE;
+  process.env.VISUALS_BASE = "HEAD";
+  t.after(() => {
+    if (before === undefined) delete process.env.VISUALS_BASE;
+    else process.env.VISUALS_BASE = before;
+  });
+
+  const errs = [];
+  const code = main([], () => {}, (m) => errs.push(m), { cwd: dir, retired: [] });
+  assert.equal(code, 0, "control: an overridden baseline really does pass anything");
+  assert.match(errs.join("\n"), /VISUALS_BASE=HEAD/, "and it is on the record");
 });
 
 /* ---------- the wiring, which is the half that makes it enforcement ---------- */
