@@ -343,7 +343,7 @@ test("a visual that merely got smaller is a note, never a failure", () => {
   });
   assert.deepEqual(failures, []);
   assert.deepEqual(notes.map((n) => n.kind), ["shrink"]);
-  assert.ok(notes[0].text.includes(`${lineCount(before)} to ${lineCount(after)}`));
+  assert.ok(notes[0].text.includes(`${lineCount(before)} lines down to ${lineCount(after)}`));
 });
 
 test("a RETIRED entry covers its file being emptied as well as removed", () => {
@@ -637,9 +637,10 @@ test("lostLines is the unit a faculty moves in, and facultyMoved needs it to be 
   const after = "const x = 1;";
   const lost = lostLines(before, after, MARKUP_TAG);
   assert.deepEqual(lost.sort(), ["<canvas />", "<figure>", "<span />"]);
-  assert.equal(facultyMoved(lost, [{ path: "p", before: "", after }]), null, "nothing gained them");
-  assert.equal(facultyMoved(lost, [{ path: "p", before, after: before }]), null, "it always had them");
-  assert.equal(facultyMoved(lost, [{ path: "p", before: "", after: before }]).to, "p");
+  const live = "components/pages/home/draw-hub.tsx";
+  assert.equal(facultyMoved(lost, [{ path: live, before: "", after }]), null, "nothing gained them");
+  assert.equal(facultyMoved(lost, [{ path: live, before, after: before }]), null, "it always had them");
+  assert.equal(facultyMoved(lost, [{ path: live, before: "", after: before }]).to, live);
 });
 
 /* ---------- a path kept is not a repository entry kept ---------- */
@@ -891,4 +892,111 @@ test("node scripts/copy-check.mjs <page> fails on a deleted visual", (t) => {
   assert.ok(broken.stdout.includes(B), "the failure names the file");
   assert.match(broken.stdout, /REWIRES a visual/);
   assert.ok(!broken.stdout.includes("page(s) clean"), "and it stops before copy-check can say clean");
+});
+
+/* ---------- rule 6: a faculty moves only where it can still be a visual ---------- */
+
+// The body of the visual, kept verbatim, parked somewhere it cannot render.
+// Before rule 6 every one of these excused the gutting and the guard said so in
+// its own output: "drawing operations moved to .../SectorMap.old.txt", exit 0.
+const GUTTED = `export default function SectorMap() {\n  return <div className="vis-frame" />;\n}`;
+
+const gutWithCopyAt = (copy, trackedNow) =>
+  classify({
+    basePaths: [B],
+    nowPaths: [B, copy],
+    trackedNow,
+    baseText: new Map([[B, visualSource("SectorMap")]]),
+    nowText: new Map([[B, GUTTED], [copy, visualSource("SectorMap")]]),
+    retired: [],
+  });
+
+test("a copy parked on a dead extension does not rescue a gutting (s-4009 case AC)", () => {
+  // The exact destination rule 4 already rejects for a removal, committed.
+  const copy = `${WATCHED}/home/SectorMap.old.txt`;
+  assert.equal(isLiveSource(copy), false, "control: .old.txt is not a file the build compiles");
+  const { failures, notes } = gutWithCopyAt(copy, [B, copy]);
+  assert.equal(failures.length, 1, JSON.stringify(notes));
+  assert.equal(failures[0].path, B);
+  assert.equal(failures[0].kind, "gutted");
+  assert.ok(!notes.some((n) => n.text.includes(copy)), "and it is not named as the drawing's new home");
+});
+
+test("an untracked sibling does not rescue a gutting (s-4009 case AB)", () => {
+  // A live extension this time, so only the index answers it: a file nobody
+  // else will ever get is a scratch copy, not the drawing's new home.
+  const copy = `${WATCHED}/home/SectorMapLegacy.tsx`;
+  assert.equal(isLiveSource(copy), true, "control: .tsx is a file the build compiles");
+  const { failures } = gutWithCopyAt(copy, [B]);
+  assert.equal(failures.length, 1);
+  assert.equal(failures[0].path, B);
+});
+
+test("rule 6 keeps the counterweight it was added to: a tracked helper still rescues", () => {
+  // Same content and the same extension as the case above. The only difference
+  // is that the index records it, so an extract-to-helper is still not a
+  // false positive. This is the pair that proves rule 6 cuts where it means to.
+  const copy = `${WATCHED}/home/draw-hub.tsx`;
+  const { failures, notes } = gutWithCopyAt(copy, [B, copy]);
+  assert.deepEqual(failures, []);
+  assert.ok(notes.some((n) => n.kind === "moved" && n.text.includes(copy)));
+});
+
+test("facultyMoved applies rule 4's two tests itself", () => {
+  const lost = ["<figure>"];
+  const arrival = (path) => [{ path, before: "", after: "<figure>" }];
+  assert.equal(facultyMoved(lost, arrival("a/b/park.tsx.bak")), null, "a dead extension is no home");
+  assert.equal(facultyMoved(lost, arrival("a/b/park.txt")), null, "nor is a .txt");
+  assert.equal(facultyMoved(lost, arrival("a/b/live.tsx")).to, "a/b/live.tsx");
+  assert.equal(
+    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/other.tsx"])),
+    null,
+    "a live file the index does not know about is no home either",
+  );
+  assert.equal(facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/live.tsx"])).to, "a/b/live.tsx");
+});
+
+/* ---------- rule 7: the band that passes does not pass in silence ---------- */
+
+test("a faculty in the residual band is a note even when the line count does not move", () => {
+  // s-4009 case AL: 26 of 74 elements, just above COLLAPSE, and the file went
+  // 402 lines to 398, so the line-count spine printed nothing at all.
+  const rects = (n) => Array.from({ length: n }, (_, i) => `      <rect x={${i}} />`).join("\n");
+  const pad = (n) => Array.from({ length: n }, () => `      const pad = 1;`).join("\n");
+  const before = visualSource("SectorMap", rects(20));
+  const after = visualSource("SectorMap", `${rects(7)}\n${pad(13)}`);
+  assert.equal(lineCount(before), lineCount(after), "control: the line count does not move at all");
+
+  const { failures, notes } = classify({
+    basePaths: [B],
+    nowPaths: [B],
+    baseText: new Map([[B, before]]),
+    nowText: new Map([[B, after]]),
+    retired: [],
+  });
+  assert.deepEqual(failures, [], "still not a failure: it kept more than COLLAPSE");
+  assert.deepEqual(notes.map((n) => n.kind), ["shrink"]);
+  assert.match(notes[0].text, /elements 22 down to 9 \(41%\)/);
+});
+
+test("the shrink note leads with the faculties and puts the line count last", () => {
+  // N3: a gutting can make a file LONGER, so the line count is a weak spine.
+  // When both shrink, the measurement comes first and what got noticed second.
+  const rects = (n) => Array.from({ length: n }, (_, i) => `      <rect x={${i}} />`).join("\n");
+  const before = visualSource("SectorMap", rects(40));
+  const after = visualSource("SectorMap", rects(14));
+  const verdict = compareVisual(B, before, after);
+  assert.equal(verdict.note.kind, "shrink");
+  const text = verdict.note.text;
+  assert.ok(text.includes("elements"), text);
+  assert.ok(text.includes("lines down to"), text);
+  assert.ok(text.indexOf("elements") < text.indexOf("lines down to"), `faculties must lead: ${text}`);
+});
+
+test("a faculty too small for a ratio to mean anything is not a note", () => {
+  // The same floor the gutted rule uses: 1 of 3 is an edit, 1 of 63 is a loss.
+  const before = visualSource("SectorMap");
+  assert.ok(markupCount(before) < COLLAPSE_FLOOR, "control: this visual has few tags");
+  const verdict = compareVisual(B, before, before);
+  assert.equal(verdict, null);
 });

@@ -89,9 +89,48 @@
  *    component is only 49 unique lines of markup) and passed, while the exact
  *    same content left under its own name failed. Renaming is not a discount.
  *
+ * 6. The same two tests decide where a FACULTY may move to. facultyMoved() is
+ *    the counterweight that stops an extract-to-helper being a false positive,
+ *    and round two gave it no liveness test at all, so a copy parked beside the
+ *    gutted file excused every faculty it lost: review s-4009 gutted
+ *    SectorMap.tsx in place, left the body as SectorMap.old.txt, and the guard
+ *    printed "drawing operations moved to components/pages/home/SectorMap.old
+ *    .txt" and exited 0, on the exact destination rule 4 rejects for a removal.
+ *    A destination good enough to rescue a removal is the only destination good
+ *    enough to rescue a gutting, so rule 4's predicate is applied here too: the
+ *    arrival must be a file the build compiles AND a file the index records.
+ *    An untracked sibling is a scratch copy, not the drawing's new home.
+ *
+ * 7. The band that passes does not pass in silence, and the faculties lead the
+ *    note. Between COLLAPSE and SHRINK_NOTE a visual is smaller but not gone,
+ *    which is legitimate and must not block. Round two measured that band on
+ *    the LINE COUNT alone, and the line count is a weak spine for a rule about
+ *    drawings: s-4009 cut 74 elements to 26 (35%, just above COLLAPSE) while
+ *    the file went 402 lines to 398, and the guard printed nothing at all. So
+ *    every faculty is compared against SHRINK_NOTE, not just the body, and the
+ *    note reads elements first and lines last.
+ *
  * Every failure names the file and its line count at the base, because the line
  * count is what got noticed (6157 lines of animation across hq-4pu0q.3 and
  * hq-4pu0q.4) and a path alone does not carry that.
+ *
+ * WHAT THIS CHECK CANNOT DO, stated here rather than implied away. It reads
+ * source as TEXT, so it cannot tell live code from dead code. Wherever a
+ * drawing's text survives but nothing renders it, the faculties still count and
+ * this check stays quiet. Review s-4009 demonstrated three shapes it does not
+ * catch, and two of them are still open on purpose:
+ *
+ *   - the body kept as an uncalled function with a stub exported in its place
+ *     (the file gets LONGER, every faculty intact, the page renders an empty
+ *     div)
+ *   - the paint calls kept verbatim but aimed at a no-op object, so `.fill(` is
+ *     still there and the receiver draws nothing
+ *
+ * Closing that class means asking the BUILD what renders instead of asking the
+ * source what it says, which is a different measurement with its own Definition
+ * of Done: hq-4pu0q.23. Do not read a green run of this check as proof that a
+ * visual still renders. It proves the drawing's substance is still in the tree,
+ * in a file the build compiles, which is less than that and worth having.
  *
  * RETIRED is the only way out, and retiring an animation is Daniel's decision
  * alone. An entry covers its path being removed, emptied, gutted or stilled.
@@ -368,11 +407,19 @@ export function lostLines(before, after, pattern) {
  *
  * It cannot excuse a deletion: the source has to actually still be there, in a
  * live file under the watched tree, at git's own rename threshold.
+ *
+ * "Live file" is rule 4's own predicate, applied here for the reason in rule 6:
+ * a destination good enough to rescue a REMOVAL is the only destination good
+ * enough to rescue a GUTTING. `inIndex` is the set of paths the repository
+ * knows about, or null for "do not ask", which is what a unit test wants.
  */
-export function facultyMoved(lost, elsewhere) {
+export function facultyMoved(lost, elsewhere, inIndex = null) {
   if (lost.length === 0) return null;
   for (const { path, before = "", after } of elsewhere) {
     if (after === undefined) continue;
+    // Rule 6: a parking space is not a new home, in either direction.
+    if (!isLiveSource(path)) continue;
+    if (inIndex !== null && !inIndex.has(path)) continue;
     const had = new Set(trimmedLines(before));
     const has = new Set(trimmedLines(after));
     let gained = 0;
@@ -386,13 +433,14 @@ export function facultyMoved(lost, elsewhere) {
 /**
  * The substance half of the rule: what the visual had against what it has,
  * wherever it now lives. `path` is the base path (what the worker has to put
- * back) and `at` is where it lives now, the same path unless it moved.
+ * back) and `at` is where it lives now, the same path unless it moved, and
+ * `inIndex` is passed through to facultyMoved, which needs it for rule 6.
  *
  * Returns one failure, or one note, or null. A visual that lost its markup AND
  * its animation is one deleted visual carrying two reasons, not two failures,
  * and the headline is the loss a reader recognises first.
  */
-export function compareVisual(path, before, after, at = path, elsewhere = []) {
+export function compareVisual(path, before, after, at = path, elsewhere = [], inIndex = null) {
   const b = profile(before);
   const n = profile(after);
   const reasons = [];
@@ -446,7 +494,7 @@ export function compareVisual(path, before, after, at = path, elsewhere = []) {
   // A faculty that turned up somewhere else under the watched tree moved house.
   const moved = [];
   const lost = reasons.filter((r) => {
-    const where = facultyMoved(lostLines(before, after, r.pattern), elsewhere);
+    const where = facultyMoved(lostLines(before, after, r.pattern), elsewhere, inIndex);
     if (!where) return true;
     moved.push(`${r.what ?? "its source"} moved to ${where.to} (${pct(where.score)} of the lines that left)`);
     return false;
@@ -470,11 +518,39 @@ export function compareVisual(path, before, after, at = path, elsewhere = []) {
     };
   }
 
-  if (b.lines > 0 && n.lines / b.lines < SHRINK_NOTE) {
+  // Rule 7: the band between COLLAPSE and SHRINK_NOTE passes, but it does not
+  // pass in silence, and the faculties lead because they are the measurement.
+  const shrunk = [];
+  const shrank = (was, now) => was > 0 && now / was < SHRINK_NOTE;
+  const down = (was, now, what) => `${what} ${was} down to ${now} (${pct(now / was)})`;
+
+  for (const [faculty, what] of [
+    ["markup", "elements"],
+    ["paint", "drawing operations"],
+    ["canvas", "canvas context(s)"],
+  ]) {
+    if (b[faculty] >= COLLAPSE_FLOOR && shrank(b[faculty], n[faculty])) {
+      shrunk.push(down(b[faculty], n[faculty], what));
+    }
+  }
+  for (const name of Object.keys(MOTION_DRIVERS)) {
+    if (b.motion[name] >= COLLAPSE_FLOOR && shrank(b.motion[name], n.motion[name])) {
+      shrunk.push(down(b.motion[name], n.motion[name], `${name} call(s)`));
+    }
+  }
+  if (b.code >= CODE_FLOOR && shrank(b.code, n.code)) {
+    shrunk.push(`${pct(n.code / b.code)} of its source left, comments and whitespace aside`);
+  }
+  // The line count goes last. It is what got noticed, not what is measured:
+  // a gutting can make a file LONGER (see rule 7).
+  if (shrank(b.lines, n.lines)) shrunk.push(`${b.lines} lines down to ${n.lines}`);
+
+  if (shrunk.length) {
     return {
       note: {
         kind: "shrink",
-        text: `${path} went from ${b.lines} to ${n.lines} lines; not a failure, but say in the bead what left`,
+        text: `${path} kept its faculties but they got smaller: ${shrunk.join("; ")}` +
+          `; not a failure, but say in the bead what left`,
       },
     };
   }
@@ -592,7 +668,7 @@ export function classify({
       .filter((q) => q !== at)
       .map((q) => ({ path: q, before: baseText.get(q) ?? "", after: nowText.get(q) }));
 
-    const verdict = compareVisual(path, before, after, at, elsewhere);
+    const verdict = compareVisual(path, before, after, at, elsewhere, trackedNow === null ? null : inIndex);
     if (!verdict) continue;
     if (verdict.failure) failures.push(verdict.failure);
     else notes.push(verdict.note);
