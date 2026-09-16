@@ -175,6 +175,25 @@ describe("the counts the basis paragraph is accountable for", () => {
   }
 
   /**
+   * The structure diagram's own svg, found by its accessible name.
+   *
+   * Round three blocked because the count below split the WHOLE page on the
+   * label: one "unpublished" text node anywhere in any other diagram bought the
+   * paragraph another unpublished homepage, and the reviewer added one to the
+   * PAYMENTS diagram and watched the page publish five with every check green.
+   * The count is only meaningful inside the drawing it is accounting for.
+   */
+  function structureSvg(markup: string, aria: string): string {
+    const at = markup.indexOf(`aria-label="${aria}"`);
+    expect(at, "no svg on the page carries the structure diagram's accessible name").toBeGreaterThan(-1);
+    const open = markup.lastIndexOf("<svg", at);
+    const close = markup.indexOf("</svg>", at);
+    expect(open, "the structure diagram's accessible name is not on an svg").toBeGreaterThan(-1);
+    expect(close, "the structure diagram's svg is never closed").toBeGreaterThan(open);
+    return markup.slice(open, close);
+  }
+
+  /**
    * Occurrences of one exact SVG text node. Not a substring count: "we
    * unpublished" in the basis prose and "unpublished" as a row label are the
    * same word, and it is the rows that are being counted.
@@ -197,9 +216,10 @@ describe("the counts the basis paragraph is accountable for", () => {
     });
 
     it(`${locale}: the basis sentence's homepage count is the rows drawn unpublished`, () => {
-      const markup = basisMarkup(locale);
-      const down = labelled(markup, d.vis.structure.unpublished);
-      const kept = labelled(markup, d.vis.structure.canonical);
+      // Scoped to the structure diagram, never the whole page: see structureSvg.
+      const diagram = structureSvg(basisMarkup(locale), d.vis.structure.aria);
+      const down = labelled(diagram, d.vis.structure.unpublished);
+      const kept = labelled(diagram, d.vis.structure.canonical);
       // The fifth front door is not a deletion, it is the store that survived,
       // so it is drawn and it is not counted.
       expect(down, "the structure diagram draws no unpublished row").toBeGreaterThan(0);
@@ -221,6 +241,75 @@ describe("the counts the basis paragraph is accountable for", () => {
       ).toBeTruthy();
       const n = NUMERALS[(invitation as RegExpMatchArray)[1].toLowerCase()];
       expect(claimed(locale, "staff")).toEqual([n]);
+    });
+
+    it(`${locale}: every numeral in the basis sentence belongs to a claim this suite reads`, () => {
+      // Round three of hq-4pu0q.5 blocked here (review s-181c), and the block is
+      // the round-two block repeating one level up. Round two's diagnosis was
+      // that a guard pinning a fixed list of what was in the paragraph when the
+      // guard was written does not notice a new claim ADDED to it. CLAIMS was
+      // that same fixed list, one regex per claim instead of one constant per
+      // claim, so a fifth count was simply unread: the reviewer made the
+      // sentence say the store serves eight languages, the page draws two, and
+      // every DoD check stayed green including the block named after this
+      // paragraph.
+      //
+      // So the accounting runs the other way here. Every numeral in the
+      // sentence has to fall inside a claim the cases above actually check. A
+      // count nobody reads is a count nobody is holding to the page.
+      const sentence = enkanto[locale].facts.basis;
+
+      // The build date is a date, not a count. Removed by span so the numerals
+      // inside it are not mistaken for claims, and asserted to be there, since
+      // a sentence that stops carrying its date should fail rather than quietly
+      // widen what this case permits.
+      const dateRe =
+        locale === "en"
+          ? /\bon \d{1,2} [A-Z][a-z]+ \d{4}\b/
+          : /\bal \d{1,2} de [a-zá-ú]+ de \d{4}\b/;
+      const date = dateRe.exec(sentence);
+      expect(date, "the basis sentence no longer dates the build").not.toBeNull();
+      const dateSpan: [number, number] = [
+        date!.index,
+        date!.index + date![0].length,
+      ];
+
+      // Spans the four cases above are accountable for.
+      const covered: Array<[number, number]> = [dateSpan];
+      for (const claim of Object.keys(CLAIMS[locale])) {
+        const m = CLAIMS[locale][claim].exec(sentence);
+        expect(m, `the basis sentence no longer states its ${claim} claim`).not.toBeNull();
+        covered.push([m!.index, m!.index + m![0].length]);
+      }
+
+      // Detection vocabulary, deliberately wider than the value map above: this
+      // has to notice a numeral it cannot evaluate, because an unreadable count
+      // is exactly as unheld as an unread one. Digits are caught whatever they
+      // spell.
+      const WORDS = [
+        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+        "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty",
+        "fifty", "sixty", "seventy", "eighty", "ninety", "hundred", "thousand",
+        "un", "una", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete",
+        "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince",
+        "dieciséis", "diecisiete", "dieciocho", "diecinueve", "veinte",
+        "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta",
+        "noventa", "cien", "ciento", "mil",
+      ];
+      const numeral = new RegExp(`\\d+|\\b(?:${WORDS.join("|")})\\b`, "gi");
+
+      const unaccounted: string[] = [];
+      for (let m = numeral.exec(sentence); m !== null; m = numeral.exec(sentence)) {
+        const at = m.index;
+        const inside = covered.some(([from, to]) => at >= from && at < to);
+        if (!inside) unaccounted.push(`"${m[0]}" at ${at}`);
+      }
+
+      expect(
+        unaccounted,
+        `the basis sentence publishes a count no case in this block reads, so nothing holds it to the page: ${unaccounted.join(", ")}. Add a pattern to CLAIMS and a case that compares it with what the page draws.`,
+      ).toEqual([]);
     });
   }
 });
