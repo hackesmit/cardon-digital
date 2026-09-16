@@ -113,6 +113,116 @@ describe("the counts the basis paragraph is accountable for", () => {
     const en = enkanto.en.system.modules.flatMap((m) => m.screens);
     expect(en).toEqual(es);
   });
+
+  /**
+   * The numerals in the basis SENTENCE, against what the page draws.
+   *
+   * Round two of hq-4pu0q.5 blocked here. The sentence said five homepages
+   * were unpublished; the diagram draws four unpublished and a fifth kept as
+   * the canonical store. Every case above stayed green through that, because
+   * each compares the dictionary with a constant that restates the sentence
+   * rather than with the sentence itself. The basis paragraph's whole job is
+   * to account for the numbers above it, so its numerals have to be read out
+   * of the prose and compared with the page. A count this paragraph claims and
+   * the page does not draw is the defect, whichever of the four it is.
+   */
+  const NUMERALS: Record<string, number> = {
+    one: 1, two: 2, three: 3, four: 4, five: 5,
+    six: 6, seven: 7, eight: 8, nine: 9, ten: 10, nineteen: 19,
+    un: 1, una: 1, uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5,
+    seis: 6, siete: 7, ocho: 8, nueve: 9, diez: 10, diecinueve: 19,
+  };
+
+  /**
+   * Each claim the basis sentence makes, per locale, as the pattern that finds
+   * its numerals. Written against the sentence, so rewording the sentence
+   * without updating this table fails loudly instead of quietly asserting
+   * nothing: a pattern that stops matching is its own failing case.
+   */
+  const CLAIMS: Record<Locale, Record<string, RegExp>> = {
+    en: {
+      modules: /\b([a-z]+) modules\b/,
+      screens: /\b([a-z]+) screens named here in lists of ([a-z]+), ([a-z]+) and ([a-z]+)\b/,
+      staff: /\b([a-z]+) staff positions\b/,
+      homepages: /\b([a-z]+) homepages we unpublished\b/,
+    },
+    es: {
+      modules: /\b([a-záéíóúñ]+) módulos\b/,
+      screens: /las ([a-záéíóúñ]+) pantallas nombradas aquí en listas de ([a-záéíóúñ]+), ([a-záéíóúñ]+) y ([a-záéíóúñ]+)\b/,
+      staff: /\b([a-záéíóúñ]+) puestos de personal\b/,
+      homepages: /las ([a-záéíóúñ]+) páginas de inicio que despublicamos\b/,
+    },
+  };
+
+  /** Every numeral the named claim captures, as numbers. */
+  function claimed(locale: Locale, claim: string): number[] {
+    const found = enkanto[locale].facts.basis.match(CLAIMS[locale][claim]);
+    expect(
+      found,
+      `the basis sentence no longer states its ${claim} claim in ${locale}`,
+    ).toBeTruthy();
+    return (found as RegExpMatchArray).slice(1).map((word) => {
+      const n = NUMERALS[word.toLowerCase()];
+      expect(n, `"${word}" is not a numeral this table knows`).toBeDefined();
+      return n;
+    });
+  }
+
+  function basisMarkup(locale: Locale): string {
+    return renderToStaticMarkup(
+      React.createElement(EnkantoCaseStudy, { params: { locale } }),
+    );
+  }
+
+  /**
+   * Occurrences of one exact SVG text node. Not a substring count: "we
+   * unpublished" in the basis prose and "unpublished" as a row label are the
+   * same word, and it is the rows that are being counted.
+   */
+  function labelled(markup: string, label: string): number {
+    return markup.split(`>${label}</text>`).length - 1;
+  }
+
+  for (const locale of locales) {
+    const d = enkanto[locale];
+
+    it(`${locale}: the basis sentence's module count is the number of modules`, () => {
+      expect(claimed(locale, "modules")).toEqual([d.system.modules.length]);
+    });
+
+    it(`${locale}: the basis sentence's screen total and split are the module lists`, () => {
+      const lengths = d.system.modules.map((m) => m.screens.length);
+      const total = lengths.reduce((a, b) => a + b, 0);
+      expect(claimed(locale, "screens")).toEqual([total, ...lengths]);
+    });
+
+    it(`${locale}: the basis sentence's homepage count is the rows drawn unpublished`, () => {
+      const markup = basisMarkup(locale);
+      const down = labelled(markup, d.vis.structure.unpublished);
+      const kept = labelled(markup, d.vis.structure.canonical);
+      // The fifth front door is not a deletion, it is the store that survived,
+      // so it is drawn and it is not counted.
+      expect(down, "the structure diagram draws no unpublished row").toBeGreaterThan(0);
+      expect(kept, "the structure diagram draws no canonical store row").toBe(1);
+      expect(claimed(locale, "homepages")).toEqual([down]);
+    });
+
+    it(`${locale}: the basis sentence's staff count is the count the demo invitation gives`, () => {
+      // The page's only corroboration for this one is its own other sentence,
+      // so the two are held together rather than left to drift apart.
+      const invitation = d.system.demo.body.match(
+        locale === "en"
+          ? /\bany of the ([a-z]+) positions\b/
+          : /\buno de los ([a-záéíóúñ]+) puestos\b/,
+      );
+      expect(
+        invitation,
+        "the demo invitation no longer states a position count",
+      ).toBeTruthy();
+      const n = NUMERALS[(invitation as RegExpMatchArray)[1].toLowerCase()];
+      expect(claimed(locale, "staff")).toEqual([n]);
+    });
+  }
 });
 
 describe("the result placeholder cannot reach the live site", () => {

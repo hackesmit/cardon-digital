@@ -80,7 +80,7 @@ const en = {
     ],
     basisK: "Basis",
     basis:
-      "No En'kanto revenue figure is published here, and no result from the system's use, because it is not in service there yet. The counts of the build on 9 September 2026 are: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions, and the five homepages we unpublished.",
+      "No En'kanto revenue figure is published here, and no result from the system's use, because it is not in service there yet. The counts of the build on 9 September 2026 are: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions, and the four homepages we unpublished.",
   },
   before: {
     kicker: "Before",
@@ -312,7 +312,7 @@ const es: typeof en = {
     ],
     basisK: "Base",
     basis:
-      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los conteos de la construcción al 9 de septiembre de 2026 son: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal, y las cinco páginas de inicio que despublicamos.",
+      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los conteos de la construcción al 9 de septiembre de 2026 son: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal, y las cuatro páginas de inicio que despublicamos.",
   },
   before: {
     kicker: "Antes",
