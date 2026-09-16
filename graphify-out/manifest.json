@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1788974449.6573439,
-    "ast_hash": "2e4d8cd353241e021d98ff6f59144110",
+    "mtime": 1789512198.4996107,
+    "ast_hash": "a7d066ef1c29a747c64750b276634846",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
-    "mtime": 1788341569.9023552,
-    "ast_hash": "2330d009258fdf7d9820c4aff5392ff4",
+    "mtime": 1789457713.0963469,
+    "ast_hash": "ecfa5b2f88273159e7b0bf740c74b26e",
     "semantic_hash": ""
   },
   "public/media/enkanto-valle.webp": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1788935476.2620747,
-    "ast_hash": "2889191d8678c1e698b63fa59cf11ff7",
+    "mtime": 1789512198.4955723,
+    "ast_hash": "d0d64f5174716b040aedb2e1fac48fbd",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1788975816.8890545,
-    "ast_hash": "d3af108e667017c3d7435b895b5dba1f",
+    "mtime": 1789512198.4996107,
+    "ast_hash": "b6cbab1d14fc760d480ecf63519d392a",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -635,8 +635,8 @@
     "semantic_hash": ""
   },
   "lib/demo.ts": {
-    "mtime": 1788977333.5452964,
-    "ast_hash": "2a326f92fde13d09db3abd7d3fa2b692",
+    "mtime": 1789502454.520521,
+    "ast_hash": "1b57101a19337d53d8614b15dfe5ca88",
     "semantic_hash": ""
   },
   "components/pages/modulos/BridgeMap.test.ts": {
@@ -697,6 +697,86 @@
   "lib/i18n/demo.ts": {
     "mtime": 1788977333.5452964,
     "ast_hash": "770a480bd98a6d35a91d5397b3170f01",
+    "semantic_hash": ""
+  },
+  "components/site/Media.test.tsx": {
+    "mtime": 1789457713.0963469,
+    "ast_hash": "bda94df4506e8dbbab414a29f40dcd7c",
+    "semantic_hash": ""
+  },
+  "components/site/Media.tsx": {
+    "mtime": 1789457713.0963469,
+    "ast_hash": "a5659eaf1ef083a02d6500245f612796",
+    "semantic_hash": ""
+  },
+  "vitest.config.ts": {
+    "mtime": 1789484778.5958872,
+    "ast_hash": "c6887a712d377375b576fb2fbf6d2440",
+    "semantic_hash": ""
+  },
+  "docs/media-clearances.md": {
+    "mtime": 1789457713.0963469,
+    "ast_hash": "eae24488320b6ae302211b05aa3d7ada",
+    "semantic_hash": ""
+  },
+  "public/media/README.md": {
+    "mtime": 1789457713.0963469,
+    "ast_hash": "582666652cdf3007358a957165ffa638",
+    "semantic_hash": ""
+  },
+  "components/pages/demos/RestauranteDemo.tsx": {
+    "mtime": 1789484778.594369,
+    "ast_hash": "d968e3218fb9f99e65eddca49f1dbd1d",
+    "semantic_hash": ""
+  },
+  "components/pages/demos/demos.test.ts": {
+    "mtime": 1789484778.5958872,
+    "ast_hash": "2deef0573aecbcd5ec223081d93d4920",
+    "semantic_hash": ""
+  },
+  "components/pages/demos/floor.ts": {
+    "mtime": 1789484778.5958872,
+    "ast_hash": "c30461d5306d81947f11933e0a1c8c1d",
+    "semantic_hash": ""
+  },
+  "components/pages/demos/motion.ts": {
+    "mtime": 1789484778.5958872,
+    "ast_hash": "a9b9c76e4e09f41354e3285ecb6cf2f4",
+    "semantic_hash": ""
+  },
+  "components/pages/demos/palette.ts": {
+    "mtime": 1789484778.5958872,
+    "ast_hash": "a2bfc389f7166bdfcf76e92ff0a0d33b",
+    "semantic_hash": ""
+  },
+  "lib/i18n/demos.ts": {
+    "mtime": 1789484778.5958872,
+    "ast_hash": "0fffc78f9850620562fec42c731dfe90",
+    "semantic_hash": ""
+  },
+  "scripts/copy-check.mjs": {
+    "mtime": 1789490255.6647034,
+    "ast_hash": "a32a5198592779b48cf18ce0674fb235",
+    "semantic_hash": ""
+  },
+  "scripts/copy-check.test.mjs": {
+    "mtime": 1789490255.6667955,
+    "ast_hash": "f727a48912fb7c4b308df7d1ced33f1d",
+    "semantic_hash": ""
+  },
+  "docs/copy-doctrine.md": {
+    "mtime": 1789512198.4996107,
+    "ast_hash": "fa4de77778622f21fe563a845a9ed3e1",
+    "semantic_hash": ""
+  },
+  "scripts/visuals-check.mjs": {
+    "mtime": 1789512198.4996107,
+    "ast_hash": "4d1db1cf58cdc61868b322aa01c7d9bf",
+    "semantic_hash": ""
+  },
+  "scripts/visuals-check.test.mjs": {
+    "mtime": 1789512198.4996107,
+    "ast_hash": "4f2f854c592cc10e693d7655f8e7377f",
     "semantic_hash": ""
   }
 }
