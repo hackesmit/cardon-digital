@@ -12,6 +12,7 @@ import {
   workedExamples,
 } from "../pricing";
 import type { Locale } from "./config";
+import { modulos } from "./modulos";
 import {
   bridgesSentence,
   comboName,
@@ -327,4 +328,40 @@ describe("/precios keeps the scoping earlier rounds added", () => {
     expect(text).not.toMatch(/\bla demo\b|\blas demos\b/i);
     expect(text).toMatch(/\bel demo\b/i);
   });
+
+  it.each(["en", "es"] as const)(
+    "%s: whoever stamps the invoice is the INVOICING provider, not the payment one",
+    (locale) => {
+      // Round two of hq-4pu0q.7 blocked here (review s-51fa). The absorbed
+      // payments clause said "your provider stamps the invoice" one clause
+      // after naming the PAYMENT provider the link runs on, so it read as the
+      // payment provider stamping the CFDI. modulos.ts owns this claim and is
+      // explicit: "the stamping is done by your own invoicing provider and we
+      // never imply otherwise". The merge base never mentioned stamping at all,
+      // so the ambiguity arrived with the rewrite.
+      const sentence = precios[locale].floors.modules.restaurante.limit;
+      const stamping =
+        locale === "en" ? /stamps the invoice/i : /timbra la factura/i;
+      const invoicing =
+        locale === "en"
+          ? /invoicing provider stamps the invoice/i
+          : /proveedor de facturaci[oó]n timbra la factura/i;
+      // Only binding when the sentence makes the claim at all. If a later
+      // rewrite drops stamping entirely that is a dropped-condition question
+      // for hq-4pu0q.15, not a false failure here.
+      if (stamping.test(sentence)) expect(sentence).toMatch(invoicing);
+
+      // And it still agrees with the policy source it was absorbed from.
+      const source = modulos[locale].modules.find((m) => m.id === "restaurante");
+      expect(source, "the restaurante module copy moved").toBeDefined();
+      const sourceInvoicing =
+        locale === "en"
+          ? /stamping is done by your own invoicing provider/i
+          : /timbrado lo hace su propio proveedor de facturaci[oó]n/i;
+      expect(
+        source!.policy,
+        "the policy source moved, check this clause by hand",
+      ).toMatch(sourceInvoicing);
+    },
+  );
 });
