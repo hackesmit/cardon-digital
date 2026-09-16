@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
 import PricingDetails from "@/components/pages/precios/PricingDetails";
+import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
-import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
+import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
@@ -32,12 +32,21 @@ export function generateMetadata({ params }: Params): Metadata {
  * the Diagnostico sets the quote. Never the per-size table, the hours, the
  * rates, the scope factor, the concession percentages, the build-only prices,
  * the early-exit numbers, or the name of any payment provider.
+ *
+ * Bead hq-4pu0q.7 rewrote the copy against docs/copy-doctrine.md and changed
+ * three things about the page itself. One action is repeated verbatim, the
+ * Growth Diagnostic in site.ts, in the hero and again at the close, so a reader
+ * is asked for one thing rather than four phrasings of it. The two links to
+ * /modulos are gone, because the module detail a buyer needs now sits on the
+ * floor cards and that page is being retired. And the four-bullet breakdown of
+ * the Diagnostic under the closing call to action is a photograph instead: it
+ * is the same argument, and a caption is read by about twice as many people as
+ * the copy around it.
  */
 export default function PreciosPage({ params }: Params) {
   const locale = localeOf(params);
   const d = precios[locale];
   const s = site[locale];
-  const href = (path: string) => localePath(locale, path);
   const mailto =
     "mailto:daniel@cardondigital.com?subject=" +
     encodeURIComponent(s.diag.mailSubject);
@@ -59,18 +68,40 @@ export default function PreciosPage({ params }: Params) {
               </h1>
               <p className="hero-sub">{rich(d.hero.sub)}</p>
               <div className="hero-actions">
-                <a className="cta" href="#floors">
+                <a className="cta" href={mailto}>
+                  {s.diag.cta}
+                </a>
+                <a className="btn-ghost" href="#floors">
                   {d.hero.ctaFloors}
                 </a>
-                <Link className="btn-ghost" href={href("/modulos")}>
-                  {d.hero.ctaModules}
-                </Link>
               </div>
+              {/* The trunk test's fourth question, "who already uses it",
+                  answered above the fold on a phone. Both wineries are named
+                  on the site already and each has its own case page. */}
+              <p className="hero-proof">{d.hero.proof}</p>
               <p className="brandline">{s.brandline}</p>
             </div>
           </Reveal>
         </div>
       </section>
+
+      {/* ===================== WHAT OWNERSHIP LOOKS LIKE ================ */}
+      {/* The hero promises the winery ends up owning the thing. This is the
+          day that promise is kept, so it sits directly under the sentence. */}
+      <div className="section pr-shot">
+        <div className="container">
+          <Reveal>
+            <Media
+              className="pr-photo"
+              slot="precios/handover"
+              tone="full"
+              priority
+              caption={d.media.handoverCap}
+              alt={d.media.handoverAlt}
+            />
+          </Reveal>
+        </div>
+      </div>
 
       {/* ==================== THE THREE ENTRY PRICES ==================== */}
       <ModuleFloors locale={locale} />
@@ -100,20 +131,15 @@ export default function PreciosPage({ params }: Params) {
                   <a className="cta cta-lg" href={mailto}>
                     {s.diag.cta}
                   </a>
-                  <Link className="btn-ghost" href={href("/modulos")}>
-                    {d.close.ctaModules}
-                  </Link>
                 </div>
                 <p className="diag-price">{rich(s.diag.price)}</p>
               </div>
-              <div className="diag-specs">
-                {d.close.specs.map((spec) => (
-                  <div className="spec" key={spec}>
-                    <span className="spec-dot" />
-                    <span>{rich(spec)}</span>
-                  </div>
-                ))}
-              </div>
+              <Media
+                className="diag-photo"
+                slot="precios/diagnostic-session"
+                caption={d.media.diagCap}
+                alt={d.media.diagAlt}
+              />
             </div>
           </Reveal>
         </div>

@@ -1,4 +1,5 @@
 import FloorChart from "@/components/pages/precios/FloorChart";
+import { demoHref } from "@/lib/demo";
 import type { Locale } from "@/lib/i18n/config";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
@@ -26,6 +27,13 @@ import {
  * (./FloorChart) instead of leaving a reader to hold three cards in their head,
  * and the sentence about what the monthly is made of is read once beneath that
  * comparison rather than repeated on all three cards.
+ *
+ * Bead hq-4pu0q.7 moved the module detail a buyer needs in order to choose off
+ * /modulos, which is being retired, and onto these cards: the configuration the
+ * published price buys, the direction the size moves and where it stops, the
+ * one caveat that changes what the entry build actually gives, and a link to
+ * that module's demo. Nothing new is published; it is the same catalogue detail
+ * read where the price is.
  */
 
 /** Localized bundle lines, with the multiplicity where a feature repeats. */
@@ -58,8 +66,10 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
         <Reveal>
           <div className="section-head">
             <span className="kicker">{d.kicker}</span>
+            {/* No standfirst here on purpose: it restated the card's own
+                "bought on its own" and "the complete build" labels, which is
+                the paragraph doctrine section 3 says to delete. */}
             <h2 id="floors-title">{d.title}</h2>
-            <p className="section-sub">{rich(d.sub)}</p>
           </div>
         </Reveal>
 
@@ -113,6 +123,25 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
                       <li key={line}>{line}</li>
                     ))}
                   </ul>
+
+                  <dl className="floor-detail">
+                    <dt className="floor-dk mono">{d.upLabel}</dt>
+                    <dd className="floor-dv">{m.up}</dd>
+                    <dt className="floor-dk mono">{d.limitLabel}</dt>
+                    <dd className="floor-dv">{m.limit}</dd>
+                  </dl>
+
+                  {/* The demo host is a different origin, so it opens in its
+                      own tab and the label names its module: three buttons on
+                      one page are three destinations to a screen reader. */}
+                  <a
+                    className="floor-demo"
+                    href={demoHref(locale, [id])}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {m.demo}
+                  </a>
                 </article>
               </Reveal>
             );
@@ -120,6 +149,7 @@ export default function ModuleFloors({ locale }: { locale: Locale }) {
         </div>
 
         <Reveal>
+          <p className="floor-demo-note">{d.demoNote}</p>
           <p className="floor-foot">{rich(d.note)}</p>
         </Reveal>
       </div>

@@ -63,6 +63,8 @@ and upsizing is not.
 | `winery/cellar` | photo | `3 / 2` | 3000 x 2000 px | Work in the cellar, the system present but not the subject. A person doing the job. |
 | `winery/vineyard` | photo | `21 / 9` | 3360 x 1440 px | The vineyard as a band: rows, horizon, Valle light. This is the one wide establishing shot. |
 | `winery/tasting-room` | photo | `4 / 3` | 4000 x 3000 px | The tasting room in use, a pour in progress, the room readable around it. |
+| `precios/handover` | photo | `3 / 2` | 3000 x 2000 px | Handover day at the winery: the team around one screen, the credentials being changed over. A working room, nobody posed for the camera. |
+| `precios/diagnostic-session` | photo | `4 / 3` | 4000 x 3000 px | Day one of the Diagnostic: the working session at the winery, laptop, notes and the people who run the operation, the room readable around them. |
 | `enkanto/restaurant-pass` | photo | `3 / 2` | 3000 x 2000 px | The pass at service: a ticket going out, the screen or tablet in the working position. |
 | `enkanto/front-desk` | photo | `3 / 2` | 3000 x 2000 px | Check in at the front desk, guest side of the counter visible. |
 | `enkanto/room-charge` | video | `16 / 9` | 3840 x 2160 px | A restaurant charge being sent to the room: the tablet at the table, then the folio. 8 to 12 seconds. |
