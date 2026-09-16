@@ -580,8 +580,25 @@ export default function RestauranteDemo() {
 
     const canRun = () =>
       shouldAnimate({ reduced: reduced(), docVisible, onscreen });
+    /* The first start tells the story from the top; every later one is a
+       resume. resolved() runs at mount and parks the clock on STANDING_CYC,
+       which is right for a pause: a visitor who scrolled away at 18:10 comes
+       back to the room they left and it carries on. It was wrong for the
+       first run, where there is no room the visitor arrived on: on an in-view
+       load start() carried on from the hold, so the payoff frame sat frozen
+       for the whole 5.5s, faded to 15 percent, and only at about 7.2s did
+       17:00 begin with an empty room. The first thing a visitor saw was the
+       ending (reviewer s-4a6c, BLOCKING 2). The never-ran flag is the whole
+       distinction: resolved() still draws STANDING_CYC, so the hold frame,
+       the paused frame and the reduced-motion frame are still one frame, and
+       a resume still never runs backwards. */
+    let ran = false;
     const start = () => {
       if (running || !canRun()) return;
+      if (!ran) {
+        ran = true;
+        cycT = 0;
+      }
       running = true;
       last = performance.now();
       raf = requestAnimationFrame(frame);

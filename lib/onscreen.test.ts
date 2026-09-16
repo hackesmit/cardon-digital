@@ -110,11 +110,12 @@ interface ObserverSite {
   optionsUnresolved: boolean;
 }
 
-const observerSites = (): ObserverSite[] => {
+/** The observer sites in one file's source. Separate from the walk so a
+    fixture can be checked without being on disk. */
+const sitesIn = (file: string, src: string): ObserverSite[] => {
   const out: ObserverSite[] = [];
-  for (const file of sources) {
-    const src = read(file);
-    if (!src.includes("IntersectionObserver")) continue;
+  if (!src.includes("IntersectionObserver")) return out;
+  {
     const sf = ts.createSourceFile(
       file,
       src,
@@ -133,6 +134,44 @@ const observerSites = (): ObserverSite[] => {
       }
       return "";
     };
+    /* Every identifier this file binds to the constructor, so an alias is a
+       site too: const IO = window.IntersectionObserver; new IO(cb, {
+       threshold: [0, 0.35] }) with cb reading isIntersecting walked past a
+       check that only knew the name at the new expression (reviewer s-4a6c,
+       non-blocking). Plain bindings and destructuring, chased until the set
+       stops growing; not a type checker, so an alias reached through a call
+       or a parameter is still invisible, which is why demos.test.ts
+       additionally forbids a demo component from naming the constructor at
+       all. */
+    const aliases = new Set<string>(["IntersectionObserver"]);
+    const isAlias = (node: ts.Node) => aliases.has(named(node));
+    let grew = true;
+    const collect = (node: ts.Node) => {
+      if (ts.isVariableDeclaration(node) && node.initializer) {
+        if (ts.isIdentifier(node.name) && isAlias(node.initializer) && !aliases.has(node.name.text)) {
+          aliases.add(node.name.text);
+          grew = true;
+        }
+        if (ts.isObjectBindingPattern(node.name)) {
+          for (const el of node.name.elements) {
+            const prop = el.propertyName
+              ? el.propertyName.getText(sf).replace(/["']/g, "")
+              : ts.isIdentifier(el.name)
+                ? el.name.text
+                : "";
+            if (prop === "IntersectionObserver" && ts.isIdentifier(el.name) && !aliases.has(el.name.text)) {
+              aliases.add(el.name.text);
+              grew = true;
+            }
+          }
+        }
+      }
+      ts.forEachChild(node, collect);
+    };
+    while (grew) {
+      grew = false;
+      collect(sf);
+    }
     const scan = (node: ts.Node, found: { ii: boolean; ct: boolean }) => {
       if (ts.isPropertyAccessExpression(node) && node.name.text === "isIntersecting") found.ii = true;
       if (
@@ -145,7 +184,7 @@ const observerSites = (): ObserverSite[] => {
       ts.forEachChild(node, (c) => scan(c, found));
     };
     const visit = (node: ts.Node) => {
-      if (ts.isNewExpression(node) && named(node.expression) === "IntersectionObserver") {
+      if (ts.isNewExpression(node) && isAlias(node.expression)) {
         const args = node.arguments ?? ([] as unknown as ts.NodeArray<ts.Expression>);
         const found = { ii: false, ct: false };
         if (args[0]) scan(args[0], found);
@@ -194,6 +233,9 @@ const observerSites = (): ObserverSite[] => {
   return out;
 };
 
+const observerSites = (): ObserverSite[] =>
+  sources.flatMap((file) => sitesIn(file, read(file)));
+
 describe("clearsThreshold, the one reading of an observer entry", () => {
   const entry = (intersectionRatio: number, isIntersecting = intersectionRatio > 0) => ({
     isIntersecting,
@@ -222,6 +264,43 @@ describe("clearsThreshold, the one reading of an observer entry", () => {
   it("keeps the natural meaning of a zero threshold, any contact at all", () => {
     /* a zero-area target intersects with a ratio of 0, per spec */
     expect(clearsThreshold(entry(0, true), 0)).toBe(true);
+  });
+});
+
+describe("an observer is found however its constructor is spelled", () => {
+  const site = (src: string) => sitesIn("components/pages/demos/Fixture.tsx", src);
+
+  it.each([
+    ["the bare name", "new IntersectionObserver(cb, { threshold: [0, 0.35] })"],
+    ["window.", "new window.IntersectionObserver(cb, { threshold: [0, 0.35] })"],
+    ["an element access", 'new window["IntersectionObserver"](cb, { threshold: [0, 0.35] })'],
+    ["an alias", "const IO = window.IntersectionObserver; new IO(cb, { threshold: [0, 0.35] })"],
+    ["an alias of an alias", "const A = IntersectionObserver; const B = A; new B(cb, { threshold: [0, 0.35] })"],
+    ["a destructured alias", "const { IntersectionObserver: Obs } = window; new Obs(cb, { threshold: [0, 0.35] })"],
+    ["a destructured name", "const { IntersectionObserver } = window; new IntersectionObserver(cb, { threshold: [0, 0.35] })"],
+  ])("through %s", (_how, expr) => {
+    const src = "const cb = (es) => { x = es[es.length - 1].isIntersecting; };\n" + expr + ";\n";
+    const found = site(src);
+    expect(found).toHaveLength(1);
+    expect(found[0].readsIsIntersecting).toBe(false);
+    expect(found[0].thresholdIsArray).toBe(true);
+  });
+
+  /* the s-4a6c loophole verbatim: the callback is inline, so the reading is
+     seen, and the threshold is a list, so this is the combination the
+     repo-wide check below rejects */
+  it("finds the s-4a6c aliased observer and reads its callback", () => {
+    const found = site(
+      "const IO = window.IntersectionObserver;\n" +
+        "const io = new IO((es) => { el.dataset.on = String(es[es.length - 1].isIntersecting); }, { threshold: [0, 0.35] });\n",
+    );
+    expect(found).toHaveLength(1);
+    expect(found[0].readsIsIntersecting).toBe(true);
+    expect(found[0].thresholdIsArray).toBe(true);
+  });
+
+  it("does not mistake an unrelated constructor for one", () => {
+    expect(site("const RO = ResizeObserver; new RO(cb); IntersectionObserver;")).toHaveLength(0);
   });
 });
 
