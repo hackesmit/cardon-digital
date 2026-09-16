@@ -188,7 +188,7 @@ describe("the ads card carries the condition precios sets", () => {
       // A pinned phrase broke main once (see the case below), because the precios
       // rewrite landed on the same day and reworded this sentence to "Neither
       // attaches to Produccion".
-      rule: /\bProduccion\b[^.]*\b(?:never|neither|not)\b|\b(?:never|neither|not)\b[^.]*\bProduccion\b/i,
+      rule: /\b(?:never|neither|do(?:es)? not|not)\s+attach(?:es|ed)?\s+to\s+Produccion\b/i,
       sizeCondition: /middle size|medium size|from the middle/i,
       policyVerb: /attach(?:es)? to/i,
       inclusionVerb: /come[s]? with|included in|part of/i,
@@ -197,7 +197,7 @@ describe("the ads card carries the condition precios sets", () => {
       claim: /[Aa]nuncios[^.]*dentro de la cuota mensual/,
       modules: /Hospitalidad y a? ?Restaurante/,
       excluded: /Producci[o\u00f3]n/i,
-      rule: /Producción[^.]*(?:nunca|no se agrega|ninguno)|(?:nunca|no se agrega|ninguno)[^.]*Producción/i,
+      rule: /a Producci[oó]n\s+(?:nunca|no)\s+se\s+agrega/i,
       sizeCondition: /tama\u00f1o mediano|desde el mediano/i,
       policyVerb: /se agrega[n]? a/i,
       inclusionVerb: /vienen? con|incluid[oa]s? en|forma[n]? parte de/i,
@@ -224,8 +224,14 @@ describe("the ads card carries the condition precios sets", () => {
           `lib/pricing.ts now offers ad management on Produccion at ${size}, so this whole card needs rewriting rather than this guard relaxing`,
         ).toBe(false);
       }
-      // The soft half is the copy, matched on the exclusion rather than on a
-      // sentence, so a rewording that keeps the meaning does not break the build.
+      // The soft half is the copy. It matches the exclusion as a COMPLETE
+      // negated relationship, negation bound to the attachment verb bound to the
+      // module, not just the words in the same sentence. Cross-vendor review
+      // (lucy, gpt-5.6-sol) broke the first attempt with copy that reversed the
+      // policy and still passed: "Google ads attach to Produccion, not
+      // Hospitalidad and Restaurante" satisfied a regex that only wanted
+      // Produccion and a negation somewhere near it. A rewording that keeps the
+      // meaning still passes; one that inverts it does not.
       expect(precios[locale].ads.body).toMatch(rule);
     });
 
