@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
+import { demos } from "@/lib/i18n/demos";
 import { winery } from "@/lib/i18n/winery";
 
 /** Bar heights for the Brix sparkline, as a share of the plot. Decoration
@@ -17,6 +18,21 @@ const CITED_ROW = [0, 1];
  * marked. Self-contained, no network of any kind; every string is illustrative
  * and comes from the dictionary.
  *
+ * Every reading on the board and in the transcript is invented, so the frame
+ * carries the same admission the module demos and the case visuals carry
+ * (lib/i18n/demos.ts `honest`, doctrine section 5). It is the figure's caption
+ * and it sits above the board, as it does on every other demo frame here, so
+ * it is read before the numbers rather than after them.
+ *
+ * This used to be one element with role="img" and `aria` as its label, which
+ * hid the whole board and transcript from a screen reader and replaced them
+ * with a one sentence summary (cross-vendor review, round two). The board and
+ * the transcript are text, so they are now read as text and the summary is
+ * kept as a visually hidden lead: a reader who cannot see the frame gets what
+ * the frame is FOR, then the same two exchanges everyone else reads, including
+ * the "no data" answer, which is the entire argument of this section. The bar
+ * sparkline stays aria-hidden, because it is the one part that is decoration.
+ *
  * Motion follows the house play-once idiom (see the PlayOnceVis wrappers): the
  * rendered markup IS the resolved state, so with no JS, with reduced motion,
  * or before the observer fires, the reader gets the whole exchange, still and
@@ -31,6 +47,7 @@ const CITED_ROW = [0, 1];
  */
 export default function AssistantDemo() {
   const t = useDict(winery).assist.demo;
+  const honest = useDict(demos).honest;
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -77,70 +94,74 @@ export default function AssistantDemo() {
   let step = 0;
 
   return (
-    <div className="assist-demo" ref={ref} role="img" aria-label={t.aria}>
-      <div className="ad-board">
-        <div className="ad-board-head">
-          <span className="ad-board-title">{t.boardTitle}</span>
-          <span className="ad-live mono">{t.live}</span>
-        </div>
-
-        <div className="ad-chart">
-          <span className="ad-chart-k mono">{t.chartK}</span>
-          <div className="ad-bars" aria-hidden="true">
-            {BARS.map((h, i) => (
-              <span
-                className="ad-bar"
-                key={i}
-                style={{ "--h": h, "--i": i } as React.CSSProperties}
-              />
-            ))}
+    <figure className="assist-figure">
+      <figcaption className="assist-honest mono">{honest}</figcaption>
+      <div className="assist-demo" ref={ref}>
+        <p className="sr-only">{t.aria}</p>
+        <div className="ad-board">
+          <div className="ad-board-head">
+            <span className="ad-board-title">{t.boardTitle}</span>
+            <span className="ad-live mono">{t.live}</span>
           </div>
-          <span className="ad-chart-v">{t.chartV}</span>
-        </div>
 
-        <ul className="ad-rows">
-          {t.rows.map((row, i) => (
-            <li
-              className={"ad-row" + (CITED_ROW.includes(i) ? " ad-row-cited" : "")}
-              key={row.k}
-              style={
-                { "--i": CITED_ROW.indexOf(i) } as React.CSSProperties
-              }
-            >
-              <span className="ad-row-k">{row.k}</span>
-              <span className="ad-row-v mono">{row.v}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="ad-chat">
-        {t.turns.map((turn, ti) => (
-          <div className="ad-exchange" key={turn.q}>
-            <p
-              className="ad-turn ad-q"
-              style={{ "--i": step++ } as React.CSSProperties}
-            >
-              {turn.q}
-            </p>
-            <div
-              className="ad-turn ad-a"
-              style={{ "--i": step++ } as React.CSSProperties}
-            >
-              {turn.a.map((linetext) => (
-                <p className="ad-a-line" key={linetext}>
-                  {linetext}
-                </p>
+          <div className="ad-chart">
+            <span className="ad-chart-k mono">{t.chartK}</span>
+            <div className="ad-bars" aria-hidden="true">
+              {BARS.map((h, i) => (
+                <span
+                  className="ad-bar"
+                  key={i}
+                  style={{ "--h": h, "--i": i } as React.CSSProperties}
+                />
               ))}
-              <p className="ad-cite">
-                <span className="ad-cite-k mono">{t.citeK}</span>
-                <span className="ad-cite-v">{turn.cite}</span>
-              </p>
             </div>
-            {ti < t.turns.length - 1 ? <span className="ad-rule" /> : null}
+            <span className="ad-chart-v">{t.chartV}</span>
           </div>
-        ))}
+
+          <ul className="ad-rows">
+            {t.rows.map((row, i) => (
+              <li
+                className={"ad-row" + (CITED_ROW.includes(i) ? " ad-row-cited" : "")}
+                key={row.k}
+                style={
+                  { "--i": CITED_ROW.indexOf(i) } as React.CSSProperties
+                }
+              >
+                <span className="ad-row-k">{row.k}</span>
+                <span className="ad-row-v mono">{row.v}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="ad-chat">
+          {t.turns.map((turn, ti) => (
+            <div className="ad-exchange" key={turn.q}>
+              <p
+                className="ad-turn ad-q"
+                style={{ "--i": step++ } as React.CSSProperties}
+              >
+                {turn.q}
+              </p>
+              <div
+                className="ad-turn ad-a"
+                style={{ "--i": step++ } as React.CSSProperties}
+              >
+                {turn.a.map((linetext) => (
+                  <p className="ad-a-line" key={linetext}>
+                    {linetext}
+                  </p>
+                ))}
+                <p className="ad-cite">
+                  <span className="ad-cite-k mono">{t.citeK}</span>
+                  <span className="ad-cite-v">{turn.cite}</span>
+                </p>
+              </div>
+              {ti < t.turns.length - 1 ? <span className="ad-rule" /> : null}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </figure>
   );
 }
