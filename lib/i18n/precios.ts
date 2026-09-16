@@ -110,7 +110,7 @@ const en = {
         tag: "Close the day with the cash already counted.",
         up: "More tables, stations or covers a day move it up, to 60 tables.",
         limit:
-          "Cash and a card written down work from day one. A payment link is a connector on your own provider account, quoted on top, one per provider, and your provider stamps the invoice.",
+          "Cash and a card written down work from day one. A payment link is a connector on your own provider account, quoted on top, one per provider, and your own invoicing provider stamps the invoice.",
         demo: "Open the Restaurante demo",
       },
     },
@@ -332,7 +332,7 @@ const es: typeof en = {
         tag: "Cierre el día con el efectivo ya contado.",
         up: "Más mesas, estaciones o comensales al día lo suben, hasta 60 mesas.",
         limit:
-          "Efectivo y tarjeta anotada a mano funcionan desde el día uno. El enlace de pago es un conector sobre su propia cuenta de proveedor, que se cotiza aparte, uno por proveedor, y su proveedor timbra la factura.",
+          "Efectivo y tarjeta anotada a mano funcionan desde el día uno. El enlace de pago es un conector sobre su propia cuenta de proveedor, que se cotiza aparte, uno por proveedor, y su propio proveedor de facturación timbra la factura.",
         demo: "Abrir el demo de Restaurante",
       },
     },
