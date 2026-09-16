@@ -573,15 +573,22 @@ describe("the mix example's ranking sentence tracks the quote, not the dict", ()
     (e) => e.publishable && e.modules.length === 3,
   )!;
 
-  // The exact prose the page rendered before hq-ggot1.14, now composed from
-  // the quote's own module order instead of typed into lib/i18n/precios.ts.
+  /**
+   * The exact sentence a visitor reads, which no lexical check can see: the
+   * lead lives in the dictionary and the ranking clause is composed from the
+   * quote's own module order (hq-ggot1.14), so the checker only ever reads the
+   * two halves apart. Pinning the whole assembled string here is what makes the
+   * runtime-assembly gap docs/copy-doctrine.md records a checked thing rather
+   * than a remembered one. The lead was rewritten by hq-4pu0q.7; the clause,
+   * which is the part that has to track the data, is unchanged.
+   */
   const expected = {
-    en: "All three modules, each at its entry size. The complete build is the three lists above, ranked by build price: Restaurante at full price, Hospitalidad second, Produccion third.",
-    es: "Los tres módulos, cada uno en su tamaño de entrada. La construcción completa son las tres listas de arriba, ordenadas por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercero.",
+    en: "All three at their entry size, ranked by build price: Restaurante at full price, Hospitalidad second, Produccion third.",
+    es: "Los tres en su tamaño de entrada, ordenados por tamaño de obra: Restaurante a precio completo, Hospitalidad en segundo lugar, Producción en tercer lugar.",
   } as const;
 
   it.each(["en", "es"] as const)(
-    "%s reads exactly as before, built from example.modules",
+    "%s reads as one sentence, built from example.modules",
     (locale) => {
       expect(mixRankingSentence(locale, publishable.modules)).toBe(
         expected[locale],
