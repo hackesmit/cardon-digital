@@ -66,7 +66,7 @@ const en = {
       },
       {
         k: "Outcome",
-        v: "An hour of finance work, now about two minutes, refreshed through the day",
+        v: "About an hour of finance work, now about two minutes, refreshed through the day",
       },
     ],
     basisK: "Basis",
@@ -91,7 +91,7 @@ const en = {
   },
   number: {
     kicker: "The number",
-    title: "An hour of finance work, now about two minutes.",
+    title: "About an hour of finance work, now about two minutes.",
     sub: "The same workflow, rebuilt to refresh itself through the day.",
     manual: "BY HAND",
     auto: "RUNS ITSELF",
@@ -99,8 +99,8 @@ const en = {
     short: "about 2 min",
     less: "about 97 percent less",
     refreshed: "REFRESHED THROUGH THE DAY",
-    tag: "an hour, compressed to two minutes",
-    aria: "A one hour manual workflow compresses to about two minutes.",
+    tag: "about an hour to about two minutes",
+    aria: "A manual workflow of about an hour compresses to about two minutes.",
   },
   result: {
     kicker: "For your winery",
@@ -216,7 +216,7 @@ const es: typeof en = {
       },
       {
         k: "Resultado",
-        v: "De una hora de trabajo financiero a unos dos minutos, con actualización durante el día",
+        v: "De como una hora de trabajo financiero a unos dos minutos, con actualización durante el día",
       },
     ],
     basisK: "Base",
@@ -241,16 +241,16 @@ const es: typeof en = {
   },
   number: {
     kicker: "El número",
-    title: "Una hora de trabajo financiero, ahora unos dos minutos.",
-    sub: "El mismo flujo, reconstruido para actualizarse solo durante el día.",
+    title: "Como una hora de trabajo financiero, ahora unos dos minutos.",
+    sub: "El mismo flujo, reconstruido para actualizarse por sí solo durante el día.",
     manual: "A MANO",
     auto: "SE HACE SOLO",
     long: "como 1 hora",
     short: "como 2 min",
     less: "como 97 por ciento menos",
     refreshed: "SE ACTUALIZA DURANTE EL DÍA",
-    tag: "una hora, comprimida a dos minutos",
-    aria: "Un flujo manual de una hora se comprime a unos dos minutos.",
+    tag: "de como una hora a unos dos minutos",
+    aria: "Un flujo manual de como una hora se comprime a unos dos minutos.",
   },
   result: {
     kicker: "Para su bodega",
