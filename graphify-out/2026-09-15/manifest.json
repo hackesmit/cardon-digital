@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "a7d066ef1c29a747c64750b276634846",
+    "mtime": 1789490255.6647034,
+    "ast_hash": "cee3c2090fabcdd6a3dd9eca88c5fca9",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1789512198.4955723,
-    "ast_hash": "d0d64f5174716b040aedb2e1fac48fbd",
+    "mtime": 1788935476.2620747,
+    "ast_hash": "2889191d8678c1e698b63fa59cf11ff7",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -315,8 +315,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "b6cbab1d14fc760d480ecf63519d392a",
+    "mtime": 1788975816.8890545,
+    "ast_hash": "d3af108e667017c3d7435b895b5dba1f",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -765,18 +765,8 @@
     "semantic_hash": ""
   },
   "docs/copy-doctrine.md": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "fa4de77778622f21fe563a845a9ed3e1",
-    "semantic_hash": ""
-  },
-  "scripts/visuals-check.mjs": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "4d1db1cf58cdc61868b322aa01c7d9bf",
-    "semantic_hash": ""
-  },
-  "scripts/visuals-check.test.mjs": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "4f2f854c592cc10e693d7655f8e7377f",
+    "mtime": 1789490255.6647034,
+    "ast_hash": "4f975149866f4f5f8c382071704fc31e",
     "semantic_hash": ""
   }
 }

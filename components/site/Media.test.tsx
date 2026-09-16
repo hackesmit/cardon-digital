@@ -226,7 +226,6 @@ describe("a slot off the shot list is refused at runtime too", () => {
       slot: "winery/undocumented-shot",
       caption: "Una frase real.",
       alt: "Alt real.",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as unknown as MediaProps;
     expect(() => renderToStaticMarkup(<Media {...smuggled} />)).toThrow(/is not a slot/);
   });
