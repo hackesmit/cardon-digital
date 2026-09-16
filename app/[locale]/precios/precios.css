@@ -413,3 +413,57 @@
     white-space:normal;text-align:center;line-height:1.25;
   }
 }
+
+/* ============================================================
+   BEAD hq-4pu0q.7
+   The photographs, the module detail that came across from
+   /modulos, and the closing block now that its four bullets are
+   a picture instead.
+   ============================================================ */
+
+/* The ownership photograph, directly under the sentence it proves. The frame
+   reserves its own box from the ratio, so nothing reflows when the file lands. */
+.pg-precios .pr-shot{padding-top:0;}
+.pg-precios .pr-photo{max-width:820px;margin:0 auto;}
+
+/* What moves the size up, and the one thing worth knowing before signing. A
+   definition list: the label is the term and the sentence is the definition,
+   which is what a screen reader then reads them as. */
+.pg-precios .floor-detail{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);
+  display:flex;flex-direction:column;gap:4px;
+}
+.pg-precios .floor-dk{
+  font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
+}
+.pg-precios .floor-dk + .floor-dv{margin:0 0 10px;}
+.pg-precios .floor-dv{color:var(--text-dim);font-size:0.86rem;line-height:1.5;}
+.pg-precios .floor-detail .floor-dv:last-child{margin-bottom:0;}
+
+/* The demo link sits at the foot of the card, after the price and the build, so
+   a reader who wants to see it running has read what it costs first. */
+.pg-precios .floor-demo{
+  margin-top:auto;padding-top:16px;
+  align-self:flex-start;
+  font-family:var(--mono);font-size:0.76rem;letter-spacing:0.06em;
+  color:var(--primary);border-bottom:1px solid var(--primary-dim);
+  transition:color .2s ease,border-color .2s ease;
+}
+.pg-precios .floor-demo:hover{color:var(--text);border-color:var(--text);}
+.pg-precios .floor-demo-note{
+  color:var(--muted);font-size:0.82rem;line-height:1.5;margin-bottom:6px;
+}
+
+/* The closing block's second column used to be four bullets about the
+   Diagnostic. It is the photograph of that session now, so the column keeps its
+   width and the grid is unchanged. */
+.pg-precios .diag-photo{position:relative;min-width:0;}
+@media (max-width:900px){
+  .pg-precios .diag-photo{max-width:520px;}
+}
+
+/* Who already uses it, in the hero, so the four-second test is answered without
+   scrolling on a phone. */
+.pg-precios .hero-proof{
+  margin-top:18px;color:var(--text-dim);font-size:0.92rem;
+}

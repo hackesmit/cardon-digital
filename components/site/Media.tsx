@@ -153,6 +153,18 @@ export const MEDIA_SLOTS = {
     frame:
       "The tasting room in use, a pour in progress, the room readable around it.",
   },
+  "precios/handover": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "Handover day at the winery: the team around one screen, the credentials being changed over. A working room, nobody posed for the camera.",
+  },
+  "precios/diagnostic-session": {
+    kind: "photo",
+    ratio: "4 / 3",
+    frame:
+      "Day one of the Diagnostic: the working session at the winery, laptop, notes and the people who run the operation, the room readable around them.",
+  },
   "enkanto/restaurant-pass": {
     kind: "photo",
     ratio: "3 / 2",
