@@ -4,14 +4,16 @@ import { moduleIds, type ModuleId } from "./pricing";
 /**
  * Where a demo button points, in one place.
  *
- * The demo host deployed at bead hq-ko3a0.6: https://cardon-demo.vercel.app.
- * demo.cardondigital.com follows once the domain switch lands (console command
- * c-f0a92a4ecebb); when that happens, this one constant is the only edit and
- * every button on the site moves with it. Each button carries its own list of
- * modules in the ?modulos= query, comma separated, matching enkanto-system's
- * js/demo/config.js module ids (produccion, hospitalidad, restaurante).
+ * The demo host is https://demo.cardondigital.com, live over TLS since bead
+ * hq-c68jn. It was first deployed at hq-ko3a0.6 as
+ * https://cardon-demo.vercel.app, which still serves the same demo and stays in
+ * enkanto-system's HOSTS_DEMO, because links already sent to prospects point at
+ * it. The switch was one edit to this constant and every button on the site
+ * moved with it. Each button carries its own list of modules in the ?modulos=
+ * query, comma separated, matching enkanto-system's js/demo/config.js module
+ * ids (produccion, hospitalidad, restaurante).
  */
-export const DEMO_HOST: string = "https://cardon-demo.vercel.app";
+export const DEMO_HOST: string = "https://demo.cardondigital.com";
 
 /** The placeholder path, locale prefixed, the same one /modulos uses. */
 export const DEMO_PATH = "/demo";
