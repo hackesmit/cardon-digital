@@ -555,8 +555,8 @@
     "semantic_hash": ""
   },
   "lib/pricing.test.ts": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "f72b43b4cbdec95b2817c5f6b18409bc",
+    "mtime": 1788933334.3277194,
+    "ast_hash": "253ec7f4129342993d10ee2794af419f",
     "semantic_hash": ""
   },
   "app/[locale]/modulos/page.tsx": {
@@ -575,8 +575,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "1349cff3295b8e4cb436591125c42b9e",
+    "mtime": 1788937733.2934594,
+    "ast_hash": "a1c22a19349bf0eee4f8214d4a7ef890",
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
@@ -585,18 +585,18 @@
     "semantic_hash": ""
   },
   "components/pages/precios/ModuleFloors.tsx": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "a78f635d317d350589b0fb4419cad169",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "22d7a2855696ac7be8850c47d0837853",
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "c578101cf6a038dc1eec4373f1aeab30",
+    "mtime": 1788953275.7353444,
+    "ast_hash": "3b03ec2c2cfedee79fd1230a3a759a26",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "03b85a124e2dfbae6f06b764e4c9a3c3",
+    "mtime": 1788917952.8430674,
+    "ast_hash": "cac01ebdcd97d6890f57c63122a1229f",
     "semantic_hash": ""
   },
   "components/pages/showcase/Showcase.tsx": {
@@ -705,8 +705,8 @@
     "semantic_hash": ""
   },
   "components/site/Media.tsx": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "726435ca7c7464709f15832a3e83ad3a",
+    "mtime": 1789457713.0963469,
+    "ast_hash": "a5659eaf1ef083a02d6500245f612796",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -720,8 +720,8 @@
     "semantic_hash": ""
   },
   "public/media/README.md": {
-    "mtime": 1789533155.8111985,
-    "ast_hash": "ef9b1f3e62e9468cdb2a3a407ad5c6e8",
+    "mtime": 1789457713.0963469,
+    "ast_hash": "582666652cdf3007358a957165ffa638",
     "semantic_hash": ""
   },
   "components/pages/demos/RestauranteDemo.tsx": {
