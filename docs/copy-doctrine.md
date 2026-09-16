@@ -400,3 +400,51 @@ restaurants and hospitality. The build needs the slots ready before the media la
 7. No claim appears that is not already true and already ours to publish.
 8. avoid-ai-writing detector run over the page's extracted strings, reported, not
    treated as the pass mark.
+9. No file under `components/pages/` is gone that was there at the merge base, unless
+   `RETIRED` in scripts/visuals-check.mjs carries it with Daniel's approval and a date.
+   Run `npm run copy:check`, which checks this first. Section 8 is the rule.
+
+## 8. A copy bead never deletes a visual (binding)
+
+Daniel, 2026-09-15, after reading the rebuilt home page: "seems like there was a serious
+downgrade in UI design from the original animations for each field on the site and the
+ones presented now." He was right, and the fault was in how the beads were written, not
+in the workers. This section is the rule that came out of it. It binds every copy bead,
+and it overrides anything in a bead description that implies otherwise.
+
+1. **A copy bead never deletes a visual.** If a canvas component, an animated SVG or a
+   motion wrapper reads dictionary keys the new architecture removes, you rewire the
+   visual to the new keys. Where the visual needs a key the new dictionary does not
+   have, you add the key.
+2. **"No other page imports it" is not a reason to delete it.** The motion work is the
+   asset. The dictionary key that happened to feed it is not.
+3. **Retiring any animation is Daniel's decision alone.** Not a worker's, not a
+   reviewer's, and not a consequence of a typecheck failing. A bead that believes a
+   visual should go files the question and leaves the visual in.
+4. **A Media slot never replaces an animation.** The photography does not exist yet, so
+   a slot in an animation's place renders as a pending placeholder: that is a downgrade
+   rather than a trade. Media slots belong in the case, proof and what-you-get blocks,
+   beside the motion, never instead of it.
+5. **The words come down; the motion does not.** Halving a page's words is a prose
+   operation. The strings a visual cannot run without (labels, legends, accessible
+   names, the noscript fallback) are its working parts, so they are counted and
+   reported apart from prose rather than trimmed to hit a budget. On this repo they
+   live under the page dictionary's `vis` key for exactly that reason.
+
+### The mechanism
+
+A rule with no mechanism is not captured, so this one is runnable:
+
+    node scripts/visuals-check.mjs        # or: npm run copy:check
+
+It takes the set of files under `components/pages/` at the merge base with the default
+branch, takes the same set at the working tree, and fails on any path that was in the
+first and is not in the second. It is a set difference on paths rather than a diff
+filter, so a deletion dressed as a `git mv` out of the tree fails the same way a plain
+`rm` does. `npm run copy:check` runs it before the copy checker, so a copy bead that
+deletes a visual cannot reach a green copy check.
+
+The escape hatch is the rule, written down. `RETIRED` in that script is a list of exact
+paths, each with the date and the reason Daniel approved it. Adding an entry is how a
+visual is retired, and the entry is what a reviewer reads. An entry that no longer
+matches a removed file is reported as stale, so the list cannot quietly grow.
