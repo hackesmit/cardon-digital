@@ -92,7 +92,7 @@
 /* ------------------------------ the board ------------------------------- */
 
 /* The board fills the query container: no padding, no border, no margin here.
-   The component measures the canvas rect for its drawing width and the
+   The component measures canvas.clientWidth for its drawing width and the
    figure's content box for its floor plan, and the pre-hydration height below
    is written in cqw of that same content box, so all three are one number only
    while this box adds nothing (reviewer s-3b55, note 3). demos.test.ts fails
@@ -261,8 +261,20 @@
 .demo-pick-box {
   display: grid;
 }
+/* A ghost box stretches its live child unless told not to. The cell is as
+   tall as the tallest ghost and a grid item's default alignment is stretch,
+   so the live row was drawn to the height of "Mesa grande / seis lugares"
+   whichever table was selected; and because .demo-pick is a wrapping flex
+   row, align-content normal spread that spare height between its lines. The
+   figure stayed at 840px, which is what the ghosts are for, and the gap
+   between the table name and its detail jumped 13.5px on every tap instead,
+   for 11 of the 12 tables at 390px (reviewer s-4a6c, BLOCKING 1). align-self
+   start sizes each row to its own content and leaves the track, and so the
+   box, at the tallest ghost. Every ghost box carries this, the caption box
+   below included; demos.test.ts fails either without it. */
 .demo-pick-box > * {
   grid-area: 1 / 1;
+  align-self: start;
 }
 .demo-pick-ghost {
   visibility: hidden;
@@ -308,8 +320,12 @@
   letter-spacing: 0.06em;
   color: var(--text-dim);
 }
+/* align-self start for the reason given at .demo-pick-box: the live child
+   here is one inline span today, so nothing shows, and the next demo's
+   caption may not be. */
 .demo-caption-box > * {
   grid-area: 1 / 1;
+  align-self: start;
 }
 .demo-caption-ghost {
   visibility: hidden;

@@ -105,7 +105,16 @@ What is settled:
 
 `lib/onscreen.test.ts` enforces the part that is genuinely a bug, repo-wide: no
 observer may read `isIntersecting` while declaring a threshold array, and any
-new observer has to come through `clearsThreshold`. The nine existing callsites that read
+new observer that declares a threshold has to come through `clearsThreshold`.
+It walks the TypeScript AST rather than the text, finds the constructor as
+`IntersectionObserver`, `window.IntersectionObserver`,
+`window["IntersectionObserver"]`, and through any identifier the file binds to
+one of those, plainly or by destructuring, chased until the set stops growing.
+It is not a type checker: an alias reached through a call or a parameter is
+still invisible to it, which is why `demos.test.ts` adds a stricter rule for
+the demos themselves, that a demo component does not name
+`IntersectionObserver` at all, in any spelling. The observer a demo needs is
+the one in `motion.ts`. The nine existing callsites that read
 `isIntersecting` behind a scalar threshold are listed there as measured-correct
 in Chromium and unverified elsewhere, which is what hq-2u86a is for. They are
 not a backlog you should clear on your own reading of the spec.
@@ -150,6 +159,21 @@ exports `STANDING_CYC` for this; `resolved()` sets `cycT` to it and draws
 draw the same pixels, but a demo parked at the end starts dipping toward the
 loop seam the instant it resumes, so a visitor scrolling it into view watches
 the payoff frame fade to 15 percent opacity and refill.
+
+**The standing frame is where a resume starts, not where the story starts.**
+`resolved()` runs at mount, so the clock is parked before the loop has ever
+run, and a `start()` that simply carried on from the parked clock played the
+ending first: on an in-view load the payoff frame sat frozen for the whole
+5.5 second hold, faded to 15 percent, and only at about 7.2 seconds did 17:00
+begin with an empty room. The first thing a visitor saw was the ending, held
+still, on the demo the site's motion is judged by. The fix is one flag:
+`start()` sets `cycT = 0` the first time it runs and never again, so the first
+run tells the story from the top and every later start is the resume above.
+`resolved()` still draws `STANDING_CYC`, so the reduced-motion frame, the
+paused frame and the hold are still one frame, and nothing runs backwards.
+`state/review/s-4a6c/firstview.mjs` samples the caption for eight seconds
+after an in-view load and fails if the first caption is the peak or the
+caption has not moved within three seconds.
 
 ## 6. One breakpoint, owned by the data module, measured on the figure
 
@@ -218,6 +242,19 @@ Three rules, and all three are needed:
 - **Give the readout strip a fixed row structure**, a one-column grid rather
   than a wrapping row, so the caption cannot displace the selection or sit
   beside it depending on how long each happens to be.
+- **A ghost box stretches its live child unless told not to.** The cell is
+  as tall as the tallest ghost and a grid item's default alignment is stretch,
+  so the live row is drawn to the tallest ghost's height whatever it holds;
+  if that row is itself a wrapping flex container, `align-content: normal`
+  spreads the spare height between its lines. On the phone plan that put
+  13.5px of extra gap between the table name and its detail for 11 of the 12
+  tables and none for the twelfth, so the figure held at 840px while the text
+  inside it jumped on every tap. Pair every ghost box with `align-self: start`
+  on its children (`.demo-pick-box > *` and `.demo-caption-box > *` both
+  carry it; `demos.test.ts` fails either without it), and probe the live
+  row's own box against its content, not only the figure height:
+  `state/review/s-4a6c/pickgap.mjs` taps all twelve tables at 390 and 1440
+  and fails on any spare height.
 
 `state/review/s-0b4b/caption-box.mjs` drives the four captions at 141 widths in
 both locales, and `selection.mjs` taps all twelve tables at 57 widths in both
@@ -300,6 +337,49 @@ the platform actually does.
 Demos two and three copy this shape. A `cellar.ts` and a `fortnight.ts`, each
 pure, each with its own tests, and a component that measures.
 
+## 12. The contract is enforced on every demo, and the spellings are the contract
+
+Daniel's ruling, 2026-09-15, on the s-4a6c review of hq-3pfhe.6. The review
+showed that rules 1, 2, 3 and the stylesheet half of 6 were enforced
+generically while rules 5, 6 (component side), 7 and 9 were enforced only by
+string checks pinned to `RestauranteDemo.tsx`: a demo two that imported
+`demos.css` and called `observeOnscreen` passed every "every demo component"
+check while taking its plan from the rounded `clientWidth`, its drawing width
+from the painted rect, writing its caption into a bare span with no ghosts and
+drawing no standing frame through the timeline, with the suite green and
+`tsc` exit 0. The two ways to close that were to lift the checks to every
+component, or to move the enforcement into the DoD of hq-3pfhe.2 and
+hq-3pfhe.3. **The ruling is the first.** Generic enforcement is what
+invariant 8 asks for; a future bead's DoD is a promise, and a promise is not a
+mechanism.
+
+So `demos.test.ts` holds the component-side rules as functions of a
+component's source (`componentRules`) and runs every one of them over every
+`.tsx` file in `components/pages/demos/`. The reviewer's two loophole
+components are embedded in the test verbatim and the test asserts they FAIL
+the rules they were written to dodge, so the enforcement cannot drift back to
+describing one file.
+
+The consequence for whoever writes demos two and three: **the spellings those
+checks pin are part of the contract.** `W = Math.max(1, canvas.clientWidth)`,
+`contentW = exact`, `figureContentWidth()`, `rectContentWidth()`, `roSeen`,
+`isPhonePlan(figureContentWidth())`, `cycT`, `STANDING_CYC`, `let ran = false`
+and the `if (!ran)` reset in `start()`, `captionRef` writing
+`caption.textContent`, `CAPTION_KEYS.map` over `.demo-caption-ghost`,
+`pickRow(i, ghost)` over `.demo-pick-ghost` if the demo has a readout the
+visitor changes, and the `<noscript>` block hiding `.demo-canvas` plus every
+`.rd-btn` and `.demo-hint` it renders. Copy the reference's measuring and
+clock code as it stands. If a rule genuinely does not fit your demo, change
+the check and the demo in the same commit and say why in both; do not route
+around the check, because a reviewer will drop the loophole fixtures back in
+and run the suite.
+
+The cleaner shape, a shared measuring hook and a shared clock that the three
+components call rather than copy, would make these checks structural instead
+of lexical. It is a refactor of a component three review rounds have verified,
+so it is not part of a fix round; if demo two's author reaches for it, that is
+a bead of its own, and the tests above are what it has to keep green.
+
 ---
 
 ## Before you call a demo done
@@ -328,12 +408,18 @@ pure, each with its own tests, and a component that measures.
   | reduced motion turned off starts the loop | 2 |
   | the backing store refits when the ratio changes | 4 |
   | no JavaScript leaves prose, not an empty frame | 9 |
+  | the spacing inside the live readout row is constant across every table, both plans | 7 |
+  | on an in-view load the story starts within three seconds and the peak is not the first caption | 5 |
 
   The implementations live outside the repo, in `state/review/s-3b55` (round
-  two's reviewer) and `state/review/s-0b4b` (this bead), because each needs two
-  probe routes that are not committed: one mounting the demo alone, one putting
-  it in a resizable column. Copy them into an archived build of your branch
-  rather than writing them again. If they have gone stale, the table above is
-  the contract and the scripts are only one way to satisfy it.
+  two's reviewer), `state/review/s-0b4b` (this bead's first round),
+  `state/review/s-4a6c` (its reviewer: `pickgap.mjs`, `firstview.mjs` and the
+  `loophole/` fixtures) and `state/review/s-4222` (the fix round, every probe
+  rerun), because each needs two probe routes that are not committed: one
+  mounting the demo alone, one putting it in a resizable column. Copy them into
+  an archived build of your branch rather than writing them again. If they
+  have gone stale, the table above is the contract and the scripts are only
+  one way to satisfy it. Headless Chromium on this box needs the vendored
+  libraries: `LD_LIBRARY_PATH=/home/daniel/hq/ops/vendor/browserlibs`.
 - Four screenshots captured and read back: light desktop, dark desktop, 390px,
   reduced motion. Read them. A shot nobody looked at is not evidence.
