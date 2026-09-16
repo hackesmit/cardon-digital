@@ -184,7 +184,11 @@ describe("the ads card carries the condition precios sets", () => {
       claim: /ads[^.]*inside the monthly(?: service)? fee/i,
       modules: /Hospitalidad and Restaurante/,
       excluded: /Producci[o\u00f3]n/i,
-      rule: /never attach to Produccion/,
+      // Intent, not phrasing: precios must still EXCLUDE Produccion from ads.
+      // A pinned phrase broke main once (see the case below), because the precios
+      // rewrite landed on the same day and reworded this sentence to "Neither
+      // attaches to Produccion".
+      rule: /\bProduccion\b[^.]*\b(?:never|neither|not)\b|\b(?:never|neither|not)\b[^.]*\bProduccion\b/i,
       sizeCondition: /middle size|medium size|from the middle/i,
       policyVerb: /attach(?:es)? to/i,
       inclusionVerb: /come[s]? with|included in|part of/i,
@@ -193,7 +197,7 @@ describe("the ads card carries the condition precios sets", () => {
       claim: /[Aa]nuncios[^.]*dentro de la cuota mensual/,
       modules: /Hospitalidad y a? ?Restaurante/,
       excluded: /Producci[o\u00f3]n/i,
-      rule: /A Producci\u00f3n nunca/,
+      rule: /Producción[^.]*(?:nunca|no se agrega|ninguno)|(?:nunca|no se agrega|ninguno)[^.]*Producción/i,
       sizeCondition: /tama\u00f1o mediano|desde el mediano/i,
       policyVerb: /se agrega[n]? a/i,
       inclusionVerb: /vienen? con|incluid[oa]s? en|forma[n]? parte de/i,
@@ -205,6 +209,23 @@ describe("the ads card carries the condition precios sets", () => {
       claims[locale];
 
     it(`${locale}: precios still states the rule this card is held to`, () => {
+      // Two halves, because this case broke main once on 2026-09-15 by pinning a
+      // phrase. The winery and precios rewrites were reviewed separately against
+      // main, each green alone, and precios reworded "never attach to
+      // Produccion" to "Neither attaches to Produccion" the same day. Merging
+      // both turned main red on an assertion about wording that no longer
+      // existed, and neither branch's own review could have seen it.
+      //
+      // The hard half is pricing, which cannot rot with a rewrite: ads are not
+      // available on Produccion at any size.
+      for (const size of ["S", "M", "L"] as const) {
+        expect(
+          addOnAvailable("google-ads-management", ["produccion"], size),
+          `lib/pricing.ts now offers ad management on Produccion at ${size}, so this whole card needs rewriting rather than this guard relaxing`,
+        ).toBe(false);
+      }
+      // The soft half is the copy, matched on the exclusion rather than on a
+      // sentence, so a rewording that keeps the meaning does not break the build.
       expect(precios[locale].ads.body).toMatch(rule);
     });
 
