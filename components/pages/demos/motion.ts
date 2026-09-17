@@ -13,8 +13,10 @@
  * turning the preference off later called start() into a gate that could never
  * open again: the demo was frozen for the life of the page. Both reviews
  * reproduced it. observeOnscreen takes no motion preference at all, so that
- * mistake cannot be expressed through this API, and demos.test.ts fails any
- * demo component that hand-rolls its own observer instead of calling it.
+ * mistake cannot be expressed through this API. Since hq-3pfhe.7 a demo does
+ * not call it either: ./stage/useDemoStage.ts does, once, for every demo, and
+ * contract.test.tsx counts observers at the global and fails one that was
+ * constructed anywhere but here.
  */
 
 import { clearsThreshold } from "@/lib/onscreen";

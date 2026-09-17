@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { GHOST_BOXES } from "./contract/ghosts";
 import { broken, sourceRules } from "./contract/source";
@@ -30,6 +31,19 @@ describe("every demo component, parsed", () => {
     components.flatMap((file) => Object.keys(sourceRules).map((rule) => [file, rule] as const)),
   )("%s %s", (file, rule) => {
     expect(sourceRules[rule](file, read(file), ctx)).toEqual([]);
+  });
+});
+
+describe("the shared frame", () => {
+  it("imports the stylesheet, so every mount is styled", () => {
+    /* Round one shipped demos.css with no importer anywhere in the tree: the
+       canvas fell back to its 300px intrinsic width and all twelve hotspots
+       landed off the board. The frame every demo renders carries it now. */
+    const sf = ts.createSourceFile("DemoFigure.tsx", read("stage/DemoFigure.tsx"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+    const imports = sf.statements
+      .filter(ts.isImportDeclaration)
+      .map((st) => (st.moduleSpecifier as ts.StringLiteral).text);
+    expect(imports).toContain("../demos.css");
   });
 });
 
