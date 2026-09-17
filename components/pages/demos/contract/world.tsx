@@ -542,13 +542,16 @@ export class World {
    * animated GIF, APNG, WebP or an SVG with SMIL inside, and a board draws
    * its pictures on the canvas.
    *
-   * CSS is the declared route that stays open to a demo, because app/
-   * globals.css stops every animation and transition under reduce for the
-   * whole site. That is a stylesheet's job and it is held where stylesheets
-   * are read (demos.test.ts: nothing in demos.css outranks that rule, and
-   * source.test.ts: a demo imports no stylesheet of its own). What is judged
-   * here is the part of CSS a component can carry on its own back: an inline
-   * style that animates, transitions or loads an image.
+   * CSS is the declared route that stays open to a demo, because under
+   * reduce app/globals.css stops every animation and transition on every
+   * element and demos.css says the same for the figure's pseudo-elements,
+   * which `*` does not match. That is a stylesheet's job and it is held
+   * where stylesheets are read (demos.test.ts: both rules exist and nothing
+   * in demos.css outranks them; source.test.ts: a demo imports no stylesheet
+   * of its own). What is judged here is the CSS a component can carry on its
+   * own back: an inline style that animates, transitions or loads an image,
+   * a <style> of its own anywhere in the document, and, through the ambient
+   * layer's doors, a sheet written from script.
    */
   strangers(): string[] {
     const out: string[] = [];
