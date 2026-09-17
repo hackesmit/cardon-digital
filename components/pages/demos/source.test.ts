@@ -141,6 +141,10 @@ describe("the source rules are load bearing", () => {
     ["const v = globalThis[`a${1}`]; void v;", "a template key on globalThis"],
     ["const c = Reflect.construct(Object, []); void c;", "Reflect"],
     ["const w = document.defaultView; void w;", "the window through the document"],
+    ['const IO = Function("return Inter" + "sectionObserver")(); void IO;', "code built from a string"],
+    ['const IO = new Function("return 1"); void IO;', "new Function"],
+    ['const IO = window.eval("Inter" + "sectionObserver"); void IO;', "eval through the window"],
+    ['const IO = eval("1"); void IO;', "eval"],
   ])("rejects %s (%s)", (body) => {
     expect(broken("D.tsx", demo(body), ctx)).toEqual([GLOBAL]);
   });
@@ -151,6 +155,7 @@ describe("the source rules are load bearing", () => {
     'const m = window["matchMedia"]; void m;',
     "/* window[key] and IntersectionObserver, in a comment */",
     "const o = { window: 1 }; void o.window;",
+    "const f: Function | null = null; void f;",
   ])("allows %s", (body) => {
     expect(broken("D.tsx", demo(body), ctx)).toEqual([]);
   });
