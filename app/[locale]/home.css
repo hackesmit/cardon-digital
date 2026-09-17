@@ -1020,6 +1020,232 @@
   color: var(--text-dim);
 }
 
+/* ---- the section season, in the problem section (bead hq-qd9jh) ----
+   Two panels on one clock: the fruit (Brix, with total acidity as its
+   counter-curve) over the same section's daily high and low, one scrub moving
+   both. The canvas draws with the live theme tokens through
+   components/pages/demos/palette.ts, the way the module demos do, so this
+   file colours only the HTML around it: the head, the readout tiles that
+   double as the legend, and the hint.
+
+   Two hues, both tokens, neither invented: the fruit wears --primary-bright,
+   the module colour of Produccion, and the heat wears --energy-bright. The
+   acid counter-curve is --muted and dashed, so the second series on the
+   fruit panel is told apart by pattern, never by a third hue.
+
+   The figure is the query container. It fills its band (no max-width: the
+   card it replaced was capped at 640px inside a full-bleed section, which
+   is the empty space Daniel named), the readout sits to its right from
+   760px of figure width, and under 640px the panels take the phone plan
+   and the tiles go two by two underneath. The component decides phone or
+   wide on the same box, the figure's content width, against the same
+   number, so the height reserved here is the height it draws. */
+.pg-showcase .ss {
+  container-type: inline-size;
+  --ss-h: 472px;
+  --ss-fruit: var(--primary-bright);
+  --ss-heat: var(--energy-bright);
+  margin: clamp(24px, 3.5vw, 34px) 0 clamp(30px, 4vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
+  padding: clamp(12px, 2vw, 18px) clamp(12px, 2vw, 22px);
+}
+.pg-showcase .ss-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 20px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.pg-showcase .ss-title {
+  font-weight: 600;
+  font-size: clamp(1rem, 1.4vw, 1.14rem);
+  letter-spacing: -0.01em;
+}
+.pg-showcase .ss-section {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ss-fruit);
+  font-weight: 600;
+}
+.pg-showcase .ss-honest {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-showcase .ss-lead {
+  margin: 0 0 16px;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  max-width: 64ch;
+}
+.pg-showcase .ss-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px 28px;
+}
+/* The stage is the one pointer target and the one keyboard target: a drag
+   anywhere over either panel moves both. pan-y leaves a vertical swipe to
+   the page, so a phone reader who lands a thumb on the chart still scrolls;
+   only a horizontal drag is ours. */
+.pg-showcase .ss-stage {
+  position: relative;
+  touch-action: pan-y;
+  cursor: crosshair;
+  border-radius: 3px;
+  outline: none;
+}
+.pg-showcase .ss-stage:focus-visible {
+  box-shadow: 0 0 0 2px var(--panel), 0 0 0 4px var(--ss-fruit);
+}
+.pg-showcase .ss-canvas {
+  display: block;
+  width: 100%;
+  height: var(--ss-h);
+}
+/* The component sets hidden when it cannot draw (no 2d context, a lost
+   context). The attribute alone does nothing against the rule above, since
+   .pg-showcase .ss-canvas at (0,2,0) beats the UA [hidden] at (0,1,0), and
+   the reader got a blank reserved box over the written season. */
+.pg-showcase .ss-canvas[hidden] {
+  display: none;
+}
+/* The readout: the day, four tiles, the hint. The tiles carry the swatches,
+   so they are the legend as well as the reading, and every value is mono
+   tabular so a tile never changes width as the scrub moves. */
+.pg-showcase .ss-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pg-showcase .ss-stats {
+  display: grid;
+  /* minmax(0, 1fr), never a bare 1fr: a bare track's minimum is the tile's
+     min-content, so a long uppercase label could hold the column open and
+     push the figure out of its band on a narrow phone */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px 14px;
+  margin: 0;
+}
+.pg-showcase .ss-day {
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text);
+}
+.pg-showcase .ss-stat {
+  margin: 0;
+  padding: 10px 12px 11px;
+  border: 1px solid var(--line-soft);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 3%, var(--panel));
+}
+.pg-showcase .ss-stat dt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-showcase .ss-swatch {
+  flex: none;
+  width: 14px;
+  height: 0;
+  border-top: 2px solid var(--ss-fruit);
+}
+.pg-showcase .ss-stat[data-k="acid"] .ss-swatch {
+  border-top-style: dashed;
+  border-top-color: var(--muted);
+}
+.pg-showcase .ss-stat[data-k="tmax"] .ss-swatch {
+  border-top-color: var(--ss-heat);
+}
+/* the low is drawn as a thin line at 0.35 alpha under the range band, so
+   its swatch is that line, not a block that reads as the band */
+.pg-showcase .ss-stat[data-k="tmin"] .ss-swatch {
+  border-top-width: 1px;
+  border-top-color: color-mix(in srgb, var(--ss-heat) 35%, transparent);
+}
+.pg-showcase .ss-stat dd {
+  margin: 4px 0 0;
+  font-size: 1.32rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.pg-showcase .ss-stat dd small {
+  margin-left: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+/* a heat day reads as one in the tile too, in the same clay as the fill */
+.pg-showcase .ss-stat[data-hot="true"] dd {
+  color: var(--ss-heat);
+}
+.pg-showcase .ss-hint {
+  margin: 2px 0 0;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-showcase .ss-fallback {
+  padding: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+@container (min-width: 760px) {
+  .pg-showcase .ss-body {
+    grid-template-columns: minmax(0, 1fr) 236px;
+  }
+  .pg-showcase .ss-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+/* Range syntax, not max-width: 639px. The component's plan is "under 640",
+   and (max-width: 639px) is "at most 639", which disagree on a fractional
+   width such as 639.5px (browser zoom, a fractional grid track) and would
+   reserve the wide height for the phone plan there (lucy, round one). */
+@container (width < 640px) {
+  /* On the stage, never on .ss: a container query is evaluated against an
+     ANCESTOR container of the element it styles, so a rule on the container
+     itself never matches, and the phone height sat unused while the canvas
+     kept the wide one (measured: 472px reserved, 428px drawn). */
+  .pg-showcase .ss-stage {
+    --ss-h: 428px;
+  }
+  .pg-showcase .ss-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .pg-showcase .ss-lead {
+    font-size: 0.88rem;
+  }
+  .pg-showcase .ss-stat dd {
+    font-size: 1.18rem;
+  }
+}
+
 @media (max-width: 900px) {
   .pg-showcase .sc-problem-list {
     grid-template-columns: 1fr 1fr;
