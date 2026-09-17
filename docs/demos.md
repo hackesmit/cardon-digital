@@ -65,8 +65,9 @@ transitions in `demos.css` are the one exception. Under reduce
 `app/globals.css` stops every animation and transition on every ELEMENT of the
 site; its selector is `*`, which does not match a pseudo-element, so
 `demos.css` repeats the rule for the figure with `::before`, `::after` and
-`::marker` named, and `demos.test.ts` holds both rules and fails a declaration
-in `demos.css` that outranks them with `!important`. CSS motion is not gated
+`::marker` named, and `demos.test.ts` holds both rules, fails a declaration
+in `demos.css` that outranks them with `!important`, and fails an animation or
+transition given to any other pseudo-element. CSS motion is not gated
 off screen or in a hidden tab, here or anywhere on the site.
 
 `draw` is a function of its two arguments. It is called with the clock's
@@ -226,8 +227,8 @@ the observer's constructor, it arrives at the stand-in. The checks
 | loads under reduce; hides the tab; scrolls away; and each time watches the whole page for a second and a half | a frame was asked for by anybody, or any canvas was drawn on, or a scroll position was set, or anything on the page was mutated, any attribute included and a portal included; a page loaded under reduce is watched from its first moment: timers run on the page's clock, so a `setInterval` is seen as surely as a frame loop |
 | sends the `cardon-mode` event, then a window `resize`, three seconds into the story | the frames after it are not the frames of a visitor who had the same event before the story began: the demo answered the event by moving time, which so far has meant a `key` on the figure |
 | takes the scene the mounted demo handed the stage and draws six readings in order, again, and backwards, with about a second of the page's time passing before every draw and `height`, `layout`, `hotspots` and every `live` text called between the passes | any reading drew a different frame the second or third time, or a `live` text answered differently: `draw` has a memory or a clock. Also if `draw` or a `live` text asked the page for the time or a random number at all, in these draws or in the second of story before them, used or not. Also if a frame leaves state on the context, a `save()` with no `restore()` or a `translate` outside a pair, because the next frame is drawn under it |
-| opens the demo on two pages, one at 1.000s and one at 5.777s by the page's clock, five years apart by the date, with different random numbers, does the same things on both for sixty-one seconds, one tap included | any frame, or the figure's markup at any second, differs between the two: something that differs between the two pages reached the picture, wherever it was read and wherever it was kept |
-| mounts with and without reduce and, over sixty-two seconds, does everything the other rows do (theme event, window resize, every button, reduce on and off, tab hidden and back, off screen and back, a new width), waiting each time for promises and dynamic imports to settle, and after each second reads every element in the document, head and portals included | an element is not on the list of elements that stand still (`INERT` in `contract/world.tsx`: structure, text, tables, `canvas`, `button`, static SVG shapes, paint servers and filters; so `animate`, `set`, `marquee`, `video`, `img`, `iframe` and anything not yet invented are refused unread), or a `<style>` sits anywhere but the frame's noscript, or an inline style names `animation`, `transition` or a `url()`, or `drawImage` or `createPattern` was given anything but a canvas, an image or a bitmap, or anything called `Element.animate`, `new Animation`, `new KeyframeEffect`, `document.startViewTransition`, a `CSSStyleSheet` method that writes rules, or set `document.adoptedStyleSheets`: these exist on the test page from before your module is evaluated, so feature detection at the top of a file finds them, they do nothing, and they are counted |
+| opens the demo on two pages, one at 1.000s and one at 5.777s by the page's clock, five years apart by the date, with different random numbers, does the same things on both for sixty-one seconds, one tap included | any frame, or the figure's text at any second, differs between the two: something that differs between the two pages reached the picture, wherever it was read and wherever it was kept |
+| mounts with and without reduce and, over sixty-two seconds, does everything the other rows do (theme event, window resize, every button, reduce on and off, tab hidden and back, off screen and back, a new width), waiting three turns of the event loop each time so that a promise or a dynamic import can land, and after each second reads every element in the document, head and portals included | an element is not on the list of elements that stand still (`INERT` in `contract/world.tsx`: structure, text, tables, `canvas`, `button`, static SVG shapes, paint servers and filters; so `animate`, `set`, `marquee`, `video`, `img`, `iframe` and anything not yet invented are refused unread), or a `<style>` sits anywhere but the frame's noscript, or an inline style names `animation`, `transition` or a `url()`, or `drawImage` or `createPattern` was given anything but a canvas, an image or a bitmap, or anything called `Element.animate`, `new Animation`, `new KeyframeEffect`, `document.startViewTransition`, a `CSSStyleSheet` method that writes rules, or set `document.adoptedStyleSheets`: these exist on the test page from before your module is evaluated, so feature detection at the top of a file finds them, they do nothing, and they are counted |
 | watches every DOM mutation across a full cycle, then taps every button | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop changed any attribute of anything |
 | looks for `aria-live` and the live roles in the mounted tree | one sits outside a ghost box |
 | mounts, runs the loop, taps every button, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
@@ -242,13 +243,17 @@ cannot call `draw` with the page's clock out of reach, and it cannot stop an
 animation the browser is running. So each is closed from the other side, at
 the page, and the list of what the page owns is exact, not a manner of
 speaking. From before any demo module is evaluated, so that a reference
-captured at the top of a file is the stand-in too: the whole `performance`
-object (`now`, `timeOrigin`, marks and entries), `Date.now`, `new Date()`,
+captured at the top of a file is the stand-in too: `performance.now` and
+`performance.timeOrigin` (the rest of `performance` is left real, and a
+picture that reads any of it has asked a question), `Date.now`, `new Date()`,
 `Date()`, `Intl.DateTimeFormat` `format` and `formatToParts` asked for now,
 `document.timeline.currentTime`, an event's `timeStamp`, the frame callback's
 argument, `Math.random`, `crypto.getRandomValues` and `crypto.randomUUID`.
 They are one number, the harness moves it, and the two pages differ in all of
-it. What may be mounted is a list of what stands still, not a list of what
+it. One thing the two pages cannot differ in is a value your module noted
+while it was being imported, because both pages mount one evaluation of it;
+so a demo module that asks for the time or a random number at import is
+refused at the import. What may be mounted is a list of what stands still, not a list of what
 moves. The tap and event rows are different: the stage makes them true for
 every demo that does not re-key its figure, and the checks are there for the
 one that does, for those three events only.
@@ -265,7 +270,8 @@ it is:
   name (a worker, a `<video>` that is never drawn, an API newer than this
   file);
 - a declaration made in answer to something the stands-still row does not do,
-  or later than its sixty-two seconds;
+  later than its sixty-two seconds, or by work that takes more than three
+  turns of the event loop to arrive;
 - a `key` that follows anything but the three events above;
 - and everything that only happens in a real browser, which is what the list
   at the end of this file is for.

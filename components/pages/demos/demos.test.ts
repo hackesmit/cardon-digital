@@ -373,6 +373,23 @@ const outranksReduce = (sheet: string) =>
         !/:\s*none\s*!\s*important\s*$/i.test(d),
     );
 
+/** Selectors that are given an animation or a transition and name a
+    pseudo-element other than the three the figure's reduce rule stops. */
+const movesUncovered = (sheet: string) => {
+  const found: string[] = [];
+  for (const m of Array.from(sheet.matchAll(/([^{};]+)\{([^{}]*)\}/g))) {
+    const moves = m[2]
+      .split(";")
+      .some((d) => /^\s*(-\w+-)?(animation|transition)[\w-]*\s*:/i.test(d) && !/:\s*none\s*(!\s*important)?\s*$/i.test(d));
+    if (!moves) continue;
+    for (const sel of m[1].split(",")) {
+      const pseudo = Array.from(sel.matchAll(/::([\w-]+)/g)).map((p) => p[1].toLowerCase());
+      if (pseudo.some((p) => !["before", "after", "marker"].includes(p))) found.push(sel.trim());
+    }
+  }
+  return found;
+};
+
 describe("the demos stylesheet", () => {
   /* The rules, without the prose. Every check below is lexical, and this file
      now explains in comments what its queries used to get wrong, naming the
@@ -543,6 +560,13 @@ describe("the demos stylesheet", () => {
       for (const part of ["", "::before", "::after"]) expect(stopped).toContain(sel + part);
     }
     expect(stopped).toContain(".demo-figure *::marker");
+    /* a pseudo-element the rule does not name would move under reduce, so
+       nothing but the three it names may be given motion in this sheet */
+    expect(movesUncovered(css)).toEqual([]);
+    expect(movesUncovered("p::first-letter{ animation: pulse 1s infinite }")).toHaveLength(1);
+    expect(movesUncovered("@media (hover){ .a:hover, li::first-line { transition: color 1s } }")).toHaveLength(1);
+    expect(movesUncovered(".a::before, .b:hover::after, li::marker { transition: opacity 1s }")).toEqual([]);
+    expect(movesUncovered("p::selection{ transition: none }")).toEqual([]);
     expect(outranksReduce(".x{ animation: none !important }")).toEqual([]);
     expect(outranksReduce(".x{ animation: none, spin 1s !important }")).toHaveLength(1);
     expect(css).not.toMatch(/url\(|@import|image-set\(/i);

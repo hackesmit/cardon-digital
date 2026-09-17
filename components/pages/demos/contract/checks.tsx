@@ -487,7 +487,10 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
        words. It needs no knowledge of the scene and none of HOW the time got
        in: read in draw(), in layout(), in the component body or an effect,
        kept in a closure, a ref or the DOM, it shows here or it changed
-       nothing anybody can see.
+       nothing anybody can see. One route is out of its reach, a value noted
+       while the MODULE was evaluated, since both pages mount one evaluation;
+       contract.test.tsx refuses that at the import (`importing` in
+       ./world.tsx).
 
        WHY THIS IS A CHECK AND NOT A CONSTRUCTION. draw() is a function and
        the page's clock is a global: JavaScript has no way to call a function
@@ -499,7 +502,10 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
       withWorld(setup, (w) => {
         w.mount(Demo);
         act(() => w.width(800));
-        const page = () => w.container.innerHTML;
+        /* the words and not the markup: two pages in a browser evaluate a
+           module twice, these two mount it once, so an id from a counter at
+           the top of a file differs here and nowhere else */
+        const page = () => w.container.textContent ?? "";
         seen.push(w.standing(), page());
         act(() => w.onscreen(1));
         /* a cycle fits in sixty seconds, so this is all of it and the seam */
