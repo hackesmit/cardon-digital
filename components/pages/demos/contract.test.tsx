@@ -89,7 +89,26 @@ vi.mock("./stage/useDemoStage", async (original) => {
    whole cycle, and under StrictMode twice over */
 vi.setConfig({ testTimeout: 30000 });
 
+/* A module is evaluated once, however many pages it is mounted on, so what
+   it asks the page while it is being imported is judged here and remembered
+   for every later load of the same file (./contract/world.tsx, `importing`). */
+const askedAtImport = new Map<string, string[]>();
 const load = async (path: string): Promise<Demo> => {
+  const { importing } = await import("./contract/world");
+  if (!askedAtImport.has(path)) {
+    importing.asked.length = 0;
+    importing.depth++;
+    try {
+      await import(/* @vite-ignore */ path);
+    } finally {
+      importing.depth--;
+      askedAtImport.set(path, Array.from(new Set(importing.asked)));
+    }
+  }
+  expect(
+    askedAtImport.get(path),
+    path + " asked the page for the time or for luck while it was being imported, so it knows when it was opened",
+  ).toEqual([]);
   const mod = (await import(/* @vite-ignore */ path)) as { default?: Demo };
   if (typeof mod.default !== "function") throw new Error(path + " has no default export to mount");
   return mod.default;
@@ -432,6 +451,12 @@ describe("the checks are load bearing", () => {
     expect(await failing(await loophole("CapturedClockDemo"))).toEqual(expect.arrayContaining([PURE, PAGES]));
   });
 
+  it("refuses a module that notes the time while it is being imported, which two mounts of one evaluation cannot tell apart", async () => {
+    await expect(loophole("OpenedAtDemo")).rejects.toThrow(/while it was being imported/);
+    /* and again: the module is cached, the verdict is too */
+    await expect(loophole("OpenedAtDemo")).rejects.toThrow(/Date\.now\(\)/);
+  });
+
   it("fails an animation behind feature detection at the top of the file", async () => {
     expect(await failing(await loophole("FeatureDetectDemo"))).toEqual([MOVES]);
   });
@@ -483,7 +508,6 @@ describe("the checks are load bearing", () => {
     ["window.performance.now()", () => window.performance.now()],
     ["globalThis.Date.now()", () => globalThis.Date.now()],
     ["the date the page was opened, performance.timeOrigin", () => performance.timeOrigin],
-    ["a performance mark", () => performance.mark("sweep").startTime],
     ["Math.random()", () => Math.random() * 1e6],
     ["crypto.getRandomValues()", () => crypto.getRandomValues(new Uint32Array(1))[0]],
     ["crypto.randomUUID()", () => parseInt(crypto.randomUUID().slice(0, 6), 16)],
@@ -525,6 +549,13 @@ describe("the checks are load bearing", () => {
     const failed = await failing(() => figure(s));
     expect(failed).toContain(PURE);
     expect(failed).not.toContain(PAGES);
+  });
+
+  it("fails a draw() that reads a performance mark, which is the real clock's and only counted", async () => {
+    /* the rest of `performance` is left real, so nothing about what it
+       answers is promised here except that asking is seen */
+    const s = scene((env, t) => bar(env, t, Math.floor(performance.mark("sweep").startTime / 1000)));
+    expect(await failing(() => figure(s))).toContain(PURE);
   });
 
   it("fails a draw() that asks only while the stage is drawing the story, before anybody asks it twice", async () => {

@@ -20,6 +20,26 @@ import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
 /** Set while ./motion's observeOnscreen is on the stack; contract.test.tsx
     wraps the real function to count it. An observer constructed at depth 0
     was built by hand. */
+/* Everything the permanent stand-ins further down close over lives in ONE
+   object on globalThis, so that a second evaluation of this module
+   (vi.resetModules) talks to the same stand-ins instead of installing a
+   World they never hear of. Function declaration: hoisted above its uses. */
+interface Slot {
+  active: World | null;
+  drawing: { depth: number };
+  importing: { depth: number; asked: string[] };
+  installed: boolean;
+}
+function slot(): Slot {
+  const g = globalThis as unknown as { __demoWorldAmbient?: Slot };
+  return (g.__demoWorldAmbient ??= {
+    active: null,
+    drawing: { depth: 0 },
+    importing: { depth: 0, asked: [] },
+    installed: false,
+  });
+}
+
 export const provenance = { depth: 0 };
 
 /** What the stage was last asked to draw, and on what. contract.test.tsx
@@ -32,7 +52,15 @@ export const handed: { scene: unknown; env: unknown; count: number } = { scene: 
 /** Set while a scene's draw() or a live text's at() is on the stack, by the
     same wrapper and by the purity check. Whatever asks the page what time it
     is, or for a random number, at depth above 0 was asked by a picture. */
-export const drawing = { depth: 0 };
+export const drawing: { depth: number } = slot().drawing;
+
+/** Set while a demo MODULE is being evaluated (contract.test.tsx wraps its
+    import). Both pages of the two-page check mount one evaluation of the
+    module, so a value noted at the top of a file, `const opened = Date.now()`,
+    is the same on both and no comparison can see it. The question is: a
+    module that asks the time or for luck while it is being imported is
+    refused, whatever it goes on to do with the answer. */
+export const importing: { depth: number; asked: string[] } = slot().importing;
 
 interface Entry {
   isIntersecting: boolean;
@@ -128,8 +156,10 @@ export const settle = async () => {
   for (let i = 0; i < 3; i++) await new Promise<void>((done) => realSetTimeout(done, 0));
 };
 
-let active: World | null = null;
+const ambientSlot = slot();
 const ask = <T,>(what: string, real: () => T, mine: (w: World) => T): T => {
+  const { active, importing, drawing } = ambientSlot;
+  if (importing.depth > 0) importing.asked.push(what);
   if (!active) return real();
   if (drawing.depth > 0) active.asked.push(what);
   return mine(active);
@@ -140,7 +170,7 @@ const declare = (what: string) => {
      would fail some other demo's test. The stands-still check waits for
      deferred work with its page still installed (settle, above), which is
      where it is seen. */
-  active?.declared.push(what);
+  ambientSlot.active?.declared.push(what);
   const a: Record<string, unknown> = {
     playState: "running",
     currentTime: 0,
@@ -155,8 +185,11 @@ const declare = (what: string) => {
 
 const ambient = () => {
   const g = globalThis as unknown as Record<string, unknown>;
-  if (g.__demoWorldAmbient) return;
-  g.__demoWorldAmbient = true;
+  /* Once per jsdom global, for the life of the test file. vitest gives every
+     test file its own worker context (isolate, the default, which this repo
+     does not turn off), so no other suite meets these. */
+  if (ambientSlot.installed) return;
+  ambientSlot.installed = true;
   /* writable where the platform's own is: a reviewer's harness that puts a
      stub of its own over one of these has to be able to */
   const define = (target: object, key: string, desc: PropertyDescriptor) =>
@@ -164,26 +197,20 @@ const ambient = () => {
   const wall = (w: World) => w.epoch + w.now;
 
   /* TIME. The whole of `performance` is a facade, not now() alone: whatever
-     a picture reads off it is a question, and the clocks on it are the
-     World's (timeOrigin is the date the page was opened, entries start at
-     the World's now). */
+     a picture reads off it is a question. now() and timeOrigin, the date the
+     page was opened, are the World's; marks, measures and entries are the
+     real ones, real prototypes and real durations, and only counted. */
   const realPerf = performance;
   const realNow = realPerf.now.bind(realPerf);
   g.performance = new Proxy(realPerf, {
     get(t, k) {
       if (k === "now") return () => ask("performance.now()", realNow, (w) => w.now);
       if (k === "timeOrigin") return ask("performance.timeOrigin", () => t.timeOrigin, (w) => w.epoch);
+      /* anything else is the real thing, untouched, and a picture that
+         read it has still asked the page a question */
       const v = Reflect.get(t, k, t) as unknown;
-      if (typeof v !== "function") return ask("performance." + String(k), () => v, () => v);
-      return (...args: unknown[]) => {
-        const out = (v as (...a: unknown[]) => unknown).apply(t, args);
-        return ask("performance." + String(k) + "()", () => out, (w) =>
-          /* an entry, or a list of them: their clocks are the World's too */
-          Array.isArray(out) || (out && typeof out === "object")
-            ? JSON.parse(JSON.stringify(out, (key, val) => (key === "startTime" || key === "duration" ? w.now : val)))
-            : out,
-        );
-      };
+      ask("performance." + String(k), () => 0, () => 0);
+      return typeof v === "function" ? (v as (...a: unknown[]) => unknown).bind(t) : v;
     },
   });
   /* Date.now is replaced on the real Date as well as through the global:
@@ -343,7 +370,7 @@ export class World {
     };
     const world = this;
     /* the ambient layer above answers for this page from here on */
-    active = this;
+    ambientSlot.active = this;
 
     g.IS_REACT_ACT_ENVIRONMENT = true;
     /* vitest compiles this app's JSX with the classic runtime */
@@ -524,7 +551,7 @@ export class World {
       this.container?.remove();
       for (const undo of this.restore.reverse()) undo();
       this.restore = [];
-      if (active === this) active = null;
+      if (ambientSlot.active === this) ambientSlot.active = null;
     }
   }
 
