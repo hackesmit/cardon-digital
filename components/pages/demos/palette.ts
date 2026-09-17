@@ -20,9 +20,9 @@
  * accents are the tokens: same ratios, byte-identical output, and
  * demos.test.ts reads app/globals.css and fails if either side is edited
  * alone. line and lineSoft take the alphas of --line and --line-soft, 0.22 and
- * 0.12, over the canvas kit's hairline hue, which is what every other canvas
- * visual on the site already strokes with, so the demos match the home visuals
- * rather than a CSS border. axis, floor, plate, accentInk and the accent
+ * 0.12, over the canvas kit's hairline ratio applied to the demo's own hue, so
+ * the demos read like the home visuals rather than like a CSS border and still
+ * wear one colour. axis, floor, plate, accentInk and the accent
  * alphas have no CSS twin at all: a 9px mono label and a 1px stroke need their
  * own contrast, and each says so on its field below.
  *
@@ -34,6 +34,16 @@
  * app/[locale]/modulos/modulos.css: Produccion --primary, Hospitalidad
  * --secondary, Restaurante --energy. A demo wears one hue and nothing here
  * invents a colour.
+ *
+ * One hue means one hue. Every hue-bearing field below is derived from the
+ * hue the caller asked for, and this function reads no other brand token at
+ * all: round two derived the structural hairline from --primary regardless,
+ * which put Produccion's green under Restaurante's red floor and would have
+ * done the same to Hospitalidad (lucy, round two). demos.test.ts records which
+ * custom properties readDemoPalette asks for and fails if an unrelated brand
+ * token is read, then asserts that changing the hue changes every hue-bearing
+ * field and leaves every other field untouched. docs/demos.md states the rule
+ * for demos two and three.
  *
  * The canvas primitives (hexToRgb, mix, rgba, fitCanvas, rr, easing, line) are
  * the repo's existing canvas kit and are re-exported below so a demo has one
@@ -132,8 +142,11 @@ export interface DemoPalette {
   /** The site's --muted, for chrome that is decoration beside something else. */
   muted: string;
 
+  /** The structural hairline, the demo's own hue pushed toward the text
+      colour by the canvas kit's ratio. Hue-bearing, so it moves with the hue
+      the caller asked for and never with another module's. */
   lineRgb: RGB;
-  /** The alphas of --line and --line-soft over the kit's hairline hue. */
+  /** The alphas of --line and --line-soft over lineRgb. */
   line: string;
   lineSoft: string;
 
@@ -171,15 +184,22 @@ export function readDemoPalette(el: HTMLElement, hue: DemoHue): DemoPalette {
   const ground = token("ground");
   const panel = token("panel");
   const text = token("text");
-  const primary = token("primary");
   const toward: RGB = dark ? WHITE : BLACK;
 
+  /* The demo's hue, read once. It is the only brand token this function is
+     allowed to touch: see the single-hue contract in the header. */
+  const brand = token(hue);
+
   // --<hue>-bright, mixed here exactly as globals.css mixes it.
-  const accent = mix(token(hue), text, BRIGHT_MIX[hue]);
+  const accent = mix(brand, text, BRIGHT_MIX[hue]);
   const floor = mix(panel, text, 0.08);
   const plate = mix(panel, text, dark ? 0.18 : 0.15);
-  /* the hairline hue canvasKit.readPalette strokes the home visuals with */
-  const lineRgb = mix(primary, text, 0.35);
+  /* The hairline: the canvas kit's ratio, over the demo's own hue. Round two
+     mixed --primary here whatever hue was asked for, so Restaurante drew every
+     structural line on its floor in the Produccion green while its accents
+     were the Restaurante red, and Hospitalidad would have inherited the same
+     (lucy, round two; fixed on hq-3pfhe.6). */
+  const lineRgb = mix(brand, text, 0.35);
 
   return {
     dark,
