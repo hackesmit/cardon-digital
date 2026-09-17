@@ -356,8 +356,10 @@ describe("the checks are load bearing", () => {
   });
 
   it("fails a loop that leaves no mutation and no canvas call, only frames asked for", () => {
-    const Scroller = beside({ reduce: false, hidden: false, offscreen: false }, (el, n) => (el.scrollLeft = n), true);
-    expect(failing(() => figure(lawful, <Scroller />))).toContain(STILL);
+    /* it touches nothing the page can see, so the frame count is the only
+       witness: a loop left spinning off screen is the battery, not the eye */
+    const Idle = beside({ reduce: false, hidden: false, offscreen: false }, () => {}, true);
+    expect(failing(() => figure(lawful, <Idle />))).toContain(STILL);
   });
 
   it("fails a timer that draws on a canvas of its own and changes nothing in the DOM", () => {
