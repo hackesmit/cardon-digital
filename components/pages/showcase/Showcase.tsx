@@ -4,7 +4,7 @@ import Combinations from "@/components/pages/modulos/Combinations";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
 import PricingDetails from "@/components/pages/precios/PricingDetails";
-import VintageCompare from "@/components/pages/showcase/VintageCompare";
+import SectionSeason from "@/components/pages/showcase/SectionSeason";
 import Reveal from "@/components/site/Reveal";
 import { allModules, demoHref, demoIsLive } from "@/lib/demo";
 import { localePath, type Locale } from "@/lib/i18n/config";
@@ -131,13 +131,13 @@ export default function Showcase({ locale }: { locale: Locale }) {
             </div>
           </Reveal>
 
-          {/* The comparison the pitch names, drawn: the section that says the
-              question takes an afternoon shows what the answer looks like. */}
+          {/* One section's season, drawn (bead hq-qd9jh): the fruit over the
+              same section's weather, on one clock, which is the capability
+              the problem list says nobody has. It stands where VintageCompare
+              stood; that component, its styles and its dictionary keys are
+              still in the tree, unrendered, and come back with one import. */}
           <Reveal delay={60}>
-            {/* The running season, read at build time and passed down rather
-                than read inside the client component, where the server and the
-                browser could disagree across a new year. */}
-            <VintageCompare locale={locale} year={new Date().getFullYear()} />
+            <SectionSeason locale={locale} />
           </Reveal>
 
           <ol className="sc-problem-list">
