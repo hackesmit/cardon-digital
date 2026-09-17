@@ -435,16 +435,94 @@ and it overrides anything in a bead description that implies otherwise.
 
 A rule with no mechanism is not captured, so this one is runnable:
 
-    node scripts/visuals-check.mjs        # or: npm run copy:check
+    node scripts/visuals-check.mjs        # or: npm run copy:check, or npm test
 
-It takes the set of files under `components/pages/` at the merge base with the default
-branch, takes the same set at the working tree, and fails on any path that was in the
-first and is not in the second. It is a set difference on paths rather than a diff
-filter, so a deletion dressed as a `git mv` out of the tree fails the same way a plain
-`rm` does. `npm run copy:check` runs it before the copy checker, so a copy bead that
-deletes a visual cannot reach a green copy check.
+It runs inside `node scripts/copy-check.mjs <page>` as well, because that is the command
+every copy bead's Definition of Done names, and a guard wired only into a sibling script
+is voluntary: measured on hq-4pu0q.3, with all four home visuals deleted, that command
+printed "1 page(s) clean" and exited 0. The guard prints nothing there when it is happy.
+
+It compares `components/pages/` at the merge base with the default branch against the
+working tree. **It measures substance, not existence.** A visual can lose everything it
+was without losing its path, and a guard that asks whether a FILE is there cannot guard a
+VISUAL: review s-48db ran thirteen deletion shapes through the first version of this
+check and seven exited 0, every one of them keeping a path, or a file, or a line count,
+and none of them keeping the drawing. So each visual is read as a set of faculties and
+compared with what it had:
+
+| Faculty | What it counts | Fails when |
+| --- | --- | --- |
+| body | source with comments and whitespace removed | it is empty, or under a third of what it was |
+| markup | JSX and SVG opening tags | none left, or under a third of them |
+| paint | the operations that put ink on a `<canvas>` and the path calls that shape it | none left, or under a third |
+| canvas | `getContext`, taking a drawing surface at all | none left |
+| motion | the animation drivers, counted **one kind at a time** | any kind that was there is at zero |
+
+`fillStyle` and `globalAlpha` are deliberately not paint. They are settings, not drawing,
+and counting them lets a canvas keep half its score while drawing nothing.
+
+Everything but the line count is read off comment-stripped source, because commenting a
+component out keeps its tags, its frames and its line count and renders nothing.
+
+Four things decide WHERE a visual is measured, which is the other half of the rule:
+
+1. **The path left the tree.** A set difference on paths rather than a diff filter, so a
+   deletion dressed as a `git mv` out of the tree fails the same way a plain `rm` does,
+   staged or not.
+2. **Still here means still in the repository.** The working tree is read from disk, so
+   an unstaged `rm` is a deleted visual. But a file on disk and out of the index is gone
+   from every clone and every other worktree: `git rm --cached` plus a `.gitignore` line
+   is a deletion that only the machine running the check cannot see.
+3. **A move inside the tree is not a deletion, if the destination is somewhere a visual
+   can live.** A path that left is matched against the paths that arrived by shared
+   source lines, at git's own 50 percent rename threshold. The destination has to be a
+   file the build compiles, so `SectorMap.tsx.bak` and `SectorMap.old.txt` are parking
+   spaces and not moves; and a deletion already recorded in the index needs an arrival
+   the index records too, so a committed removal cannot be excused by an untracked file
+   nobody else will ever get. An unstaged `cp` then `rm` still passes, because that is
+   how a move gets made by hand.
+4. **A move is then measured at its destination.** Renaming is not a discount. Stripping
+   every markup line out of a component scores 84 percent on shared lines, because a 300
+   line component is only 49 lines of markup, and the first version of this check passed
+   it while failing the identical content left under its own name.
+
+A faculty that turns up in another file under the same tree MOVED rather than died, and
+is a note: extracting a drawing into a helper takes paint to zero in the file that had it
+and loses nothing. The lines have to actually still be there, and be new there, so a line
+four other visuals already have vouches for nothing. They also have to be somewhere the
+visual can still BE a visual, which is the same pair of tests a rename has to pass: a
+file the build compiles, and a file the index records. A copy parked as `SectorMap.old
+.txt`, or an untracked sibling nobody else will ever get, is a parking space and not the
+drawing's new home. Without that pair the counterweight excused the gutting it exists to
+distinguish, and said so in its own output. Anything short of a failure, a
+faculty down but not collapsed, is a shrink note that never blocks, because a visual can
+legitimately get smaller and a guard that argues with every rewrite gets deleted.
+
+Shrink notes are measured on every faculty and not just the line count, and they read the
+faculty first: a visual can lose two thirds of its elements while the file gets four lines
+shorter, and the band that passes must not pass in silence.
+
+Every failure names the file, its line count at the base and every faculty it lost, since
+the line count is what got noticed, and says to rewire rather than delete. `VISUALS_BASE`
+overrides the baseline and announces itself on stderr when it does, because a baseline of
+`HEAD` passes anything and a receipt that does not say so looks identical to one that ran.
+
+What it cannot do, said plainly so nobody reads more into a green run than is there: it
+reads source as TEXT and cannot tell live code from dead code. A body kept as an uncalled
+function with a stub exported in its place, or paint calls aimed at a no-op object, keep
+every faculty while nothing renders, and this check stays quiet. Closing that class means
+asking the BUILD what renders rather than asking the source what it says, which is a
+different measurement with its own Definition of Done: hq-4pu0q.23.
+
+Two controls, both runnable. Replayed over the last fourteen commits of this repo, each
+against its own parent, it fires exactly once: on 11d43c3, the commit that deleted the
+four home visuals. And s-48db's thirteen adversarial cases plus thirteen more, in
+`state/review/s-45d8/adversarial.sh`, all behave: every deletion shape exits 1, and the
+clean tree, the `git mv`, the unstaged `cp` then `rm`, a move into a new subdirectory and
+a real rewrite that keeps the drawing all exit 0.
 
 The escape hatch is the rule, written down. `RETIRED` in that script is a list of exact
 paths, each with the date and the reason Daniel approved it. Adding an entry is how a
-visual is retired, and the entry is what a reviewer reads. An entry that no longer
-matches a removed file is reported as stale, so the list cannot quietly grow.
+visual is retired, and the entry is what a reviewer reads, and it covers that path being
+emptied, gutted or stilled as well as removed. An entry that no longer matches a removed file is
+reported as stale, so the list cannot quietly grow.
