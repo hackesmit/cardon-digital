@@ -2,7 +2,7 @@
 import { readdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { act, useEffect, useMemo, useRef, useState } from "react";
+import { act, StrictMode, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
@@ -399,6 +399,22 @@ describe("the checks are load bearing", () => {
     expect(failed).toContain("mounts nothing operable that the noscript rule does not name");
     /* the static render cannot see it, which is why the mounted check exists */
     expect(failed).not.toContain(NOSCRIPT);
+  });
+
+  it("passes the reference and the tap demo under StrictMode, where every effect runs twice", async () => {
+    /* next.config.mjs turns it on, so in development the stage's effect is
+       set up, torn down and set up again before anything has run. The clock
+       in the ref lives through that, and it has still never been started. */
+    for (const file of ["./RestauranteDemo.tsx", "../../../lib/testing/loopholes/demos/TapRestartDemo.tsx"]) {
+      const Demo = await load(file);
+      expect(
+        failing(() => (
+          <StrictMode>
+            <Demo />
+          </StrictMode>
+        )),
+      ).toEqual([]);
+    }
   });
 
   it("passes the reference demo on every check, so the checks describe what ships", async () => {
