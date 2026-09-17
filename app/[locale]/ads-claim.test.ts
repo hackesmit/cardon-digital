@@ -64,6 +64,9 @@ const buildAtEverySize = attachesTo.every((m) =>
 /** Any mention of advertising, in either language. Wide on purpose. */
 const ADS = /\bads?\b|\badvertis|\banuncio|\bpublicidad|\bpauta|\bcampaign|\bcampaña|\bppc\b|\bsem\b/i;
 
+/** The verb of the thing pricing refuses at S, for blocks whose ads noun sits in a stripped phrase. */
+const MANAGES = /\bmanag(?:e|es|ed|ing|ement)\b|\bmanej|\bgesti[o\u00f3]n|\badministr/i;
+
 /** The size condition, in precios' words or the S M L letters /modulos uses. */
 const SIZE: Record<Locale, RegExp> = {
   en: /from the middle size up|from M\b/,
@@ -109,6 +112,8 @@ const NOT_AN_OFFER: Record<Locale, RegExp[]> = {
     /\bGoogle Ads, sitios web\b/g,
     /\breserva directa y anuncios\b/g,
     /Donde el sitio describe[^.]*manejo de anuncios dentro de la cuota mensual/g,
+    // Terms again: data handling, which is not ads and shares the verb.
+    /\bmanejo de datos\b/g,
   ],
 };
 
@@ -224,7 +229,13 @@ async function offers(locale: Locale): Promise<Offer[]> {
   for (const page of pages) surfaces.push({ page, blocks: await served(page, locale) });
   for (const { page, blocks } of surfaces) {
     blocks.forEach((block, i) => {
-      if (!ADS.test(offerIn(block, locale))) return;
+      // Two ways to be an offer: ads vocabulary survives the strip, or the
+      // block mentions ads at all and what survives still MANAGES something.
+      // The second is /modulos' "A Google Ads build at any size, with its
+      // monthly management from M": the build phrase strips, and without this
+      // the management half had no noun left and lost its condition in silence.
+      const rest = offerIn(block, locale);
+      if (!ADS.test(rest) && !(ADS.test(block) && MANAGES.test(rest))) return;
       const near = blocks.slice(i, i + 3);
       out.push({ page, block, conditioned: near.some((b) => SIZE[locale].test(b)) });
     });
