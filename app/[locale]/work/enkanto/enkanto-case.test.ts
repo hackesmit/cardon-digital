@@ -192,10 +192,28 @@ describe("the counts the basis paragraph is accountable for", () => {
     expect(close, "the structure diagram's svg is never closed").toBeGreaterThan(open);
     const svg = markup.slice(open, close);
 
-    // Round four scoped the count to the SVG, and round four's review pointed out
-    // that an svg is not a row: a legend swatch, or a label drawn outside the
-    // viewBox, still bought the paragraph another homepage. So the count is scoped
-    // to the group that draws the front doors and nothing else.
+    // Round four scoped the count to the SVG, and its review pointed out that an
+    // svg is not a row: a legend swatch, or a label drawn outside the viewBox,
+    // still bought the paragraph another homepage. So the count is scoped to the
+    // group that draws the front doors.
+    //
+    // ROUND FIVE'S REVIEW (s-691a) SHOWED THAT ONLY MOVED THE HOLE. Seven ways a
+    // fifth homepage still gets past this, each proved through the whole Definition
+    // of Done: a row drawn as a SIBLING of the group rather than inside it; a
+    // second group carrying the same class, because indexOf reads only the first;
+    // a label wrapped in a tspan, because the match below wants the text node to
+    // start immediately after the tag; a row drawn from defs through a use element;
+    // a hidden label; a label parked in defs while four are painted; and a label
+    // drawn inside the group but below the viewBox, which is the exact shape round
+    // four claimed to have closed.
+    //
+    // They are not fixed here, deliberately. Four generations of a lexical guard
+    // over this one paragraph have each been beaten by the next markup, and every
+    // one of these needs a future author to edit the diagram. The structural
+    // answer, which deletes this whole apparatus rather than growing it a fifth
+    // time, is hq-4pu0q.25: take the count from the same data the diagram draws,
+    // so the prose cannot disagree with the page. Read the name of this function
+    // as "the rows this counts", not "the rows the page draws".
     const g = svg.indexOf('<g class="e-front-doors"');
     expect(g, "the structure diagram no longer marks which group draws the front doors").toBeGreaterThan(-1);
     const gEnd = svg.indexOf("</g>", g);
