@@ -27,7 +27,17 @@
    placeholder under a 600px canvas (lucy, round two). Every rule below that
    used to be @media on the viewport is now @container on this box, and the
    component measures this same content box against the same 640px, so the two
-   cannot disagree. components/pages/demos/floor.ts owns the number. */
+   cannot disagree. components/pages/demos/floor.ts owns the number.
+
+   The two queries are written as a range pair, (width < 640px) against
+   (width >= 640px), and not as (max-width: 639px) against (min-width: 640px).
+   The range pair partitions the number line; the max/min pair leaves the open
+   interval (639, 640) matching neither, and a container query reads the
+   fractional content box, so a figure sitting at 639.25px drew the phone board
+   under the desktop stylesheet with a 214px first-layout shift (reviewer
+   s-3b55, BLOCKING 2). demos.test.ts evaluates both of these conditions
+   against floor.ts's isPhonePlan() in quarter-pixel steps across the boundary
+   and fails unless they agree at every step, so the pair cannot drift back. */
 .demo-figure {
   container-type: inline-size;
   --demo-accent: var(--energy-bright);
@@ -81,6 +91,12 @@
 
 /* ------------------------------ the board ------------------------------- */
 
+/* The board fills the query container: no padding, no border, no margin here.
+   The component measures canvas.clientWidth for its drawing width and the
+   figure's content box for its floor plan, and the pre-hydration height below
+   is written in cqw of that same content box, so all three are one number only
+   while this box adds nothing (reviewer s-3b55, note 3). demos.test.ts fails
+   this rule if a box-affecting property appears in it. */
 .demo-stage {
   position: relative;
 }
@@ -180,7 +196,7 @@
 
 /* Plates exist only where there is a pointer that can hover and room to put
    them. Everywhere else the strip below the board carries the same words. */
-@container (min-width: 640px) {
+@container (width >= 640px) {
 @media (hover: hover) {
   /* The plate opening is the hover feedback. A tinted rectangle behind the
      hotspot only drew a grey square across the floor plan, which is the same
@@ -220,16 +236,48 @@
 
 /* ---------------------------- the readout strip -------------------------- */
 
+/* Two rows, always: the selection the visitor chose, then the caption the loop
+   is writing. Round two made this a wrapping flex row, which put the caption
+   beside the selection when the two happened to fit and pushed it onto a
+   second line when they did not, so the figure's height depended on which of
+   four captions was showing and on which table was selected. A frame that
+   moves because the demo changed a word, or because the visitor tapped a
+   longer table name, is the same defect twice. A grid of one column has one
+   height. */
 .demo-readout {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px solid var(--line-soft);
   font-size: 0.86rem;
+}
+/* Held open by every readout at once, for the reason .demo-caption-box is:
+   the box a changing value is drawn in does not change size. The trigger here
+   is a tap rather than the loop, and "Mesa grande / seis lugares" is long
+   enough to wrap where the shorter names do not, which moved the figure 31px
+   under the visitor's finger. */
+.demo-pick-box {
+  display: grid;
+}
+/* A ghost box stretches its live child unless told not to. The cell is as
+   tall as the tallest ghost and a grid item's default alignment is stretch,
+   so the live row was drawn to the height of "Mesa grande / seis lugares"
+   whichever table was selected; and because .demo-pick is a wrapping flex
+   row, align-content normal spread that spare height between its lines. The
+   figure stayed at 840px, which is what the ghosts are for, and the gap
+   between the table name and its detail jumped 13.5px on every tap instead,
+   for 11 of the 12 tables at 390px (reviewer s-4a6c, BLOCKING 1). align-self
+   start sizes each row to its own content and leaves the track, and so the
+   box, at the tallest ghost. Every ghost box carries this, the caption box
+   below included; demos.test.ts fails either without it. */
+.demo-pick-box > * {
+  grid-area: 1 / 1;
+  align-self: start;
+}
+.demo-pick-ghost {
+  visibility: hidden;
 }
 .demo-pick {
   display: flex;
@@ -252,10 +300,40 @@
   color: var(--demo-accent);
   font-size: 0.8rem;
 }
-.demo-caption {
+/* The caption is the one thing on the page the loop rewrites every frame, and
+   the four phases are not the same length. In a wrapping flex row that made
+   the figure 579px tall while the board read "llenandose" and 610px for the
+   other three captions: a 31px reflow twice per 38.5s cycle, for the life of
+   the page, at every width where the figure reaches its max-width, taking
+   everything below it on the page with it (reviewer s-3b55, BLOCKING 1).
+
+   The box holds all four captions stacked in a single grid cell with three of
+   them invisible, so its width and height are the longest caption's at every
+   container width and in every locale, not the current one's. That is the
+   general rule demos two and three inherit, stated in docs/demos.md: a value
+   the loop rewrites is drawn in a box whose size does not depend on the value.
+   Reserving a measured pixel height instead would be right at one width, one
+   font size and one language. */
+.demo-caption-box {
+  display: grid;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--text-dim);
+}
+/* align-self start for the reason given at .demo-pick-box: the live child
+   here is one inline span today, so nothing shows, and the next demo's
+   caption may not be. */
+.demo-caption-box > * {
+  grid-area: 1 / 1;
+  align-self: start;
+}
+.demo-caption-ghost {
+  visibility: hidden;
+}
+.demo-caption {
+  font-size: inherit;
+  letter-spacing: inherit;
+  color: inherit;
 }
 .demo-hint {
   margin-top: 8px;
@@ -270,7 +348,7 @@
    tables into three columns and four rows and grows the room to hold them.
    The only thing this file has to do is give the hotspots a touch target and
    get out of the way of the plates, which are already gone above. */
-@container (max-width: 639px) {
+@container (width < 640px) {
   .demo-canvas {
     height: calc(60px + clamp(330px, 92cqw, 380px) + 34px + clamp(110px, 34cqw, 140px) + 22px);
   }
@@ -292,11 +370,6 @@
   .rd-btn {
     width: 48px;
     height: 48px;
-  }
-  .demo-readout {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
   }
 }
 
