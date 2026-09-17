@@ -447,7 +447,8 @@ describe("the checks are load bearing", () => {
     ["Date() called as a function", () => Date.parse(Date())],
     ["a formatter asked for now", () => 1000 * Number(new Intl.DateTimeFormat("en", { second: "numeric" }).format())],
     ["formatToParts asked for now", () => Number(new Intl.DateTimeFormat("en", { minute: "numeric" }).formatToParts()[0].value) * 1000],
-    ["document.timeline", () => Number(document.timeline.currentTime)],
+    /* guarded, as an author who has met jsdom writes it */
+    ["document.timeline", () => Number(document.timeline?.currentTime ?? 0)],
     ["an event's timeStamp", () => new Event("x").timeStamp],
     ["Math.random()", () => Math.random() * 1e6],
     ["crypto.getRandomValues()", () => crypto.getRandomValues(new Uint32Array(1))[0]],
@@ -472,13 +473,38 @@ describe("the checks are load bearing", () => {
     expect(failed).not.toContain(PURE);
   });
 
-  it("fails a draw() that reads the clock and has not used it yet", () => {
-    /* every frame on every page agrees, for the first day: only the question
-       itself gives it away */
-    const s = scene((env, t) => bar(env, t, performance.now() > 86400000 ? 40 : 0));
+  it.each<[string, () => unknown]>([
+    ["performance.now()", () => performance.now()],
+    ["Date.now()", () => Date.now()],
+    ["new Date()", () => new Date()],
+    ["a formatter", () => new Intl.DateTimeFormat("en").format()],
+    ["document.timeline", () => document.timeline?.currentTime],
+    ["Math.random()", () => Math.random()],
+    ["crypto.getRandomValues()", () => crypto.getRandomValues(new Uint8Array(1))],
+    ["crypto.randomUUID()", () => crypto.randomUUID()],
+  ])("fails a draw() that asks for %s and has not used the answer yet", (_, read) => {
+    /* every frame on every page agrees: only the question gives it away */
+    const s = scene((env, t) => {
+      read();
+      bar(env, t);
+    });
     const failed = failing(() => figure(s));
     expect(failed).toContain(PURE);
     expect(failed).not.toContain(PAGES);
+  });
+
+  it("fails a draw() that asks only while the stage is drawing the story, before anybody asks it twice", () => {
+    function Early() {
+      const s = useMemo(() => {
+        let calls = 0;
+        return scene((env, t) => {
+          if (calls++ < 5) performance.now();
+          bar(env, t);
+        });
+      }, []);
+      return figure(s);
+    }
+    expect(failing(Early)).toEqual([PURE]);
   });
 
   it("fails words chosen by the wall clock, which no frame shows", () => {
@@ -516,6 +542,9 @@ describe("the checks are load bearing", () => {
     ["Element.animate, unguarded", (el) => void el.animate([{ opacity: 0 }, { opacity: 1 }], 600)],
     ["Element.animate, only when reduce is off", (el) => {
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) el.animate?.([{ opacity: 0 }], 600);
+    }],
+    ["Element.animate, only when reduce is ON, as a gentler stand-in for the loop", (el) => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) el.animate?.([{ opacity: 0.6 }, { opacity: 1 }], 900);
     }],
     ["new Animation over a KeyframeEffect", (el) => new Animation(new KeyframeEffect(el, [{ opacity: 0 }], 600)).play()],
     ["a view transition", () => void (document as unknown as { startViewTransition(cb: () => void): void }).startViewTransition(() => {})],
