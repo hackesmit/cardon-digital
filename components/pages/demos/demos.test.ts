@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { withoutCssComments } from "./contract/ghosts";
 
 import {
   bands,
@@ -365,7 +366,14 @@ describe("the demos stylesheet", () => {
      now explains in comments what its queries used to get wrong, naming the
      old (max-width: 639px) pair in the sentence that rejects it. Reading the
      raw stylesheet made the header comment itself a match. */
-  const css = read("demos.css").replace(/\/\*[\s\S]*?\*\//g, "");
+  const css = withoutCssComments(read("demos.css"));
+
+  it("reads a comment delimiter inside a string as a string", () => {
+    const hostile = 'a::before { content: "/*" }\n.kept > * { grid-area: 1 / 1 }\nb::after { content: "*/" } /* gone */';
+    const read = withoutCssComments(hostile);
+    expect(read).toContain(".kept > * { grid-area: 1 / 1 }");
+    expect(read).not.toContain("gone");
+  });
   const phoneBlock = new RegExp(
     "@container \\(width < " + PHONE_MAX + "px\\) \\{([\\s\\S]*?)\\n\\}",
   ).exec(css);
