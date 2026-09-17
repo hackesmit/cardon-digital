@@ -517,7 +517,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
     };
     const one = story({ now: 1000, seed: 1 });
     const other = story({ now: 5777, epoch: Date.UTC(2031, 1, 3, 4, 5, 6, 789), seed: 20260917 });
-    expect(one.length, "frames and pages recorded").toBeGreaterThan(100);
+    expect(one.length, "frames and pages recorded in sixty-one seconds in view (hardly any: the demo is not animating, so there is no story to compare)").toBeGreaterThan(100);
     expect(other.length, "frames and pages the second visitor saw, against the first").toBe(one.length);
     expect(
       other.filter((f, i) => f !== one[i]).length,
@@ -560,7 +560,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
         return frames;
       };
       const control = story(0);
-      expect(control.length, "frames after " + what).toBe(15);
+      expect(control.length, "frames in the second after " + what + " (too few: the demo is not animating, so there is no story to compare)").toBe(15);
       expect(
         story(3008).filter((f, i) => f !== control[i]).length,
         "frames after " + what + " three seconds into the story that a visitor who had it before the story began did not see",
