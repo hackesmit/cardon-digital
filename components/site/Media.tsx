@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import type { Locale } from "@/lib/i18n/config";
+import { clearsThreshold } from "@/lib/onscreen";
 import "./media.css";
 
 /**
@@ -341,6 +342,20 @@ export function visibleSrc(
 export function posterFor(slot: string, poster: string | undefined): string {
   return typeof poster === "string" && poster.trim() !== "" ? poster : posterFile(slot);
 }
+
+/**
+ * How much of the slot has to be in view before the policy calls it visible.
+ *
+ * Read through @/lib/onscreen rather than off entry.isIntersecting. Not
+ * because isIntersecting was autoplaying clips off a one pixel sliver, which
+ * was reported and does not reproduce in Chromium, where ratio 0.03 under a
+ * scalar 0.35 comes back false. It is because that coupling is invisible at the
+ * callsite, is only checked here in one of the three engines this site ships
+ * to, and holds only while the threshold stays a scalar. A ratio comparison is
+ * the same answer everywhere. docs/demos.md carries the rule and the
+ * measurement.
+ */
+export const MEDIA_VISIBLE = 0.35;
 
 /** What the visitor has asked for. "auto" means they have not said. */
 export type VideoIntent = "auto" | "play" | "pause";
@@ -737,10 +752,12 @@ function MediaVideo({
     if (observed) {
       io = new IntersectionObserver(
         (entries) => {
-          for (const entry of entries) visibleRef.current = entry.isIntersecting;
+          for (const entry of entries) {
+            visibleRef.current = clearsThreshold(entry, MEDIA_VISIBLE);
+          }
           apply();
         },
-        { threshold: 0.35 },
+        { threshold: MEDIA_VISIBLE },
       );
       io.observe(el);
     }
