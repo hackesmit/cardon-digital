@@ -414,6 +414,9 @@ describe("the checks are load bearing", () => {
   const MOVES =
     "mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser";
   const loophole = (name: string) => load("../../../lib/testing/loopholes/demos/" + name + ".tsx");
+  const bar = (env: StageEnv, t: number, shift = 0) =>
+    env.ctx.fillRect(0, 0, t >= 5 && t < 6.1 ? 50 : ((t * 10 + shift) % 97) + 1, 10);
+  const lawfulBar = scene((env, t) => bar(env, t));
 
   it("fails the s-1022 wall clock, a draw() with no memory that reads the page's clock", async () => {
     const failed = failing(await loophole("WallClockDemo"));
@@ -430,6 +433,23 @@ describe("the checks are load bearing", () => {
     expect(failing(await loophole("KeyTapDemo"))).toContain(TAP);
   });
 
+  it.each(["cardon-mode", "resize"])("fails a figure keyed on the %s event alone", (event) => {
+    /* the reviewer's listens to both, so either half of the check would do
+       for it; these need the half that is theirs */
+    function Keyed() {
+      const [n, setN] = useState(0);
+      useEffect(() => {
+        const on = () => setN((v) => v + 1);
+        window.addEventListener(event, on);
+        return () => window.removeEventListener(event, on);
+      }, []);
+      return (
+        <DemoFigure key={n} demo="fixture" scene={lawfulBar} title="t" honest="vista ilustrativa, no son datos de cliente" fallback="prose" />
+      );
+    }
+    expect(failing(Keyed)).toEqual([EVENTS]);
+  });
+
   it("fails the s-1022 scene that reads back the DOM the stage wrote", async () => {
     expect(failing(await loophole("DomReadDemo"))).toEqual([CLOCK]);
   });
@@ -438,8 +458,6 @@ describe("the checks are load bearing", () => {
     expect(failing(await loophole("ResizeMemoryDemo"))).toEqual([PURE]);
   });
 
-  const bar = (env: StageEnv, t: number, shift = 0) =>
-    env.ctx.fillRect(0, 0, t >= 5 && t < 6.1 ? 50 : ((t * 10 + shift) % 97) + 1, 10);
 
   it.each<[string, () => number]>([
     ["Date.now()", () => Date.now()],
@@ -521,7 +539,6 @@ describe("the checks are load bearing", () => {
     expect(failing(() => figure(scene((env, t) => bar(env, t))))).toEqual([]);
   });
 
-  const lawfulBar = scene((env, t) => bar(env, t));
   it.each<[string, () => React.ReactNode]>([
     ["an SMIL animate", () => <svg><rect width="10" height="8"><animate attributeName="width" from="10" to="120" dur="1s" /></rect></svg>],
     ["an SMIL set", () => <svg><rect><set attributeName="x" to="9" begin="1s" /></rect></svg>],
