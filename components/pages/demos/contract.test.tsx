@@ -430,6 +430,10 @@ describe("the checks are load bearing", () => {
     expect(failing(await loophole("KeyTapDemo"))).toContain(TAP);
   });
 
+  it("fails the s-1022 scene that reads back the DOM the stage wrote", async () => {
+    expect(failing(await loophole("DomReadDemo"))).toEqual([CLOCK]);
+  });
+
   it("fails the s-1022 scene that is pure per reading and counts its layouts", async () => {
     expect(failing(await loophole("ResizeMemoryDemo"))).toEqual([PURE]);
   });
