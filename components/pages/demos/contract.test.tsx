@@ -56,7 +56,9 @@ describe("every demo component, mounted", () => {
 /**
  * The reviewers' loophole components, verbatim from state/review/s-4a6c and
  * state/review/s-5836, each of which passed the whole suite when it was
- * written. Dropping any of them beside this file turns the run above red;
+ * written. They live in lib/testing/loopholes/demos, outside components/, because they
+ * are not visuals and the visuals guard would adopt them. Dropping any of
+ * them beside this file turns the run above red;
  * these are the same fact without the drop, so the checks cannot drift back
  * to describing one file.
  */
@@ -72,7 +74,7 @@ describe("the checks are load bearing", () => {
   const STANDS = "stands on a drawn frame, and under reduced motion that frame never moves";
 
   it("fails the s-5836 cellar on each of the five things it does", async () => {
-    const failed = failing(await load("./loopholes/CellarDemo.tsx"));
+    const failed = failing(await load("../../../lib/testing/loopholes/demos/CellarDemo.tsx"));
     /* an observer reached as window["Intersection" + "Observer"], frozen for
        life, the clock backwards on resume, the covers span written through
        firstChild.nodeValue and the selection row with no ghosts, a live
@@ -85,7 +87,7 @@ describe("the checks are load bearing", () => {
     expect(failed).not.toContain(PLAN);
   });
 
-  it.each(["./loopholes/StringDemo.tsx", "./loopholes/ProduccionDemo.tsx"])(
+  it.each(["../../../lib/testing/loopholes/demos/StringDemo.tsx", "../../../lib/testing/loopholes/demos/ProduccionDemo.tsx"])(
     "fails %s, which no string can talk its way out of",
     async (path) => {
       const failed = failing(await load(path));
@@ -94,7 +96,7 @@ describe("the checks are load bearing", () => {
   );
 
   it("fails the s-4a6c Hospitalidad, an observer behind an alias", async () => {
-    expect(failing(await load("./loopholes/HospitalidadDemo.tsx"))).toEqual(
+    expect(failing(await load("../../../lib/testing/loopholes/demos/HospitalidadDemo.tsx"))).toEqual(
       expect.arrayContaining([OBSERVER, STANDS]),
     );
   });

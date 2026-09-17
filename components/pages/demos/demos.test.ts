@@ -355,7 +355,7 @@ function stubObserver(): { instance: () => FakeObserver } {
      contract.test.tsx  every demo mounted and driven, judged on what it does
      source.test.ts     four AST rules for what a mount cannot reach
 
-   The reviewers' loophole components live in ./loopholes and both suites
+   The reviewers' loophole components live in lib/testing/loopholes and both suites
    assert they fail. */
 
 /* --------- the pre-hydration canvas height is the measured height -------- */

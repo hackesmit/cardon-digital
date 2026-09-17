@@ -74,10 +74,10 @@ const READS_ISINTERSECTING: Record<string, number> = {
  * pattern covers files that do not exist yet.
  */
 const NOT_JUDGED = new Set([
-  "components/pages/demos/loopholes/CellarDemo.tsx",
-  "components/pages/demos/loopholes/HospitalidadDemo.tsx",
-  "components/pages/demos/loopholes/ProduccionDemo.tsx",
-  "components/pages/demos/loopholes/StringDemo.tsx",
+  "lib/testing/loopholes/demos/CellarDemo.tsx",
+  "lib/testing/loopholes/demos/HospitalidadDemo.tsx",
+  "lib/testing/loopholes/demos/ProduccionDemo.tsx",
+  "lib/testing/loopholes/demos/StringDemo.tsx",
   "components/pages/demos/contract/world.tsx",
 ]);
 
