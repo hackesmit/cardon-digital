@@ -98,8 +98,13 @@
  *    .txt" and exited 0, on the exact destination rule 4 rejects for a removal.
  *    A destination good enough to rescue a removal is the only destination good
  *    enough to rescue a gutting, so rule 4's predicate is applied here too: the
- *    arrival must be a file the build compiles AND a file the index records.
- *    An untracked sibling is a scratch copy, not the drawing's new home.
+ *    arrival must be a file the build compiles, and where the loss is RECORDED
+ *    (HEAD or the index already lacks the lines) a file the index records. A
+ *    gutting committed or staged with its helper left out of the repository is
+ *    gone from every clone even though this disk imports it (review s-7729,
+ *    G1i), and its remedy is git add, not a checkout. A gutting only on this
+ *    disk, with its helper not yet staged either, is a refactor mid-edit and
+ *    passes (review s-1ae3, F1).
  *
  * 7. The band that passes does not pass in silence, and the faculties lead the
  *    note. Between COLLAPSE and SHRINK_NOTE a visual is smaller but not gone,
@@ -412,30 +417,55 @@ export function lostLines(before, after, pattern) {
  * a destination good enough to rescue a REMOVAL is the only destination good
  * enough to rescue a GUTTING. `inIndex` is the set of paths the repository
  * knows about, or null for "do not ask", which is what a unit test wants.
+ *
+ * `recordedGone` is the subset of `lost` that HEAD or the index already lacks
+ * for this file: the part of the loss the repository has recorded. Only those
+ * lines need a recorded arrival. See recordedLoss().
  */
-export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = false) {
+export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = new Set()) {
   if (lost.length === 0) return null;
   for (const { path, before = "", after } of elsewhere) {
     if (after === undefined) continue;
     // Rule 6: a parking space is not a new home, in either direction.
     if (!isLiveSource(path)) continue;
-    // The index test is rule 4's, and rule 4 only applies it when the LOSS is
-    // itself recorded in the index. Applying it unconditionally broke the most
-    // ordinary honest refactor there is: extract a drawing into a helper, run the
-    // tests before staging anything, and the helper is untracked, so the drawing
-    // read as deleted (review s-1ae3). It also bought nothing, because the attack
-    // it was aimed at passes with a single git add anyway. isLiveSource is the
-    // half of rule 6 that earns its keep: a .txt or .bak beside the file is a
-    // parking space whether or not anyone staged it.
-    if (recordedGone && inIndex !== null && !inIndex.has(path)) continue;
+    // The index test is rule 4's, and rule 4 applies it only when the loss is
+    // itself recorded. Asked of every gutting, it failed the most ordinary honest
+    // refactor there is: extract a drawing into a helper and run the tests before
+    // staging anything (review s-1ae3). Asked of none, it passed a gutting
+    // COMMITTED with its helper left out of the repository, gitignored even, so
+    // main imports a file no clone has (review s-7729, G1i). So it is asked line
+    // by line: a line HEAD or the index already lacks can only be rescued by an
+    // arrival the index records, and a line only this disk lacks can be rescued
+    // by any live file, staged or not.
+    const tracked = inIndex === null || inIndex.has(path);
     const had = new Set(trimmedLines(before));
     const has = new Set(trimmedLines(after));
     let gained = 0;
-    for (const line of lost) if (has.has(line) && !had.has(line)) gained++;
+    for (const line of lost) {
+      if (!has.has(line) || had.has(line)) continue;
+      if (!tracked && recordedGone.has(line)) continue;
+      gained++;
+    }
     const score = gained / lost.length;
     if (score >= RENAME_THRESHOLD) return { to: path, score };
   }
   return null;
+}
+
+/**
+ * The lines of `lost` that a recorded version of the file no longer has.
+ * `recorded` is what HEAD and the index hold for it (either may be missing):
+ * a gutting that is staged or committed is a loss the repository already
+ * carries, and a gutting only on this disk is an edit in progress.
+ */
+export function recordedLoss(lost, recorded = []) {
+  const gone = new Set();
+  for (const text of recorded) {
+    if (text === undefined) continue;
+    const kept = new Set(trimmedLines(text));
+    for (const line of lost) if (!kept.has(line)) gone.add(line);
+  }
+  return gone;
 }
 
 /**
@@ -448,7 +478,7 @@ export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = fal
  * its animation is one deleted visual carrying two reasons, not two failures,
  * and the headline is the loss a reader recognises first.
  */
-export function compareVisual(path, before, after, at = path, elsewhere = [], inIndex = null) {
+export function compareVisual(path, before, after, at = path, elsewhere = [], inIndex = null, recorded = []) {
   const b = profile(before);
   const n = profile(after);
   const reasons = [];
@@ -501,9 +531,22 @@ export function compareVisual(path, before, after, at = path, elsewhere = [], in
 
   // A faculty that turned up somewhere else under the watched tree moved house.
   const moved = [];
+  const unrecorded = new Set();
   const lost = reasons.filter((r) => {
-    const where = facultyMoved(lostLines(before, after, r.pattern), elsewhere, inIndex);
-    if (!where) return true;
+    const lines = lostLines(before, after, r.pattern);
+    const where = facultyMoved(lines, elsewhere, inIndex, recordedLoss(lines, recorded));
+    if (!where) {
+      // Say where it went when the only thing missing is the repository's copy
+      // of the arrival, so the remedy printed is git add and not a checkout.
+      const home = inIndex === null ? null : facultyMoved(lines, elsewhere);
+      if (home) {
+        unrecorded.add(home.to);
+        r.text += `; it is in ${home.to}, which the repository does not have, while the loss is staged or committed`;
+      } else {
+        r.addable = false;
+      }
+      return true;
+    }
     moved.push(`${r.what ?? "its source"} moved to ${where.to} (${pct(where.score)} of the lines that left)`);
     return false;
   });
@@ -522,6 +565,7 @@ export function compareVisual(path, before, after, at = path, elsewhere = [], in
         nowLines: n.lines,
         detail: reported.map((r) => r.text).concat(moved),
         ...(at === path ? {} : { at }),
+        ...(reported.every((r) => r.addable !== false) && unrecorded.size ? { addTo: [...unrecorded] } : {}),
       },
     };
   }
@@ -579,6 +623,9 @@ export function compareVisual(path, before, after, at = path, elsewhere = [], in
  *                         be read, and an unread file cannot have been gutted.
  *   movedOut              path -> a destination outside the watched tree, for
  *                         the message only. Never changes a verdict.
+ *   recordedText          path -> [what HEAD holds, what the index holds], for
+ *                         the paths that changed. Absent means nothing recorded,
+ *                         which is also what a unit test that does not ask gets.
  *
  * Returns failures, each with a kind ("removed", "untracked", "emptied",
  * "gutted" or "stilled"), and notes, which never block.
@@ -591,6 +638,7 @@ export function classify({
   nowText = new Map(),
   retired = RETIRED,
   movedOut = new Map(),
+  recordedText = new Map(),
 }) {
   const onDisk = new Set(nowPaths);
   const inIndex = trackedNow === null ? onDisk : new Set(trackedNow);
@@ -676,7 +724,11 @@ export function classify({
       .filter((q) => q !== at)
       .map((q) => ({ path: q, before: baseText.get(q) ?? "", after: nowText.get(q) }));
 
-    const verdict = compareVisual(path, before, after, at, elsewhere, trackedNow === null ? null : inIndex);
+    const verdict = compareVisual(
+      path, before, after, at, elsewhere,
+      trackedNow === null ? null : inIndex,
+      recordedText.get(at) ?? [],
+    );
     if (!verdict) continue;
     if (verdict.failure) failures.push(verdict.failure);
     else notes.push(verdict.note);
@@ -856,7 +908,10 @@ function run(argv, out, err, overrides) {
   const onDisk = new Set(nowPaths);
   const baseText = new Map();
   const nowText = new Map();
+  const recordedText = new Map();
+  const indexed = new Set(trackedNow);
   for (const path of interesting) {
+    if (indexed.has(path)) recordedText.set(path, [textAt("HEAD", path, cwd), textAt("", path, cwd)]);
     if (wasThere.has(path)) {
       const t = textAt(base, path, cwd);
       if (t !== undefined) baseText.set(path, t);
@@ -883,7 +938,7 @@ function run(argv, out, err, overrides) {
   }
 
   const { failures, notes } = classify({
-    basePaths, nowPaths, trackedNow, baseText, nowText, retired, movedOut,
+    basePaths, nowPaths, trackedNow, baseText, nowText, retired, movedOut, recordedText,
   });
 
   if (failures.length === 0 && quiet) return 0;
@@ -902,7 +957,9 @@ function run(argv, out, err, overrides) {
     if (f.at) out(`        measured at ${f.at}, where it moved to`);
   }
 
-  const restore = failures.filter((f) => !f.outTo).map((f) => f.path);
+  const read = failures.filter((f) => !f.outTo).map((f) => f.path);
+  const restore = failures.filter((f) => !f.outTo && !f.addTo).map((f) => f.path);
+  const unadded = [...new Set(failures.flatMap((f) => f.addTo ?? []))];
   const reorganised = failures.filter((f) => f.outTo);
   const lost = failures.reduce((n, f) => n + Math.max(0, (f.baseLines ?? 0) - f.nowLines), 0);
 
@@ -911,13 +968,16 @@ function run(argv, out, err, overrides) {
       `\na copy bead REWIRES a visual to its new dictionary keys and never deletes it, and` +
       `\nretiring an animation is Daniel's decision alone. Moving one inside ${WATCHED}/ is fine.` +
       `\n\nWhat left is still in the base commit. To read it:\n` +
+      read.map((p) => `\n  git show ${base.slice(0, 12)}:${p}\n`).join("") +
       (restore.length
-        ? restore
-            .map((p) => `\n  git show ${base.slice(0, 12)}:${p}\n`)
-            .join("") +
-          `\nTo take the whole file back, and ONLY if you have no other edit in it you` +
+        ? `\nTo take the whole file back, and ONLY if you have no other edit in it you` +
           `\nwant to keep, since this discards them:\n` +
           `\n  git checkout ${base.slice(0, 12)} -- ${restore.join(" ")}\n`
+        : "") +
+      (unadded.length
+        ? `\nThe drawing is not deleted: its loss is staged or committed and its new home` +
+          `\nis not. Add the home (and take it out of any .gitignore) so every clone has it:\n` +
+          `\n  git add ${unadded.join(" ")}\n`
         : "") +
       reorganised
         .map((f) => `\n  git mv ${f.outTo} ${f.path}    (it is not deleted, it left ${WATCHED}/)\n`)

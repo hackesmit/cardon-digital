@@ -38,6 +38,7 @@ import {
   motionCounts,
   lostLines,
   facultyMoved,
+  recordedLoss,
   MARKUP_TAG,
   profile,
   isLiveSource,
@@ -922,9 +923,11 @@ test("a copy parked on a dead extension does not rescue a gutting (s-4009 case A
   assert.ok(!notes.some((n) => n.text.includes(copy)), "and it is not named as the drawing's new home");
 });
 
-test("an untracked sibling rescues a gutting, and that is knowingly not caught here (s-4009 case AB)", () => {
+test("an untracked sibling rescues a gutting still in progress on disk (s-4009 case AB, unrecorded)", () => {
   // This expectation was the opposite until round three's review (s-1ae3), and
   // it is worth writing down why it flipped rather than quietly deleting it.
+  // It holds only while the gutting itself is unrecorded; the test after this
+  // one is the same tree with the gutting staged, and that fails.
   //
   // Catching AB meant demanding an INDEXED arrival unconditionally, and that
   // failed the most ordinary honest refactor there is: extract a drawing into a
@@ -949,6 +952,22 @@ test("an untracked sibling rescues a gutting, and that is knowingly not caught h
   );
 });
 
+test("an untracked sibling does not rescue a gutting HEAD or the index records (s-7729 G1)", () => {
+  const copy = `${WATCHED}/home/SectorMapLegacy.tsx`;
+  const { failures } = classify({
+    basePaths: [B],
+    nowPaths: [B, copy],
+    trackedNow: [B],
+    baseText: new Map([[B, visualSource("SectorMap")]]),
+    nowText: new Map([[B, GUTTED], [copy, visualSource("SectorMap")]]),
+    recordedText: new Map([[B, [visualSource("SectorMap"), GUTTED]]]),
+    retired: [],
+  });
+  assert.equal(failures.length, 1);
+  assert.equal(failures[0].path, B);
+  assert.deepEqual(failures[0].addTo, [copy], "the remedy is to add the home, not to take the file back");
+});
+
 test("rule 6 keeps the counterweight it was added to: a tracked helper still rescues", () => {
   // Same content and the same extension as the case above. The only difference
   // is that the index records it, so an extract-to-helper is still not a
@@ -966,28 +985,37 @@ test("facultyMoved applies rule 4's two tests itself", () => {
   assert.equal(facultyMoved(lost, arrival("a/b/park.txt")), null, "nor is a .txt");
   assert.equal(facultyMoved(lost, arrival("a/b/live.tsx")).to, "a/b/live.tsx");
   // The index test is rule 4's and it is CONDITIONAL there: an indexed arrival is
-  // demanded only when the loss is itself recorded in the index. Round three's
-  // review (s-1ae3) found it applied unconditionally here, which failed the most
-  // ordinary honest refactor there is, extracting a drawing into a helper and
-  // running the tests before staging anything, and then printed a git checkout
-  // that would have discarded the refactor's call-site edit.
+  // demanded only for the part of the loss HEAD or the index already records.
+  // Unconditional, it failed an extraction tested before staging (s-1ae3); never
+  // asked, it passed a committed gutting whose helper no clone has (s-7729).
+  const untracked = new Set(["a/b/other.tsx"]);
   assert.equal(
-    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/other.tsx"])).to,
+    facultyMoved(lost, arrival("a/b/live.tsx"), untracked).to,
     "a/b/live.tsx",
     "an unstaged helper is still a home while the loss is unstaged too",
   );
   assert.equal(
-    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/other.tsx"]), true),
+    facultyMoved(lost, arrival("a/b/live.tsx"), untracked, new Set(lost)),
     null,
-    "but once the loss is recorded in the index, the arrival has to be recorded too",
+    "but once the loss is recorded, the arrival has to be recorded too",
   );
-  assert.equal(
-    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/live.tsx"]), true).to,
-    "a/b/live.tsx",
-  );
-  // isLiveSource is the half of rule 6 that earns its keep, and it holds whether
-  // or not anything is staged.
-  assert.equal(facultyMoved(lost, arrival("a/b/park.txt"), new Set(["a/b/park.txt"]), true), null);
+  assert.equal(facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/live.tsx"]), new Set(lost)).to, "a/b/live.tsx");
+  // isLiveSource is the half of rule 6 that holds whether or not anything is staged.
+  assert.equal(facultyMoved(lost, arrival("a/b/park.txt"), new Set(["a/b/park.txt"])), null);
+});
+
+test("the recorded part of a loss is what HEAD or the index lacks, line by line", () => {
+  const lost = ["<figure>", "<canvas />"];
+  assert.deepEqual([...recordedLoss(lost, [])], [], "nothing recorded: nothing asked");
+  assert.deepEqual([...recordedLoss(lost, ["<figure>\n<canvas />", undefined])], [], "both still recorded");
+  assert.deepEqual([...recordedLoss(lost, ["<figure>\n<canvas />", "<figure>"])], ["<canvas />"], "the index lacks one");
+  // Half the lines staged gone and half only on disk: the untracked helper
+  // rescues the unrecorded half and not the recorded half, so it scores below
+  // the threshold and a gutting cannot be smuggled through by staging most of it.
+  const four = ["<a>", "<b>", "<c>", "<d>"];
+  const helper = [{ path: "a/b/live.tsx", before: "", after: four.join("\n") }];
+  assert.equal(facultyMoved(four, helper, new Set(), new Set(["<a>", "<b>", "<c>"])), null);
+  assert.equal(facultyMoved(four, helper, new Set(), new Set(["<a>"])).to, "a/b/live.tsx");
 });
 
 /* ---------- rule 7: the band that passes does not pass in silence ---------- */
@@ -1033,4 +1061,108 @@ test("a faculty too small for a ratio to mean anything is not a note", () => {
   assert.ok(markupCount(before) < COLLAPSE_FLOOR, "control: this visual has few tags");
   const verdict = compareVisual(B, before, before);
   assert.equal(verdict, null);
+});
+
+/* ---------- s-7729: the loss recorded, its arrival not, against real git ---------- */
+
+/** SectorMap.tsx becomes a wrapper that imports its whole body from `helper`. */
+function extractWhole(dir, helper) {
+  const rel = `./${helper.split("/").pop().replace(/\.tsx$/, "")}`;
+  mkdirSync(join(dir, helper, ".."), { recursive: true });
+  writeFileSync(join(dir, helper), animatedSource("SectorMapBody", 6, 80));
+  writeFileSync(
+    join(dir, B),
+    `import SectorMapBody from "${rel}";\n\nexport default function SectorMap() {\n  return <SectorMapBody />;\n}\n`,
+  );
+}
+
+const inRepo = (dir) => (...args) => execFileSync("git", args, { cwd: dir, stdio: "ignore" });
+const HELPER = `${WATCHED}/home/SectorMapBody.tsx`;
+
+test("a gutting committed with its imported helper left untracked fails, and says git add (G1)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const git = inRepo(dir);
+  git("tag", "base");
+  extractWhole(dir, HELPER);
+  git("add", B);
+  git("commit", "-qm", "the wrapper only");
+
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(`FAIL  ${B}`), text);
+  assert.ok(text.includes(`git add ${HELPER}`), text);
+  assert.ok(!text.includes("git checkout"), `a checkout would discard the refactor: ${text}`);
+  assert.ok(text.indexOf("git show") < text.indexOf("git add"), "reading what left still leads");
+});
+
+test("the same with the helper gitignored fails too, which the disk cannot see (G1i)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const git = inRepo(dir);
+  git("tag", "base");
+  extractWhole(dir, HELPER);
+  writeFileSync(join(dir, WATCHED, "home", ".gitignore"), "SectorMapBody.tsx\n");
+  git("add", "-A");
+  git("commit", "-qm", "gut, and ignore the helper");
+
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(B), text);
+});
+
+test("the gutting staged and its helper not is one tree, and it fails with git add (G1s, H1s)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  extractWhole(dir, HELPER);
+  inRepo(dir)("add", B);
+
+  const { code, text } = runIn(dir);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(`git add ${HELPER}`), text);
+  assert.ok(!text.includes("git checkout"), text);
+});
+
+test("a committed gutting is not unrecorded by an unrelated unstaged edit on top", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const git = inRepo(dir);
+  git("tag", "base");
+  extractWhole(dir, HELPER);
+  git("add", B);
+  git("commit", "-qm", "the wrapper only");
+  writeFileSync(join(dir, B), `${readFileSync(join(dir, B), "utf8")}// an unrelated edit\n`);
+
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+});
+
+test("an extraction tested before anything is staged passes, in any directory (H2, H3, s-1ae3 F1)", (t) => {
+  for (const helper of [HELPER, `${WATCHED}/home/sector/SectorMapBody.tsx`, `${WATCHED}/home/canvas/draw/SectorMapBody.tsx`]) {
+    const dir = repoWithAnimation();
+    t.after(() => rmSync(dir, { recursive: true, force: true }));
+    extractWhole(dir, helper);
+    const { code, text } = runIn(dir);
+    assert.equal(code, 0, `${helper}: ${text}`);
+    assert.match(text, /moved to/);
+  }
+});
+
+test("the helper staged and the call site not passes, and so does a committed extraction edited on top (H3s, H4)", (t) => {
+  const staged = repoWithAnimation();
+  t.after(() => rmSync(staged, { recursive: true, force: true }));
+  extractWhole(staged, HELPER);
+  inRepo(staged)("add", HELPER);
+  assert.equal(runIn(staged).code, 0, runIn(staged).text);
+
+  const done = repoWithAnimation();
+  t.after(() => rmSync(done, { recursive: true, force: true }));
+  const git = inRepo(done);
+  git("tag", "base");
+  extractWhole(done, HELPER);
+  git("add", "-A");
+  git("commit", "-qm", "extract");
+  writeFileSync(join(done, B), `${readFileSync(join(done, B), "utf8")}// an unrelated edit\n`);
+  const { code, text } = runIn(done, ["--base", "base"]);
+  assert.equal(code, 0, text);
 });
