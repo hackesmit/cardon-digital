@@ -144,7 +144,7 @@ const en = {
     foot: [
       {
         k: "Ads",
-        body: "Ad management attaches to Hospitalidad and Restaurante, inside the monthly fee. Your budget goes from you straight to Google.",
+        body: "Ad management attaches to Hospitalidad and Restaurante, from the middle size up, inside the monthly fee. Your budget goes from you straight to Google.",
       },
       {
         k: "Terms",
@@ -355,7 +355,7 @@ const es: typeof en = {
     foot: [
       {
         k: "Anuncios",
-        body: "El manejo de anuncios se agrega a Hospitalidad y Restaurante, dentro de la cuota mensual. Su inversión la paga usted directo a Google.",
+        body: "El manejo de anuncios se agrega a Hospitalidad y Restaurante, desde el tamaño mediano, dentro de la cuota mensual. Su inversión la paga usted directo a Google.",
       },
       {
         k: "Condiciones",
