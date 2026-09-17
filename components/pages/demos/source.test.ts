@@ -52,7 +52,7 @@ describe("the source rules are load bearing", () => {
   const OPERABLE = "puts nothing operable on the page but a hotspot";
   const LIVE = "announces nothing from outside a ghost box";
   const FRAME = "is drawn in the shared frame, which derives its own noscript";
-  const fixture = (name: string) => broken(name, read("loopholes/" + name), ctx);
+  const fixture = (name: string) => broken(name, read("../../../lib/testing/loopholes/demos/" + name), ctx);
 
   it("fails the s-5836 cellar on all four", () => {
     expect(fixture("CellarDemo.tsx").sort()).toEqual([GLOBAL, OPERABLE, LIVE, FRAME].sort());
