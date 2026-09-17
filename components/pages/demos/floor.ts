@@ -131,6 +131,31 @@ export const HOLD = 5.5;
 export const FADE = 1.2;
 export const CYCLE = INTRO + RUN + HOLD + FADE;
 
+/**
+ * Where the loop's clock stands whenever the demo is not animating: the first
+ * frame of the hold, which is the full room at full opacity.
+ *
+ * One number instead of two ideas. Round two drew the standing frame straight
+ * from PEAK_T and left cycT wherever the loop had stopped, so scrolling away
+ * at 18:10 snapped the board to 19:55 and scrolling back jumped it to 18:10
+ * again: the drawing and the clock disagreed about what minute it was
+ * (reviewer s-3b55, note 4). Parking the clock on the frame the demo is
+ * showing means the static frame IS a frame of the loop, resuming carries
+ * straight on, and nothing ever runs backwards.
+ *
+ * It is the FIRST frame of the hold, not the last. Both draw the same pixels,
+ * but a demo parked at the end of the hold starts dipping toward the seam the
+ * instant it resumes, so a visitor scrolling it into view would watch the full
+ * room fade to 15 percent opacity and refill: a flash where the payoff frame
+ * should be. Parked here, the room they arrive on is held for the rest of the
+ * hold and the demo then restarts, and "the frame the loop holds on" stays
+ * true for the 5.5 seconds after a resume.
+ *
+ * cycleFrame(STANDING_CYC) is byte-identical to the frame reduced motion
+ * resolves to; demos.test.ts pins that.
+ */
+export const STANDING_CYC = INTRO + RUN;
+
 export interface CycleFrame {
   /** The minute of the service to draw. */
   t: number;
@@ -171,10 +196,18 @@ export function cycleFrame(cycT: number): CycleFrame {
   return { t, showChips, fade };
 }
 
+/** Every caption the timeline can resolve to. Exported as a list because the
+    strip reserves room for all four at once (see CAPTION_KEYS' use in
+    RestauranteDemo and the .demo-caption-box rule in demos.css), and because
+    demos.test.ts holds the dictionary to exactly these keys. */
+export const CAPTION_KEYS = ["begins", "filling", "flagged", "peak"] as const;
+
+export type CaptionKey = (typeof CAPTION_KEYS)[number];
+
 /** Which caption the strip carries at minute `t`. The hold and the static
     reduced-motion frame are both PEAK_T, so both read "peak service": the
     words and the floor can never disagree. */
-export function captionKeyFor(t: number): "begins" | "filling" | "flagged" | "peak" {
+export function captionKeyFor(t: number): CaptionKey {
   if (t < 2) return "begins";
   if (t < RUSH_T) return "filling";
   if (t < PEAK_T) return "flagged";
@@ -229,6 +262,29 @@ export function bands(w: number, isPhone: boolean): Bands {
  * 180px short of the canvas it was holding space for.
  */
 export const PHONE_MAX = 640;
+
+/**
+ * Which floor plan a container of `contentWidth` CSS pixels gets.
+ *
+ * The comparison is `< PHONE_MAX` and demos.css asks the same question as a
+ * range query, `(width < 640px)` against `(width >= 640px)`, because those two
+ * partition the number line and `(max-width: 639px)` against
+ * `(min-width: 640px)` does not. Round two shipped that pair, so a content box
+ * anywhere in (639, 640) matched neither query: the component drew the three
+ * by four phone board with 54px hotspots under the desktop stylesheet against
+ * a 422px placeholder, a 214px first layout shift in a window about half a
+ * pixel wide (reviewer s-3b55, BLOCKING 2, reproduced by breakpoint.mjs).
+ *
+ * The other half of that bug was the measurement. A container query reads the
+ * fractional content box while clientWidth is rounded, so a component asking
+ * clientWidth rounds 639.25 up into the far side of its own breakpoint even
+ * when the two conditions do meet. Callers must pass the fractional width;
+ * demos.test.ts sweeps this function and the stylesheet's own queries in
+ * quarter pixels and fails unless they agree at every step.
+ */
+export function isPhonePlan(contentWidth: number): boolean {
+  return contentWidth < PHONE_MAX;
+}
 
 /*
  * demos.css carries this same arithmetic as the canvas's pre-hydration height,
