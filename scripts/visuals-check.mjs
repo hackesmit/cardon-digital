@@ -418,13 +418,15 @@ export function lostLines(before, after, pattern) {
  * enough to rescue a GUTTING. `inIndex` is the set of paths the repository
  * knows about, or null for "do not ask", which is what a unit test wants.
  *
- * `recordedGone` is the subset of `lost` that HEAD or the index already lacks
- * for this file: the part of the loss the repository has recorded. Only those
- * lines need a recorded arrival. See recordedLoss().
+ * `recordedGone` is [what HEAD lacks, what the index lacks], two subsets of
+ * `lost`: the part of the loss the repository has recorded, and where. Only
+ * those lines need a recorded arrival, and the arrival's `recorded` text for
+ * the same version ([HEAD, index], as recordedText holds it) has to contain
+ * them. See recordedLoss().
  */
-export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = new Set()) {
+export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = [new Set(), new Set()]) {
   if (lost.length === 0) return null;
-  for (const { path, before = "", after } of elsewhere) {
+  for (const { path, before = "", after, recorded = [] } of elsewhere) {
     if (after === undefined) continue;
     // Rule 6: a parking space is not a new home, in either direction.
     if (!isLiveSource(path)) continue;
@@ -437,13 +439,21 @@ export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = new
     // by line: a line HEAD or the index already lacks can only be rescued by an
     // arrival the index records, and a line only this disk lacks can be rescued
     // by any live file, staged or not.
-    const tracked = inIndex === null || inIndex.has(path);
+    //
+    // And "recorded" means the arrival's recorded TEXT holds the line, in the
+    // same version that lacks it: a listed path is not a recorded home. A stub
+    // helper committed first and filled only on disk passed a committed gutting
+    // while every clone of that HEAD failed it (review s-01c6, A1).
     const had = new Set(trimmedLines(before));
     const has = new Set(trimmedLines(after));
+    const holds = recordedGone.map((_, v) =>
+      inIndex === null || recorded[v] === undefined ? null : new Set(trimmedLines(recorded[v])),
+    );
     let gained = 0;
     for (const line of lost) {
       if (!has.has(line) || had.has(line)) continue;
-      if (!tracked && recordedGone.has(line)) continue;
+      const unrescued = recordedGone.some((gone, v) => gone.has(line) && inIndex !== null && !holds[v]?.has(line));
+      if (unrescued) continue;
       gained++;
     }
     const score = gained / lost.length;
@@ -453,19 +463,22 @@ export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = new
 }
 
 /**
- * The lines of `lost` that a recorded version of the file no longer has.
- * `recorded` is what HEAD and the index hold for it (either may be missing):
- * a gutting that is staged or committed is a loss the repository already
- * carries, and a gutting only on this disk is an edit in progress.
+ * The lines of `lost` that each recorded version of the file no longer has,
+ * as [what HEAD lacks, what the index lacks]. `recorded` is what HEAD and the
+ * index hold for it (either may be missing): a gutting that is staged or
+ * committed is a loss the repository already carries, and a gutting only on
+ * this disk is an edit in progress. The two are kept apart because each is
+ * answered by the arrival's copy in the same version.
  */
 export function recordedLoss(lost, recorded = []) {
-  const gone = new Set();
-  for (const text of recorded) {
-    if (text === undefined) continue;
+  return [0, 1].map((v) => {
+    const gone = new Set();
+    const text = recorded[v];
+    if (text === undefined) return gone;
     const kept = new Set(trimmedLines(text));
     for (const line of lost) if (!kept.has(line)) gone.add(line);
-  }
-  return gone;
+    return gone;
+  });
 }
 
 /**
@@ -541,7 +554,7 @@ export function compareVisual(path, before, after, at = path, elsewhere = [], in
       const home = inIndex === null ? null : facultyMoved(lines, elsewhere);
       if (home) {
         unrecorded.add(home.to);
-        r.text += `; it is in ${home.to}, which the repository does not have, while the loss is staged or committed`;
+        r.text += `; it is in ${home.to}, which the repository does not have with these lines, while the loss is staged or committed`;
       } else {
         r.addable = false;
       }
@@ -624,8 +637,11 @@ export function compareVisual(path, before, after, at = path, elsewhere = [], in
  *   movedOut              path -> a destination outside the watched tree, for
  *                         the message only. Never changes a verdict.
  *   recordedText          path -> [what HEAD holds, what the index holds], for
- *                         the paths that changed. Absent means nothing recorded,
- *                         which is also what a unit test that does not ask gets.
+ *                         the paths that changed or arrived. Absent means
+ *                         nothing recorded, which is also what a unit test that
+ *                         does not ask gets. A visual's entry says where its
+ *                         loss is recorded; an arrival's says whether its
+ *                         recorded copy holds what left.
  *
  * Returns failures, each with a kind ("removed", "untracked", "emptied",
  * "gutted" or "stilled"), and notes, which never block.
@@ -722,7 +738,7 @@ export function classify({
 
     const elsewhere = [...nowText.keys()]
       .filter((q) => q !== at)
-      .map((q) => ({ path: q, before: baseText.get(q) ?? "", after: nowText.get(q) }));
+      .map((q) => ({ path: q, before: baseText.get(q) ?? "", after: nowText.get(q), recorded: recordedText.get(q) ?? [] }));
 
     const verdict = compareVisual(
       path, before, after, at, elsewhere,
@@ -811,6 +827,42 @@ function arrivalsOutside(base, cwd) {
     return [];
   }
   return added.filter((p) => !p.startsWith(`${WATCHED}/`) && isLiveSource(p));
+}
+
+/**
+ * Every `rev:path` in `specs` in one `git cat-file --batch`, instead of a git
+ * process per blob: run() reads up to three versions of every changed path, and
+ * at one process each a 600-file branch took 2.6 s (review s-01c6). Returns a
+ * Map spec -> text, with no entry for a spec git does not have as a blob.
+ */
+function readBlobs(specs, cwd) {
+  const found = new Map();
+  const batchable = specs.filter((spec) => !/[\n\r]/.test(spec));
+  // A path git cannot take on one line of a batch is read the slow way.
+  for (const spec of specs.filter((spec) => /[\n\r]/.test(spec))) {
+    const [rev, ...rest] = spec.split(":");
+    const t = textAt(rev, rest.join(":"), cwd);
+    if (t !== undefined) found.set(spec, t);
+  }
+  if (!batchable.length) return found;
+  const raw = execFileSync("git", ["cat-file", "--batch"], {
+    cwd,
+    input: `${batchable.join("\n")}\n`,
+    stdio: ["pipe", "pipe", "pipe"],
+    maxBuffer: 1024 * 1024 * 1024,
+  });
+  let at = 0;
+  for (const spec of batchable) {
+    const eol = raw.indexOf(10, at);
+    const header = /^[0-9a-f]{40,64} (\S+) (\d+)$/.exec(raw.toString("utf8", at, eol));
+    at = eol + 1;
+    // Otherwise "<name> missing" or "<name> ambiguous", and no content follows.
+    if (!header) continue;
+    const size = Number(header[2]);
+    if (header[1] === "blob") found.set(spec, raw.toString("utf8", at, at + size));
+    at += size + 1;
+  }
+  return found;
 }
 
 function textAt(rev, path, cwd) {
@@ -909,11 +961,16 @@ function run(argv, out, err, overrides) {
   const baseText = new Map();
   const nowText = new Map();
   const recordedText = new Map();
-  const indexed = new Set(trackedNow);
+  const blobs = readBlobs(
+    [...interesting].flatMap((p) => [`HEAD:${p}`, `:${p}`, ...(wasThere.has(p) ? [`${base}:${p}`] : [])]),
+    cwd,
+  );
   for (const path of interesting) {
-    if (indexed.has(path)) recordedText.set(path, [textAt("HEAD", path, cwd), textAt("", path, cwd)]);
+    const head = blobs.get(`HEAD:${path}`);
+    const index = blobs.get(`:${path}`);
+    if (head !== undefined || index !== undefined) recordedText.set(path, [head, index]);
     if (wasThere.has(path)) {
-      const t = textAt(base, path, cwd);
+      const t = blobs.get(`${base}:${path}`);
       if (t !== undefined) baseText.set(path, t);
     }
     if (onDisk.has(path)) {

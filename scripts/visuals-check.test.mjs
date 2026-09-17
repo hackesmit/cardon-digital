@@ -994,28 +994,51 @@ test("facultyMoved applies rule 4's two tests itself", () => {
     "a/b/live.tsx",
     "an unstaged helper is still a home while the loss is unstaged too",
   );
+  const inHead = [new Set(lost), new Set()];
   assert.equal(
-    facultyMoved(lost, arrival("a/b/live.tsx"), untracked, new Set(lost)),
+    facultyMoved(lost, arrival("a/b/live.tsx"), untracked, inHead),
     null,
     "but once the loss is recorded, the arrival has to be recorded too",
   );
-  assert.equal(facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/live.tsx"]), new Set(lost)).to, "a/b/live.tsx");
+  // Recorded means its recorded TEXT holds the lines, not that its path is
+  // listed: a stub helper committed first and filled only on disk is no home
+  // for a committed gutting (s-01c6 A1).
+  const tracked = new Set(["a/b/live.tsx"]);
+  const recordedAs = (head, index) => [{ path: "a/b/live.tsx", before: "", after: "<figure>", recorded: [head, index] }];
+  assert.equal(facultyMoved(lost, arrival("a/b/live.tsx"), tracked, inHead), null, "tracked, recorded text unknown");
+  assert.equal(facultyMoved(lost, recordedAs("export {};", "export {};"), tracked, inHead), null, "a recorded stub");
+  assert.equal(facultyMoved(lost, recordedAs("<figure>", "<figure>"), tracked, inHead).to, "a/b/live.tsx");
+  // Each version answers for its own loss: HEAD for what HEAD lacks, the index
+  // for what the index lacks.
+  const inIndexOnly = [new Set(), new Set(lost)];
+  assert.equal(facultyMoved(lost, recordedAs("export {};", "<figure>"), tracked, inIndexOnly).to, "a/b/live.tsx");
+  assert.equal(facultyMoved(lost, recordedAs("<figure>", "export {};"), tracked, inIndexOnly), null);
   // isLiveSource is the half of rule 6 that holds whether or not anything is staged.
   assert.equal(facultyMoved(lost, arrival("a/b/park.txt"), new Set(["a/b/park.txt"])), null);
 });
 
 test("the recorded part of a loss is what HEAD or the index lacks, line by line", () => {
   const lost = ["<figure>", "<canvas />"];
-  assert.deepEqual([...recordedLoss(lost, [])], [], "nothing recorded: nothing asked");
-  assert.deepEqual([...recordedLoss(lost, ["<figure>\n<canvas />", undefined])], [], "both still recorded");
-  assert.deepEqual([...recordedLoss(lost, ["<figure>\n<canvas />", "<figure>"])], ["<canvas />"], "the index lacks one");
+  const sets = (versions) => versions.map((v) => [...v]);
+  assert.deepEqual(sets(recordedLoss(lost, [])), [[], []], "nothing recorded: nothing asked");
+  assert.deepEqual(sets(recordedLoss(lost, ["<figure>\n<canvas />", undefined])), [[], []], "both still recorded");
+  assert.deepEqual(
+    sets(recordedLoss(lost, ["<figure>\n<canvas />", "<figure>"])),
+    [[], ["<canvas />"]],
+    "the index lacks one, and it is the index that lacks it",
+  );
   // Half the lines staged gone and half only on disk: the untracked helper
   // rescues the unrecorded half and not the recorded half, so it scores below
   // the threshold and a gutting cannot be smuggled through by staging most of it.
   const four = ["<a>", "<b>", "<c>", "<d>"];
   const helper = [{ path: "a/b/live.tsx", before: "", after: four.join("\n") }];
-  assert.equal(facultyMoved(four, helper, new Set(), new Set(["<a>", "<b>", "<c>"])), null);
-  assert.equal(facultyMoved(four, helper, new Set(), new Set(["<a>"])).to, "a/b/live.tsx");
+  assert.equal(facultyMoved(four, helper, new Set(), [new Set(), new Set(["<a>", "<b>", "<c>"])]), null);
+  assert.equal(facultyMoved(four, helper, new Set(), [new Set(), new Set(["<a>"])]).to, "a/b/live.tsx");
+  // The same holds for a TRACKED helper whose recorded copy has only some of
+  // them: partial recorded content does not rescue the whole loss (s-01c6 A1p).
+  const part = [{ ...helper[0], recorded: ["<a>", "<a>"] }];
+  const allRecorded = [new Set(four), new Set(four)];
+  assert.equal(facultyMoved(four, part, new Set(["a/b/live.tsx"]), allRecorded), null);
 });
 
 /* ---------- rule 7: the band that passes does not pass in silence ---------- */
@@ -1165,4 +1188,79 @@ test("the helper staged and the call site not passes, and so does a committed ex
   writeFileSync(join(done, B), `${readFileSync(join(done, B), "utf8")}// an unrelated edit\n`);
   const { code, text } = runIn(done, ["--base", "base"]);
   assert.equal(code, 0, text);
+});
+
+/* ---------- s-01c6: the arrival tracked by path, not by content ---------- */
+
+/** Commit a helper stub, or the first `keep` of a real body, before the move. */
+function stubFirst(dir, keep = null) {
+  const git = inRepo(dir);
+  git("tag", "base");
+  mkdirSync(join(dir, HELPER, ".."), { recursive: true });
+  const body = animatedSource("SectorMapBody", 6, 80).split("\n");
+  const recorded = keep === null ? "export {};\n" : `${body.slice(0, Math.floor(body.length * keep)).join("\n")}\n`;
+  writeFileSync(join(dir, HELPER), recorded);
+  git("add", HELPER);
+  git("commit", "-qm", "the helper, before anything moves into it");
+}
+
+test("a gutting committed into a helper whose committed copy is a stub fails, and says git add (s-01c6 A1)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  stubFirst(dir);
+  extractWhole(dir, HELPER);
+  inRepo(dir)("add", B);
+  inRepo(dir)("commit", "-qm", "the wrapper only");
+
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(`FAIL  ${B}`), text);
+  assert.ok(text.includes(`git add ${HELPER}`), text);
+  assert.ok(!text.includes("git checkout"), text);
+  assert.ok(text.indexOf("git show") < text.indexOf("git add"), "reading what left still leads");
+});
+
+test("the same staged instead of committed fails too (s-01c6 A1s)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  stubFirst(dir);
+  extractWhole(dir, HELPER);
+  inRepo(dir)("add", B);
+
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(`git add ${HELPER}`), text);
+});
+
+test("a helper committed with part of the body does not rescue all of it (s-01c6 A1p)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  stubFirst(dir, 0.3);
+  extractWhole(dir, HELPER);
+  inRepo(dir)("add", B);
+  inRepo(dir)("commit", "-qm", "the wrapper only");
+
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+});
+
+test("a stub helper filled and committed with its call site passes, and so does one filled on disk only", (t) => {
+  // The controls for the three above: the same pre-existing stub is an honest
+  // home once its recorded copy holds the drawing, or while nothing is recorded.
+  const done = repoWithAnimation();
+  t.after(() => rmSync(done, { recursive: true, force: true }));
+  stubFirst(done);
+  extractWhole(done, HELPER);
+  inRepo(done)("add", B, HELPER);
+  inRepo(done)("commit", "-qm", "extract into the stub");
+  const committed = runIn(done, ["--base", "base"]);
+  assert.equal(committed.code, 0, committed.text);
+
+  const disk = repoWithAnimation();
+  t.after(() => rmSync(disk, { recursive: true, force: true }));
+  stubFirst(disk);
+  extractWhole(disk, HELPER);
+  const unstaged = runIn(disk, ["--base", "base"]);
+  assert.equal(unstaged.code, 0, unstaged.text);
+  assert.match(unstaged.text, /moved to/);
 });
