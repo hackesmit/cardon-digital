@@ -92,6 +92,8 @@ export class World {
   /** Frames asked for, by anybody, ever. A board that may not animate asks
       for none, and the count does not care who asked or how it was spelled. */
   framesRequested = 0;
+  /** scrollLeft and scrollTop set, on anything: motion with no record. */
+  scrolls = 0;
   private timers = new Map<number, { cb: () => void; at: number; every: number | null }>();
   private timerId = 0;
   private rafs = new Map<number, (now: number) => void>();
@@ -214,6 +216,18 @@ export class World {
         return { x: 0, y: 0, top: 0, left: 0, right: width, bottom: 0, width, height: 0 };
       },
     });
+    for (const key of ["scrollLeft", "scrollTop"]) {
+      const real = Object.getOwnPropertyDescriptor(Element.prototype, key);
+      define(Element.prototype, key, {
+        get(this: Element) {
+          return real?.get?.call(this) ?? 0;
+        },
+        set(this: Element, v: number) {
+          world.scrolls++;
+          real?.set?.call(this, v);
+        },
+      });
+    }
     const contexts = new WeakMap<object, unknown>();
     define(HTMLCanvasElement.prototype, "getContext", {
       value(this: HTMLCanvasElement) {

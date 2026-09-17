@@ -153,22 +153,34 @@ const judgeWrites = (records: MutationRecord[], when: string) => {
     function, and a function can start a loop. There is nothing to take away.
     What can be done is to judge the whole page and not the mechanism's
     corner of it, through the globals, where no spelling gets past. */
+/** A button whose tap CHANGES the selection: one that says it is not pressed,
+    or failing that the second on the page. The second alone can be the one
+    already chosen, when something else on the page is a button too, and a
+    tap that changes nothing re-renders nothing. */
+const unchosen = (buttons: HTMLButtonElement[]) =>
+  buttons.find((b) => b.getAttribute("aria-pressed") === "false") ?? buttons[1];
+
 const watchPage = (w: World) => {
   const seen: MutationRecord[] = [];
   const mo = new MutationObserver((r) => seen.push(...r));
-  mo.observe(w.container, {
+  /* the body and not the mount: a portal is one line, and it lands outside */
+  mo.observe(document.body, {
     subtree: true,
     childList: true,
     characterData: true,
     attributes: true,
   });
   const frames = w.framesRequested;
+  const scrolls = w.scrolls;
   const drawn = w.log.length;
   return () => {
     const records = seen.concat(mo.takeRecords());
     mo.disconnect();
     return {
       frames: w.framesRequested - frames,
+      /* a scroll position is a property: it moves the page and leaves no
+         mutation record, so the world counts the setters */
+      scrolls: w.scrolls - scrolls,
       drawn: w.log.length - drawn,
       mutations: records.map(
         (r) =>
@@ -281,7 +293,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
         const tap = () => {
           const all = Array.from(w.container.querySelectorAll("button"));
           buttons = all.length;
-          if (all.length > 1) act(() => all[1].click());
+          if (all.length > 1) act(() => unchosen(all).click());
           /* a browser tells every NEW observer where its target is; the stub
              does not, so say it again: nothing to a stage that survived the
              tap, the first start of its clock to one the tap rebuilt */
@@ -313,8 +325,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       act(() => w.onscreen(0));
       act(() => w.onscreen(1));
       w.tick(300);
-      const all = Array.from(w.container.querySelectorAll("button"));
-      act(() => all[1].click());
+      act(() => unchosen(Array.from(w.container.querySelectorAll("button"))).click());
       act(() => w.onscreen(1));
       const after = w.tick(600);
       expect(after.length, "frames in the 0.6s after a tap inside the hold").toBeGreaterThan(5);
@@ -336,14 +347,18 @@ export const checks: Record<string, (Demo: Demo) => void> = {
         w.mount(Demo);
         act(() => w.width(800));
         act(() => w.onscreen(1));
-        w.tick(500);
+        /* The half second before leaving is animation a demo is allowed. A
+           page loaded under reduce is never allowed any, so there it is
+           watched from the first moment and not after a head start. */
+        if (!setup.reduce) w.tick(500);
         act(() => leave(w));
         const stop = watchPage(w);
-        w.tick(1500);
+        w.tick(setup.reduce ? 2000 : 1500);
         const moved = stop();
         expect(moved.mutations.slice(0, 3), "DOM mutations in 1.5s " + when).toEqual([]);
         expect(moved.drawn, "canvas calls in 1.5s " + when).toBe(0);
         expect(moved.frames, "frames asked for in 1.5s " + when).toBe(0);
+        expect(moved.scrolls, "scroll positions set in 1.5s " + when).toBe(0);
       });
     }
   },
@@ -383,6 +398,20 @@ export const checks: Record<string, (Demo: Demo) => void> = {
         scene.draw(env, t);
         return w.log.slice(from).join(";");
       };
+      /* A trace is calls, not pixels, and a transform left on the context
+         moves every later frame under an identical trace. So a frame opens
+         and closes its own state: save and restore balance, and nothing
+         moves the origin outside a pair. */
+      const leaks = (frame: string) => {
+        let depth = 0;
+        for (const call of frame.split(";")) {
+          if (call.startsWith("save(")) depth++;
+          else if (call.startsWith("restore(")) depth--;
+          else if (depth <= 0 && /^(translate|rotate|scale|transform)\(/.test(call)) return call;
+          if (depth < 0) return "restore() with nothing saved";
+        }
+        return depth === 0 ? "" : depth + " save() never restored";
+      };
       const { cycle, standing } = scene.clock;
       const readings = [0, standing * 0.31, standing * 0.74, standing, (standing + cycle) / 2, cycle * 0.97];
       /* in order, in order again, then backwards, which no running loop does:
@@ -392,6 +421,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       const back = readings.slice().reverse().map(at).reverse();
       readings.forEach((t, i) => {
         const r = t.toFixed(2);
+        expect(leaks(first[i]), "context state the frame at " + r + " leaves behind for the next one").toBe("");
         expect(again[i] === first[i], "the reading " + r + " drawn a second time is the frame it was the first time").toBe(true);
         expect(back[i] === first[i], "the reading " + r + " drawn out of order is the frame it was in order").toBe(true);
       });
