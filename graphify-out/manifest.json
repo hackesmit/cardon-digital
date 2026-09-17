@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "components/pages/case/SpotlightFrames.tsx": {
-    "mtime": 1788335221.2883148,
-    "ast_hash": "5208a8160b8cca820c492dd6a5cefc8f",
+    "mtime": 1789627423.529881,
+    "ast_hash": "a985a5c9888edd49e834037512d76fc9",
     "semantic_hash": ""
   },
   "components/pages/case/VineyardMap.tsx": {
@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/work/monte-xanic/page.tsx": {
-    "mtime": 1788424941.2733243,
-    "ast_hash": "6a9b5d6042ff3020ebef193b955f72d4",
+    "mtime": 1789627423.528612,
+    "ast_hash": "0e1b719dcecdb057c878564490c6f72d",
     "semantic_hash": ""
   },
   "app/not-found.tsx": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/monte-xanic.ts": {
-    "mtime": 1788424941.2777243,
-    "ast_hash": "a0e4684e4713e25f57faec61b520464e",
+    "mtime": 1789627423.529881,
+    "ast_hash": "ed30a7c910edf5a590cdddeb1c307ba6",
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
@@ -705,8 +705,8 @@
     "semantic_hash": ""
   },
   "components/site/Media.tsx": {
-    "mtime": 1789533155.8071942,
-    "ast_hash": "726435ca7c7464709f15832a3e83ad3a",
+    "mtime": 1789627349.5995524,
+    "ast_hash": "8ffe510e265ac68ff5148a29e884d4aa",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -725,28 +725,28 @@
     "semantic_hash": ""
   },
   "components/pages/demos/RestauranteDemo.tsx": {
-    "mtime": 1789484778.594369,
-    "ast_hash": "d968e3218fb9f99e65eddca49f1dbd1d",
+    "mtime": 1789627349.5955524,
+    "ast_hash": "a56cb3f76a245d7755dfc398d78aac27",
     "semantic_hash": ""
   },
   "components/pages/demos/demos.test.ts": {
-    "mtime": 1789484778.5958872,
-    "ast_hash": "2deef0573aecbcd5ec223081d93d4920",
+    "mtime": 1789627349.5995524,
+    "ast_hash": "ff735ed75d999f63855a3811569e0b4e",
     "semantic_hash": ""
   },
   "components/pages/demos/floor.ts": {
-    "mtime": 1789484778.5958872,
-    "ast_hash": "c30461d5306d81947f11933e0a1c8c1d",
+    "mtime": 1789627349.5995524,
+    "ast_hash": "06b8414b367f53296ed82ec2a79fc152",
     "semantic_hash": ""
   },
   "components/pages/demos/motion.ts": {
-    "mtime": 1789484778.5958872,
-    "ast_hash": "a9b9c76e4e09f41354e3285ecb6cf2f4",
+    "mtime": 1789627349.5995524,
+    "ast_hash": "3d22b824512aad34237c76f405c122b5",
     "semantic_hash": ""
   },
   "components/pages/demos/palette.ts": {
-    "mtime": 1789484778.5958872,
-    "ast_hash": "a2bfc389f7166bdfcf76e92ff0a0d33b",
+    "mtime": 1789627349.5995524,
+    "ast_hash": "838a456cd58c79ecd835e0076d89c845",
     "semantic_hash": ""
   },
   "lib/i18n/demos.ts": {
@@ -780,8 +780,28 @@
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/winery-page.test.ts": {
-    "mtime": 1789533055.883218,
-    "ast_hash": "0ad92d14acb0e3457912e08e878fb6db",
+    "mtime": 1789533611.1281857,
+    "ast_hash": "dc66ba9f718a22e0645554ce7093ff71",
+    "semantic_hash": ""
+  },
+  "lib/onscreen.test.ts": {
+    "mtime": 1789627349.5995524,
+    "ast_hash": "bc2f97911f7b64d22904163c1c71f4cd",
+    "semantic_hash": ""
+  },
+  "lib/onscreen.ts": {
+    "mtime": 1789627349.6035523,
+    "ast_hash": "3b100e5bcbbf18e97e4cd5a6964c9ece",
+    "semantic_hash": ""
+  },
+  "docs/demos.md": {
+    "mtime": 1789627349.5995524,
+    "ast_hash": "977b9ab59142b88a099636dcf6ee4db0",
+    "semantic_hash": ""
+  },
+  "components/pages/case/SpotlightFrames.test.ts": {
+    "mtime": 1789627423.529881,
+    "ast_hash": "70a0936aca4fe14cfcf245fcc6864b6a",
     "semantic_hash": ""
   }
 }
