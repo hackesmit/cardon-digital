@@ -330,15 +330,12 @@ async function served(page: string, locale: Locale): Promise<string[]> {
 async function shell(locale: Locale): Promise<string[]> {
   const Footer = (await import("../../components/site/Footer")).default;
   const NotFoundBody = (await import("../../components/site/NotFoundBody")).default;
-  return blocksOf(
-    renderToStaticMarkup(
-      React.createElement(
-        LocaleProvider,
-        // eslint-disable-next-line react/no-children-prop
-        { locale, children: [React.createElement(NotFoundBody, { locale, key: "404" }), React.createElement(Footer, { locale, key: "footer" })] },
-      ),
-    ),
-  );
+  const children = [
+    React.createElement(NotFoundBody, { locale, key: "404" }),
+    React.createElement(Footer, { locale, key: "footer" }),
+  ];
+  // eslint-disable-next-line react/no-children-prop
+  return blocksOf(renderToStaticMarkup(React.createElement(LocaleProvider, { locale, children })));
 }
 
 /** What is left of a sentence once everything that is not an offer is stripped. */
@@ -449,10 +446,9 @@ describe("every served ads claim carries the conditions lib/pricing.ts sets", ()
     for (const file of sourceFiles) {
       const blocks = literals(file);
       const perLocale = locales.map((l) => judged(slash(relative(root, file)), blocks, l));
-      perLocale[0].forEach((o, i) => {
+      perLocale[0].forEach((o) => {
         const everywhere = perLocale.every((list) => list.some((x) => x.block === o.block && x.bad));
         if (o.bad && everywhere && bad.indexOf(report([o])[0]) < 0) bad.push(report([o])[0]);
-        void i;
       });
     }
     expect(bad).toEqual([]);
