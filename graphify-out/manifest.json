@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "a7d066ef1c29a747c64750b276634846",
+    "mtime": 1789632041.6190348,
+    "ast_hash": "a119c4db05decfbbfdfd2f1d8189e21f",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -755,8 +755,8 @@
     "semantic_hash": ""
   },
   "scripts/copy-check.mjs": {
-    "mtime": 1789490255.6647034,
-    "ast_hash": "a32a5198592779b48cf18ce0674fb235",
+    "mtime": 1789632041.6190348,
+    "ast_hash": "d0e6c539835e706682b9f77cacb84563",
     "semantic_hash": ""
   },
   "scripts/copy-check.test.mjs": {
@@ -765,18 +765,18 @@
     "semantic_hash": ""
   },
   "docs/copy-doctrine.md": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "fa4de77778622f21fe563a845a9ed3e1",
+    "mtime": 1789632041.6190348,
+    "ast_hash": "7ff5155b9a5e90f13aada947551fc006",
     "semantic_hash": ""
   },
   "scripts/visuals-check.mjs": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "4d1db1cf58cdc61868b322aa01c7d9bf",
+    "mtime": 1789632041.6190348,
+    "ast_hash": "61be37fcc91b3a1684501779d3ea16f0",
     "semantic_hash": ""
   },
   "scripts/visuals-check.test.mjs": {
-    "mtime": 1789512198.4996107,
-    "ast_hash": "4f2f854c592cc10e693d7655f8e7377f",
+    "mtime": 1789632041.6190348,
+    "ast_hash": "7b2e8b92417bdabb9f1fdf15bc40773b",
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/winery-page.test.ts": {
