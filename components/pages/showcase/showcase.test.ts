@@ -414,7 +414,7 @@ describe("the two layout plans", () => {
     expect(rule).toContain("display: none");
   });
 
-  it("hides the canvas with scripts off, with a rule nothing in the cascade can outrank", () => {
+  it("hides the canvas with scripts off, and no ordinary edit puts it back", () => {
     // Round three of hq-qd9jh scoped the noscript selector to .pg-showcase so it
     // would out-specify the (0,2,0) rule in home.css, and guarded that with a
     // function that weighed selectors by counting classes, attributes and
@@ -453,11 +453,21 @@ describe("the two layout plans", () => {
       "the scripts-off rule is unscoped, so it would reach a .ss-canvas on any other page",
     ).toContain(".pg-showcase");
 
-    // The one thing that CAN outrank it is another !important, so no stylesheet
-    // anywhere in the repo may declare display on this canvas that way. EVERY
-    // css file is walked, not a named list: "the same rule placed in modulos.css"
-    // was one of the seven shapes precisely because the old guard read only
-    // home.css. Cheap and exact, with no specificity model, just the conflict.
+    // The one thing that can outrank it is another !important, so every css file
+    // in the repo is walked, not a named list: "the same rule placed in
+    // modulos.css" was one of the seven shapes precisely because the old guard
+    // read only home.css.
+    //
+    // WHAT THIS PART DOES NOT SEE, measured by round four's review (s-691c),
+    // which found seven shapes that reveal the canvas while this case stays
+    // green: a selector with no .ss-canvas class literal (canvas, or a nested
+    // &:not() whose inner selector omits it), a declaration written "display :
+    // block" with a space before the colon, an @layer block, whose !important
+    // beats every unlayered one at any specificity, and a second style tag. Those
+    // all need an author writing an !important aimed at this canvas on purpose,
+    // which a unit case cannot stop; what it does stop is the accident, which is
+    // what round three actually shipped. hq-4pu0q.26 carries the rest. This
+    // comment exists so nobody reads the case name as a guarantee.
     const sheets: string[] = [];
     const walk = (dir: string) => {
       for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -479,7 +489,7 @@ describe("the two layout plans", () => {
         if (!selector.includes(".ss-canvas")) continue;
         expect(
           decls,
-          `${full} declares display on .ss-canvas with !important ("${selector.trim()}"), which can outrank the scripts-off rule`,
+          `${full} declares display on .ss-canvas with !important ("${selector.trim()}"), which can outrank the scripts-off rule. Note this walk only sees a tight "display:" in a rule whose selector carries the .ss-canvas class literal, so a clean run here is not proof that nothing outranks it (see the comment above and hq-4pu0q.26).`,
         ).not.toMatch(/display:[^;]*!important/i);
       }
     }
