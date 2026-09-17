@@ -47,6 +47,61 @@ describe("the shared frame", () => {
   });
 });
 
+/**
+ * The two s-4a6c loophole components as this directory's tests have carried
+ * them since hq-3pfhe.6. contract.test.tsx has to MOUNT them, which a string
+ * cannot be, so the reviewer's own files, which differ from these only by a
+ * header comment, are in lib/testing/loopholes/demos; both forms are judged.
+ */
+const LOOPHOLE_PRODUCCION = `"use client";
+import { useEffect, useRef } from "react";
+import { observeOnscreen, shouldAnimate } from "./motion";
+import { PHONE_MAX } from "./floor";
+import "./demos.css";
+
+export default function ProduccionDemo() {
+  const ref = useRef<HTMLElement>(null);
+  const cap = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const phone = el.clientWidth < PHONE_MAX;
+    const W = Math.round(el.getBoundingClientRect().width);
+    return observeOnscreen(el, (on) => {
+      if (shouldAnimate({ reduced: false, docVisible: true, onscreen: on }) && cap.current) {
+        cap.current.textContent = phone ? "phone " + W : "wide " + W;
+      }
+    });
+  }, []);
+  return (
+    <figure className="demo-figure" ref={ref}>
+      <div className="demo-stage"><canvas className="demo-canvas" /></div>
+      <div className="demo-readout"><span className="demo-caption" ref={cap} /></div>
+    </figure>
+  );
+}
+`;
+
+const LOOPHOLE_HOSPITALIDAD = `"use client";
+import { useEffect, useRef } from "react";
+import { observeOnscreen } from "./motion";
+import "./demos.css";
+
+export default function HospitalidadDemo() {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const IO = window.IntersectionObserver;
+    const io = new IO((es) => { el.dataset.on = String(es[es.length - 1].isIntersecting); }, { threshold: [0, 0.35] });
+    io.observe(el);
+    const un = observeOnscreen(el, () => {});
+    return () => { io.disconnect(); un(); };
+  }, []);
+  return <figure className="demo-figure" ref={ref} />;
+}
+`;
+
 describe("the source rules are load bearing", () => {
   const GLOBAL = "reaches no global by a computed name, and names no observer";
   const OPERABLE = "puts nothing operable on the page but a hotspot";
@@ -64,9 +119,13 @@ describe("the source rules are load bearing", () => {
     expect(fixture("StringDemo.tsx")).toContain(FRAME);
   });
 
-  it("fails both s-4a6c fixtures", () => {
+  it("fails both s-4a6c fixtures, as strings and as the reviewer's files", () => {
     expect(fixture("ProduccionDemo.tsx")).toContain(FRAME);
     expect(fixture("HospitalidadDemo.tsx")).toEqual(expect.arrayContaining([GLOBAL, FRAME]));
+    expect(broken("ProduccionDemo.tsx", LOOPHOLE_PRODUCCION, ctx)).toContain(FRAME);
+    expect(broken("HospitalidadDemo.tsx", LOOPHOLE_HOSPITALIDAD, ctx)).toEqual(
+      expect.arrayContaining([GLOBAL, FRAME]),
+    );
   });
 
   /* each shape on its own, so a rule cannot lean on its neighbour */
