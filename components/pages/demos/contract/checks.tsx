@@ -385,15 +385,16 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       };
       const { cycle, standing } = scene.clock;
       const readings = [0, standing * 0.31, standing * 0.74, standing, (standing + cycle) / 2, cycle * 0.97];
+      /* in order, in order again, then backwards, which no running loop does:
+         every reading is drawn three times and each time it is one frame */
       const first = readings.map(at);
-      readings.forEach((t) =>
-        expect(at(t) === at(t), "the reading " + t.toFixed(2) + " drawn twice in a row is one frame").toBe(true),
-      );
-      /* backwards, which no running loop ever does */
+      const again = readings.map(at);
       const back = readings.slice().reverse().map(at).reverse();
-      readings.forEach((t, i) =>
-        expect(back[i] === first[i], "the reading " + t.toFixed(2) + " drawn out of order is the frame it was in order").toBe(true),
-      );
+      readings.forEach((t, i) => {
+        const r = t.toFixed(2);
+        expect(again[i] === first[i], "the reading " + r + " drawn a second time is the frame it was the first time").toBe(true);
+        expect(back[i] === first[i], "the reading " + r + " drawn out of order is the frame it was in order").toBe(true);
+      });
       for (const text of scene.live) {
         const keys = readings.map((t) => text.at(t));
         expect(readings.slice().reverse().map((t) => text.at(t)).reverse(), "the words at a reading").toEqual(keys);

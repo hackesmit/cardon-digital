@@ -2,9 +2,11 @@
 import { readdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { useEffect, useState } from "react";
+import { act, useEffect, useMemo, useRef, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
+import { World } from "./contract/world";
+import { observeOnscreen } from "./motion";
 import { DemoFigure, Hotspot } from "./stage/DemoFigure";
 import type { DemoScene } from "./stage/useDemoStage";
 
@@ -217,6 +219,126 @@ describe("the checks are load bearing", () => {
       );
     }
     expect(failing(Remounts)).toContain(TAP);
+  });
+
+  it("draws a scene swapped in mid-story at the reading the clock already had", () => {
+    /* the other half of B1's fix: a new scene object is a new picture, so it
+       has to be DRAWN, from the old time. A stage that ignored it would keep
+       a stale locale on the board for the life of the mount. */
+    const make = (mark: number): DemoScene =>
+      scene((env, t) => env.ctx.fillRect(mark, 0, t >= 5 && t < 6.1 ? 50 : Math.round(t * 10), 10));
+    function Swaps() {
+      const [picked, setPicked] = useState(0);
+      return (
+        <DemoFigure
+          demo="fixture"
+          scene={make(picked)}
+          title="t"
+          honest="vista ilustrativa, no son datos de cliente"
+          fallback="prose"
+          selection={picked}
+          hotspots={[0, 1].map((i) => (
+            <Hotspot key={i} picked={i === picked} onPick={() => setPicked(i)} label={"spot " + i} />
+          ))}
+        />
+      );
+    }
+    expect(failing(Swaps)).toEqual([]);
+    const w = new World();
+    w.install();
+    try {
+      w.mount(Swaps);
+      act(() => w.width(800));
+      act(() => w.onscreen(1));
+      const before = w.tick(2000);
+      expect(before[before.length - 1]).toContain("fillRect(0,0,");
+      act(() => w.container.querySelectorAll("button")[1].click());
+      const after = w.tick(320);
+      /* the new scene's mark, at widths that carry on from two seconds in */
+      for (const f of after) expect(f).toMatch(/fillRect\(1,0,2\d,10\)/);
+    } finally {
+      w.dispose();
+    }
+  });
+
+  /* STILL is three conditions and three kinds of evidence, and each has to be
+     carrying weight: a second loop beside the stage that honours two of the
+     three gates and ignores the third, and loops that leave only one kind of
+     trace. None of them touches the 2d context of the stage's canvas, which
+     is all the old motion checks read. */
+  const beside = (honours: { reduce: boolean; hidden: boolean; offscreen: boolean }, act: (el: HTMLElement, n: number) => void, frames = false) =>
+    function Beside() {
+      const el = useRef<HTMLSpanElement>(null);
+      useEffect(() => {
+        let on = true;
+        const stop = honours.offscreen ? observeOnscreen(el.current!.parentElement!, (v) => (on = v)) : () => {};
+        let n = 0;
+        let id = 0;
+        const step = () => {
+          if (frames) id = requestAnimationFrame(step);
+          if (honours.reduce && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+          if (honours.hidden && document.hidden) return;
+          if (honours.offscreen && !on) return;
+          act(el.current!, ++n);
+        };
+        if (frames) id = requestAnimationFrame(step);
+        else id = window.setInterval(step, 50);
+        return () => {
+          stop();
+          if (frames) cancelAnimationFrame(id);
+          else window.clearInterval(id);
+        };
+      }, []);
+      return <span ref={el} />;
+    };
+  const lawful = scene((env) => env.ctx.fillRect(0, 0, 10, 10));
+  const attr = (el: HTMLElement, n: number) => el.setAttribute("data-n", String(n));
+
+  it.each([
+    ["prefers-reduced-motion", { reduce: false, hidden: true, offscreen: true }],
+    ["a hidden tab", { reduce: true, hidden: false, offscreen: true }],
+    ["being off screen", { reduce: true, hidden: true, offscreen: false }],
+  ])("fails a timer beside the stage that ignores only %s", (_, honours) => {
+    const Bar = beside(honours, attr);
+    expect(failing(() => figure(lawful, <Bar />))).toContain(STILL);
+  });
+
+  it("passes a second loop that honours all three gates, so it is the motion and not the loop that fails", () => {
+    const Bar = beside({ reduce: true, hidden: true, offscreen: true }, attr);
+    expect(failing(() => figure(lawful, <Bar />))).not.toContain(STILL);
+  });
+
+  it("fails a loop that leaves no mutation and no canvas call, only frames asked for", () => {
+    const Scroller = beside({ reduce: false, hidden: false, offscreen: false }, (el, n) => (el.scrollLeft = n), true);
+    expect(failing(() => figure(lawful, <Scroller />))).toContain(STILL);
+  });
+
+  it("fails a timer that draws on a canvas of its own and changes nothing in the DOM", () => {
+    function Own() {
+      const c = useRef<HTMLCanvasElement>(null);
+      useEffect(() => {
+        const id = window.setInterval(() => c.current!.getContext("2d")!.fillRect(0, 0, 1, 1), 50);
+        return () => window.clearInterval(id);
+      }, []);
+      return <canvas ref={c} className="demo-canvas" />;
+    }
+    expect(failing(() => figure(lawful, <Own />))).toContain(STILL);
+  });
+
+  it("fails a draw that remembers the furthest reading it was shown", () => {
+    /* one memory per mount, the way a real scene's closure is: a memory
+       shared by every mount in this file would be full before PURE ran */
+    function HiWater() {
+      const s = useMemo(() => {
+        let hi = 0;
+        return scene((env, t) => {
+          hi = Math.max(hi, t);
+          env.ctx.fillRect(0, 0, t >= 5 && t < 6.1 ? 50 : hi, 10);
+        });
+      }, []);
+      return figure(s);
+    }
+    expect(failing(HiWater)).toContain(PURE);
   });
 
   it("fails a button that only exists once an effect has run", () => {
