@@ -2,7 +2,7 @@
 import { readdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { act, StrictMode, useEffect, useMemo, useRef, useState } from "react";
+import React, { act, StrictMode, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
@@ -44,8 +44,18 @@ vi.mock("./motion", async (original) => {
    object per scene, so it adds no identity churn of its own. */
 vi.mock("./stage/useDemoStage", async (original) => {
   const real = await original<typeof import("./stage/useDemoStage")>();
-  const { handed } = await import("./contract/world");
+  const { handed, drawing } = await import("./contract/world");
   const wrapped = new WeakMap<object, DemoScene>();
+  /* while a picture is being made, the world writes down every question it
+     asks about the time or about luck (./contract/world.tsx, `drawing`) */
+  const marked = <A extends unknown[], R>(fn: (...a: A) => R) => (...a: A): R => {
+    drawing.depth++;
+    try {
+      return fn(...a);
+    } finally {
+      drawing.depth--;
+    }
+  };
   return {
     ...real,
     useDemoStage: (scene: DemoScene, ...rest: [never, never]) => {
@@ -56,11 +66,16 @@ vi.mock("./stage/useDemoStage", async (original) => {
            assigning over an inherited read-only property throws */
         const made: DemoScene = Object.create(scene, {
           draw: {
-            value: (env: StageEnv, t: number) => {
+            value: marked((env: StageEnv, t: number) => {
               handed.scene = scene;
               handed.env = env;
               scene.draw(env, t);
-            },
+            }),
+          },
+          live: {
+            value: scene.live.map((text) =>
+              Object.create(text, { at: { value: marked((t: number) => text.at(t)) } }),
+            ),
           },
         });
         wrapped.set(scene, (w = made));
@@ -388,6 +403,163 @@ describe("the checks are load bearing", () => {
       return figure(s);
     }
     expect(failing(HiWater)).toContain(PURE);
+  });
+
+  /* The s-1022 four: each through the shared stage, each 345 of 345 when it
+     was written, two of them the s-2e55 classes again a few lines away. The
+     checks that catch them do not know them: the layers below are each held
+     by a fixture of a different shape. */
+  const PAGES = "tells the same story on a page opened at another time, on another day, with other luck";
+  const EVENTS = "a theme change or a window resize changes the picture and nothing about the time";
+  const MOVES =
+    "mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser";
+  const loophole = (name: string) => load("../../../lib/testing/loopholes/demos/" + name + ".tsx");
+
+  it("fails the s-1022 wall clock, a draw() with no memory that reads the page's clock", async () => {
+    const failed = failing(await loophole("WallClockDemo"));
+    expect(failed).toEqual(expect.arrayContaining([PURE, PAGES]));
+    expect(failed).not.toContain(MOVES);
+  });
+
+  it("fails the s-1022 SMIL and Web Animation demo, motion the browser runs and jsdom does not", async () => {
+    expect(failing(await loophole("SmilDemo"))).toEqual([MOVES]);
+  });
+
+  it("fails the s-1022 figure keyed on the theme event, and the one keyed on a tap", async () => {
+    expect(failing(await loophole("KeyThemeDemo"))).toEqual([EVENTS]);
+    expect(failing(await loophole("KeyTapDemo"))).toContain(TAP);
+  });
+
+  it("fails the s-1022 scene that is pure per reading and counts its layouts", async () => {
+    expect(failing(await loophole("ResizeMemoryDemo"))).toEqual([PURE]);
+  });
+
+  const bar = (env: StageEnv, t: number, shift = 0) =>
+    env.ctx.fillRect(0, 0, t >= 5 && t < 6.1 ? 50 : ((t * 10 + shift) % 97) + 1, 10);
+
+  it.each<[string, () => number]>([
+    ["Date.now()", () => Date.now()],
+    ["new Date()", () => new Date().getTime()],
+    ["Date() called as a function", () => Date.parse(Date())],
+    ["a formatter asked for now", () => 1000 * Number(new Intl.DateTimeFormat("en", { second: "numeric" }).format())],
+    ["formatToParts asked for now", () => Number(new Intl.DateTimeFormat("en", { minute: "numeric" }).formatToParts()[0].value) * 1000],
+    ["document.timeline", () => Number(document.timeline.currentTime)],
+    ["an event's timeStamp", () => new Event("x").timeStamp],
+    ["Math.random()", () => Math.random() * 1e6],
+    ["crypto.getRandomValues()", () => crypto.getRandomValues(new Uint32Array(1))[0]],
+    ["crypto.randomUUID()", () => parseInt(crypto.randomUUID().slice(0, 6), 16)],
+  ])("fails a draw() that moves by %s, in the sweep only", (_, read) => {
+    const s = scene((env, t) => bar(env, t, t >= 5 ? 0 : Math.floor(read() / 1000)));
+    expect(failing(() => figure(s))).toEqual(expect.arrayContaining([PURE, PAGES]));
+  });
+
+  it("fails a scene that noted when the page was opened and draws from that, though every draw on one page agrees", () => {
+    /* the time gets in through the component body, not through draw(), and
+       one page can never see it: asked twice it answers twice the same */
+    function Opened() {
+      const s = useMemo(() => {
+        const opened = performance.now();
+        return scene((env, t) => bar(env, t, Math.floor(opened / 100)));
+      }, []);
+      return figure(s);
+    }
+    const failed = failing(Opened);
+    expect(failed).toContain(PAGES);
+    expect(failed).not.toContain(PURE);
+  });
+
+  it("fails a draw() that reads the clock and has not used it yet", () => {
+    /* every frame on every page agrees, for the first day: only the question
+       itself gives it away */
+    const s = scene((env, t) => bar(env, t, performance.now() > 86400000 ? 40 : 0));
+    const failed = failing(() => figure(s));
+    expect(failed).toContain(PURE);
+    expect(failed).not.toContain(PAGES);
+  });
+
+  it("fails words chosen by the wall clock, which no frame shows", () => {
+    const s: DemoScene = {
+      ...scene((env, t) => bar(env, t)),
+      live: [
+        { name: "caption", values: { a: "a", b: "b" }, keys: ["a", "b"], initial: "a", at: () => (Math.floor(Date.now() / 1000) % 2 ? "a" : "b") },
+      ],
+    };
+    expect(failing(() => figure(s))).toEqual(expect.arrayContaining([PURE, PAGES]));
+  });
+
+  it("passes the same bar drawn from the reading alone, so it is the clock the checks object to", () => {
+    expect(failing(() => figure(scene((env, t) => bar(env, t))))).toEqual([]);
+  });
+
+  const lawfulBar = scene((env, t) => bar(env, t));
+  it.each<[string, () => React.ReactNode]>([
+    ["an SMIL animate", () => <svg><rect width="10" height="8"><animate attributeName="width" from="10" to="120" dur="1s" /></rect></svg>],
+    ["an SMIL set", () => <svg><rect><set attributeName="x" to="9" begin="1s" /></rect></svg>],
+    ["a marquee", () => React.createElement("marquee", null, "llenándose")],
+    ["a video", () => <video autoPlay muted loop src="/room.mp4" />],
+    ["an image, which may be animated and cannot be told from one that is not", () => <img alt="" src="/room.gif" />],
+    ["an element nobody has heard of", () => React.createElement("spinner-next")],
+    ["an inline animation", () => <span style={{ animation: "spin 1s infinite" }} />],
+    ["an inline transition", () => <span style={{ transition: "width 1s" }} />],
+    ["an inline background image", () => <span style={{ backgroundImage: "url(/room.gif)" }} />],
+    ["a style element of its own", () => <style>{".x{animation:spin 1s infinite !important}"}</style>],
+  ])("fails a lawful scene beside %s", (_, extra) => {
+    const Extra = () => <>{extra()}</>;
+    expect(failing(() => figure(lawfulBar, <Extra />))).toEqual([MOVES]);
+  });
+
+  it.each<[string, (el: HTMLElement) => void]>([
+    ["Element.animate, unguarded", (el) => void el.animate([{ opacity: 0 }, { opacity: 1 }], 600)],
+    ["Element.animate, only when reduce is off", (el) => {
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) el.animate?.([{ opacity: 0 }], 600);
+    }],
+    ["new Animation over a KeyframeEffect", (el) => new Animation(new KeyframeEffect(el, [{ opacity: 0 }], 600)).play()],
+    ["a view transition", () => void (document as unknown as { startViewTransition(cb: () => void): void }).startViewTransition(() => {})],
+  ])("fails a lawful scene beside %s", (_, start) => {
+    function Starts() {
+      const el = useRef<HTMLSpanElement>(null);
+      useEffect(() => start(el.current!), []);
+      return <span ref={el} />;
+    }
+    expect(failing(() => figure(lawfulBar, <Starts />))).toEqual([MOVES]);
+  });
+
+  it("fails an SMIL animation in a portal, outside the mount", () => {
+    /* a server render has no portals, so this one arrives with the effect */
+    function Portal() {
+      const [on, setOn] = useState(false);
+      useEffect(() => setOn(true), []);
+      return on ? createPortal(<svg><circle r="2"><animateMotion path="M0 0L9 9" dur="1s" /></circle></svg>, document.body) : null;
+    }
+    expect(failing(() => figure(lawfulBar, <Portal />))).toEqual([MOVES]);
+  });
+
+  it("fails a Web Animation started by a tap and not at mount", () => {
+    function OnTap() {
+      const [picked, setPicked] = useState(0);
+      const el = useRef<HTMLSpanElement>(null);
+      useEffect(() => {
+        if (picked) el.current!.animate?.([{ opacity: 0 }], 600);
+      }, [picked]);
+      return (
+        <DemoFigure demo="fixture" scene={lawfulBar} title="t" honest="vista ilustrativa, no son datos de cliente" fallback="prose" selection={picked}
+          hotspots={[0, 1].map((i) => <Hotspot key={i} picked={i === picked} onPick={() => setPicked(i)} label={"spot " + i} />)}>
+          <span ref={el} />
+        </DemoFigure>
+      );
+    }
+    expect(failing(OnTap)).toEqual([MOVES]);
+  });
+
+  it("passes static svg and text beside a lawful scene, so it is the motion and not the markup", () => {
+    const Still = () => (
+      <>
+        <svg width="20" height="8" aria-hidden="true"><g><rect width="10" height="8" /><path d="M0 0L1 1" /></g></svg>
+        <strong>18</strong>
+        <span style={{ display: "inline-block", width: 4 }} />
+      </>
+    );
+    expect(failing(() => figure(lawfulBar, <Still />))).toEqual([]);
   });
 
   it("fails a button that only exists once an effect has run", () => {

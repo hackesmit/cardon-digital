@@ -198,6 +198,27 @@ describe("the source rules are load bearing", () => {
     expect(broken("D.tsx", demo("", jsx), ctx)).toEqual([]);
   });
 
+  const IMPORTS = "imports code and data, and no stylesheet, image or film of its own";
+  it.each([
+    'import "./cellar.css";',
+    'import styles from "./cellar.module.scss";',
+    'import film from "./room.mp4";',
+    'import gif from "@/public/room.gif?url";',
+    'const css = require("./cellar.css");',
+    'const later = import("./cellar.css");',
+    'const name = "./cellar.css"; const later = import(name);',
+    'export * from "./cellar.css";',
+  ])("rejects %s", (head) => {
+    expect(broken("D.tsx", demo(head, "<DemoFigure />"), ctx)).toEqual([IMPORTS]);
+  });
+
+  it.each(['import "./demos.css";', 'import { cellar } from "./cellar";', 'import data from "./cellar.json";', 'import x from "lib.name/thing";'])(
+    "allows %s",
+    (head) => {
+      expect(broken("D.tsx", demo(head, "<DemoFigure />"), ctx)).toEqual([]);
+    },
+  );
+
   it.each([
     "<DemoFigure><noscript>x</noscript></DemoFigure>",
     '<DemoFigure><style>{".rd-btn{display:block}"}</style></DemoFigure>',

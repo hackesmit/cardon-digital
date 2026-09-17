@@ -361,6 +361,12 @@ function stubObserver(): { instance: () => FakeObserver } {
 
 /* --------- the pre-hydration canvas height is the measured height -------- */
 
+/** Declarations that animate or transition and carry !important. */
+const outranksReduce = (sheet: string) =>
+  sheet
+    .split(/[;{}]/)
+    .filter((d) => /^\s*(-\w+-)?(animation|transition)[\w-]*\s*:/i.test(d) && /!\s*important/i.test(d));
+
 describe("the demos stylesheet", () => {
   /* The rules, without the prose. Every check below is lexical, and this file
      now explains in comments what its queries used to get wrong, naming the
@@ -502,6 +508,30 @@ describe("the demos stylesheet", () => {
     expect(css).toMatch(/\.demo-pick-box\s*>\s*\*\s*\{[^}]*grid-area:\s*1\s*\/\s*1/);
     expect(css).toMatch(/\.demo-pick-ghost\s*\{[^}]*visibility:\s*hidden/);
     expect(/\.demo-pick-ghost\s*\{[^}]*display:\s*none/.test(css)).toBe(false);
+  });
+
+  it("leaves the site's reduced-motion rule in charge of everything the stylesheet animates", () => {
+    /* CSS is the one declared motion open to a demo, and it is closed under
+       reduce by construction: app/globals.css stops every animation and
+       transition on the site, measured by reviewer s-1022 (margin-left 0px,
+       then 0px). That holds while two things do. The rule is there, and
+       nothing here outranks it, which only !important can. An image is the
+       other way a stylesheet moves, and nothing can tell an animated one
+       from a still, so this sheet loads none and imports no other sheet. */
+    const globals = withoutCssComments(read("../../../app/globals.css"));
+    const reduce = Array.from(
+      globals.matchAll(/@media \(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/g),
+      (m) => m[1],
+    );
+    for (const stopped of ["animation", "transition"]) {
+      const everything = new RegExp("(?:^|[};])\\s*\\*\\s*\\{[^}]*" + stopped + ":\\s*none\\s*!important");
+      expect(reduce.filter((block) => everything.test(block)), "a reduce block that stops every " + stopped).toHaveLength(1);
+    }
+    expect(outranksReduce(css)).toEqual([]);
+    expect(css).not.toMatch(/url\(|@import|image-set\(/i);
+    expect(outranksReduce(".x{ transition: width 1s !important }")).toHaveLength(1);
+    expect(outranksReduce(".x{ -webkit-animation-name: spin ! IMPORTANT }")).toHaveLength(1);
+    expect(outranksReduce(".x{ transition: width 1s; color: red !important }")).toEqual([]);
   });
 
   it.each(["demo-pick-box", "demo-caption-box"])(
