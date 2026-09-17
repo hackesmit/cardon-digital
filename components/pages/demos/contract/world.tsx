@@ -83,17 +83,203 @@ const lastFrame = (entries: string[]): string => {
 
 /** Elements that cannot move by themselves, which is every element a demo
     may mount. See World.strangers for why this is a list of what is allowed
-    and not of what is refused. */
+    and not of what is refused. Left out on purpose: img, picture, video,
+    audio, iframe, object, embed, marquee, svg's image and every SMIL element,
+    which move or may; a, input, select, textarea, details and summary, which
+    are operable and belong to the noscript rule; script and link. */
 const INERT = new Set(
   (
-    /* html: structure, text and the two things a demo is made of */
-    "figure figcaption div span p canvas button noscript style " +
-    "strong em b i small sub sup br wbr abbr time ul ol li dl dt dd h1 h2 h3 h4 h5 h6 " +
-    /* svg: shapes, text, structure and paint servers */
-    "svg g path rect circle ellipse line polyline polygon text tspan defs title desc " +
-    "clippath mask lineargradient radialgradient stop symbol use"
+    /* html: the two things a demo is made of, then structure, then text */
+    "canvas button figure figcaption noscript style " +
+    "div span p section article header footer main aside nav address hgroup search hr pre blockquote " +
+    "ul ol li dl dt dd menu table caption colgroup col thead tbody tfoot tr th td " +
+    "h1 h2 h3 h4 h5 h6 strong em b i u s small sub sup br wbr abbr time data code kbd samp var " +
+    "mark q cite dfn del ins bdi bdo ruby rt rp label output " +
+    /* svg: shapes, text, structure and paint servers; filter primitives are
+       admitted by their fe prefix in strangers() */
+    "svg g path rect circle ellipse line polyline polygon text tspan textpath defs title desc " +
+    "clippath mask lineargradient radialgradient stop symbol use pattern marker filter switch " +
+    "foreignobject metadata"
   ).split(" "),
 );
+
+/* ------------------------------------------------------------------------
+   THE AMBIENT LAYER: every source of time and of luck, and every door to
+   motion the browser runs by itself, replaced ONCE, when this module is first
+   imported, which is before any demo module is evaluated (contract.test.tsx
+   imports ./contract/checks first and loads each demo afterwards).
+
+   It used to be put in place by each World and taken away again. A demo
+   module is evaluated before any World exists, so `const now =
+   performance.now.bind(performance)` or `const can = "animate" in
+   Element.prototype` at the top of a file captured the real clock, or the
+   real absence of animate() under jsdom, and carried it past every World
+   (cross-vendor review of this round). These stay for the life of the test
+   file and answer for whichever World is installed, or as the real thing
+   when none is.
+   ------------------------------------------------------------------------ */
+/* taken before any World replaces it: the one real timer the checks use */
+const realSetTimeout = setTimeout;
+/** Let everything a demo left for later actually run, while the page that
+    mounted it is still installed: promise callbacks, a dynamic import, a
+    real zero timer. A check is otherwise synchronous, and work queued in a
+    microtask would run after the World had gone and be seen by nobody. */
+export const settle = async () => {
+  for (let i = 0; i < 3; i++) await new Promise<void>((done) => realSetTimeout(done, 0));
+};
+
+let active: World | null = null;
+const ask = <T,>(what: string, real: () => T, mine: (w: World) => T): T => {
+  if (!active) return real();
+  if (drawing.depth > 0) active.asked.push(what);
+  return mine(active);
+};
+const declare = (what: string) => {
+  /* With no World installed this is work a synchronous check left behind in
+     a microtask, and it belongs to nobody: charging it to the next World
+     would fail some other demo's test. The stands-still check waits for
+     deferred work with its page still installed (settle, above), which is
+     where it is seen. */
+  active?.declared.push(what);
+  const a: Record<string, unknown> = {
+    playState: "running",
+    currentTime: 0,
+    finished: new Promise(() => {}),
+    ready: Promise.resolve(),
+  };
+  for (const m of ["cancel", "pause", "play", "finish", "reverse", "persist", "commitStyles", "updatePlaybackRate", "addEventListener", "removeEventListener", "skipTransition"]) {
+    a[m] = () => {};
+  }
+  return a;
+};
+
+const ambient = () => {
+  const g = globalThis as unknown as Record<string, unknown>;
+  if (g.__demoWorldAmbient) return;
+  g.__demoWorldAmbient = true;
+  /* writable where the platform's own is: a reviewer's harness that puts a
+     stub of its own over one of these has to be able to */
+  const define = (target: object, key: string, desc: PropertyDescriptor) =>
+    Object.defineProperty(target, key, { configurable: true, ...("value" in desc ? { writable: true } : {}), ...desc });
+  const wall = (w: World) => w.epoch + w.now;
+
+  /* TIME. The whole of `performance` is a facade, not now() alone: whatever
+     a picture reads off it is a question, and the clocks on it are the
+     World's (timeOrigin is the date the page was opened, entries start at
+     the World's now). */
+  const realPerf = performance;
+  const realNow = realPerf.now.bind(realPerf);
+  g.performance = new Proxy(realPerf, {
+    get(t, k) {
+      if (k === "now") return () => ask("performance.now()", realNow, (w) => w.now);
+      if (k === "timeOrigin") return ask("performance.timeOrigin", () => t.timeOrigin, (w) => w.epoch);
+      const v = Reflect.get(t, k, t) as unknown;
+      if (typeof v !== "function") return ask("performance." + String(k), () => v, () => v);
+      return (...args: unknown[]) => {
+        const out = (v as (...a: unknown[]) => unknown).apply(t, args);
+        return ask("performance." + String(k) + "()", () => out, (w) =>
+          /* an entry, or a list of them: their clocks are the World's too */
+          Array.isArray(out) || (out && typeof out === "object")
+            ? JSON.parse(JSON.stringify(out, (key, val) => (key === "startTime" || key === "duration" ? w.now : val)))
+            : out,
+        );
+      };
+    },
+  });
+  /* Date.now is replaced on the real Date as well as through the global:
+     jsdom stamps its events with the real one. */
+  const RealDate = Date;
+  const realDateNow = RealDate.now.bind(RealDate);
+  define(RealDate, "now", { value: () => ask("Date.now()", realDateNow, wall) });
+  g.Date = new Proxy(RealDate, {
+    construct: (D, args, target) =>
+      Reflect.construct(D, args.length ? args : [ask("new Date()", realDateNow, wall)], target),
+    apply: () => new RealDate(ask("Date()", realDateNow, wall)).toString(),
+  });
+  for (const method of ["format", "formatToParts"] as const) {
+    const real = Object.getOwnPropertyDescriptor(Intl.DateTimeFormat.prototype, method)!;
+    const timed = (fn: (d?: unknown) => unknown) => (d?: unknown) =>
+      fn(d === undefined ? ask("Intl.DateTimeFormat " + method + "()", realDateNow, wall) : d);
+    define(
+      Intl.DateTimeFormat.prototype,
+      method,
+      real.get
+        ? { get(this: Intl.DateTimeFormat) { return timed(real.get!.call(this)); } }
+        : { value(this: Intl.DateTimeFormat, d?: unknown) { return timed((x) => real.value.call(this, x))(d); } },
+    );
+  }
+  define(document, "timeline", {
+    get: () => ({
+      get currentTime() {
+        return ask("document.timeline.currentTime", realNow, (w) => w.now);
+      },
+    }),
+  });
+
+  /* LUCK. */
+  const realRandom = Math.random.bind(Math);
+  define(Math, "random", { value: () => ask("Math.random()", realRandom, (w) => w.luck()) });
+  if (typeof crypto !== "undefined") {
+    const realValues = crypto.getRandomValues.bind(crypto);
+    const realUUID = crypto.randomUUID?.bind(crypto);
+    define(crypto, "getRandomValues", {
+      value: <A extends ArrayBufferView>(a: A): A =>
+        ask("crypto.getRandomValues()", () => realValues(a as never) as A, (w) => {
+          const bytes = new Uint8Array(a.buffer, a.byteOffset, a.byteLength);
+          for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(w.luck() * 256);
+          return a;
+        }),
+    });
+    define(crypto, "randomUUID", {
+      value: () =>
+        ask("crypto.randomUUID()", () => realUUID?.() ?? "", (w) => {
+          const h = Array.from({ length: 32 }, () => Math.floor(w.luck() * 16).toString(16)).join("");
+          return [h.slice(0, 8), h.slice(8, 12), h.slice(12, 16), h.slice(16, 20), h.slice(20)].join("-");
+        }),
+    });
+  }
+
+  /* MOTION THE BROWSER RUNS BY ITSELF (reviewer s-1022, L5). A Web Animation
+     is not a frame, a timer, a canvas call or a mutation, so nothing else
+     here can see one, and jsdom has none of these, so a careful author's ?.
+     made the call vanish under test. They exist on this page, they do
+     nothing, and every use is written down. Script has these ways to hand
+     the browser an animation and no others: Animatable.animate, the two
+     constructors, and a view transition. A stylesheet made or changed from
+     script is the same thing by a longer road, so those doors are here too. */
+  define(Element.prototype, "animate", {
+    value(this: Element) {
+      return declare("<" + this.tagName.toLowerCase() + ">.animate()");
+    },
+  });
+  g.Animation = function Animation() { return declare("new Animation()"); };
+  g.KeyframeEffect = function KeyframeEffect() { return declare("new KeyframeEffect()"); };
+  define(document, "startViewTransition", {
+    value: (cb?: () => void) => {
+      cb?.();
+      return declare("document.startViewTransition()");
+    },
+  });
+  const Sheet = (g.CSSStyleSheet ?? function CSSStyleSheet() {}) as { prototype: Record<string, unknown> };
+  for (const m of ["insertRule", "deleteRule", "replace", "replaceSync", "addRule"]) {
+    const real = Sheet.prototype[m] as ((...a: unknown[]) => unknown) | undefined;
+    define(Sheet.prototype, m, {
+      value(this: unknown, ...a: unknown[]) {
+        declare("CSSStyleSheet." + m + "()");
+        return real?.apply(this, a);
+      },
+    });
+  }
+  let adopted: unknown[] = [];
+  define(document, "adoptedStyleSheets", {
+    get: () => adopted,
+    set: (v: unknown[]) => {
+      declare("document.adoptedStyleSheets");
+      adopted = v;
+    },
+  });
+};
+ambient();
 
 export class World {
   /** Milliseconds since this page was opened, plus where it started: the ONE
@@ -106,6 +292,15 @@ export class World {
   epoch = Date.UTC(2026, 8, 17, 18, 0, 0);
   /** Math.random and crypto are a sequence this decides. */
   seed = 1;
+  private drawn = 0;
+  /** The next random number: mulberry32 from `seed`. */
+  luck(): number {
+    this.drawn = (this.drawn + 0x6d2b79f5) >>> 0;
+    let t = (this.drawn + this.seed) >>> 0;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  }
   /** Every time a picture asked for the time or for luck: see `drawing`. */
   asked: string[] = [];
   /** Every animation handed to the BROWSER to run: Element.animate, new
@@ -132,7 +327,6 @@ export class World {
   private rafs = new Map<number, (now: number) => void>();
   private rafId = 0;
   private restore: (() => void)[] = [];
-  DateProxy: unknown = null;
   private root: Root | null = null;
   container!: HTMLElement;
 
@@ -148,6 +342,8 @@ export class World {
       });
     };
     const world = this;
+    /* the ambient layer above answers for this page from here on */
+    active = this;
 
     g.IS_REACT_ACT_ENVIRONMENT = true;
     /* vitest compiles this app's JSX with the classic runtime */
@@ -239,108 +435,6 @@ export class World {
         else delete (target as Record<string, unknown>)[key];
       });
     };
-    /* EVERY SOURCE OF TIME AND OF LUCK IS THE WORLD'S (reviewer s-1022, L4).
-       performance.now alone was, so a draw() that read it was caught only if
-       time happened to pass between two draws, and it did not. They are all
-       one number here, and each read is written down when a picture made it.
-       Date.now is replaced on the real Date as well as on the global: jsdom
-       stamps its events through the real one. */
-    const ask = <T,>(what: string, v: T): T => {
-      if (drawing.depth > 0) world.asked.push(what);
-      return v;
-    };
-    const wall = () => world.epoch + world.now;
-    define(performance, "now", { value: () => ask("performance.now()", world.now) });
-    const RealDate = Date;
-    define(RealDate, "now", { value: () => ask("Date.now()", wall()) });
-    put(
-      "Date",
-      new Proxy(RealDate, {
-        construct: (D, args, target) =>
-          Reflect.construct(D, args.length ? args : [ask("new Date()", wall())], target === world.DateProxy ? D : target),
-        apply: () => new RealDate(ask("Date()", wall())).toString(),
-      }),
-    );
-    world.DateProxy = g.Date;
-    for (const method of ["format", "formatToParts"] as const) {
-      const real = Object.getOwnPropertyDescriptor(Intl.DateTimeFormat.prototype, method)!;
-      const timed = (fn: (d?: unknown) => unknown) => (d?: unknown) =>
-        fn(d === undefined ? ask("Intl.DateTimeFormat " + method + "()", wall()) : d);
-      define(
-        Intl.DateTimeFormat.prototype,
-        method,
-        real.get
-          ? { get(this: Intl.DateTimeFormat) { return timed(real.get!.call(this)); } }
-          : { value(this: Intl.DateTimeFormat, d?: unknown) { return timed((x) => real.value.call(this, x))(d); } },
-      );
-    }
-    let luck = world.seed >>> 0;
-    const next = () => {
-      /* mulberry32 */
-      luck = (luck + 0x6d2b79f5) >>> 0;
-      let t = luck;
-      t = Math.imul(t ^ (t >>> 15), t | 1);
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-    };
-    define(Math, "random", { value: () => ask("Math.random()", next()) });
-    if (typeof crypto !== "undefined") {
-      define(crypto, "getRandomValues", {
-        value: <A extends ArrayBufferView>(a: A): A => {
-          ask("crypto.getRandomValues()", 0);
-          const bytes = new Uint8Array(a.buffer, a.byteOffset, a.byteLength);
-          for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(next() * 256);
-          return a;
-        },
-      });
-      define(crypto, "randomUUID", {
-        value: () => {
-          ask("crypto.randomUUID()", 0);
-          const h = Array.from({ length: 32 }, () => Math.floor(next() * 16).toString(16)).join("");
-          return [h.slice(0, 8), h.slice(8, 12), h.slice(12, 16), h.slice(16, 20), h.slice(20)].join("-");
-        },
-      });
-    }
-
-    /* MOTION THE BROWSER RUNS BY ITSELF (reviewer s-1022, L5). A Web Animation
-       is not a frame, a timer, a canvas call or a mutation, so nothing above
-       can see one, and jsdom has none of these, so a careful author's ?. made
-       the call vanish under test. They exist here, they do nothing, and every
-       use is written down. The script side of the platform has these ways in
-       and no others: Animatable.animate, the two constructors, the document's
-       timeline, and a view transition. */
-    const inert = () => {
-      const a: Record<string, unknown> = {
-        playState: "running",
-        currentTime: 0,
-        finished: new Promise(() => {}),
-        ready: Promise.resolve(),
-      };
-      for (const m of ["cancel", "pause", "play", "finish", "reverse", "persist", "commitStyles", "updatePlaybackRate", "addEventListener", "removeEventListener", "skipTransition"]) {
-        a[m] = () => {};
-      }
-      return a;
-    };
-    const declare = (what: string) => {
-      world.declared.push(what);
-      return inert();
-    };
-    define(Element.prototype, "animate", {
-      value(this: Element) {
-        return declare("<" + this.tagName.toLowerCase() + ">.animate()");
-      },
-    });
-    put("Animation", function Animation() { return declare("new Animation()"); });
-    put("KeyframeEffect", function KeyframeEffect() { return declare("new KeyframeEffect()"); });
-    define(document, "startViewTransition", {
-      value: (cb?: () => void) => {
-        cb?.();
-        return declare("document.startViewTransition()");
-      },
-    });
-    define(document, "timeline", {
-      get: () => ({ get currentTime() { return ask("document.timeline.currentTime", world.now); } }),
-    });
     define(document, "hidden", { get: () => world.hidden });
     /* layout: clientWidth is the rounded layout box, the rect is the painted
        one, and only the ResizeObserver carries the fraction */
@@ -384,6 +478,17 @@ export class World {
         if (k in t) return t[k];
         return (...args: unknown[]) => {
           world.log.push(k + "(" + args.map(show).join(",") + ")");
+          /* a canvas, a bitmap or an image is one picture on a canvas (an
+             animated image draws its poster frame); a film is whatever
+             frame it has reached, which is a clock the stage does not own,
+             and it need not be on the page to play */
+          if (k === "drawImage" || k === "createPattern") {
+            const src = args[0] as { tagName?: string; constructor?: { name?: string } } | null;
+            const tag = String(src?.tagName ?? src?.constructor?.name ?? src).toLowerCase();
+            if (!/^(canvas|img|imagebitmap|offscreencanvas)$/.test(tag)) {
+              world.declared.push(k + "() from a <" + tag + ">, whose picture is not the reading's");
+            }
+          }
           if (k.startsWith("create")) return world.recorder();
           if (k === "measureText") return { width: 0 };
           return undefined;
@@ -419,6 +524,7 @@ export class World {
       this.container?.remove();
       for (const undo of this.restore.reverse()) undo();
       this.restore = [];
+      if (active === this) active = null;
     }
   }
 
@@ -446,13 +552,15 @@ export class World {
    */
   strangers(): string[] {
     const out: string[] = [];
-    for (const el of Array.from(document.body.querySelectorAll("*"))) {
+    /* the whole document and not the body: a stylesheet put in the head by
+       script is a declaration like any other */
+    for (const el of Array.from(document.querySelectorAll("head *, body *"))) {
       const tag = el.tagName.toLowerCase();
-      if (!INERT.has(tag)) out.push("<" + tag + "> is not an element known to stand still");
+      if (!INERT.has(tag) && !/^fe[a-z]+$/.test(tag)) out.push("<" + tag + "> is not an element known to stand still");
       else if (tag === "style" && !el.closest("noscript")) out.push("<style> outside the frame's noscript");
       const css = el.getAttribute("style") ?? "";
       for (const prop of css.split(";").map((d) => d.split(":")[0].trim().toLowerCase())) {
-        if (/^(-\w+-)?(animation|transition|offset|view-transition|scroll-timeline|view-timeline)/.test(prop)) {
+        if (/^(-\w+-)?(animation|transition)/.test(prop)) {
           out.push("<" + tag + "> carries an inline " + prop);
         }
       }
