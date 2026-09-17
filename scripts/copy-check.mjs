@@ -17,6 +17,8 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join, resolve } from "node:path";
 
+import { guard } from "./visuals-check.mjs";
+
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 
 /**
@@ -791,5 +793,13 @@ export function main(argv, out = console.log, err = console.error, overrides = {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  // Section 8 of the doctrine, the one that says a copy bead never deletes a
+  // visual, runs HERE and not only from `npm run copy:check`, because this is
+  // the command every copy bead's Definition of Done names. Measured on
+  // hq-4pu0q.3: with all four home visuals deleted, this script printed
+  // "1 page(s) clean" and exited 0. The guard is silent when nothing is wrong,
+  // so it costs one git call and no output on the normal path.
+  const visuals = guard();
+  if (visuals !== 0) process.exit(visuals);
   process.exit(main(process.argv.slice(2)));
 }

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' && npm run copy:check:test",
+    "test": "node scripts/visuals-check.mjs && vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' && npm run copy:check:test",
     "copy:check": "node scripts/visuals-check.mjs && node scripts/copy-check.mjs",
     "copy:check:test": "node --test 'scripts/**/*.test.mjs'"
   },
