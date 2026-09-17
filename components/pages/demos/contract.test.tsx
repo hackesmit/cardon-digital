@@ -85,6 +85,10 @@ vi.mock("./stage/useDemoStage", async (original) => {
   };
 });
 
+/* a fixture is run through every check, two of which watch a page for a
+   whole cycle, and under StrictMode twice over */
+vi.setConfig({ testTimeout: 30000 });
+
 const load = async (path: string): Promise<Demo> => {
   const mod = (await import(/* @vite-ignore */ path)) as { default?: Demo };
   if (typeof mod.default !== "function") throw new Error(path + " has no default export to mount");
@@ -100,7 +104,7 @@ describe("every demo component, mounted", () => {
 
   describe.each(components)("%s", (file) => {
     it.each(Object.keys(checks))("%s", async (name) => {
-      checks[name](await load("./" + file));
+      await checks[name](await load("./" + file));
     });
   });
 });
@@ -126,7 +130,7 @@ describe("the checks are load bearing", () => {
   const STANDS = "stands on a drawn frame, and under reduced motion that frame never moves";
 
   it("fails the s-5836 cellar on each of the five things it does", async () => {
-    const failed = failing(await load("../../../lib/testing/loopholes/demos/CellarDemo.tsx"));
+    const failed = await failing(await load("../../../lib/testing/loopholes/demos/CellarDemo.tsx"));
     /* an observer reached as window["Intersection" + "Observer"], frozen for
        life, the clock backwards on resume, the covers span written through
        firstChild.nodeValue and the selection row with no ghosts, a live
@@ -142,13 +146,13 @@ describe("the checks are load bearing", () => {
   it.each(["../../../lib/testing/loopholes/demos/StringDemo.tsx", "../../../lib/testing/loopholes/demos/ProduccionDemo.tsx"])(
     "fails %s, which no string can talk its way out of",
     async (path) => {
-      const failed = failing(await load(path));
+      const failed = await failing(await load(path));
       expect(failed).toEqual(expect.arrayContaining([STANDS, CLOCK, WRITES, PLAN]));
     },
   );
 
   it("fails the s-4a6c Hospitalidad, an observer behind an alias", async () => {
-    expect(failing(await load("../../../lib/testing/loopholes/demos/HospitalidadDemo.tsx"))).toEqual(
+    expect(await failing(await load("../../../lib/testing/loopholes/demos/HospitalidadDemo.tsx"))).toEqual(
       expect.arrayContaining([OBSERVER, STANDS]),
     );
   });
@@ -165,11 +169,11 @@ describe("the checks are load bearing", () => {
        restarted its story on every tap is now simply a correct demo. The
        check it used to need is held red by the remounting demo below, and
        against the old stage by the mutation table in state/review/s-07b8. */
-    expect(failing(await load("../../../lib/testing/loopholes/demos/TapRestartDemo.tsx"))).toEqual([]);
+    expect(await failing(await load("../../../lib/testing/loopholes/demos/TapRestartDemo.tsx"))).toEqual([]);
   });
 
   it("fails the s-2e55 SVG bar, a second loop beside the stage that asks nobody whether it may run", async () => {
-    const failed = failing(await load("../../../lib/testing/loopholes/demos/SvgLoopDemo.tsx"));
+    const failed = await failing(await load("../../../lib/testing/loopholes/demos/SvgLoopDemo.tsx"));
     expect(failed).toEqual(expect.arrayContaining([STILL, WRITES]));
     /* its canvas is lawful, so it is the bar the checks object to */
     expect(failed).not.toContain(STANDS);
@@ -178,7 +182,7 @@ describe("the checks are load bearing", () => {
   });
 
   it("fails the s-2e55 closure clock, whose draw() counts its calls", async () => {
-    const failed = failing(await load("../../../lib/testing/loopholes/demos/OwnClockDemo.tsx"));
+    const failed = await failing(await load("../../../lib/testing/loopholes/demos/OwnClockDemo.tsx"));
     expect(failed).toContain(PURE);
   });
 
@@ -200,7 +204,7 @@ describe("the checks are load bearing", () => {
     </DemoFigure>
   );
 
-  it("fails a board that sets styles and paints nothing", () => {
+  it("fails a board that sets styles and paints nothing", async () => {
     const blank = scene((env, t) => {
       env.ctx.fillStyle = t >= 5 && t < 6.1 ? "standing" : String(t);
     });
@@ -208,15 +212,15 @@ describe("the checks are load bearing", () => {
       env.ctx.fillStyle = t >= 5 && t < 6.1 ? "standing" : String(t);
       env.ctx.fillRect(0, 0, 10, 10);
     });
-    expect(failing(() => figure(blank))).toEqual(expect.arrayContaining([STANDS, CLOCK]));
+    expect(await failing(() => figure(blank))).toEqual(expect.arrayContaining([STANDS, CLOCK]));
     /* the same scene with one rectangle in it passes both, so it is the
        missing paint the checks object to */
-    const ok = failing(() => figure(painted));
+    const ok = await failing(() => figure(painted));
     expect(ok).not.toContain(STANDS);
     expect(ok).not.toContain(CLOCK);
   });
 
-  it("fails a demo that remounts its figure on every tap, the one way left to restart the story", () => {
+  it("fails a demo that remounts its figure on every tap, the one way left to restart the story", async () => {
     /* A key is React's way of saying 'a different component', so a figure
        keyed on the selection IS a new mount with a new clock, and the stage
        cannot tell it from a visitor arriving. That much is not closable by
@@ -242,13 +246,13 @@ describe("the checks are load bearing", () => {
         </>
       );
     }
-    expect(failing(Remounts)).toContain(TAP);
+    expect(await failing(Remounts)).toContain(TAP);
     /* with another button ahead of them, the second button on the page is
        the hotspot already chosen, and tapping it changes nothing */
-    expect(failing(() => <Remounts lead />)).toContain(TAP);
+    expect(await failing(() => <Remounts lead />)).toContain(TAP);
   });
 
-  it("draws a scene swapped in mid-story at the reading the clock already had", () => {
+  it("draws a scene swapped in mid-story at the reading the clock already had", async () => {
     /* the other half of B1's fix: a new scene object is a new picture, so it
        has to be DRAWN, from the old time. A stage that ignored it would keep
        a stale locale on the board for the life of the mount. */
@@ -270,7 +274,7 @@ describe("the checks are load bearing", () => {
         />
       );
     }
-    expect(failing(Swaps)).toEqual([]);
+    expect(await failing(Swaps)).toEqual([]);
     const w = new World();
     w.install();
     try {
@@ -325,40 +329,40 @@ describe("the checks are load bearing", () => {
     ["prefers-reduced-motion", { reduce: false, hidden: true, offscreen: true }],
     ["a hidden tab", { reduce: true, hidden: false, offscreen: true }],
     ["being off screen", { reduce: true, hidden: true, offscreen: false }],
-  ])("fails a timer beside the stage that ignores only %s", (_, honours) => {
+  ])("fails a timer beside the stage that ignores only %s", async (_, honours) => {
     const Bar = beside(honours, attr);
-    expect(failing(() => figure(lawful, <Bar />))).toContain(STILL);
+    expect(await failing(() => figure(lawful, <Bar />))).toContain(STILL);
   });
 
-  it("passes a second loop that honours all three gates, so it is the motion and not the loop that fails", () => {
+  it("passes a second loop that honours all three gates, so it is the motion and not the loop that fails", async () => {
     const Bar = beside({ reduce: true, hidden: true, offscreen: true }, attr);
-    expect(failing(() => figure(lawful, <Bar />))).not.toContain(STILL);
+    expect(await failing(() => figure(lawful, <Bar />))).not.toContain(STILL);
   });
 
-  it("fails a timer that only scrolls, which leaves no mutation, no canvas call and no frame", () => {
+  it("fails a timer that only scrolls, which leaves no mutation, no canvas call and no frame", async () => {
     const Scroller = beside({ reduce: false, hidden: false, offscreen: false }, (el, n) => (el.scrollLeft = n));
-    expect(failing(() => figure(lawful, <Scroller />))).toContain(STILL);
+    expect(await failing(() => figure(lawful, <Scroller />))).toContain(STILL);
   });
 
-  it("fails a bar that moves only in the first half second of a page loaded under reduce", () => {
+  it("fails a bar that moves only in the first half second of a page loaded under reduce", async () => {
     const Brief = beside({ reduce: false, hidden: true, offscreen: true }, (el, n) => {
       if (n < 9) attr(el, n);
     });
-    expect(failing(() => figure(lawful, <Brief />))).toContain(STILL);
+    expect(await failing(() => figure(lawful, <Brief />))).toContain(STILL);
   });
 
-  it("fails a bar that moves in a portal, outside the mount", () => {
+  it("fails a bar that moves in a portal, outside the mount", async () => {
     const Inner = beside({ reduce: false, hidden: false, offscreen: false }, attr);
     const Portal = () => createPortal(<Inner />, document.body);
-    expect(failing(() => figure(lawful, <Portal />))).toContain(STILL);
+    expect(await failing(() => figure(lawful, <Portal />))).toContain(STILL);
   });
 
-  it("fails a draw that leaves a transform on the context, and takes a frozen scene", () => {
+  it("fails a draw that leaves a transform on the context, and takes a frozen scene", async () => {
     const drifting = scene((env) => {
       env.ctx.translate(1, 0);
       env.ctx.fillRect(0, 0, 10, 10);
     });
-    expect(failing(() => figure(drifting))).toContain(PURE);
+    expect(await failing(() => figure(drifting))).toContain(PURE);
     const kept = Object.freeze(
       scene((env) => {
         env.ctx.save();
@@ -367,17 +371,17 @@ describe("the checks are load bearing", () => {
         env.ctx.restore();
       }),
     );
-    expect(failing(() => figure(kept))).not.toContain(PURE);
+    expect(await failing(() => figure(kept))).not.toContain(PURE);
   });
 
-  it("fails a loop that leaves no mutation and no canvas call, only frames asked for", () => {
+  it("fails a loop that leaves no mutation and no canvas call, only frames asked for", async () => {
     /* it touches nothing the page can see, so the frame count is the only
        witness: a loop left spinning off screen is the battery, not the eye */
     const Idle = beside({ reduce: false, hidden: false, offscreen: false }, () => {}, true);
-    expect(failing(() => figure(lawful, <Idle />))).toContain(STILL);
+    expect(await failing(() => figure(lawful, <Idle />))).toContain(STILL);
   });
 
-  it("fails a timer that draws on a canvas of its own and changes nothing in the DOM", () => {
+  it("fails a timer that draws on a canvas of its own and changes nothing in the DOM", async () => {
     function Own() {
       const c = useRef<HTMLCanvasElement>(null);
       useEffect(() => {
@@ -386,10 +390,10 @@ describe("the checks are load bearing", () => {
       }, []);
       return <canvas ref={c} className="demo-canvas" />;
     }
-    expect(failing(() => figure(lawful, <Own />))).toContain(STILL);
+    expect(await failing(() => figure(lawful, <Own />))).toContain(STILL);
   });
 
-  it("fails a draw that remembers the furthest reading it was shown", () => {
+  it("fails a draw that remembers the furthest reading it was shown", async () => {
     /* one memory per mount, the way a real scene's closure is: a memory
        shared by every mount in this file would be full before PURE ran */
     function HiWater() {
@@ -402,7 +406,7 @@ describe("the checks are load bearing", () => {
       }, []);
       return figure(s);
     }
-    expect(failing(HiWater)).toContain(PURE);
+    expect(await failing(HiWater)).toContain(PURE);
   });
 
   /* The s-1022 four: each through the shared stage, each 345 of 345 when it
@@ -419,21 +423,29 @@ describe("the checks are load bearing", () => {
   const lawfulBar = scene((env, t) => bar(env, t));
 
   it("fails the s-1022 wall clock, a draw() with no memory that reads the page's clock", async () => {
-    const failed = failing(await loophole("WallClockDemo"));
+    const failed = await failing(await loophole("WallClockDemo"));
     expect(failed).toEqual(expect.arrayContaining([PURE, PAGES]));
     expect(failed).not.toContain(MOVES);
   });
 
+  it("fails a clock captured at the top of the file, before any page existed", async () => {
+    expect(await failing(await loophole("CapturedClockDemo"))).toEqual(expect.arrayContaining([PURE, PAGES]));
+  });
+
+  it("fails an animation behind feature detection at the top of the file", async () => {
+    expect(await failing(await loophole("FeatureDetectDemo"))).toEqual([MOVES]);
+  });
+
   it("fails the s-1022 SMIL and Web Animation demo, motion the browser runs and jsdom does not", async () => {
-    expect(failing(await loophole("SmilDemo"))).toEqual([MOVES]);
+    expect(await failing(await loophole("SmilDemo"))).toEqual([MOVES]);
   });
 
   it("fails the s-1022 figure keyed on the theme event, and the one keyed on a tap", async () => {
-    expect(failing(await loophole("KeyThemeDemo"))).toEqual([EVENTS]);
-    expect(failing(await loophole("KeyTapDemo"))).toContain(TAP);
+    expect(await failing(await loophole("KeyThemeDemo"))).toEqual([EVENTS]);
+    expect(await failing(await loophole("KeyTapDemo"))).toContain(TAP);
   });
 
-  it.each(["cardon-mode", "resize"])("fails a figure keyed on the %s event alone", (event) => {
+  it.each(["cardon-mode", "resize"])("fails a figure keyed on the %s event alone", async (event) => {
     /* the reviewer's listens to both, so either half of the check would do
        for it; these need the half that is theirs */
     function Keyed() {
@@ -447,15 +459,15 @@ describe("the checks are load bearing", () => {
         <DemoFigure key={n} demo="fixture" scene={lawfulBar} title="t" honest="vista ilustrativa, no son datos de cliente" fallback="prose" />
       );
     }
-    expect(failing(Keyed)).toEqual([EVENTS]);
+    expect(await failing(Keyed)).toEqual([EVENTS]);
   });
 
   it("fails the s-1022 scene that reads back the DOM the stage wrote", async () => {
-    expect(failing(await loophole("DomReadDemo"))).toEqual([CLOCK]);
+    expect(await failing(await loophole("DomReadDemo"))).toEqual([CLOCK]);
   });
 
   it("fails the s-1022 scene that is pure per reading and counts its layouts", async () => {
-    expect(failing(await loophole("ResizeMemoryDemo"))).toEqual([PURE]);
+    expect(await failing(await loophole("ResizeMemoryDemo"))).toEqual([PURE]);
   });
 
 
@@ -468,15 +480,19 @@ describe("the checks are load bearing", () => {
     /* guarded, as an author who has met jsdom writes it */
     ["document.timeline", () => Number(document.timeline?.currentTime ?? 0)],
     ["an event's timeStamp", () => new Event("x").timeStamp],
+    ["window.performance.now()", () => window.performance.now()],
+    ["globalThis.Date.now()", () => globalThis.Date.now()],
+    ["the date the page was opened, performance.timeOrigin", () => performance.timeOrigin],
+    ["a performance mark", () => performance.mark("sweep").startTime],
     ["Math.random()", () => Math.random() * 1e6],
     ["crypto.getRandomValues()", () => crypto.getRandomValues(new Uint32Array(1))[0]],
     ["crypto.randomUUID()", () => parseInt(crypto.randomUUID().slice(0, 6), 16)],
-  ])("fails a draw() that moves by %s, in the sweep only", (_, read) => {
+  ])("fails a draw() that moves by %s, in the sweep only", async (_, read) => {
     const s = scene((env, t) => bar(env, t, t >= 5 ? 0 : Math.floor(read() / 1000)));
-    expect(failing(() => figure(s))).toEqual(expect.arrayContaining([PURE, PAGES]));
+    expect(await failing(() => figure(s))).toEqual(expect.arrayContaining([PURE, PAGES]));
   });
 
-  it("fails a scene that noted when the page was opened and draws from that, though every draw on one page agrees", () => {
+  it("fails a scene that noted when the page was opened and draws from that, though every draw on one page agrees", async () => {
     /* the time gets in through the component body, not through draw(), and
        one page can never see it: asked twice it answers twice the same */
     function Opened() {
@@ -486,7 +502,7 @@ describe("the checks are load bearing", () => {
       }, []);
       return figure(s);
     }
-    const failed = failing(Opened);
+    const failed = await failing(Opened);
     expect(failed).toContain(PAGES);
     expect(failed).not.toContain(PURE);
   });
@@ -500,18 +516,18 @@ describe("the checks are load bearing", () => {
     ["Math.random()", () => Math.random()],
     ["crypto.getRandomValues()", () => crypto.getRandomValues(new Uint8Array(1))],
     ["crypto.randomUUID()", () => crypto.randomUUID()],
-  ])("fails a draw() that asks for %s and has not used the answer yet", (_, read) => {
+  ])("fails a draw() that asks for %s and has not used the answer yet", async (_, read) => {
     /* every frame on every page agrees: only the question gives it away */
     const s = scene((env, t) => {
       read();
       bar(env, t);
     });
-    const failed = failing(() => figure(s));
+    const failed = await failing(() => figure(s));
     expect(failed).toContain(PURE);
     expect(failed).not.toContain(PAGES);
   });
 
-  it("fails a draw() that asks only while the stage is drawing the story, before anybody asks it twice", () => {
+  it("fails a draw() that asks only while the stage is drawing the story, before anybody asks it twice", async () => {
     function Early() {
       const s = useMemo(() => {
         let calls = 0;
@@ -522,21 +538,21 @@ describe("the checks are load bearing", () => {
       }, []);
       return figure(s);
     }
-    expect(failing(Early)).toEqual([PURE]);
+    expect(await failing(Early)).toEqual([PURE]);
   });
 
-  it("fails words chosen by the wall clock, which no frame shows", () => {
+  it("fails words chosen by the wall clock, which no frame shows", async () => {
     const s: DemoScene = {
       ...scene((env, t) => bar(env, t)),
       live: [
         { name: "caption", values: { a: "a", b: "b" }, keys: ["a", "b"], initial: "a", at: () => (Math.floor(Date.now() / 1000) % 2 ? "a" : "b") },
       ],
     };
-    expect(failing(() => figure(s))).toEqual(expect.arrayContaining([PURE, PAGES]));
+    expect(await failing(() => figure(s))).toEqual(expect.arrayContaining([PURE, PAGES]));
   });
 
-  it("passes the same bar drawn from the reading alone, so it is the clock the checks object to", () => {
-    expect(failing(() => figure(scene((env, t) => bar(env, t))))).toEqual([]);
+  it("passes the same bar drawn from the reading alone, so it is the clock the checks object to", async () => {
+    expect(await failing(() => figure(scene((env, t) => bar(env, t))))).toEqual([]);
   });
 
   it.each<[string, () => React.ReactNode]>([
@@ -550,9 +566,9 @@ describe("the checks are load bearing", () => {
     ["an inline transition", () => <span style={{ transition: "width 1s" }} />],
     ["an inline background image", () => <span style={{ backgroundImage: "url(/room.gif)" }} />],
     ["a style element of its own", () => <style>{".x{animation:spin 1s infinite !important}"}</style>],
-  ])("fails a lawful scene beside %s", (_, extra) => {
+  ])("fails a lawful scene beside %s", async (_, extra) => {
     const Extra = () => <>{extra()}</>;
-    expect(failing(() => figure(lawfulBar, <Extra />))).toEqual([MOVES]);
+    expect(await failing(() => figure(lawfulBar, <Extra />))).toEqual([MOVES]);
   });
 
   it.each<[string, (el: HTMLElement) => void]>([
@@ -565,26 +581,98 @@ describe("the checks are load bearing", () => {
     }],
     ["new Animation over a KeyframeEffect", (el) => new Animation(new KeyframeEffect(el, [{ opacity: 0 }], 600)).play()],
     ["a view transition", () => void (document as unknown as { startViewTransition(cb: () => void): void }).startViewTransition(() => {})],
-  ])("fails a lawful scene beside %s", (_, start) => {
+  ])("fails a lawful scene beside %s", async (_, start) => {
     function Starts() {
       const el = useRef<HTMLSpanElement>(null);
       useEffect(() => start(el.current!), []);
       return <span ref={el} />;
     }
-    expect(failing(() => figure(lawfulBar, <Starts />))).toEqual([MOVES]);
+    expect(await failing(() => figure(lawfulBar, <Starts />))).toEqual([MOVES]);
   });
 
-  it("fails an SMIL animation in a portal, outside the mount", () => {
+  it("fails an SMIL animation in a portal, outside the mount", async () => {
     /* a server render has no portals, so this one arrives with the effect */
     function Portal() {
       const [on, setOn] = useState(false);
       useEffect(() => setOn(true), []);
       return on ? createPortal(<svg><circle r="2"><animateMotion path="M0 0L9 9" dur="1s" /></circle></svg>, document.body) : null;
     }
-    expect(failing(() => figure(lawfulBar, <Portal />))).toEqual([MOVES]);
+    expect(await failing(() => figure(lawfulBar, <Portal />))).toEqual([MOVES]);
   });
 
-  it("fails a Web Animation started by a tap and not at mount", () => {
+  const fade = (el: HTMLElement) => void el.animate?.([{ opacity: 0.5 }, { opacity: 1 }], 900);
+  it.each<[string, (el: HTMLElement) => void | (() => void)]>([
+    ["forty seconds into the page, from a timer", (el) => void window.setTimeout(() => fade(el), 40000)],
+    ["when the theme changes", (el) => window.addEventListener("cardon-mode", () => fade(el))],
+    ["when the window is resized", (el) => window.addEventListener("resize", () => fade(el))],
+    ["when the tab comes back", (el) => document.addEventListener("visibilitychange", () => void (document.hidden || fade(el)))],
+    ["when reduce is turned ON, as a gentler stand-in", (el) =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (e) => void (e.matches && fade(el)))],
+    ["from a promise, after the effect has returned", (el) => void Promise.resolve().then(() => Promise.resolve()).then(() => fade(el))],
+    ["after a dynamic import", (el) => void import("./floor").then(() => fade(el))],
+  ])("fails a Web Animation started %s", async (_, arrange) => {
+    function Later() {
+      const el = useRef<HTMLSpanElement>(null);
+      useEffect(() => void arrange(el.current!), []);
+      return <span ref={el} />;
+    }
+    expect(await failing(() => figure(lawfulBar, <Later />))).toEqual([MOVES]);
+  });
+
+  it("fails a board that draws a film, which plays whether or not it is on the page", async () => {
+    function Film() {
+      const s = useMemo(() => {
+        const film = document.createElement("video");
+        return scene((env, t) => {
+          bar(env, t);
+          env.ctx.drawImage(film, 0, 0);
+        });
+      }, []);
+      return figure(s);
+    }
+    expect(await failing(Film)).toEqual([MOVES]);
+    /* a canvas or an image is one picture: an animated image gives a canvas
+       its poster frame */
+    function Still() {
+      const s = useMemo(() => {
+        const img = document.createElement("img");
+        const own = document.createElement("canvas");
+        return scene((env, t) => {
+          bar(env, t);
+          env.ctx.drawImage(img, 0, 0);
+          env.ctx.drawImage(own, 0, 0);
+        });
+      }, []);
+      return figure(s);
+    }
+    expect(await failing(Still)).toEqual([]);
+  });
+
+  it.each<[string, () => void]>([
+    ["a style element put in the head", () => {
+      const el = document.createElement("style");
+      el.textContent = ".demo-readout{animation:pulse 1s infinite !important}";
+      document.head.appendChild(el);
+    }],
+    ["a rule inserted into a sheet that was already there", () => {
+      const sheet = document.querySelector<HTMLStyleElement>("noscript style")?.sheet;
+      sheet?.insertRule(".demo-readout{animation:pulse 1s infinite !important}");
+    }],
+    ["an adopted stylesheet", () => {
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets];
+    }],
+  ])("fails a lawful scene beside %s from an effect", async (_, write) => {
+    function Styles() {
+      useEffect(() => {
+        write();
+        return () => document.head.querySelectorAll("style").forEach((el) => el.remove());
+      }, []);
+      return null;
+    }
+    expect(await failing(() => figure(lawfulBar, <Styles />))).toEqual([MOVES]);
+  });
+
+  it("fails a Web Animation started by a tap and not at mount", async () => {
     function OnTap() {
       const [picked, setPicked] = useState(0);
       const el = useRef<HTMLSpanElement>(null);
@@ -598,28 +686,36 @@ describe("the checks are load bearing", () => {
         </DemoFigure>
       );
     }
-    expect(failing(OnTap)).toEqual([MOVES]);
+    expect(await failing(OnTap)).toEqual([MOVES]);
   });
 
-  it("passes static svg and text beside a lawful scene, so it is the motion and not the markup", () => {
+  it("passes static svg and text beside a lawful scene, so it is the motion and not the markup", async () => {
     const Still = () => (
       <>
         <svg width="20" height="8" aria-hidden="true"><g><rect width="10" height="8" /><path d="M0 0L1 1" /></g></svg>
         <strong>18</strong>
-        <span style={{ display: "inline-block", width: 4 }} />
+        <span style={{ display: "inline-block", width: 4, offsetDistance: "20%", viewTransitionName: "bar" }} />
+        <section><header><h3>mesas</h3></header><table><tbody><tr><td>12</td></tr></tbody></table><blockquote>lleno</blockquote></section>
+        <svg width="20" height="8" aria-hidden="true">
+          <defs>
+            <pattern id="p" width="4" height="4"><path d="M0 0L4 4" /></pattern>
+            <filter id="f"><feGaussianBlur stdDeviation="1" /></filter>
+          </defs>
+          <rect width="20" height="8" fill="url(#p)" filter="url(#f)" />
+        </svg>
       </>
     );
-    expect(failing(() => figure(lawfulBar, <Still />))).toEqual([]);
+    expect(await failing(() => figure(lawfulBar, <Still />))).toEqual([]);
   });
 
-  it("fails a button that only exists once an effect has run", () => {
+  it("fails a button that only exists once an effect has run", async () => {
     const s = scene((env) => env.ctx.fillRect(0, 0, 10, 10));
     function Late() {
       const [on, setOn] = useState(false);
       useEffect(() => setOn(true), []);
       return on ? <button type="button">late</button> : null;
     }
-    const failed = failing(() => figure(s, <Late />));
+    const failed = await failing(() => figure(s, <Late />));
     expect(failed).toContain("mounts nothing operable that the noscript rule does not name");
     /* the static render cannot see it, which is why the mounted check exists */
     expect(failed).not.toContain(NOSCRIPT);
@@ -632,7 +728,7 @@ describe("the checks are load bearing", () => {
     for (const file of ["./RestauranteDemo.tsx", "../../../lib/testing/loopholes/demos/TapRestartDemo.tsx"]) {
       const Demo = await load(file);
       expect(
-        failing(() => (
+        await failing(() => (
           <StrictMode>
             <Demo />
           </StrictMode>
@@ -642,6 +738,6 @@ describe("the checks are load bearing", () => {
   });
 
   it("passes the reference demo on every check, so the checks describe what ships", async () => {
-    expect(failing(await load("./RestauranteDemo.tsx"))).toEqual([]);
+    expect(await failing(await load("./RestauranteDemo.tsx"))).toEqual([]);
   });
 });

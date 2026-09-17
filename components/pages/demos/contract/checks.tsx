@@ -5,7 +5,7 @@ import { demos } from "../../../../lib/i18n/demos";
 import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
 import { GHOST_BOXES, GHOSTS } from "./ghosts";
 import type { DemoScene, StageEnv } from "../stage/useDemoStage";
-import { drawing, handed, World } from "./world";
+import { drawing, handed, settle, World } from "./world";
 
 /**
  * The demo contract as behaviours (bead hq-3pfhe.7).
@@ -193,7 +193,7 @@ const watchPage = (w: World) => {
   };
 };
 
-export const checks: Record<string, (Demo: Demo) => void> = {
+export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
   "learns it is on screen from observeOnscreen and builds no observer of its own": (Demo) => {
     /* both ways round, because the observer the s-5836 fixture built by hand
        exists only on a page that did NOT load under reduced motion */
@@ -568,10 +568,10 @@ export const checks: Record<string, (Demo: Demo) => void> = {
     }
   },
 
-  "mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser": (Demo) => {
-    /* Reviewer s-1022, L5, as a class: see World.strangers and the stubs
-       above it in ./world.tsx for why this is an allow list of elements and
-       a count at the platform's doors, and why it is not a gate.
+  "mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser": async (Demo) => {
+    /* Reviewer s-1022, L5, as a class: see World.strangers and the ambient
+       layer in ./world.tsx for why this is an allow list of elements and a
+       count at the platform's doors, and why it is not a gate.
 
        WHY THIS IS A REFUSAL AND NOT A GATE. The stage gates what it runs. It
        cannot gate what the browser runs: there is no switch on a subtree
@@ -580,29 +580,56 @@ export const checks: Record<string, (Demo: Demo) => void> = {
        in production to hear it is not something a marketing site should do.
        So the contract's own sentence is held instead, 'anything that moves
        is drawn by draw or is a live text', and declared motion is refused
-       outright, on every page, not only a reduced one. */
+       outright, on every page, not only a reduced one.
+
+       A declaration can arrive at any moment and for any reason, so this is
+       the one check that does EVERYTHING the others do to a page, for a
+       whole cycle and its seam, and looks after each thing it did. It is
+       also the one check that waits: what a demo leaves for a promise or a
+       dynamic import runs while the page is still here. */
     for (const reduce of [false, true]) {
-      withWorld({ reduce }, (w) => {
+      const w = new World();
+      w.reduce = reduce;
+      w.install();
+      try {
         const seen = new Set<string>();
         const look = () => w.strangers().forEach((x) => seen.add(x));
+        const wait = () => act(async () => void (await settle()));
         w.mount(Demo);
         look();
         act(() => w.width(800));
         act(() => w.onscreen(1));
-        w.tick(3000);
+        await wait();
         look();
-        for (const b of Array.from(w.container.querySelectorAll("button"))) {
-          act(() => b.click());
+        const stimuli: Record<number, () => void> = {
+          3: () => window.dispatchEvent(new Event("cardon-mode")),
+          5: () => window.dispatchEvent(new Event("resize")),
+          7: () => Array.from(w.container.querySelectorAll("button")).forEach((b) => b.click()),
+          9: () => w.setReduce(!reduce),
+          11: () => w.setReduce(reduce),
+          13: () => w.setHidden(true),
+          15: () => w.setHidden(false),
+          17: () => w.onscreen(0),
+          19: () => w.onscreen(1),
+          21: () => w.width(500),
+        };
+        for (let s = 0; s < 62; s++) {
+          if (stimuli[s]) {
+            act(stimuli[s]);
+            await wait();
+          }
+          w.tick(1008);
           look();
         }
-        act(() => w.setHidden(true));
-        w.tick(500);
+        await wait();
         look();
         expect(
           Array.from(seen),
           "on the page" + (reduce ? " under prefers-reduced-motion" : "") + " and able to move without the stage",
         ).toEqual([]);
-      });
+      } finally {
+        w.dispose();
+      }
     }
   },
 
@@ -729,14 +756,14 @@ export const checks: Record<string, (Demo: Demo) => void> = {
 };
 
 /** The names of the checks `Demo` fails, for the loophole fixtures. */
-export const failing = (Demo: Demo): string[] =>
-  Object.entries(checks)
-    .filter(([, check]) => {
-      try {
-        check(Demo);
-        return false;
-      } catch {
-        return true;
-      }
-    })
-    .map(([name]) => name);
+export const failing = async (Demo: Demo): Promise<string[]> => {
+  const out: string[] = [];
+  for (const [name, check] of Object.entries(checks)) {
+    try {
+      await check(Demo);
+    } catch {
+      out.push(name);
+    }
+  }
+  return out;
+};
