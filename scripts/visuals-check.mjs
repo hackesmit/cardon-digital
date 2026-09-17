@@ -413,13 +413,21 @@ export function lostLines(before, after, pattern) {
  * enough to rescue a GUTTING. `inIndex` is the set of paths the repository
  * knows about, or null for "do not ask", which is what a unit test wants.
  */
-export function facultyMoved(lost, elsewhere, inIndex = null) {
+export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = false) {
   if (lost.length === 0) return null;
   for (const { path, before = "", after } of elsewhere) {
     if (after === undefined) continue;
     // Rule 6: a parking space is not a new home, in either direction.
     if (!isLiveSource(path)) continue;
-    if (inIndex !== null && !inIndex.has(path)) continue;
+    // The index test is rule 4's, and rule 4 only applies it when the LOSS is
+    // itself recorded in the index. Applying it unconditionally broke the most
+    // ordinary honest refactor there is: extract a drawing into a helper, run the
+    // tests before staging anything, and the helper is untracked, so the drawing
+    // read as deleted (review s-1ae3). It also bought nothing, because the attack
+    // it was aimed at passes with a single git add anyway. isLiveSource is the
+    // half of rule 6 that earns its keep: a .txt or .bak beside the file is a
+    // parking space whether or not anyone staged it.
+    if (recordedGone && inIndex !== null && !inIndex.has(path)) continue;
     const had = new Set(trimmedLines(before));
     const has = new Set(trimmedLines(after));
     let gained = 0;
@@ -902,8 +910,15 @@ function run(argv, out, err, overrides) {
     `\n${failures.length} visual(s) deleted, ${lost} line(s) of it. docs/copy-doctrine.md section 8:` +
       `\na copy bead REWIRES a visual to its new dictionary keys and never deletes it, and` +
       `\nretiring an animation is Daniel's decision alone. Moving one inside ${WATCHED}/ is fine.` +
-      `\n\nPut it back with:\n` +
-      (restore.length ? `\n  git checkout ${base.slice(0, 12)} -- ${restore.join(" ")}\n` : "") +
+      `\n\nWhat left is still in the base commit. To read it:\n` +
+      (restore.length
+        ? restore
+            .map((p) => `\n  git show ${base.slice(0, 12)}:${p}\n`)
+            .join("") +
+          `\nTo take the whole file back, and ONLY if you have no other edit in it you` +
+          `\nwant to keep, since this discards them:\n` +
+          `\n  git checkout ${base.slice(0, 12)} -- ${restore.join(" ")}\n`
+        : "") +
       reorganised
         .map((f) => `\n  git mv ${f.outTo} ${f.path}    (it is not deleted, it left ${WATCHED}/)\n`)
         .join("") +

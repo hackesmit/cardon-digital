@@ -922,14 +922,31 @@ test("a copy parked on a dead extension does not rescue a gutting (s-4009 case A
   assert.ok(!notes.some((n) => n.text.includes(copy)), "and it is not named as the drawing's new home");
 });
 
-test("an untracked sibling does not rescue a gutting (s-4009 case AB)", () => {
-  // A live extension this time, so only the index answers it: a file nobody
-  // else will ever get is a scratch copy, not the drawing's new home.
+test("an untracked sibling rescues a gutting, and that is knowingly not caught here (s-4009 case AB)", () => {
+  // This expectation was the opposite until round three's review (s-1ae3), and
+  // it is worth writing down why it flipped rather than quietly deleting it.
+  //
+  // Catching AB meant demanding an INDEXED arrival unconditionally, and that
+  // failed the most ordinary honest refactor there is: extract a drawing into a
+  // helper, run the tests before staging anything, and the helper is untracked,
+  // so the drawing reads as deleted and the failure prints a git checkout that
+  // discards the refactor's call-site edit. A guard that fails honest work gets
+  // bypassed, and this one was charging that price for nothing: AB passes with a
+  // single `git add` of the sibling, so the index never stopped an attacker who
+  // could type six characters. It only ever stopped an author mid-refactor.
+  //
+  // What actually separates AB from a real extraction is that nothing IMPORTS
+  // SectorMapLegacy.tsx: it is dead code wearing a live extension. That is the
+  // reachability question, which this guard cannot answer by reading source as
+  // text, and it is carried by hq-4pu0q.23 rather than pretended at here.
   const copy = `${WATCHED}/home/SectorMapLegacy.tsx`;
   assert.equal(isLiveSource(copy), true, "control: .tsx is a file the build compiles");
-  const { failures } = gutWithCopyAt(copy, [B]);
-  assert.equal(failures.length, 1);
-  assert.equal(failures[0].path, B);
+  const { failures, notes } = gutWithCopyAt(copy, [B]);
+  assert.deepEqual(failures, [], "not caught, and the comment above says why");
+  assert.ok(
+    notes.some((n) => n.kind === "moved" && n.text.includes(copy)),
+    "it is reported as a move, so the band is not silent",
+  );
 });
 
 test("rule 6 keeps the counterweight it was added to: a tracked helper still rescues", () => {
@@ -948,12 +965,29 @@ test("facultyMoved applies rule 4's two tests itself", () => {
   assert.equal(facultyMoved(lost, arrival("a/b/park.tsx.bak")), null, "a dead extension is no home");
   assert.equal(facultyMoved(lost, arrival("a/b/park.txt")), null, "nor is a .txt");
   assert.equal(facultyMoved(lost, arrival("a/b/live.tsx")).to, "a/b/live.tsx");
+  // The index test is rule 4's and it is CONDITIONAL there: an indexed arrival is
+  // demanded only when the loss is itself recorded in the index. Round three's
+  // review (s-1ae3) found it applied unconditionally here, which failed the most
+  // ordinary honest refactor there is, extracting a drawing into a helper and
+  // running the tests before staging anything, and then printed a git checkout
+  // that would have discarded the refactor's call-site edit.
   assert.equal(
-    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/other.tsx"])),
-    null,
-    "a live file the index does not know about is no home either",
+    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/other.tsx"])).to,
+    "a/b/live.tsx",
+    "an unstaged helper is still a home while the loss is unstaged too",
   );
-  assert.equal(facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/live.tsx"])).to, "a/b/live.tsx");
+  assert.equal(
+    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/other.tsx"]), true),
+    null,
+    "but once the loss is recorded in the index, the arrival has to be recorded too",
+  );
+  assert.equal(
+    facultyMoved(lost, arrival("a/b/live.tsx"), new Set(["a/b/live.tsx"]), true).to,
+    "a/b/live.tsx",
+  );
+  // isLiveSource is the half of rule 6 that earns its keep, and it holds whether
+  // or not anything is staged.
+  assert.equal(facultyMoved(lost, arrival("a/b/park.txt"), new Set(["a/b/park.txt"]), true), null);
 });
 
 /* ---------- rule 7: the band that passes does not pass in silence ---------- */
