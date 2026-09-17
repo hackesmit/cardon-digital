@@ -154,13 +154,14 @@ the observer's constructor, it arrives at the stand-in. The checks
 
 | it does | and fails if |
 | --- | --- |
-| mounts under reduced motion, reports the figure on screen, waits | no standing frame was drawn, or anything moved |
+| mounts under reduced motion, reports the figure on screen, waits | no standing frame was drawn, or it set styles and painted nothing, or anything moved |
 | loads under reduce, then turns reduce off | fewer than ten frames follow in two seconds |
 | loads in view and watches three seconds | the standing frame is among the first frames: the story opened on its ending |
 | scrolls away, comes back; hides the tab, comes back | the paused board is not the standing frame, or any frame in the second after the return is not the frame it was parked on, or the loop never leaves the hold again |
 | counts observers at the global | one was constructed outside `observeOnscreen` |
 | watches every DOM mutation across a full cycle, then taps every button | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop touched `style`, `class` or `hidden` |
 | looks for `aria-live` and the live roles in the mounted tree | one sits outside a ghost box |
+| mounts, runs the loop, taps every button, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
 | renders to static markup and reads the noscript rule against it | a canvas, anything operable, or any string the dictionary files under `hint` is still on the page; or the fallback, the honest label or the readout is not |
 | delivers 639.6, 640.2 and 639.9 under an ancestor scaled by two | `data-plan` is not phone, wide, phone, or the backing store is not the layout width |
 
@@ -176,8 +177,9 @@ what a mount cannot reach (a branch it did not take, a way around its
 stand-ins):
 
 1. No read of `window`, `globalThis` or `self` through a key that is not a
-   literal, no passing them around as values, no `Reflect`, no `defaultView`,
-   and no naming `IntersectionObserver`, as identifier, property or string.
+   literal, no passing them around as values, no `Reflect`, `eval` or
+   `Function`, no `defaultView`, and no naming `IntersectionObserver`, as
+   identifier, property or string.
 2. Anything operable (`button`, `a`, `input`, `onClick`, `role="button"`,
    `tabIndex`) carries the hotspot class the noscript rule hides. Render a
    `<Hotspot>`.

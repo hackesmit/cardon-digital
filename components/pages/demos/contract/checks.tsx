@@ -44,6 +44,36 @@ const HINTS = (() => {
   return out;
 })();
 
+const OPERABLE = "button,[role=button],a[href],input,select,textarea,summary,[tabindex]";
+
+/** The demo as a visitor with scripting off receives it, and what its own
+    noscript rule takes off the page. */
+const noscriptRule = (Demo: Demo) => {
+  const html = renderToStaticMarkup(
+    <LocaleProvider locale="es">
+      <Demo />
+    </LocaleProvider>,
+  );
+  /* With scripting off a parser reads noscript content as markup; jsdom
+     under vitest has scripting on and would hand it back as text. React's
+     serializer escapes text, so the literal tag can only be the element. */
+  const page = document.createElement("div");
+  page.innerHTML = html.replace(/<noscript>/g, "<div data-noscript>").replace(/<\/noscript>/g, "</div>");
+  const figure = page.querySelector("figure");
+  expect(figure, "a demo is a figure").not.toBeNull();
+  const noscript = page.querySelector("[data-noscript]");
+  expect(noscript, "a <noscript> that carries the figure").not.toBeNull();
+  const hidden: string[] = [];
+  for (const style of Array.from(noscript!.querySelectorAll("style"))) {
+    for (const rule of (style.textContent ?? "").split("}")) {
+      const [selectors, body] = rule.split("{");
+      if (body && /display\s*:\s*none/.test(body)) hidden.push(...selectors.split(","));
+    }
+  }
+  const gone = (el: Element) => hidden.some((sel) => el.matches(sel.trim()));
+  return { page, figure: figure!, noscript: noscript!, gone };
+};
+
 const withWorld = (setup: Partial<World>, body: (w: World) => void) => {
   const w = new World();
   Object.assign(w, setup);
@@ -54,6 +84,13 @@ const withWorld = (setup: Partial<World>, body: (w: World) => void) => {
     w.dispose();
   }
 };
+
+/** A frame that puts something on the canvas. The stage clears the board and
+    a scene can set styles all day; neither is a picture, and a demo that did
+    only that would satisfy every comparison below with a blank board. */
+const PAINTS = /(?:^|;)(?:fill|stroke|fillRect|strokeRect|fillText|strokeText|drawImage|putImageData)\(/;
+const expectPainted = (frame: string, what: string) =>
+  expect(PAINTS.test(frame), what + " puts nothing on the canvas").toBe(true);
 
 const describeEl = (el: Element) =>
   "<" + el.tagName.toLowerCase() + (el.className ? ' class="' + el.className + '"' : "") + ">";
@@ -121,6 +158,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       w.mount(Demo);
       act(() => w.width(800));
       expect(w.standing(), "a demo that may not animate still draws its payoff frame").not.toBe("");
+      expectPainted(w.standing(), "the standing frame");
       act(() => w.onscreen(1));
       expect(w.tick(1000), "frames drawn under prefers-reduced-motion").toEqual([]);
     }),
@@ -152,6 +190,7 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       const opening = w.tick(3000);
       expect(opening.length, "frames in the first three seconds in view").toBeGreaterThan(10);
       expect(opening, "the first thing a visitor sees is not the ending").not.toContain(standing);
+      expectPainted(opening[opening.length - 1], "the story, three seconds in,");
 
       for (const [what, leave, back] of [
         ["scrolled away", () => w.onscreen(0), () => w.onscreen(1)],
@@ -221,55 +260,52 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       }
     }),
 
-  "leaves prose, the honest label and the readout with scripting off, and nothing to operate": (Demo) => {
-    const html = renderToStaticMarkup(
-      <LocaleProvider locale="es">
-        <Demo />
-      </LocaleProvider>,
-    );
-    /* With scripting off a parser reads noscript content as markup; jsdom
-       under vitest has scripting on and would hand it back as text. React's
-       serializer escapes text, so the literal tag can only be the element. */
-    const page = document.createElement("div");
-    page.innerHTML = html.replace(/<noscript>/g, "<div data-noscript>").replace(/<\/noscript>/g, "</div>");
-    const figure = page.querySelector("figure");
-    expect(figure, "a demo is a figure").not.toBeNull();
-    const noscript = page.querySelector("[data-noscript]");
-    expect(noscript, "a <noscript> that carries the figure").not.toBeNull();
+  "mounts nothing operable that the noscript rule does not name": (Demo) =>
+    withWorld({}, (w) => {
+      /* The static render below is what a visitor with scripting off gets,
+         and it cannot see a control that only exists after an effect ran: a
+         helper that renders null on the server and a button once mounted.
+         Such a control is dead weight to nobody, but it is also a button the
+         frame did not render and the source rules did not read, so the rule
+         "nothing operable but a hotspot" is held here too, on the live tree,
+         after the loop has run and every button has been tapped. */
+      const { gone } = noscriptRule(Demo);
+      w.mount(Demo);
+      act(() => w.width(800));
+      act(() => w.onscreen(1));
+      w.tick(1000);
+      for (const b of Array.from(w.container.querySelectorAll("button"))) act(() => b.click());
+      expect(
+        Array.from(w.container.querySelectorAll(OPERABLE)).filter((el) => !gone(el)).map(describeEl),
+        "operable on the mounted page and not covered by the noscript rule",
+      ).toEqual([]);
+    }),
 
-    const hidden: string[] = [];
-    for (const style of Array.from(noscript!.querySelectorAll("style"))) {
-      for (const rule of (style.textContent ?? "").split("}")) {
-        const [selectors, body] = rule.split("{");
-        if (body && /display\s*:\s*none/.test(body)) hidden.push(...selectors.split(","));
-      }
-    }
-    const gone = (el: Element) => hidden.some((s) => el.matches(s.trim()));
+  "leaves prose, the honest label and the readout with scripting off, and nothing to operate": (Demo) => {
+    const { page, figure, noscript, gone } = noscriptRule(Demo);
 
     /* The must-list is what THIS render put on the page, not a list of class
        names: the board that will never be drawn, everything that would have
        to be operated, and the sentence telling the visitor to operate it. */
-    const dead = Array.from(
-      page.querySelectorAll("canvas,button,[role=button],a[href],input,select,textarea,summary,[tabindex]"),
-    ).concat(
+    const dead = Array.from(page.querySelectorAll("canvas," + OPERABLE)).concat(
       Array.from(page.querySelectorAll("*")).filter(
         (el) => el.children.length === 0 && HINTS.has((el.textContent ?? "").trim()),
       ),
     );
     expect(dead.some((el) => el.tagName === "CANVAS"), "a demo draws on a canvas").toBe(true);
     expect(
-      dead.filter((el) => !noscript!.contains(el) && !gone(el)).map(describeEl),
+      dead.filter((el) => !noscript.contains(el) && !gone(el)).map(describeEl),
       "still on the page with scripting off",
     ).toEqual([]);
 
-    const fallback = noscript!.querySelector(".demo-fallback");
+    const fallback = noscript.querySelector(".demo-fallback");
     expect((fallback?.textContent ?? "").trim(), "the written description").not.toBe("");
-    const honest = Array.from(figure!.querySelectorAll("*")).filter(
+    const honest = Array.from(figure.querySelectorAll("*")).filter(
       (el) => el.children.length === 0 && el.textContent === demos.es.honest,
     );
     expect(honest.length, "the honest label").toBeGreaterThan(0);
     for (const el of honest) expect(gone(el), "the honest label is not removable").toBe(false);
-    const boxes = Array.from(figure!.querySelectorAll(BOX));
+    const boxes = Array.from(figure.querySelectorAll(BOX));
     expect(boxes.length, "a readout resolved from the first render").toBeGreaterThan(0);
     for (const el of boxes) expect(gone(el)).toBe(false);
   },

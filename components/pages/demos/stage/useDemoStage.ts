@@ -189,8 +189,10 @@ export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: numbe
     /* Keep the hotspots over what they belong to at every width, from the
        geometry the canvas draws with, so they cannot drift. The edge hints
        tell the CSS which way a plate has to open to stay inside the frame. */
-    const btns = frameEl.querySelectorAll<HTMLElement>("." + HOTSPOT);
     const positionHotspots = () => {
+      /* asked for at every layout rather than once at mount, so a hotspot
+         that arrived since is placed by the next one */
+      const btns = frameEl.querySelectorAll<HTMLElement>("." + HOTSPOT);
       const spots = scene.hotspots ? scene.hotspots(env) : [];
       for (let i = 0; i < spots.length && i < btns.length; i++) {
         const { fx, fy } = spots[i];

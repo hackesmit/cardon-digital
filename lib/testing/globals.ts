@@ -90,6 +90,15 @@ export const globalEscapes = (sf: ts.SourceFile): string[] => {
     if (ts.isIdentifier(n) && n.text === "Reflect" && isValueUse(n)) {
       found.push(where(sf, n) + " uses Reflect, which reaches any global without naming it");
     }
+    /* code built from a string reaches anything, and nothing can read it:
+       Function("return Inter" + "sectionObserver")(), window.eval(...) */
+    if (ts.isIdentifier(n) && (n.text === "eval" || n.text === "Function")) {
+      const p = n.parent;
+      const asProperty = ts.isPropertyAccessExpression(p) && p.name === n;
+      if (asProperty || isValueUse(n)) {
+        found.push(where(sf, n) + " uses " + n.text + ", which runs code no check can read");
+      }
+    }
     if (ts.isIdentifier(n) && GLOBALS.has(n.text) && isValueUse(n)) {
       const use = wrapped(n);
       const p = use.parent;

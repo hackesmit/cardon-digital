@@ -2,8 +2,11 @@
 import { readdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { useEffect, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
+import { DemoFigure } from "./stage/DemoFigure";
+import type { DemoScene } from "./stage/useDemoStage";
 
 /**
  * Every demo in this directory, mounted and driven (bead hq-3pfhe.7).
@@ -99,6 +102,53 @@ describe("the checks are load bearing", () => {
     expect(failing(await load("../../../lib/testing/loopholes/demos/HospitalidadDemo.tsx"))).toEqual(
       expect.arrayContaining([OBSERVER, STANDS]),
     );
+  });
+
+  /* Two demos that use the mechanism faithfully and still should not pass,
+     found by the cross-vendor review of this harness. */
+  const scene = (draw: DemoScene["draw"]): DemoScene => ({
+    hue: "primary",
+    clock: { cycle: 10, standing: 5 },
+    height: () => 100,
+    layout: () => {},
+    draw,
+    live: [
+      { name: "caption", values: { a: "a", b: "b" }, keys: ["a", "b"], initial: "a", at: (t) => (t < 5 ? "a" : "b") },
+    ],
+  });
+  const figure = (s: DemoScene, children?: React.ReactNode) => (
+    <DemoFigure demo="fixture" scene={s} title="t" honest="vista ilustrativa, no son datos de cliente" fallback="prose">
+      {children}
+    </DemoFigure>
+  );
+
+  it("fails a board that sets styles and paints nothing", () => {
+    const blank = scene((env, t) => {
+      env.ctx.fillStyle = t >= 5 && t < 6.1 ? "standing" : String(t);
+    });
+    const painted = scene((env, t) => {
+      env.ctx.fillStyle = t >= 5 && t < 6.1 ? "standing" : String(t);
+      env.ctx.fillRect(0, 0, 10, 10);
+    });
+    expect(failing(() => figure(blank))).toEqual(expect.arrayContaining([STANDS, CLOCK]));
+    /* the same scene with one rectangle in it passes both, so it is the
+       missing paint the checks object to */
+    const ok = failing(() => figure(painted));
+    expect(ok).not.toContain(STANDS);
+    expect(ok).not.toContain(CLOCK);
+  });
+
+  it("fails a button that only exists once an effect has run", () => {
+    const s = scene((env) => env.ctx.fillRect(0, 0, 10, 10));
+    function Late() {
+      const [on, setOn] = useState(false);
+      useEffect(() => setOn(true), []);
+      return on ? <button type="button">late</button> : null;
+    }
+    const failed = failing(() => figure(s, <Late />));
+    expect(failed).toContain("mounts nothing operable that the noscript rule does not name");
+    /* the static render cannot see it, which is why the mounted check exists */
+    expect(failed).not.toContain(NOSCRIPT);
   });
 
   it("passes the reference demo on every check, so the checks describe what ships", async () => {

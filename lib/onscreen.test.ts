@@ -427,6 +427,8 @@ describe("no file reaches the constructor, or a global, where this check cannot 
     ["the window under another name", "const w = window; new w.IntersectionObserver(cb);"],
     ["the window through itself", "new window.self.IntersectionObserver(cb);"],
     ["the window through the document", "const w = document.defaultView; void w;"],
+    ["code built from a string", 'const IO = Function("return Inter" + "sectionObserver")(); new IO(cb);'],
+    ["eval through the window", 'const IO = window.eval("Inter" + "sectionObserver"); new IO(cb);'],
   ])("refuses %s", (_how, src) => {
     expect(escapesIn("components/site/Fixture.tsx", src).length).toBeGreaterThan(0);
   });
