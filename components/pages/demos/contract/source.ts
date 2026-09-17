@@ -178,6 +178,39 @@ export const sourceRules: Record<
     }
     return found;
   },
+
+  "imports code and data, and no stylesheet, image or film of its own": (file, text) => {
+    /* The one declared motion a demo may have is CSS, because the site stops
+       every CSS animation and transition under reduce (app/globals.css) and
+       demos.test.ts holds demos.css to never outranking that. A stylesheet a
+       demo brought itself is read by neither, and an imported .gif or .mp4 is
+       motion nothing on a jsdom page can see (reviewer s-1022, L5). So this
+       is a list of what an import may BE, by extension, and everything else
+       is refused unread. The shared sheet is the one exception: importing it
+       twice is importing it once. */
+    const sf = parse(file, text);
+    const found: string[] = [];
+    const judge = (n: ts.Node, spec: string) => {
+      const ext = /\.([A-Za-z0-9]+)$/.exec(spec.split(/[?#]/)[0].split("/").pop() ?? "")?.[1];
+      if (!ext || /^(ts|tsx|js|jsx|mjs|json)$/.test(ext) || spec === "./demos.css") return;
+      found.push(where(sf, n) + " imports " + spec);
+    };
+    const visit = (n: ts.Node) => {
+      if ((ts.isImportDeclaration(n) || ts.isExportDeclaration(n)) && n.moduleSpecifier && ts.isStringLiteralLike(n.moduleSpecifier)) {
+        judge(n, n.moduleSpecifier.text);
+      } else if (
+        ts.isCallExpression(n) &&
+        (n.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(n.expression) && n.expression.text === "require"))
+      ) {
+        const arg = n.arguments[0];
+        if (arg && ts.isStringLiteralLike(arg)) judge(n, arg.text);
+        else found.push(where(sf, n) + " imports something only known when it runs");
+      }
+      ts.forEachChild(n, visit);
+    };
+    visit(sf);
+    return found;
+  },
 };
 
 /** The names of the rules `text` breaks, for the loophole fixtures. */

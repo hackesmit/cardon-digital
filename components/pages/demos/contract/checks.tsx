@@ -5,7 +5,7 @@ import { demos } from "../../../../lib/i18n/demos";
 import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
 import { GHOST_BOXES, GHOSTS } from "./ghosts";
 import type { DemoScene, StageEnv } from "../stage/useDemoStage";
-import { handed, World } from "./world";
+import { drawing, handed, World } from "./world";
 
 /**
  * The demo contract as behaviours (bead hq-3pfhe.7).
@@ -377,7 +377,11 @@ export const checks: Record<string, (Demo: Demo) => void> = {
          reading and also take away its memory. What it can do is ask twice:
          the scene the mounted demo really handed over, on the board the stage
          really built, drawn at the same reading twice and then out of order.
-         A scene with a clock of its own cannot answer the same way twice. */
+         A scene that counts its calls cannot answer the same way twice. One
+         that reads the PAGE's clock could, while the draws were made in a
+         single instant (reviewer s-1022, L4), so they no longer are: see
+         at() below, and the two-page check after this one for time that got
+         in by a route this one does not walk. */
       handed.scene = null;
       const before = handed.count;
       w.mount(Demo);
@@ -392,11 +396,36 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       const scene = handed.scene as DemoScene;
       const env = handed.env as StageEnv;
       expect(env, "the stage drew the scene at least once").not.toBeNull();
+      /* TIME PASSES BETWEEN THE DRAWS (reviewer s-1022, L4). They used to be
+         made in one instant, so a draw() that kept no memory and read
+         performance.now() was one frame per reading by accident: its story
+         ran backwards in Chromium with this check green. Every source of time
+         and of luck is the world's (./world.tsx), so an uneven stretch of all
+         of them goes by before each draw, and a picture made from any of them
+         is a different picture. */
+      let nth = 0;
       const at = (t: number) => {
+        w.now += 977 + 131 * (nth++ % 7);
         const from = w.log.length;
         env.ctx.clearRect(0, 0, env.W, env.H);
-        scene.draw(env, t);
+        drawing.depth++;
+        try {
+          scene.draw(env, t);
+        } finally {
+          drawing.depth--;
+        }
         return w.log.slice(from).join(";");
+      };
+      /* and everything else the stage calls on a scene is called in between,
+         as a resize, a new scene or a tap would: a draw whose answer depends
+         on how often layout() ran has a memory too, kept one call further
+         away (reviewer s-1022, L6) */
+      const churn = () => {
+        scene.height(env.W, env.phone);
+        scene.layout(env);
+        scene.layout(env);
+        scene.hotspots?.(env);
+        for (const text of scene.live) text.at(scene.clock.standing);
       };
       /* A trace is calls, not pixels, and a transform left on the context
          moves every later frame under an identical trace. So a frame opens
@@ -417,7 +446,9 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       /* in order, in order again, then backwards, which no running loop does:
          every reading is drawn three times and each time it is one frame */
       const first = readings.map(at);
+      churn();
       const again = readings.map(at);
+      churn();
       const back = readings.slice().reverse().map(at).reverse();
       readings.forEach((t, i) => {
         const r = t.toFixed(2);
@@ -425,11 +456,155 @@ export const checks: Record<string, (Demo: Demo) => void> = {
         expect(again[i] === first[i], "the reading " + r + " drawn a second time is the frame it was the first time").toBe(true);
         expect(back[i] === first[i], "the reading " + r + " drawn out of order is the frame it was in order").toBe(true);
       });
-      for (const text of scene.live) {
-        const keys = readings.map((t) => text.at(t));
-        expect(readings.slice().reverse().map((t) => text.at(t)).reverse(), "the words at a reading").toEqual(keys);
-      }
+      const words = (t: number) => {
+        w.now += 977;
+        drawing.depth++;
+        try {
+          return scene.live.map((text) => text.at(t));
+        } finally {
+          drawing.depth--;
+        }
+      };
+      const keys = readings.map(words);
+      expect(readings.slice().reverse().map(words).reverse(), "the words at a reading").toEqual(keys);
+      /* The direct form of the same property, over the second of story above
+         and every draw here: a picture is made from its reading, so it has no
+         reason to ask the page what time it is or for a random number, and
+         each time one did is on the world's list. */
+      expect(
+        Array.from(new Set(w.asked)),
+        "what draw() or a live text asked the page for while making a picture",
+      ).toEqual([]);
     }),
+
+  "tells the same story on a page opened at another time, on another day, with other luck": (Demo) => {
+    /* Reviewer s-1022, L4, as a class. The purity check above asks a scene
+       the same question twice on ONE page. This asks it on two, which differ
+       in everything a page can differ in without the visitor doing anything:
+       when it was opened by the page's clock, what the date is, and what
+       Math.random and crypto will say. The visitors do the same things at
+       the same moments, so they must see the same frames and read the same
+       words. It needs no knowledge of the scene and none of HOW the time got
+       in: read in draw(), in layout(), in the component body or an effect,
+       kept in a closure, a ref or the DOM, it shows here or it changed
+       nothing anybody can see.
+
+       WHY THIS IS A CHECK AND NOT A CONSTRUCTION. draw() is a function and
+       the page's clock is a global: JavaScript has no way to call a function
+       with the globals out of its reach, short of another realm, and a scene
+       draws on a canvas that lives in this one. The stage cannot take the
+       clock away, so the world owns every clock there is and moves them. */
+    const story = (setup: Partial<World>) => {
+      const seen: string[] = [];
+      withWorld(setup, (w) => {
+        w.mount(Demo);
+        act(() => w.width(800));
+        const page = () => w.container.innerHTML;
+        seen.push(w.standing(), page());
+        act(() => w.onscreen(1));
+        /* a cycle fits in sixty seconds, so this is all of it and the seam */
+        for (let s = 0; s < 61; s++) {
+          seen.push(...w.tick(1008).filter((f) => f.startsWith("clearRect(")), page());
+          if (s === 4) {
+            const buttons = Array.from(w.container.querySelectorAll("button"));
+            if (buttons.length > 1) act(() => unchosen(buttons).click());
+          }
+        }
+        act(() => w.onscreen(0));
+        seen.push(w.standing(), page());
+      });
+      return seen;
+    };
+    const one = story({ now: 1000, seed: 1 });
+    const other = story({ now: 5777, epoch: Date.UTC(2031, 1, 3, 4, 5, 6, 789), seed: 20260917 });
+    expect(one.length, "frames and pages recorded").toBeGreaterThan(100);
+    expect(other.length, "frames and pages the second visitor saw, against the first").toBe(one.length);
+    expect(
+      other.filter((f, i) => f !== one[i]).length,
+      "frames or pages, of " + one.length + ", that differ between two visitors who did the same things on pages opened at different times",
+    ).toBe(0);
+  },
+
+  "a theme change or a window resize changes the picture and nothing about the time": (Demo) => {
+    /* The tap check's judge, for the two other events every demo on this
+       site receives (reviewer s-1022, L7). The stage answers both itself and
+       touches no time doing it, so through the stage this cannot fail. It is
+       for a demo that answers them as well: the reviewer's keyed its figure
+       on the theme event 'so it repaints with the new palette', which is a
+       new mount, and a visitor in the hold who switched theme was sent back
+       to 'empieza el servicio'. One visitor gets the event before the board
+       comes into view and one three seconds into the story; afterwards they
+       have had the same events, so they must see the same frames. */
+    const events: [string, () => void][] = [
+      ["a theme change", () => window.dispatchEvent(new Event("cardon-mode"))],
+      ["a window resize", () => window.dispatchEvent(new Event("resize"))],
+    ];
+    for (const [what, fire] of events) {
+      const story = (after: number) => {
+        let frames: string[] = [];
+        withWorld({}, (w) => {
+          w.mount(Demo);
+          act(() => w.width(800));
+          if (after === 0) act(fire);
+          act(() => w.onscreen(1));
+          w.tick(after);
+          if (after > 0) {
+            act(fire);
+            /* as in the tap check: the stub does not tell a NEW observer
+               where its target is, and a browser does */
+            act(() => w.onscreen(1));
+          }
+          /* past the stage's 140ms resize debounce, then 0.6s */
+          frames = w.tick(3008 + 1008 - after).filter((f) => f.startsWith("clearRect(")).slice(-15);
+        });
+        return frames;
+      };
+      const control = story(0);
+      expect(control.length, "frames after " + what).toBe(15);
+      expect(
+        story(3008).filter((f, i) => f !== control[i]).length,
+        "frames after " + what + " three seconds into the story that a visitor who had it before the story began did not see",
+      ).toBe(0);
+    }
+  },
+
+  "mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser": (Demo) => {
+    /* Reviewer s-1022, L5, as a class: see World.strangers and the stubs
+       above it in ./world.tsx for why this is an allow list of elements and
+       a count at the platform's doors, and why it is not a gate.
+
+       WHY THIS IS A REFUSAL AND NOT A GATE. The stage gates what it runs. It
+       cannot gate what the browser runs: there is no switch on a subtree
+       that stops Web Animations and SMIL, an animation started after a gate
+       closed is not an event the stage hears, and patching Element.animate
+       in production to hear it is not something a marketing site should do.
+       So the contract's own sentence is held instead, 'anything that moves
+       is drawn by draw or is a live text', and declared motion is refused
+       outright, on every page, not only a reduced one. */
+    for (const reduce of [false, true]) {
+      withWorld({ reduce }, (w) => {
+        const seen = new Set<string>();
+        const look = () => w.strangers().forEach((x) => seen.add(x));
+        w.mount(Demo);
+        look();
+        act(() => w.width(800));
+        act(() => w.onscreen(1));
+        w.tick(3000);
+        look();
+        for (const b of Array.from(w.container.querySelectorAll("button"))) {
+          act(() => b.click());
+          look();
+        }
+        act(() => w.setHidden(true));
+        w.tick(500);
+        look();
+        expect(
+          Array.from(seen),
+          "on the page" + (reduce ? " under prefers-reduced-motion" : "") + " and able to move without the stage",
+        ).toEqual([]);
+      });
+    }
+  },
 
   "rewrites nothing whose box is not held open by ghosts": (Demo) =>
     withWorld({}, (w) => {
