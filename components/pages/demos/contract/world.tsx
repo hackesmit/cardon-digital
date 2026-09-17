@@ -231,7 +231,9 @@ export class World {
 
     const define = (target: object, key: string, desc: PropertyDescriptor) => {
       const old = Object.getOwnPropertyDescriptor(target, key);
-      Object.defineProperty(target, key, { configurable: true, ...desc });
+      /* writable where the platform's own is: a reviewer's harness that puts
+         a stub of its own over one of these has to be able to */
+      Object.defineProperty(target, key, { configurable: true, ...("value" in desc ? { writable: true } : {}), ...desc });
       this.restore.push(() => {
         if (old) Object.defineProperty(target, key, old);
         else delete (target as Record<string, unknown>)[key];
