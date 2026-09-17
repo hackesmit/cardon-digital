@@ -457,7 +457,10 @@ function structureVis(v: VisDict) {
       <span className="vis-tag">{v.structure.tag}</span>
       <svg className="mini-svg" viewBox="0 0 520 238" role="img" aria-label={v.structure.aria}>
         <text className="e-lab mono" x="34" y="44" fontSize="11" letterSpacing="1.2">{v.structure.homepages}</text>
-        <g>
+        {/* The five front doors, and ONLY the five. The basis paragraph counts the
+            rows in here, so a legend or an annotation added to this diagram must
+            go outside this group or it becomes another homepage (review s-641a). */}
+        <g className="e-front-doors">
           <rect className="e-page-off" x="34" y="58" width="190" height="26" rx="2" />
           <text className="e-muted mono" x="46" y="75" fontSize="11">{v.structure.unpublished}</text>
           <rect className="e-page-off" x="34" y="92" width="190" height="26" rx="2" />
