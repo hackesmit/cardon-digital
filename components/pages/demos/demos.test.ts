@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -62,24 +62,15 @@ import { demos, type DemosDict } from "../../../lib/i18n/demos";
  * six hex tokens copied into JS, the standing frame agreeing with the loop's
  * clock, the board adding no box of its own, and the placeholders in the copy.
  *
- * Round two of the s-4a6c review (bead hq-3pfhe.6, fix round two) added
- * three: the live row inside a ghost box is not stretched to the tallest
- * ghost, the first run starts the story from the top rather than from the
- * hold, and every component-side rule runs over every demo in this directory
- * and is proven load bearing against the reviewer's loophole fixtures.
+ * Round two of the s-4a6c review (bead hq-3pfhe.6, fix round two) added two
+ * here: the live row inside a ghost box is not stretched to the tallest
+ * ghost, and the first run starts the story from the top rather than from
+ * the hold. The component-side rules it also added were lexical and are gone:
+ * see section 3.
  */
 
 const here = new URL("./", import.meta.url);
 const read = (rel: string, base: URL = here) => readFileSync(new URL(rel, base), "utf8");
-
-/** The same file with its comments removed. Every lexical check below is about
-    the code, and these files now explain in prose exactly what they used to
-    get wrong, naming the old spelling in the sentence that rejects it: reading
-    the raw text fails a fixed file for describing its own fix, and passes a
-    broken one that commented the line out. */
-const strip = (src: string) =>
-  src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
-const code = (rel: string, base: URL = here) => strip(read(rel, base));
 
 /** The three brand hues, one per demo: Produccion, Hospitalidad, Restaurante. */
 const HUES = ["primary", "secondary", "energy"] as const satisfies readonly DemoHue[];
@@ -170,9 +161,9 @@ describe("the loop holds on the fullest minute of the evening", () => {
       ending: the payoff frame frozen for the whole 5.5s hold, a fade to 15
       percent, and 17:00 beginning at about 7.2s with an empty room. The
       standing frame is where a RESUME starts. The story starts at the top,
-      which is the door, and it has moved within three seconds. The component
-      half, start() resetting cycT to 0 once behind a never-ran flag, is in
-      componentRules below. */
+      which is the door, and it has moved within three seconds. The other
+      half, that the first start and only the first resets the clock, is
+      ./stage/clock.ts, which no demo can reach into. */
   it("starts the story from the top on its first run, not from the hold", () => {
     const top = cycleFrame(0);
     expect(top.t).toBe(0);
@@ -350,272 +341,22 @@ function stubObserver(): { instance: () => FakeObserver } {
   };
 }
 
-/* --------- 3. the frame travels with the component that draws in it ------- */
+/* ------ 3. the component side of the contract is not in this file ------- */
 
-/**
- * The component side of docs/demos.md, one check per rule, each a function of
- * one component's source. They are written this way rather than inline so the
- * same rules run over every demo in this directory AND over the loophole
- * fixtures below, which have to fail them.
- *
- * The s-4a6c review found rules 5, 6 (component side), 7 and 9 enforced only
- * by string checks pinned to code("RestauranteDemo.tsx"): a demo two that
- * imported demos.css and called observeOnscreen passed every "every demo
- * component" check while taking its plan from the rounded clientWidth, its
- * drawing width from the painted rect, writing its caption into a bare span
- * with no ghosts and drawing no standing frame through the timeline, with the
- * suite green at 90 and tsc exit 0 (state/review/s-4a6c/loophole). Daniel's
- * ruling, 2026-09-15: enforce generically over every component rather than
- * in the DoD of hq-3pfhe.2 and hq-3pfhe.3, because a future bead's DoD is not
- * a mechanism (invariant 8). The spellings pinned here are therefore part of
- * the contract, which docs/demos.md section 12 says in so many words.
- *
- * `src` is the source with its comments removed and `raw` is the file as
- * written; every check reads `src` except the two that need the import line
- * and the noscript block verbatim.
- */
-const componentRules: Record<string, (src: string, raw: string) => void> = {
-  "imports demos.css, so a mount is styled": (_src, raw) => {
-    /* Round one shipped demos.css with no importer anywhere in the tree: the
-       canvas fell back to its 300px intrinsic width, .demo-stage was not
-       positioned, and all twelve hotspots landed off the board. The repo's
-       precedent is components/consent/ConsentBanner.tsx importing
-       ./consent.css. */
-    expect(raw).toContain('import "./demos.css";');
-  },
+/* It was: seven functions of a component's comment-stripped source, each a
+   list of spellings, run over every demo. The s-5836 review passed all of
+   them with a demo that froze for life, ran its clock backwards and reflowed
+   the page, satisfied the positive ones with a string constant, and erased
+   the negative ones' input with two string literals holding the comment
+   delimiters (bead hq-3pfhe.7). What replaced them:
 
-  "takes its gates from ./motion and names no observer of its own": (src) => {
-    expect(src).toContain("observeOnscreen(");
-    /* An observer built by hand can be built inside a reduced-motion branch,
-       which is exactly the bug. observeOnscreen has no motion argument. The
-       old form of this check rejected `new IntersectionObserver`, which an
-       alias walks around: const IO = window.IntersectionObserver; new IO(cb,
-       { threshold: [0, 0.35] }) with cb reading isIntersecting (reviewer
-       s-4a6c, non-blocking). A demo has no business naming the constructor
-       at all, in any spelling, so the word itself is the failure. */
-    expect(src).not.toMatch(/IntersectionObserver/);
-  },
+     ./stage/           the clock, the measuring, the gates and the frame, which
+                        the demos call instead of copying (clock.test.ts)
+     contract.test.tsx  every demo mounted and driven, judged on what it does
+     source.test.ts     four AST rules for what a mount cannot reach
 
-  "reads the same box the queries read, fractional and untransformed": (src) => {
-    /* Half of the boundary bug was the rounding: clientWidth is an integer, so
-       a real 639.25px content box read as 640 and picked the wide plan even
-       where the two conditions do meet. clientWidth is right for the drawing
-       width, which is an integer pixel grid, and wrong for the plan: the plan
-       needs the fraction. */
-    expect(src).toContain("W = Math.max(1, canvas.clientWidth)");
-    expect(src).not.toMatch(/isPhonePlan\([^)]*clientWidth/);
-    expect(src).not.toContain("canvas.getBoundingClientRect()");
-    /* The authority is the ResizeObserver's contentRect, which is the LAYOUT
-       content box, the one a container query measures. getBoundingClientRect
-       is the painted box: under a scaled ancestor the two differ, and the
-       component would pick the phone plan under the wide stylesheet all over
-       again (cross-vendor review, this bead). */
-    expect(src).toMatch(/contentW = exact/);
-    expect(src).toMatch(/const figureContentWidth = \(\) => contentW \?\? rectContentWidth\(\)/);
-    /* and the observer's first delivery re-runs the layout synchronously,
-       because the mount's reading was a guess */
-    expect(src).toMatch(/if \(!roSeen\) \{[\s\S]{0,80}resize\(\);/);
-    /* the rect form survives only as the pre-observer reading, and when it is
-       used it takes off the border as well as the padding */
-    const fallback = /const rectContentWidth = \(\) => \{([\s\S]*?)\n    \};/.exec(src);
-    expect(fallback).not.toBeNull();
-    expect(fallback![1]).toContain("getBoundingClientRect");
-    expect(fallback![1]).toContain("borderLeftWidth");
-    /* and nowhere else: the painted box is the reading before the observer
-       has spoken, never a drawing width and never a plan */
-    expect(src.replace(fallback![0], "")).not.toContain("getBoundingClientRect");
-    /* and the plan comes from floor.ts rather than from a second comparison */
-    expect(src).toContain("isPhonePlan(figureContentWidth())");
-    expect(src).not.toMatch(/<\s*PHONE_MAX/);
-  },
-
-  "draws its standing frame through the timeline, and starts the story from the top": (src) => {
-    /* the standing frame is a frame OF the loop, with the clock parked on it;
-       the old form drew PEAK_T straight and left the clock behind */
-    expect(src).toContain("cycT = STANDING_CYC");
-    expect(src).not.toMatch(/drawScene\(PEAK_T/);
-    /* and the parked clock is where a RESUME starts, not where the story
-       starts: the first start resets it to the top, once, behind a never-ran
-       flag (reviewer s-4a6c, BLOCKING 2), and nothing else resets it, so a
-       resume still carries on and never runs backwards */
-    const start = /const start = \(\) => \{([\s\S]*?)\n    \};/.exec(src);
-    expect(start, "a start() the loop is entered through").not.toBeNull();
-    expect(start![1]).toMatch(/if \(!ran\) \{\s*ran = true;\s*cycT = 0;/);
-    expect(src).toMatch(/let ran = false;/);
-    expect(src.match(/(?<!let )cycT = 0;/g)).toHaveLength(1);
-  },
-
-  "holds its caption in a box sized for every caption, not the current one": (src) => {
-    /* setCaption() writes one of four phases into the strip every frame, and
-       in a wrapping flex row the four different lengths made the figure 579px
-       tall at one phase and 610px at the other three: a 31px reflow twice per
-       cycle, forever, at every width where the figure reaches its max-width,
-       moving everything below it on the page (reviewer s-3b55, BLOCKING 1).
-       All four captions are rendered into one grid cell with three of them
-       invisible, so the box is the longest caption's size at every width and
-       in both locales. A reserved pixel height would be right at one width,
-       one font size and one language. */
-    expect(src).toMatch(/className="demo-caption-box mono"/);
-    expect(src).toMatch(/CAPTION_KEYS\.map/);
-    expect(src).toMatch(/className="demo-caption-ghost"/);
-    /* the live caption is still its own node, so the loop writes one of them */
-    expect(src).toMatch(/className="demo-caption"[\s\S]{0,40}ref=\{captionRef\}/);
-    /* and it is the only text the loop writes: a value written anywhere else
-       is a value drawn in a box whose size depends on it (docs/demos.md,
-       rule 7). A second live value needs a second ghost box and a rule here. */
-    const writes = src.match(/\.(?:textContent|innerText|innerHTML)\s*=/g) ?? [];
-    expect(writes.length, "the loop writes its caption through the DOM").toBeGreaterThan(0);
-    expect(src.match(/caption\.textContent\s*=/g) ?? []).toHaveLength(writes.length);
-  },
-
-  "holds its selection in a box sized for every readout, not the selected one": (src) => {
-    /* Same rule, different trigger: one table name wraps where the others do
-       not, so tapping it grew the figure 31px and the next tap shrank it
-       again (cross-vendor review, round two). The strip's grid stops the
-       caption displacing the selection; it does nothing about the selection's
-       own wrap, which is what this holds open. A demo with no readout the
-       visitor changes has nothing to hold: the rule applies the moment the
-       component carries a live region or a pick row. */
-    if (!/aria-live|demo-pick/.test(src)) return;
-    expect(src).toMatch(/className="demo-pick-box"/);
-    expect(src).toMatch(/\{pickRow\(picked, false\)\}/);
-    expect(src).toMatch(/READOUTS\.map\(\(_, i\) => pickRow\(i, true\)\)/);
-    /* one spelling for both, so the ghost cannot be styled differently from
-       the value it is reserving room for */
-    expect(src.match(/className="demo-pick-k mono"/g)).toHaveLength(1);
-    /* and the ghosts are out of the accessibility tree, so the live region
-       does not announce twelve readouts */
-    expect(src).toMatch(/aria-live=\{ghost \? undefined : "polite"\}/);
-    expect(src).toMatch(/aria-hidden=\{ghost \? true : undefined\}/);
-  },
-
-  "hides the board, its hotspots and its hint when there is no JavaScript": (_src, raw) => {
-    const noscript = /<noscript>([\s\S]*?)<\/noscript>/.exec(raw);
-    expect(noscript, "a <noscript> that carries the figure").not.toBeNull();
-    const style = /<style>\{"([^"]*)"\}<\/style>/.exec(noscript![1]);
-    expect(style).not.toBeNull();
-    const hidden = style![1].split("{")[0].split(",").map((s) => s.trim());
-    /* The hint tells the visitor to choose a table and this rule removes every
-       table there is to choose, so it goes with them (reviewer s-3b55,
-       note 2). Read as a selector list rather than a substring, so a rule that
-       hides three things and forgets the fourth cannot pass. */
-    const must = [".demo-canvas"];
-    if (/"rd-btn/.test(raw)) must.push(".rd-btn");
-    if (/"demo-hint/.test(raw)) must.push(".demo-hint");
-    expect(hidden.sort()).toEqual(must.sort());
-    expect(style![1]).toMatch(/display:\s*none/);
-    expect(noscript![1]).toContain("demo-fallback");
-  },
-};
-
-describe("every demo component", () => {
-  const components = readdirSync(new URL(here)).filter(
-    (f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"),
-  );
-
-  it("exists", () => expect(components.length).toBeGreaterThan(0));
-
-  it.each(
-    components.flatMap((file) => Object.keys(componentRules).map((rule) => [file, rule] as const)),
-  )("%s %s", (file, rule) => {
-    componentRules[rule](code(file), read(file));
-  });
-});
-
-/**
- * The reviewer's own loophole components (state/review/s-4a6c/loophole),
- * verbatim. Dropping either into this directory has to turn the suite red;
- * these two tests are the same fact without the drop, so the rules cannot
- * drift back to pinning one file.
- */
-const LOOPHOLE_PRODUCCION = `"use client";
-import { useEffect, useRef } from "react";
-import { observeOnscreen, shouldAnimate } from "./motion";
-import { PHONE_MAX } from "./floor";
-import "./demos.css";
-
-export default function ProduccionDemo() {
-  const ref = useRef<HTMLElement>(null);
-  const cap = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const phone = el.clientWidth < PHONE_MAX;
-    const W = Math.round(el.getBoundingClientRect().width);
-    return observeOnscreen(el, (on) => {
-      if (shouldAnimate({ reduced: false, docVisible: true, onscreen: on }) && cap.current) {
-        cap.current.textContent = phone ? "phone " + W : "wide " + W;
-      }
-    });
-  }, []);
-  return (
-    <figure className="demo-figure" ref={ref}>
-      <div className="demo-stage"><canvas className="demo-canvas" /></div>
-      <div className="demo-readout"><span className="demo-caption" ref={cap} /></div>
-    </figure>
-  );
-}
-`;
-
-const LOOPHOLE_HOSPITALIDAD = `"use client";
-import { useEffect, useRef } from "react";
-import { observeOnscreen } from "./motion";
-import "./demos.css";
-
-export default function HospitalidadDemo() {
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const IO = window.IntersectionObserver;
-    const io = new IO((es) => { el.dataset.on = String(es[es.length - 1].isIntersecting); }, { threshold: [0, 0.35] });
-    io.observe(el);
-    const un = observeOnscreen(el, () => {});
-    return () => { io.disconnect(); un(); };
-  }, []);
-  return <figure className="demo-figure" ref={ref} />;
-}
-`;
-
-describe("the component rules are load bearing", () => {
-  const broken = (raw: string) =>
-    Object.entries(componentRules)
-      .filter(([, check]) => {
-        try {
-          check(strip(raw), raw);
-          return false;
-        } catch {
-          return true;
-        }
-      })
-      .map(([rule]) => rule);
-
-  it("fails the s-4a6c Produccion loophole on every rule it was written to dodge", () => {
-    const failed = broken(LOOPHOLE_PRODUCCION);
-    expect(failed).toEqual(
-      expect.arrayContaining([
-        "reads the same box the queries read, fractional and untransformed",
-        "draws its standing frame through the timeline, and starts the story from the top",
-        "holds its caption in a box sized for every caption, not the current one",
-        "hides the board, its hotspots and its hint when there is no JavaScript",
-      ]),
-    );
-    /* and it passes the two it was written to keep, so the failures above
-       are the rules biting and not the fixture's shape */
-    expect(failed).not.toContain("imports demos.css, so a mount is styled");
-    expect(failed).not.toContain("takes its gates from ./motion and names no observer of its own");
-  });
-
-  it("fails the s-4a6c Hospitalidad loophole, an observer behind an alias", () => {
-    expect(broken(LOOPHOLE_HOSPITALIDAD)).toContain(
-      "takes its gates from ./motion and names no observer of its own",
-    );
-  });
-
-  it("passes the reference demo on every rule, so the rules describe what ships", () => {
-    expect(broken(read("RestauranteDemo.tsx"))).toEqual([]);
-  });
-});
+   The reviewers' loophole components live in ./loopholes and both suites
+   assert they fail. */
 
 /* --------- the pre-hydration canvas height is the measured height -------- */
 
@@ -737,8 +478,9 @@ describe("the demos stylesheet", () => {
     expect(stage![1]).not.toMatch(/padding|border|margin|width|box-sizing|transform|zoom/);
   });
 
-  /* The component halves of the two ghost-box rules are in componentRules
-     above, run over every demo. These are the stylesheet halves. */
+  /* The component halves of the two ghost-box rules are ./stage/DemoFigure.tsx
+     and the write census in contract.test.tsx. These are the stylesheet
+     halves. */
   it("sizes the caption box for the longest caption, not the current one", () => {
     expect(css).toMatch(/\.demo-caption-box\s*\{[^}]*display:\s*grid/);
     expect(css).toMatch(/\.demo-caption-box\s*>\s*\*\s*\{[^}]*grid-area:\s*1\s*\/\s*1/);

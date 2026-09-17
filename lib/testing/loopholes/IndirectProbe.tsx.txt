@@ -1,0 +1,29 @@
+"use client";
+import { useEffect, useRef } from "react";
+
+/* s-5836: three observers outside the demos directory, each reading
+   isIntersecting behind a threshold array (the combination lib/onscreen.test.ts
+   rejects under every reading of the spec), each reaching the constructor by
+   an indirection the alias resolver does not follow. */
+export default function IndirectProbe() {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    type Entry = { isIntersecting: boolean };
+    type Ctor = new (cb: (es: Entry[]) => void, o: { threshold: number[] }) => { observe(e: Element): void; disconnect(): void };
+    const cb = (es: Entry[]) => { el.dataset.on = String(es[es.length - 1].isIntersecting); };
+    /* 1: a computed key that is still the literal name */
+    const key = "IntersectionObserver";
+    const A = (window as unknown as Record<string, Ctor>)[key];
+    const a = new A(cb, { threshold: [0, 0.35] });
+    /* 2: the name assembled from two halves */
+    const B = (window as unknown as Record<string, Ctor>)["Intersection" + "Observer"];
+    const bb = new B(cb, { threshold: [0, 0.35] });
+    /* 3: no new expression at all */
+    const c = Reflect.construct(IntersectionObserver, [cb, { threshold: [0, 0.35] }]) as { observe(e: Element): void; disconnect(): void };
+    a.observe(el); bb.observe(el); c.observe(el);
+    return () => { a.disconnect(); bb.disconnect(); c.disconnect(); };
+  }, []);
+  return <div ref={ref} />;
+}
