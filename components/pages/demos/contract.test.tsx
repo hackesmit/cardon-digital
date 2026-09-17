@@ -3,12 +3,13 @@ import { readdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { act, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
 import { World } from "./contract/world";
 import { observeOnscreen } from "./motion";
 import { DemoFigure, Hotspot } from "./stage/DemoFigure";
-import type { DemoScene } from "./stage/useDemoStage";
+import type { DemoScene, StageEnv } from "./stage/useDemoStage";
 
 /**
  * Every demo in this directory, mounted and driven (bead hq-3pfhe.7).
@@ -51,12 +52,17 @@ vi.mock("./stage/useDemoStage", async (original) => {
       handed.count++;
       let w = wrapped.get(scene);
       if (!w) {
-        const made: DemoScene = Object.create(scene);
-        made.draw = (env, t) => {
-          handed.scene = scene;
-          handed.env = env;
-          scene.draw(env, t);
-        };
+        /* defined, not assigned: a frozen scene is a lawful scene, and
+           assigning over an inherited read-only property throws */
+        const made: DemoScene = Object.create(scene, {
+          draw: {
+            value: (env: StageEnv, t: number) => {
+              handed.scene = scene;
+              handed.env = env;
+              scene.draw(env, t);
+            },
+          },
+        });
         wrapped.set(scene, (w = made));
       }
       return real.useDemoStage(w, ...rest);
@@ -201,24 +207,30 @@ describe("the checks are load bearing", () => {
        cannot tell it from a visitor arriving. That much is not closable by
        construction; this is the check that sees it. */
     const s = scene((env, t) => env.ctx.fillRect(0, 0, t >= 5 && t < 6.1 ? 50 : t, 10));
-    function Remounts() {
+    function Remounts({ lead = false }: { lead?: boolean }) {
       const [picked, setPicked] = useState(0);
       return (
-        <DemoFigure
-          key={picked}
-          demo="fixture"
-          scene={s}
-          title="t"
-          honest="vista ilustrativa, no son datos de cliente"
-          fallback="prose"
-          selection={picked}
-          hotspots={[0, 1].map((i) => (
-            <Hotspot key={i} picked={i === picked} onPick={() => setPicked(i)} label={"spot " + i} />
-          ))}
-        />
+        <>
+          {lead ? <button type="button">not a hotspot</button> : null}
+          <DemoFigure
+            key={picked}
+            demo="fixture"
+            scene={s}
+            title="t"
+            honest="vista ilustrativa, no son datos de cliente"
+            fallback="prose"
+            selection={picked}
+            hotspots={[0, 1].map((i) => (
+              <Hotspot key={i} picked={i === picked} onPick={() => setPicked(i)} label={"spot " + i} />
+            ))}
+          />
+        </>
       );
     }
     expect(failing(Remounts)).toContain(TAP);
+    /* with another button ahead of them, the second button on the page is
+       the hotspot already chosen, and tapping it changes nothing */
+    expect(failing(() => <Remounts lead />)).toContain(TAP);
   });
 
   it("draws a scene swapped in mid-story at the reading the clock already had", () => {
@@ -306,6 +318,41 @@ describe("the checks are load bearing", () => {
   it("passes a second loop that honours all three gates, so it is the motion and not the loop that fails", () => {
     const Bar = beside({ reduce: true, hidden: true, offscreen: true }, attr);
     expect(failing(() => figure(lawful, <Bar />))).not.toContain(STILL);
+  });
+
+  it("fails a timer that only scrolls, which leaves no mutation, no canvas call and no frame", () => {
+    const Scroller = beside({ reduce: false, hidden: false, offscreen: false }, (el, n) => (el.scrollLeft = n));
+    expect(failing(() => figure(lawful, <Scroller />))).toContain(STILL);
+  });
+
+  it("fails a bar that moves only in the first half second of a page loaded under reduce", () => {
+    const Brief = beside({ reduce: false, hidden: true, offscreen: true }, (el, n) => {
+      if (n < 9) attr(el, n);
+    });
+    expect(failing(() => figure(lawful, <Brief />))).toContain(STILL);
+  });
+
+  it("fails a bar that moves in a portal, outside the mount", () => {
+    const Inner = beside({ reduce: false, hidden: false, offscreen: false }, attr);
+    const Portal = () => createPortal(<Inner />, document.body);
+    expect(failing(() => figure(lawful, <Portal />))).toContain(STILL);
+  });
+
+  it("fails a draw that leaves a transform on the context, and takes a frozen scene", () => {
+    const drifting = scene((env) => {
+      env.ctx.translate(1, 0);
+      env.ctx.fillRect(0, 0, 10, 10);
+    });
+    expect(failing(() => figure(drifting))).toContain(PURE);
+    const kept = Object.freeze(
+      scene((env) => {
+        env.ctx.save();
+        env.ctx.translate(1, 0);
+        env.ctx.fillRect(0, 0, 10, 10);
+        env.ctx.restore();
+      }),
+    );
+    expect(failing(() => figure(kept))).not.toContain(PURE);
   });
 
   it("fails a loop that leaves no mutation and no canvas call, only frames asked for", () => {
