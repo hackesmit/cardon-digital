@@ -600,20 +600,27 @@ describe("the checks are load bearing", () => {
     expect(await failing(() => figure(lawfulBar, <Portal />))).toEqual([MOVES]);
   });
 
+  /* with its cleanup, as an effect owes: a listener left on the window would
+     fire on the next test's page */
+  const listen = (on: EventTarget, type: string, fn: () => void) => {
+    on.addEventListener(type, fn);
+    return () => on.removeEventListener(type, fn);
+  };
   const fade = (el: HTMLElement) => void el.animate?.([{ opacity: 0.5 }, { opacity: 1 }], 900);
   it.each<[string, (el: HTMLElement) => void | (() => void)]>([
     ["forty seconds into the page, from a timer", (el) => void window.setTimeout(() => fade(el), 40000)],
-    ["when the theme changes", (el) => window.addEventListener("cardon-mode", () => fade(el))],
-    ["when the window is resized", (el) => window.addEventListener("resize", () => fade(el))],
-    ["when the tab comes back", (el) => document.addEventListener("visibilitychange", () => void (document.hidden || fade(el)))],
-    ["when reduce is turned ON, as a gentler stand-in", (el) =>
-      window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (e) => void (e.matches && fade(el)))],
+    ["when the theme changes", (el) => listen(window, "cardon-mode", () => fade(el))],
+    ["when the window is resized", (el) => listen(window, "resize", () => fade(el))],
+    ["when the tab comes back", (el) => listen(document, "visibilitychange", () => void (document.hidden || fade(el)))],
+    ["when reduce is turned ON, as a gentler stand-in", (el) => {
+      window.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", (e) => void (e.matches && fade(el)));
+    }],
     ["from a promise, after the effect has returned", (el) => void Promise.resolve().then(() => Promise.resolve()).then(() => fade(el))],
     ["after a dynamic import", (el) => void import("./floor").then(() => fade(el))],
   ])("fails a Web Animation started %s", async (_, arrange) => {
     function Later() {
       const el = useRef<HTMLSpanElement>(null);
-      useEffect(() => void arrange(el.current!), []);
+      useEffect(() => arrange(el.current!), []);
       return <span ref={el} />;
     }
     expect(await failing(() => figure(lawfulBar, <Later />))).toEqual([MOVES]);
@@ -655,8 +662,11 @@ describe("the checks are load bearing", () => {
       document.head.appendChild(el);
     }],
     ["a rule inserted into a sheet that was already there", () => {
-      const sheet = document.querySelector<HTMLStyleElement>("noscript style")?.sheet;
-      sheet?.insertRule(".demo-readout{animation:pulse 1s infinite !important}");
+      /* the element is gone again before anybody can look, so the door is
+         the only witness; in a browser the target is any sheet on the page */
+      const el = document.head.appendChild(document.createElement("style"));
+      el.sheet?.insertRule(".demo-readout{animation:pulse 1s infinite !important}");
+      el.remove();
     }],
     ["an adopted stylesheet", () => {
       document.adoptedStyleSheets = [...document.adoptedStyleSheets];
