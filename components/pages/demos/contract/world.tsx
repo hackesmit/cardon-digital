@@ -22,6 +22,13 @@ import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
     was built by hand. */
 export const provenance = { depth: 0 };
 
+/** What the stage was last asked to draw, and on what. contract.test.tsx
+    wraps the real useDemoStage to fill it in, the same way it marks
+    observeOnscreen: the hook runs untouched, and the purity check in
+    ./checks.tsx gets the scene a mounted demo really handed over, with the
+    board the stage really built for it, instead of a copy it made up. */
+export const handed: { scene: unknown; env: unknown; count: number } = { scene: null, env: null, count: 0 };
+
 interface Entry {
   isIntersecting: boolean;
   intersectionRatio: number;
@@ -82,6 +89,11 @@ export class World {
   ros: FakeRO[] = [];
   mqls: FakeMQL[] = [];
   log: string[] = [];
+  /** Frames asked for, by anybody, ever. A board that may not animate asks
+      for none, and the count does not care who asked or how it was spelled. */
+  framesRequested = 0;
+  private timers = new Map<number, { cb: () => void; at: number; every: number | null }>();
+  private timerId = 0;
   private rafs = new Map<number, (now: number) => void>();
   private rafId = 0;
   private restore: (() => void)[] = [];
@@ -154,7 +166,26 @@ export class World {
         removeListener: (fn: never) => me.listeners.delete(fn),
       };
     });
+    /* Timers run on the page's clock too, so an animation driven by
+       setInterval moves when tick() says time passed, not when the test
+       runner's event loop gets round to it (which is after the check). */
+    const timer = (every: boolean) => (cb: unknown, ms?: number, ...args: unknown[]) => {
+      if (typeof cb !== "function") return 0;
+      const wait = Math.max(every ? 1 : 0, Number(ms) || 0);
+      world.timers.set(++world.timerId, {
+        cb: () => (cb as (...a: unknown[]) => void)(...args),
+        at: world.now + wait,
+        every: every ? wait : null,
+      });
+      return world.timerId;
+    };
+    const untimer = (id: unknown) => void world.timers.delete(id as number);
+    put("setTimeout", timer(false));
+    put("setInterval", timer(true));
+    put("clearTimeout", untimer);
+    put("clearInterval", untimer);
     put("requestAnimationFrame", (cb: (now: number) => void) => {
+      world.framesRequested++;
       world.rafs.set(++world.rafId, cb);
       return world.rafId;
     });
@@ -263,6 +294,12 @@ export class World {
       this.rafs.clear();
       const from = this.log.length;
       act(() => {
+        for (const [id, t] of Array.from(this.timers)) {
+          if (t.at > this.now || !this.timers.has(id)) continue;
+          if (t.every === null) this.timers.delete(id);
+          else t.at = this.now + t.every;
+          t.cb();
+        }
         for (const cb of due) cb(this.now);
       });
       if (this.log.length > from) frames.push(lastFrame(this.log.slice(from)));

@@ -4,7 +4,8 @@ import { expect, vi } from "vitest";
 import { demos } from "../../../../lib/i18n/demos";
 import { LocaleProvider } from "../../../../lib/i18n/LocaleProvider";
 import { GHOST_BOXES, GHOSTS } from "./ghosts";
-import { World } from "./world";
+import type { DemoScene, StageEnv } from "../stage/useDemoStage";
+import { handed, World } from "./world";
 
 /**
  * The demo contract as behaviours (bead hq-3pfhe.7).
@@ -93,7 +94,8 @@ const expectPainted = (frame: string, what: string) =>
   expect(PAINTS.test(frame), what + " puts nothing on the canvas").toBe(true);
 
 const describeEl = (el: Element) =>
-  "<" + el.tagName.toLowerCase() + (el.className ? ' class="' + el.className + '"' : "") + ">";
+  /* the attribute: an SVG element's className is an object */
+  "<" + el.tagName.toLowerCase() + (el.getAttribute("class") ? ' class="' + el.getAttribute("class") + '"' : "") + ">";
 
 /** No IntersectionObserver but the one ./motion builds. How the constructor
     was reached is irrelevant: every spelling lands on the world's stub. */
@@ -136,6 +138,47 @@ const judgeWrites = (records: MutationRecord[], when: string) => {
       ).toContain(live.textContent);
     }
   }
+};
+
+/** Everything that can move on a page, watched at once: frames asked for,
+    calls on the canvas, and every mutation under the mount, with NO attribute
+    filter. The motion checks used to read the 2d context alone, so a bar
+    animated by rewriting an SVG attribute from a loop of the demo's own ran
+    under prefers-reduced-motion, in a hidden tab and off screen with the
+    suite green (reviewer s-2e55, B2).
+
+    WHY THIS IS A CHECK AND NOT A CONSTRUCTION. The stage can own the clock,
+    the gates and the canvas because a demo has to be handed them. It cannot
+    own requestAnimationFrame, setInterval or the DOM: a component is a
+    function, and a function can start a loop. There is nothing to take away.
+    What can be done is to judge the whole page and not the mechanism's
+    corner of it, through the globals, where no spelling gets past. */
+const watchPage = (w: World) => {
+  const seen: MutationRecord[] = [];
+  const mo = new MutationObserver((r) => seen.push(...r));
+  mo.observe(w.container, {
+    subtree: true,
+    childList: true,
+    characterData: true,
+    attributes: true,
+  });
+  const frames = w.framesRequested;
+  const drawn = w.log.length;
+  return () => {
+    const records = seen.concat(mo.takeRecords());
+    mo.disconnect();
+    return {
+      frames: w.framesRequested - frames,
+      drawn: w.log.length - drawn,
+      mutations: records.map(
+        (r) =>
+          r.type +
+          (r.attributeName ? ":" + r.attributeName : "") +
+          " on " +
+          describeEl(r.target.nodeType === 1 ? (r.target as Element) : r.target.parentElement!),
+      ),
+    };
+  };
 };
 
 export const checks: Record<string, (Demo: Demo) => void> = {
@@ -215,6 +258,148 @@ export const checks: Record<string, (Demo: Demo) => void> = {
       }
     }),
 
+  "a tap changes the selection and nothing about the time": (Demo) => {
+    /* Reviewer s-2e55, B1. The stage's effect was keyed on the scene object,
+       a demo that built its scene in the component body handed over a new one
+       on every tap, and each tap built a new clock whose first start tells
+       the story from the top: 'servicio en su punto', one tap, 'empieza el
+       servicio'. The stage now lives as long as the mount (../stage/
+       useDemoStage.ts), so this cannot happen THROUGH the stage; the check is
+       for a demo that keeps time some other way, and for the day somebody
+       gives that effect a dependency again.
+
+       The page is deterministic, so the judge is a second page. One visitor
+       taps before the board comes into view and one taps three seconds into
+       the story. From the tap on they have the same selection, so they must
+       see the same frames: any difference is time the tap moved. */
+    const story = (tapAfter: number) => {
+      let frames: string[] = [];
+      let buttons = 0;
+      withWorld({}, (w) => {
+        w.mount(Demo);
+        act(() => w.width(800));
+        const tap = () => {
+          const all = Array.from(w.container.querySelectorAll("button"));
+          buttons = all.length;
+          if (all.length > 1) act(() => all[1].click());
+          /* a browser tells every NEW observer where its target is; the stub
+             does not, so say it again: nothing to a stage that survived the
+             tap, the first start of its clock to one the tap rebuilt */
+          if (tapAfter > 0) act(() => w.onscreen(1));
+        };
+        if (tapAfter === 0) tap();
+        act(() => w.onscreen(1));
+        w.tick(tapAfter);
+        if (tapAfter > 0) tap();
+        frames = w.tick(3008 + 608 - tapAfter).slice(-15);
+      });
+      return { frames, buttons };
+    };
+    const control = story(0);
+    if (control.buttons < 2) return;
+    expect(control.frames.length).toBe(15);
+    expect(
+      story(3008).frames.filter((f, i) => f !== control.frames[i]).length,
+      "frames in the 0.6s after a tap three seconds into the story that a visitor who tapped before it began did not see",
+    ).toBe(0);
+
+    /* and in the hold, where the reviewer measured it: the hold is still, so
+       a tap that leaves time alone is followed by one frame, over and over */
+    withWorld({}, (w) => {
+      w.mount(Demo);
+      act(() => w.width(800));
+      act(() => w.onscreen(1));
+      w.tick(3000);
+      act(() => w.onscreen(0));
+      act(() => w.onscreen(1));
+      w.tick(300);
+      const all = Array.from(w.container.querySelectorAll("button"));
+      act(() => all[1].click());
+      act(() => w.onscreen(1));
+      const after = w.tick(600);
+      expect(after.length, "frames in the 0.6s after a tap inside the hold").toBeGreaterThan(5);
+      expect(
+        new Set(after).size,
+        "distinct frames in the 0.6s after a tap inside the hold, which is still",
+      ).toBe(1);
+    });
+  },
+
+  "when it may not animate, nothing on the page moves: no frame asked for, no canvas call, no mutation": (Demo) => {
+    const still: [string, Partial<World>, (w: World) => void][] = [
+      ["under prefers-reduced-motion", { reduce: true }, () => {}],
+      ["in a hidden tab", {}, (w) => w.setHidden(true)],
+      ["scrolled off screen", {}, (w) => w.onscreen(0)],
+    ];
+    for (const [when, setup, leave] of still) {
+      withWorld(setup, (w) => {
+        w.mount(Demo);
+        act(() => w.width(800));
+        act(() => w.onscreen(1));
+        w.tick(500);
+        act(() => leave(w));
+        const stop = watchPage(w);
+        w.tick(1500);
+        const moved = stop();
+        expect(moved.mutations.slice(0, 3), "DOM mutations in 1.5s " + when).toEqual([]);
+        expect(moved.drawn, "canvas calls in 1.5s " + when).toBe(0);
+        expect(moved.frames, "frames asked for in 1.5s " + when).toBe(0);
+      });
+    }
+  },
+
+  "draws the same frame for the same reading, whatever it drew before": (Demo) =>
+    withWorld({}, (w) => {
+      /* Reviewer s-2e55, B3: draw() is called once per frame, so it is a
+         tick, and a scene can count its calls, keep a clock of its own in a
+         closure and use the shared reading only to recognise the hold. Its
+         story ran backwards with every check green, because 'only forward' is
+         a property of the number and the picture is whatever draw makes of
+         it. docs/demos.md said 'draw keeps no memory between calls' in prose.
+
+         WHY THIS IS A CHECK AND NOT A CONSTRUCTION. A closure can hold
+         anything and no type says otherwise, so the stage cannot hand draw a
+         reading and also take away its memory. What it can do is ask twice:
+         the scene the mounted demo really handed over, on the board the stage
+         really built, drawn at the same reading twice and then out of order.
+         A scene with a clock of its own cannot answer the same way twice. */
+      handed.scene = null;
+      const before = handed.count;
+      w.mount(Demo);
+      act(() => w.width(800));
+      act(() => w.onscreen(1));
+      w.tick(1000);
+      act(() => w.onscreen(0));
+      expect(
+        handed.count,
+        "scenes handed to useDemoStage (none: the demo draws outside the shared stage, or this test file does not wrap ./stage/useDemoStage)",
+      ).toBeGreaterThan(before);
+      const scene = handed.scene as DemoScene;
+      const env = handed.env as StageEnv;
+      expect(env, "the stage drew the scene at least once").not.toBeNull();
+      const at = (t: number) => {
+        const from = w.log.length;
+        env.ctx.clearRect(0, 0, env.W, env.H);
+        scene.draw(env, t);
+        return w.log.slice(from).join(";");
+      };
+      const { cycle, standing } = scene.clock;
+      const readings = [0, standing * 0.31, standing * 0.74, standing, (standing + cycle) / 2, cycle * 0.97];
+      const first = readings.map(at);
+      readings.forEach((t) =>
+        expect(at(t) === at(t), "the reading " + t.toFixed(2) + " drawn twice in a row is one frame").toBe(true),
+      );
+      /* backwards, which no running loop ever does */
+      const back = readings.slice().reverse().map(at).reverse();
+      readings.forEach((t, i) =>
+        expect(back[i] === first[i], "the reading " + t.toFixed(2) + " drawn out of order is the frame it was in order").toBe(true),
+      );
+      for (const text of scene.live) {
+        const keys = readings.map((t) => text.at(t));
+        expect(readings.slice().reverse().map((t) => text.at(t)).reverse(), "the words at a reading").toEqual(keys);
+      }
+    }),
+
   "rewrites nothing whose box is not held open by ghosts": (Demo) =>
     withWorld({}, (w) => {
       w.mount(Demo);
@@ -228,8 +413,9 @@ export const checks: Record<string, (Demo: Demo) => void> = {
         subtree: true,
         childList: true,
         characterData: true,
+        /* every attribute: a filter here is how an SVG width animated
+           by a second loop went unseen (reviewer s-2e55, B2) */
         attributes: true,
-        attributeFilter: ["style", "class", "hidden"],
       });
       act(() => w.onscreen(1));
       w.tick(60000);

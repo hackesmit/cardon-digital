@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 import { observeOnscreen, shouldAnimate } from "../motion";
 import { fitCanvas, readDemoPalette, type DemoHue, type DemoPalette } from "../palette";
-import { createClock, type ClockSpec } from "./clock";
+import { createClock, type ClockSpec, type DemoClock } from "./clock";
 import { isPhonePlan } from "./plan";
 
 /**
@@ -92,8 +92,30 @@ export const HOTSPOT = "rd-btn";
 export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: number): void {
   const select = useRef<((selection: number) => void) | null>(null);
   const latest = useRef(selection);
+  const rescene = useRef<((scene: DemoScene) => void) | null>(null);
+  const first = useRef(scene);
+
+  /* THE STAGE LIVES AS LONG AS THE MOUNT, and nothing a demo renders can
+     shorten that (reviewer s-2e55, B1). This effect used to depend on [scene],
+     so the clock's lifetime was the scene object's identity, and identity is
+     the caller's: a demo that built its scene in the component body, which
+     nothing forbade and any author does on day one, handed over a new object
+     on every tap, the stage was torn down, and the new clock's never-ran flag
+     was fresh. A visitor who tapped a tank in the hold read 'servicio en su
+     punto' and then 'empieza el servicio'.
+
+     So the effect below has NO dependencies, and the clock is in a ref as
+     well, built once per mount, so that a dependency added here later costs a
+     rebuilt observer and not a restarted story. A new scene object arrives
+     through rescene, further down, which swaps the picture and leaves the
+     time alone. There is no scene a demo can render, memoised or not, that
+     reaches the clock. */
+  const clockRef = useRef<DemoClock | null>(null);
 
   useEffect(() => {
+    /* whatever the latest render handed over; every closure below reads this
+       binding, so none of them holds on to a scene that has been replaced */
+    let scene = first.current;
     const figureEl = refs.figure.current;
     const frameEl = refs.stage.current;
     const canvas = refs.canvas.current;
@@ -116,7 +138,7 @@ export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: numbe
 
     /* The clock is built here and never leaves: a scene sees its reading and
        nothing else. See ./clock.ts for the three defects that is for. */
-    const clock = createClock(scene.clock);
+    const clock = (clockRef.current ??= createClock(scene.clock));
     let raf = 0;
     let last = 0;
 
@@ -134,7 +156,8 @@ export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: numbe
         if (shown.get(text.name) === key) continue;
         const node = refs.live.current?.get(text.name);
         if (!node) continue;
-        node.textContent = text.values[key];
+        /* a scene swapped in mid-hold usually says what is already there */
+        if (node.textContent !== text.values[key]) node.textContent = text.values[key];
         shown.set(text.name, key);
       }
     };
@@ -291,6 +314,28 @@ export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: numbe
       env.pal = readDemoPalette(frameEl, scene.hue);
       if (!clock.running()) stand();
     };
+    /* A new scene object: a locale change, or a demo that builds its scene on
+       every render. It is a new PICTURE, so its geometry is rebuilt and the
+       words are written again, and it is not a new STORY: the clock, the
+       gates and the observers are not touched. The clock keeps the cycle it
+       was built with, because a clock whose length a render can change is a
+       clock a render can wind back. */
+    rescene.current = (next) => {
+      if (next === scene) return;
+      scene = next;
+      env.pal = readDemoPalette(frameEl, scene.hue);
+      shown.clear();
+      if (scene.height(env.W, env.phone) !== env.H) {
+        resize();
+      } else {
+        /* the same board: only the geometry is the new scene's to rebuild.
+           Refitting the canvas would blank it until the next frame. */
+        scene.layout(env);
+        positionHotspots();
+      }
+      /* at the reading the clock already has, running or parked */
+      paint();
+    };
 
     resize();
     armDpr();
@@ -347,6 +392,7 @@ export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: numbe
       halt();
       clock.park();
       select.current = null;
+      rescene.current = null;
       unobserve();
       if (ro) ro.disconnect();
       window.clearTimeout(rt);
@@ -356,8 +402,14 @@ export function useDemoStage(scene: DemoScene, refs: StageRefs, selection: numbe
       window.removeEventListener("cardon-mode", onMode);
       if (dprMQ) dprMQ.removeEventListener("change", onDpr);
     };
-    /* refs are stable objects; the scene is the only thing that remounts */
+    /* No dependencies, on purpose: see the top of this hook. refs are stable
+       objects and the scene arrives through rescene. */
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    first.current = scene;
+    rescene.current?.(scene);
   }, [scene]);
 
   /* A selection has to show on the board too, and on a still board nothing

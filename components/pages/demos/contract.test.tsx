@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { useEffect, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
-import { DemoFigure } from "./stage/DemoFigure";
+import { DemoFigure, Hotspot } from "./stage/DemoFigure";
 import type { DemoScene } from "./stage/useDemoStage";
 
 /**
@@ -32,6 +32,32 @@ vi.mock("./motion", async (original) => {
       } finally {
         provenance.depth--;
       }
+    },
+  };
+});
+
+/* The same for the stage: the real hook runs, and what it is handed and what
+   it hands draw() are written down for the purity check. The wrapper is one
+   object per scene, so it adds no identity churn of its own. */
+vi.mock("./stage/useDemoStage", async (original) => {
+  const real = await original<typeof import("./stage/useDemoStage")>();
+  const { handed } = await import("./contract/world");
+  const wrapped = new WeakMap<object, DemoScene>();
+  return {
+    ...real,
+    useDemoStage: (scene: DemoScene, ...rest: [never, never]) => {
+      handed.count++;
+      let w = wrapped.get(scene);
+      if (!w) {
+        const made: DemoScene = Object.create(scene);
+        made.draw = (env, t) => {
+          handed.scene = scene;
+          handed.env = env;
+          scene.draw(env, t);
+        };
+        wrapped.set(scene, (w = made));
+      }
+      return real.useDemoStage(w, ...rest);
     },
   };
 });
@@ -104,6 +130,35 @@ describe("the checks are load bearing", () => {
     );
   });
 
+  /* The s-2e55 three: each USES the shared stage, as docs/demos.md describes,
+     and each passed the whole suite, 316 of 316, when it was written. */
+  const TAP = "a tap changes the selection and nothing about the time";
+  const STILL =
+    "when it may not animate, nothing on the page moves: no frame asked for, no canvas call, no mutation";
+  const PURE = "draws the same frame for the same reading, whatever it drew before";
+
+  it("passes the s-2e55 tap demo, because a scene built on every render no longer reaches the clock", async () => {
+    /* B1 is closed in the stage and not by a check, so the fixture that
+       restarted its story on every tap is now simply a correct demo. The
+       check it used to need is held red by the remounting demo below, and
+       against the old stage by the mutation table in state/review/s-07b8. */
+    expect(failing(await load("../../../lib/testing/loopholes/demos/TapRestartDemo.tsx"))).toEqual([]);
+  });
+
+  it("fails the s-2e55 SVG bar, a second loop beside the stage that asks nobody whether it may run", async () => {
+    const failed = failing(await load("../../../lib/testing/loopholes/demos/SvgLoopDemo.tsx"));
+    expect(failed).toEqual(expect.arrayContaining([STILL, WRITES]));
+    /* its canvas is lawful, so it is the bar the checks object to */
+    expect(failed).not.toContain(STANDS);
+    expect(failed).not.toContain(CLOCK);
+    expect(failed).not.toContain(PURE);
+  });
+
+  it("fails the s-2e55 closure clock, whose draw() counts its calls", async () => {
+    const failed = failing(await load("../../../lib/testing/loopholes/demos/OwnClockDemo.tsx"));
+    expect(failed).toContain(PURE);
+  });
+
   /* Two demos that use the mechanism faithfully and still should not pass,
      found by the cross-vendor review of this harness. */
   const scene = (draw: DemoScene["draw"]): DemoScene => ({
@@ -136,6 +191,32 @@ describe("the checks are load bearing", () => {
     const ok = failing(() => figure(painted));
     expect(ok).not.toContain(STANDS);
     expect(ok).not.toContain(CLOCK);
+  });
+
+  it("fails a demo that remounts its figure on every tap, the one way left to restart the story", () => {
+    /* A key is React's way of saying 'a different component', so a figure
+       keyed on the selection IS a new mount with a new clock, and the stage
+       cannot tell it from a visitor arriving. That much is not closable by
+       construction; this is the check that sees it. */
+    const s = scene((env, t) => env.ctx.fillRect(0, 0, t >= 5 && t < 6.1 ? 50 : t, 10));
+    function Remounts() {
+      const [picked, setPicked] = useState(0);
+      return (
+        <DemoFigure
+          key={picked}
+          demo="fixture"
+          scene={s}
+          title="t"
+          honest="vista ilustrativa, no son datos de cliente"
+          fallback="prose"
+          selection={picked}
+          hotspots={[0, 1].map((i) => (
+            <Hotspot key={i} picked={i === picked} onPick={() => setPicked(i)} label={"spot " + i} />
+          ))}
+        />
+      );
+    }
+    expect(failing(Remounts)).toContain(TAP);
   });
 
   it("fails a button that only exists once an effect has run", () => {
