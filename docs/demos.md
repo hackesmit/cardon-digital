@@ -47,10 +47,30 @@ second.
 | `hotspots(env)` | where each hotspot sits, as fractions of the board |
 | `live` | the texts the loop rewrites in the DOM, each as a set of named values and a function from `cycT` to the name showing |
 
-`draw` is the whole of your animation. It is called with the clock's reading
-and keeps no memory between calls, because the same call draws the running
-loop, the paused board and the reduced-motion frame. It never sees the clock
-itself.
+`draw` is the whole of your animation, and that is meant literally: anything
+that moves is either drawn by `draw` or is a `live` text. There is no third
+way. A bar in the readout strip animated by a loop of your own has asked
+nobody whether it may run, and the s-2e55 review measured one doing 13.7 to
+26.2 in half a second under prefers-reduced-motion. If a thing should move,
+draw it on the canvas from `cycT`.
+
+`draw` is a function of its two arguments. It is called with the clock's
+reading and keeps no memory between calls, because the same call draws the
+running loop, the paused board and the reduced-motion frame. It never sees the
+clock itself, and it must not grow one: it is called once per frame, so a
+counter in its closure is a second clock, and the same review ran a story
+backwards with one. This is checked (section 3): the suite draws your scene at
+the same reading twice and then backwards, and every reading has to be one
+frame.
+
+**Where the scene is built does not matter.** `RestauranteDemo.tsx` builds it
+behind `useMemo` so the geometry is not rebuilt on every tap, and that is an
+economy, not a rule. A scene built in the component body is a new object on
+every render; the stage treats a new object as a new picture at the same
+moment (it runs `layout`, places the hotspots, rewrites the words and repaints
+at the reading the clock already has) and never as a new story. What a scene
+cannot change after the mount is its `clock`: the stage reads `cycle` and
+`standing` once.
 
 **Markup**, through `<DemoFigure>`, `<Hotspot>` and `<PickBox>` from
 `stage/DemoFigure.tsx`. You pass the title, the dictionary's honest label, the
@@ -75,6 +95,20 @@ The fix for that was a never-ran flag, and the s-5836 demo reset the flag in
 Choose `standing` as the FIRST frame of your hold: the last frame draws the
 same pixels, but a demo parked there dips into the loop seam the moment it
 resumes.
+
+**The stage's lifetime.** The clock, the gates and the observers are built
+once per mount and live exactly as long as it. The stage's effect used to
+depend on the scene object, so its lifetime was the scene's identity, and
+identity belongs to the caller: the s-2e55 demo built its scene in the
+component body, every tap re-rendered, the stage was torn down and the new
+clock's first start told the story from the top. A visitor who tapped a tank
+in the hold read 'servicio en su punto' and then 'empieza el servicio'. The
+effect now has no dependencies, the clock sits in a ref besides, and a new
+scene arrives through a handler that swaps the picture and does not touch the
+time. One way to restart a story is left, because it is React's definition of
+a new component and not the stage's to refuse: a `key` on `<DemoFigure>` that
+changes. Do not key the figure on anything a visitor can change; the tap check
+in section 3 fails a demo that does.
 
 **The three motion gates.** A demo animates only when the visitor has not
 asked for reduced motion, the tab is in front, and the figure is on screen.
@@ -159,11 +193,24 @@ the observer's constructor, it arrives at the stand-in. The checks
 | loads in view and watches three seconds | the standing frame is among the first frames: the story opened on its ending |
 | scrolls away, comes back; hides the tab, comes back | the paused board is not the standing frame, or any frame in the second after the return is not the frame it was parked on, or the loop never leaves the hold again |
 | counts observers at the global | one was constructed outside `observeOnscreen` |
-| watches every DOM mutation across a full cycle, then taps every button | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop touched `style`, `class` or `hidden` |
+| taps a hotspot three seconds into the story, and again inside the hold | the frames after the tap are not the frames of a visitor who made the same choice before the story began, or the hold stops being still: the tap moved time |
+| loads under reduce; hides the tab; scrolls away; and each time watches the whole page for a second and a half | a frame was asked for by anybody, or any canvas was drawn on, or anything under the mount was mutated, any attribute included: timers run on the page's clock, so a `setInterval` is seen as surely as a frame loop |
+| takes the scene the mounted demo handed the stage and draws six readings in order, again, and backwards | any reading drew a different frame the second or third time, or a `live` text answered differently: `draw` has a memory |
+| watches every DOM mutation across a full cycle, then taps every button | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop changed any attribute of anything |
 | looks for `aria-live` and the live roles in the mounted tree | one sits outside a ghost box |
 | mounts, runs the loop, taps every button, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
 | renders to static markup and reads the noscript rule against it | a canvas, anything operable, or any string the dictionary files under `hint` is still on the page; or the fallback, the honest label or the readout is not |
 | delivers 639.6, 640.2 and 639.9 under an ancestor scaled by two | `data-plan` is not phone, wide, phone, or the backing store is not the layout width |
+
+Two of those three are checks because there is nothing to construct. The
+stage owns the clock, the gates and the canvas because a demo has to be handed
+them; it cannot own `requestAnimationFrame` or the DOM, and it cannot take a
+closure's memory away, so the page is judged whole and `draw` is asked twice.
+The tap row is different: the stage makes it true for every demo that does not
+re-key its figure, and the check is there for the one that does. None of this
+is a promise against an author who sets out to defeat it. It is a promise that
+an author acting in good faith, who makes the mistakes the last three reviews
+made on purpose, is told so by a red test.
 
 Three consequences for your timeline, since the harness is black-box: the
 standing frame must not appear in the first three seconds of the story, the
