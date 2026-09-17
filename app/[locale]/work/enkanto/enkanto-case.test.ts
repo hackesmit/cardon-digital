@@ -183,14 +183,29 @@ describe("the counts the basis paragraph is accountable for", () => {
    * PAYMENTS diagram and watched the page publish five with every check green.
    * The count is only meaningful inside the drawing it is accounting for.
    */
-  function structureSvg(markup: string, aria: string): string {
+  function structureRows(markup: string, aria: string): string {
     const at = markup.indexOf(`aria-label="${aria}"`);
     expect(at, "no svg on the page carries the structure diagram's accessible name").toBeGreaterThan(-1);
     const open = markup.lastIndexOf("<svg", at);
     const close = markup.indexOf("</svg>", at);
     expect(open, "the structure diagram's accessible name is not on an svg").toBeGreaterThan(-1);
     expect(close, "the structure diagram's svg is never closed").toBeGreaterThan(open);
-    return markup.slice(open, close);
+    const svg = markup.slice(open, close);
+
+    // Round four scoped the count to the SVG, and round four's review pointed out
+    // that an svg is not a row: a legend swatch, or a label drawn outside the
+    // viewBox, still bought the paragraph another homepage. So the count is scoped
+    // to the group that draws the front doors and nothing else.
+    const g = svg.indexOf('<g class="e-front-doors"');
+    expect(g, "the structure diagram no longer marks which group draws the front doors").toBeGreaterThan(-1);
+    const gEnd = svg.indexOf("</g>", g);
+    expect(gEnd, "the front-doors group is never closed").toBeGreaterThan(g);
+    const rows = svg.slice(g, gEnd);
+    expect(
+      rows.includes("<g"),
+      "the front-doors group now nests another group, so this slice is no longer the rows",
+    ).toBe(rows.indexOf("<g") === rows.lastIndexOf("<g"));
+    return rows;
   }
 
   /**
@@ -216,8 +231,9 @@ describe("the counts the basis paragraph is accountable for", () => {
     });
 
     it(`${locale}: the basis sentence's homepage count is the rows drawn unpublished`, () => {
-      // Scoped to the structure diagram, never the whole page: see structureSvg.
-      const diagram = structureSvg(basisMarkup(locale), d.vis.structure.aria);
+      // Scoped to the rows that draw the front doors, not to the page and not even
+      // to the diagram: see structureRows.
+      const diagram = structureRows(basisMarkup(locale), d.vis.structure.aria);
       const down = labelled(diagram, d.vis.structure.unpublished);
       const kept = labelled(diagram, d.vis.structure.canonical);
       // The fifth front door is not a deletion, it is the store that survived,
@@ -282,22 +298,68 @@ describe("the counts the basis paragraph is accountable for", () => {
         covered.push([m!.index, m!.index + m![0].length]);
       }
 
-      // Detection vocabulary, deliberately wider than the value map above: this
-      // has to notice a numeral it cannot evaluate, because an unreadable count
-      // is exactly as unheld as an unread one. Digits are caught whatever they
-      // spell.
-      const WORDS = [
-        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-        "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-        "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty",
-        "fifty", "sixty", "seventy", "eighty", "ninety", "hundred", "thousand",
-        "un", "una", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete",
-        "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince",
-        "dieciséis", "diecisiete", "dieciocho", "diecinueve", "veinte",
-        "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta",
-        "noventa", "cien", "ciento", "mil",
-      ];
-      const numeral = new RegExp(`\\d+|\\b(?:${WORDS.join("|")})\\b`, "gi");
+      // PARTIAL BY CONSTRUCTION, and the bound is written down rather than
+      // implied. Round four's review (s-641a) measured the first version of this
+      // vocabulary and found it held the two locales unequally: English missed
+      // only "zero" among the cardinals under a thousand but every quantity word,
+      // while Spanish missed 90 of 1000 cardinals, the whole 21 to 29 range
+      // (veintidos is one word where twenty-two is two) and every round hundred
+      // from 200 to 900. Those specific gaps are closed and the list is now per
+      // locale, but the approach is still a vocabulary, so a count phrased in a
+      // word nobody listed is still a count this case never sees. Digits are
+      // caught whatever they spell. "Every numeral" was never true and no comment
+      // here should say it is.
+      //
+      // Three generations of a lexical guard over this sentence have each lost to
+      // the next wording. The structural answer, which retires this case rather
+      // than widening it again, is hq-4pu0q.24: generate the sentence's numerals
+      // from the same data the module lists and the structure diagram render, so
+      // the prose cannot disagree with the page and there is nothing left to
+      // guard.
+      // Per locale, not one shared list. A shared list flagged English "once"
+      // (Spanish for eleven) as a count and pushed authors towards digit-free
+      // phrasing this case cannot see at all (s-641a, non-blocking).
+      const WORDS: Record<Locale, string[]> = {
+        en: [
+          "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+          "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+          "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty",
+          "fifty", "sixty", "seventy", "eighty", "ninety", "hundred", "thousand",
+          "zero", "dozen", "dozens", "hundreds", "thousands", "million",
+          "both", "half", "twice", "double", "triple", "pair", "couple", "single",
+          "millions", "several", "bilingual", "trilingual",
+          "first", "second", "third", "fourth", "fifth",
+        ],
+        es: [
+          // "un", "una" and "uno" are omitted on purpose: they are articles far
+          // more often than counts here.
+          "dos", "tres", "cuatro", "cinco", "seis", "siete",
+          "ocho", "nueve", "diez", "once", "doce", "trece", "catorce", "quince",
+          "dieciséis", "diecisiete", "dieciocho", "diecinueve", "veinte",
+          "veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco",
+          "veintiséis", "veintisiete", "veintiocho", "veintinueve",
+          "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta",
+          "noventa", "cien", "ciento", "doscientos", "trescientos",
+          "cuatrocientos", "quinientos", "seiscientos", "setecientos",
+          "ochocientos", "novecientos", "mil", "cero",
+          "docena", "docenas", "cientos", "miles", "millón", "ambos", "ambas",
+          "mitad", "doble", "triple", "único", "única", "par", "millones",
+          "varios", "varias", "bilingüe", "trilingüe",
+          "primer", "primera", "segundo", "segunda", "tercer", "tercera",
+          "veintiún", "doscientas", "trescientas", "cuatrocientas",
+          "quinientas", "seiscientas", "setecientas", "ochocientas",
+          "novecientas",
+        ],
+      };
+      // Unicode-aware boundaries, not \b: JavaScript's \b is defined on [A-Za-z0-9_],
+      // so a word that STARTS with an accent ("unico" with its acute) never matches
+      // behind a leading \b. That silently dropped one Spanish quantity word and
+      // would drop any future one, which is the quiet kind of hole this whole case
+      // exists to avoid.
+      const numeral = new RegExp(
+        `\\d+|(?<![\\p{L}\\p{N}])(?:${WORDS[locale].join("|")})(?![\\p{L}\\p{N}])`,
+        "giu",
+      );
 
       const unaccounted: string[] = [];
       for (let m = numeral.exec(sentence); m !== null; m = numeral.exec(sentence)) {
@@ -308,7 +370,7 @@ describe("the counts the basis paragraph is accountable for", () => {
 
       expect(
         unaccounted,
-        `the basis sentence publishes a count no case in this block reads, so nothing holds it to the page: ${unaccounted.join(", ")}. Add a pattern to CLAIMS and a case that compares it with what the page draws.`,
+        `the basis sentence publishes a count no case in this block reads, so nothing holds it to the page: ${unaccounted.join(", ")}. Add a pattern to CLAIMS and a case that compares it with what the page draws. Note this detection is partial (see the comment above and hq-4pu0q.24), so a clean run here is not proof that every count is held.`,
       ).toEqual([]);
     });
   }
