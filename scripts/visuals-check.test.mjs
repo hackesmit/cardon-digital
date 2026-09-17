@@ -994,7 +994,7 @@ test("facultyMoved applies rule 4's two tests itself", () => {
     "a/b/live.tsx",
     "an unstaged helper is still a home while the loss is unstaged too",
   );
-  const inHead = [new Set(lost), new Set()];
+  const inHead = [lost, null];
   assert.equal(
     facultyMoved(lost, arrival("a/b/live.tsx"), untracked, inHead),
     null,
@@ -1008,37 +1008,48 @@ test("facultyMoved applies rule 4's two tests itself", () => {
   assert.equal(facultyMoved(lost, arrival("a/b/live.tsx"), tracked, inHead), null, "tracked, recorded text unknown");
   assert.equal(facultyMoved(lost, recordedAs("export {};", "export {};"), tracked, inHead), null, "a recorded stub");
   assert.equal(facultyMoved(lost, recordedAs("<figure>", "<figure>"), tracked, inHead).to, "a/b/live.tsx");
-  // Each version answers for its own loss: HEAD for what HEAD lacks, the index
-  // for what the index lacks.
-  const inIndexOnly = [new Set(), new Set(lost)];
+  // Each version answers for its own loss: HEAD for what HEAD lost, the index
+  // for what the index lost.
+  const inIndexOnly = [null, lost];
   assert.equal(facultyMoved(lost, recordedAs("export {};", "<figure>"), tracked, inIndexOnly).to, "a/b/live.tsx");
   assert.equal(facultyMoved(lost, recordedAs("<figure>", "export {};"), tracked, inIndexOnly), null);
   // isLiveSource is the half of rule 6 that holds whether or not anything is staged.
   assert.equal(facultyMoved(lost, arrival("a/b/park.txt"), new Set(["a/b/park.txt"])), null);
 });
 
-test("the recorded part of a loss is what HEAD or the index lacks, line by line", () => {
-  const lost = ["<figure>", "<canvas />"];
-  const sets = (versions) => versions.map((v) => [...v]);
-  assert.deepEqual(sets(recordedLoss(lost, [])), [[], []], "nothing recorded: nothing asked");
-  assert.deepEqual(sets(recordedLoss(lost, ["<figure>\n<canvas />", undefined])), [[], []], "both still recorded");
-  assert.deepEqual(
-    sets(recordedLoss(lost, ["<figure>\n<canvas />", "<figure>"])),
-    [[], ["<canvas />"]],
-    "the index lacks one, and it is the index that lacks it",
-  );
-  // Half the lines staged gone and half only on disk: the untracked helper
-  // rescues the unrecorded half and not the recorded half, so it scores below
-  // the threshold and a gutting cannot be smuggled through by staging most of it.
+test("the recorded part of a loss is each version's own gutting, or nothing", () => {
+  const before = animatedSource("SectorMap", 6, 80);
+  const wrapper = `export default function SectorMap() {\n  return <SectorMapBody />;\n}\n`;
+  const source = /\S/;
+  assert.deepEqual(recordedLoss(before, [], source), [null, null], "nothing recorded: nothing asked");
+  assert.deepEqual(recordedLoss(before, [before, undefined], source), [null, null], "HEAD is the base: no loss");
+  const [head, index] = recordedLoss(before, [before, wrapper], source);
+  assert.equal(head, null);
+  assert.deepEqual(index, lostLines(before, wrapper, source), "the index lost its own lines");
+  // A version that lost a line but is not gutted on its own carries no gutting,
+  // so an extraction in progress on disk is not failed by a small commit under it.
+  const oneLess = before.replace("    const step7 = 7 * 3 + 1;\n", "");
+  assert.deepEqual(recordedLoss(before, [oneLess, oneLess], source), [null, null]);
+});
+
+test("each version's loss is scored on its own, never pooled with another's (s-5993)", () => {
   const four = ["<a>", "<b>", "<c>", "<d>"];
   const helper = [{ path: "a/b/live.tsx", before: "", after: four.join("\n") }];
-  assert.equal(facultyMoved(four, helper, new Set(), [new Set(), new Set(["<a>", "<b>", "<c>"])]), null);
-  assert.equal(facultyMoved(four, helper, new Set(), [new Set(), new Set(["<a>"])]).to, "a/b/live.tsx");
-  // The same holds for a TRACKED helper whose recorded copy has only some of
-  // them: partial recorded content does not rescue the whole loss (s-01c6 A1p).
+  // The disk copy has all four; a loss the index carries needs the index copy.
+  assert.equal(facultyMoved(four, helper, new Set(), [null, ["<a>", "<b>", "<c>"]]), null);
+  assert.equal(facultyMoved(four, helper, new Set(), [null, ["<a>"]]), null, "however small, it is not averaged away");
+  assert.equal(facultyMoved(four, helper, null, [null, ["<a>"]]).to, "a/b/live.tsx", "null inIndex: do not ask");
+  // A recorded copy holding part of what that version lost does not rescue it
+  // (s-01c6 A1p), and the disk's half cannot top it up (s-5993 X1): HEAD lost
+  // four, its helper holds one, and the disk holds all of them.
   const part = [{ ...helper[0], recorded: ["<a>", "<a>"] }];
-  const allRecorded = [new Set(four), new Set(four)];
-  assert.equal(facultyMoved(four, part, new Set(["a/b/live.tsx"]), allRecorded), null);
+  const tracked = new Set(["a/b/live.tsx"]);
+  assert.equal(facultyMoved(four, part, tracked, [four, null]), null);
+  assert.equal(facultyMoved(four, part, tracked, [["<a>", "<b>"], null]).to, "a/b/live.tsx", "half is the threshold");
+  assert.equal(facultyMoved(four, part, tracked, [["<a>", "<b>", "<c>"], null]), null);
+  // And the disk view is its own too: recorded copies do not rescue a disk that lacks the lines.
+  const diskStub = [{ path: "a/b/live.tsx", before: "", after: "export {};", recorded: [four.join("\n"), four.join("\n")] }];
+  assert.equal(facultyMoved(four, diskStub, tracked, [four, four]), null);
 });
 
 /* ---------- rule 7: the band that passes does not pass in silence ---------- */
@@ -1263,4 +1274,77 @@ test("a stub helper filled and committed with its call site passes, and so does 
   const unstaged = runIn(disk, ["--base", "base"]);
   assert.equal(unstaged.code, 0, unstaged.text);
   assert.match(unstaged.text, /moved to/);
+});
+
+/* ---------- s-5993: each version answers for its own loss, not one pooled score ---------- */
+
+/**
+ * X1's recorded half: SectorMap loses filler lines `from` onward, and the helper
+ * holds `held` of them. On its own, that HEAD is a gutting its helper does not rescue.
+ */
+function partialFirst(dir, from = 0, held = 34) {
+  const git = inRepo(dir);
+  git("tag", "base");
+  const base = animatedSource("SectorMap", 6, 80).split("\n");
+  const cut = (line) => {
+    const m = /^ {4}const step(\d+) = /.exec(line);
+    return m !== null && Number(m[1]) >= from;
+  };
+  writeFileSync(join(dir, B), base.filter((l) => !cut(l)).join("\n"));
+  const moved = base.filter(cut).slice(0, held);
+  mkdirSync(join(dir, HELPER, ".."), { recursive: true });
+  writeFileSync(join(dir, HELPER), `export default function SectorMapBody() {\n${moved.join("\n")}\n  return null;\n}\n`);
+  git("add", B, HELPER);
+}
+
+test("a partial gutting committed with a partial helper fails however the disk finishes it (s-5993 X1)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  partialFirst(dir);
+  inRepo(dir)("commit", "-qm", "the partial extraction");
+  const alone = runIn(dir, ["--base", "base"]);
+  assert.equal(alone.code, 1, `control, what a clone of this HEAD says: ${alone.text}`);
+
+  extractWhole(dir, HELPER);
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+  assert.ok(text.includes(`FAIL  ${B}`), text);
+  assert.ok(text.includes(`git add ${HELPER}`), text);
+  assert.ok(text.indexOf("git show") < text.indexOf("git add"), "reading what left still leads");
+});
+
+test("the same staged instead of committed fails too, since git commit ships it (s-5993 X1s)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  partialFirst(dir);
+  extractWhole(dir, HELPER);
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 1, text);
+});
+
+test("the partial extraction finished and committed whole passes (s-5993 X1 control)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  partialFirst(dir);
+  inRepo(dir)("commit", "-qm", "the partial extraction");
+  extractWhole(dir, HELPER);
+  inRepo(dir)("add", B, HELPER);
+  inRepo(dir)("commit", "-qm", "the rest of it");
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 0, text);
+  assert.match(text, /moved to/);
+});
+
+test("a small committed edit under an extraction still on disk is not a recorded gutting (s-5993)", (t) => {
+  const dir = repoWithAnimation();
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const git = inRepo(dir);
+  git("tag", "base");
+  const before = readFileSync(join(dir, B), "utf8");
+  writeFileSync(join(dir, B), before.replace("    const step7 = 7 * 3 + 1;\n", ""));
+  git("commit", "-qam", "one line less");
+  extractWhole(dir, HELPER);
+  const { code, text } = runIn(dir, ["--base", "base"]);
+  assert.equal(code, 0, text);
+  assert.match(text, /moved to/);
 });

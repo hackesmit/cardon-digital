@@ -418,82 +418,78 @@ export function lostLines(before, after, pattern) {
  * enough to rescue a GUTTING. `inIndex` is the set of paths the repository
  * knows about, or null for "do not ask", which is what a unit test wants.
  *
- * `recordedGone` is [what HEAD lacks, what the index lacks], two subsets of
- * `lost`: the part of the loss the repository has recorded, and where. Only
- * those lines need a recorded arrival, and the arrival's `recorded` text for
- * the same version ([HEAD, index], as recordedText holds it) has to contain
- * them. See recordedLoss().
+ * `versions` is [what HEAD lost, what the index lost]: for each recorded
+ * version of the visual that is gutted on its own in this faculty, the lines it
+ * lost, and null for a version that is not. See recordedLoss(). Each of those
+ * is scored on its own against the arrival's copy in the SAME version, at the
+ * same threshold, and the disk's loss against the disk's copy.
  */
-export function facultyMoved(lost, elsewhere, inIndex = null, recordedGone = [new Set(), new Set()]) {
+export function facultyMoved(lost, elsewhere, inIndex = null, versions = [null, null]) {
   if (lost.length === 0) return null;
   for (const { path, before = "", after, recorded = [] } of elsewhere) {
     if (after === undefined) continue;
     // Rule 6: a parking space is not a new home, in either direction.
     if (!isLiveSource(path)) continue;
+    const had = new Set(trimmedLines(before));
+    const score = gainedShare(lost, had, new Set(trimmedLines(after)));
+    if (score < RENAME_THRESHOLD) continue;
     // The index test is rule 4's, and rule 4 applies it only when the loss is
     // itself recorded. Asked of every gutting, it failed the most ordinary honest
     // refactor there is: extract a drawing into a helper and run the tests before
     // staging anything (review s-1ae3). Asked of none, it passed a gutting
     // COMMITTED with its helper left out of the repository, gitignored even, so
-    // main imports a file no clone has (review s-7729, G1i). So it is asked line
-    // by line: a line HEAD or the index already lacks can only be rescued by an
-    // arrival the index records, and a line only this disk lacks can be rescued
-    // by any live file, staged or not.
+    // main imports a file no clone has (review s-7729, G1i).
     //
-    // And "recorded" means the arrival's recorded TEXT holds the line, in the
-    // same version that lacks it: a listed path is not a recorded home. A stub
+    // And "recorded" means the arrival's recorded TEXT holds the lines, in the
+    // same version that lost them: a listed path is not a recorded home. A stub
     // helper committed first and filled only on disk passed a committed gutting
     // while every clone of that HEAD failed it (review s-01c6, A1).
-    const had = new Set(trimmedLines(before));
-    const has = new Set(trimmedLines(after));
-    const holds = recordedGone.map((_, v) =>
-      inIndex === null || recorded[v] === undefined ? null : new Set(trimmedLines(recorded[v])),
-    );
-    let gained = 0;
-    for (const line of lost) {
-      if (!has.has(line) || had.has(line)) continue;
-      const unrescued = recordedGone.some((gone, v) => gone.has(line) && inIndex !== null && !holds[v]?.has(line));
-      if (unrescued) continue;
-      gained++;
-    }
-    const score = gained / lost.length;
-    if (score >= RENAME_THRESHOLD) return { to: path, score };
+    //
+    // So each version that carries a gutting answers for it alone. One score
+    // pooled over lines lost in HEAD and lines lost only on disk let the disk's
+    // half carry a partial gutting committed with a partial helper over the
+    // threshold, while a checkout of that HEAD and a commit of the index both
+    // failed it (review s-5993, X1 and X1s).
+    const answered = inIndex === null || versions.every((gone, v) => {
+      if (!gone?.length) return true;
+      if (recorded[v] === undefined) return false;
+      return gainedShare(gone, had, new Set(trimmedLines(recorded[v]))) >= RENAME_THRESHOLD;
+    });
+    if (answered) return { to: path, score };
   }
   return null;
 }
 
+/** The share of `lines` a destination has now and did not have at the base. */
+function gainedShare(lines, had, has) {
+  let gained = 0;
+  for (const line of lines) if (has.has(line) && !had.has(line)) gained++;
+  return gained / lines.length;
+}
+
 /**
- * The lines of `lost` that each recorded version of the file no longer has,
- * as [what HEAD lacks, what the index lacks]. `recorded` is what HEAD and the
- * index hold for it (either may be missing): a gutting that is staged or
- * committed is a loss the repository already carries, and a gutting only on
- * this disk is an edit in progress. The two are kept apart because each is
- * answered by the arrival's copy in the same version.
+ * What each recorded version of the visual lost in the faculty `pattern`
+ * measures, as [what HEAD lost, what the index lost]. `recorded` is what HEAD
+ * and the index hold for it (either may be missing). A version counts only
+ * when it is gutted in that faculty ON ITS OWN, by the same measure as the disk
+ * (a small committed edit under an extraction still in progress is not a
+ * recorded gutting), and then its loss is its own lines, not the part of the
+ * disk's loss it shares: that is what a checkout of it would be judged on.
  */
-export function recordedLoss(lost, recorded = []) {
+export function recordedLoss(before, recorded = [], pattern) {
+  const b = profile(before);
   return [0, 1].map((v) => {
-    const gone = new Set();
     const text = recorded[v];
-    if (text === undefined) return gone;
-    const kept = new Set(trimmedLines(text));
-    for (const line of lost) if (!kept.has(line)) gone.add(line);
-    return gone;
+    if (text === undefined) return null;
+    const gutted = lossReasons(b, profile(text)).some((r) => r.pattern.source === pattern.source);
+    return gutted ? lostLines(before, text, pattern) : null;
   });
 }
 
 /**
- * The substance half of the rule: what the visual had against what it has,
- * wherever it now lives. `path` is the base path (what the worker has to put
- * back) and `at` is where it lives now, the same path unless it moved, and
- * `inIndex` is passed through to facultyMoved, which needs it for rule 6.
- *
- * Returns one failure, or one note, or null. A visual that lost its markup AND
- * its animation is one deleted visual carrying two reasons, not two failures,
- * and the headline is the loss a reader recognises first.
+ * Every way `n` lost what `b` had, each with the line pattern that measures it.
  */
-export function compareVisual(path, before, after, at = path, elsewhere = [], inIndex = null, recorded = []) {
-  const b = profile(before);
-  const n = profile(after);
+function lossReasons(b, n) {
   const reasons = [];
 
   if (b.code !== 0 && n.code === 0) {
@@ -541,13 +537,30 @@ export function compareVisual(path, before, after, at = path, elsewhere = [], in
       text: `${pct(n.code / b.code)} of its source left, comments and whitespace aside`,
     });
   }
+  return reasons;
+}
+
+/**
+ * The substance half of the rule: what the visual had against what it has,
+ * wherever it now lives. `path` is the base path (what the worker has to put
+ * back) and `at` is where it lives now, the same path unless it moved, and
+ * `inIndex` is passed through to facultyMoved, which needs it for rule 6.
+ *
+ * Returns one failure, or one note, or null. A visual that lost its markup AND
+ * its animation is one deleted visual carrying two reasons, not two failures,
+ * and the headline is the loss a reader recognises first.
+ */
+export function compareVisual(path, before, after, at = path, elsewhere = [], inIndex = null, recorded = []) {
+  const b = profile(before);
+  const n = profile(after);
+  const reasons = lossReasons(b, n);
 
   // A faculty that turned up somewhere else under the watched tree moved house.
   const moved = [];
   const unrecorded = new Set();
   const lost = reasons.filter((r) => {
     const lines = lostLines(before, after, r.pattern);
-    const where = facultyMoved(lines, elsewhere, inIndex, recordedLoss(lines, recorded));
+    const where = facultyMoved(lines, elsewhere, inIndex, recordedLoss(before, recorded, r.pattern));
     if (!where) {
       // Say where it went when the only thing missing is the repository's copy
       // of the arrival, so the remedy printed is git add and not a checkout.
