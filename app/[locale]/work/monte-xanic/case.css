@@ -2,10 +2,17 @@
    Page-specific styles for the Monte Xanic case study. Scoped under .pg-case so
    they never leak into the shared layer. The shared agave classes (hero, section,
    kicker, split, vis-frame, diagnostic, footer, reveal) live in globals.css and are
-   NOT duplicated here. This file adds only what the case study needs on top: the
-   wine sector accent, the section prose, the two static diagrams, the play-once
-   prediction and finance diagrams, the signature vineyard section map, the berry
-   to bottle strip, and the result callouts / outcome. */
+   NOT duplicated here. This file adds only what the case history needs on top: the
+   wine sector accent, the section prose, the before and after media pair, the
+   play-once finance diagram, the signature vineyard section map, the berry to
+   bottle strip, and the result callouts.
+
+   Removed with the rewrite (hq-4pu0q.4): the two static mechanism diagrams and
+   their .d-* palette, the play-once prediction curve and its .pred-* rules, and
+   the outcome block, which restated the callouts above it. The cursor spotlight
+   on .vine-stage went with them and is back: SpotlightFrames was restored on
+   Daniel's ruling that a copy bead never deletes a visual, so --mx / --my are
+   written again and this rule is live. */
 
 .pg-case{
   position:relative;
@@ -15,7 +22,6 @@
      --panel tokens so it recolors with the mode toggle. */
   --wine:#7A2233;
   --wine-accent: color-mix(in srgb, var(--wine) 58%, var(--text) 42%);
-  --wine-soft: color-mix(in srgb, var(--wine) 68%, var(--panel) 32%);
   --wine-faint: color-mix(in srgb, var(--wine) 20%, transparent);
 }
 
@@ -24,69 +30,35 @@
 .pg-case .eyebrow::before{background:var(--wine-accent);}
 .pg-case .hero-copy{max-width:820px;}
 .pg-case .hero-sub{max-width:62ch;}
-.pg-case h1 .wine{color:var(--wine-accent);}
-.pg-case h2 .wine{color:var(--wine-accent);}
-.pg-case h2 .accent{color:var(--primary);}
 .pg-case .kicker.wine{color:var(--wine-accent);}
 .pg-case .kicker.wine::before{background:var(--wine-accent);border-radius:50%;}
 .pg-case .section-head{max-width:66ch;}
 .pg-case .section-sub{max-width:58ch;}
-.pg-case .split-copy .note b.w{color:var(--wine-accent);}
 .pg-case .rule-top{border-top:1px solid var(--line-soft);}
 
 .pg-case .prose{max-width:64ch;color:var(--text-dim);font-size:clamp(1.02rem,1.35vw,1.16rem);}
 .pg-case .prose p + p{margin-top:16px;}
-.pg-case .prose b{color:var(--text);font-weight:600;}
 
-/* keep the cursor spotlight on the signature vineyard stage (a plain .vine-stage,
-   not a .vis-frame, so globals does not cover it) */
-.pg-case .vine-stage::after{
-  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  opacity:0;transition:opacity .35s ease;
-  background:radial-gradient(230px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--primary) 12%, transparent), transparent 72%);
+/* ============================ MEDIA ============================
+   The before and after pair. Ogilvy's strongest format only works if the two
+   frames sit side by side at the same size, so this is a two column grid that
+   collapses to one, and both slots are 3 / 2, which Media reserves from the
+   ratio. The old way is tinted and the way it works now is the page's one full
+   colour photograph, which is the identity rule doing editorial work: the past
+   is drained and the present is not. */
+.pg-case .case-pair{
+  margin-top:clamp(26px,4vw,44px);
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:clamp(16px,2.4vw,26px);align-items:start;
 }
-.pg-case .vine-stage:hover::after{opacity:1;}
-
-/* ============================ STATIC DIAGRAMS (dashboard, custom maps) ======= */
-.pg-case .mini-svg{display:block;width:100%;height:auto;}
-.pg-case .d-card{fill:var(--card);stroke:var(--line);stroke-width:1.2;}
-.pg-case .d-panel{fill:var(--panel);stroke:var(--line);stroke-width:1.3;}
-.pg-case .d-line{stroke:var(--line);}
-.pg-case .d-muted{fill:var(--muted);}
-.pg-case .d-dim{fill:var(--text-dim);}
-.pg-case .d-ink{fill:var(--text);}
-.pg-case .d-primary{fill:var(--primary);}
-.pg-case .d-secondary{fill:var(--secondary);}
-.pg-case .d-wine{fill:var(--wine-accent);}
-.pg-case .d-conn{fill:none;stroke:var(--primary-dim);stroke-width:1.4;stroke-linecap:round;}
-.pg-case .d-conn-wine{fill:none;stroke:var(--wine-accent);stroke-width:1.6;stroke-linecap:round;}
-.pg-case .d-track{fill:var(--line-soft);}
-.pg-case .d-stroke-muted{stroke:var(--muted);fill:none;}
-.pg-case .d-stroke-primary{stroke:var(--primary);fill:none;}
-.pg-case .d-lab{font-family:var(--mono);fill:var(--muted);}
-.pg-case .d-val{font-family:var(--mono);fill:var(--text);}
-.pg-case .d-plot{fill:color-mix(in srgb, var(--primary) 23%, transparent);stroke:color-mix(in srgb, var(--primary) 45%, transparent);stroke-width:1.4;stroke-linejoin:round;}
-.pg-case .d-plot-dim{fill:color-mix(in srgb, var(--primary) 19%, transparent);stroke:color-mix(in srgb, var(--primary) 40%, transparent);stroke-width:1.4;stroke-linejoin:round;}
-.pg-case .d-plot-wine{fill:var(--wine-faint);stroke:var(--wine-accent);stroke-width:1.6;stroke-linejoin:round;}
-.pg-case .live-pill{fill:none;stroke:var(--primary-dim);stroke-width:1.2;}
-@keyframes livePulse{0%,100%{opacity:.35;}50%{opacity:1;}}
-.pg-case .live-dot{fill:var(--primary);animation:livePulse 2.6s ease-in-out infinite;}
-
-/* ---- prediction diagram: play-once draw-on ---- */
-.pg-case .pred-curve{fill:none;stroke:var(--primary);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;
-  stroke-dasharray:660;stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease;}
-.pg-case .pred-target{stroke:var(--secondary);stroke-width:1.6;stroke-dasharray:5 5;}
-.pg-case .pred-proj{fill:none;stroke:var(--wine-accent);stroke-width:2;stroke-dasharray:4 5;opacity:1;transition:opacity .7s ease .9s;}
-.pg-case .pred-mark{opacity:1;transition:opacity .6s ease .9s, transform .6s cubic-bezier(.2,1.4,.3,1) .9s;transform-box:fill-box;transform-origin:center;}
-.pg-case .pred-mark-ring{fill:none;stroke:var(--wine-accent);stroke-width:2;}
-.pg-case .pred-mark-core{fill:var(--wine-accent);}
-.pg-case .pred-lab{font-family:var(--mono);fill:var(--muted);}
-.pg-case .pred-lab-w{font-family:var(--mono);fill:var(--wine-accent);}
-.pg-case .pred-vis[data-anim="pre"] .pred-curve{stroke-dashoffset:660;}
-.pg-case .pred-vis[data-anim="pre"] .pred-proj{opacity:0;}
-.pg-case .pred-vis[data-anim="pre"] .pred-mark{opacity:0;transform:scale(0.7);}
+/* A 16 / 9 slot runs the full container width otherwise, which is taller than
+   anything else on the page and pushes the thread below the fold twice over. */
+.pg-case .case-media-wide{
+  max-width:820px;margin:clamp(24px,3vw,36px) 0 clamp(26px,3.4vw,40px);
+}
 
 /* ---- finance diagram: play-once compress (this chapter appears only here) ---- */
+.pg-case .mini-svg{display:block;width:100%;height:auto;}
 .pg-case .fin-track{fill:var(--line-soft);}
 .pg-case .fin-bar{fill:var(--primary);transform-box:fill-box;transform-origin:left center;transition:transform 1.7s cubic-bezier(.4,0,.15,1);}
 .pg-case .fin-lab-manual,.pg-case .fin-lab-auto{font-family:var(--mono);transition:opacity .6s ease;}
@@ -127,6 +99,12 @@
   box-shadow:var(--shadow);
   aspect-ratio:1000/560;
 }
+.pg-case .vine-stage::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:0;transition:opacity .35s ease;
+  background:radial-gradient(230px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--primary) 12%, transparent), transparent 72%);
+}
+.pg-case .vine-stage:hover::after{opacity:1;}
 .pg-case .vine-base{position:absolute;inset:0;width:100%;height:100%;display:block;}
 .pg-case .vine-plots{position:absolute;inset:0;width:100%;height:100%;display:block;}
 .pg-case .plot{cursor:default;}
@@ -252,14 +230,10 @@
 .pg-case .callout-lead{font-size:clamp(1.2rem,2vw,1.6rem);font-weight:600;letter-spacing:-0.02em;line-height:1.14;color:var(--text);}
 .pg-case .callout-body{color:var(--text-dim);font-size:0.96rem;}
 
-/* ============================ OUTCOME ============================ */
-.pg-case .outcome{padding:clamp(40px,5vw,72px) 0;}
-.pg-case .outcome-inner{max-width:70ch;}
-.pg-case .outcome-inner h2{margin-bottom:18px;}
-
 /* ============================ RESPONSIVE ============================ */
 @media (max-width:640px){
   .pg-case .callouts{grid-template-columns:1fr;}
+  .pg-case .case-pair{grid-template-columns:1fr;}
   .pg-case .vine-stage{aspect-ratio:auto;min-height:380px;}
   /* the berry-to-bottle stage fits its own SVG content: never a tall letterbox */
   .pg-case .b2b-stage{min-height:0;}
@@ -275,6 +249,15 @@
   .pg-case .vine-plate{max-width:196px;}
   .pg-case .vine-marker{width:14px;height:17px;}
   .pg-case .vine-legend{max-width:74%;}
+}
+
+/* ---- diagnostic day markers ----
+   A real label, so it is a label in the markup with its own class. Emphasis
+   markers in the dictionary would spend the doctrine's three-span budget on
+   chrome, and this page spends none of it. */
+.pg-case .spec-d{
+  color:var(--text);font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;
+  margin-right:9px;
 }
 
 /* ---- case header block (case-naming memo 6.1) ----
