@@ -561,8 +561,12 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
       };
       const control = story(0);
       expect(control.length, "frames in the second after " + what + " (too few: the demo is not animating, so there is no story to compare)").toBe(15);
+      const late = story(3008);
+      /* a figure remounted by the event and never drawn again is no story
+         at all, and an empty list differs from nothing */
+      expect(late.length, "frames in the second after " + what + " three seconds into the story").toBe(15);
       expect(
-        story(3008).filter((f, i) => f !== control[i]).length,
+        late.filter((f, i) => f !== control[i]).length,
         "frames after " + what + " three seconds into the story that a visitor who had it before the story began did not see",
       ).toBe(0);
     }

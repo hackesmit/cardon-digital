@@ -361,11 +361,17 @@ function stubObserver(): { instance: () => FakeObserver } {
 
 /* --------- the pre-hydration canvas height is the measured height -------- */
 
-/** Declarations that animate or transition and carry !important. */
+/** Declarations that animate or transition and carry !important, other than
+    the ones that stop it. */
 const outranksReduce = (sheet: string) =>
   sheet
     .split(/[;{}]/)
-    .filter((d) => /^\s*(-\w+-)?(animation|transition)[\w-]*\s*:/i.test(d) && /!\s*important/i.test(d));
+    .filter(
+      (d) =>
+        /^\s*(-\w+-)?(animation|transition)[\w-]*\s*:/i.test(d) &&
+        /!\s*important/i.test(d) &&
+        !/:\s*none\s*!\s*important\s*$/i.test(d),
+    );
 
 describe("the demos stylesheet", () => {
   /* The rules, without the prose. Every check below is lexical, and this file
@@ -514,8 +520,9 @@ describe("the demos stylesheet", () => {
     /* CSS is the one declared motion open to a demo, and it is closed under
        reduce by construction: app/globals.css stops every animation and
        transition on the site, measured by reviewer s-1022 (margin-left 0px,
-       then 0px). That holds while two things do. The rule is there, and
-       nothing here outranks it, which only !important can. An image is the
+       then 0px). That holds while three things do. The rule is there;
+       nothing here outranks it, which only !important can; and the figure
+       repeats it for its pseudo-elements, which `*` does not match. An image is the
        other way a stylesheet moves, and nothing can tell an animated one
        from a still, so this sheet loads none and imports no other sheet. */
     const globals = withoutCssComments(read("../../../app/globals.css"));
@@ -528,6 +535,16 @@ describe("the demos stylesheet", () => {
       expect(reduce.filter((block) => everything.test(block)), "a reduce block that stops every " + stopped).toHaveLength(1);
     }
     expect(outranksReduce(css)).toEqual([]);
+    /* and the figure's own rule, which reaches what `*` cannot */
+    const own = /@media \(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*?\n\}/.exec(css)?.[0] ?? "";
+    const rule = /([^{}]*)\{\s*animation:\s*none\s*!important;\s*transition:\s*none\s*!important;?\s*\}/.exec(own);
+    const stopped = (rule?.[1] ?? "").split(",").map((sel) => sel.trim());
+    for (const sel of [".demo-figure", ".demo-figure *"]) {
+      for (const part of ["", "::before", "::after"]) expect(stopped).toContain(sel + part);
+    }
+    expect(stopped).toContain(".demo-figure *::marker");
+    expect(outranksReduce(".x{ animation: none !important }")).toEqual([]);
+    expect(outranksReduce(".x{ animation: none, spin 1s !important }")).toHaveLength(1);
     expect(css).not.toMatch(/url\(|@import|image-set\(/i);
     expect(outranksReduce(".x{ transition: width 1s !important }")).toHaveLength(1);
     expect(outranksReduce(".x{ -webkit-animation-name: spin ! IMPORTANT }")).toHaveLength(1);
