@@ -312,7 +312,7 @@ describe("the counts the basis paragraph is accountable for", () => {
       //
       // Three generations of a lexical guard over this sentence have each lost to
       // the next wording. The structural answer, which retires this case rather
-      // than widening it again, is hq-4pu0q.24: generate the sentence's numerals
+      // than widening it again, is hq-4pu0q.25: generate the sentence's numerals
       // from the same data the module lists and the structure diagram render, so
       // the prose cannot disagree with the page and there is nothing left to
       // guard.
@@ -370,7 +370,7 @@ describe("the counts the basis paragraph is accountable for", () => {
 
       expect(
         unaccounted,
-        `the basis sentence publishes a count no case in this block reads, so nothing holds it to the page: ${unaccounted.join(", ")}. Add a pattern to CLAIMS and a case that compares it with what the page draws. Note this detection is partial (see the comment above and hq-4pu0q.24), so a clean run here is not proof that every count is held.`,
+        `the basis sentence publishes a count no case in this block reads, so nothing holds it to the page: ${unaccounted.join(", ")}. Add a pattern to CLAIMS and a case that compares it with what the page draws. Note this detection is partial (see the comment above and hq-4pu0q.25), so a clean run here is not proof that every count is held.`,
       ).toEqual([]);
     });
   }
