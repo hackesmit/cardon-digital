@@ -38,7 +38,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * Growth Diagnostic in site.ts, in the hero and again at the close, so a reader
  * is asked for one thing rather than four phrasings of it. The two links to
  * /modulos are gone, because the module detail a buyer needs now sits on the
- * floor cards and that page is being retired. And the four-bullet breakdown of
+ * floor cards and that page is retired (bead hq-4pu0q.8, which redirects it
+ * here with a 308). And the four-bullet breakdown of
  * the Diagnostic under the closing call to action is a photograph instead: it
  * is the same argument, and a caption is read by about twice as many people as
  * the copy around it.
