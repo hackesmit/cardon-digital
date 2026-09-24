@@ -745,8 +745,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/demos.ts": {
-    "mtime": 1790234112.781574,
-    "ast_hash": "430950e134b415d36bba1191243cae5c",
+    "mtime": 1789484778.5958872,
+    "ast_hash": "0fffc78f9850620562fec42c731dfe90",
     "semantic_hash": ""
   },
   "scripts/copy-check.mjs": {
@@ -952,21 +952,6 @@
   "lib/testing/loopholes/IndirectProbe.tsx.txt": {
     "mtime": 1790214014.7330852,
     "ast_hash": "2a70e6684e75ddd8fe448a8c80975a61",
-    "semantic_hash": ""
-  },
-  "components/pages/demos/HospitalidadDemo.tsx": {
-    "mtime": 1790234112.781574,
-    "ast_hash": "122712923e39b283e9ba0dda1d80cfba",
-    "semantic_hash": ""
-  },
-  "components/pages/demos/fortnight.test.ts": {
-    "mtime": 1790234112.781574,
-    "ast_hash": "341a8c5fe876722b876a31fd90c1322d",
-    "semantic_hash": ""
-  },
-  "components/pages/demos/fortnight.ts": {
-    "mtime": 1790234112.781574,
-    "ast_hash": "042ced6350710ca66462bf27c972a2d7",
     "semantic_hash": ""
   }
 }

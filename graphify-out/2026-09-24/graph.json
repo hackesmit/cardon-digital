@@ -180,7 +180,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_about_page",
-      "community": 6,
+      "community": 11,
       "norm_label": "page.tsx"
     },
     {
@@ -190,7 +190,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_locale_about_page_params",
-      "community": 6,
+      "community": 11,
       "norm_label": "params"
     },
     {
@@ -200,7 +200,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "app_locale_about_page_localeof",
-      "community": 6,
+      "community": 11,
       "norm_label": "localeof()"
     },
     {
@@ -210,7 +210,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_locale_about_page_generatemetadata",
-      "community": 6,
+      "community": 11,
       "norm_label": "generatemetadata()"
     },
     {
@@ -220,7 +220,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_locale_about_page_aboutpage",
-      "community": 6,
+      "community": 11,
       "norm_label": "aboutpage()"
     },
     {
@@ -340,7 +340,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "app_locale_ads_claim_test_names",
-      "community": 11,
+      "community": 40,
       "norm_label": "names()"
     },
     {
@@ -710,7 +710,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_demo_page_test",
-      "community": 56,
+      "community": 7,
       "norm_label": "page.test.tsx"
     },
     {
@@ -720,7 +720,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "app_locale_demo_page_test_redirect",
-      "community": 56,
+      "community": 7,
       "norm_label": "{ redirect }"
     },
     {
@@ -850,7 +850,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test",
-      "community": 40,
+      "community": 28,
       "norm_label": "winery-page.test.ts"
     },
     {
@@ -860,7 +860,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test_pagesource",
-      "community": 40,
+      "community": 28,
       "norm_label": "pagesource"
     },
     {
@@ -870,7 +870,7 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test_captures",
-      "community": 40,
+      "community": 28,
       "norm_label": "captures()"
     },
     {
@@ -880,7 +880,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test_strings",
-      "community": 40,
+      "community": 28,
       "norm_label": "strings()"
     },
     {
@@ -890,7 +890,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test_declaredspans",
-      "community": 40,
+      "community": 28,
       "norm_label": "declaredspans()"
     },
     {
@@ -910,7 +910,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test_servedspans",
-      "community": 40,
+      "community": 28,
       "norm_label": "servedspans()"
     },
     {
@@ -920,7 +920,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "app_locale_industries_winery_winery_page_test_servedcapbodies",
-      "community": 40,
+      "community": 28,
       "norm_label": "servedcapbodies()"
     },
     {
@@ -930,7 +930,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_layout",
-      "community": 4,
+      "community": 7,
       "norm_label": "layout.tsx"
     },
     {
@@ -940,7 +940,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "app_locale_layout_generatestaticparams",
-      "community": 4,
+      "community": 7,
       "norm_label": "generatestaticparams()"
     },
     {
@@ -950,7 +950,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "app_locale_layout_generatemetadata",
-      "community": 4,
+      "community": 7,
       "norm_label": "generatemetadata()"
     },
     {
@@ -960,7 +960,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "app_locale_layout_localelayout",
-      "community": 4,
+      "community": 32,
       "norm_label": "localelayout()"
     },
     {
@@ -1200,7 +1200,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test",
-      "community": 52,
+      "community": 2,
       "norm_label": "enkanto-case.test.ts"
     },
     {
@@ -1210,7 +1210,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_pagesource",
-      "community": 52,
+      "community": 2,
       "norm_label": "pagesource"
     },
     {
@@ -1220,7 +1220,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_stripcomments",
-      "community": 52,
+      "community": 2,
       "norm_label": "stripcomments()"
     },
     {
@@ -1230,7 +1230,7 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_decodeentities",
-      "community": 52,
+      "community": 2,
       "norm_label": "decodeentities()"
     },
     {
@@ -1240,7 +1240,7 @@
       "source_location": "L84",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_pagecode",
-      "community": 52,
+      "community": 2,
       "norm_label": "pagecode"
     },
     {
@@ -1250,7 +1250,7 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_claimed",
-      "community": 52,
+      "community": 2,
       "norm_label": "claimed()"
     },
     {
@@ -1260,7 +1260,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_basismarkup",
-      "community": 52,
+      "community": 40,
       "norm_label": "basismarkup()"
     },
     {
@@ -1270,7 +1270,7 @@
       "source_location": "L186",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_structurerows",
-      "community": 52,
+      "community": 2,
       "norm_label": "structurerows()"
     },
     {
@@ -1280,7 +1280,7 @@
       "source_location": "L234",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_labelled",
-      "community": 52,
+      "community": 2,
       "norm_label": "labelled()"
     },
     {
@@ -1290,7 +1290,7 @@
       "source_location": "L402",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_env",
-      "community": 52,
+      "community": 2,
       "norm_label": "env"
     },
     {
@@ -1300,7 +1300,7 @@
       "source_location": "L441",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_strings",
-      "community": 52,
+      "community": 2,
       "norm_label": "strings()"
     },
     {
@@ -1310,7 +1310,7 @@
       "source_location": "L502",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_renderedtext",
-      "community": 52,
+      "community": 2,
       "norm_label": "renderedtext()"
     },
     {
@@ -1320,7 +1320,7 @@
       "source_location": "L514",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_html",
-      "community": 52,
+      "community": 2,
       "norm_label": "html()"
     },
     {
@@ -1330,7 +1330,7 @@
       "source_location": "L525",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_enclosingfigure",
-      "community": 52,
+      "community": 2,
       "norm_label": "enclosingfigure()"
     },
     {
@@ -1340,7 +1340,7 @@
       "source_location": "L534",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_accessibletext",
-      "community": 52,
+      "community": 2,
       "norm_label": "accessibletext()"
     },
     {
@@ -1350,7 +1350,7 @@
       "source_location": "L727",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_blocks",
-      "community": 52,
+      "community": 2,
       "norm_label": "blocks()"
     },
     {
@@ -1360,7 +1360,7 @@
       "source_location": "L752",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_visualmarkup",
-      "community": 52,
+      "community": 2,
       "norm_label": "visualmarkup()"
     },
     {
@@ -1370,7 +1370,7 @@
       "source_location": "L936",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_enkanto_case_test_paths",
-      "community": 52,
+      "community": 2,
       "norm_label": "paths()"
     },
     {
@@ -1500,7 +1500,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_pending",
-      "community": 52,
+      "community": 2,
       "norm_label": "pending.ts"
     },
     {
@@ -1510,7 +1510,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "app_locale_work_enkanto_pending_showspending",
-      "community": 52,
+      "community": 2,
       "norm_label": "showspending()"
     },
     {
@@ -1520,7 +1520,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page",
-      "community": 6,
+      "community": 5,
       "norm_label": "page.tsx"
     },
     {
@@ -1530,7 +1530,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_params",
-      "community": 6,
+      "community": 5,
       "norm_label": "params"
     },
     {
@@ -1540,7 +1540,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_localeof",
-      "community": 6,
+      "community": 5,
       "norm_label": "localeof()"
     },
     {
@@ -1550,7 +1550,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_generatemetadata",
-      "community": 6,
+      "community": 5,
       "norm_label": "generatemetadata()"
     },
     {
@@ -1560,7 +1560,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "app_locale_work_monte_xanic_page_montexaniccasestudy",
-      "community": 6,
+      "community": 5,
       "norm_label": "montexaniccasestudy()"
     },
     {
@@ -1790,7 +1790,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "app_sitemap",
-      "community": 4,
+      "community": 7,
       "norm_label": "sitemap.ts"
     },
     {
@@ -1800,7 +1800,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "app_sitemap_routes",
-      "community": 4,
+      "community": 7,
       "norm_label": "routes"
     },
     {
@@ -1810,7 +1810,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "app_sitemap_sitemap",
-      "community": 4,
+      "community": 7,
       "norm_label": "sitemap()"
     },
     {
@@ -2080,7 +2080,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_case_casefacts",
-      "community": 52,
+      "community": 5,
       "norm_label": "casefacts.tsx"
     },
     {
@@ -2090,7 +2090,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "components_pages_case_casefacts_casefact",
-      "community": 52,
+      "community": 5,
       "norm_label": "casefact"
     },
     {
@@ -2100,7 +2100,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "components_pages_case_casefacts_casefacts",
-      "community": 52,
+      "community": 5,
       "norm_label": "casefacts()"
     },
     {
@@ -2110,7 +2110,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_case_playoncevis",
-      "community": 6,
+      "community": 5,
       "norm_label": "playoncevis.tsx"
     },
     {
@@ -2120,7 +2120,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "components_pages_case_playoncevis_playoncevisprops",
-      "community": 6,
+      "community": 5,
       "norm_label": "playoncevisprops"
     },
     {
@@ -2130,7 +2130,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "components_pages_case_playoncevis_playoncevis",
-      "community": 6,
+      "community": 5,
       "norm_label": "playoncevis()"
     },
     {
@@ -2230,7 +2230,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap",
-      "community": 10,
+      "community": 37,
       "norm_label": "vineyardmap.tsx"
     },
     {
@@ -2240,7 +2240,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_rgb",
-      "community": 10,
+      "community": 37,
       "norm_label": "rgb"
     },
     {
@@ -2250,7 +2250,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_plot",
-      "community": 10,
+      "community": 37,
       "norm_label": "plot"
     },
     {
@@ -2260,7 +2260,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_plots",
-      "community": 10,
+      "community": 37,
       "norm_label": "plots"
     },
     {
@@ -2270,7 +2270,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_centroidof",
-      "community": 10,
+      "community": 37,
       "norm_label": "centroidof()"
     },
     {
@@ -2280,7 +2280,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_centroids",
-      "community": 10,
+      "community": 37,
       "norm_label": "centroids"
     },
     {
@@ -2290,7 +2290,7 @@
       "source_location": "L61",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_flag_anchors",
-      "community": 10,
+      "community": 37,
       "norm_label": "flag_anchors"
     },
     {
@@ -2300,7 +2300,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_pathd",
-      "community": 10,
+      "community": 37,
       "norm_label": "pathd()"
     },
     {
@@ -2310,58 +2310,8 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "components_pages_case_vineyardmap_vineyardmap",
-      "community": 10,
+      "community": 37,
       "norm_label": "vineyardmap()"
-    },
-    {
-      "label": "HospitalidadDemo.tsx",
-      "file_type": "code",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_demos_hospitalidaddemo",
-      "community": 5,
-      "norm_label": "hospitalidaddemo.tsx"
-    },
-    {
-      "label": "Vis",
-      "file_type": "code",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L80",
-      "_origin": "ast",
-      "id": "components_pages_demos_hospitalidaddemo_vis",
-      "community": 5,
-      "norm_label": "vis"
-    },
-    {
-      "label": "hospitalidadScene()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L84",
-      "_origin": "ast",
-      "id": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "community": 5,
-      "norm_label": "hospitalidadscene()"
-    },
-    {
-      "label": "PRE",
-      "file_type": "code",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L388",
-      "_origin": "ast",
-      "id": "components_pages_demos_hospitalidaddemo_pre",
-      "community": 5,
-      "norm_label": "pre"
-    },
-    {
-      "label": "HospitalidadDemo()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L390",
-      "_origin": "ast",
-      "id": "components_pages_demos_hospitalidaddemo_hospitalidaddemo",
-      "community": 5,
-      "norm_label": "hospitalidaddemo()"
     },
     {
       "label": "RestauranteDemo.tsx",
@@ -2970,7 +2920,7 @@
       "source_location": "L327",
       "_origin": "ast",
       "id": "components_pages_demos_contract_world_world_onscreen",
-      "community": 36,
+      "community": 0,
       "norm_label": ".onscreen()"
     },
     {
@@ -3224,306 +3174,6 @@
       "norm_label": "bands"
     },
     {
-      "label": "fortnight.test.ts",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_test",
-      "community": 5,
-      "norm_label": "fortnight.test.ts"
-    },
-    {
-      "label": "here",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L57",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_test_here",
-      "community": 5,
-      "norm_label": "here"
-    },
-    {
-      "label": "read()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_test_read",
-      "community": 5,
-      "norm_label": "read()"
-    },
-    {
-      "label": "fortnight.ts",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight",
-      "community": 5,
-      "norm_label": "fortnight.ts"
-    },
-    {
-      "label": "UnitKind",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L24",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_unitkind",
-      "community": 5,
-      "norm_label": "unitkind"
-    },
-    {
-      "label": "Channel",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L33",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_channel",
-      "community": 5,
-      "norm_label": "channel"
-    },
-    {
-      "label": "UnitDef",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L35",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_unitdef",
-      "community": 5,
-      "norm_label": "unitdef"
-    },
-    {
-      "label": "Stay",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L39",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_stay",
-      "community": 5,
-      "norm_label": "stay"
-    },
-    {
-      "label": "UNITS",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_units",
-      "community": 5,
-      "norm_label": "units"
-    },
-    {
-      "label": "STAYS",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L78",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_stays",
-      "community": 5,
-      "norm_label": "stays"
-    },
-    {
-      "label": "weekday()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L119",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_weekday",
-      "community": 5,
-      "norm_label": "weekday()"
-    },
-    {
-      "label": "dayNumber()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L120",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_daynumber",
-      "community": 5,
-      "norm_label": "daynumber()"
-    },
-    {
-      "label": "isWeekend()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L121",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_isweekend",
-      "community": 5,
-      "norm_label": "isweekend()"
-    },
-    {
-      "label": "FINAL",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L129",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_final",
-      "community": 5,
-      "norm_label": "final"
-    },
-    {
-      "label": "SOLD",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L141",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_sold",
-      "community": 5,
-      "norm_label": "sold"
-    },
-    {
-      "label": "SOLD_DIRECT",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L142",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_sold_direct",
-      "community": 5,
-      "norm_label": "sold_direct"
-    },
-    {
-      "label": "FEATURED",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L152",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_featured",
-      "community": 5,
-      "norm_label": "featured"
-    },
-    {
-      "label": "READOUTS",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L162",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_readouts",
-      "community": 5,
-      "norm_label": "readouts"
-    },
-    {
-      "label": "cycleFrame",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L204",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_cycleframe",
-      "community": 5,
-      "norm_label": "cycleframe"
-    },
-    {
-      "label": "landed()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L228",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_landed",
-      "community": 5,
-      "norm_label": "landed()"
-    },
-    {
-      "label": "occupancyAt()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L236",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_occupancyat",
-      "community": 5,
-      "norm_label": "occupancyat()"
-    },
-    {
-      "label": "directShareAt()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L249",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_directshareat",
-      "community": 5,
-      "norm_label": "directshareat()"
-    },
-    {
-      "label": "CAPTION_KEYS",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L262",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_caption_keys",
-      "community": 5,
-      "norm_label": "caption_keys"
-    },
-    {
-      "label": "CaptionKey",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L264",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_captionkey",
-      "community": 5,
-      "norm_label": "captionkey"
-    },
-    {
-      "label": "captionKeyFor()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L271",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_captionkeyfor",
-      "community": 5,
-      "norm_label": "captionkeyfor()"
-    },
-    {
-      "label": "clampN()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L280",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_clampn",
-      "community": 5,
-      "norm_label": "clampn()"
-    },
-    {
-      "label": "bands",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L306",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_bands",
-      "community": 5,
-      "norm_label": "bands"
-    },
-    {
-      "label": "board",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L349",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_board",
-      "community": 5,
-      "norm_label": "board"
-    },
-    {
-      "label": "stayRect()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L368",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_stayrect",
-      "community": 5,
-      "norm_label": "stayrect()"
-    },
-    {
-      "label": "hotspotSpots()",
-      "file_type": "code",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L385",
-      "_origin": "ast",
-      "id": "components_pages_demos_fortnight_hotspotspots",
-      "community": 5,
-      "norm_label": "hotspotspots()"
-    },
-    {
       "label": "motion.ts",
       "file_type": "code",
       "source_file": "components/pages/demos/motion.ts",
@@ -3620,7 +3270,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "components_pages_demos_palette_readdemopalette",
-      "community": 39,
+      "community": 0,
       "norm_label": "readdemopalette()"
     },
     {
@@ -3680,7 +3330,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure",
-      "community": 46,
+      "community": 36,
       "norm_label": "demofigure.tsx"
     },
     {
@@ -3690,7 +3340,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_hidden_without_script",
-      "community": 46,
+      "community": 36,
       "norm_label": "hidden_without_script"
     },
     {
@@ -3700,7 +3350,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_demofigureprops",
-      "community": 46,
+      "community": 36,
       "norm_label": "demofigureprops"
     },
     {
@@ -3710,7 +3360,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_demofigure",
-      "community": 46,
+      "community": 36,
       "norm_label": "demofigure()"
     },
     {
@@ -3720,7 +3370,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_hotspotprops",
-      "community": 46,
+      "community": 36,
       "norm_label": "hotspotprops"
     },
     {
@@ -3730,7 +3380,7 @@
       "source_location": "L111",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_hotspotprops_onpick",
-      "community": 46,
+      "community": 36,
       "norm_label": ".onpick()"
     },
     {
@@ -3750,7 +3400,7 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_pickboxprops",
-      "community": 46,
+      "community": 36,
       "norm_label": "pickboxprops"
     },
     {
@@ -3760,7 +3410,7 @@
       "source_location": "L141",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_pickboxprops_row",
-      "community": 46,
+      "community": 36,
       "norm_label": ".row()"
     },
     {
@@ -3770,7 +3420,7 @@
       "source_location": "L155",
       "_origin": "ast",
       "id": "components_pages_demos_stage_demofigure_pickbox",
-      "community": 46,
+      "community": 36,
       "norm_label": "pickbox()"
     },
     {
@@ -4240,7 +3890,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "components_pages_home_canvaskit_rgba",
-      "community": 39,
+      "community": 0,
       "norm_label": "rgba()"
     },
     {
@@ -4250,7 +3900,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "components_pages_home_canvaskit_mix",
-      "community": 39,
+      "community": 0,
       "norm_label": "mix()"
     },
     {
@@ -4280,7 +3930,7 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "components_pages_home_canvaskit_fitcanvas",
-      "community": 36,
+      "community": 39,
       "norm_label": "fitcanvas()"
     },
     {
@@ -4290,7 +3940,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "components_pages_home_canvaskit_rr",
-      "community": 5,
+      "community": 0,
       "norm_label": "rr()"
     },
     {
@@ -4490,7 +4140,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_modulos_combinations",
-      "community": 61,
+      "community": 6,
       "norm_label": "combinations.tsx"
     },
     {
@@ -4500,7 +4150,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "components_pages_modulos_combinations_combinations",
-      "community": 61,
+      "community": 6,
       "norm_label": "combinations()"
     },
     {
@@ -4510,7 +4160,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_modulos_moduleblock",
-      "community": 61,
+      "community": 6,
       "norm_label": "moduleblock.tsx"
     },
     {
@@ -4690,7 +4340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_precios_floorchart",
-      "community": 11,
+      "community": 6,
       "norm_label": "floorchart.tsx"
     },
     {
@@ -4700,7 +4350,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "components_pages_precios_floorchart_floorchart",
-      "community": 11,
+      "community": 6,
       "norm_label": "floorchart()"
     },
     {
@@ -4730,7 +4380,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_precios_modulefloors",
-      "community": 11,
+      "community": 6,
       "norm_label": "modulefloors.tsx"
     },
     {
@@ -4740,7 +4390,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "components_pages_precios_modulefloors_bundlelines",
-      "community": 11,
+      "community": 6,
       "norm_label": "bundlelines()"
     },
     {
@@ -4750,7 +4400,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "components_pages_precios_modulefloors_modulefloors",
-      "community": 11,
+      "community": 6,
       "norm_label": "modulefloors()"
     },
     {
@@ -4810,7 +4460,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_showcase_showcase",
-      "community": 56,
+      "community": 6,
       "norm_label": "showcase.tsx"
     },
     {
@@ -4820,7 +4470,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "components_pages_showcase_showcase_showcase",
-      "community": 56,
+      "community": 6,
       "norm_label": "showcase()"
     },
     {
@@ -5250,7 +4900,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo",
-      "community": 46,
+      "community": 28,
       "norm_label": "assistantdemo.tsx"
     },
     {
@@ -5260,7 +4910,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_bars",
-      "community": 46,
+      "community": 28,
       "norm_label": "bars"
     },
     {
@@ -5270,7 +4920,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_cited_row",
-      "community": 46,
+      "community": 28,
       "norm_label": "cited_row"
     },
     {
@@ -5280,7 +4930,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "components_pages_winery_assistantdemo_assistantdemo",
-      "community": 46,
+      "community": 28,
       "norm_label": "assistantdemo()"
     },
     {
@@ -5290,7 +4940,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_pages_winery_pricingbundles",
-      "community": 49,
+      "community": 7,
       "norm_label": "pricingbundles.tsx"
     },
     {
@@ -5300,7 +4950,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "components_pages_winery_pricingbundles_pricingbundles",
-      "community": 49,
+      "community": 7,
       "norm_label": "pricingbundles()"
     },
     {
@@ -6120,7 +5770,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "components_site_nav",
-      "community": 4,
+      "community": 7,
       "norm_label": "nav.tsx"
     },
     {
@@ -6130,7 +5780,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "components_site_nav_nav",
-      "community": 4,
+      "community": 7,
       "norm_label": "nav()"
     },
     {
@@ -7140,7 +6790,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_demo",
-      "community": 56,
+      "community": 6,
       "norm_label": "demo.ts"
     },
     {
@@ -7230,7 +6880,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_about",
-      "community": 6,
+      "community": 11,
       "norm_label": "about.ts"
     },
     {
@@ -7240,7 +6890,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "lib_i18n_about_en",
-      "community": 6,
+      "community": 11,
       "norm_label": "en"
     },
     {
@@ -7250,7 +6900,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "lib_i18n_about_es",
-      "community": 6,
+      "community": 11,
       "norm_label": "es"
     },
     {
@@ -7260,7 +6910,7 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "lib_i18n_about_aboutdict",
-      "community": 6,
+      "community": 11,
       "norm_label": "aboutdict"
     },
     {
@@ -7270,7 +6920,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "lib_i18n_about_about",
-      "community": 6,
+      "community": 11,
       "norm_label": "about"
     },
     {
@@ -7330,7 +6980,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_config",
-      "community": 4,
+      "community": 7,
       "norm_label": "config.ts"
     },
     {
@@ -7340,7 +6990,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "lib_i18n_config_locales",
-      "community": 4,
+      "community": 7,
       "norm_label": "locales"
     },
     {
@@ -7350,7 +7000,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "lib_i18n_config_locale",
-      "community": 61,
+      "community": 6,
       "norm_label": "locale"
     },
     {
@@ -7360,7 +7010,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "lib_i18n_config_islocale",
-      "community": 4,
+      "community": 32,
       "norm_label": "islocale()"
     },
     {
@@ -7370,7 +7020,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "lib_i18n_config_otherlocale",
-      "community": 4,
+      "community": 7,
       "norm_label": "otherlocale()"
     },
     {
@@ -7400,7 +7050,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "lib_i18n_config_oglocale",
-      "community": 4,
+      "community": 7,
       "norm_label": "oglocale"
     },
     {
@@ -7420,7 +7070,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "lib_i18n_config_striplocale",
-      "community": 4,
+      "community": 7,
       "norm_label": "striplocale()"
     },
     {
@@ -7430,7 +7080,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "lib_i18n_config_localepath",
-      "community": 56,
+      "community": 7,
       "norm_label": "localepath()"
     },
     {
@@ -7657,7 +7307,7 @@
       "label": "DemosDict",
       "file_type": "code",
       "source_file": "lib/i18n/demos.ts",
-      "source_location": "L135",
+      "source_location": "L70",
       "_origin": "ast",
       "id": "lib_i18n_demos_demosdict",
       "community": 46,
@@ -7667,7 +7317,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/demos.ts",
-      "source_location": "L137",
+      "source_location": "L72",
       "_origin": "ast",
       "id": "lib_i18n_demos_es",
       "community": 46,
@@ -7677,7 +7327,7 @@
       "label": "demos",
       "file_type": "code",
       "source_file": "lib/i18n/demos.ts",
-      "source_location": "L237",
+      "source_location": "L120",
       "_origin": "ast",
       "id": "lib_i18n_demos_demos",
       "community": 46,
@@ -7690,7 +7340,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_enkanto",
-      "community": 52,
+      "community": 2,
       "norm_label": "enkanto.ts"
     },
     {
@@ -7700,7 +7350,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_en",
-      "community": 52,
+      "community": 2,
       "norm_label": "en"
     },
     {
@@ -7710,7 +7360,7 @@
       "source_location": "L268",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_es",
-      "community": 52,
+      "community": 2,
       "norm_label": "es"
     },
     {
@@ -7720,7 +7370,7 @@
       "source_location": "L489",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_enkantodict",
-      "community": 52,
+      "community": 2,
       "norm_label": "enkantodict"
     },
     {
@@ -7730,7 +7380,7 @@
       "source_location": "L490",
       "_origin": "ast",
       "id": "lib_i18n_enkanto_enkanto",
-      "community": 52,
+      "community": 2,
       "norm_label": "enkanto"
     },
     {
@@ -7790,7 +7440,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_metadata",
-      "community": 4,
+      "community": 7,
       "norm_label": "metadata.ts"
     },
     {
@@ -7800,7 +7450,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "lib_i18n_metadata_alternatesfor",
-      "community": 4,
+      "community": 7,
       "norm_label": "alternatesfor()"
     },
     {
@@ -7820,7 +7470,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_modulos",
-      "community": 61,
+      "community": 6,
       "norm_label": "modulos.ts"
     },
     {
@@ -7830,7 +7480,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "lib_i18n_modulos_modulecopy",
-      "community": 61,
+      "community": 6,
       "norm_label": "modulecopy"
     },
     {
@@ -7840,7 +7490,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "lib_i18n_modulos_combinaitem",
-      "community": 61,
+      "community": 6,
       "norm_label": "combinaitem"
     },
     {
@@ -7850,7 +7500,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "lib_i18n_modulos_en",
-      "community": 61,
+      "community": 6,
       "norm_label": "en"
     },
     {
@@ -7860,7 +7510,7 @@
       "source_location": "L446",
       "_origin": "ast",
       "id": "lib_i18n_modulos_es",
-      "community": 61,
+      "community": 6,
       "norm_label": "es"
     },
     {
@@ -7870,7 +7520,7 @@
       "source_location": "L814",
       "_origin": "ast",
       "id": "lib_i18n_modulos_modulosdict",
-      "community": 61,
+      "community": 6,
       "norm_label": "modulosdict"
     },
     {
@@ -7880,7 +7530,7 @@
       "source_location": "L815",
       "_origin": "ast",
       "id": "lib_i18n_modulos_modulos",
-      "community": 61,
+      "community": 6,
       "norm_label": "modulos"
     },
     {
@@ -7890,7 +7540,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic",
-      "community": 10,
+      "community": 37,
       "norm_label": "monte-xanic.ts"
     },
     {
@@ -7900,7 +7550,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_en",
-      "community": 10,
+      "community": 37,
       "norm_label": "en"
     },
     {
@@ -7910,7 +7560,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_es",
-      "community": 10,
+      "community": 37,
       "norm_label": "es"
     },
     {
@@ -7920,7 +7570,7 @@
       "source_location": "L328",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_montexanicdict",
-      "community": 10,
+      "community": 37,
       "norm_label": "montexanicdict"
     },
     {
@@ -7930,7 +7580,7 @@
       "source_location": "L329",
       "_origin": "ast",
       "id": "lib_i18n_monte_xanic_montexanic",
-      "community": 10,
+      "community": 37,
       "norm_label": "montexanic"
     },
     {
@@ -7990,7 +7640,7 @@
       "source_location": "L469",
       "_origin": "ast",
       "id": "lib_i18n_precios_precios",
-      "community": 11,
+      "community": 6,
       "norm_label": "precios"
     },
     {
@@ -8160,7 +7810,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "lib_i18n_rich_dict",
-      "community": 49,
+      "community": 55,
       "norm_label": "dict"
     },
     {
@@ -8340,7 +7990,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_i18n_winery",
-      "community": 49,
+      "community": 28,
       "norm_label": "winery.ts"
     },
     {
@@ -8350,7 +8000,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "lib_i18n_winery_en",
-      "community": 49,
+      "community": 28,
       "norm_label": "en"
     },
     {
@@ -8360,7 +8010,7 @@
       "source_location": "L239",
       "_origin": "ast",
       "id": "lib_i18n_winery_es",
-      "community": 49,
+      "community": 28,
       "norm_label": "es"
     },
     {
@@ -8370,7 +8020,7 @@
       "source_location": "L424",
       "_origin": "ast",
       "id": "lib_i18n_winery_winerydict",
-      "community": 49,
+      "community": 28,
       "norm_label": "winerydict"
     },
     {
@@ -8380,7 +8030,7 @@
       "source_location": "L425",
       "_origin": "ast",
       "id": "lib_i18n_winery_winery",
-      "community": 49,
+      "community": 28,
       "norm_label": "winery"
     },
     {
@@ -8490,7 +8140,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "lib_onscreen",
-      "community": 59,
+      "community": 9,
       "norm_label": "onscreen.ts"
     },
     {
@@ -8500,7 +8150,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "lib_onscreen_onscreenentry",
-      "community": 59,
+      "community": 9,
       "norm_label": "onscreenentry"
     },
     {
@@ -8510,7 +8160,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "lib_onscreen_clearsthreshold",
-      "community": 59,
+      "community": 9,
       "norm_label": "clearsthreshold()"
     },
     {
@@ -8660,7 +8310,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "lib_pricing_currencybylocale",
-      "community": 11,
+      "community": 6,
       "norm_label": "currencybylocale"
     },
     {
@@ -8680,7 +8330,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "lib_pricing_formatamount",
-      "community": 11,
+      "community": 3,
       "norm_label": "formatamount()"
     },
     {
@@ -8690,7 +8340,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "lib_pricing_formatprice",
-      "community": 11,
+      "community": 6,
       "norm_label": "formatprice()"
     },
     {
@@ -8780,7 +8430,7 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "lib_pricing_mixdiscountbyrank",
-      "community": 48,
+      "community": 34,
       "norm_label": "mixdiscountbyrank"
     },
     {
@@ -8790,7 +8440,7 @@
       "source_location": "L151",
       "_origin": "ast",
       "id": "lib_pricing_roundhalfdown",
-      "community": 3,
+      "community": 60,
       "norm_label": "roundhalfdown()"
     },
     {
@@ -8800,7 +8450,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "lib_pricing_round500",
-      "community": 50,
+      "community": 60,
       "norm_label": "round500()"
     },
     {
@@ -8820,7 +8470,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "lib_pricing_ceilto",
-      "community": 57,
+      "community": 50,
       "norm_label": "ceilto()"
     },
     {
@@ -8840,7 +8490,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "lib_pricing_usdfrommxn",
-      "community": 3,
+      "community": 60,
       "norm_label": "usdfrommxn()"
     },
     {
@@ -8850,7 +8500,7 @@
       "source_location": "L202",
       "_origin": "ast",
       "id": "lib_pricing_priced",
-      "community": 3,
+      "community": 60,
       "norm_label": "priced()"
     },
     {
@@ -8860,7 +8510,7 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "lib_pricing_sumpriced",
-      "community": 3,
+      "community": 60,
       "norm_label": "sumpriced()"
     },
     {
@@ -8890,7 +8540,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "lib_pricing_moduleid",
-      "community": 11,
+      "community": 6,
       "norm_label": "moduleid"
     },
     {
@@ -8900,7 +8550,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "lib_pricing_moduleids",
-      "community": 11,
+      "community": 6,
       "norm_label": "moduleids"
     },
     {
@@ -8940,7 +8590,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "lib_pricing_bundleitem",
-      "community": 11,
+      "community": 3,
       "norm_label": "bundleitem"
     },
     {
@@ -9030,7 +8680,7 @@
       "source_location": "L545",
       "_origin": "ast",
       "id": "lib_pricing_featurehours",
-      "community": 3,
+      "community": 60,
       "norm_label": "featurehours()"
     },
     {
@@ -9040,7 +8690,7 @@
       "source_location": "L557",
       "_origin": "ast",
       "id": "lib_pricing_featuresetup",
-      "community": 3,
+      "community": 60,
       "norm_label": "featuresetup()"
     },
     {
@@ -9250,7 +8900,7 @@
       "source_location": "L830",
       "_origin": "ast",
       "id": "lib_pricing_quoteline",
-      "community": 48,
+      "community": 3,
       "norm_label": "quoteline"
     },
     {
@@ -9330,7 +8980,7 @@
       "source_location": "L1106",
       "_origin": "ast",
       "id": "lib_pricing_modulefloors",
-      "community": 11,
+      "community": 6,
       "norm_label": "modulefloors"
     },
     {
@@ -9360,7 +9010,7 @@
       "source_location": "L1174",
       "_origin": "ast",
       "id": "lib_pricing_workedexample",
-      "community": 3,
+      "community": 60,
       "norm_label": "workedexample"
     },
     {
@@ -9410,7 +9060,7 @@
       "source_location": "L1281",
       "_origin": "ast",
       "id": "lib_pricing_growerbundlehours",
-      "community": 50,
+      "community": 60,
       "norm_label": "growerbundlehours()"
     },
     {
@@ -9420,7 +9070,7 @@
       "source_location": "L1300",
       "_origin": "ast",
       "id": "lib_pricing_growersetups",
-      "community": 50,
+      "community": 60,
       "norm_label": "growersetups()"
     },
     {
@@ -9610,7 +9260,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "lib_testing_loopholes_demos_cellardemo_cellardemo",
-      "community": 36,
+      "community": 0,
       "norm_label": "cellardemo()"
     },
     {
@@ -19743,640 +19393,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_bands",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_board",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_caption_keys",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_captionkeyfor",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_cycleframe",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_daynumber",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_directshareat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_featured",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_hotspotspots",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_isweekend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_landed",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_occupancyat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_readouts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_stay",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_stayrect",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_stays",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_units",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_fortnight_weekday",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L390",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_hospitalidaddemo_hospitalidaddemo",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L84",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L388",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_hospitalidaddemo_pre",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L80",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_hospitalidaddemo_vis",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_palette",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_palette_demopalette",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_demofigure",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_demofigure_demofigure",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_demofigure_hotspot",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_demofigure_pickbox",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_usedemostage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_usedemostage_demoscene",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L34",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_demos_stage_usedemostage_stageenv",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_home_canvaskit_line",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_home_canvaskit_rgba",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "components_pages_home_canvaskit_rr",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "lib_i18n_demos",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "lib_i18n_demos_demos",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "lib_i18n_demos_demosdict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "lib_i18n_localeprovider",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo",
-      "target": "lib_i18n_localeprovider_usedict",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L397",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidaddemo",
-      "target": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L101",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_bands",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L102",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_board",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L377",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_captionkeyfor",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L357",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_cycleframe",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L158",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_daynumber",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L339",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_directshareat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L370",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_hotspotspots",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L154",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_isweekend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L258",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_landed",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L283",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_occupancyat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L165",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_stayrect",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L156",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_fortnight_weekday",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L142",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_demos_stage_usedemostage_livetext_at"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L140",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_home_canvaskit_line",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L181",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_home_canvaskit_rgba",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L170",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidadscene",
-      "target": "components_pages_home_canvaskit_rr",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "components/pages/demos/HospitalidadDemo.tsx",
-      "source_location": "L391",
-      "weight": 1.0,
-      "source": "components_pages_demos_hospitalidaddemo_hospitalidaddemo",
-      "target": "lib_i18n_localeprovider_usedict"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "components/pages/demos/RestauranteDemo.tsx",
       "source_location": "L16",
       "weight": 1.0,
@@ -21526,17 +20542,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_contract_ghosts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "components/pages/demos/source.test.ts",
       "source_location": "L4",
       "weight": 1.0,
@@ -21552,17 +20557,6 @@
       "source_location": "L3",
       "weight": 1.0,
       "source": "components_pages_demos_demos_test",
-      "target": "components_pages_demos_contract_ghosts_withoutcsscomments",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
       "target": "components_pages_demos_contract_ghosts_withoutcsscomments",
       "confidence_score": 1.0
     },
@@ -22681,583 +21675,6 @@
       "weight": 1.0,
       "source": "lib_testing_loopholes_demos_cellardemo_cellardemo",
       "target": "components_pages_demos_floor_bands"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_bands",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_board",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_caption_keys",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_captionkeyfor",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_cycleframe",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_directshareat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_featured",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_final",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_hotspotspots",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_isweekend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_landed",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_occupancyat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_readouts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_sold",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_sold_direct",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_stays",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L57",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_test_here",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_test_read",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_units",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "components_pages_demos_fortnight_weekday",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "lib_i18n_demos",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.test.ts",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_test",
-      "target": "lib_i18n_demos_demos",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L306",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_bands",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L349",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_board",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L262",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_caption_keys",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L264",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_captionkey",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L271",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_captionkeyfor",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L33",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_channel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L280",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_clampn",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L204",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_cycleframe",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L120",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_daynumber",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L249",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_directshareat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L152",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_featured",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L129",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_final",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L385",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_hotspotspots",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L121",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_isweekend",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L228",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_landed",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L236",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_occupancyat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L162",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_readouts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L141",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_sold",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L142",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_sold_direct",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L39",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_stay",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L368",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_stayrect",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L78",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_stays",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L35",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_unitdef",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L24",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_unitkind",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_units",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L119",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_fortnight_weekday",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L396",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_stage_plan",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L396",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight",
-      "target": "components_pages_demos_stage_plan_isphoneplan",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L122",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_isweekend",
-      "target": "components_pages_demos_fortnight_weekday",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L252",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_directshareat",
-      "target": "components_pages_demos_fortnight_occupancyat",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L310",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_bands",
-      "target": "components_pages_demos_fortnight_clampn",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "components/pages/demos/fortnight.ts",
-      "source_location": "L390",
-      "weight": 1.0,
-      "source": "components_pages_demos_fortnight_hotspotspots",
-      "target": "components_pages_demos_fortnight_stayrect",
-      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -34061,7 +32478,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/demos.ts",
-      "source_location": "L237",
+      "source_location": "L120",
       "weight": 1.0,
       "source": "lib_i18n_demos",
       "target": "lib_i18n_demos_demos",
@@ -34071,7 +32488,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/demos.ts",
-      "source_location": "L135",
+      "source_location": "L70",
       "weight": 1.0,
       "source": "lib_i18n_demos",
       "target": "lib_i18n_demos_demosdict",
@@ -34091,7 +32508,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/demos.ts",
-      "source_location": "L137",
+      "source_location": "L72",
       "weight": 1.0,
       "source": "lib_i18n_demos",
       "target": "lib_i18n_demos_es",
@@ -42143,5 +40560,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "99e3de06108b1d60d6a56593f157b9417e20474d"
+  "built_at_commit": "29db5729cc4c96959a151bfe3226fb7b563d241f"
 }
