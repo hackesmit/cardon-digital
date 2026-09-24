@@ -543,8 +543,7 @@ would drop something a buyer needs to decide.
 Daniel reviews it when the rewrite epic finishes. The accepted length is not a number frozen
 here: it is whatever `node scripts/copy-check.mjs precios` reports on main when he reviews it at
 the epic's end, so nothing written here can be read as a target to cut the live page down to.
-Getting
-it to half is a policy decision, not a copy one: drop the complete build lists from the cards,
+Getting it to half is a policy decision, not a copy one: drop the complete build lists from the cards,
 drop the seven-combination table, or accept that a page publishing seven prices with their
 builds is longer than half. A rewrite bead does not take that decision on its own reading, and
 does not shed a limit to hit a count.
@@ -569,7 +568,7 @@ non-blocking. A reviewer blocks on two things and only these two: an honest edit
 and an honest edit the check refuses. Both are the check failing the author it exists to help. A
 novel dodge no honest author would write is a note, not a blocker. It never runs the other way: it
 is not a shield for a copy change, and it never excuses dropping a pricing condition, a scope, or
-a limit, which sections 8 and 9 forbid on their own terms.
+a limit, which section 9 forbids on its own terms.
 
 The mechanism is a change to the review brief, drafted in
 `ops/proposals/52-good-faith-check-standard.md` in /home/daniel/hq and pending Daniel's

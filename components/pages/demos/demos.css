@@ -381,4 +381,22 @@
   .rd-plate {
     transition: none;
   }
+
+  /* Under reduce nothing a stylesheet declares moves inside a demo. The site
+     says so for every element (app/globals.css), but its selector is `*`,
+     and the universal selector does not match a pseudo-element, so a
+     ::before given an animation here would have run under reduce with every
+     check green (cross-vendor review, hq-3pfhe.7 s-1ed1). The figure says it
+     for itself, pseudo-elements included, and demos.test.ts holds both this
+     rule and that nothing in this file outranks it. */
+  .demo-figure,
+  .demo-figure::before,
+  .demo-figure::after,
+  .demo-figure *,
+  .demo-figure *::before,
+  .demo-figure *::after,
+  .demo-figure *::marker {
+    animation: none !important;
+    transition: none !important;
+  }
 }

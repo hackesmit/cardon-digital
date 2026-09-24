@@ -1,24 +1,27 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { GHOST_BOXES } from "./contract/ghosts";
+import { demoFiles } from "./contract/files";
 import { broken, sourceRules } from "./contract/source";
 import { HOTSPOT } from "./stage/useDemoStage";
 
 /**
- * The source half of the demo contract (bead hq-3pfhe.7): four AST rules over
- * every demo beside this file. What a demo DOES is contract.test.tsx, on a
- * mounted component; these cover what a mount cannot reach. See
- * ./contract/source.ts for why they parse and never grep.
+ * The source half of the demo contract (bead hq-3pfhe.7): AST rules over every
+ * demo under this directory, subfolders included (./contract/files.ts, which
+ * contract.test.tsx walks with too: a demo neither half could see was the same
+ * one defect twice). What a demo DOES is contract.test.tsx, on a mounted
+ * component; these cover what a mount cannot reach. See ./contract/source.ts
+ * for why they parse and never grep.
  */
 
 const here = new URL("./", import.meta.url);
 const read = (rel: string) => readFileSync(new URL(rel, here), "utf8");
 const ctx = { hotspot: HOTSPOT, ghostBoxes: GHOST_BOXES };
 
-const components = readdirSync(here).filter(
-  (f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"),
-);
+const components = demoFiles(dirname(fileURLToPath(import.meta.url)));
 
 describe("every demo component, parsed", () => {
   it("exists", () => expect(components.length).toBeGreaterThan(0));
@@ -196,6 +199,41 @@ describe("the source rules are load bearing", () => {
   it("allows a live region written inside a ghost box", () => {
     const jsx = '<DemoFigure><div className="demo-pick-box"><p aria-live="polite">x</p></div></DemoFigure>';
     expect(broken("D.tsx", demo("", jsx), ctx)).toEqual([]);
+  });
+
+  const IMPORTS = "imports code and data, and no stylesheet, image or film of its own";
+  it.each([
+    'import "./cellar.css";',
+    'import styles from "./cellar.module.scss";',
+    'import film from "./room.mp4";',
+    'import gif from "@/public/room.gif?url";',
+    'const css = require("./cellar.css");',
+    'const later = import("./cellar.css");',
+    'const name = "./cellar.css"; const later = import(name);',
+    'export * from "./cellar.css";',
+  ])("rejects %s", (head) => {
+    expect(broken("D.tsx", demo(head, "<DemoFigure />"), ctx)).toEqual([IMPORTS]);
+  });
+
+  it.each(['import "./demos.css";', 'import { cellar } from "./cellar";', 'import data from "./cellar.json";', 'import x from "lib.name/thing";'])(
+    "allows %s",
+    (head) => {
+      expect(broken("D.tsx", demo(head, "<DemoFigure />"), ctx)).toEqual([]);
+    },
+  );
+
+  it("judges a demo one folder down by the same rules, reaching further for the same two files", () => {
+    /* the walk finds demos in subfolders now (./contract/files.ts), and a demo
+       there imports ../stage/DemoFigure and ../demos.css. Both were pinned to
+       the path a demo beside this file writes, so the frame rule and the import
+       rule would have refused a lawful demo for living one folder down. */
+    const nested =
+      'import "../demos.css";\n' +
+      'import { DemoFigure } from "../stage/DemoFigure";\n' +
+      "export default function D() {\n  return <DemoFigure />;\n}\n";
+    expect(broken("sala/SalaDemo.tsx", nested, ctx)).toEqual([]);
+    /* and it is still the shared sheet by name, not any .css one folder up */
+    expect(broken("sala/SalaDemo.tsx", nested.replace("../demos.css", "../sala.css"), ctx)).toEqual([IMPORTS]);
   });
 
   it.each([
