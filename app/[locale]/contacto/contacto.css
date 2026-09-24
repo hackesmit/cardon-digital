@@ -80,6 +80,7 @@
 .contact-form .form-foot .cta{align-self:flex-start;cursor:pointer;font-family:var(--sans);}
 .contact-form .form-foot .cta[disabled]{opacity:0.6;cursor:progress;}
 .contact-form .form-privacy{color:var(--muted);font-size:0.84rem;line-height:1.55;max-width:52ch;margin:0;}
+.contact-form .form-privacy-link{color:var(--primary);text-decoration:underline;text-underline-offset:3px;}
 .contact-form .form-general:empty{display:none;}
 .contact-form .form-general{
   color:var(--energy-bright);font-size:0.92rem;margin:0;
