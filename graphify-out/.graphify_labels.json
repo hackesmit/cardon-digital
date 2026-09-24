@@ -57,12 +57,21 @@
   "55": "page.tsx",
   "56": "page.tsx",
   "57": "bumpOffBareMultiple",
+  "58": "DemoScene",
   "59": "observeOnscreen",
   "60": "priced",
   "61": "BridgeMap.tsx",
   "62": "palette.ts",
   "63": "World",
   "64": "page.tsx",
+  "65": "ModuleFloors.tsx",
+  "66": "BridgeMap.tsx",
+  "67": "Page",
   "68": "metadata.ts",
-  "70": "ghosts.ts"
+  "69": "winery-page.test.ts",
+  "70": "ghosts.ts",
+  "71": "OpenedAtDemo.tsx",
+  "72": "PickStuckDemo.tsx",
+  "73": "ResizeMemoryDemo.tsx",
+  "74": "collapse.mjs"
 }
