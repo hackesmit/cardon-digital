@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { localePath } from "@/lib/i18n/config";
 import { contact } from "@/lib/i18n/contact";
 import {
   EMPTY_ATTRIBUTION,
@@ -283,7 +284,17 @@ export default function ContactForm() {
         <button className="cta" type="submit" disabled={status === "sending"}>
           {status === "sending" ? d.sending : d.submit}
         </button>
-        <p className="form-privacy">{d.privacy}</p>
+        {/* The short notice, and the way to the long one: a visitor deciding
+            whether to type their address should not have to hunt the footer
+            for what happens to it. The anchor is a plain href rather than the
+            router's Link, because leaving this page mid-form is a real
+            navigation and should behave like one. */}
+        <p className="form-privacy">
+          {d.privacy.body}{" "}
+          <a className="form-privacy-link" href={localePath(locale, "/privacy")}>
+            {d.privacy.link}
+          </a>
+        </p>
       </div>
 
       <p className="form-general" role="alert">

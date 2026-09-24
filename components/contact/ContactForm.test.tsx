@@ -36,6 +36,7 @@ import { CONSENT_COOKIE } from "../../lib/analytics/consent";
 import { LocaleProvider } from "../../lib/i18n/LocaleProvider";
 import { locales, type Locale } from "../../lib/i18n/config";
 import { privacy } from "../../lib/i18n/privacy";
+import { contact } from "../../lib/i18n/contact";
 import { HONEYPOT_FIELD } from "../../lib/contact/validate";
 
 type GtagCall = unknown[];
@@ -253,11 +254,17 @@ describe("the contact form as a counted conversion", () => {
 });
 
 describe("the privacy notice against what leaves the browser", () => {
-  /* Exactly the fields the notice enumerates: what you typed, the language
-     the page was in, the page you were on and the marks the link carried,
-     plus the honeypot. A field added here without a matching sentence in
-     lib/i18n/privacy.ts is processing the notice does not describe, which is
-     the defect this bead was filed for. */
+  /* Every key the form POSTs. Most of them are a sentence in the notice:
+     what you typed, the language the page was in, the page you were on, the
+     campaign marks on that page's address, plus the honeypot. Two are not,
+     and cannot be yet: cd_lead_id and cd_first_seen come from the cd_src
+     first-touch record, which nothing on this site writes (hq-3hjr9 ships the
+     writer), so they leave the browser empty and the notice names no lead id
+     and no first-seen time. EMPTY_TODAY below pins them empty for exactly
+     that reason: the day the writer lands, this suite goes red and the notice
+     gains its sentence in the same change. A field added to either list
+     without one is processing the notice does not describe, which is the
+     defect this bead was filed for. */
   const DISCLOSED = [
     "name",
     "winery",
@@ -274,6 +281,10 @@ describe("the privacy notice against what leaves the browser", () => {
     HONEYPOT_FIELD,
   ].sort();
 
+  /* Sent on every submission, always empty, and named nowhere in the notice.
+     See the note above DISCLOSED. */
+  const EMPTY_TODAY = ["cd_lead_id", "cd_first_seen"];
+
   it("posts exactly the fields the notice describes, and nothing else", async () => {
     page = new Page();
     page.consent("granted");
@@ -281,6 +292,17 @@ describe("the privacy notice against what leaves the browser", () => {
     await page.send();
 
     expect(Object.keys(page.posted[0]).sort()).toEqual(DISCLOSED);
+  });
+
+  it("sends the two fields the notice does not name as empty", async () => {
+    page = new Page();
+    page.consent("granted");
+    page.fill();
+    await page.send();
+
+    for (const key of EMPTY_TODAY) {
+      expect(page.posted[0][key]).toBe("");
+    }
   });
 
   it("names both shapes of the written door, in both locales", () => {
@@ -303,11 +325,112 @@ describe("the privacy notice against what leaves the browser", () => {
     for (const locale of locales) {
       const body = privacy[locale].contactBody;
       const landing = locale === "en" ? /the page you were on/i : /la página en la que estaba/i;
-      const marks = locale === "en" ? /marks the link you arrived by/i : /marcas que trajera el enlace/i;
+      const marks =
+        locale === "en"
+          ? /marks that page's own address was carrying/i
+          : /marcas que trajera la dirección de esa misma página/i;
       const log = locale === "en" ? /server log/i : /registro de nuestro servidor/i;
       expect(body).toMatch(landing);
       expect(body).toMatch(marks);
       expect(body).toMatch(log);
+    }
+  });
+});
+
+describe("the notice's own promises about itself", () => {
+  /* The form's short line is the only privacy text most visitors read, and
+     until this bead it ended "we share it with nobody" while the message
+     travelled through a delivery service and a delivered send was reported to
+     Google. It now says both, and carries the door to the long version. */
+  it("links the short line to the locale's full notice", () => {
+    for (const locale of locales) {
+      page = new Page(locale);
+      const link = page.form.querySelector(
+        ".form-privacy a",
+      ) as HTMLAnchorElement | null;
+      expect(link).not.toBeNull();
+      expect(link!.getAttribute("href")).toBe("/" + locale + "/privacy");
+      expect(link!.textContent?.trim().length ?? 0).toBeGreaterThan(0);
+      page.destroy();
+      page = null;
+    }
+  });
+
+  it("does not claim the message reaches nobody else", () => {
+    for (const locale of locales) {
+      const line = contact[locale].form.privacy.body;
+      expect(line).not.toMatch(
+        locale === "en" ? /share it with nobody/i : /no lo compartimos con nadie/i,
+      );
+      // The two things that sentence used to hide.
+      expect(line).toMatch(
+        locale === "en" ? /delivers this site's mail/i : /entrega el correo de este sitio/i,
+      );
+      expect(line).toMatch(locale === "en" ? /conversion/i : /conversión/i);
+    }
+  });
+
+  /* The notice's last sentence promises a new effective date whenever what
+     this site collects changes. A date alone cannot keep that promise, since
+     nothing makes anyone move it, so the date is pinned here beside a digest
+     of every section that describes collection. Change what the notice says
+     and this test goes red with the digest it now wants; the only way to
+     green is to write today's date into both locales and into DATE below. */
+  const DATE = { en: "2026-09-24", es: "24 de septiembre de 2026" };
+  const DESCRIBES_COLLECTION = [
+    "measureBody",
+    "measureList",
+    "measureWithdraw",
+    "deviceBody",
+    "contactBody",
+    "hostingBody",
+    "clientBody",
+  ] as const;
+  const DIGEST = "0776e16d";
+
+  function digest(text: string): string {
+    /* FNV-1a, 32 bit: a short stable number, not a security hash. */
+    let h = 0x811c9dc5;
+    for (let i = 0; i < text.length; i += 1) {
+      h ^= text.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h.toString(16).padStart(8, "0");
+  }
+
+  it("carries the effective date of the last change to what it describes", () => {
+    const parts: string[] = [];
+    for (const locale of locales) {
+      expect(privacy[locale].effective).toContain(DATE[locale]);
+      for (const section of DESCRIBES_COLLECTION) {
+        const value = privacy[locale][section];
+        parts.push(Array.isArray(value) ? value.join("\u0000") : value);
+      }
+    }
+    expect(digest(parts.join("\u0001"))).toBe(DIGEST);
+  });
+
+  /* Added to this bead's scope on 2026-09-24 (J-own-20): the notice has to
+     say where a client system's data and its backups live. It belongs in the
+     client-data section, because none of it is data this site collects. */
+  it("says where client-system data and its backups live, in both locales", () => {
+    for (const locale of locales) {
+      const body = privacy[locale].clientBody;
+      const backup = locale === "en" ? /backup/i : /respaldo/i;
+      const offsite =
+        locale === "en"
+          ? /second storage provider/i
+          : /segundo proveedor de almacenamiento/i;
+      const theirs =
+        locale === "en" ? /client's own name/i : /nombre del propio cliente/i;
+      const notThisSite =
+        locale === "en"
+          ? /this website collects or touches/i
+          : /este sitio recabe ni toque/i;
+      expect(body).toMatch(backup);
+      expect(body).toMatch(offsite);
+      expect(body).toMatch(theirs);
+      expect(body).toMatch(notThisSite);
     }
   });
 });
