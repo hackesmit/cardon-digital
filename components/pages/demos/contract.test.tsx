@@ -1,11 +1,13 @@
 // @vitest-environment jsdom
-import { readdirSync } from "node:fs";
-import { dirname } from "node:path";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import React, { act, StrictMode, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { describe, expect, it, vi } from "vitest";
 import { checks, failing, type Demo } from "./contract/checks";
+import { demoFiles } from "./contract/files";
 import { World } from "./contract/world";
 import { observeOnscreen } from "./motion";
 import { DemoFigure, Hotspot } from "./stage/DemoFigure";
@@ -16,8 +18,9 @@ import type { DemoScene, StageEnv } from "./stage/useDemoStage";
  *
  * The checks are in ./contract/checks.tsx and the page they run on is
  * ./contract/world.tsx. This file only decides WHAT is checked: every .tsx
- * beside it, found by listing the directory, so a demo is under the contract
- * from the commit that adds it and nobody has to remember to register it.
+ * under this directory, found by walking it (./contract/files.ts), so a demo
+ * is under the contract from the commit that adds it, nobody has to remember
+ * to register it, and a subfolder is not a place to put one out of reach.
  */
 
 /* observeOnscreen is the one sanctioned way to an IntersectionObserver. The
@@ -69,6 +72,7 @@ vi.mock("./stage/useDemoStage", async (original) => {
             value: marked((env: StageEnv, t: number) => {
               handed.scene = scene;
               handed.env = env;
+              handed.t = t;
               scene.draw(env, t);
             }),
           },
@@ -110,16 +114,56 @@ const load = async (path: string): Promise<Demo> => {
     path + " asked the page for the time or for luck while it was being imported, so it knows when it was opened",
   ).toEqual([]);
   const mod = (await import(/* @vite-ignore */ path)) as { default?: Demo };
-  if (typeof mod.default !== "function") throw new Error(path + " has no default export to mount");
+  if (typeof mod.default !== "function") {
+    throw new Error(
+      path + " has no demo to mount: every .tsx under components/pages/demos is one demo," +
+        " default-exported. Shared JSX belongs in ./stage, which the contract is built on, and" +
+        " shared arithmetic in a .ts module; a .tsx helper is code no check and no source rule reads",
+    );
+  }
   return mod.default;
 };
 
-const components = readdirSync(dirname(fileURLToPath(import.meta.url))).filter(
-  (f) => f.endsWith(".tsx") && !f.endsWith(".test.tsx"),
-);
+const components = demoFiles(dirname(fileURLToPath(import.meta.url)));
+
+describe("what the contract is about", () => {
+  it("is every demo in this directory, the reference one included", () => {
+    expect(components.length).toBeGreaterThan(0);
+    expect(components).toContain("RestauranteDemo.tsx");
+  });
+
+  it("reaches into subfolders, and leaves the stage and this contract alone", () => {
+    /* Both halves of the contract listed one directory, so the component that
+       fails two checks beside RestauranteDemo.tsx passed the whole suite from
+       a subfolder of it, and a helper that rendered the hotspots from one was
+       read by no source rule (stand-in review of 077a7b4, probe 6). */
+    const dir = mkdtempSync(join(tmpdir(), "demo-files-"));
+    for (const sub of ["stage", "contract", "sala", "sala/stage"]) mkdirSync(join(dir, sub));
+    for (const file of [
+      "RestauranteDemo.tsx",
+      "floor.ts",
+      "contract.test.tsx",
+      "stage/DemoFigure.tsx",
+      "contract/checks.tsx",
+      "sala/SalaDemo.tsx",
+      "sala/spots.tsx",
+      "sala/stage/HiddenDemo.tsx",
+    ]) {
+      writeFileSync(join(dir, file), "");
+    }
+    expect(demoFiles(dir)).toEqual([
+      "RestauranteDemo.tsx",
+      "sala/SalaDemo.tsx",
+      /* a helper in a subfolder is a demo file too: one demo to a file, and
+         load() below says so in the failure */
+      "sala/spots.tsx",
+      /* a second `stage` further down is a directory, not the machinery */
+      "sala/stage/HiddenDemo.tsx",
+    ]);
+  });
+});
 
 describe("every demo component, mounted", () => {
-  it("exists", () => expect(components.length).toBeGreaterThan(0));
 
   describe.each(components)("%s", (file) => {
     it.each(Object.keys(checks))("%s", async (name) => {
@@ -141,7 +185,7 @@ describe("the checks are load bearing", () => {
   const OBSERVER = "learns it is on screen from observeOnscreen and builds no observer of its own";
   const FROZEN = "starts its loop when reduced motion is turned off on a page loaded under it";
   const CLOCK = "tells the story from the top, parks on the standing frame, and resumes from it";
-  const WRITES = "rewrites nothing whose box is not held open by ghosts";
+  const WRITES = "rewrites nothing whose box is not held open by ghosts, and the words are the reading's";
   const LIVE = "keeps every live region inside a ghost box";
   const NOSCRIPT =
     "leaves prose, the honest label and the readout with scripting off, and nothing to operate";
@@ -493,6 +537,59 @@ describe("the checks are load bearing", () => {
 
   it("fails the s-1022 scene that is pure per reading and counts its layouts", async () => {
     expect(await failing(await loophole("ResizeMemoryDemo"))).toEqual([PURE]);
+  });
+
+  /* The stand-in review of the merged commit 077a7b4: six probes, each of
+     which passed the whole suite when it was written, and each a thing an
+     honest author does rather than a way round the harness. The first five are
+     components; the sixth was a demo in a subfolder, which neither half of the
+     contract listed, and it is held by the walk in ./contract/files.ts and the
+     tests at the top of this file. */
+  it("fails a scene that latches the first reading a tap in mid-story shows it", async () => {
+    /* probe 1: the tap moments were 0 and three seconds, and this one restarts
+       the story for any tap between four seconds and the hold */
+    expect(await failing(await loophole("TapWindowDemo"))).toContain(TAP);
+  });
+
+  it("fails a caption written by a clock of the demo's own, in values the ghosts do reserve", async () => {
+    /* probe 2: every word it writes is a word the box holds room for, so the
+       only thing wrong with it is WHEN it says them */
+    expect(await failing(await loophole("CaptionClockDemo"))).toContain(WRITES);
+  });
+
+  it("fails a remounting figure whose hotspots are divs with role=button", async () => {
+    /* probe 3: the same defect as Remounts above, and the checks that tap used
+       to query for "button" and find nothing */
+    const failed = await failing(await loophole("RoleButtonDemo"));
+    expect(failed).toEqual(expect.arrayContaining([TAP, WRITES]));
+  });
+
+  it("fails a demo that has only the payoff for every selection but the first", async () => {
+    /* probe 5: the opening was judged on the selection a page opens with, and
+       every other tank here opens on its ending and stands there */
+    expect(await failing(await loophole("PickStuckDemo"))).toContain(CLOCK);
+  });
+
+  it("fails a hint sentence the demo renders itself, with an inline tag beside the words", async () => {
+    /* probe 4: the hint was matched against the whole text of a leaf, and
+       `<p>{hint} <b>1-2</b></p>` is neither */
+    expect(await failing(await loophole("LeftoverHintDemo"))).toContain(NOSCRIPT);
+  });
+
+  it("fails a demo with one thing to operate, whose tap nothing can be compared against", async () => {
+    /* the silent early return that probe 3 walked through: no selection at all
+       is a demo with nothing to tap, and one control is a tap no check judges */
+    function Lone() {
+      const [picked, setPicked] = useState(0);
+      return (
+        <DemoFigure demo="fixture" scene={lawfulBar} title="t" honest="vista ilustrativa, no son datos de cliente" fallback="prose" selection={picked}
+          hotspots={<Hotspot picked={picked === 0} onPick={() => setPicked(1)} label="spot" />} />
+      );
+    }
+    expect(await failing(Lone)).toEqual([TAP]);
+    /* and nothing to operate is not an escape but a demo with no selection:
+       the bar alone, which is lawful */
+    expect(await failing(() => figure(lawfulBar))).toEqual([]);
   });
 
 

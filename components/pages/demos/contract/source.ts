@@ -157,7 +157,9 @@ export const sourceRules: Record<
     let imported = false;
     for (const st of sf.statements) {
       if (!ts.isImportDeclaration(st) || !ts.isStringLiteral(st.moduleSpecifier)) continue;
-      if (!/^\.\/stage\/DemoFigure$/.test(st.moduleSpecifier.text)) continue;
+      /* however far up it has to reach: a demo in a subfolder imports
+         ../stage/DemoFigure and is the same demo (./files.ts) */
+      if (!/(?:^|\/)stage\/DemoFigure$/.test(st.moduleSpecifier.text)) continue;
       const named = st.importClause?.namedBindings;
       if (named && ts.isNamedImports(named)) {
         imported ||= named.elements.some((e) => (e.propertyName ?? e.name).text === "DemoFigure");
@@ -191,8 +193,11 @@ export const sourceRules: Record<
     const sf = parse(file, text);
     const found: string[] = [];
     const judge = (n: ts.Node, spec: string) => {
-      const ext = /\.([A-Za-z0-9]+)$/.exec(spec.split(/[?#]/)[0].split("/").pop() ?? "")?.[1];
-      if (!ext || /^(ts|tsx|js|jsx|mjs|json)$/.test(ext) || spec === "./demos.css") return;
+      const name = spec.split(/[?#]/)[0].split("/").pop() ?? "";
+      const ext = /\.([A-Za-z0-9]+)$/.exec(name)?.[1];
+      /* the shared sheet by name and not by path, for the same reason: a demo
+         one directory down imports ../demos.css */
+      if (!ext || /^(ts|tsx|js|jsx|mjs|json)$/.test(ext) || (name === "demos.css" && /^[.]/.test(spec))) return;
       found.push(where(sf, n) + " imports " + spec);
     };
     const visit = (n: ts.Node) => {
