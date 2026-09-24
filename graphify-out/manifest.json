@@ -270,8 +270,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/work/monte-xanic/page.tsx": {
-    "mtime": 1789627423.528612,
-    "ast_hash": "0e1b719dcecdb057c878564490c6f72d",
+    "mtime": 1790234582.7801335,
+    "ast_hash": "526057671d1a0c2b84e9d80261f51ef9",
     "semantic_hash": ""
   },
   "app/not-found.tsx": {
@@ -325,8 +325,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/monte-xanic.ts": {
-    "mtime": 1789627423.529881,
-    "ast_hash": "ed30a7c910edf5a590cdddeb1c307ba6",
+    "mtime": 1790234582.7801335,
+    "ast_hash": "8049efc1a2512c885e126a4c1e87d8fe",
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
@@ -750,8 +750,8 @@
     "semantic_hash": ""
   },
   "scripts/copy-check.mjs": {
-    "mtime": 1789632041.6190348,
-    "ast_hash": "d0e6c539835e706682b9f77cacb84563",
+    "mtime": 1790234582.7801335,
+    "ast_hash": "11d8990fa2eaea7c89566febb41cbf66",
     "semantic_hash": ""
   },
   "scripts/copy-check.test.mjs": {
@@ -967,6 +967,11 @@
   "components/pages/demos/fortnight.ts": {
     "mtime": 1790234112.781574,
     "ast_hash": "042ced6350710ca66462bf27c972a2d7",
+    "semantic_hash": ""
+  },
+  "app/[locale]/work/monte-xanic/case-page.test.ts": {
+    "mtime": 1790234582.7801335,
+    "ast_hash": "5d25c4837b6a50a6e94e48f4eff9896a",
     "semantic_hash": ""
   }
 }
