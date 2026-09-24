@@ -1,0 +1,167 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /home/daniel/hq/rigs/cardon-digital-2f56
+
+ ❯ components/pages/demos/produccion.test.ts (16 tests | 8 failed) 108ms
+   × the scene draws at every width the stage can hand it > throws nothing at 0px, across a whole cycle 5ms
+     → IndexSizeError: arcTo r=-3.1666666666666665
+   × the scene draws at every width the stage can hand it > throws nothing at 1px, across a whole cycle 1ms
+     → IndexSizeError: arcTo r=-3.0908333333333338
+   × the scene draws at every width the stage can hand it > throws nothing at 2px, across a whole cycle 1ms
+     → IndexSizeError: arcTo r=-3.015
+   × the scene draws at every width the stage can hand it > throws nothing at 3px, across a whole cycle 1ms
+     → IndexSizeError: arcTo r=-2.9391666666666665
+   × the scene draws at every width the stage can hand it > throws nothing at 8px, across a whole cycle 0ms
+     → IndexSizeError: arcTo r=-2.56
+   × the scene draws at every width the stage can hand it > throws nothing at 24px, across a whole cycle 0ms
+     → IndexSizeError: arcTo r=-1.346666666666667
+   × the scene draws at every width the stage can hand it > keeps drawing after the width collapses and comes back 1ms
+     → IndexSizeError: arcTo r=-3.0908333333333338
+   × the scene draws at every width the stage can hand it > puts every hotspot on the board it just laid out 2ms
+     → fx at 0: expected false to be true // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > throws nothing at 0px, across a whole cycle
+Error: IndexSizeError: arcTo r=-3.1666666666666665
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:107:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > throws nothing at 1px, across a whole cycle
+Error: IndexSizeError: arcTo r=-3.0908333333333338
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:107:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > throws nothing at 2px, across a whole cycle
+Error: IndexSizeError: arcTo r=-3.015
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:107:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > throws nothing at 3px, across a whole cycle
+Error: IndexSizeError: arcTo r=-2.9391666666666665
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:107:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > throws nothing at 8px, across a whole cycle
+Error: IndexSizeError: arcTo r=-2.56
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:107:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > throws nothing at 24px, across a whole cycle
+Error: IndexSizeError: arcTo r=-1.346666666666667
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:107:50
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > keeps drawing after the width collapses and comes back
+Error: IndexSizeError: arcTo r=-3.0908333333333338
+ ❯ call components/pages/demos/produccion.test.ts:53:45
+     51|        negative, and a negative one is a throw, not a no-op. */
+     52|     if (k === "arc" && args[2] < 0) throw new SpecViolation("IndexSize…
+     53|     if (k === "arcTo" && args[4] < 0) throw new SpecViolation("IndexSi…
+       |                                             ^
+     54|     if (k === "ellipse" && (args[2] < 0 || args[3] < 0)) {
+     55|       throw new SpecViolation("IndexSizeError: ellipse");
+ ❯ Proxy.api.<computed> components/pages/demos/produccion.test.ts:68:48
+ ❯ Module.rr components/pages/home/canvasKit.ts:143:7
+ ❯ drawCellar components/pages/demos/ProduccionDemo.tsx:384:7
+ ❯ Object.draw components/pages/demos/ProduccionDemo.tsx:614:7
+ ❯ components/pages/demos/produccion.test.ts:121:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  components/pages/demos/produccion.test.ts > the scene draws at every width the stage can hand it > puts every hotspot on the board it just laid out
+AssertionError: fx at 0: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ components/pages/demos/produccion.test.ts:135:53
+    133|       scene.layout(e);
+    134|       for (const h of scene.hotspots!(e)) {
+    135|         expect(Number.isFinite(h.fx), "fx at " + W).toBe(true);
+       |                                                     ^
+    136|         expect(Number.isFinite(h.fy), "fy at " + W).toBe(true);
+    137|       }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+ Test Files  1 failed (1)
+      Tests  8 failed | 8 passed (16)
+   Start at  00:19:55
+   Duration  608ms (transform 188ms, setup 0ms, collect 209ms, tests 108ms, environment 0ms, prepare 158ms)
+
