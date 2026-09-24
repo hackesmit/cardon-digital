@@ -1,0 +1,16 @@
+A mid {"plan":"wide","caption":"madurando","figW":760,"figH":633.48,"canvasW":722,"canvasH":"422px","overflow":0}
+A captions 26.0s to 31.0s [["26.0","la ventana, avisada con cinco días"],["26.3","la ventana, avisada con cinco días"],["26.6","la ventana, avisada con cinco días"],["26.9","la ventana, avisada con cinco días"],["27.2","la ventana, avisada con cinco días"],["27.5","la ventana, avisada con cinco días"],["27.8","la ventana, avisada con cinco días"],["28.1","la ventana, avisada con cinco días"],["28.4","la ventana, avisada con cinco días"],["28.7","cada lote, cortado en su ventana"],["29.0","cada lote, cortado en su ventana"],["29.3","cada lote, cortado en su ventana"],["29.6","cada lote, cortado en su ventana"],["29.9","cada lote, cortado en su ventana"],["30.2","cada lote, cortado en su ventana"],["30.5","cada lote, cortado en su ventana"],["30.8","cada lote, cortado en su ventana"]]
+A hold {"plan":"wide","caption":"cada lote, cortado en su ventana","figW":760,"figH":633.48,"canvasW":722,"canvasH":"422px","overflow":0} errors []
+A2 captions 27.0s to 30.0s [["27.00","la ventana, avisada con cinco días"],["27.25","la ventana, avisada con cinco días"],["27.50","la ventana, avisada con cinco días"],["27.75","la ventana, avisada con cinco días"],["28.00","la ventana, avisada con cinco días"],["28.25","la ventana, avisada con cinco días"],["28.50","la ventana, avisada con cinco días"],["28.75","cada lote, cortado en su ventana"],["29.00","cada lote, cortado en su ventana"],["29.25","cada lote, cortado en su ventana"],["29.50","cada lote, cortado en su ventana"],["29.75","cada lote, cortado en su ventana"],["30.00","cada lote, cortado en su ventana"]]
+B dark hold {"plan":"wide","caption":"cada lote, cortado en su ventana","figW":760,"figH":633.48,"canvasW":722,"canvasH":"422px","overflow":0} errors []
+B en hold {"plan":"wide","caption":"every lot cut inside its window","figW":760,"figH":633.48,"canvasW":722,"canvasH":"422px","overflow":0} errors []
+P es hold {"plan":"phone","caption":"cada lote, cortado en su ventana","figW":375,"figH":803.84,"canvasW":349,"canvasH":"565px","overflow":0} errors []
+P en hold {"plan":"phone","caption":"every lot cut inside its window","figW":375,"figH":803.84,"canvasW":349,"canvasH":"565px","overflow":0} errors []
+P dark hold {"plan":"phone","caption":"cada lote, cortado en su ventana","figW":375,"figH":803.84,"canvasW":349,"canvasH":"565px","overflow":0} errors []
+P 390 hold {"plan":"phone","caption":"cada lote, cortado en su ventana","figW":390,"figH":813.84,"canvasW":364,"canvasH":"575px","overflow":0} errors []
+C reduced {"plan":"wide","caption":"cada lote, cortado en su ventana","figW":760,"figH":633.48,"canvasW":722,"canvasH":"422px","overflow":0} errors []
+C reduced still: SAME
+C reduced == hold pixels: SAME
+D collapse: errors before 0 at 0 width 0 restored 0
+D first errors []
+D after restore {"plan":"wide","caption":"madurando","figW":760,"figH":633.48,"canvasW":722,"canvasH":"422px","overflow":0}

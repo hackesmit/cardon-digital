@@ -1,0 +1,85 @@
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./app/[locale]/work/enkanto/page.tsx
+162:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/pages/case/VineyardMap.tsx
+383:6  Warning: React Hook useEffect has missing dependencies: 't.below', 't.heat', 't.meets', 't.quality', 't.sample', 't.sectionWord', 't.vsStandard', and 't.water'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/pages/home/HeroAssembly.tsx
+770:6  Warning: React Hook useEffect has missing dependencies: 't.connecting', 't.docs', 't.oneSystem', 't.panelSummary', 't.panelTitle', and 't.rows'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/pages/winery/VineField.tsx
+1138:6  Warning: React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/site/Media.tsx
+601:5  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/site/SiteShell.tsx
+35:7  Warning: Do not use `<head>` element. Use `<Head />` from `next/head` instead. See: https://nextjs.org/docs/messages/no-head-element  @next/next/no-head-element
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/28) ...
+   Generating static pages (7/28) 
+   Generating static pages (14/28) 
+   Generating static pages (21/28) 
+ ✓ Generating static pages (28/28)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /_not-found                          290 B          87.7 kB
+├ ● /[locale]                            36 kB           136 kB
+├   ├ /es
+├   └ /en
+├ ● /[locale]/about                      554 B          87.9 kB
+├   ├ /es/about
+├   └ /en/about
+├ ● /[locale]/coming-soon                183 B          87.6 kB
+├   ├ /es/coming-soon
+├   └ /en/coming-soon
+├ ● /[locale]/contacto                   7.67 kB        95.1 kB
+├   ├ /es/contacto
+├   └ /en/contacto
+├ ● /[locale]/demo                       191 B          96.3 kB
+├   ├ /es/demo
+├   └ /en/demo
+├ ● /[locale]/industries/winery          14.3 kB         114 kB
+├   ├ /es/industries/winery
+├   └ /en/industries/winery
+├ ● /[locale]/precios                    510 B          91.7 kB
+├   ├ /es/precios
+├   └ /en/precios
+├ ● /[locale]/privacy                    183 B          87.6 kB
+├   ├ /es/privacy
+├   └ /en/privacy
+├ ● /[locale]/terms                      183 B          87.6 kB
+├   ├ /es/terms
+├   └ /en/terms
+├ ● /[locale]/work/enkanto               510 B           100 kB
+├   ├ /es/work/enkanto
+├   └ /en/work/enkanto
+├ ● /[locale]/work/monte-xanic           9.32 kB         101 kB
+├   ├ /es/work/monte-xanic
+├   └ /en/work/monte-xanic
+├ ƒ /api/contact                         0 B                0 B
+├ ○ /icon.svg                            0 B                0 B
+├ ○ /robots.txt                          0 B                0 B
+└ ○ /sitemap.xml                         0 B                0 B
++ First Load JS shared by all            87.4 kB
+  ├ chunks/838-2d09919ce9493679.js       31.7 kB
+  ├ chunks/91977780-275408c68cf5f662.js  53.6 kB
+  └ other shared chunks (total)          2.05 kB
+
+
+ƒ Middleware                             27 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses getStaticProps)
+ƒ  (Dynamic)  server-rendered on demand
+

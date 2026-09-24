@@ -1,0 +1,47 @@
+lib/i18n/home.ts  en 886w/1b (target 696w)  es 987w/1b (target 785w)
+  note  lib/i18n/home.ts  en  words  886 words against a target of 696 (half of the 1391 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/home.ts  es  words  987 words against a target of 785 (half of the 1570 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+lib/i18n/winery.ts  en 832w/1b (target 828w)  es 939w/1b (target 941w)
+  note  lib/i18n/winery.ts  en  words  832 words against a target of 828 (half of the 1656 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+lib/i18n/monte-xanic.ts  en 689w/0b (target 684w)  es 757w/0b (target 763w)
+  note  lib/i18n/monte-xanic.ts  en  words  689 words against a target of 684 (half of the 1367 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+lib/i18n/enkanto.ts  en 1335w/0b (target 1191w)  es 1416w/0b (target 1277w)
+  note  lib/i18n/enkanto.ts  en  words  1335 words against a target of 1191 (half of the 2381 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/enkanto.ts  es  words  1416 words against a target of 1277 (half of the 2553 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/enkanto.ts  es  comparative  line 338  "no es/son (plain negation)" in: ...ra siendo una bodega mexicana no es algo que la ley permita, así...
+lib/i18n/modulos.ts  en 2586w/10b (target 1404w)  es 2856w/10b (target 1545w)
+  FAIL  lib/i18n/modulos.ts  en  bold  10 emphasis spans ("**" and "__" both render), at most 3 allowed
+  FAIL  lib/i18n/modulos.ts  en  negative-contrast  line 128  ", not" in: ...It is another set of features, not a cut-down one.
+  FAIL  lib/i18n/modulos.ts  es  bold  10 emphasis spans ("**" and "__" both render), at most 3 allowed
+  FAIL  lib/i18n/modulos.ts  es  negative-contrast  line 656  "no es/son + article" in: No es un cliente que tomemos. Una prop...
+  note  lib/i18n/modulos.ts  en  words  2586 words against a target of 1404 (half of the 2808 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/modulos.ts  en  comparative  line 122  "rather than" in: ...tank movements are remembered rather than written, and the commercial s...
+  note  lib/i18n/modulos.ts  en  comparative  line 128  "instead of" in: ...tion and deliveries to buyers instead of tanks, barrels and a bottling...
+  note  lib/i18n/modulos.ts  en  comparative  line 281  "rather than" in: ...We say so in the Diagnostico rather than quoting work we would not do...
+  note  lib/i18n/modulos.ts  en  comparative  line 286  "rather than" in: ...s shown on the occupancy view rather than hidden. The system never writ...
+  note  lib/i18n/modulos.ts  en  comparative  line 366  "rather than" in: ...to run tracks service volume rather than furniture.
+  note  lib/i18n/modulos.ts  en  comparative  line 374  "rather than" in: Named here rather than discovered later: guest self-...
+  note  lib/i18n/modulos.ts  es  words  2856 words against a target of 1545 (half of the 3090 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/modulos.ts  es  comparative  line 678  "no es/son (plain negation)" in: ...al: un grupo que opera varias no es para lo que está hecho este m...
+lib/i18n/precios.ts  en 1119w/2b (target 650w)  es 1247w/2b (target 717w)
+  note  lib/i18n/precios.ts  en  words  1119 words against a target of 650 (half of the 1300 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/precios.ts  es  words  1247 words against a target of 717 (half of the 1434 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+lib/i18n/showcase.ts  en 790w/7b (target 325w)  es 837w/7b (target 337w)
+  FAIL  lib/i18n/showcase.ts  en  bold  7 emphasis spans ("**" and "__" both render), at most 3 allowed
+  FAIL  lib/i18n/showcase.ts  es  bold  7 emphasis spans ("**" and "__" both render), at most 3 allowed
+  note  lib/i18n/showcase.ts  en  words  790 words against a target of 325 (half of the 649 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/showcase.ts  es  words  837 words against a target of 337 (half of the 673 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/showcase.ts  es  comparative  line 246  "no es/son (plain negation)" in: ...un CFDI, y un gasto sin CFDI no es deducible. Del lado mexicano,...
+lib/i18n/about.ts  en 461w/0b (target 231w)  es 474w/0b (target 237w)
+  FAIL  lib/i18n/about.ts  en  negative-contrast  line 39  ", not" in: ...means every process done well, not only the ones anyone sees.
+  FAIL  lib/i18n/about.ts  es  negative-contrast  line 91  "no es/son + article" in: ...hay una llamada cada semana. No es una mesa de ayuda con número de f...
+  note  lib/i18n/about.ts  en  words  461 words against a target of 231 (half of the 461 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/about.ts  es  words  474 words against a target of 237 (half of the 474 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/about.ts  es  comparative  line 83  "no es/son (plain negation)" in: ...a cada añada y a cada cosecha no es administración. Es la única f...
+lib/i18n/contact.ts  en 576w/4b (target 288w)  es 545w/4b (target 273w)
+  FAIL  lib/i18n/contact.ts  en  bold  4 emphasis spans ("**" and "__" both render), at most 3 allowed
+  FAIL  lib/i18n/contact.ts  es  bold  4 emphasis spans ("**" and "__" both render), at most 3 allowed
+  note  lib/i18n/contact.ts  en  words  576 words against a target of 288 (half of the 576 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+  note  lib/i18n/contact.ts  es  words  545 words against a target of 273 (half of the 545 this page carried when the doctrine landed). Advisory: the number that gates a rewrite lives in that bead's own Definition of Done.
+
+4 of 9 page(s) violate docs/copy-doctrine.md
