@@ -2,10 +2,13 @@ import type { MetadataRoute } from "next";
 import { locales, localePath } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/i18n/metadata";
 
-/** Every page, in every locale. Paths here are locale-free. */
+/** Every page, in every locale. Paths here are locale-free.
+ *
+ * A path retired in lib/routes.ts may not appear here: it no longer has a page
+ * and the sitemap would be advertising a redirect. /modulos left on bead
+ * hq-4pu0q.8, and app/routes.test.ts holds the pair to each other. */
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" as const },
-  { path: "/modulos", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/industries/winery", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/work/monte-xanic", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/work/enkanto", priority: 0.9, changeFrequency: "monthly" as const },

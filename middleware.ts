@@ -8,6 +8,7 @@ import {
   localePath,
   stripLocale,
 } from "@/lib/i18n/config";
+import { retiredRoute } from "@/lib/routes";
 
 /* Two jobs in one pass.
    1. Locale routing. Every page lives under /es or /en. A cardon-locale cookie
@@ -29,33 +30,32 @@ export const config = {
 
 const NOINDEX = "noindex, nofollow";
 
-/* Retired industry pages (bead hq-wrig5.11): the site sells three areas only,
-   so clinics, construction, hiring and restaurants are gone. Their routes, with
-   or without a locale prefix, redirect permanently to the modules page. */
-const REMOVED_INDUSTRIES = new Set([
-  "/industries/clinics",
-  "/industries/construction",
-  "/industries/hiring",
-  "/industries/restaurants",
-]);
-
 export function middleware(req: NextRequest) {
   const gated = process.env.COMING_SOON === "1";
   const { pathname } = req.nextUrl;
   const pathLocale = localeFromPath(pathname);
 
-  // A literal 301 to /<locale>/modulos, the moved-permanently status the
-  // removal was specified with (Next's own redirects() would emit 308).
-  if (REMOVED_INDUSTRIES.has(stripLocale(pathname))) {
+  /* A page the site no longer has (lib/routes.ts holds the table and the reason
+     for each entry). The redirect is answered here, ahead of the locale rule
+     and ahead of the pre-launch gate, so a retired address lands on its live
+     page in one hop rather than bouncing through a locale prefix first. The
+     status is written out per entry because Next's own redirects() emits 308
+     for everything and the industry routes shipped with a 301. */
+  const retired = retiredRoute(stripLocale(pathname));
+  if (retired) {
     const cookie = req.cookies.get(LOCALE_COOKIE)?.value;
     const locale =
       pathLocale ??
       (isLocale(cookie)
         ? cookie
         : localeFromCountry(req.headers.get("x-vercel-ip-country")));
-    const url = req.nextUrl.clone();
-    url.pathname = localePath(locale, "/modulos");
-    return NextResponse.redirect(url, 301);
+    /* A plain URL rather than nextUrl.clone(): a NextURL keeps the trailing
+       slash the request arrived with and would send /es/modulos/ on to
+       /es/precios/, a second hop for Next's own normaliser to undo. The query
+       string is carried across, so a campaign parameter survives the move. */
+    const url = new URL(req.url);
+    url.pathname = localePath(locale, retired.to);
+    return NextResponse.redirect(url, retired.status);
   }
 
   if (!pathLocale) {
