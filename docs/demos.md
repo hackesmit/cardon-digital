@@ -371,8 +371,9 @@ visitor changes, and the `<noscript>` block hiding `.demo-canvas` plus every
 `.rd-btn` and `.demo-hint` it renders. Copy the reference's measuring and
 clock code as it stands. If a rule genuinely does not fit your demo, change
 the check and the demo in the same commit and say why in both; do not route
-around the check, because a reviewer will drop the loophole fixtures back in
-and run the suite.
+around a check while leaving it standing, because this contract is written for a
+good-faith author (docs/copy-doctrine.md section 10) and the honest move is to
+change the check in the open, not to slip past it.
 
 The cleaner shape, a shared measuring hook and a shared clock that the three
 components call rather than copy, would make these checks structural instead
