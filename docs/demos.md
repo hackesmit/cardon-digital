@@ -51,17 +51,40 @@ second.
 that moves is either drawn by `draw` or is a `live` text. There is no third
 way. A bar in the readout strip animated by a loop of your own has asked
 nobody whether it may run, and the s-2e55 review measured one doing 13.7 to
-26.2 in half a second under prefers-reduced-motion. If a thing should move,
-draw it on the canvas from `cycT`.
+26.2 in half a second under prefers-reduced-motion. Motion you hand to the
+browser is the same defect with no loop to find: the s-1022 review put an SMIL
+`<animate>` and an `Element.animate()` beside a lawful scene and measured both
+moving under reduce, because the stage gates what it runs and cannot gate what
+the browser runs. So a demo mounts only elements that cannot move by
+themselves (section 3 has the list; an `<img>` is not on it, since a still and
+an animated GIF look the same to a page), starts no Web Animation, makes no
+stylesheet from script, imports no stylesheet or media of its own, draws no
+`<video>` onto its canvas, and carries no inline `animation`, `transition` or
+`url()`. If a thing should move, draw it on the canvas from `cycT`. CSS
+transitions in `demos.css` are the one exception. Under reduce
+`app/globals.css` stops every animation and transition on every ELEMENT of the
+site; its selector is `*`, which does not match a pseudo-element, so
+`demos.css` repeats the rule for the figure with `::before`, `::after` and
+`::marker` named, and `demos.test.ts` holds both rules, fails a declaration
+in `demos.css` that outranks them with `!important`, and fails an animation or
+transition given to any other pseudo-element. CSS motion is not gated
+off screen or in a hidden tab, here or anywhere on the site.
 
 `draw` is a function of its two arguments. It is called with the clock's
 reading and keeps no memory between calls, because the same call draws the
 running loop, the paused board and the reduced-motion frame. It never sees the
 clock itself, and it must not grow one: it is called once per frame, so a
 counter in its closure is a second clock, and the same review ran a story
-backwards with one. This is checked (section 3): the suite draws your scene at
-the same reading twice and then backwards, and every reading has to be one
-frame.
+backwards with one. Nor may it read anybody else's clock: the s-1022 review
+ran the same story backwards from `performance.now()` with no closure at all.
+`cycT` is the only time a picture is made from, and `Math.random()` is not a
+reading either.
+This is checked three ways (section 3): the suite draws your scene at the same
+reading twice and then backwards, with time passing and `layout` called in
+between, and every reading has to be one frame; it fails a `draw` or a `live`
+text that asks the page for the time or a random number at all; and it opens
+your demo on two pages that differ in when they were opened, the date and
+every random number, and the two visitors have to see the same sixty seconds.
 
 **Where the scene is built does not matter.** `RestauranteDemo.tsx` builds it
 behind `useMemo` so the geometry is not rebuilt on every tap, and that is an
@@ -107,8 +130,15 @@ effect now has no dependencies, the clock sits in a ref besides, and a new
 scene arrives through a handler that swaps the picture and does not touch the
 time. One way to restart a story is left, because it is React's definition of
 a new component and not the stage's to refuse: a `key` on `<DemoFigure>` that
-changes. Do not key the figure on anything a visitor can change; the tap check
-in section 3 fails a demo that does.
+changes. A new mount that starts at the top is telling the truth, so this is
+an escape hatch and not a hole, and it is yours to keep shut: do not key the
+figure on anything that changes while a visitor is looking. Section 3 checks
+three such things and no more. It fails a key changed by a tap on a hotspot,
+by the `cardon-mode` theme event or by a window `resize` (the s-1022 review
+keyed a figure on the last two "so it repaints with the new palette", and a
+visitor in the hold who switched theme was sent back to 'empieza el
+servicio'). A key that follows anything else, a timer, a locale, a prop from
+the page, is seen by no check here.
 
 **The three motion gates.** A demo animates only when the visitor has not
 asked for reduced motion, the tab is in front, and the figure is on screen.
@@ -178,8 +208,11 @@ Nothing below reads your source for a spelling, and there is no comment
 stripper to confuse: the old one was a regex, and two string literals holding
 the comment delimiters erased every line between them from the checked text.
 
-**`contract.test.tsx`: every demo, mounted.** Every `.tsx` in
-`components/pages/demos/` is found by listing the directory and mounted under
+**`contract.test.tsx`: every demo, mounted.** Every `.tsx` under
+`components/pages/demos/`, subfolders included, is found by walking the
+directory (`contract/files.ts`, which the source half walks with; `stage/` and
+`contract/` are the machinery and are skipped, at the top only, so a second
+`stage` further down is an ordinary folder) and mounted under
 jsdom on a page (`contract/world.tsx`) whose IntersectionObserver,
 ResizeObserver, matchMedia, tab visibility, requestAnimationFrame and 2d
 context are stand-ins installed on the globals. However a component reaches
@@ -190,36 +223,78 @@ the observer's constructor, it arrives at the stand-in. The checks
 | --- | --- |
 | mounts under reduced motion, reports the figure on screen, waits | no standing frame was drawn, or it set styles and painted nothing, or anything moved |
 | loads under reduce, then turns reduce off | fewer than ten frames follow in two seconds |
-| loads in view and watches three seconds | the standing frame is among the first frames: the story opened on its ending |
+| loads in view and watches three seconds, once for every hotspot on the page, each chosen before the board came into view | fewer than ten frames, or one frame over and over, or the standing frame is among them: that selection opened on its ending, or has only its ending |
 | scrolls away, comes back; hides the tab, comes back | the paused board is not the standing frame, or any frame in the second after the return is not the frame it was parked on, or the loop never leaves the hold again |
 | counts observers at the global | one was constructed outside `observeOnscreen` |
-| taps a hotspot three seconds into the story, and again inside the hold | the frames after the tap are not the frames of a visitor who made the same choice before the story began, or the hold stops being still: the tap moved time |
+| taps a control before the story, then three, six and nine seconds into it, and again inside the hold | the frames at the end are not the frames of a visitor who made the same choice before the story began, or the hold stops being still: the tap moved time. A control is anything a visitor can operate, the same list the noscript rule is held to (`button`, `role=button`, a link, a field, a `summary`, anything with a `tabindex`), so hotspots that are not `<button>` are tapped like any other. Exactly one control fails outright: a lone control has no other selection to be compared against, so no check here would judge its tap |
 | loads under reduce; hides the tab; scrolls away; and each time watches the whole page for a second and a half | a frame was asked for by anybody, or any canvas was drawn on, or a scroll position was set, or anything on the page was mutated, any attribute included and a portal included; a page loaded under reduce is watched from its first moment: timers run on the page's clock, so a `setInterval` is seen as surely as a frame loop |
-| takes the scene the mounted demo handed the stage and draws six readings in order, again, and backwards | any reading drew a different frame the second or third time, or a `live` text answered differently: `draw` has a memory. Also if a frame leaves state on the context, a `save()` with no `restore()` or a `translate` outside a pair, because the next frame is drawn under it |
-| watches every DOM mutation across a full cycle, then taps every button | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop changed any attribute of anything |
+| sends the `cardon-mode` event, then a window `resize`, three seconds into the story | the frames after it are not the frames of a visitor who had the same event before the story began: the demo answered the event by moving time, which so far has meant a `key` on the figure |
+| takes the scene the mounted demo handed the stage and draws six readings in order, again, and backwards, with about a second of the page's time passing before every draw and `height`, `layout`, `hotspots` and every `live` text called between the passes | any reading drew a different frame the second or third time, or a `live` text answered differently: `draw` has a memory or a clock. Also if `draw` or a `live` text asked the page for the time or a random number at all, in these draws or in the second of story before them, used or not. Also if a frame leaves state on the context, a `save()` with no `restore()` or a `translate` outside a pair, because the next frame is drawn under it |
+| opens the demo on two pages, one at 1.000s and one at 5.777s by the page's clock, five years apart by the date, with different random numbers, does the same things on both for sixty-one seconds, one tap included | any frame, or the figure's text at any second, differs between the two: something that differs between the two pages reached the picture, wherever it was read and wherever it was kept |
+| mounts with and without reduce and, over sixty-two seconds, does everything the other rows do (theme event, window resize, every button, reduce on and off, tab hidden and back, off screen and back, a new width), waiting three turns of the event loop each time so that a promise or a dynamic import can land, and after each second reads every element in the document, head and portals included | an element is not on the list of elements that stand still (`INERT` in `contract/world.tsx`: structure, text, tables, `canvas`, `button`, static SVG shapes, paint servers and filters; so `animate`, `set`, `marquee`, `video`, `img`, `iframe` and anything not yet invented are refused unread), or a `<style>` sits anywhere but the frame's noscript, or an inline style names `animation`, `transition` or a `url()`, or `drawImage` or `createPattern` was given anything but a canvas, an image or a bitmap, or anything called `Element.animate`, `new Animation`, `new KeyframeEffect`, `document.startViewTransition`, a `CSSStyleSheet` method that writes rules, or set `document.adoptedStyleSheets`: these exist on the test page from before your module is evaluated, so feature detection at the top of a file finds them, they do nothing, and they are counted |
+| watches every DOM mutation across a full cycle, reading the words in the boxes against the clock about sixty times on the way, then taps every control | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop changed any attribute of anything, or a word in a box is not the word its `live` text names at the reading the board was last drawn at: the words are the reading's, and a second clock writing them is a second story |
 | looks for `aria-live` and the live roles in the mounted tree | one sits outside a ghost box |
-| mounts, runs the loop, taps every button, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
-| renders to static markup and reads the noscript rule against it | a canvas, anything operable, or any string the dictionary files under `hint` is still on the page; or the fallback, the honest label or the readout is not |
+| mounts, runs the loop, taps every control, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
+| renders to static markup and reads the noscript rule against it | a canvas, anything operable, or any sentence the dictionary files under `hint` is still on the page; the hint is looked for in the deepest element that HOLDS it, so `<p>{hint} <b>1-2</b></p>` is the paragraph and not nothing; or the fallback, the honest label or the readout is not |
 | delivers 639.6, 640.2 and 639.9 under an ancestor scaled by two | `data-plan` is not phone, wide, phone, or the backing store is not the layout width |
 
-Two of those three are checks because there is nothing to construct. The
-stage owns the clock, the gates and the canvas because a demo has to be handed
-them; it cannot own `requestAnimationFrame` or the DOM, and it cannot take a
-closure's memory away, so the page is judged whole and `draw` is asked twice.
-The tap row is different: the stage makes it true for every demo that does not
-re-key its figure, and the check is there for the one that does. None of this
-is a promise against an author who sets out to defeat it. It is a promise that
-an author acting in good faith, who makes the mistakes the last three reviews
-made on purpose, is told so by a red test.
+The stillness, purity, two-page and stands-still rows are checks because
+there is nothing to construct. The stage owns the clock, the gates and the
+canvas because a demo has to be handed them; it cannot own
+`requestAnimationFrame` or the DOM, it cannot take a closure's memory away, it
+cannot call `draw` with the page's clock out of reach, and it cannot stop an
+animation the browser is running. So each is closed from the other side, at
+the page, and the list of what the page owns is exact, not a manner of
+speaking. From before any demo module is evaluated, so that a reference
+captured at the top of a file is the stand-in too: `performance.now` and
+`performance.timeOrigin` (the rest of `performance` is left real, and a
+picture that reads any of it has asked a question), `Date.now`, `new Date()`,
+`Date()`, `Intl.DateTimeFormat` `format` and `formatToParts` asked for now,
+`document.timeline.currentTime`, an event's `timeStamp`, the frame callback's
+argument, `Math.random`, `crypto.getRandomValues` and `crypto.randomUUID`.
+They are one number, the harness moves it, and the two pages differ in all of
+it. One thing the two pages cannot differ in is a value your module noted
+while it was being imported, because both pages mount one evaluation of it;
+so a demo module that asks for the time or a random number at import is
+refused at the import. What may be mounted is a list of what stands still, not a list of what
+moves. The tap and event rows are different: the stage makes them true for
+every demo that does not re-key its figure, and the checks are there for the
+one that does, for those three events only.
 
-Three consequences for your timeline, since the harness is black-box: the
-standing frame must not appear in the first three seconds of the story, the
-hold must draw the standing frame unchanged for at least a second and end
-within twenty, and one cycle must fit in sixty seconds. The stylesheet decides
-what a ghost box is (`X > *` with `grid-area: 1 / 1`), so a new box added to
-`demos.css` is under the contract without being registered anywhere.
+What this page still cannot see, so that nobody reads the table as more than
+it is:
 
-**`source.test.ts`: four AST rules**, parsed with `ts.createSourceFile`, for
+- a stylesheet other than `demos.css` reaching into the figure, including one
+  brought by a package or a helper your demo imports: rule 5 below reads your
+  file's own imports and no further;
+- anything a scene reads that the harness never varies between its two pages:
+  scroll position, the window's size, storage, the URL, the network;
+- a clock or an animation reached through something the list above does not
+  name (a worker, a `<video>` that is never drawn, an API newer than this
+  file);
+- a declaration made in answer to something the stands-still row does not do,
+  later than its sixty-two seconds, or by work that takes more than three
+  turns of the event loop to arrive;
+- a `key` that follows anything but the three events above;
+- a tap that shifts time by less than the hold is wide, on a demo whose hold
+  covers the tenth second of its story, because that is where the tap row
+  compares its two pages and a hold is still;
+- a picture that tells one selection's story backwards, or in any other wrong
+  order, while its words run forwards. The page can see that a frame is not
+  the payoff frame and that the story moves; which way a drawing is going is
+  a property of what it means, and the page does not know what it means;
+- a `.tsx` under `components/pages/demos/` that is not a demo: it is mounted
+  like one and fails saying so, which is the rule and not an oversight, but it
+  means shared JSX has to live in `stage/` and shared arithmetic in a `.ts`
+  module beside the demo;
+- and everything that only happens in a real browser, which is what the list
+  at the end of this file is for.
+
+None of this is a promise against an author who sets out to defeat it. It is a
+promise that an author acting in good faith, who makes the mistakes the last
+four reviews made on purpose, is told so by a red test.
+
+**`source.test.ts`: five AST rules**, parsed with `ts.createSourceFile`, for
 what a mount cannot reach (a branch it did not take, a way around its
 stand-ins):
 
@@ -232,8 +307,17 @@ stand-ins):
    `<Hotspot>`.
 3. Anything with `aria-live`, or a role of status, alert or log, or a role
    that cannot be read, sits inside a ghost box. Render a `<PickBox>`.
-4. The demo renders `<DemoFigure>` and writes no `<noscript>` or `<style>` of
-   its own, so the hidden list is derived from what the frame renders.
+4. The demo renders `<DemoFigure>` from `stage/DemoFigure`, however far up it
+   has to reach for it, and writes no `<noscript>` or `<style>` of its own, so
+   the hidden list is derived from what the frame renders.
+5. Every import, `require` and `import()` names a literal specifier with no
+   extension or one of `ts`, `tsx`, `js`, `jsx`, `mjs`, `json`. A stylesheet
+   of the demo's own is read by neither `demos.test.ts` nor the site's
+   reduced-motion review, and an imported film or GIF is motion no jsdom page
+   sees. `demos.css` is allowed by name, so a demo one folder down may import
+   `../demos.css`: importing it twice is importing it once.
+   The rule reads the demo's own file: what a module it imports goes on to
+   import is not followed.
 
 **`lib/onscreen.test.ts`: repo-wide.** No observer may read `isIntersecting`
 behind a threshold array, and a new observer that declares a threshold goes
@@ -252,12 +336,13 @@ is not a construction, a `typeof` or a type, refuses every computed read of a
 global, and reads a callback passed by name where the file defines it.
 
 **The loophole fixtures are in the tree.** `lib/testing/loopholes/demos/`
-holds the four reviewer demos verbatim and
+holds the reviewers' demos verbatim (s-4a6c, s-5836, s-2e55 and s-1022) and
 `lib/testing/loopholes/IndirectProbe.tsx.txt` the fifth, and each suite
 asserts they fail and on what. They sit outside `components/` because they
 are not visuals. A reviewer will also drop them beside your demo
 and run the suite (`state/review/s-5836/loophole/run.sh`,
-`state/review/s-4a6c/loophole/run.sh`). If a check genuinely does not fit your
+`state/review/s-4a6c/loophole/run.sh`, `state/review/s-2e55/loophole/run.sh`,
+`state/review/s-1022/loophole/run.sh`). If a check genuinely does not fit your
 demo, change the check and the demo in the same commit and say why in both; the
 honest move is to change the check in the open, not to route around it while
 leaving it standing, because this contract is written for a good-faith author
