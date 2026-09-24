@@ -725,8 +725,8 @@
     "semantic_hash": ""
   },
   "components/pages/demos/demos.test.ts": {
-    "mtime": 1790214014.7301784,
-    "ast_hash": "473d0b4d8b6980339d9b7f22d548ee75",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "c56d3f03f450c1d690f29c86bb8eb17c",
     "semantic_hash": ""
   },
   "components/pages/demos/floor.ts": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "docs/demos.md": {
-    "mtime": 1790214014.7314878,
-    "ast_hash": "87e6cb6494dde58bf26beb79d659a625",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "9d8a5bd074b510e14493024657147064",
     "semantic_hash": ""
   },
   "components/pages/case/SpotlightFrames.test.ts": {
@@ -830,13 +830,13 @@
     "semantic_hash": ""
   },
   "components/pages/demos/contract.test.tsx": {
-    "mtime": 1790214014.7280874,
-    "ast_hash": "3c13c7ace76363c0eefe305a385c5149",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "707180669e18b2ad84e369b77faa81dd",
     "semantic_hash": ""
   },
   "components/pages/demos/contract/checks.tsx": {
-    "mtime": 1790214014.7280874,
-    "ast_hash": "fafbd0f83915ae9910c136a68ed130bd",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "92eb510d6c061869e5dc48bc6ce8e16d",
     "semantic_hash": ""
   },
   "components/pages/demos/contract/ghosts.ts": {
@@ -845,18 +845,18 @@
     "semantic_hash": ""
   },
   "components/pages/demos/contract/source.ts": {
-    "mtime": 1790214014.7301784,
-    "ast_hash": "8b4bca79c6773fb7b6eee524c8f1a8a9",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "5c0cf8855c79beb88c891fa3dc6c73f0",
     "semantic_hash": ""
   },
   "components/pages/demos/contract/world.tsx": {
-    "mtime": 1790214014.7301784,
-    "ast_hash": "f91c9d45b295c360cc792547a22b9526",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "23d4c4058bfe043bf9f6fc2366af938d",
     "semantic_hash": ""
   },
   "components/pages/demos/source.test.ts": {
-    "mtime": 1790214014.7301784,
-    "ast_hash": "2d34388d24f4b05d9dd2023eab506629",
+    "mtime": 1790234677.3454132,
+    "ast_hash": "091c65b2ff457120bd4e42e97b101aa1",
     "semantic_hash": ""
   },
   "components/pages/demos/stage/DemoFigure.tsx": {
@@ -972,6 +972,81 @@
   "app/[locale]/work/monte-xanic/case-page.test.ts": {
     "mtime": 1790234582.7801335,
     "ast_hash": "5d25c4837b6a50a6e94e48f4eff9896a",
+    "semantic_hash": ""
+  },
+  "components/pages/demos/contract/files.ts": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "27d3623f719d33e5e4f7ca17bcfd20f0",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/CaptionClockDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "fec5d01bfbc284138fc9b08336ae46aa",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/CapturedClockDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "6e2bf60b465a0975deb8112cf775c79a",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/DomReadDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "bcc4bad25a2163b59a69ac50368c85f8",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/FeatureDetectDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "dca97a43ffe921689ced97d37a5ab3e5",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/KeyTapDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "b2e38513c0c8e09e6cb569929750651b",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/KeyThemeDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "d6e1421476a68b3d1dfc6207eaf6157c",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/LeftoverHintDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "a24b73a6dbb84531b7e1b640ad0b800d",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/OpenedAtDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "663b3b26897277792aef46c3b15aed19",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/PickStuckDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "fba277329e0a1ed2fac119de9f8374b6",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/ResizeMemoryDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "29dcdaa23c9bb761747f2e9a5f91b04c",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/RoleButtonDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "ac31bb732cacda6a78d4df5ce72bfd47",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/SmilDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "0a17632f848533873eaed6e8b8c39824",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/TapWindowDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "f117bcd9e4f4963afcbde0d3008853dd",
+    "semantic_hash": ""
+  },
+  "lib/testing/loopholes/demos/WallClockDemo.tsx": {
+    "mtime": 1790234677.3454132,
+    "ast_hash": "7008a72e5ff056c3e4bd10ee21687557",
     "semantic_hash": ""
   }
 }
