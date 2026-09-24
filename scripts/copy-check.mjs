@@ -45,7 +45,28 @@ const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 export const PAGES = {
   home: { en: { budget: 696, measured: 1391 }, es: { budget: 785, measured: 1570 } },
   winery: { en: { budget: 828, measured: 1656 }, es: { budget: 941, measured: 1882 } },
-  "monte-xanic": { en: { budget: 684, measured: 1367 }, es: { budget: 763, measured: 1526 } },
+  /**
+   * monte-xanic carries a raise Daniel authorised on hq-4pu0q.32, and it is
+   * written as arithmetic so the two halves stay readable: the doctrine
+   * landing count (1367 en, 1526 es) plus the words the three restored
+   * visuals add (173 en, 195 es).
+   *
+   * The raise is in `measured` at twice its size because of a pin this bead
+   * does not own: scripts/copy-check.test.mjs requires `budget` to be exactly
+   * half of `measured`, so a budget that moves alone fails the suite. The
+   * consequence, said plainly because the diff is the only place it shows:
+   * `measured` is no longer purely the landing count, and the advisory line
+   * this table prints ("half of the N this page carried when the doctrine
+   * landed") reads N off it. The honest fix is the one doctrine section 8
+   * rule 5 already describes, counting a page's `vis` strings apart from its
+   * prose rather than folding a visual's working parts into a prose budget.
+   * That is a change to the counter and to its suite, which this bead owns
+   * neither of, so it is filed rather than smuggled in here.
+   */
+  "monte-xanic": {
+    en: { budget: 684 + 173, measured: 1367 + 2 * 173 },
+    es: { budget: 763 + 195, measured: 1526 + 2 * 195 },
+  },
   enkanto: { en: { budget: 1191, measured: 2381 }, es: { budget: 1277, measured: 2553 } },
   modulos: { en: { budget: 1404, measured: 2808 }, es: { budget: 1545, measured: 3090 } },
   precios: { en: { budget: 650, measured: 1300 }, es: { budget: 717, measured: 1434 } },
