@@ -9,6 +9,7 @@ import {
   type Attribution,
 } from "@/lib/contact/attribution";
 import { CLICK_DOORS } from "@/lib/contact/doors";
+import { trackContactSubmit } from "@/lib/analytics/events";
 import {
   HONEYPOT_FIELD,
   LIMITS,
@@ -104,6 +105,21 @@ export default function ContactForm() {
       });
 
       if (res.ok) {
+        /* The conversion is the message that arrived, not the attempt to send
+           one: a rejected field, a refused send or a dead network counts
+           nothing, so one delivered lead is one conversion and a visitor who
+           fixes a field and tries again is still one. Only this branch knows
+           that, which is why the form reports it itself instead of leaving it
+           to the document-level listener in components/consent: that listener
+           can only see the submit event, which fires on every attempt.
+           trackContactSubmit is a no-op without a measurement id and without a
+           granted consent cookie, so nothing here needs to ask.
+
+           The form deliberately carries neither id="contact-form" nor
+           data-conversion="contact"; either one would make that listener count
+           this same lead a second time, on the attempt. ContactForm.test.tsx
+           holds both halves of that. */
+        trackContactSubmit("form");
         setStatus("sent");
         setValues(EMPTY);
         return;

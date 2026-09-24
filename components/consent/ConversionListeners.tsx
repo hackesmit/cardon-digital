@@ -21,6 +21,18 @@ import { trackContactSubmit, trackConversion } from "@/lib/analytics/events";
  *   2. A recognised destination. WhatsApp, the booking providers and mailto
  *      links are counted as they are, so the CTAs already on the site report
  *      from the day the ids are set.
+ *
+ * What delegation cannot reach, and why the contact form is not marked here.
+ * A submit event fires on every attempt, including one the form's own
+ * validation is about to refuse and one whose send comes back 500, so a form
+ * marked for this listener reports a conversion for a lead that never arrived
+ * and reports three for a visitor who mistyped an address twice. Whether the
+ * message was actually delivered is known only inside the form, after its POST
+ * answers, so components/contact/ContactForm.tsx calls trackContactSubmit
+ * itself at that point and carries neither marker, and this listener leaves it
+ * alone. The submit branch below stays for a plainly posted form that has no
+ * success to wait for; the ads plan (google-ads-plan.md section 6.1) makes the
+ * form the only Primary conversion, which is the count that must not inflate.
  */
 
 const DESTINATIONS: Array<{ kind: ConversionKind; match: RegExp }> = [
