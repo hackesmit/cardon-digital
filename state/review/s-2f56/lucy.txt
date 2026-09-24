@@ -1,0 +1,11 @@
+reviewing with gpt-5.6-sol (cross-vendor) …
+review: request failed: HTTP Error 429: Too Many Requests
+{
+    "error": {
+        "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+        "type": "insufficient_quota",
+        "param": null,
+        "code": "credit_balance_exhausted"
+    }
+}
+

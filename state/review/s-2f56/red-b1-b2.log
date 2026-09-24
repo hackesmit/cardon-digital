@@ -1,0 +1,93 @@
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /home/daniel/hq/rigs/cardon-digital-2f56
+
+ ❯ components/pages/demos/cellar.test.ts (40 tests | 4 failed) 91ms
+   × the captions > never says every lot is cut while one is still on the vine 5ms
+     → expected [ 'day 34.00, 5 of 6 in', …(3) ] to deeply equal []
+   × the marker's label > never lands on a reading, at any width or text length 4ms
+     → expected [ …(4) ] to deeply equal []
+   × the marker's label > sits under the chart's floor, which is where no reading can be 0ms
+     → the label's top at 240: expected 516 to be greater than 534
+   × the marker's label > stays on the board, at every width the text can fit on 1ms
+     → left edge at 240, text 160: expected -5.657142857142873 to be greater than or equal to 0
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  components/pages/demos/cellar.test.ts > the captions > never says every lot is cut while one is still on the vine
+AssertionError: expected [ 'day 34.00, 5 of 6 in', …(3) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "day 34.00, 5 of 6 in",
++   "day 34.05, 5 of 6 in",
++   "day 34.10, 5 of 6 in",
++   "day 34.15, 5 of 6 in",
++ ]
+
+ ❯ components/pages/demos/cellar.test.ts:324:31
+    322|       }
+    323|     }
+    324|     expect(lying.slice(0, 4)).toEqual([]);
+       |                               ^
+    325|     /* and it does say it, on the day the last lot comes off */
+    326|     expect(captionKeyFor(cutDay(LAST) - 0.01)).not.toBe("picked");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  components/pages/demos/cellar.test.ts > the marker's label > never lands on a reading, at any width or text length
+AssertionError: expected [ …(4) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "phone 240, text 88px: a reading at 67.4,517.0",
++   "phone 240, text 96px: a reading at 60.0,519.2",
++   "phone 240, text 104px: a reading at 52.6,516.5",
++   "phone 240, text 112px: a reading at 42.7,519.5",
++ ]
+
+ ❯ components/pages/demos/cellar.test.ts:510:28
+    508|       }
+    509|     }
+    510|     expect(on.slice(0, 4)).toEqual([]);
+       |                            ^
+    511|   });
+    512| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  components/pages/demos/cellar.test.ts > the marker's label > sits under the chart's floor, which is where no reading can be
+AssertionError: the label's top at 240: expected 516 to be greater than 534
+ ❯ components/pages/demos/cellar.test.ts:521:49
+    519|       const g = chart(w, isPhone);
+    520|       const { box, baseline } = flagLabel(w, isPhone, 160);
+    521|       expect(box.y0, "the label's top at " + w).toBeGreaterThan(g.base…
+       |                                                 ^
+    522|       expect(baseline).toBeGreaterThan(g.base);
+    523|       for (const L of LOTS) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  components/pages/demos/cellar.test.ts > the marker's label > stays on the board, at every width the text can fit on
+AssertionError: left edge at 240, text 160: expected -5.657142857142873 to be greater than or equal to 0
+ ❯ components/pages/demos/cellar.test.ts:534:65
+    532|       for (const textW of TEXT_W.filter((t) => t <= g.x1 - g.x0)) {
+    533|         const { box } = flagLabel(w, isPhone, textW);
+    534|         expect(box.x0, "left edge at " + w + ", text " + textW).toBeGr…
+       |                                                                 ^
+    535|         expect(box.x1, "right edge at " + w + ", text " + textW).toBeL…
+    536|         expect(box.y1, "bottom edge at " + w).toBeLessThanOrEqual(band…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 36 passed (40)
+   Start at  00:18:45
+   Duration  485ms (transform 58ms, setup 0ms, collect 66ms, tests 91ms, environment 0ms, prepare 39ms)
+
