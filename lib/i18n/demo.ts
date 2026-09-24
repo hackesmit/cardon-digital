@@ -5,9 +5,13 @@ import type { Dict } from "./rich";
  * (lib/demo.ts); while the demo host is cleared that fallback is this route,
  * so the button lands here rather than on the 404 page or, worse, in a
  * redirect loop back to itself. The page says the demos are not open yet,
- * names the three modules, and points the reader at the modules page, the
- * pricing page and the free diagnostic. It carries a noindex directive: this
- * is a holding page and not one we want found.
+ * names the three modules, and points the reader at the pricing page and the
+ * free diagnostic. It carries a noindex directive: this is a holding page and
+ * not one we want found.
+ *
+ * It pointed at the modules page too until bead hq-4pu0q.8 retired that page.
+ * The three modules are described on this page already, so the link went
+ * rather than being repointed at a second copy of the same words.
  */
 
 const en = {
@@ -36,7 +40,6 @@ const en = {
   ],
   linksLead: "While the demos are being finished:",
   links: {
-    modules: "See the three modules",
     pricing: "See the pricing",
   },
 };
@@ -67,7 +70,6 @@ const es: typeof en = {
   ],
   linksLead: "Mientras terminamos los demos:",
   links: {
-    modules: "Vea los tres módulos",
     pricing: "Vea los precios",
   },
 };

@@ -1,14 +1,19 @@
 import type { Dict } from "./rich";
 
 /**
- * The modules page: Produccion, Hospitalidad and Restaurante, what each one
+ * The three modules: Produccion, Hospitalidad and Restaurante, what each one
  * solves, its feature list by size, who it is for, and the seven ways they
  * combine.
  *
- * Every feature line, every size band and every bridge on this page comes from
- * the module catalogue. No figure lives here: prices are on /precios, which is
- * the only page that prints them, and this dictionary carries exactly one line
- * that points at it.
+ * The page this was written for is retired (bead hq-4pu0q.8). What it said
+ * lives on the home page, on /precios and in the demos now, and /modulos
+ * redirects to /precios. The copy below outlived it because the components it
+ * feeds did: ModuleBlock, Combinations and ModuleScreen still render it on the
+ * showcase home (bead hq-wrig5.15). The page's own words went with the page.
+ *
+ * Every feature line, every size band and every bridge here comes from the
+ * module catalogue. No figure lives here: prices are on /precios, which is the
+ * only page that prints them.
  */
 
 /** One module's copy. Produccion carries the grower set and Restaurante the
@@ -52,31 +57,12 @@ export type CombinaItem = {
 };
 
 const en = {
-  meta: {
-    title: "The three modules",
-    description:
-      "Produccion, Hospitalidad and Restaurante: the winery record, the lodging calendar and the point of sale. Buy one, two or three, at the size your operation is, and each bridge between them can be quoted separately once both of the modules it joins are bought.",
-  },
-
+  /* All that is left of the hero: the showcase home reads `sub` as the
+     standfirst over the three module blocks. The headline, the eyebrow and the
+     two hero actions belonged to the retired page and went with it. */
   hero: {
-    aria: "Introduction",
-    eyebrow: "The system, by module",
-    t1: "Three modules. ",
-    accent: "You buy the ones you run on.",
     sub: "Produccion is the record of what you grew, made and sold. Hospitalidad is every booking from every channel in one calendar. Restaurante is the point of sale, from the waiter's phone to the cash cut. **Each one is a whole system on its own, and each one is sized to the operation in front of it.**",
-    ctaCombina: "How they combine",
   },
-
-  /**
-   * The one line on this page that touches price, and it only points away.
-   * It says the rules are stated, not that every figure behind them is: memo
-   * 8.1 publishes the annual rule as policy and keeps the percentage and the
-   * arithmetic off every public surface, so a claim that they are written out
-   * in full is a promise the pricing page may not keep (Lucy 2026-09-08).
-   */
-  priceLine:
-    "Every module has a published entry price, setup and monthly, and the combination and annual rules are stated as the policy they are. **They all live on the pricing page.**",
-  priceCta: "See pricing",
 
   demoNote:
     "The demos run on a made-up brand, and each one opens with a single module switched on. **Each button opens the live demo in a new tab.**",
@@ -455,36 +441,12 @@ const en = {
     ] as CombinaItem[],
     foot: "The service base is charged once whatever the mix, and a module added to a client we already serve is a smaller build than the same module bought alone, because the training, the assistant frame, the report and the environment are already standing.",
   },
-
-  diagDesc:
-    "Which modules, at which size, is a question the Diagnostico answers before anyone quotes anything. **Ten working days going through your data, your bookings, your floor and your numbers as one system.** You get a written memo: what is true, what is broken and what is worth building first.",
-  diagSpecs: [
-    "**Day 1.** A working session over the operation you actually run, module by module.",
-    "**Days 2 to 9.** We dig: the sources, the channels, the floor, the measurement and the numbers behind the numbers.",
-    "**Day 10.** The memo lands: what is true, what is broken, and which module earns its place first.",
-    "**Free and unattached.** Use it with us or without us. If we build, the price is agreed at the start and you own the result.",
-  ],
 };
 
 const es: typeof en = {
-  meta: {
-    title: "Los tres módulos",
-    description:
-      "Producción, Hospitalidad y Restaurante: el registro de la bodega, el calendario del hospedaje y el punto de venta. Se compra uno, dos o tres, del tamaño de la operación, y cada puente entre ellos se puede cotizar aparte cuando se compran los dos módulos que une.",
-  },
-
   hero: {
-    aria: "Introducción",
-    eyebrow: "El sistema, por módulo",
-    t1: "Tres módulos. ",
-    accent: "Usted compra los que opera.",
     sub: "Producción es el registro de lo que cultivó, elaboró y vendió. Hospitalidad es cada reserva de cada canal en un solo calendario. Restaurante es el punto de venta, del teléfono del mesero hasta el corte de caja. **Cada uno es un sistema completo por su cuenta, y cada uno se dimensiona a la operación que tiene enfrente.**",
-    ctaCombina: "Cómo se combinan",
   },
-
-  priceLine:
-    "Cada módulo tiene un precio de entrada publicado, implementación y mensualidad, y las reglas de combinación y de pago anual están escritas como la política que son. **Todo eso vive en la página de precios.**",
-  priceCta: "Ver precios",
 
   demoNote:
     "Los demos corren sobre una marca ficticia, y cada uno abre con un solo módulo encendido. **Cada botón abre el demo en vivo en una pestaña nueva.**",
@@ -847,15 +809,6 @@ const es: typeof en = {
     ] as CombinaItem[],
     foot: "La base del servicio se cobra una sola vez sea cual sea la combinación, y un módulo agregado a un cliente que ya atendemos es una construcción más chica que ese mismo módulo comprado solo, porque la capacitación, el marco del asistente, el informe y el ambiente ya están de pie.",
   },
-
-  diagDesc:
-    "Cuáles módulos, en qué tamaño, es una pregunta que el Diagnóstico contesta antes de que nadie cotice nada. **Diez días hábiles recorriendo sus datos, sus reservas, su piso y sus números como un solo sistema.** Usted recibe un informe escrito: qué es cierto, qué está roto y qué conviene construir primero.",
-  diagSpecs: [
-    "**Día 1.** Una sesión de trabajo sobre la operación que de verdad corre, módulo por módulo.",
-    "**Días 2 a 9.** Escarbamos: las fuentes, los canales, el piso, la medición y los números detrás de los números.",
-    "**Día 10.** Llega el informe: qué es cierto, qué está roto y qué módulo se gana el primer lugar.",
-    "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda desde el principio y usted se queda con el resultado.",
-  ],
 };
 
 export type ModulosDict = typeof en;
