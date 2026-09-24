@@ -36,6 +36,7 @@
   "34": "VineField.tsx",
   "35": "SitePlanVisual.tsx",
   "36": "useDemoStage.ts",
+  "37": "case-page.test.ts",
   "38": "page.tsx",
   "39": "canvasKit.ts",
   "40": "ModuleFloors.tsx",
@@ -58,6 +59,7 @@
   "57": "bumpOffBareMultiple",
   "58": "ModuleScreen.tsx",
   "59": "observeOnscreen",
+  "60": "priced",
   "61": "BridgeMap.tsx",
   "62": "palette.ts"
 }
