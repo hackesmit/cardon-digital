@@ -66,6 +66,51 @@ const en = {
     hint: "Select a table to read its last booking of the evening.",
   },
 
+  produccion: {
+    title: "The block and the cellar across one harvest",
+    tagSpan: "20 AUG to 1 OCT",
+    /** Drawn on the canvas. */
+    vineyard: "VINEYARD BLOCK",
+    cellar: "CELLAR",
+    brix: "DEGREES BRIX BY LOT",
+    illustrativeUpper: "ILLUSTRATIVE",
+    illustrative: "illustrative",
+    /** The band the readings climb into, and the calm marker five days ahead
+        of the last crossing. The short form is for narrow boards, where the
+        long one would run off the chart. */
+    window: "picking window",
+    flag: "the picking window, five days early",
+    flagCompact: "window, five days early",
+    /** The calendar strip's months. Drawn, so they are three letters. */
+    months: { aug: "AUG", sep: "SEP", oct: "OCT" },
+    /** Where the harvest has got to, read out beside the block. */
+    captions: {
+      begins: "the harvest begins",
+      ripening: "ripening",
+      flagged: "the window, flagged five days early",
+      picked: "every lot cut inside its window",
+    },
+    fallback:
+      "A vineyard block of six lots seen from above with the cellar beside it, across one harvest from 20 August to 1 October. Each lot deepens as its fruit ripens and is cut on the day its sugar reading enters the picking window, and the fruit travels from the lot to its own tank, which fills. Underneath, the six lots' readings in degrees Brix climb toward that window, and five days before the last crossing a calm marker shows the window arriving, visible early rather than as a surprise.",
+    /** The lot readouts overlaid on the block. Each is that lot's own cut. */
+    varieties: {
+      sauvignonBlanc: "Sauvignon Blanc",
+      chardonnay: "Chardonnay",
+      merlot: "Merlot",
+      tempranillo: "Tempranillo",
+      nebbiolo: "Nebbiolo",
+      cabernet: "Cabernet Sauvignon",
+    },
+    lotName: "Lot {k}, {variety}",
+    cut: "cut {date}, {brix} Bx, {tons} t",
+    lotAria:
+      "Lot {k}, {variety}. Illustrative cut: {date}, {brix} degrees Brix, {tons} tons.",
+    /** The strip under the block, which is the whole readout on a phone where
+        there is no hover to open a plate. */
+    readoutLabel: "Selected lot",
+    hint: "Select a lot to read its cut.",
+  },
+
   hospitalidad: {
     title: "The fortnight filling, channel by channel",
     tagNights: "14 nights",
@@ -179,6 +224,42 @@ const es: DemosDict = {
     },
     readoutLabel: "Mesa seleccionada",
     hint: "Elige una mesa para leer su última reservación de la noche.",
+  },
+
+  produccion: {
+    title: "El viñedo y la bodega a lo largo de una vendimia",
+    tagSpan: "20 AGO a 1 OCT",
+    vineyard: "VIÑEDO",
+    cellar: "BODEGA",
+    brix: "GRADOS BRIX POR LOTE",
+    illustrativeUpper: "ILUSTRATIVO",
+    illustrative: "ilustrativo",
+    window: "ventana de corte",
+    flag: "la ventana de corte, cinco días antes",
+    flagCompact: "ventana, cinco días antes",
+    months: { aug: "AGO", sep: "SEP", oct: "OCT" },
+    captions: {
+      begins: "empieza la vendimia",
+      ripening: "madurando",
+      flagged: "la ventana, avisada con cinco días",
+      picked: "cada lote, cortado en su ventana",
+    },
+    fallback:
+      "Un viñedo de seis lotes visto desde arriba con la bodega a un lado, a lo largo de una vendimia del 20 de agosto al 1 de octubre. Cada lote se oscurece conforme madura su fruta y se corta el día en que su lectura de azúcar entra en la ventana de corte, y la fruta viaja del lote a su propia cuba, que se va llenando. Abajo, las lecturas de los seis lotes en grados Brix suben hacia esa ventana, y cinco días antes de que el último lote entre en su ventana, una marca serena la muestra llegando, visible con tiempo y no como sorpresa.",
+    varieties: {
+      sauvignonBlanc: "Sauvignon Blanc",
+      chardonnay: "Chardonnay",
+      merlot: "Merlot",
+      tempranillo: "Tempranillo",
+      nebbiolo: "Nebbiolo",
+      cabernet: "Cabernet Sauvignon",
+    },
+    lotName: "Lote {k}, {variety}",
+    cut: "corte {date}, {brix} Bx, {tons} t",
+    lotAria:
+      "Lote {k}, {variety}. Corte ilustrativo: {date}, {brix} grados Brix, {tons} toneladas.",
+    readoutLabel: "Lote seleccionado",
+    hint: "Elige un lote para leer su corte.",
   },
 
   hospitalidad: {

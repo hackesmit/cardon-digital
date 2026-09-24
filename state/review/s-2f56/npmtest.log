@@ -1,0 +1,210 @@
+
+> cardon-digital@0.1.0 test
+> node scripts/visuals-check.mjs && vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' && npm run copy:check:test --reporter=dot
+
+components/pages  50 file(s) at 39f55b06fd64, 53 now
+
+no visual was removed
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /home/daniel/hq/rigs/cardon-digital-2f56
+
+ ✓ components/pages/case/SpotlightFrames.test.ts (6 tests) 5ms
+ ✓ middleware.test.ts (15 tests) 13ms
+ ✓ app/routes.test.ts (16 tests) 5ms
+ ✓ lib/pricing.test.ts (156 tests) 70ms
+ ✓ lib/i18n/precios.test.ts (24 tests) 21ms
+ ✓ components/pages/demos/cellar.test.ts (40 tests) 112ms
+ ✓ components/pages/showcase/showcase.test.ts (30 tests) 42ms
+ ✓ components/pages/demos/demos.test.ts (71 tests) 72ms
+ ✓ components/site/Media.test.tsx (124 tests) 57ms
+ ✓ components/pages/demos/stage/clock.test.ts (10 tests) 20ms
+ ✓ components/pages/modulos/BridgeMap.test.ts (2 tests) 3ms
+ ✓ app/[locale]/demo/page.test.tsx (5 tests) 21ms
+ ✓ app/[locale]/industries/winery/winery-page.test.ts (19 tests) 258ms
+ ✓ components/pages/demos/source.test.ts (49 tests) 177ms
+ ✓ components/pages/demos/produccion.test.ts (16 tests) 254ms
+ ✓ app/[locale]/work/enkanto/enkanto-case.test.ts (67 tests) 68ms
+ ✓ lib/onscreen.test.ts (167 tests) 247ms
+ ✓ app/[locale]/ads-claim.test.ts (12 tests) 875ms
+ ✓ components/pages/demos/contract.test.tsx (49 tests) 5258ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > tells the story from the top, parks on the standing frame, and resumes from it 365ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > rewrites nothing whose box is not held open by ghosts 414ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > tells the story from the top, parks on the standing frame, and resumes from it 398ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > rewrites nothing whose box is not held open by ghosts 537ms
+   ✓ the checks are load bearing > passes the reference and the tap demo under StrictMode, where every effect runs twice 1159ms
+   ✓ the checks are load bearing > passes the reference demo on every check, so the checks describe what ships 1061ms
+
+ Test Files  19 passed (19)
+      Tests  878 passed (878)
+   Start at  00:34:35
+   Duration  6.52s (transform 2.23s, setup 0ms, collect 5.41s, tests 7.58s, environment 256ms, prepare 1.23s)
+
+npm warn Unknown cli config "--reporter". This will stop working in the next major version of npm.
+
+> cardon-digital@0.1.0 copy:check:test
+> node --test 'scripts/**/*.test.mjs'
+
+✔ extraction: splits the en and es objects (1.845557ms)
+✔ extraction: an apostrophe inside a double quoted string does not open a string (0.292213ms)
+✔ extraction: prose in comments is not counted as copy (1.424967ms)
+✔ extraction: a template literal contributes its text, not its substitution (0.269674ms)
+✔ extraction: every top level en/es declaration feeds its locale (0.132997ms)
+✔ extraction: escapes decode and emphasis markers are not words (0.241185ms)
+✔ extraction: a page with no matching locale object fails loudly (0.314053ms)
+✔ extraction: an object type annotation is not mistaken for the copy (0.175216ms)
+✔ extraction: export const is read like const (0.203675ms)
+✔ extraction: quoted and computed keys are keys, not copy (0.45729ms)
+✔ extraction: a scalar or array locale declaration is read, not skipped (0.174486ms)
+✔ extraction: a regex literal inside a substitution does not end it early (0.138577ms)
+✔ extraction: an initializer copy-check cannot read is a loud error, not a silent zero (0.141967ms)
+✔ words: a page at its locale budget passes (0.267774ms)
+✔ words: a page over its target is reported with both numbers (0.335482ms)
+✔ words: each locale carries its own budget, so the shorter one gets no headroom (0.168486ms)
+✔ bold: three spans pass (0.083208ms)
+✔ bold: four spans fail (0.072129ms)
+✔ bold: the accent marker counts too, so the sed bypass is closed (0.096548ms)
+✔ bold: a stray marker is reported per string, so two of them do not cancel out (0.281033ms)
+✔ bold: an unclosed span inside one string fails as malformed (0.145897ms)
+✔ bold: counting matches what rich.tsx renders (0.071009ms)
+✔ negative contrast: ", not" fails in en (0.104278ms)
+✔ negative contrast: "not just" fails in en (0.051919ms)
+✔ negative contrast: "not another" fails in en (0.101178ms)
+✔ negative contrast: "never a" fails in en (0.113427ms)
+✔ negative contrast: "not X but Y" fails in en (0.056889ms)
+✔ negative contrast: "no es/son + article" fails in es (0.150117ms)
+✔ negative contrast: "no es/son + article" fails in es (0.154226ms)
+✔ negative contrast: "no solo" fails in es (0.255944ms)
+✔ negative contrast: "no solo" fails in es (0.063408ms)
+✔ negative contrast: ", sino" fails in es (0.190626ms)
+✔ negative contrast: "no otra" fails in es (0.080828ms)
+✔ negative contrast: "no otro" fails in es (0.110558ms)
+✔ negative contrast: honest prose passes (0.169316ms)
+✔ negative contrast: word boundaries keep honest Spanish out of it (0.187886ms)
+✔ negative contrast: honest Spanish negation passes: Para deducir un gasto en Mexico ha... (0.137947ms)
+✔ negative contrast: honest Spanish negation passes: Vender del otro lado de la fronter... (0.044329ms)
+✔ negative contrast: honest Spanish negation passes: Vista ilustrativa, no son datos de... (0.030569ms)
+✔ negative contrast: honest Spanish negation passes: Si el total no es correcto, revise... (0.166766ms)
+✔ negative contrast: honest Spanish negation passes: Un grupo que opera varias no es pa... (0.050519ms)
+✔ negative contrast: the narrowed Spanish rule still catches the real tells (0.337322ms)
+✔ negative contrast: the plain negation advisory does not double report an article hit (0.073509ms)
+✔ negative contrast: a hit reports the locale, the shape and the text (0.092177ms)
+✔ allowlist: the exact string is exempt and nothing else is (0.155977ms)
+✔ allowlist: one deliberate line reused across entries counts once, not once per use (0.112128ms)
+✔ allowlist: an entry that no longer carries a contrast is reported as stale (0.104807ms)
+✔ allowlist: one entry per page per locale validates, two do not (0.136197ms)
+✔ allowlist: an unknown page or locale is a config error (0.089148ms)
+✔ allowlist: a malformed allowlist is a reported config error, never a throw (0.116878ms)
+✔ advisory: rather than and instead of are reported and never block (0.107428ms)
+✔ em dash: a hyphen passes and an em dash fails (0.41523ms)
+✔ cli: no arguments is a usage error (0.196835ms)
+✔ cli: an unknown page is a usage error (0.048889ms)
+✔ cli: --all does not take page names (0.023119ms)
+✔ cli: a config error exits 2 and never throws (0.114218ms)
+✔ cli: the shipped allowlist is within the doctrine's cap (0.03353ms)
+✔ budget table: every page has a dictionary with both locales (5.639077ms)
+✔ budget table: every target is below what its page measured when the doctrine landed (0.132587ms)
+✔ words: the budget is advisory, so a page over it reports and never blocks (0.376471ms)
+✔ words: a rewritten page is clean and is never told to edit the budget table (0.101157ms)
+✔ negative contrast: not X but Y blocks in its general form (0.088328ms)
+✔ negative contrast: the widened rule stays inside one clause (0.061698ms)
+✔ allowlist: the cap counts contrast occurrences, not array entries (0.184656ms)
+✔ extraction: a nested value that is not a literal is a loud error (0.238044ms)
+✔ extraction: a spread inside a dictionary is a loud error (0.082368ms)
+✔ extraction: numbers, booleans and null are not copy and read clean (0.394901ms)
+✔ extraction: a dictionary naming another locale declaration is not an error (0.081769ms)
+✔ extraction: an array entry is held to the same rule as a key's value (0.093588ms)
+✔ extraction: a template substitution is code, not a dictionary (0.157506ms)
+✔ allowlist: two shapes matching the same words are one contrast (0.126507ms)
+✔ extraction: a template that is nothing but a substitution is a loud error (0.051359ms)
+✔ extraction: a shorthand property is held to the same rule as a written one (0.137487ms)
+✔ extraction: a locale may only name its own declarations (0.066668ms)
+✔ extraction: decimal numbers are not copy either (0.031589ms)
+✔ a file that stays is not a removal (1.465187ms)
+✔ a file that leaves the tree is a removal (0.189776ms)
+✔ a file added on the branch is not a removal (0.196456ms)
+✔ a RETIRED entry covers exactly its own path (0.170456ms)
+✔ an entry whose file is still here is a note, not a failure (0.172626ms)
+✔ an entry whose file left before this branch is historical, not a failure (0.089458ms)
+✔ removals are reported in a stable order (0.130527ms)
+✔ the shipped RETIRED list is well formed (0.100528ms)
+✔ a malformed RETIRED entry is a config error, never a throw (0.258244ms)
+✔ main exits 2 on a malformed RETIRED list rather than checking anything (0.3974ms)
+✔ main exits 2 when --base is given no ref (0.120948ms)
+✔ a plain unstaged rm fails, which a staged diff filter does not see (37.231916ms)
+✔ a rename out of the tree fails, which git reports as a rename (37.646086ms)
+✔ an untouched repository is clean (33.216216ms)
+✔ lineCount counts source lines, not blank ones (0.127187ms)
+✔ substance is empty for a file whose source is only comments (0.219075ms)
+✔ markupCount counts opening tags, and not a less-than comparison (0.124308ms)
+✔ similarity is git's measure: shared source lines over the larger file (0.082558ms)
+✔ a move inside the tree is a note, not a failure (0.573607ms)
+✔ a move that keeps most of the file is still a move (0.242115ms)
+✔ a deletion dressed as a move fails, because nothing of it survived (0.199696ms)
+✔ emptying a file in place is a deletion with the name left behind (1.019527ms)
+✔ gutting a component down to a shell that still parses is a deletion too (0.172446ms)
+✔ a file that never had markup cannot be gutted (0.46253ms)
+✔ a visual that merely got smaller is a note, never a failure (0.299154ms)
+✔ a RETIRED entry covers its file being emptied as well as removed (0.096158ms)
+✔ a file the caller did not read is never a failure (0.057919ms)
+✔ git mv inside the tree passes, which the path set alone did not (34.073338ms)
+✔ an emptied file fails against real git, naming the file and the line count (29.774632ms)
+✔ the four faculties are read off a real visual (0.231315ms)
+✔ a stub that keeps ONE element does not clear the rule (s-48db case E) (0.325623ms)
+✔ ...and neither does one that keeps THREE (0.566657ms)
+✔ a re-export in place of a component is the same hole (s-48db case F) (0.222935ms)
+✔ a small visual is judged by what it lost, never by a ratio (0.161916ms)
+✔ killing the animation loop is a deletion, with every line kept (s-48db case G) (0.223795ms)
+✔ an animation driver is counted on its own, never pooled into a total (0.46908ms)
+✔ a canvas that stops taking a context has lost its drawing (0.238195ms)
+✔ commenting a component out is deleting it, not keeping it (0.230195ms)
+✔ a body that collapses to a fraction of itself is gutted, markup or not (0.255374ms)
+✔ a faculty that moved to another file under the tree is a note, not a failure (0.286533ms)
+✔ ...and a line the other file always had rescues nothing (0.196756ms)
+✔ lostLines is the unit a faculty moves in, and facultyMoved needs it to be new (0.109088ms)
+✔ a file on this disk and out of the index is gone (s-48db case K) (0.097297ms)
+✔ an unstaged rm is still a removal, which is why the disk is read at all (0.051359ms)
+✔ a rename onto a dead extension is a deletion (s-48db cases H and I) (0.171436ms)
+✔ isLiveSource is about what the build compiles (0.053069ms)
+✔ a recorded deletion needs a recorded arrival, an unstaged one does not (0.124718ms)
+✔ a rescued move is measured at its destination (s-48db case J) (0.433911ms)
+✔ RETIRED still covers every shape, which is the only way out (0.127967ms)
+✔ git rm --cached plus a .gitignore line fails against real git (41.860507ms)
+✔ a git mv onto .tsx.bak fails against real git (40.235554ms)
+✔ an unstaged cp then rm still passes against real git (31.941724ms)
+✔ the animation cut out in place fails against real git (29.830927ms)
+✔ VISUALS_BASE says so, because it is an off switch (33.657137ms)
+✔ the npm scripts a worker runs invoke the guard (0.225045ms)
+✔ node scripts/copy-check.mjs <page> fails on a deleted visual (115.659747ms)
+✔ a copy parked on a dead extension does not rescue a gutting (s-4009 case AC) (0.326243ms)
+✔ an untracked sibling rescues a gutting still in progress on disk (s-4009 case AB, unrecorded) (0.230515ms)
+✔ an untracked sibling does not rescue a gutting HEAD or the index records (s-7729 G1) (0.261884ms)
+✔ rule 6 keeps the counterweight it was added to: a tracked helper still rescues (0.117897ms)
+✔ facultyMoved applies rule 4's two tests itself (0.098578ms)
+✔ the recorded part of a loss is each version's own gutting, or nothing (0.605276ms)
+✔ each version's loss is scored on its own, never pooled with another's (s-5993) (0.129087ms)
+✔ a faculty in the residual band is a note even when the line count does not move (0.162127ms)
+✔ the shrink note leads with the faculties and puts the line count last (0.088478ms)
+✔ a faculty too small for a ratio to mean anything is not a note (0.037359ms)
+✔ a gutting committed with its imported helper left untracked fails, and says git add (G1) (41.887154ms)
+✔ the same with the helper gitignored fails too, which the disk cannot see (G1i) (41.793971ms)
+✔ the gutting staged and its helper not is one tree, and it fails with git add (G1s, H1s) (33.122267ms)
+✔ a committed gutting is not unrecorded by an unrelated unstaged edit on top (41.876753ms)
+✔ an extraction tested before anything is staged passes, in any directory (H2, H3, s-1ae3 F1) (94.354585ms)
+✔ the helper staged and the call site not passes, and so does a committed extraction edited on top (H3s, H4) (84.67143ms)
+✔ a gutting committed into a helper whose committed copy is a stub fails, and says git add (s-01c6 A1) (49.888128ms)
+✔ the same staged instead of committed fails too (s-01c6 A1s) (44.738352ms)
+✔ a helper committed with part of the body does not rescue all of it (s-01c6 A1p) (50.80734ms)
+✔ a stub helper filled and committed with its call site passes, and so does one filled on disk only (91.933151ms)
+✔ a partial gutting committed with a partial helper fails however the disk finishes it (s-5993 X1) (51.353292ms)
+✔ the same staged instead of committed fails too, since git commit ships it (s-5993 X1s) (35.944308ms)
+✔ the partial extraction finished and committed whole passes (s-5993 X1 control) (51.243774ms)
+✔ a small committed edit under an extraction still on disk is not a recorded gutting (s-5993) (39.618106ms)
+ℹ tests 155
+ℹ suites 0
+ℹ pass 155
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1292.365527
