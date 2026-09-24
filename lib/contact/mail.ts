@@ -131,6 +131,24 @@ export function buildEmail(s: ContactSubmission): Email {
 }
 
 /**
+ * The provider's error name alone, never its body. Resend answers a rejection
+ * with { statusCode, name, message }, where name is a fixed token and message
+ * can quote the request. Anything else, or any token that is not a plain word,
+ * comes back as "rejected".
+ */
+function errorName(body: string): string {
+  try {
+    const parsed = JSON.parse(body) as { name?: unknown };
+    if (typeof parsed.name === "string" && /^[a-z0-9_-]{1,40}$/i.test(parsed.name)) {
+      return parsed.name;
+    }
+  } catch {
+    // A non-JSON body (a gateway's HTML page, say) says nothing worth keeping.
+  }
+  return "rejected";
+}
+
+/**
  * Sends the email, or reports that this environment cannot. Never throws: a
  * network failure comes back as an unsuccessful sent result and the route
  * decides what the visitor sees.
@@ -164,7 +182,13 @@ export async function deliver(email: Email): Promise<DeliveryResult> {
     });
 
     if (!res.ok) {
-      const detail = (await res.text()).slice(0, 400);
+      /* The provider's own words are not logged. Its rejection body quotes the
+         request back, which for a rejected address means the visitor's email
+         address in a log the privacy notice says holds no address at all.
+         What survives is the status and the provider's error name, a fixed
+         token like validation_error, held to that shape so nothing a visitor
+         typed can ride out inside it. */
+      const detail = errorName(await res.text());
       console.error("[contact] resend rejected the message", res.status, detail);
       return { mode: "sent", ok: false, status: res.status, detail };
     }

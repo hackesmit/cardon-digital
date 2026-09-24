@@ -101,8 +101,16 @@ const en = {
     sending: "Sending",
     /** The honeypot: hidden from people, filled in by bots. */
     honeypot: "Leave this field empty",
-    privacy:
-      "We use what you write here only to answer you. It goes to our own inbox, it feeds no mailing list, and we share it with nobody.",
+    /** The short version, beside the button, with the door to the long one.
+     *  It stops short of "we share it with nobody": the message travels
+     *  through the service that delivers this site's mail, and a delivered
+     *  send is reported to Google as a conversion where measurement was
+     *  accepted. Both are named in full in the notice this links to. */
+    privacy: {
+      body:
+        "We use what you write here only to answer you. It reaches our own inbox through the service that delivers this site's mail, it feeds no mailing list, and we never sell or share your details for marketing. If you accepted measurement, a delivered message is counted as one conversion.",
+      link: "What this site collects, in full",
+    },
     errors: {
       name: "Please write your name.",
       winery: "That name is longer than the field takes.",
@@ -215,8 +223,11 @@ const es: typeof en = {
     submit: "Enviar mensaje",
     sending: "Enviando",
     honeypot: "Deje este campo vacío",
-    privacy:
-      "Lo que escriba aquí lo usamos solo para responderle. Llega a nuestro propio correo, no alimenta ninguna lista y no lo compartimos con nadie.",
+    privacy: {
+      body:
+        "Lo que escriba aquí lo usamos solo para responderle. Llega a nuestro propio correo a través del servicio que entrega el correo de este sitio, no alimenta ninguna lista y nunca vendemos ni compartimos sus datos con fines de mercadotecnia. Si usted aceptó la medición, un mensaje entregado se cuenta como una conversión.",
+      link: "Qué recaba este sitio, completo",
+    },
     errors: {
       name: "Escriba su nombre, por favor.",
       winery: "Ese nombre es más largo de lo que acepta el campo.",
