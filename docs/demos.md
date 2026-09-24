@@ -343,7 +343,10 @@ are not visuals. A reviewer will also drop them beside your demo
 and run the suite (`state/review/s-5836/loophole/run.sh`,
 `state/review/s-4a6c/loophole/run.sh`, `state/review/s-2e55/loophole/run.sh`,
 `state/review/s-1022/loophole/run.sh`). If a check genuinely does not fit your
-demo, change the check and the demo in the same commit and say why in both.
+demo, change the check and the demo in the same commit and say why in both; the
+honest move is to change the check in the open, not to route around it while
+leaving it standing, because this contract is written for a good-faith author
+(docs/copy-doctrine.md section 10).
 
 ## 4. What is still yours to get right
 
