@@ -7,12 +7,16 @@
    play-once finance diagram, the signature vineyard section map, the berry to
    bottle strip, and the result callouts.
 
-   Removed with the rewrite (hq-4pu0q.4): the two static mechanism diagrams and
-   their .d-* palette, the play-once prediction curve and its .pred-* rules, and
-   the outcome block, which restated the callouts above it. The cursor spotlight
-   on .vine-stage went with them and is back: SpotlightFrames was restored on
-   Daniel's ruling that a copy bead never deletes a visual, so --mx / --my are
-   written again and this rule is live. */
+   Removed with the rewrite (hq-4pu0q.4) and brought back on Daniel's ruling
+   that retiring a visual is his decision alone: the two static diagrams and
+   their .d-* palette, the play-once readiness curve and its .pred-* rules, and
+   the cursor spotlight on .vine-stage, which is live again because
+   SpotlightFrames writes --mx / --my again. Only the outcome block stayed out,
+   because it restated the callouts above it and is prose rather than a visual.
+
+   What came back changed (hq-4pu0q.32) is the frame around each drawing: a
+   <figure> with a result caption under it and the honesty label the section
+   map carries, both new here. */
 
 .pg-case{
   position:relative;
@@ -55,6 +59,83 @@
    anything else on the page and pushes the thread below the fold twice over. */
 .pg-case .case-media-wide{
   max-width:820px;margin:clamp(24px,3vw,36px) 0 clamp(26px,3.4vw,40px);
+}
+
+/* ============================ THE THREE RESTORED VISUALS ============================
+   The three diagrams hq-4pu0q.4 removed and Daniel brought back (hq-4pu0q.13,
+   hq-4pu0q.32). Each is a <figure>: a framed drawing, then the caption that
+   sells the result. The caption is the selling half, so it is body-sized and
+   sits directly under the frame rather than floating on it, where a drawing can
+   swallow it.
+
+   The frames get their own padding band top and bottom, the way .ops-vis does
+   in globals, so the tag sits above the drawing and the honesty label sits
+   below it rather than over the panel they describe. */
+.pg-case .case-vis{margin:0;}
+.pg-case .case-vis-wide{max-width:820px;margin-top:clamp(24px,3.4vw,38px);}
+.pg-case .case-vis .vis-frame{padding:34px 18px 30px;}
+.pg-case .case-vis-pair{
+  margin-top:clamp(20px,2.8vw,30px);
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:clamp(16px,2.4vw,26px);align-items:start;
+}
+.pg-case .vis-result{
+  margin-top:13px;max-width:56ch;
+  color:var(--text-dim);font-size:0.97rem;line-height:1.52;
+}
+/* The label every illustrative drawing on this page carries, in the same words
+   the section map uses. Inside the frame, in the band the padding reserves. */
+.pg-case .vis-honest{
+  position:absolute;bottom:9px;right:18px;z-index:2;max-width:70%;text-align:right;
+  font-family:var(--mono);font-size:0.62rem;letter-spacing:0.05em;color:var(--muted);
+}
+
+/* ---- the static diagram palette (one live view, the row on its section) ---- */
+.pg-case .d-card{fill:var(--card);stroke:var(--line);stroke-width:1.2;}
+.pg-case .d-panel{fill:var(--panel);stroke:var(--line);stroke-width:1.3;}
+.pg-case .d-line{stroke:var(--line);}
+.pg-case .d-dim{fill:var(--text-dim);}
+.pg-case .d-ink{fill:var(--text);}
+.pg-case .d-primary{fill:var(--primary);}
+.pg-case .d-secondary{fill:var(--secondary);}
+.pg-case .d-wine{fill:var(--wine-accent);}
+.pg-case .d-conn{fill:none;stroke:var(--primary-dim);stroke-width:1.4;stroke-linecap:round;}
+.pg-case .d-conn-wine{fill:none;stroke:var(--wine-accent);stroke-width:1.6;stroke-linecap:round;}
+.pg-case .d-track{fill:var(--line-soft);}
+.pg-case .d-lab{font-family:var(--mono);fill:var(--muted);}
+.pg-case .d-val{font-family:var(--mono);fill:var(--text);}
+.pg-case .d-plot{fill:color-mix(in srgb, var(--primary) 23%, transparent);stroke:color-mix(in srgb, var(--primary) 45%, transparent);stroke-width:1.4;stroke-linejoin:round;}
+.pg-case .d-plot-dim{fill:color-mix(in srgb, var(--primary) 19%, transparent);stroke:color-mix(in srgb, var(--primary) 40%, transparent);stroke-width:1.4;stroke-linejoin:round;}
+.pg-case .d-plot-wine{fill:var(--wine-faint);stroke:var(--wine-accent);stroke-width:1.6;stroke-linejoin:round;}
+.pg-case .live-pill{fill:none;stroke:var(--primary-dim);stroke-width:1.2;}
+@keyframes livePulse{0%,100%{opacity:.35;}50%{opacity:1;}}
+.pg-case .live-dot{fill:var(--primary);animation:livePulse 2.6s ease-in-out infinite;}
+
+/* ---- readiness curve: play-once draw-on ---- */
+.pg-case .pred-curve{fill:none;stroke:var(--primary);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:660;stroke-dashoffset:0;transition:stroke-dashoffset 1.6s ease;}
+.pg-case .pred-target{stroke:var(--secondary);stroke-width:1.6;stroke-dasharray:5 5;}
+.pg-case .pred-proj{fill:none;stroke:var(--wine-accent);stroke-width:2;stroke-dasharray:4 5;opacity:1;transition:opacity .7s ease .9s;}
+.pg-case .pred-mark{opacity:1;transition:opacity .6s ease .9s, transform .6s cubic-bezier(.2,1.4,.3,1) .9s;transform-box:fill-box;transform-origin:center;}
+.pg-case .pred-mark-ring{fill:none;stroke:var(--wine-accent);stroke-width:2;}
+.pg-case .pred-mark-core{fill:var(--wine-accent);}
+.pg-case .pred-lab{font-family:var(--mono);fill:var(--muted);}
+.pg-case .pred-lab-w{font-family:var(--mono);fill:var(--wine-accent);}
+.pg-case .pred-vis[data-anim="pre"] .pred-curve{stroke-dashoffset:660;}
+.pg-case .pred-vis[data-anim="pre"] .pred-proj{opacity:0;}
+.pg-case .pred-vis[data-anim="pre"] .pred-mark{opacity:0;transform:scale(0.7);}
+
+/* Reduced motion, stated here rather than left to the site-wide rule in
+   globals.css. Two things have to stop: the live dot's pulse and the curve's
+   draw-on. PlayOnceVis already drops data-anim under reduce so the drawing
+   mounts resolved, and these rules hold even if the attribute is set, which is
+   what a visitor who turns the setting on mid-visit would otherwise see. */
+@media (prefers-reduced-motion: reduce){
+  .pg-case .live-dot{animation:none;opacity:1;}
+  .pg-case .pred-curve,.pg-case .pred-proj,.pg-case .pred-mark{transition:none;}
+  .pg-case .pred-vis[data-anim="pre"] .pred-curve{stroke-dashoffset:0;}
+  .pg-case .pred-vis[data-anim="pre"] .pred-proj{opacity:1;}
+  .pg-case .pred-vis[data-anim="pre"] .pred-mark{opacity:1;transform:none;}
 }
 
 /* ---- finance diagram: play-once compress (this chapter appears only here) ---- */
@@ -234,6 +315,9 @@
 @media (max-width:640px){
   .pg-case .callouts{grid-template-columns:1fr;}
   .pg-case .case-pair{grid-template-columns:1fr;}
+  .pg-case .case-vis-pair{grid-template-columns:1fr;}
+  /* the drawings hold their own detail, so they get the width back */
+  .pg-case .case-vis .vis-frame{padding:32px 12px 28px;}
   .pg-case .vine-stage{aspect-ratio:auto;min-height:380px;}
   /* the berry-to-bottle stage fits its own SVG content: never a tall letterbox */
   .pg-case .b2b-stage{min-height:0;}

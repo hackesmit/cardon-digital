@@ -125,6 +125,61 @@ const en = {
     ],
   },
   vis: {
+    /** The honesty label the three restored frames carry, which is doctrine
+     *  section 5's rule for a demo: the readings on them are invented. The
+     *  section map holds its own copy under `map` because VineyardMap reads
+     *  that object and this bead does not own that component. */
+    honest: "Illustrative view, invented data.",
+    /** One live view. The three places the BEFORE section names are still on
+     *  the left of this picture, because they are the winery's own and they
+     *  did not go away; what changed is that nobody walks to them. */
+    view: {
+      tag: "nobody assembles it any more",
+      caption:
+        "Morning starts with the harvest already assembled. The three places still hold their numbers, and going to get them is no longer anyone's job.",
+      aria:
+        "A production system, spreadsheets and field notebooks arriving in one view of the harvest, current through the day.",
+      system: "system",
+      spreadsheets: "spreadsheets",
+      notebooks: "field notebooks",
+      panel: "The harvest, today",
+      live: "LIVE",
+      harvest: "HARVEST",
+      inSeason: "in season",
+      ripeness: "RIPENESS",
+      reading: "current reading",
+      sections: "SECTIONS",
+      allMapped: "all on the map",
+      tanks: "TANKS",
+      tracked: "tracked",
+    },
+    /** A reading with an address. The result is the one in `result.items`:
+     *  every number sits on its section, so nobody carries the vineyard in
+     *  their head to act on a line. */
+    place: {
+      tag: "the section, already on screen",
+      caption:
+        "The line says B3 is approaching, and the section it means is right there. Nobody has to picture the vineyard to act on a reading.",
+      aria:
+        "The row for section B3, bound to its block on a map of the vineyard.",
+      section: "SECTION",
+      state: "STATE",
+      hold: "hold",
+      approaching: "approaching",
+      atTarget: "at target",
+    },
+    /** The pick, seen coming. Illustrative like the map, and labelled as such
+     *  on the frame: the curve is a shape, and no date on it is measured. */
+    ahead: {
+      tag: "the pick, on the calendar first",
+      caption:
+        "Readiness reaches the calendar before it reaches the rows, so the pick is planned with time in hand.",
+      aria:
+        "A readiness curve climbing to the Monte Xanic standard line, with a projected point on the date the section comes due.",
+      readiness: "READINESS",
+      standard: "MONTE XANIC STANDARD",
+      anticipated: "anticipated",
+    },
     map: {
       legendMain: "Vineyard sections",
       legendSub: "quality scored against Monte Xanic's standard",
@@ -275,6 +330,49 @@ const es: typeof en = {
     ],
   },
   vis: {
+    honest: "Vista ilustrativa, datos inventados.",
+    view: {
+      tag: "ya nadie la arma a mano",
+      caption:
+        "La mañana empieza con la cosecha ya armada. Los tres lugares siguen ahí con sus números, y ya nadie tiene que ir a juntarlos.",
+      aria:
+        "Un sistema de producción, hojas de cálculo y libretas de campo llegando a una sola vista de la cosecha, al día.",
+      system: "sistema",
+      spreadsheets: "hojas de cálculo",
+      notebooks: "libretas de campo",
+      panel: "La cosecha, hoy",
+      live: "AL DÍA",
+      harvest: "COSECHA",
+      inSeason: "en temporada",
+      ripeness: "MADUREZ",
+      reading: "lectura al día",
+      sections: "CUADROS",
+      allMapped: "todos en el mapa",
+      tanks: "TANQUES",
+      tracked: "con seguimiento",
+    },
+    place: {
+      tag: "el cuadro, ya en la pantalla",
+      caption:
+        "El renglón dice que B3 se acerca, y el cuadro del que habla está ahí mismo. Ya nadie tiene que imaginarse el viñedo para actuar sobre una lectura.",
+      aria:
+        "El renglón del cuadro B3, amarrado a su polígono en un mapa del viñedo.",
+      section: "CUADRO",
+      state: "ESTADO",
+      hold: "esperar",
+      approaching: "acercándose",
+      atTarget: "en punto",
+    },
+    ahead: {
+      tag: "el corte, primero en el calendario",
+      caption:
+        "La madurez llega al calendario antes de llegar a los surcos, así que el corte se planea con tiempo de ventaja.",
+      aria:
+        "Una curva de madurez subiendo hasta la línea del estándar de Monte Xanic, con un punto proyectado en la fecha en que el cuadro llega a punto.",
+      readiness: "MADUREZ",
+      standard: "ESTÁNDAR MONTE XANIC",
+      anticipated: "anticipada",
+    },
     map: {
       legendMain: "Cuadros del viñedo",
       legendSub: "calidad contra el estándar de Monte Xanic",
