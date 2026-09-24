@@ -157,7 +157,9 @@ export const sourceRules: Record<
     let imported = false;
     for (const st of sf.statements) {
       if (!ts.isImportDeclaration(st) || !ts.isStringLiteral(st.moduleSpecifier)) continue;
-      if (!/^\.\/stage\/DemoFigure$/.test(st.moduleSpecifier.text)) continue;
+      /* however far up it has to reach: a demo in a subfolder imports
+         ../stage/DemoFigure and is the same demo (./files.ts) */
+      if (!/(?:^|\/)stage\/DemoFigure$/.test(st.moduleSpecifier.text)) continue;
       const named = st.importClause?.namedBindings;
       if (named && ts.isNamedImports(named)) {
         imported ||= named.elements.some((e) => (e.propertyName ?? e.name).text === "DemoFigure");
@@ -176,6 +178,42 @@ export const sourceRules: Record<
         found.push(where(sf, el) + " writes its own <" + tag + ">");
       }
     }
+    return found;
+  },
+
+  "imports code and data, and no stylesheet, image or film of its own": (file, text) => {
+    /* The one declared motion a demo may have is CSS, because the site stops
+       every CSS animation and transition under reduce (app/globals.css) and
+       demos.test.ts holds demos.css to never outranking that. A stylesheet a
+       demo brought itself is read by neither, and an imported .gif or .mp4 is
+       motion nothing on a jsdom page can see (reviewer s-1022, L5). So this
+       is a list of what an import may BE, by extension, and everything else
+       is refused unread. The shared sheet is the one exception: importing it
+       twice is importing it once. */
+    const sf = parse(file, text);
+    const found: string[] = [];
+    const judge = (n: ts.Node, spec: string) => {
+      const name = spec.split(/[?#]/)[0].split("/").pop() ?? "";
+      const ext = /\.([A-Za-z0-9]+)$/.exec(name)?.[1];
+      /* the shared sheet by name and not by path, for the same reason: a demo
+         one directory down imports ../demos.css */
+      if (!ext || /^(ts|tsx|js|jsx|mjs|json)$/.test(ext) || (name === "demos.css" && /^[.]/.test(spec))) return;
+      found.push(where(sf, n) + " imports " + spec);
+    };
+    const visit = (n: ts.Node) => {
+      if ((ts.isImportDeclaration(n) || ts.isExportDeclaration(n)) && n.moduleSpecifier && ts.isStringLiteralLike(n.moduleSpecifier)) {
+        judge(n, n.moduleSpecifier.text);
+      } else if (
+        ts.isCallExpression(n) &&
+        (n.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(n.expression) && n.expression.text === "require"))
+      ) {
+        const arg = n.arguments[0];
+        if (arg && ts.isStringLiteralLike(arg)) judge(n, arg.text);
+        else found.push(where(sf, n) + " imports something only known when it runs");
+      }
+      ts.forEachChild(n, visit);
+    };
+    visit(sf);
     return found;
   },
 };
