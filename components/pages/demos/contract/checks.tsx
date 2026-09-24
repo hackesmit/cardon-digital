@@ -349,7 +349,12 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
        see the same frames: any difference is time the tap moved. */
     /** How long every page in this check runs for, tap included: past the
         latest tap it makes, so there is a stretch of story after all of them
-        to compare. */
+        to compare. It is a fixed length and not one read off the demo's clock,
+        which costs an assumption: it falls inside the story for both demos
+        under the contract (standing at 31.8s and at 14s). A demo whose hold
+        covered the end of it would have this check compare two still frames,
+        and a tap that shifted time by less than the hold is wide would hide
+        there. */
     const TOTAL = 10016;
     const story = (tapAfter: number) => {
       let frames: string[] = [];
