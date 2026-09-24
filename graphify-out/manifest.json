@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
-    "mtime": 1788427590.1705554,
-    "ast_hash": "d5bb87a65878f74fb57e96c8c6e9d2df",
+    "mtime": 1790275574.6812303,
+    "ast_hash": "93929bc823d597fefc2bbd76381e2eca",
     "semantic_hash": ""
   },
   "lib/i18n/rich.tsx": {
@@ -370,8 +370,8 @@
     "semantic_hash": ""
   },
   "components/consent/ConversionListeners.tsx": {
-    "mtime": 1788423636.0282407,
-    "ast_hash": "5e3269a782c8507421d7397d945231d3",
+    "mtime": 1790275574.6812303,
+    "ast_hash": "a3395fbfd6daa9d8aabba39f9d5467fc",
     "semantic_hash": ""
   },
   "components/consent/MeasurementScripts.tsx": {
@@ -455,8 +455,8 @@
     "semantic_hash": ""
   },
   "components/contact/ContactForm.tsx": {
-    "mtime": 1788719086.0812123,
-    "ast_hash": "24ab57ec6de97f64d0cb8926a16e614f",
+    "mtime": 1790275574.6812303,
+    "ast_hash": "3d9df4b33c394f3c5eac63f57da1fdd5",
     "semantic_hash": ""
   },
   "components/contact/ContactMail.tsx": {
@@ -485,8 +485,8 @@
     "semantic_hash": ""
   },
   "lib/contact/mail.ts": {
-    "mtime": 1788719086.0818276,
-    "ast_hash": "24027d54fc78aa71e21a994998291b53",
+    "mtime": 1790275574.6812303,
+    "ast_hash": "cfae5b9707d0952f339957c22b8501d9",
     "semantic_hash": ""
   },
   "lib/contact/rateLimit.ts": {
@@ -500,8 +500,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/contact.ts": {
-    "mtime": 1788719086.0818276,
-    "ast_hash": "7e0fcaae4d81beaac5602533146d53df",
+    "mtime": 1790275574.6812303,
+    "ast_hash": "d633b45d54cb20fd27c602bcc6450e34",
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
@@ -760,8 +760,8 @@
     "semantic_hash": ""
   },
   "docs/copy-doctrine.md": {
-    "mtime": 1789632041.6190348,
-    "ast_hash": "7ff5155b9a5e90f13aada947551fc006",
+    "mtime": 1790275551.8431506,
+    "ast_hash": "f33fa28ea17f2c38c9b95304f04f21cc",
     "semantic_hash": ""
   },
   "scripts/visuals-check.mjs": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   "docs/demos.md": {
-    "mtime": 1790234677.3454132,
-    "ast_hash": "9d8a5bd074b510e14493024657147064",
+    "mtime": 1790275551.8431506,
+    "ast_hash": "0cc4518133a5919bb272abd0a778df70",
     "semantic_hash": ""
   },
   "components/pages/case/SpotlightFrames.test.ts": {
@@ -1047,6 +1047,21 @@
   "lib/testing/loopholes/demos/WallClockDemo.tsx": {
     "mtime": 1790234677.3454132,
     "ast_hash": "7008a72e5ff056c3e4bd10ee21687557",
+    "semantic_hash": ""
+  },
+  "components/consent/ConversionListeners.test.tsx": {
+    "mtime": 1790275574.6812303,
+    "ast_hash": "948092b6192cc530d22d2bbae0cc07a8",
+    "semantic_hash": ""
+  },
+  "components/contact/ContactForm.test.tsx": {
+    "mtime": 1790275574.6812303,
+    "ast_hash": "e7f35aa31101d3330ec61cd008cb1c53",
+    "semantic_hash": ""
+  },
+  "lib/contact/mail.test.ts": {
+    "mtime": 1790275574.6812303,
+    "ast_hash": "9fa022dbd64e5db91d09ed9d9b716a80",
     "semantic_hash": ""
   }
 }
