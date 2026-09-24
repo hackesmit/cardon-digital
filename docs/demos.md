@@ -234,7 +234,7 @@ the observer's constructor, it arrives at the stand-in. The checks
 | mounts with and without reduce and, over sixty-two seconds, does everything the other rows do (theme event, window resize, every button, reduce on and off, tab hidden and back, off screen and back, a new width), waiting three turns of the event loop each time so that a promise or a dynamic import can land, and after each second reads every element in the document, head and portals included | an element is not on the list of elements that stand still (`INERT` in `contract/world.tsx`: structure, text, tables, `canvas`, `button`, static SVG shapes, paint servers and filters; so `animate`, `set`, `marquee`, `video`, `img`, `iframe` and anything not yet invented are refused unread), or a `<style>` sits anywhere but the frame's noscript, or an inline style names `animation`, `transition` or a `url()`, or `drawImage` or `createPattern` was given anything but a canvas, an image or a bitmap, or anything called `Element.animate`, `new Animation`, `new KeyframeEffect`, `document.startViewTransition`, a `CSSStyleSheet` method that writes rules, or set `document.adoptedStyleSheets`: these exist on the test page from before your module is evaluated, so feature detection at the top of a file finds them, they do nothing, and they are counted |
 | watches every DOM mutation across a full cycle, reading the words in the boxes against the clock about sixty times on the way, then taps every control | text was written outside a ghost box, or a live child holds a value no ghost reserves, or the loop changed any attribute of anything, or a word in a box is not the word its `live` text names at the reading the board was last drawn at: the words are the reading's, and a second clock writing them is a second story |
 | looks for `aria-live` and the live roles in the mounted tree | one sits outside a ghost box |
-| mounts, runs the loop, taps every button, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
+| mounts, runs the loop, taps every control, then looks for anything operable | something operable is on the live page that the noscript rule does not name: a control that only exists once an effect has run is invisible to the static render below |
 | renders to static markup and reads the noscript rule against it | a canvas, anything operable, or any sentence the dictionary files under `hint` is still on the page; the hint is looked for in the deepest element that HOLDS it, so `<p>{hint} <b>1-2</b></p>` is the paragraph and not nothing; or the fallback, the honest label or the readout is not |
 | delivers 639.6, 640.2 and 639.9 under an ancestor scaled by two | `data-plan` is not phone, wide, phone, or the backing store is not the layout width |
 
@@ -276,6 +276,9 @@ it is:
   later than its sixty-two seconds, or by work that takes more than three
   turns of the event loop to arrive;
 - a `key` that follows anything but the three events above;
+- a tap that shifts time by less than the hold is wide, on a demo whose hold
+  covers the tenth second of its story, because that is where the tap row
+  compares its two pages and a hold is still;
 - a picture that tells one selection's story backwards, or in any other wrong
   order, while its words run forwards. The page can see that a frame is not
   the payoff frame and that the story moves; which way a drawing is going is
