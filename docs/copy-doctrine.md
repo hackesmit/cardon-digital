@@ -526,3 +526,45 @@ paths, each with the date and the reason Daniel approved it. Adding an entry is 
 visual is retired, and the entry is what a reviewer reads, and it covers that path being
 emptied, gutted or stilled as well as removed. An entry that no longer matches a removed file is
 reported as stale, so the list cannot quietly grow.
+
+## 9. Completeness beats the word target (binding)
+
+Daniel, 2026-09-23, closing hq-4pu0q.16, recorded here by hq-4pu0q.33. A copy bead often
+asks for two things at once: everything a buyer needs to choose a module and a size, and a
+word target of about half the page. On some pages those conflict, and the bead does not say
+which wins. It does now: completeness of the offer wins. The word target is a ceiling to aim
+at, not a license to drop a price condition, a scope, or a limit. A page that publishes seven
+prices with the builds beside them is allowed to run longer than half when cutting further
+would drop something a buyer needs to decide.
+
+/precios is the worked case. It sits at 1,072 English and 1,194 Spanish words, over its line,
+and that length is accepted for now; Daniel reviews it when the rewrite epic finishes. Getting
+it to half is a policy decision, not a copy one: drop the complete build lists from the cards,
+drop the seven-combination table, or accept that a page publishing seven prices with their
+builds is longer than half. A rewrite bead does not take that decision on its own reading, and
+does not shed a limit to hit a count.
+
+The mechanism is section 7 rule 1 read the way it was already demoted for. Half the words stays
+the target and is carried in each rewrite bead's own Definition of Done, where a human judges
+the result, the same way the word target is advisory in the checker and not an exit 1. A count
+a page cannot meet without lying about the offer is not a gate.
+
+## 10. The checks protect a good-faith author (binding)
+
+Daniel, 2026-09-23, deciding hq-3pfhe.8, recorded here by hq-4pu0q.33. Every guard, copy check
+and test harness in this repo protects against honest mistakes by a good-faith author. It is
+not required to defeat deliberate evasion. Four demo reviews in a row each found a new hole a
+few lines from the last fixture, and a check chased far enough to stop a determined author from
+routing around it never reaches a green state; the arms race is the wrong game.
+
+So the standard a reviewer holds a change to is honest edits, not clever ones. A reviewer notes
+a new evasion shape as non-blocking. A reviewer blocks on two things and only these two: an
+honest edit the check misses, and an honest edit the check refuses. Both are the check failing
+the author it exists to help. A novel dodge no honest author would write is a note, not a
+blocker.
+
+The mechanism is the review brief, which now states this standard, so the next review asks for
+honest coverage rather than an unwinnable hunt for the next hole. This does not license anyone
+to route around a check: the loophole fixtures already in the suites stay, because they also
+catch an honest per-file regression, and the honest path to a rule that does not fit is to
+change the check in the open, not to slip past it.
