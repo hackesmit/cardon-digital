@@ -173,7 +173,7 @@ const en = {
     ahead: {
       tag: "the pick, on the calendar first",
       caption:
-        "Readiness reaches the calendar before it reaches the rows, so the pick is planned with days in hand.",
+        "Readiness reaches the calendar before it reaches the rows, so the pick is planned with time in hand.",
       aria:
         "A readiness curve climbing to the Monte Xanic standard line, with a projected point on the date the section comes due.",
       readiness: "READINESS",
@@ -366,7 +366,7 @@ const es: typeof en = {
     ahead: {
       tag: "el corte, primero en el calendario",
       caption:
-        "La madurez llega al calendario antes de llegar a los surcos, así que el corte se planea con días de ventaja.",
+        "La madurez llega al calendario antes de llegar a los surcos, así que el corte se planea con tiempo de ventaja.",
       aria:
         "Una curva de madurez subiendo hasta la línea del estándar de Monte Xanic, con un punto proyectado en la fecha en que el cuadro llega a punto.",
       readiness: "MADUREZ",
