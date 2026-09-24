@@ -68,14 +68,14 @@ export default function DemoPage({ params }: Params) {
 
             <p className="demo-links-lead">{d.linksLead}</p>
             {/* Identity v3: the diagnostic is the site's one clay action, so it
-               takes the .cta and the two internal links stay quiet ghosts. */}
+               takes the .cta and the internal link stays a quiet ghost. The
+               second ghost went to the modules page, which is retired (bead
+               hq-4pu0q.8); the three modules are named on this page already,
+               so the link had nowhere left to add anything. */}
             <div className="demo-actions">
               <a className="cta" href={mailto}>
                 {s.diag.cta}
               </a>
-              <Link className="btn-ghost" href={href("/modulos")}>
-                {d.links.modules}
-              </Link>
               <Link className="btn-ghost" href={href("/precios")}>
                 {d.links.pricing}
               </Link>

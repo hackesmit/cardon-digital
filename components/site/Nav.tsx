@@ -30,8 +30,8 @@ export default function Nav() {
   // the class on its own <main> rather than the nav reading process.env, which
   // would be "1" on the server and undefined in the browser and mismatch on
   // hydration. Both sides therefore start on the page links and the effect
-  // swaps them in after mount; without JS they stay page links, which still
-  // reach the same copy on /modulos and /precios.
+  // swaps them in after mount; without JS the pricing item stays a page link,
+  // which reaches the same copy on /precios.
   const [showcaseAnchors, setShowcaseAnchors] = useState(false);
   const pathname = usePathname();
   const locale = useLocale();
@@ -45,13 +45,15 @@ export default function Nav() {
   // industry items. The site now sells three areas only, so the other-industries
   // dropdown is gone (bead hq-wrig5.11) and the row is a flat list.
   //
-  // Modules and pricing lead the row ahead of it (2026-09-08, bead hq-wrig5.3):
-  // what we sell and what it costs are the two pages the site now routes a
-  // reader to first, and they are the two the showcase home links out to.
+  // Pricing leads the row ahead of it (2026-09-08, bead hq-wrig5.3): what it
+  // costs is the page the site routes a reader to first. Modules used to lead
+  // beside it and the page behind it is retired (bead hq-4pu0q.8), so the item
+  // survives only where it still goes somewhere: the showcase home carries the
+  // modules as a section of itself, so there it is an anchor, and on the
+  // ordinary site nothing takes its place. Repointing it at /precios would have
+  // put the same destination in the row twice under two names.
   const linksBefore = [
-    showcaseAnchors
-      ? { href: "#modulos", label: t.modules }
-      : { href: href("/modulos"), label: t.modules },
+    ...(showcaseAnchors ? [{ href: "#modulos", label: t.modules }] : []),
     showcaseAnchors
       ? { href: "#precios", label: t.pricing }
       : { href: href("/precios"), label: t.pricing },

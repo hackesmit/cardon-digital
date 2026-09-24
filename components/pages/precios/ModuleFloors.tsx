@@ -29,7 +29,7 @@ import {
  * comparison rather than repeated on all three cards.
  *
  * Bead hq-4pu0q.7 moved the module detail a buyer needs in order to choose off
- * /modulos, which is being retired, and onto these cards: the configuration the
+ * /modulos, which is retired (bead hq-4pu0q.8), and onto these cards: the configuration the
  * published price buys, the direction the size moves and where it stops, the
  * one caveat that changes what the entry build actually gives, and a link to
  * that module's demo. Nothing new is published; it is the same catalogue detail

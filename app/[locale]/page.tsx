@@ -332,8 +332,11 @@ function OfficialHome({ params }: Params) {
             </svg>
           </PlayOnceVis>
 
+          {/* The modules page is retired (bead hq-4pu0q.8) and the detail a
+              reader wants next, module by module, is on the pricing floor
+              cards now. */}
           <p className="gets-more">
-            <Link href={href("/modulos")}>{d.gets.more}</Link>
+            <Link href={href("/precios")}>{d.gets.more}</Link>
           </p>
 
           {callToAction}

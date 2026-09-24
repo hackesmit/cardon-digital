@@ -5,6 +5,7 @@ import ts from "typescript";
 import { describe, expect, it } from "vitest";
 
 import { clearsThreshold } from "./onscreen";
+import { globalEscapes, isValueUse, where as whereIn } from "./testing/globals";
 
 /**
  * The on-screen rule and its repo-wide enforcement (bead hq-3pfhe.6).
@@ -65,6 +66,21 @@ const READS_ISINTERSECTING: Record<string, number> = {
   "components/site/Reveal.tsx": 1,
 };
 
+/**
+ * Files this walk does not judge, by exact path: the reviewers' loophole
+ * components, which exist to be wrong and are asserted wrong below and in
+ * components/pages/demos, and the test page that stands in for the browser's
+ * observers. A path, never a directory or a pattern, because an exemption by
+ * pattern covers files that do not exist yet.
+ */
+const NOT_JUDGED = new Set([
+  "lib/testing/loopholes/demos/CellarDemo.tsx",
+  "lib/testing/loopholes/demos/HospitalidadDemo.tsx",
+  "lib/testing/loopholes/demos/ProduccionDemo.tsx",
+  "lib/testing/loopholes/demos/StringDemo.tsx",
+  "components/pages/demos/contract/world.tsx",
+]);
+
 const sources = (() => {
   const out: string[] = [];
   const walk = (rel: string) => {
@@ -73,7 +89,7 @@ const sources = (() => {
       const child = rel + name;
       if (statSync(join(root, child)).isDirectory()) {
         walk(child + "/");
-      } else if (/\.tsx?$/.test(name) && !/\.test\.tsx?$/.test(name)) {
+      } else if (/\.tsx?$/.test(name) && !/\.test\.tsx?$/.test(name) && !NOT_JUDGED.has(child)) {
         out.push(child);
       }
     }
@@ -108,6 +124,9 @@ interface ObserverSite {
   /** an options argument was passed that this check could not read: a
       variable, a spread, a call. Never treated as thresholdless. */
   optionsUnresolved: boolean;
+  /** the callback is a name this file does not bind to a function, so what
+      it reads is unknown. Counted as reading isIntersecting. */
+  callbackUnresolved: boolean;
 }
 
 /** The observer sites in one file's source. Separate from the walk so a
@@ -139,10 +158,9 @@ const sitesIn = (file: string, src: string): ObserverSite[] => {
        threshold: [0, 0.35] }) with cb reading isIntersecting walked past a
        check that only knew the name at the new expression (reviewer s-4a6c,
        non-blocking). Plain bindings and destructuring, chased until the set
-       stops growing; not a type checker, so an alias reached through a call
-       or a parameter is still invisible, which is why demos.test.ts
-       additionally forbids a demo component from naming the constructor at
-       all. */
+       stops growing. Not a type checker: an alias reached through a call or
+       a parameter is invisible here, which is why escapesIn() below refuses
+       every use of the constructor that is not a construction. */
     const aliases = new Set<string>(["IntersectionObserver"]);
     const isAlias = (node: ts.Node) => aliases.has(named(node));
     let grew = true;
@@ -183,11 +201,33 @@ const sitesIn = (file: string, src: string): ObserverSite[] => {
       }
       ts.forEachChild(node, (c) => scan(c, found));
     };
+    /* A callback passed by name is read where the file defines it. The
+       s-5836 probe declared `const cb = (es) => ...isIntersecting` and passed
+       `cb`, and the scan of the argument saw one identifier and nothing
+       else. A name this file does not define is unknown, not innocent. */
+    const definitions = new Map<string, ts.Node>();
+    const define = (node: ts.Node) => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
+        definitions.set(node.name.text, node.initializer);
+      }
+      if (ts.isFunctionDeclaration(node) && node.name) definitions.set(node.name.text, node);
+      ts.forEachChild(node, define);
+    };
+    define(sf);
     const visit = (node: ts.Node) => {
       if (ts.isNewExpression(node) && isAlias(node.expression)) {
         const args = node.arguments ?? ([] as unknown as ts.NodeArray<ts.Expression>);
         const found = { ii: false, ct: false };
-        if (args[0]) scan(args[0], found);
+        let callbackUnresolved = false;
+        let callback: ts.Node | undefined = args[0];
+        for (let hops = 0; callback && ts.isIdentifier(callback) && hops < 8; hops++) {
+          callback = definitions.get(callback.text);
+        }
+        if (callback && !ts.isIdentifier(callback)) scan(callback, found);
+        else if (args[0]) {
+          callbackUnresolved = true;
+          found.ii = true;
+        }
         let thresholdIsArray = false;
         let declaresThreshold = false;
         let optionsUnresolved = false;
@@ -224,6 +264,7 @@ const sitesIn = (file: string, src: string): ObserverSite[] => {
           thresholdIsArray,
           declaresThreshold,
           optionsUnresolved,
+          callbackUnresolved,
         });
       }
       ts.forEachChild(node, visit);
@@ -231,6 +272,58 @@ const sitesIn = (file: string, src: string): ObserverSite[] => {
     visit(sf);
   }
   return out;
+};
+
+/**
+ * Every way `src` touches the observer's constructor, or a global, that the
+ * site finder above cannot follow (bead hq-3pfhe.7).
+ *
+ * The s-5836 review put three observers in components/site, each reading
+ * isIntersecting behind a threshold array, each reached by an indirection:
+ * window[key] with key a const string, window["Intersection" + "Observer"],
+ * and Reflect.construct. This file passed, 24 of 24. Teaching the alias
+ * resolver to fold constants and model Reflect would have fixed those three
+ * and lost to the fourth, so this does the opposite: the constructor may be
+ * CONSTRUCTED, asked about with typeof, and named as a type, and any other
+ * use of it is a failure, as is any read of a global through a key that is
+ * not a literal. Every observer in the repo was already written that way.
+ */
+const escapesIn = (file: string, src: string): string[] => {
+  const sf = ts.createSourceFile(
+    file,
+    src,
+    ts.ScriptTarget.Latest,
+    true,
+    file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS,
+  );
+  const found = globalEscapes(sf);
+  const visit = (node: ts.Node) => {
+    const constructor =
+      (ts.isIdentifier(node) && node.text === "IntersectionObserver" && isValueUse(node)) ||
+      (ts.isPropertyAccessExpression(node) && node.name.text === "IntersectionObserver") ||
+      (ts.isElementAccessExpression(node) &&
+        ts.isStringLiteralLike(node.argumentExpression) &&
+        node.argumentExpression.text === "IntersectionObserver");
+    /* window.IntersectionObserver is judged once, as the access */
+    const inner = ts.isIdentifier(node) && ts.isPropertyAccessExpression(node.parent) && node.parent.name === node;
+    if (constructor && !inner) {
+      let use: ts.Node = node;
+      while (ts.isParenthesizedExpression(use.parent) || ts.isAsExpression(use.parent) || ts.isNonNullExpression(use.parent)) {
+        use = use.parent;
+      }
+      const p = use.parent;
+      const constructed = ts.isNewExpression(p) && p.expression === use;
+      const asked = ts.isTypeOfExpression(p);
+      if (!constructed && !asked) {
+        found.push(
+          whereIn(sf, node) + " uses the IntersectionObserver constructor as a value: construct it in place, so its callback and options can be read",
+        );
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return found;
 };
 
 const observerSites = (): ObserverSite[] =>
@@ -282,7 +375,9 @@ describe("an observer is found however its constructor is spelled", () => {
     const src = "const cb = (es) => { x = es[es.length - 1].isIntersecting; };\n" + expr + ";\n";
     const found = site(src);
     expect(found).toHaveLength(1);
-    expect(found[0].readsIsIntersecting).toBe(false);
+    /* cb is passed by name and read where it is defined; until hq-3pfhe.7
+       this asserted false, which was the blindness written down as a fact */
+    expect(found[0].readsIsIntersecting).toBe(true);
     expect(found[0].thresholdIsArray).toBe(true);
   });
 
@@ -301,6 +396,74 @@ describe("an observer is found however its constructor is spelled", () => {
 
   it("does not mistake an unrelated constructor for one", () => {
     expect(site("const RO = ResizeObserver; new RO(cb); IntersectionObserver;")).toHaveLength(0);
+  });
+});
+
+describe("no file reaches the constructor, or a global, where this check cannot follow", () => {
+  const probe = read("lib/testing/loopholes/IndirectProbe.tsx.txt");
+
+  it.each(sources.map((f) => [f]))("%s", (file) => {
+    expect(escapesIn(file, read(file))).toEqual([]);
+  });
+
+  it("fails the s-5836 probe on each of its three observers", () => {
+    const found = escapesIn("components/site/IndirectProbe.tsx", probe);
+    /* window[key] with key a const string */
+    expect(found.some((m) => /^line 18 reads window\[/.test(m)), found.join("\n")).toBe(true);
+    /* the name assembled from two halves */
+    expect(found.some((m) => /^line 21 reads window\[/.test(m)), found.join("\n")).toBe(true);
+    /* Reflect.construct, twice over: Reflect itself, and the constructor
+       handed to it as a value */
+    expect(found.some((m) => /^line 24 uses Reflect/.test(m)), found.join("\n")).toBe(true);
+    expect(found.some((m) => /^line 24 uses the IntersectionObserver constructor as a value/.test(m))).toBe(true);
+  });
+
+  it.each([
+    ["an alias", "const IO = window.IntersectionObserver; new IO(cb);"],
+    ["a destructured alias", "const { IntersectionObserver: Obs } = window; new Obs(cb);"],
+    ["an argument", "make(IntersectionObserver, cb);"],
+    ["a property", "const kit = { Observer: IntersectionObserver };"],
+    ["a literal key used as a value", 'const IO = window["IntersectionObserver"];'],
+    ["the window under another name", "const w = window; new w.IntersectionObserver(cb);"],
+    ["the window through itself", "new window.self.IntersectionObserver(cb);"],
+    ["the window through the document", "const w = document.defaultView; void w;"],
+    ["code built from a string", 'const IO = Function("return Inter" + "sectionObserver")(); new IO(cb);'],
+    ["eval through the window", 'const IO = window.eval("Inter" + "sectionObserver"); new IO(cb);'],
+  ])("refuses %s", (_how, src) => {
+    expect(escapesIn("components/site/Fixture.tsx", src).length).toBeGreaterThan(0);
+  });
+
+  it.each([
+    "new IntersectionObserver(cb, { threshold: 0.2 });",
+    "new window.IntersectionObserver(cb);",
+    'new window["IntersectionObserver"](cb);',
+    'if (typeof IntersectionObserver === "undefined") start();',
+    'if ("IntersectionObserver" in window) start();',
+    "let io: IntersectionObserver | null = null; void io;",
+    "const top = 4; const frames = [top]; void frames;",
+    'window.addEventListener("resize", f); window.matchMedia("(min-width: 1px)");',
+  ])("allows %s", (src) => {
+    expect(escapesIn("components/site/Fixture.tsx", src)).toEqual([]);
+  });
+
+  it("reads a callback passed by name, and distrusts one it cannot find", () => {
+    const byName = sitesIn(
+      "components/site/Fixture.tsx",
+      "const cb = (es) => { x = es[0].isIntersecting; };\nconst again = cb;\nnew IntersectionObserver(again, { threshold: [0, 0.35] });\n",
+    );
+    expect(byName).toHaveLength(1);
+    expect(byName[0].readsIsIntersecting).toBe(true);
+    expect(byName[0].callbackUnresolved).toBe(false);
+    const unknown = sitesIn(
+      "components/site/Fixture.tsx",
+      'import { cb } from "./elsewhere";\nnew IntersectionObserver(cb, { threshold: [0, 0.35] });\n',
+    );
+    expect(unknown[0].callbackUnresolved).toBe(true);
+    expect(unknown[0].readsIsIntersecting).toBe(true);
+  });
+
+  it("judges exactly the files it says it does not", () => {
+    for (const file of Array.from(NOT_JUDGED)) expect(() => read(file), file).not.toThrow();
   });
 });
 
