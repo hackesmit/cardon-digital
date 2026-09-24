@@ -201,6 +201,11 @@ export function inCellar(d: number): number {
 /** The last lot to cross, which is the one the marker is about. */
 export const LAST = LOTS[LOTS.length - 1];
 export const LAST_CROSS = LAST.cross;
+/** The day the last lot's fruit is off the vine, which is the day the harvest
+    is in. A crossing is a READING entering the window and the fruit follows it
+    CUT_LAG days later, so the two are not the same day and the captions below
+    turn on this one (reviewer, 2026-09-24). */
+export const LAST_CUT = cutDay(LAST);
 /** The day the marker appears: the crossing was legible this long before it. */
 export const FLAG_D = LAST_CROSS - LEAD;
 /** Where the playhead stops: the last tank full, and a day to rest on it. */
@@ -305,13 +310,24 @@ export const CAPTION_KEYS = ["begins", "ripening", "flagged", "picked"] as const
 
 export type CaptionKey = (typeof CAPTION_KEYS)[number];
 
-/** Which caption the strip carries on day `d`. The hold and the static
-    reduced-motion frame are both END_D, so both read "cut inside its window":
-    the words and the block can never disagree. */
+/**
+ * Which caption the strip carries on day `d`.
+ *
+ * The hold and the static reduced-motion frame are both END_D, so both read
+ * "cut inside its window": the words and the block can never disagree.
+ *
+ * "picked" turns on the last CUT and not on the last crossing. Round one used
+ * the crossing, so for the day and a half between the two the strip claimed
+ * every lot was cut while B3 was still ringed on the vine, its tank empty and
+ * the cellar counting 5 of 6 (reviewer, 2026-09-24): about 1.15 seconds of
+ * every loop where the words contradicted the picture beside them.
+ * cellar.test.ts holds the general form of that, which is that "picked" may
+ * only be said on a day inCellar() gives LOTS.length.
+ */
 export function captionKeyFor(d: number): CaptionKey {
   if (d < 2) return "begins";
   if (d < FLAG_D) return "ripening";
-  if (d < LAST_CROSS) return "flagged";
+  if (d < LAST_CUT) return "flagged";
   return "picked";
 }
 
@@ -354,6 +370,102 @@ export function bands(w: number, isPhone: boolean): Bands {
   const covH = isPhone ? clampN(w * 0.34, 110, 140) : clampN(w * 0.13, 118, 150);
   const lb = lt + covH;
   return { cy, ry0, ry1, roomH, lt, lb, height: Math.round(lb + 22) };
+}
+
+/* --------------------------- the chart's geometry ------------------------ */
+
+/**
+ * The shared time axis, as fractions of the measured width: the calendar strip
+ * and the readings chart stand on the same one, so a day is the same x in both.
+ */
+export const AXIS_L = 0.075;
+export const AXIS_R = 0.94;
+
+export interface ChartGeom {
+  x0: number;
+  x1: number;
+  /** The chart's ceiling (BRIX_HI) and its floor (BRIX_LO), in pixels. */
+  top: number;
+  base: number;
+  timeX(d: number): number;
+  brixY(v: number): number;
+}
+
+/**
+ * The readings chart's box and its two scales at a measured width.
+ *
+ * It lives here rather than inside the component's layout() because the
+ * placement of the marker's label is an argument about where the READINGS are,
+ * and an argument about lines on a canvas can only be settled by a test if the
+ * lines and the label are both derived from a function a test can call. Round
+ * one put that label on top of three of them on the phone plan and no test
+ * could have known (reviewer, 2026-09-24).
+ */
+export function chart(w: number, isPhone: boolean): ChartGeom {
+  const b = bands(w, isPhone);
+  const x0 = w * AXIS_L;
+  const x1 = Math.max(x0, w * AXIS_R);
+  const top = b.lt;
+  const base = b.lb;
+  return {
+    x0,
+    x1,
+    top,
+    base,
+    timeX: (d) => x0 + (d / HARVEST) * (x1 - x0),
+    brixY: (v) => base - ((v - BRIX_LO) / (BRIX_HI - BRIX_LO)) * (base - top),
+  };
+}
+
+/** The marker label's font size, so its box is the box the canvas draws. */
+export const FLAG_FONT_PX = 11;
+
+export interface FlagLabel {
+  /** Where fillText is called, with this alignment. */
+  x: number;
+  baseline: number;
+  align: "left" | "right";
+  /** The ink the label actually covers, which is what has to be kept clear. */
+  box: { x0: number; y0: number; x1: number; y1: number };
+}
+
+/**
+ * Where the marker's label goes, given how wide the text measures.
+ *
+ * The label is the demo's argument in words, so it names the marker's day. The
+ * one place it cannot sit is on the readings, and round one sat on three of
+ * them: on the phone plan it was right-anchored at the marker just above the
+ * chart's floor, 164px of text lying across the B1, B2 and B3 lines from day
+ * 3.75 on, in both locales and both modes, on the payoff frame the hold and
+ * the reduced-motion frame both show (reviewer, 2026-09-24).
+ *
+ * So it sits UNDER the floor, in the figure's own bottom margin. That is not a
+ * gap that happens to be free at one width: BRIX_LO is the chart's floor, so
+ * every reading the loop can draw is at or above it, and a box that starts
+ * below it cannot be crossed by a reading at any width, in any locale, however
+ * long the text measures. Reading it as an annotation on the time axis is also
+ * what the words mean, since "five days early" is a statement about a day.
+ */
+export function flagLabel(w: number, isPhone: boolean, textW: number): FlagLabel {
+  const g = chart(w, isPhone);
+  const rx = g.timeX(FLAG_D);
+  const gap = 7;
+  const baseline = g.base + FLAG_FONT_PX + 2;
+  /* beside the marker on the side it fits on, and hard against the board's
+     edge when neither side has room for the whole of it */
+  const align: "left" | "right" = rx + gap + textW <= g.x1 ? "left" : "right";
+  const x = align === "left" ? rx + gap : Math.max(rx - gap, Math.min(textW, w));
+  return {
+    x,
+    baseline,
+    align,
+    box: {
+      x0: align === "left" ? x : x - textW,
+      x1: align === "left" ? x + textW : x,
+      y0: baseline - FLAG_FONT_PX,
+      y1: baseline + 4,
+    },
+  };
 }
 
 /* The breakpoint is the stage's, since all three demos share one stylesheet. */

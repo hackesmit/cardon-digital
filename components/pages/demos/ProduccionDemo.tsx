@@ -21,11 +21,14 @@ import {
   CAPTION_KEYS,
   captionKeyFor,
   CENTRES,
+  chart,
   climbing,
   cutDay,
   CYCLE,
   cycleFrame,
   fillAt,
+  FLAG_FONT_PX,
+  flagLabel,
   FLAG_D,
   harvestDate,
   HARVEST,
@@ -99,7 +102,7 @@ const CELLAR_FROM = 0.62;
  * same draw() is the running loop, the paused board and the reduced-motion
  * frame, so it keeps no memory between calls and reads no clock of its own.
  */
-function produccionScene(vis: Vis): DemoScene {
+export function produccionScene(vis: Vis): DemoScene {
   /* the board as the stage last described it; set at the top of layout() and
      draw(), read by everything below */
   let ctx!: CanvasRenderingContext2D;
@@ -148,15 +151,26 @@ function produccionScene(vis: Vis): DemoScene {
     H = env.H;
     phone = env.phone;
     const b = bands(W, phone);
-    x0 = W * 0.075;
-    x1 = W * 0.94; /* shared time axis for the calendar strip and the chart */
+    /* the shared time axis and the chart's two scales, from ./cellar.ts, so
+       the placement of the marker's label is derived from the same numbers a
+       test can call rather than from a copy of them */
+    const c = chart(W, phone);
+    x0 = c.x0;
+    x1 = c.x1;
     clockY = b.cy;
-    loadTop = b.lt;
-    loadBase = b.lb;
+    loadTop = c.top;
+    loadBase = c.base;
     unit = phone ? clampN(W * 0.05, 14, 20) : clampN(W * 0.026, 12, 26);
 
+    /* Every width below is derived from the measured board and clamped at
+       zero. A container collapsed to nothing (a hidden tab, an auto grid
+       track) has the stage draw at W = 1, and round one turned that into a
+       negative tank width, a negative corner radius inside rr() and thirty-two
+       IndexSizeError throws a second out of arcTo, where the reference demo
+       threw none (reviewer, 2026-09-24). A board too small to see still has to
+       be a board draw() can finish. */
     const roomX0 = W * ROOM_L;
-    const roomX1 = W * ROOM_R;
+    const roomX1 = Math.max(roomX0, W * ROOM_R);
     /* Wide: the land and the building side by side, which is how a winemaker
        holds them. Phone: the same two, stacked, because six tanks in a row
        beside a block would be six 12px tanks. */
@@ -182,14 +196,17 @@ function produccionScene(vis: Vis): DemoScene {
     /* the tanks, a row inside the cellar's plate with a label line under it */
     const pad = phone ? 9 : 10;
     const gap = Math.max(4, (cellX1 - cellX0) * 0.016);
-    const tankW = (cellX1 - cellX0 - pad * 2 - gap * (LOTS.length - 1)) / LOTS.length;
+    const tankW = Math.max(
+      0,
+      (cellX1 - cellX0 - pad * 2 - gap * (LOTS.length - 1)) / LOTS.length,
+    );
     const top = cellY0 + pad;
     const bottom = cellY1 - 14;
     for (let i = 0; i < LOTS.length; i++) {
       tanks[i].x = cellX0 + pad + i * (tankW + gap);
       tanks[i].y = top;
       tanks[i].w = tankW;
-      tanks[i].h = bottom - top;
+      tanks[i].h = Math.max(0, bottom - top);
     }
   };
 
@@ -343,10 +360,22 @@ function produccionScene(vis: Vis): DemoScene {
         ctx.lineWidth = 2.4;
         ctx.stroke();
       }
+      /* The key is read off the land it is drawn on, so it cannot wear the
+         muted ink the labels beside the board wear: PAL.axis on a ripe lot's
+         fill measures 2.08:1 in light mode, where 4.5 is the bar for a 9px
+         label (reviewer's non-blocking note, 2026-09-24). The map-maker's
+         answer is a halo: the panel colour under the full text ink, which
+         holds at every stage of ripening and in both modes. Picking one of two
+         inks by the fill's luminance instead leaves a crossover at 3.7:1,
+         which is the same defect with a smaller number. */
       ctx.font = "600 " + (phone ? 10 : 9) + "px " + MONO;
-      ctx.fillStyle = PAL.axis;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = PAL.panel;
+      ctx.strokeText(L.k, g.cx, g.cy);
+      ctx.fillStyle = PAL.ink;
       ctx.fillText(L.k, g.cx, g.cy);
     }
 
@@ -390,9 +419,10 @@ function produccionScene(vis: Vis): DemoScene {
 
       const full = fillAt(LOTS[i], d);
       if (full > 0.004) {
-        const h = (T.h - 2) * full;
+        /* inset inside the tank, and the tank itself can be zero wide */
+        const h = Math.max(0, T.h - 2) * full;
         const y = T.y + T.h - 1 - h;
-        rr(ctx, T.x + 1, y, T.w - 2, h, 2);
+        rr(ctx, T.x + 1, y, Math.max(0, T.w - 2), h, 2);
         ctx.fillStyle = rgba(PAL.accentRgb, 0.9);
         ctx.fill();
         /* the surface, so a tank reads as liquid and not as a bar chart */
@@ -563,7 +593,9 @@ function produccionScene(vis: Vis): DemoScene {
       ctx.setLineDash([4, 5]);
       ctx.strokeStyle = PAL.accentSoft;
       ctx.lineWidth = 1.4;
-      line(ctx, rx, loadBase, rx, topY);
+      /* through the floor by a few pixels, so the label under it reads as this
+         day's and not as a caption of the whole chart */
+      line(ctx, rx, loadBase + 5, rx, topY);
       /* where that reading was going, drawn from the day it was legible */
       ctx.setLineDash([3, 4]);
       ctx.strokeStyle = PAL.accentLine;
@@ -580,19 +612,17 @@ function produccionScene(vis: Vis): DemoScene {
         ctx.arc(timeX(LAST_CROSS), brixY(WINDOW_LO), 3.4, 0, Math.PI * 2);
         ctx.fill();
       }
-      /* The label sits low, where the early readings have long gone and
-         nothing else is drawn, so it never lands on a line or on the band's
-         own label. */
-      ctx.font = "600 11px " + MONO;
+      /* Under the chart's floor, in the figure's own bottom margin, which is
+         the one strip of the board no reading can reach: see flagLabel() in
+         ./cellar.ts, which places it and is what cellar.test.ts holds against
+         every lot's polyline at every width. */
+      const text = phone ? vis.flagCompact : vis.flag;
+      ctx.font = "600 " + FLAG_FONT_PX + "px " + MONO;
       ctx.fillStyle = PAL.accentInk;
-      const leftAnchor = rx < W * 0.5;
-      ctx.textAlign = leftAnchor ? "left" : "right";
+      const label = flagLabel(W, phone, ctx.measureText(text).width);
+      ctx.textAlign = label.align;
       ctx.textBaseline = "alphabetic";
-      ctx.fillText(
-        phone ? vis.flagCompact : vis.flag,
-        leftAnchor ? rx + 7 : rx - 7,
-        Math.min(loadBase - 7, brixY(BRIX_LO + 0.6))
-      );
+      ctx.fillText(text, label.x, label.baseline);
       ctx.restore();
     }
   };
@@ -620,8 +650,12 @@ function produccionScene(vis: Vis): DemoScene {
         ctx.fillRect(0, 0, W, H);
       }
     },
-    /* from the same geometry the canvas draws with, so they cannot drift */
-    hotspots: () => geo.map((g) => ({ fx: g.cx / W, fy: g.cy / H })),
+    /* From the same geometry the canvas draws with, so they cannot drift. A
+       collapsed board divides by nothing, and the stage writes these into a
+       style attribute, where NaN would land as "NaN%": there is no hotspot to
+       place on a board with no width, so they go to its corner. */
+    hotspots: () =>
+      geo.map((g) => ({ fx: W > 0 ? g.cx / W : 0, fy: H > 0 ? g.cy / H : 0 })),
     live: [
       {
         name: "caption",
