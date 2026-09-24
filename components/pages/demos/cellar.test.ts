@@ -9,6 +9,7 @@ import {
   CAPTION_KEYS,
   captionKeyFor,
   CENTRES,
+  chart,
   climbing,
   CUT_LAG,
   cutDay,
@@ -18,11 +19,13 @@ import {
   FADE,
   FILL,
   fillAt,
+  flagLabel,
   FLAG_D,
   HARVEST,
   HOLD,
   inCellar,
   INTRO,
+  LAST,
   LAST_CROSS,
   LEAD,
   LOTS,
@@ -304,6 +307,26 @@ describe("the captions", () => {
     expect(CAPTION_KEYS).toHaveLength(4);
   });
 
+  it("never says every lot is cut while one is still on the vine", () => {
+    /* Round one returned "picked" from the last CROSSING, but a crossing is
+       the day a reading enters the window and the fruit comes off CUT_LAG days
+       later. So for 1.5 story days a loop the strip read "every lot cut inside
+       its window" over a board with B3 still ringed on the vine, its tank
+       empty and the cellar counting 5/6 (reviewer, 2026-09-24). The words and
+       the picture are one claim: the caption may only say it once the cellar
+       holds every lot. */
+    const lying: string[] = [];
+    for (let d = 0; d <= END_D; d += 0.05) {
+      if (captionKeyFor(d) === "picked" && inCellar(d) < LOTS.length) {
+        lying.push("day " + d.toFixed(2) + ", " + inCellar(d) + " of " + LOTS.length + " in");
+      }
+    }
+    expect(lying.slice(0, 4)).toEqual([]);
+    /* and it does say it, on the day the last lot comes off */
+    expect(captionKeyFor(cutDay(LAST) - 0.01)).not.toBe("picked");
+    expect(captionKeyFor(cutDay(LAST))).toBe("picked");
+  });
+
   it.each(["en", "es"] as const)("%s carries exactly those captions", (locale) => {
     expect(Object.keys(demos[locale].produccion.captions).sort()).toEqual([...CAPTION_KEYS].sort());
   });
@@ -435,5 +458,98 @@ describe("the chart's range", () => {
   it("keeps the cut a day and a half after the crossing", () => {
     expect(CUT_LAG).toBeGreaterThan(0);
     for (const L of LOTS) expect(cutDay(L) - L.cross).toBeCloseTo(CUT_LAG, 9);
+  });
+});
+
+/* ---------- 9. the marker's label sits on nothing the chart draws -------- */
+
+describe("the marker's label", () => {
+  /** Every point the chart's polylines actually put on the canvas: the same
+      half-day walk drawChart's lotLine makes, up to each lot's own cut, on the
+      payoff frame where every line is complete and the label is showing. */
+  const readings = (w: number, isPhone: boolean) => {
+    const g = chart(w, isPhone);
+    const pts: { x: number; y: number }[] = [];
+    for (const L of LOTS) {
+      const end = cutDay(L);
+      pts.push({ x: g.timeX(0), y: g.brixY(L.brix0) });
+      for (let s = 0.5; s < end; s += 0.5) pts.push({ x: g.timeX(s), y: g.brixY(brixAt(L, s)) });
+      pts.push({ x: g.timeX(end), y: g.brixY(brixAt(L, end)) });
+    }
+    return pts;
+  };
+
+  /** 327 is the canvas inside a 375px phone, which is where the reviewer
+      found the label lying across B1, B2 and B3; the rest is the range the
+      figure is ever laid out in. */
+  const PLANS: [number, boolean][] = [
+    ...[240, 280, 327, 360, 400, 480, 600, 639].map((w) => [w, true] as [number, boolean]),
+    ...[420, 520, 640, 760, 900, 1040, 1200].map((w) => [w, false] as [number, boolean]),
+  ];
+
+  /** The label is 11px mono and its two forms differ per locale, so the box is
+      swept over every width the text can measure rather than pinned to one. */
+  const TEXT_W = Array.from({ length: 36 }, (_, i) => i * 8);
+
+  it("never lands on a reading, at any width or text length", () => {
+    const on: string[] = [];
+    for (const [w, isPhone] of PLANS) {
+      const pts = readings(w, isPhone);
+      for (const textW of TEXT_W) {
+        const { box } = flagLabel(w, isPhone, textW);
+        for (const p of pts) {
+          if (p.x < box.x0 || p.x > box.x1 || p.y < box.y0 || p.y > box.y1) continue;
+          on.push(
+            (isPhone ? "phone " : "wide ") + w + ", text " + textW + "px: a reading at " +
+              p.x.toFixed(1) + "," + p.y.toFixed(1),
+          );
+          break;
+        }
+      }
+    }
+    expect(on.slice(0, 4)).toEqual([]);
+  });
+
+  it("sits under the chart's floor, which is where no reading can be", () => {
+    /* The structural half of the same fact: BRIX_LO is the chart's floor, so
+       every reading the loop can draw is at or above it, and a label whose box
+       starts below it cannot be crossed however long the text is or whatever
+       the readings do next. */
+    for (const [w, isPhone] of PLANS) {
+      const g = chart(w, isPhone);
+      const { box, baseline } = flagLabel(w, isPhone, 160);
+      expect(box.y0, "the label's top at " + w).toBeGreaterThan(g.base);
+      expect(baseline).toBeGreaterThan(g.base);
+      for (const L of LOTS) {
+        expect(g.brixY(brixAt(L, END_D)), L.k + " at " + w).toBeLessThanOrEqual(g.base);
+      }
+    }
+  });
+
+  it("stays on the board, at every width the text can fit on", () => {
+    for (const [w, isPhone] of PLANS) {
+      const g = chart(w, isPhone);
+      for (const textW of TEXT_W.filter((t) => t <= g.x1 - g.x0)) {
+        const { box } = flagLabel(w, isPhone, textW);
+        expect(box.x0, "left edge at " + w + ", text " + textW).toBeGreaterThanOrEqual(0);
+        expect(box.x1, "right edge at " + w + ", text " + textW).toBeLessThanOrEqual(w);
+        expect(box.y1, "bottom edge at " + w).toBeLessThanOrEqual(bands(w, isPhone).height);
+      }
+    }
+  });
+
+  it("is drawn from the same scales the readings are", () => {
+    /* One geometry, not two: the component reads its axis and its chart out of
+       chart(), so a label placed clear here is placed clear on the canvas. */
+    for (const [w, isPhone] of PLANS) {
+      const g = chart(w, isPhone);
+      const b = bands(w, isPhone);
+      expect(g.top).toBe(b.lt);
+      expect(g.base).toBe(b.lb);
+      expect(g.timeX(0)).toBeCloseTo(g.x0, 9);
+      expect(g.timeX(HARVEST)).toBeCloseTo(g.x1, 9);
+      expect(g.brixY(BRIX_LO)).toBeCloseTo(g.base, 9);
+      expect(g.brixY(BRIX_HI)).toBeCloseTo(g.top, 9);
+    }
   });
 });
