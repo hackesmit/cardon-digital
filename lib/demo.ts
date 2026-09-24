@@ -15,7 +15,7 @@ import { moduleIds, type ModuleId } from "./pricing";
  */
 export const DEMO_HOST: string = "https://demo.cardondigital.com";
 
-/** The placeholder path, locale prefixed, the same one /modulos uses. */
+/** The placeholder path, locale prefixed. */
 export const DEMO_PATH = "/demo";
 
 /** True once the demo host is set, which is what hides the "coming" label. */

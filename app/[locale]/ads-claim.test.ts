@@ -421,7 +421,10 @@ describe("every served ads claim carries the conditions lib/pricing.ts sets", ()
     expect(pages).toContain("./page");
     expect(pages).toContain("./industries/winery/page");
     expect(pages).toContain("./precios/page");
-    expect(pages.length).toBeGreaterThanOrEqual(12);
+    // 12 until bead hq-4pu0q.8 retired /modulos. The floor is a tripwire on
+    // the walk going blind, so it moves only when a page is deliberately
+    // removed, and it says which one.
+    expect(pages.length).toBeGreaterThanOrEqual(11);
   });
 
   it("finds every dictionary, and every lib/i18n file that is not machinery is one", async () => {
