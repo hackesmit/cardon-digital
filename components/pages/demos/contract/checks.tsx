@@ -45,6 +45,23 @@ const HINTS = (() => {
   return out;
 })();
 
+const flat = (text: string | null) => (text ?? "").replace(/\s+/g, " ").trim();
+const HINT_TEXTS = Array.from(HINTS, flat).filter((h) => h !== "");
+
+/** The elements that CARRY a hint sentence: the deepest one holding each, so
+    the figure and the page around it are not reported for their child's text.
+    This was a leaf whose whole text equalled a hint, and
+    `<p>{hint} <b>1-2</b></p>` is neither a leaf nor equal to one: the sentence
+    telling a visitor to tap stayed on a page with no scripting, where nothing
+    can be tapped, with the suite green (stand-in review of 077a7b4, probe 4).
+    A sentence is a sentence wherever inside an element it sits. */
+const hintCarriers = (page: ParentNode): Element[] => {
+  const holds = (el: Element) => HINT_TEXTS.some((h) => flat(el.textContent).includes(h));
+  return Array.from(page.querySelectorAll("*")).filter(
+    (el) => holds(el) && !Array.from(el.children).some(holds),
+  );
+};
+
 const OPERABLE = "button,[role=button],a[href],input,select,textarea,summary,[tabindex]";
 
 /** The demo as a visitor with scripting off receives it, and what its own
@@ -157,8 +174,18 @@ const judgeWrites = (records: MutationRecord[], when: string) => {
     or failing that the second on the page. The second alone can be the one
     already chosen, when something else on the page is a button too, and a
     tap that changes nothing re-renders nothing. */
-const unchosen = (buttons: HTMLButtonElement[]) =>
-  buttons.find((b) => b.getAttribute("aria-pressed") === "false") ?? buttons[1];
+const unchosen = (picks: HTMLElement[]) =>
+  picks.find((b) => b.getAttribute("aria-pressed") === "false") ?? picks[1];
+
+/** Everything on the mounted page a visitor can operate, which is what a
+    check that taps has to tap. It was querySelectorAll("button"), and a demo
+    whose hotspots were <div role="button" tabIndex={0} class="rd-btn"> found
+    none of them: the tap check below returned without tapping and the write
+    check tapped nothing, both green, while every tap remounted the figure and
+    told the story again from the top (stand-in review of 077a7b4, probe 3).
+    The selector is the one the noscript rule is held to, so what a visitor can
+    operate and what the checks tap are one list. */
+const controls = (root: ParentNode) => Array.from(root.querySelectorAll<HTMLElement>(OPERABLE));
 
 const watchPage = (w: World) => {
   const seen: MutationRecord[] = [];
@@ -234,18 +261,53 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
       expect(new Set(frames).size, "distinct frames: a loop, not one redraw").toBeGreaterThan(1);
     }),
 
-  "tells the story from the top, parks on the standing frame, and resumes from it": (Demo) =>
+  "tells the story from the top, parks on the standing frame, and resumes from it": (Demo) => {
+    /** The opening, on a page where hotspot `pick` was chosen before the board
+        came into view, which the tap check proves is the same page as one where
+        it was chosen later. Returns what there was to choose from.
+
+        EVERY SELECTION AND NOT ONLY THE ONE A PAGE OPENS WITH. This ran on the
+        default pick alone, so a scene that had a story for the first tank and
+        only the payoff for the others opened on its ending after one tap, and
+        stood there, with the suite green (stand-in review of 077a7b4, probe 5).
+        What this cannot see is the probe's own shape, a reading mapped onto
+        standing minus t, which plays a real story in the wrong direction: the
+        page can tell that a frame is not the payoff and that the picture moves,
+        and which way a drawing is going is what it means, not what it draws. */
+    const opening = (pick: number): number => {
+      let count = 0;
+      withWorld({}, (w) => {
+        w.mount(Demo);
+        act(() => w.width(800));
+        const picks = controls(w.container);
+        count = picks.length;
+        if (pick > 0) {
+          if (pick >= picks.length) return;
+          act(() => picks[pick].click());
+        }
+        const chosen = pick > 0 ? " with hotspot " + pick + " chosen" : "";
+        const standing = w.standing();
+        expect(standing, "the standing frame" + chosen).not.toBe("");
+        act(() => w.onscreen(1));
+        const frames = w.tick(3000);
+        expect(frames.length, "frames in the first three seconds in view" + chosen).toBeGreaterThan(10);
+        expect(new Set(frames).size, "distinct frames in the first three seconds" + chosen + ": a story, not a still").toBeGreaterThan(1);
+        expect(frames, "the first thing a visitor sees" + chosen + " is not the ending").not.toContain(standing);
+        expectPainted(frames[frames.length - 1], "the story" + chosen + ", three seconds in,");
+      });
+      return count;
+    };
+    const picks = opening(0);
+    for (let i = 1; i < picks; i++) opening(i);
+
+    /* the pause and the resume, which belong to the clock and not to the
+       selection, on the page a visitor opens */
     withWorld({}, (w) => {
       w.mount(Demo);
       act(() => w.width(800));
       const standing = w.standing();
-      expect(standing).not.toBe("");
-
       act(() => w.onscreen(1));
-      const opening = w.tick(3000);
-      expect(opening.length, "frames in the first three seconds in view").toBeGreaterThan(10);
-      expect(opening, "the first thing a visitor sees is not the ending").not.toContain(standing);
-      expectPainted(opening[opening.length - 1], "the story, three seconds in,");
+      w.tick(3000);
 
       for (const [what, leave, back] of [
         ["scrolled away", () => w.onscreen(0), () => w.onscreen(1)],
@@ -268,7 +330,8 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
         /* and it is a loop, not a still: it leaves the hold again */
         expect(w.tick(20000).some((f) => f !== standing), what + ": the loop moved on").toBe(true);
       }
-    }),
+    });
+  },
 
   "a tap changes the selection and nothing about the time": (Demo) => {
     /* Reviewer s-2e55, B1. The stage's effect was keyed on the scene object,
@@ -284,15 +347,19 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
        taps before the board comes into view and one taps three seconds into
        the story. From the tap on they have the same selection, so they must
        see the same frames: any difference is time the tap moved. */
+    /** How long every page in this check runs for, tap included: past the
+        latest tap it makes, so there is a stretch of story after all of them
+        to compare. */
+    const TOTAL = 10016;
     const story = (tapAfter: number) => {
       let frames: string[] = [];
-      let buttons = 0;
+      let picks: string[] = [];
       withWorld({}, (w) => {
         w.mount(Demo);
         act(() => w.width(800));
         const tap = () => {
-          const all = Array.from(w.container.querySelectorAll("button"));
-          buttons = all.length;
+          const all = controls(w.container);
+          picks = all.map(describeEl);
           if (all.length > 1) act(() => unchosen(all).click());
           /* a browser tells every NEW observer where its target is; the stub
              does not, so say it again: nothing to a stage that survived the
@@ -303,17 +370,36 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
         act(() => w.onscreen(1));
         w.tick(tapAfter);
         if (tapAfter > 0) tap();
-        frames = w.tick(3008 + 608 - tapAfter).slice(-15);
+        frames = w.tick(TOTAL - tapAfter).slice(-15);
       });
-      return { frames, buttons };
+      return { frames, picks };
     };
     const control = story(0);
-    if (control.buttons < 2) return;
-    expect(control.frames.length).toBe(15);
+    /* No silent skip. A check that returns because it found nothing to tap
+       reports a pass, and a demo whose hotspots were not <button> got one
+       (probe 3 again). Nothing to operate is a demo with no selection and
+       there is honestly nothing to compare; ONE thing to operate is a tap
+       this check cannot judge, and it says so. */
     expect(
-      story(3008).frames.filter((f, i) => f !== control.frames[i]).length,
-      "frames in the 0.6s after a tap three seconds into the story that a visitor who tapped before it began did not see",
-    ).toBe(0);
+      control.picks.length === 1 ? control.picks : [],
+      "one thing to operate: a lone control has no other selection to be compared against, so no check here judges its tap",
+    ).toEqual([]);
+    if (control.picks.length === 0) return;
+    expect(control.frames.length).toBe(15);
+    /* EVERY MOMENT A TAP CAN LAND AT, and not only before the story and three
+       seconds in: a scene that latched the first reading it was shown between
+       four seconds and the hold told the story again from the top on every tap
+       inside that window, with the suite green (stand-in review of 077a7b4,
+       probe 1). Each moment is a page of its own and every page runs for the
+       same length of time, so the frames at the end line up whenever the tap
+       came. */
+    for (const tapAfter of [3008, 6008, 9008]) {
+      expect(
+        story(tapAfter).frames.filter((f, i) => f !== control.frames[i]).length,
+        "frames at the end of the story that a visitor who tapped " +
+          (tapAfter / 1000).toFixed(1) + "s in saw and one who tapped before it began did not",
+      ).toBe(0);
+    }
 
     /* and in the hold, where the reviewer measured it: the hold is still, so
        a tap that leaves time alone is followed by one frame, over and over */
@@ -325,7 +411,7 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
       act(() => w.onscreen(0));
       act(() => w.onscreen(1));
       w.tick(300);
-      act(() => unchosen(Array.from(w.container.querySelectorAll("button"))).click());
+      act(() => unchosen(controls(w.container)).click());
       act(() => w.onscreen(1));
       const after = w.tick(600);
       expect(after.length, "frames in the 0.6s after a tap inside the hold").toBeGreaterThan(5);
@@ -512,8 +598,8 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
         for (let s = 0; s < 61; s++) {
           seen.push(...w.tick(1008).filter((f) => f.startsWith("clearRect(")), page());
           if (s === 4) {
-            const buttons = Array.from(w.container.querySelectorAll("button"));
-            if (buttons.length > 1) act(() => unchosen(buttons).click());
+            const picks = controls(w.container);
+            if (picks.length > 1) act(() => unchosen(picks).click());
           }
         }
         act(() => w.onscreen(0));
@@ -614,7 +700,7 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
         const stimuli: Record<number, () => void> = {
           3: () => window.dispatchEvent(new Event("cardon-mode")),
           5: () => window.dispatchEvent(new Event("resize")),
-          7: () => Array.from(w.container.querySelectorAll("button")).forEach((b) => b.click()),
+          7: () => controls(w.container).forEach((b) => b.click()),
           9: () => w.setReduce(!reduce),
           11: () => w.setReduce(reduce),
           13: () => w.setHidden(true),
@@ -643,10 +729,33 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
     }
   },
 
-  "rewrites nothing whose box is not held open by ghosts": (Demo) =>
+  "rewrites nothing whose box is not held open by ghosts, and the words are the reading's": (Demo) =>
     withWorld({}, (w) => {
+      handed.scene = null;
       w.mount(Demo);
       act(() => w.width(800));
+      /* WHAT THE WORDS SAY, and not only that their box is held open. The
+         judgement below accepts any value a ghost reserves room for, at any
+         moment, so a caption driven by a clock of the demo's own passed while
+         the words ran backwards against the picture: 'servicio en su punto' at
+         the top of the story and 'empieza el servicio' in the hold (stand-in
+         review of 077a7b4, probe 2). A live text is a function of the reading
+         by its own declaration, so the word showing is the word the scene
+         names AT the reading the stage last drew, and there is no other writer
+         of it. */
+      const words = () => {
+        const scene = handed.scene as DemoScene | null;
+        if (!scene) return;
+        const live = Array.from(w.container.querySelectorAll(".demo-caption-box .demo-caption"));
+        expect(live.length, "live captions on the page, one per scene.live").toBe(scene.live.length);
+        scene.live.forEach((text, i) => {
+          expect(
+            live[i].textContent,
+            'the word in the "' + text.name + '" box at the reading ' + handed.t.toFixed(2) +
+              " the board was last drawn at",
+          ).toBe(text.values[text.at(handed.t)]);
+        });
+      };
       const seen: MutationRecord[] = [];
       const mo = new MutationObserver((r) => seen.push(...r));
       const drain = () => seen.splice(0).concat(mo.takeRecords());
@@ -661,16 +770,23 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
         attributes: true,
       });
       act(() => w.onscreen(1));
-      w.tick(60000);
+      words();
+      /* a whole cycle in one-second slices, so the words are read against the
+         reading about sixty times and not only at the end */
+      for (let s = 0; s < 60; s++) {
+        w.tick(1000);
+        words();
+      }
       judgeWrites(drain(), "by the running loop");
       mo.disconnect();
 
       /* and everything the visitor can change */
       mo.observe(w.container, { subtree: true, childList: true, characterData: true });
-      const buttons = Array.from(w.container.querySelectorAll("button"));
-      for (const b of buttons.concat(buttons.slice(0, 1))) {
+      const picks = controls(w.container);
+      for (const b of picks.concat(picks.slice(0, 1))) {
         act(() => b.click());
         judgeWrites(drain(), "by a tap on " + describeEl(b));
+        words();
       }
       mo.disconnect();
     }),
@@ -703,7 +819,7 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
       act(() => w.width(800));
       act(() => w.onscreen(1));
       w.tick(1000);
-      for (const b of Array.from(w.container.querySelectorAll("button"))) act(() => b.click());
+      for (const b of controls(w.container)) act(() => b.click());
       expect(
         Array.from(w.container.querySelectorAll(OPERABLE)).filter((el) => !gone(el)).map(describeEl),
         "operable on the mounted page and not covered by the noscript rule",
@@ -716,11 +832,7 @@ export const checks: Record<string, (Demo: Demo) => void | Promise<void>> = {
     /* The must-list is what THIS render put on the page, not a list of class
        names: the board that will never be drawn, everything that would have
        to be operated, and the sentence telling the visitor to operate it. */
-    const dead = Array.from(page.querySelectorAll("canvas," + OPERABLE)).concat(
-      Array.from(page.querySelectorAll("*")).filter(
-        (el) => el.children.length === 0 && HINTS.has((el.textContent ?? "").trim()),
-      ),
-    );
+    const dead = Array.from(page.querySelectorAll("canvas," + OPERABLE)).concat(hintCarriers(page));
     expect(dead.some((el) => el.tagName === "CANVAS"), "a demo draws on a canvas").toBe(true);
     expect(
       dead.filter((el) => !noscript.contains(el) && !gone(el)).map(describeEl),

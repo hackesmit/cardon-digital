@@ -47,7 +47,15 @@ export const provenance = { depth: 0 };
     observeOnscreen: the hook runs untouched, and the purity check in
     ./checks.tsx gets the scene a mounted demo really handed over, with the
     board the stage really built for it, instead of a copy it made up. */
-export const handed: { scene: unknown; env: unknown; count: number } = { scene: null, env: null, count: 0 };
+export const handed: { scene: unknown; env: unknown; t: number; count: number } = {
+  scene: null,
+  env: null,
+  /** The reading the stage last drew the scene at, which is also the reading
+      its live texts were last written from: what the words on the page say
+      is judged against it (./checks.tsx, the ghost-box check). */
+  t: 0,
+  count: 0,
+};
 
 /** Set while a scene's draw() or a live text's at() is on the stack, by the
     same wrapper and by the purity check. Whatever asks the page what time it
