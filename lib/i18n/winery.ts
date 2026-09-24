@@ -206,7 +206,7 @@ const en = {
     termsLabel: "Terms",
     terms: [
       "The fee is paid in advance, month to month, 30 days notice either way.",
-      "Leave inside twelve months and we invoice the part of the build the fee was funding, less a twelfth for each month paid.",
+      "At signing you choose how the build is paid. Pay it in full and stop the service whenever you like, owing nothing for it. Or take the lower setup that twelve months of service fund, and leaving inside those twelve months costs the part of the build the fee had not yet paid for. That part falls every month to nothing, and your quote gives it for each month.",
       "All prices plus IVA.",
     ],
   },
@@ -391,7 +391,7 @@ const es: typeof en = {
     termsLabel: "Condiciones",
     terms: [
       "La cuota va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Si deja el servicio antes de doce meses, facturamos la parte de la construcción que la cuota venía pagando, menos un doceavo por mes pagado.",
+      "Al firmar usted elige cómo se paga la construcción. Páguela completa y deje el servicio cuando quiera, sin deber nada por ella. O tome la implementación más baja, la que financian doce meses de servicio: si deja el servicio antes de esos doce, debe la parte de la construcción que la cuota todavía no había pagado. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
       "Todos los precios más IVA.",
     ],
   },
