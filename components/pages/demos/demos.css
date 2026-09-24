@@ -374,7 +374,7 @@
 }
 
 /* The component renders a <style> inside its <noscript>, which the parser
-   only applies when scripting is off: see RestauranteDemo.tsx. Nothing here
+   only applies when scripting is off: see stage/DemoFigure.tsx. Nothing here
    can do it, because CSS cannot ask whether JavaScript ran. */
 
 @media (prefers-reduced-motion: reduce) {
