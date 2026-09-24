@@ -36,7 +36,7 @@
   "34": "VineField.tsx",
   "35": "SitePlanVisual.tsx",
   "36": "useDemoStage.ts",
-  "37": "page.tsx",
+  "37": "case-page.test.ts",
   "38": "page.tsx",
   "39": "canvasKit.ts",
   "40": "ModuleFloors.tsx",
@@ -57,9 +57,12 @@
   "55": "page.tsx",
   "56": "page.tsx",
   "57": "bumpOffBareMultiple",
-  "58": "ModuleScreen.tsx",
   "59": "observeOnscreen",
   "60": "priced",
   "61": "BridgeMap.tsx",
-  "62": "palette.ts"
+  "62": "palette.ts",
+  "63": "World",
+  "64": "page.tsx",
+  "68": "metadata.ts",
+  "70": "ghosts.ts"
 }

@@ -361,6 +361,35 @@ function stubObserver(): { instance: () => FakeObserver } {
 
 /* --------- the pre-hydration canvas height is the measured height -------- */
 
+/** Declarations that animate or transition and carry !important, other than
+    the ones that stop it. */
+const outranksReduce = (sheet: string) =>
+  sheet
+    .split(/[;{}]/)
+    .filter(
+      (d) =>
+        /^\s*(-\w+-)?(animation|transition)[\w-]*\s*:/i.test(d) &&
+        /!\s*important/i.test(d) &&
+        !/:\s*none\s*!\s*important\s*$/i.test(d),
+    );
+
+/** Selectors that are given an animation or a transition and name a
+    pseudo-element other than the three the figure's reduce rule stops. */
+const movesUncovered = (sheet: string) => {
+  const found: string[] = [];
+  for (const m of Array.from(sheet.matchAll(/([^{};]+)\{([^{}]*)\}/g))) {
+    const moves = m[2]
+      .split(";")
+      .some((d) => /^\s*(-\w+-)?(animation|transition)[\w-]*\s*:/i.test(d) && !/:\s*none\s*(!\s*important)?\s*$/i.test(d));
+    if (!moves) continue;
+    for (const sel of m[1].split(",")) {
+      const pseudo = Array.from(sel.matchAll(/::([\w-]+)/g)).map((p) => p[1].toLowerCase());
+      if (pseudo.some((p) => !["before", "after", "marker"].includes(p))) found.push(sel.trim());
+    }
+  }
+  return found;
+};
+
 describe("the demos stylesheet", () => {
   /* The rules, without the prose. Every check below is lexical, and this file
      now explains in comments what its queries used to get wrong, naming the
@@ -502,6 +531,48 @@ describe("the demos stylesheet", () => {
     expect(css).toMatch(/\.demo-pick-box\s*>\s*\*\s*\{[^}]*grid-area:\s*1\s*\/\s*1/);
     expect(css).toMatch(/\.demo-pick-ghost\s*\{[^}]*visibility:\s*hidden/);
     expect(/\.demo-pick-ghost\s*\{[^}]*display:\s*none/.test(css)).toBe(false);
+  });
+
+  it("leaves the site's reduced-motion rule in charge of everything the stylesheet animates", () => {
+    /* CSS is the one declared motion open to a demo, and it is closed under
+       reduce by construction: app/globals.css stops every animation and
+       transition on the site, measured by reviewer s-1022 (margin-left 0px,
+       then 0px). That holds while three things do. The rule is there;
+       nothing here outranks it, which only !important can; and the figure
+       repeats it for its pseudo-elements, which `*` does not match. An image is the
+       other way a stylesheet moves, and nothing can tell an animated one
+       from a still, so this sheet loads none and imports no other sheet. */
+    const globals = withoutCssComments(read("../../../app/globals.css"));
+    const reduce = Array.from(
+      globals.matchAll(/@media \(prefers-reduced-motion:\s*reduce\)\s*\{([\s\S]*?)\n\}/g),
+      (m) => m[1],
+    );
+    for (const stopped of ["animation", "transition"]) {
+      const everything = new RegExp("(?:^|[};])\\s*\\*\\s*\\{[^}]*" + stopped + ":\\s*none\\s*!important");
+      expect(reduce.filter((block) => everything.test(block)), "a reduce block that stops every " + stopped).toHaveLength(1);
+    }
+    expect(outranksReduce(css)).toEqual([]);
+    /* and the figure's own rule, which reaches what `*` cannot */
+    const own = /@media \(prefers-reduced-motion:\s*reduce\)\s*\{[\s\S]*?\n\}/.exec(css)?.[0] ?? "";
+    const rule = /([^{}]*)\{\s*animation:\s*none\s*!important;\s*transition:\s*none\s*!important;?\s*\}/.exec(own);
+    const stopped = (rule?.[1] ?? "").split(",").map((sel) => sel.trim());
+    for (const sel of [".demo-figure", ".demo-figure *"]) {
+      for (const part of ["", "::before", "::after"]) expect(stopped).toContain(sel + part);
+    }
+    expect(stopped).toContain(".demo-figure *::marker");
+    /* a pseudo-element the rule does not name would move under reduce, so
+       nothing but the three it names may be given motion in this sheet */
+    expect(movesUncovered(css)).toEqual([]);
+    expect(movesUncovered("p::first-letter{ animation: pulse 1s infinite }")).toHaveLength(1);
+    expect(movesUncovered("@media (hover){ .a:hover, li::first-line { transition: color 1s } }")).toHaveLength(1);
+    expect(movesUncovered(".a::before, .b:hover::after, li::marker { transition: opacity 1s }")).toEqual([]);
+    expect(movesUncovered("p::selection{ transition: none }")).toEqual([]);
+    expect(outranksReduce(".x{ animation: none !important }")).toEqual([]);
+    expect(outranksReduce(".x{ animation: none, spin 1s !important }")).toHaveLength(1);
+    expect(css).not.toMatch(/url\(|@import|image-set\(/i);
+    expect(outranksReduce(".x{ transition: width 1s !important }")).toHaveLength(1);
+    expect(outranksReduce(".x{ -webkit-animation-name: spin ! IMPORTANT }")).toHaveLength(1);
+    expect(outranksReduce(".x{ transition: width 1s; color: red !important }")).toEqual([]);
   });
 
   it.each(["demo-pick-box", "demo-caption-box"])(
