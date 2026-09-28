@@ -766,7 +766,9 @@ export default function DigitalArc() {
         c.globalAlpha = a;
         const by = cta.y + blockY(3);
         rr(c, cta.x, by, cta.w, cta.h, 2);
-        c.fillStyle = PAL.energy;
+        // Agave, not clay: the page's own hero action is the one clay element in
+        // the viewport this canvas shares with it (identity v3, clay once).
+        c.fillStyle = PAL.primary;
         c.fill();
         c.font = F(g.compact ? 13 : 12);
         c.textAlign = "center";

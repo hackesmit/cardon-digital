@@ -111,6 +111,9 @@ export default function Home({ params }: Params) {
               </Link>
             </div>
             <p className="hero-risk">{d.hero.risk}</p>
+            {/* The trunk test's fourth question, who already uses it, answered
+                above the canvas so a 390px phone has all four before a scroll. */}
+            <p className="hero-proof">{d.hero.proofLine}</p>
           </div>
 
           <DigitalArc />
@@ -583,8 +586,8 @@ export default function Home({ params }: Params) {
               </div>
             ))}
           </div>
-
-          {callToAction}
+          {/* No closing action here: the diagnostic block below carries the
+              same button, and a viewport never holds two clay elements. */}
         </div>
       </section>
 
