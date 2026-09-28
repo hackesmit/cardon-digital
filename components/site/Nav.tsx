@@ -30,6 +30,7 @@ export default function Nav() {
   const brandHome = site[locale].brandHome;
   const toggleBtn = useRef<HTMLButtonElement | null>(null);
   const dropRef = useRef<HTMLLIElement | null>(null);
+  const dropBtn = useRef<HTMLButtonElement | null>(null);
 
   const href = (path: string) => localePath(locale, path);
 
@@ -84,6 +85,7 @@ export default function Nav() {
       if (e.key !== "Escape") return;
       if (svcOpen) {
         setSvcOpen(false);
+        dropBtn.current?.focus();
         return;
       }
       if (open) {
@@ -201,6 +203,7 @@ export default function Nav() {
               >
                 <button
                   className="drop-trigger"
+                  ref={dropBtn}
                   type="button"
                   aria-expanded={svcOpen ? "true" : "false"}
                   aria-controls="services-menu"

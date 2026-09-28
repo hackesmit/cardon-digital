@@ -45,9 +45,9 @@ const en = {
   hero: {
     aria: "Introduction",
     eyebrow: "What it costs",
-    t1: "Prices published, in pesos. ",
+    t1: "Prices published. ",
     accent: "The diagnostic sets the quote.",
-    sub: "Websites by what they include, ad management at a flat fee, and each software module from its entry price. Plus IVA, invoiced. **Everything we build stays in your name: domain, accounts, code and data.**",
+    sub: "Websites by what they include, ad management at a flat fee, and each software module from its entry price. Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. **Everything we build stays in your name: domain, accounts, code and data.**",
     proof: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
     ctaFloors: "See the prices",
     web: { kicker: "Websites", more: "The websites page" },

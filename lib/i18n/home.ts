@@ -74,7 +74,7 @@ const en = {
       {
         id: "anuncios",
         name: "Google Ads",
-        title: "New clients every week, measured.",
+        title: "New clients who were already searching, measured.",
         body: "Campaigns for the people already searching for what you sell. A flat monthly fee, and your budget goes straight to Google.",
         cta: "See ads",
       },
@@ -167,8 +167,8 @@ const en = {
   },
   pricing: {
     kicker: "What it costs",
-    title: "Prices published, in pesos.",
-    sub: "Every service has its entry price in the open, plus IVA, invoiced. The diagnostic sets the final quote.",
+    title: "Prices published.",
+    sub: "Every service has its entry price in the open. Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. The diagnostic sets the final quote.",
     siteK: "Website",
     adsK: "Google Ads",
     softK: "Software",
@@ -182,7 +182,7 @@ const en = {
       },
       {
         k: "Terms",
-        body: "Quoted in pesos, plus IVA, with an invoice. The build is paid half to start and half on delivery.",
+        body: "Quoted and invoiced in pesos, plus IVA. The build is paid half to start and half on delivery.",
       },
     ],
   },
@@ -298,7 +298,7 @@ const es: typeof en = {
       {
         name: "Monte Xanic",
         place: "Valle de Guadalupe",
-        result: "Una hora de trabajo financiero, hoy como dos minutos",
+        result: "Como una hora de trabajo financiero, hoy como dos minutos",
       },
       {
         name: "Viñedo En'kanto",
@@ -328,7 +328,7 @@ const es: typeof en = {
       {
         id: "anuncios",
         name: "Anuncios en Google",
-        title: "Clientes nuevos cada semana, medidos.",
+        title: "Clientes nuevos que ya lo buscaban, medidos.",
         body: "Campañas para la gente que ya está buscando lo que usted vende. Cuota fija al mes, y su presupuesto va directo a Google.",
         cta: "Ver anuncios",
       },

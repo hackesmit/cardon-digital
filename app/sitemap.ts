@@ -33,6 +33,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: r.changeFrequency,
       priority: r.priority,
+      alternates: {
+        languages: Object.fromEntries(
+          locales
+            .map((l) => [l, SITE_URL + localePath(l, r.path)])
+            .concat([["x-default", SITE_URL + localePath("es", r.path)]]),
+        ),
+      },
     })),
   );
 }

@@ -14,13 +14,13 @@ const en = {
   meta: {
     title: "Websites",
     description:
-      "A website that gets found on Google and gets written to the same day. Designed for your business, copy included, price published by what it includes, and the domain and the site in your name.",
+      "A website that gets found on Google and gets written to from a phone. Designed for your business, copy included, price published by what it includes, and the domain and the site in your name.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Websites",
     title: "Get found on Google,",
-    titleAccent: "and get written to the same day.",
+    titleAccent: "and get written to from a phone.",
     sub: "We design and build your business's website so it loads fast, reads on a phone and takes the visitor to a call or a WhatsApp message. The price is published by what it includes, and the domain and the site stay in your name.",
     proof: "Sites built for Vinedo En'kanto and Dharma Ochoa, delivered in their names.",
   },
@@ -53,7 +53,7 @@ const en = {
   packages: {
     kicker: "What it costs",
     title: "Four packages, priced by what they include.",
-    sub: "Entry prices in pesos, plus IVA, invoiced. A price moves up with what your site needs and never down.",
+    sub: "Entry prices, quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. A price moves up with what your site needs and never down.",
     fromLabel: "from",
     deliveryLabel: "Delivery",
     daysUnit: "business days",
@@ -161,13 +161,13 @@ const es: typeof en = {
   meta: {
     title: "Sitios web",
     description:
-      "Un sitio que lo encuentran en Google y por el que le escriben ese mismo día. Diseñado para su negocio, con textos incluidos, precio publicado por lo que incluye, y el dominio y el sitio a su nombre.",
+      "Un sitio que lo encuentran en Google y por el que le escriben desde el teléfono. Diseñado para su negocio, con textos incluidos, precio publicado por lo que incluye, y el dominio y el sitio a su nombre.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Sitios web",
     title: "Que lo encuentren en Google",
-    titleAccent: "y le escriban ese mismo día.",
+    titleAccent: "y le escriban desde el teléfono.",
     sub: "Diseñamos y construimos el sitio de su negocio para que cargue rápido, se lea en el teléfono y lleve al visitante a llamarle o escribirle por WhatsApp. El precio está publicado por lo que incluye, y el dominio y el sitio quedan a su nombre.",
     proof: "Sitios hechos para Viñedo En'kanto y Dharma Ochoa, entregados a su nombre.",
   },
