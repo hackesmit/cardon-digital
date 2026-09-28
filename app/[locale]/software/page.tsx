@@ -191,7 +191,8 @@ export default function SoftwarePage({ params }: Params) {
               ))}
             </div>
           </Reveal>
-          {cta}
+          {/* No closing action here: the diagnostic block below carries the
+              same button, and a viewport never holds two clay elements. */}
         </div>
       </section>
 

@@ -584,7 +584,9 @@ export default function SiteRise() {
         c.globalAlpha = e * fo;
         rr(c, b.x, b.y + dy, b.w, b.h, 2);
         if (clay) {
-          c.fillStyle = press > 0 ? PAL.energyBright : PAL.energy;
+          // Agave, not clay: the page's hero action is the one clay element in the
+          // viewport this canvas shares with it (identity v3, clay once).
+          c.fillStyle = press > 0 ? PAL.primaryBright : PAL.primary;
           c.fill();
           c.fillStyle = PAL.panel;
         } else {

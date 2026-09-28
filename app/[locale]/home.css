@@ -1466,3 +1466,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* The fourth trunk-test answer, who already uses it, sits under the risk line
+   and reads as the same quiet mono note the service heroes use. */
+.pg-home .hero-proof {
+  margin-top: 8px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--primary);
+  max-width: 72ch;
+}
+
+/* Desktop: the 760px copy column broke the two-clause headline into four
+   lines with "compren," and "solo." alone and left the right half of the hero
+   empty. Wider column, same 60ch cap on the result sentence. */
+@media (min-width: 900px) {
+  .pg-home .hero-copy {
+    max-width: 1040px;
+  }
+}

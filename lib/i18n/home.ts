@@ -35,6 +35,7 @@ const en = {
     titleAccent: "And let the work run itself.",
     sub: "A site people write to, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
+    proofLine: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
   },
   proof: {
     aria: "Businesses already built for",
@@ -288,6 +289,7 @@ const es: typeof en = {
     titleAccent: "y que el trabajo se haga solo.",
     sub: "Un sitio por el que le escriben, anuncios que traen clientes nuevos y un sistema que hace lo repetitivo por su equipo. Cada uno se contrata por su cuenta, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, construyamos o no.",
+    proofLine: "Construido para Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
   },
   proof: {
     aria: "Negocios para los que ya construimos",
