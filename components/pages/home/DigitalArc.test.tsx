@@ -28,7 +28,9 @@ const decode = (s: string) =>
 async function render(locale: Locale): Promise<string> {
   const { default: DigitalArc } = await import("./DigitalArc");
   return renderToStaticMarkup(
-    React.createElement(LocaleProvider, { locale }, React.createElement(DigitalArc))
+    // LocaleProvider declares children as required, see winery-page.test.ts.
+    // eslint-disable-next-line react/no-children-prop
+React.createElement(LocaleProvider, { locale, children: React.createElement(DigitalArc) })
   );
 }
 
