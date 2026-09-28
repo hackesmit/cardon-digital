@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import { BLOCKING_SHAPES, EM_DASH } from "../../scripts/copy-check.mjs";
 import {
-  addOnAvailable,
-  addOnMonthly,
+  adsManagement,
   bridgeFeatures,
+  currencyByLocale,
+  formatAmount,
+  formatPrice,
   featureHours,
   moduleFloors,
   moduleIds,
@@ -275,32 +277,96 @@ describe("/precios prices everything it names outside the build it publishes", (
     },
   );
 
-  it("ads and content are chargeable lines of their own, not part of a floor", () => {
-    // The published monthly comes from quote() with no add-ons, so neither of
-    // these is inside it, and both cost something when they are quoted.
-    expect(addOnAvailable("content", ["hospitalidad"], "S")).toBe(true);
-    expect(addOnMonthly("content", "S")).toBeGreaterThan(0);
-    expect(addOnAvailable("google-ads-management", ["restaurante"], "S")).toBe(
-      false,
-    );
-    expect(addOnMonthly("google-ads-management", "M")).toBeGreaterThan(0);
+  /*
+   * Google Ads management is a standalone service since 2026-09-28, carried
+   * by `adsManagement` in lib/pricing.ts: two scopes, each a flat monthly fee
+   * with a minimum monthly ad budget the client pays straight to Google. The
+   * ads block states that policy, so it is read against the data.
+   */
+  it("the published module monthly still carries no ads, which are a line of their own", () => {
+    // The published monthly comes from quote() with no add-ons.
     expect(moduleFloors.hospitalidad.monthly).toEqual(
       quote(["hospitalidad"], "S").monthly,
     );
+    for (const scope of adsManagement) {
+      expect(scope.monthly.MXN).toBeGreaterThan(0);
+      expect(scope.percentOfSpend).toBe(false);
+      expect(scope.budgetThroughCardon).toBe(false);
+    }
   });
 
+  /** Every string in the ads block, whatever keys the block is written with. */
+  function adsText(locale: Locale): string {
+    const out: string[] = [];
+    const walk = (v: unknown): void => {
+      if (typeof v === "string") out.push(v);
+      else if (Array.isArray(v)) v.forEach(walk);
+      else if (v && typeof v === "object") Object.values(v).forEach(walk);
+    };
+    walk(precios[locale].ads);
+    return out.join(" ").replace(/\*\*|__/g, "");
+  }
+
+  /** A figure as the locale prints it, not matching inside a longer number. */
+  function printed(amount: number, locale: Locale): RegExp {
+    const text = formatAmount(amount, locale).replace(/[.,]/g, "[.,]");
+    return new RegExp(`(?<![\\d.,])${text}(?!\\d|[.,]\\d)`);
+  }
+
   it.each(["en", "es"] as const)(
-    "%s: the ads block prices them and keeps its two conditions",
+    "%s: the ads block prints both monthly fees and both minimum budgets from lib/pricing.ts",
     (locale) => {
-      const { title, body } = precios[locale].ads;
-      const text = `${title} ${body}`;
-      expect(text).toMatch(PRICED_ON_TOP[locale]);
-      // The exclusion lib/pricing.ts states, and the two size conditions.
-      expect(text).toMatch(/Producci[oó]n/);
-      expect(text).toMatch(/Hospitalidad/);
-      expect(text).toMatch(/Restaurante/);
+      const text = adsText(locale);
+      const currency = currencyByLocale[locale];
+      const missing: string[] = [];
+      // A figure may be printed, or carried as the placeholder the page fills
+      // from lib/pricing.ts, named the way lib/i18n/anuncios.ts names them.
+      const cap = (id: string) => id[0].toUpperCase() + id.slice(1);
+      for (const scope of adsManagement) {
+        for (const [what, figure, token] of [
+          ["monthly", scope.monthly, `{${scope.id}}`],
+          ["minimum budget", scope.minimumBudget, `{min${cap(scope.id)}}`],
+        ] as const) {
+          if (!text.includes(token) && !printed(figure[currency], locale).test(text)) {
+            missing.push(`${scope.id} ${what} ${formatPrice(locale, figure[currency])}`);
+          }
+        }
+      }
+      expect(missing).toEqual([]);
     },
   );
+
+  it.each(["en", "es"] as const)(
+    "%s: every amount the ads block prints is an ads figure lib/pricing.ts carries",
+    (locale) => {
+      const currency = currencyByLocale[locale];
+      const known = new Set<number>();
+      for (const scope of adsManagement) {
+        for (const f of [scope.monthly, scope.setup, scope.minimumBudget]) {
+          known.add(f[currency]);
+        }
+      }
+      const amounts = (adsText(locale).match(/\d{1,3}(?:,\d{3})+|\d+/g) ?? [])
+        .map((n) => Number(n.replace(/,/g, "")))
+        // Small counts (campaigns, ad groups) are scope, not money.
+        .filter((n) => n >= 100);
+      expect(amounts.filter((n) => !known.has(n))).toEqual([]);
+    },
+  );
+
+  it.each(["en", "es"] as const)(
+    "%s: the ads block says the fee is flat and the budget goes straight to Google",
+    (locale) => {
+      const text = adsText(locale);
+      // Owed because lib/pricing.ts says so; if either flag turned true these
+      // words would be false and this must fail rather than pass.
+      expect(adsManagement.every((s) => s.percentOfSpend === false)).toBe(true);
+      expect(adsManagement.every((s) => s.budgetThroughCardon === false)).toBe(true);
+      expect(text).toMatch(locale === "en" ? /\bflat (?:monthly )?fee\b/i : /\bcuota (?:mensual )?fija\b/i);
+      expect(text).toMatch(locale === "en" ? /\bstraight to Google\b/i : /\bdirecto a Google\b/i);
+    },
+  );
+
 });
 
 /**

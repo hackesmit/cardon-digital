@@ -8,7 +8,7 @@ const en = {
     description:
       "Growth systems for owner-run businesses in the US and Mexico. The full site is on its way.",
   },
-  line: "Your ads, your site, your operations. One living system.",
+  line: "Get found. Get chosen. And let the work run itself.",
   sub: "The full site is being assembled. If you would rather not wait:",
   mailSubject: "Growth Diagnostic",
 };
@@ -19,7 +19,7 @@ const es: typeof en = {
     description:
       "Sistemas de crecimiento para bodegas del Valle de Guadalupe y Ensenada. El sitio completo va en camino.",
   },
-  line: "Su cosecha, su bodega, sus cuentas. Un solo sistema.",
+  line: "Que lo encuentren, que le compren, y que el trabajo se haga solo.",
   sub: "Estamos armando el sitio completo. Si prefiere no esperar:",
   mailSubject: "Diagnóstico de Crecimiento",
 };

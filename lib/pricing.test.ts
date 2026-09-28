@@ -6,6 +6,9 @@ import {
   type ModuleSelection,
   type Size,
   absorbedProviderCash,
+  adsManagement,
+  adsMinimumBudget,
+  adsScope,
   addOnAvailable,
   addOnMonthly,
   annualPrepay,
@@ -44,6 +47,10 @@ import {
   sharedServiceBaseHours,
   sizes,
   usdFromMxn,
+  webCareHours,
+  webCareMonthly,
+  webPackageFrom,
+  webPackages,
   wineryBundles,
   wineryPricingPlaceholder,
   winerySetupFloor,
@@ -1395,5 +1402,168 @@ describe("sizes", () => {
   it("exposes the three size bands the whole model is built on", () => {
     expect([...sizes]).toEqual(["S", "M", "L"]);
     expect(scopeFactor).toEqual({ S: 1.0, M: 1.5, L: 2.05 });
+  });
+});
+
+/*
+ * Websites and standalone Google Ads management (Daniel's direction of
+ * 2026-09-28, web-ads-pricing-mx.md section 5). Every published figure is
+ * checked against the hours it has to recover at the stated rate, and every
+ * USD figure against the conversion of its own rounded MXN figure.
+ */
+describe("website packages", () => {
+  it("are the four packages, smallest first, each dearer and slower than the last", () => {
+    expect(webPackages.map((p) => p.id)).toEqual(["presencia", "negocio", "reservas", "tienda"]);
+    for (let i = 1; i < webPackages.length; i++) {
+      expect(webPackages[i].buildHours).toBeGreaterThan(webPackages[i - 1].buildHours);
+      expect(webPackages[i].from.MXN).toBeGreaterThan(webPackages[i - 1].from.MXN);
+      expect(webPackages[i].deliveryDays.max).toBeGreaterThan(webPackages[i - 1].deliveryDays.max);
+    }
+  });
+
+  it.each([
+    // id, hours, cost recovery, derived, published, margin, USD, bound by
+    ["presencia", 4.5, 12150, 12500, 12500, 350, 740, "hours"],
+    ["negocio", 8.5, 22950, 23000, 24000, 1050, 1410, "market-floor"],
+    ["reservas", 13.5, 36450, 36500, 38000, 1550, 2240, "market-floor"],
+    ["tienda", 20, 54000, 54000, 55000, 1000, 3240, "market-floor"],
+  ] as const)(
+    "%s: %s h, cost %s, derived %s, published %s (clears by %s), %s USD",
+    (id, hours, cost, derived, published, margin, usd, boundBy) => {
+      const p = webPackages.find((x) => x.id === id)!;
+      expect(p.buildHours).toBe(hours);
+      expect(p.costRecovery).toBe(hours * setupRate);
+      expect(p.costRecovery).toBe(cost);
+      expect(p.derived).toBe(derived);
+      expect(webPackageFrom(id)).toEqual({ MXN: published, USD: usd });
+      expect(p.from.MXN - p.costRecovery).toBe(margin);
+      expect(p.boundBy).toBe(boundBy);
+    },
+  );
+
+  it.each(webPackages.map((p) => [p.id, p] as const))(
+    "%s: the published figure clears its hours, sits on a 500, off a bare 10,000, and converts from the rounded MXN",
+    (_, p) => {
+      expect(p.from.MXN).toBeGreaterThanOrEqual(p.buildHours * setupRate);
+      expect(p.from.MXN % 500).toBe(0);
+      expect(p.from.MXN % 10000).not.toBe(0);
+      expect(p.derived).toBe(bumpOffBareMultiple(ceilTo(p.buildHours * setupRate, 500), 10000, 500, "up"));
+      expect(p.from.MXN).toBe(Math.max(p.derived, p.marketFloor));
+      expect(p.from.USD).toBe(usdFromMxn(p.from.MXN));
+    },
+  );
+
+  it("a market floor is never dead weight: where it is set it binds, or it equals the derived figure", () => {
+    // If the hours grow past a floor, the derived figure takes over and this
+    // says the floor can go; nothing publishes below the hours either way.
+    for (const p of webPackages) expect(p.marketFloor).toBeGreaterThanOrEqual(p.derived);
+  });
+
+  it("delivery ranges, page counts and feature lists as the memo cards them", () => {
+    expect(webPackages.map((p) => [p.deliveryDays.min, p.deliveryDays.max])).toEqual([
+      [7, 10],
+      [15, 15],
+      [20, 25],
+      [25, 35],
+    ]);
+    expect(webPackages.map((p) => p.pages)).toEqual([1, 6, 8, 6]);
+    const [presencia, negocio, reservas, tienda] = webPackages;
+    for (const p of webPackages) {
+      for (const f of p.features) expect(f).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+      expect(new Set(p.features).size).toBe(p.features.length);
+    }
+    // Each larger package carries everything in Negocio or Presencia.
+    for (const f of presencia.features) expect(negocio.features).toContain(f);
+    for (const f of negocio.features) expect(reservas.features).toContain(f);
+    for (const f of negocio.features) expect(tienda.features).toContain(f);
+    expect(reservas.features).toContain("booking-path");
+    expect(tienda.features).toEqual(
+      expect.arrayContaining(["product-catalogue", "checkout", "payment-provider-connector"]),
+    );
+    expect(tienda.features).not.toContain("booking-path");
+  });
+
+  it("care is one 2,500 figure for every package and clears its 2 hours", () => {
+    expect(webCareHours).toBe(2);
+    expect(webCareMonthly()).toEqual({ MXN: 2500, USD: 150 });
+    expect(webCareMonthly().MXN).toBeGreaterThanOrEqual(webCareHours * serviceRate);
+    expect(webCareMonthly().MXN - webCareHours * serviceRate).toBe(50);
+    // Nearest-100 would take the exact half 2,450 down, below the hours.
+    expect(round100(webCareHours * serviceRate)).toBeLessThan(webCareHours * serviceRate);
+    expect(webCareMonthly().USD).toBe(usdFromMxn(webCareMonthly().MXN));
+  });
+});
+
+describe("standalone Google Ads management", () => {
+  it("is two scopes, local then crecimiento, larger in scope, fee, setup and budget", () => {
+    expect(adsManagement.map((s) => s.id)).toEqual(["local", "crecimiento"]);
+    const [local, crecimiento] = adsManagement;
+    expect(crecimiento.campaigns).toBeGreaterThan(local.campaigns);
+    expect(crecimiento.adGroups).toBeGreaterThan(local.adGroups);
+    expect(crecimiento.monthly.MXN).toBeGreaterThan(local.monthly.MXN);
+    expect(crecimiento.setup.MXN).toBeGreaterThan(local.setup.MXN);
+    expect(crecimiento.minimumBudget.MXN).toBeGreaterThan(local.minimumBudget.MXN);
+  });
+
+  it.each([
+    // id, service h, monthly, USD, monthly margin, build h, setup, USD, setup margin, budget, USD, campaigns, ad groups
+    ["local", 4, 5500, 320, 600, 4, 10900, 640, 100, 10000, 590, 1, 3],
+    ["crecimiento", 7, 8800, 520, 225, 6, 16500, 970, 300, 15000, 880, 3, 10],
+  ] as const)(
+    "%s: the published figures",
+    (id, sh, monthly, monthlyUsd, monthlyMargin, bh, setup, setupUsd, setupMargin, budget, budgetUsd, campaigns, adGroups) => {
+      const s = adsScope(id);
+      expect(s.serviceHours).toBe(sh);
+      expect(s.monthly).toEqual({ MXN: monthly, USD: monthlyUsd });
+      expect(s.monthly.MXN - sh * serviceRate).toBe(monthlyMargin);
+      expect(s.buildHours).toBe(bh);
+      expect(s.setup).toEqual({ MXN: setup, USD: setupUsd });
+      expect(s.setup.MXN - bh * setupRate).toBe(setupMargin);
+      expect(adsMinimumBudget(id)).toEqual({ MXN: budget, USD: budgetUsd });
+      expect(s.campaigns).toBe(campaigns);
+      expect(s.adGroups).toBe(adGroups);
+    },
+  );
+
+  it.each(adsManagement.map((s) => [s.id, s] as const))(
+    "%s: every figure clears its hours at the stated rate and converts from the rounded MXN",
+    (_, s) => {
+      expect(s.monthlyCost).toBe(s.serviceHours * serviceRate);
+      expect(s.monthly.MXN).toBeGreaterThanOrEqual(s.monthlyCost);
+      expect(s.setupCost).toBe(s.buildHours * setupRate);
+      expect(s.setup.MXN).toBeGreaterThanOrEqual(s.setupCost);
+      expect(s.setup.MXN).toBe(Math.max(ceilTo(s.setupCost, 100), s.setupMarketFloor));
+      expect(s.monthly.MXN % 1000).not.toBe(0);
+      expect(s.setup.MXN % 10000).not.toBe(0);
+      for (const f of [s.monthly, s.setup, s.minimumBudget]) expect(f.USD).toBe(usdFromMxn(f.MXN));
+    },
+  );
+
+  it.each(adsManagement.map((s) => [s.id, s] as const))(
+    "%s: the fee is flat and the budget goes straight to Google, never through Cardon",
+    (_, s) => {
+      expect(s.percentOfSpend).toBe(false);
+      expect(s.budgetThroughCardon).toBe(false);
+    },
+  );
+
+  it("charges what a module quote charges for ads at the matching size, so there is one price", () => {
+    for (const s of adsManagement) {
+      expect(s.monthly.MXN).toBe(addOnMonthly("google-ads-management", s.moduleSize));
+      expect(
+        quote(["restaurante"], s.moduleSize, ["google-ads-management"]).addOns[0].monthly,
+      ).toBe(s.monthly.MXN);
+    }
+  });
+
+  it("the module catalogue's ads build hours would not be recovered by these setups", () => {
+    // Pins the reason lib/pricing.ts builds the standalone setups from 4 and 6
+    // hours and not from the catalogue's 4.05 and 6.55.
+    expect((featureHours("restaurante", "google-ads-build", "S") as number) * setupRate).toBeGreaterThan(
+      adsScope("local").setup.MXN,
+    );
+    expect((featureHours("restaurante", "google-ads-build", "M") as number) * setupRate).toBeGreaterThan(
+      adsScope("crecimiento").setup.MXN,
+    );
   });
 });

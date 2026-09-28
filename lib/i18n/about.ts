@@ -20,8 +20,8 @@ const en = {
   hero: {
     eyebrow: "About",
     title: "We come from wine.",
-    titleAccent: "That is why we build for it.",
-    sub: "Cardon Digital builds the system a winery runs on: harvest, lab, tanks, vintages and the books in one place. We come out of years spent inside a Valle winery, watching the number somebody needed go missing.",
+    titleAccent: "We build for anyone who runs a business by hand.",
+    sub: "Cardon Digital builds websites, runs Google Ads and builds the software an owner-run business operates on. We come out of years inside a Valle winery, watching the number somebody needed go missing and the client somebody needed never find the door.",
   },
   mission: {
     kicker: "Why we exist",
@@ -29,14 +29,14 @@ const en = {
     body: [
       "Our founder, Daniel Hack, has worked in wine for years. What he saw repeats in most wineries: paper notebooks, data from past vintages nobody can find, wines that cannot be compared against each other with any precision, and a vintage that came out well and cannot be repeated, because nobody wrote down what was done.",
       "Other food industries moved ahead in the meantime. They measure more, they keep better records, and they learn from what they did last year. Wine depends more than any of them on what happened in the vintage before, and keeps the worst record of it.",
-      "Cardon exists to close that distance. We give a winery the tools to track its own processes and to make better wine from more exact analysis.",
+      "Cardon exists to close that distance. We give a winery the tools to track its own processes and make better wine from more exact analysis, and we give any owner-run business the same three things: a site people find, ads that bring the right people, and a system that keeps the record so the team does not have to.",
     ],
   },
   beliefs: {
     kicker: "What we believe",
     title: "A person makes the wine. The system holds the record.",
     body: [
-      "Winemaking is human, natural, and different every year. Nobody automates that and we do not try. The goal is the highest quality the fruit allows, and that means every process done well, not only the ones anyone sees.",
+      "Winemaking is human, natural, and different every year. Nobody automates that and we do not try. The goal is the highest quality the fruit allows, and that means every process done well, including the ones nobody sees.",
       "Keeping and tracking the data properly is one of the most important parts of it. Seeing what was done and how it landed in each vintage and each harvest is not administration. It is the only way to repeat what worked.",
     ],
   },
@@ -45,7 +45,7 @@ const en = {
     title: "We learn your method first. Then we build.",
     body: [
       "Before we propose anything we go through how you work now: where the information is kept, how it is analyzed, whether tests get run and what they are compared against, and how one vintage is set beside the ones before it. What to build, and in what order, comes out of that.",
-      "During the build and after it we are on WhatsApp, and there is a call every week. It is not a help desk with a ticket number. The question goes to whoever built the system.",
+      "During the build and after it we are on WhatsApp, and there is a call every week. The question goes to whoever built the system, with no help desk and no ticket number in between.",
     ],
     credK: "What we work in",
     cred: "Google Ads, websites, program development, process automation, and AI systems. In wine, WSET Level 2.",
@@ -63,8 +63,8 @@ const es: typeof en = {
   hero: {
     eyebrow: "Quiénes somos",
     title: "Venimos del vino.",
-    titleAccent: "Por eso construimos para el vino.",
-    sub: "Cardon Digital construye el sistema con el que trabaja una bodega: la cosecha, el laboratorio, los tanques, las añadas y las cuentas en un solo lugar. Venimos de años dentro de una bodega del Valle, viendo cómo se pierde el dato que hacía falta.",
+    titleAccent: "Construimos para quien lleva su negocio a mano.",
+    sub: "Cardon Digital hace sitios web, maneja anuncios en Google y construye el software con el que opera un negocio. Venimos de años dentro de una bodega del Valle, viendo cómo se pierde el dato que hacía falta y cómo el cliente que hacía falta nunca encuentra la puerta.",
   },
   mission: {
     kicker: "Por qué existimos",
@@ -72,7 +72,7 @@ const es: typeof en = {
     body: [
       "Nuestro fundador, Daniel Hack, lleva años trabajando en el vino. Lo que vio se repite en casi todas las bodegas: libretas de papel, datos de añadas pasadas que ya nadie encuentra, vinos que no se pueden comparar entre sí con precisión, y una añada que salió bien y no se puede repetir, porque nadie dejó por escrito qué se hizo.",
       "Mientras tanto, otras industrias de alimentos se adelantaron. Miden más, guardan mejor y aprenden de lo que hicieron el año pasado. El vino, que depende más que ninguna de lo que pasó en la añada anterior, es el que peor lo guarda.",
-      "Cardon existe para cerrar esa distancia. Le damos a la bodega las herramientas para seguir sus propios procesos y hacer mejor vino a partir de un análisis más exacto.",
+      "Cardon existe para cerrar esa distancia. Le damos a la bodega las herramientas para seguir sus propios procesos y hacer mejor vino a partir de un análisis más exacto, y le damos a cualquier negocio las mismas tres cosas: un sitio que la gente encuentra, anuncios que traen a la gente correcta y un sistema que guarda el registro para que su equipo no tenga que hacerlo.",
     ],
   },
   beliefs: {
@@ -88,7 +88,7 @@ const es: typeof en = {
     title: "Primero entendemos su método. Después construimos.",
     body: [
       "Antes de proponer nada revisamos cómo trabaja hoy: dónde guarda la información, cómo la analiza, si hace pruebas y contra qué las compara, y cómo pone una añada junto a las anteriores. De ahí sale qué hay que construir, y en qué orden.",
-      "Durante la construcción y después de ella estamos en WhatsApp, y hay una llamada cada semana. No es una mesa de ayuda con número de folio. La pregunta llega a quien construyó el sistema.",
+      "Durante la construcción y después de ella estamos en WhatsApp, y hay una llamada cada semana. La pregunta llega a quien construyó el sistema, sin mesa de ayuda ni número de folio de por medio.",
     ],
     credK: "En qué trabajamos",
     cred: "Google Ads, sitios web, desarrollo de programas, automatización de procesos y sistemas de inteligencia artificial. En vino, WSET Nivel 2.",

@@ -1273,3 +1273,196 @@
     text-align: center;
   }
 }
+
+/* ============================ THE ARC (2026-09-28) ============================
+   Blocks the arc rewrite added: a three-card proof bar, the three service
+   cards, a four-item objection grid, the one-system block around the old hero
+   canvas, the who block, and the three-line price summary. Everything else on
+   the page keeps the classes above. */
+
+/* Three proof cards; the third has no case page yet and is a still card. */
+.pg-home .proof-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.pg-home .proof-item-still {
+  cursor: default;
+}
+.pg-home .proof-item-still:hover {
+  border-color: var(--line);
+}
+
+/* The three service cards. Each card is one link, so the whole card is the
+   target on a phone; the price line is the answer to "what does it cost"
+   before the visitor has left the home page. */
+.pg-home .svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.pg-home .svc-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.pg-home .svc-card:hover {
+  border-color: var(--primary-dim);
+  transform: translateY(-2px);
+}
+.pg-home .svc-n {
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  color: var(--secondary);
+}
+.pg-home .svc-name {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-home .svc-title {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.16;
+  color: var(--text);
+  margin-top: 2px;
+}
+.pg-home .svc-body {
+  color: var(--text-dim);
+  font-size: 0.96rem;
+  line-height: 1.58;
+}
+.pg-home .svc-price {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  border-top: 1px solid var(--line-soft);
+}
+.pg-home .svc-cta {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.pg-home .svc-arc {
+  margin-top: clamp(20px, 2.6vw, 30px);
+  max-width: 62ch;
+  color: var(--text-dim);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  line-height: 1.6;
+}
+
+/* Four objections: two by two above 900px, so each answer keeps its measure. */
+.pg-home .fam-grid-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* One system: the old hero canvas plays under the block's own copy. The
+   canvas keeps the height rule it always had (#heroCanvas above). */
+.pg-home .system .stage-wrap {
+  margin-top: clamp(22px, 3vw, 36px);
+}
+.pg-home .how-anywhere {
+  margin-top: clamp(18px, 2.4vw, 26px);
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Who builds it: one measure, no card. */
+.pg-home .who-inner {
+  max-width: 64ch;
+}
+.pg-home .who-body {
+  margin-top: 16px;
+  color: var(--text-dim);
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  line-height: 1.62;
+}
+
+/* Three price lines, read off the data module. */
+.pg-home .price-lines {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
+  margin: 0 0 clamp(18px, 2.4vw, 26px);
+}
+.pg-home .price-line {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(16px, 2vw, 22px);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--scrim), transparent);
+}
+.pg-home .price-line dt {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-home .price-line dd {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 8px;
+}
+.pg-home .price-line dd b {
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--primary);
+}
+.pg-home .price-from {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+.pg-home .pricing-foot-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.pg-home .diag-doors {
+  margin-top: 14px;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  max-width: 48ch;
+}
+
+@media (max-width: 900px) {
+  .pg-home .proof-grid-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pg-home .svc-grid {
+    grid-template-columns: 1fr;
+  }
+  .pg-home .price-lines {
+    grid-template-columns: 1fr;
+  }
+  .pg-home .pricing-foot-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .pg-home .proof-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .pg-home .fam-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

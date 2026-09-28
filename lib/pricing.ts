@@ -732,6 +732,14 @@ export type AddOn = {
 
 export const addOns: AddOn[] = [
   {
+    // Since Daniel's direction of 2026-09-28 the public surface sells Google
+    // Ads management on its own, through `adsManagement` below, to anyone and
+    // at any size of anything else they buy. This add-on stays because it is
+    // how ads are carried inside a MODULE quote, and it charges the same fees:
+    // 5,500 at M and 8,800 at L are the "local" and "crecimiento" scopes'
+    // monthly figures, which are read from here so the two cannot drift. The
+    // S null and the attachesTo list below now describe the module quote only,
+    // not who may buy ads.
     id: "google-ads-management",
     hours: { S: null, M: 3, L: 3.5 },
     attachesTo: ["hospitalidad", "restaurante"],
@@ -1302,6 +1310,265 @@ export function growerSetupS(): Record<CurrencyCode, number> {
   const costRecovery = h * setupRate;
   const rounded = round500(h * setupRate * scopeFactor.S);
   return priced(rounded < costRecovery ? ceilTo(costRecovery, 500) : rounded);
+}
+
+/* ============================ WEBSITE PACKAGES ===========================
+   Daniel's direction of 2026-09-28: Cardon sells websites, Google Ads
+   management and the software modules, each on its own and in combination.
+   Source: research/2026-09/web-ads-pricing-mx.md section 5 (bunker), with two
+   coordinator adjustments: one care fee of 2,500 for every package, which is
+   the care floor in LAUNCH-PLAN-2026-08.md and 2 service hours, and a fourth
+   package, Tienda, published from the memo's e-commerce floor.
+
+   Order of operations for a package's `from` figure:
+     1. cost recovery   = build hours x setupRate (2,700), no scope factor;
+     2. derived         = cost recovery rounded UP to the next 500, then moved
+                          one 500 up if it lands on a bare multiple of 10,000,
+                          the way a setup total is (bumpOffBareMultiple);
+     3. from            = the larger of the derived figure and the memo's
+                          market position (`marketFloor`), which is the one
+                          figure here that is typed rather than derived. It
+                          is a floor and never a ceiling: if the hours grow,
+                          the derived figure passes it and the price moves.
+   Build hours are Daniel's hours only (memo 5.1), estimates to be checked
+   against the first two builds of each package. All prices exclude IVA. */
+
+export type WebPackageId = "presencia" | "negocio" | "reservas" | "tienda";
+
+export type WebPackage = {
+  id: WebPackageId;
+  /** Daniel build hours the package is assumed to take. */
+  buildHours: number;
+  /** buildHours x setupRate, the amount the `from` figure has to clear. */
+  costRecovery: number;
+  /** Cost recovery rounded up to 500 and bumped off a bare 10,000. */
+  derived: number;
+  /** The memo's published market position, a floor on `from`. */
+  marketFloor: number;
+  /** What the package is published from, both currencies. */
+  from: Record<CurrencyCode, number>;
+  /** Which of the two set `from`: the hours, or the market floor above them. */
+  boundBy: "hours" | "market-floor";
+  /** Delivery in business days, a range; min equals max for a fixed figure. */
+  deliveryDays: { min: number; max: number };
+  /** Pages included at most. */
+  pages: number;
+  /** Catalogue ids, kebab-case; the dictionaries own their names. */
+  features: string[];
+};
+
+/** Presencia, the memo's feature list (memo 5.2). */
+const presenciaFeatures = [
+  "custom-design",
+  "copy-written",
+  "whatsapp-button-and-form",
+  "ga4-with-conversion-events",
+  "local-seo-basics",
+];
+/** Negocio: everything in Presencia plus the profile and an editable section. */
+const negocioFeatures = [
+  ...presenciaFeatures,
+  "google-business-profile-optimisation",
+  "editable-section",
+];
+/** Reservas: everything in Negocio plus the booking path and its follow-up. */
+const reservasFeatures = [
+  ...negocioFeatures,
+  "bilingual-pages",
+  "booking-path",
+  "extra-form",
+  "confirmation-and-follow-up",
+  "training",
+];
+/** Tienda: Negocio's scope plus catalogue, checkout and payments (memo 5.2). */
+const tiendaFeatures = [
+  ...negocioFeatures,
+  "product-catalogue",
+  "checkout",
+  "payment-provider-connector",
+  "shipping-and-pickup-rules",
+  "order-notifications",
+];
+
+function webPackage(
+  id: WebPackageId,
+  buildHours: number,
+  marketFloor: number,
+  deliveryDays: { min: number; max: number },
+  pages: number,
+  features: string[],
+): WebPackage {
+  const costRecovery = pesos2(buildHours * setupRate);
+  const derived = bumpOffBareMultiple(ceilTo(costRecovery, 500), 10000, 500, "up");
+  const from = Math.max(derived, marketFloor);
+  return {
+    id,
+    buildHours,
+    costRecovery,
+    derived,
+    marketFloor,
+    from: priced(from),
+    boundBy: derived >= marketFloor ? "hours" : "market-floor",
+    deliveryDays,
+    pages,
+    features,
+  };
+}
+
+/**
+ * The four packages, smallest first. The arithmetic, per package:
+ *
+ *  - presencia: 4.5 h x 2,700 = 12,150, up to 12,500. The memo also says
+ *    12,500, so the hours set it; it clears cost recovery by 350.
+ *  - negocio: 8.5 h x 2,700 = 22,950, up to 23,000. The memo's 24,000, just
+ *    under the 25,000 line where mid agencies start, is the floor; it clears
+ *    cost recovery by 1,050.
+ *  - reservas: 13.5 h x 2,700 = 36,450, up to 36,500. The memo's 38,000 is the
+ *    floor; it clears cost recovery by 1,550.
+ *  - tienda: 20 h x 2,700 = 54,000, already on a 500 and not a bare 10,000.
+ *    The memo's e-commerce floor of 55,000 is the floor; it clears cost
+ *    recovery by 1,000.
+ *
+ * Tienda carries Negocio's six pages plus its product pages, which a product
+ * count bounds rather than a page count; the quote states that count.
+ */
+export const webPackages: readonly WebPackage[] = [
+  webPackage("presencia", 4.5, 12500, { min: 7, max: 10 }, 1, presenciaFeatures),
+  webPackage("negocio", 8.5, 24000, { min: 15, max: 15 }, 6, negocioFeatures),
+  webPackage("reservas", 13.5, 38000, { min: 20, max: 25 }, 8, reservasFeatures),
+  webPackage("tienda", 20, 55000, { min: 25, max: 35 }, 6, tiendaFeatures),
+];
+
+export function webPackageById(id: WebPackageId): WebPackage {
+  const found = webPackages.find((p) => p.id === id);
+  if (!found) throw new Error(`no website package ${id}`);
+  return found;
+}
+
+/** What a package is published from, in both currencies. */
+export function webPackageFrom(id: WebPackageId): Record<CurrencyCode, number> {
+  return webPackageById(id).from;
+}
+
+/** Daniel service hours a month in website care, for every package. */
+export const webCareHours = 2;
+
+/**
+ * Monthly care for any website package: 2 h x 1,225 = 2,450, rounded UP to
+ * the next 100, which is 2,500. Up and not to the nearest, because 2,450 is
+ * an exact half and round100 takes a half down to 2,400, below the hours. Not
+ * a bare multiple of 1,000, so no bump. It clears cost recovery by 50 and is
+ * the 2,500 care floor of LAUNCH-PLAN-2026-08.md, so there is one care figure
+ * across websites and automation retainers.
+ */
+export function webCareMonthly(): Record<CurrencyCode, number> {
+  return priced(
+    bumpOffBareMultiple(ceilTo(webCareHours * serviceRate, 100), 1000, 100, "up"),
+  );
+}
+
+/* ========================= GOOGLE ADS MANAGEMENT =========================
+   A standalone service since 2026-09-28, sold to anyone, with or without a
+   website or a module. Source: web-ads-pricing-mx.md 5.3 and BUSINESS-PLAN
+   5.5: a FLAT monthly fee, never a percentage of spend at any spend, and the
+   ad budget is paid by the client straight to Google on the client's own
+   account, never through Cardon. Both are carried as data below so a page
+   that states the policy is tested against it.
+
+   Monthly fee. Read from the module add-on so the standalone card and a
+   module quote charge one price: addOnMonthly("google-ads-management", M) is
+   round100(3 h x 1,225 x 1.5) = round100(5,512.5) = 5,500, and at L it is
+   round100(3.5 h x 1,225 x 2.05) = round100(8,789.375) = 8,800. The memo's
+   standalone service hours then have to be cleared: local 4 h x 1,225 =
+   4,900, cleared by 600; crecimiento 7 h x 1,225 = 8,575, cleared by 225.
+
+   Campaign build (setup). Build hours 4 and 6 (memo 5.3), no scope factor,
+   rounded UP to the next 100, the step the memo's own ads setups use:
+     local        4 h x 2,700 = 10,800, market floor 10,900, clears by 100;
+     crecimiento  6 h x 2,700 = 16,200, market floor 16,500, clears by 300.
+   The module catalogue's google-ads-build line (4.05 h at S, 6.55 h at M) is
+   not used here: 4.05 x 2,700 = 10,935 and 6.55 x 2,700 = 17,685 would both
+   sit ABOVE the published 10,900 and 16,500, so those hours cannot be the
+   ones these figures recover. That line is a build inside a module, which
+   carries the module's own discovery and tracking.
+
+   Minimum eligible monthly ad budget. Not a price: a threshold on the money
+   the client pays Google, below which a flat fee outweighs the spend (memo
+   5.3). Typed from the memo, converted like every other figure. */
+
+export type AdsScopeId = "local" | "crecimiento";
+
+export type AdsScope = {
+  id: AdsScopeId;
+  /** The module-quote size whose ads add-on carries this same monthly fee. */
+  moduleSize: Size;
+  /** Daniel service hours a month the fee has to clear. */
+  serviceHours: number;
+  monthly: Record<CurrencyCode, number>;
+  /** serviceHours x serviceRate. */
+  monthlyCost: number;
+  buildHours: number;
+  /** buildHours x setupRate. */
+  setupCost: number;
+  setupMarketFloor: number;
+  setup: Record<CurrencyCode, number>;
+  /** Paid by the client straight to Google, per month, at least. */
+  minimumBudget: Record<CurrencyCode, number>;
+  /** Scope, bounded by counts a buyer can check. */
+  campaigns: number;
+  adGroups: number;
+  /** Policy: the fee is flat. A page may never say otherwise while false. */
+  percentOfSpend: boolean;
+  /** Policy: the ad budget never passes through Cardon's hands. */
+  budgetThroughCardon: boolean;
+};
+
+function adsScopeOf(
+  id: AdsScopeId,
+  moduleSize: Size,
+  serviceHours: number,
+  buildHours: number,
+  setupMarketFloor: number,
+  minimumBudget: number,
+  campaigns: number,
+  adGroups: number,
+): AdsScope {
+  const monthly = addOnMonthly("google-ads-management", moduleSize);
+  if (monthly === null) throw new Error(`no ads add-on at ${moduleSize}`);
+  const setupCost = pesos2(buildHours * setupRate);
+  return {
+    id,
+    moduleSize,
+    serviceHours,
+    monthly: priced(monthly),
+    monthlyCost: pesos2(serviceHours * serviceRate),
+    buildHours,
+    setupCost,
+    setupMarketFloor,
+    setup: priced(Math.max(ceilTo(setupCost, 100), setupMarketFloor)),
+    minimumBudget: priced(minimumBudget),
+    campaigns,
+    adGroups,
+    percentOfSpend: false,
+    budgetThroughCardon: false,
+  };
+}
+
+/** The two scopes, smaller first. Campaigns and ad groups are maxima. */
+export const adsManagement: readonly AdsScope[] = [
+  adsScopeOf("local", "M", 4, 4, 10900, 10000, 1, 3),
+  adsScopeOf("crecimiento", "L", 7, 6, 16500, 15000, 3, 10),
+];
+
+export function adsScope(id: AdsScopeId): AdsScope {
+  const found = adsManagement.find((s) => s.id === id);
+  if (!found) throw new Error(`no ads scope ${id}`);
+  return found;
+}
+
+/** The smallest monthly ad budget a scope accepts, both currencies. */
+export function adsMinimumBudget(id: AdsScopeId): Record<CurrencyCode, number> {
+  return adsScope(id).minimumBudget;
 }
 
 /* ========================= LEGACY WINERY BUNDLES =========================

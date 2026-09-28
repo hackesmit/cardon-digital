@@ -49,7 +49,7 @@ const en = {
   },
   hero: {
     aria: "Winery introduction",
-    eyebrow: "Industries / Winery",
+    eyebrow: "Wineries, our home ground",
     title: "You make the wine.",
     titleAccent: "The season keeps itself.",
     sub: "Stop rebuilding the harvest from memory. Read the season at a glance, and own the record.",
@@ -126,7 +126,7 @@ const en = {
       {
         num: "05",
         h: "Fill the tasting room, the club and DTC.",
-        body: "Bilingual ads attach to Hospitalidad and Restaurante, from the middle size up, inside the monthly fee, and the budget goes straight to Google.",
+        body: "A bilingual site and Google Ads at a flat monthly fee, bought on their own or with a module, and the ad budget goes straight to Google.",
       },
     ],
   },
@@ -244,7 +244,7 @@ const es: typeof en = {
   },
   hero: {
     aria: "Presentación para bodegas",
-    eyebrow: "Sectores / Bodegas",
+    eyebrow: "Bodegas, nuestro terreno",
     title: "El vino lo hace usted.",
     titleAccent: "La temporada se lleva sola.",
     sub: "Deje de reconstruir la cosecha de memoria. Lea la temporada de un vistazo, y quédese con el registro.",
@@ -319,7 +319,7 @@ const es: typeof en = {
       {
         num: "05",
         h: "Llene la sala, el club y la venta directa.",
-        body: "Los anuncios en los dos idiomas se agregan a Hospitalidad y a Restaurante, desde el tamaño mediano, dentro de la cuota mensual, y la inversión va directo a Google.",
+        body: "Un sitio en los dos idiomas y anuncios en Google con cuota fija al mes, solos o junto con un módulo, y el presupuesto va directo a Google.",
       },
     ],
   },

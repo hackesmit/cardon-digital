@@ -39,17 +39,21 @@ const en = {
   meta: {
     title: "Pricing",
     description:
-      "What each module costs to build and to run, what more than one changes, and the terms. Every entry price is published.",
+      "What a website, Google Ads management at a flat fee and each software module cost, in the open, with the terms. Every entry price is published.",
   },
 
   hero: {
     aria: "Introduction",
     eyebrow: "What it costs",
-    t1: "Two fees, ",
-    accent: "and then the system is yours.",
-    sub: "Setup pays for the build and you own it. The monthly fee pays to run it. **End the service and nothing moves between accounts: we promote you to owner, hand over the payment method and remove our access.**",
-    proof: "Built for Monte Xanic and Vinedo En'kanto.",
-    ctaFloors: "See the entry prices",
+    t1: "Prices published, in pesos. ",
+    accent: "The diagnostic sets the quote.",
+    sub: "Websites by what they include, ad management at a flat fee, and each software module from its entry price. Plus IVA, invoiced. **Everything we build stays in your name: domain, accounts, code and data.**",
+    proof: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
+    ctaFloors: "See the prices",
+    web: { kicker: "Websites", more: "The websites page" },
+    adsHead: { kicker: "Google Ads", more: "The ads page" },
+    softwareHead: { kicker: "Software", title: "Software: three modules, each with its entry price.", sub: "Setup pays for the build and you own it. The monthly fee pays to run it. End the service and nothing moves between accounts: we make you the owner, hand over the payment method and remove our access.", more: "The software page", founding: { kicker: "Founding winery", lead: "**One founding winery, through 31 December 2026: the Produccion module at the mid-size build, for its entry price.**", body: "One slot, and it does not stack with anything. In exchange: a named case with the real before and after numbers, and two introductions in the Valle." } },
+    notDo: { kicker: "What we do not do", title: "Four things we never do.", items: ["We never charge a percentage of what you spend on ads.", "We never charge per user, per seat, or per month forever.", "We never keep your domain, your accounts or your data in our name.", "We never manage social media on its own."] },
   },
 
   media: {
@@ -247,9 +251,9 @@ const en = {
   },
 
   ads: {
-    kicker: "Ads and content",
-    title: "Google Ads management and content attach to Hospitalidad and Restaurante.",
-    body: "Neither attaches to Produccion: there we organise data, control and automation, and we do not build a winery's sales. Content from the entry size, ad management from the middle size up. Ad management is inside the monthly fee, never as a share of what you spend, and both are quoted on top of the figures above.",
+    kicker: "Ads with a module",
+    title: "Ad management is its own service, at a flat fee.",
+    body: "Bought on its own or with a module, the flat fee is the same: {local} a month on the Local scope with a minimum budget of {minLocal}, or {crecimiento} a month on Growth with a minimum budget of {minCrecimiento}, always paid straight to Google, and at no point a percentage of what you spend. Content attaches to Hospitalidad and Restaurante and is quoted on top.",
   },
 
   terms: {
@@ -274,17 +278,21 @@ const es: typeof en = {
   meta: {
     title: "Precios",
     description:
-      "Lo que cuesta cada módulo, construirlo y operarlo, qué cambia con más de uno, y las condiciones. Cada precio de entrada está publicado.",
+      "Lo que cuesta un sitio web, el manejo de anuncios en Google con cuota fija y cada módulo de software, a la vista, con las condiciones. Cada precio de entrada está publicado.",
   },
 
   hero: {
     aria: "Presentación",
     eyebrow: "Lo que cuesta",
-    t1: "Dos cuotas. ",
-    accent: "Después, el sistema es suyo.",
-    sub: "La implementación paga la construcción, que queda suya. La mensualidad paga operarla. **Al terminar el servicio no se mueve nada entre cuentas: lo dejamos a usted como titular, le entregamos el método de pago y retiramos nuestro acceso.**",
-    proof: "Construido para Monte Xanic y Viñedo En'kanto.",
-    ctaFloors: "Ver los precios de entrada",
+    t1: "Precios publicados, en pesos. ",
+    accent: "El diagnóstico fija la cotización.",
+    sub: "Sitios web por lo que incluyen, manejo de anuncios con cuota fija, y cada módulo de software desde su precio de entrada. Más IVA, con factura. **Todo lo que construimos queda a su nombre: dominio, cuentas, código y datos.**",
+    proof: "Construido para Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
+    ctaFloors: "Ver los precios",
+    web: { kicker: "Sitios web", more: "La página de sitios web" },
+    adsHead: { kicker: "Anuncios en Google", more: "La página de anuncios" },
+    softwareHead: { kicker: "Software", title: "Software: tres módulos, cada uno con su precio de entrada.", sub: "La implementación paga la construcción, que queda suya. La mensualidad paga operarla. Al terminar el servicio no se mueve nada entre cuentas: lo dejamos a usted como titular, le entregamos el método de pago y retiramos nuestro acceso.", more: "La página de software", founding: { kicker: "Bodega fundadora", lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción con la construcción mediana, a su precio de entrada.**", body: "Un solo lugar, y no se acumula con nada. A cambio: un caso con nombre y los números reales de antes y después, y dos presentaciones en el Valle." } },
+    notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por asiento ni por mes para siempre.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales por sí solas."] },
   },
 
   media: {
@@ -443,9 +451,9 @@ const es: typeof en = {
   },
 
   ads: {
-    kicker: "Anuncios y contenido",
-    title: "El manejo de Google Ads y el contenido se agregan a Hospitalidad y a Restaurante.",
-    body: "A Producción no se agrega ninguno de los dos: ahí organizamos datos, control y automatización, y no construimos la venta de una bodega. El contenido va desde el tamaño de entrada y el manejo de anuncios desde el mediano. El manejo de anuncios va dentro de la cuota mensual, nunca como porcentaje de lo que usted invierte, y los dos se cotizan aparte de las cifras de arriba.",
+    kicker: "Anuncios con un módulo",
+    title: "El manejo de anuncios es un servicio aparte, con cuota fija.",
+    body: "Solo o junto con un módulo, la cuota fija es la misma: {local} al mes en el alcance Local con presupuesto mínimo de {minLocal}, o {crecimiento} al mes en Crecimiento con presupuesto mínimo de {minCrecimiento}, siempre pagado directo a Google y nunca un porcentaje de lo que invierte. El contenido se agrega a Hospitalidad y a Restaurante y se cotiza aparte.",
   },
 
   terms: {
