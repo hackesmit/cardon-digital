@@ -136,9 +136,6 @@ export default function WineryPage({ params }: Params) {
   const d = winery[locale];
   const s = site[locale];
   const href = (path: string) => localePath(locale, path);
-  const mailto =
-    "mailto:daniel@cardondigital.com?subject=" +
-    encodeURIComponent(s.diag.mailSubject);
 
   /* One primary call to action, in the hero and again in the closing block,
      and it is the home page's words (site.diag.cta) rather than a variant
@@ -382,9 +379,9 @@ export default function WineryPage({ params }: Params) {
                 <h2 id="diag-title">{s.diag.title}</h2>
                 <p className="diag-desc">{d.diagDesc}</p>
                 <div className="diag-actions">
-                  <a className="cta cta-lg" href={mailto}>
+                  <Link className="cta cta-lg" href={href("/contacto")}>
                     {s.diag.cta}
-                  </a>
+                  </Link>
                 </div>
                 <p className="diag-price">{rich(s.diag.price)}</p>
               </div>

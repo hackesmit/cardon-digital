@@ -28,7 +28,7 @@ const decode = (s: string) =>
 async function render(locale: Locale): Promise<string> {
   const { default: DigitalArc } = await import("./DigitalArc");
   return renderToStaticMarkup(
-    React.createElement(LocaleProvider, { locale, children: React.createElement(DigitalArc) })
+    React.createElement(LocaleProvider, { locale }, React.createElement(DigitalArc))
   );
 }
 

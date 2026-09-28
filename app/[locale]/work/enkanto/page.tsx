@@ -4,7 +4,7 @@ import Reveal from "@/components/site/Reveal";
 import Media from "@/components/site/Media";
 import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";
 import CaseFacts from "@/components/pages/case/CaseFacts";
-import { isLocale, type Locale } from "@/lib/i18n/config";
+import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
@@ -75,14 +75,12 @@ export default function EnkantoCaseStudy({ params }: Params) {
   const d = enkanto[locale];
   const v = d.vis;
   const s = site[locale];
-  const mailto =
-    "mailto:daniel@cardondigital.com?subject=" +
-    encodeURIComponent(s.diag.mailSubject);
+  const href = (path: string) => localePath(locale, path);
 
   const cta = (
-    <a className="cta cta-lg" href={mailto}>
+    <Link className="cta cta-lg" href={href("/contacto")}>
       {s.diag.cta}
-    </a>
+    </Link>
   );
 
   return (

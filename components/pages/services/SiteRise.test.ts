@@ -26,7 +26,7 @@ describe("SiteRise renders from the sitios dictionary only", async () => {
   for (const locale of locales) {
     const t = sitios[locale].vis.rise;
     const html = renderToStaticMarkup(
-      React.createElement(LocaleProvider, { locale, children: React.createElement(SiteRise) })
+      React.createElement(LocaleProvider, { locale }, React.createElement(SiteRise))
     );
 
     it(locale + ": frame is an image with the dictionary aria label", () => {
