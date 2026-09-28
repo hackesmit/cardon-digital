@@ -73,6 +73,14 @@ export const PAGES = {
   showcase: { en: { budget: 325, measured: 649 }, es: { budget: 337, measured: 673 } },
   about: { en: { budget: 231, measured: 461 }, es: { budget: 237, measured: 474 } },
   contact: { en: { budget: 288, measured: 576 }, es: { budget: 273, measured: 545 } },
+  /**
+   * The three service pages of the arc of 2026-09-28, new pages with no
+   * doctrine landing count. Their budgets are half of what each measured when
+   * they were written, so the advisory line has a number to report against.
+   */
+  sitios: { en: { budget: 372, measured: 744 }, es: { budget: 400, measured: 800 } },
+  anuncios: { en: { budget: 340, measured: 680 }, es: { budget: 365, measured: 730 } },
+  software: { en: { budget: 330, measured: 660 }, es: { budget: 350, measured: 700 } },
 };
 
 /**

@@ -1,0 +1,284 @@
+/* ============================================================
+   Shared layer for the three service pages (/sitios-web, /anuncios,
+   /software) and the two pricing components they share with /precios:
+   the website packages and the ad management fee. Scoped under .pg-svc on
+   each page's <main>, and under the component root classes for the two
+   pricing blocks so they dress the same on /precios.
+   ============================================================ */
+
+.pg-svc h1 .accent { display: inline-block; }
+.pg-svc .hero-proof {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  max-width: 60ch;
+}
+.pg-svc .hero-proof b { color: var(--primary); font-weight: 600; }
+
+/* ---- result blocks: a numbered grid of what the owner ends up with ---- */
+.pg-svc .res-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(18px, 2.6vw, 34px);
+}
+.pg-svc .res-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.pg-svc .res-num {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--secondary);
+}
+.pg-svc .res-item h3 {
+  font-size: clamp(1.12rem, 1.9vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.pg-svc .res-item p {
+  color: var(--text-dim);
+  font-size: 0.97rem;
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
+/* ---- numbered path (ads): four steps in a row ---- */
+.pg-svc .path {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 2vw, 26px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pg-svc .path li {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-top: 15px;
+  border-top: 2px solid var(--primary-dim);
+  color: var(--text-dim);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+.pg-svc .path .step-n {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  color: var(--primary);
+}
+
+/* ---- how it works: the three steps, reused from the home page grammar ---- */
+.pg-svc .steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2.6vw, 34px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pg-svc .step {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  padding-top: 15px;
+  border-top: 2px solid var(--primary-dim);
+}
+.pg-svc .step-n { font-size: 0.74rem; letter-spacing: 0.16em; color: var(--primary); }
+.pg-svc .step-body { color: var(--text-dim); font-size: 0.99rem; line-height: 1.6; }
+
+/* ---- objections: the owner's voice, quoted ---- */
+.pg-svc .fam-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(18px, 2.6vw, 34px);
+}
+.pg-svc .fam-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.pg-svc .fam-q {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.7vw, 1.28rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--text);
+}
+.pg-svc .fam-q p { quotes: auto; }
+.pg-svc .fam-q p::before { content: open-quote; }
+.pg-svc .fam-q p::after { content: close-quote; }
+.pg-svc .fam-a { color: var(--text-dim); font-size: 0.97rem; line-height: 1.6; }
+
+/* ---- module cards (software) ---- */
+.pg-svc .mod-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.pg-svc .mod {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.pg-svc .mod-name {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-svc .mod h3 {
+  font-size: clamp(1.12rem, 1.9vw, 1.36rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.pg-svc .mod p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.58; }
+.pg-svc .mod-demo {
+  margin-top: auto;
+  padding-top: 12px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.pg-svc .mod-other {
+  margin-top: clamp(18px, 2.4vw, 26px);
+  color: var(--text-dim);
+  font-size: 0.97rem;
+  max-width: 62ch;
+}
+.pg-svc .more-link { margin-top: 14px; font-size: 0.92rem; }
+.pg-svc .more-link a,
+.pg-svc .proof-links a {
+  color: var(--secondary);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.pg-svc .more-link a:hover,
+.pg-svc .proof-links a:hover { color: var(--text); border-color: var(--primary-dim); }
+.pg-svc .proof-links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; font-size: 0.92rem; }
+
+/* ---- the one action after each major block ---- */
+.pg-svc .cta-row {
+  margin-top: clamp(28px, 3.6vw, 44px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+.pg-svc .diag-inner { grid-template-columns: 1fr; }
+.pg-svc .diag-lead h2 { max-width: 18ch; }
+
+/* ---- website packages (shared with /precios) ---- */
+.web-packages .pk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 1.5vw, 18px);
+}
+.web-packages .pk {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: clamp(18px, 2vw, 24px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.web-packages .pk-lead {
+  border-color: var(--primary-dim);
+  background: linear-gradient(150deg, var(--primary-faint), var(--card) 62%);
+}
+.web-packages .pk-head { display: flex; flex-direction: column; gap: 4px; }
+.web-packages .pk-n { font-size: 0.7rem; letter-spacing: 0.16em; color: var(--secondary); }
+.web-packages .pk-name { font-size: 1.16rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.16; }
+.web-packages .pk-tag { color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+.web-packages .pk-price { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.02em; }
+.web-packages .pk-price b { font-size: 1.5rem; font-weight: 600; color: var(--primary); letter-spacing: -0.01em; }
+.web-packages .pk-from { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.web-packages .pk-facts { display: flex; gap: 18px; margin: 0; padding: 10px 0; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.web-packages .pk-facts div { display: flex; flex-direction: column; gap: 2px; }
+.web-packages .pk-facts dt { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.web-packages .pk-facts dd { margin: 0; font-size: 0.9rem; color: var(--text); }
+.web-packages .pk-k { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.web-packages .pk-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.web-packages .pk-list li { position: relative; padding-left: 14px; color: var(--text-dim); font-size: 0.88rem; line-height: 1.42; }
+.web-packages .pk-list li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--primary); opacity: 0.7; }
+.web-packages .pk-care {
+  margin-top: clamp(18px, 2.4vw, 26px);
+  padding-top: clamp(18px, 2.4vw, 26px);
+  border-top: 1px solid var(--line-soft);
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 8px 22px;
+  align-items: baseline;
+}
+.web-packages .pk-care-k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--secondary); }
+.web-packages .pk-care-v { color: var(--text-dim); font-size: 0.9rem; white-space: nowrap; }
+.web-packages .pk-care-v b { font-size: 1.2rem; color: var(--primary); font-weight: 600; }
+.web-packages .pk-care-body { color: var(--text-dim); font-size: 0.92rem; line-height: 1.55; max-width: 60ch; }
+
+/* ---- ad management fee (shared with /precios) ---- */
+.ads-fee .fee-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(14px, 1.8vw, 22px); max-width: 860px; }
+.ads-fee .fee {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(20px, 2.4vw, 28px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.ads-fee .fee-lead { border-color: var(--primary-dim); background: linear-gradient(150deg, var(--primary-faint), var(--card) 62%); }
+.ads-fee .fee-name { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
+.ads-fee .fee-scope { color: var(--text-dim); font-size: 0.94rem; line-height: 1.5; }
+.ads-fee .fee-facts { display: flex; flex-direction: column; gap: 10px; margin: 6px 0 0; padding-top: 12px; border-top: 1px solid var(--line-soft); }
+.ads-fee .fee-facts div { display: flex; flex-direction: column; gap: 2px; }
+.ads-fee .fee-facts dt { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.ads-fee .fee-facts dd { margin: 0; font-size: 0.95rem; color: var(--text); font-family: var(--mono); }
+.ads-fee .fee-main dd b { font-size: 1.6rem; font-weight: 600; color: var(--primary); letter-spacing: -0.01em; }
+.ads-fee .fee-rules { margin: clamp(18px, 2.4vw, 26px) 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 26px; max-width: 860px; }
+.ads-fee .fee-rules li { position: relative; padding-left: 16px; color: var(--text-dim); font-size: 0.94rem; line-height: 1.5; }
+.ads-fee .fee-rules li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 1px; background: var(--primary); }
+
+@media (max-width: 1000px) {
+  .web-packages .pk-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .pg-svc .path { grid-template-columns: repeat(2, 1fr); }
+  .pg-svc .steps { grid-template-columns: 1fr; }
+  .pg-svc .mod-grid { grid-template-columns: 1fr; }
+  .web-packages .pk-care { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (max-width: 640px) {
+  .pg-svc .res-grid, .pg-svc .fam-grid, .pg-svc .path { grid-template-columns: 1fr; }
+  .web-packages .pk-grid { grid-template-columns: 1fr; }
+  .ads-fee .fee-grid, .ads-fee .fee-rules { grid-template-columns: 1fr; }
+}
+
+/* The link back to the service page when the block is on /precios. */
+.web-packages .pk-more, .ads-fee .fee-more { margin-top: clamp(16px, 2vw, 22px); font-size: 0.92rem; }
+.web-packages .pk-more a, .ads-fee .fee-more a { color: var(--secondary); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.web-packages .pk-more a:hover, .ads-fee .fee-more a:hover { color: var(--text); border-color: var(--primary-dim); }

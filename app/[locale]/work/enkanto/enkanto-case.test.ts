@@ -13,6 +13,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { showsPending } from "./pending";
 import EnkantoCaseStudy from "./page";
 import { enkanto } from "../../../../lib/i18n/enkanto";
+import { site } from "../../../../lib/i18n/site";
 import { locales, type Locale } from "../../../../lib/i18n/config";
 import {
   BLOCKING_SHAPES,
@@ -632,7 +633,7 @@ describe("the copy doctrine, on the rendered page", () => {
     });
 
     it(`${locale}: one call to action, in the site's own words, repeated`, () => {
-      const cta = locale === "es" ? "Pida el Diagnóstico, sin costo" : "Get the free Growth Diagnostic";
+      const cta = site[locale].diag.cta;
       const occurrences = text.split(cta).length - 1;
       expect(occurrences).toBeGreaterThanOrEqual(3);
     });

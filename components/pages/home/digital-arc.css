@@ -1,0 +1,21 @@
+/* DigitalArc, the home hero canvas. Scoped under .arc-stage so nothing here
+   reaches HeroAssembly or any other stage frame. The canvas height below is
+   only the pre-hydration paint: on mount the component sets the exact height
+   from the measured width (single source of truth). */
+.arc-stage #arcCanvas {
+  display: block;
+  width: 100%;
+  height: clamp(380px, 46vw, 540px);
+}
+/* Compact composition (measured width under 780, viewport up to ~828): the
+   three stations stack in one column, so the frame is tall, not letterboxed. */
+@media (max-width: 827px) {
+  .arc-stage #arcCanvas {
+    height: clamp(600px, 150vw, 760px);
+  }
+}
+/* The caption swaps between captionRun and captionDone; keep it on one line so
+   the canvas can reserve a fixed band for it. */
+.arc-stage .stage-caption {
+  white-space: nowrap;
+}

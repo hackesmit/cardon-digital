@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import AdsFee from "@/components/pages/precios/AdsFee";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
 import PricingDetails from "@/components/pages/precios/PricingDetails";
+import WebPackages from "@/components/pages/precios/WebPackages";
 import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
-import { isLocale, type Locale } from "@/lib/i18n/config";
+import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
+import "../services.css";
 import "./precios.css";
 
 type Params = { params: { locale: string } };
@@ -23,37 +27,27 @@ export function generateMetadata({ params }: Params): Metadata {
 }
 
 /**
- * The pricing page. It is the only page on the site that prints a figure, and
- * every figure it prints is read out of lib/pricing.ts through its functions.
+ * The pricing page, the one page that prints figures, and every figure it
+ * prints is read out of lib/pricing.ts. Since the arc of 2026-09-28 it
+ * carries the three services in the order the site sells them: the website
+ * packages by feature (WebPackages, shared with /sitios-web), ad management
+ * at a flat fee (AdsFee, shared with /anuncios), and the software modules
+ * (the floors, the combinations, the monthly, the terms, unchanged). Between
+ * the terms and the close, four things that are never on the invoice.
  *
- * What may appear here is pricing-modules.md 8.1: one entry price per module
- * next to the build that produced it, worked examples at the entry size, the
- * combination and annual rules as policy, the terms, and the line that says
- * the Diagnostico sets the quote. Never the per-size table, the hours, the
- * rates, the scope factor, the concession percentages, the build-only prices,
- * the early-exit numbers, or the name of any payment provider.
- *
- * Bead hq-4pu0q.7 rewrote the copy against docs/copy-doctrine.md and changed
- * three things about the page itself. One action is repeated verbatim, the
- * Growth Diagnostic in site.ts, in the hero and again at the close, so a reader
- * is asked for one thing rather than four phrasings of it. The two links to
- * /modulos are gone, because the module detail a buyer needs now sits on the
- * floor cards and that page is retired (bead hq-4pu0q.8, which redirects it
- * here with a 308). And the four-bullet breakdown of
- * the Diagnostic under the closing call to action is a photograph instead: it
- * is the same argument, and a caption is read by about twice as many people as
- * the copy around it.
+ * What may appear for the modules is still pricing-modules.md 8.1: one entry
+ * price per module next to the build that produced it, worked examples at the
+ * entry size, the combination and annual rules as policy, the terms, and the
+ * line that says the Diagnostico sets the quote. Never the per-size table.
  */
 export default function PreciosPage({ params }: Params) {
   const locale = localeOf(params);
   const d = precios[locale];
   const s = site[locale];
-  const mailto =
-    "mailto:daniel@cardondigital.com?subject=" +
-    encodeURIComponent(s.diag.mailSubject);
+  const href = (path: string) => localePath(locale, path);
 
   return (
-    <main id="main" className="pg-precios">
+    <main id="main" className="pg-svc pg-precios">
       <span id="top" />
 
       {/* ============================ HERO ============================ */}
@@ -69,29 +63,48 @@ export default function PreciosPage({ params }: Params) {
               </h1>
               <p className="hero-sub">{rich(d.hero.sub)}</p>
               <div className="hero-actions">
-                <a className="cta" href={mailto}>
+                <Link className="cta" href={href("/contacto")}>
                   {s.diag.cta}
-                </a>
-                <a className="btn-ghost" href="#floors">
+                </Link>
+                <a className="btn-ghost" href="#paquetes">
                   {d.hero.ctaFloors}
                 </a>
               </div>
-              {/* The trunk test's fourth question, "who already uses it",
-                  answered above the fold on a phone. Both wineries are named
-                  on the site already and each has its own case page. */}
               <p className="hero-proof">{d.hero.proof}</p>
-              <p className="brandline">{s.brandline}</p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ===================== WHAT OWNERSHIP LOOKS LIKE ================ */}
-      {/* The hero promises the winery ends up owning the thing. This is the
-          day that promise is kept, so it sits directly under the sentence. */}
-      <div className="section pr-shot">
+      {/* ============================ WEBSITES ============================ */}
+      <WebPackages
+        locale={locale}
+        kicker={d.hero.web.kicker}
+        more={{ href: href("/sitios-web"), label: d.hero.web.more }}
+      />
+
+      {/* ============================ ADS ============================ */}
+      <AdsFee
+        locale={locale}
+        kicker={d.hero.adsHead.kicker}
+        more={{ href: href("/anuncios"), label: d.hero.adsHead.more }}
+      />
+
+      {/* ============================ SOFTWARE ============================ */}
+      <section className="section pr-software-head" id="software" aria-labelledby="sw-title">
         <div className="container">
           <Reveal>
+            <div className="section-head">
+              <span className="kicker">{d.hero.softwareHead.kicker}</span>
+              <h2 id="sw-title">{d.hero.softwareHead.title}</h2>
+              <p className="section-sub">{d.hero.softwareHead.sub}</p>
+            </div>
+            <p className="more-link">
+              <Link href={href("/software")}>{d.hero.softwareHead.more}</Link>
+            </p>
+          </Reveal>
+          <Reveal>
+            {/* The day the ownership promise is kept, under the sentence that makes it. */}
             <Media
               className="pr-photo"
               slot="precios/handover"
@@ -102,36 +115,55 @@ export default function PreciosPage({ params }: Params) {
             />
           </Reveal>
         </div>
-      </div>
+      </section>
 
-      {/* ==================== THE THREE ENTRY PRICES ==================== */}
       <ModuleFloors locale={locale} />
-
-      {/* ==================== MORE THAN ONE MODULE ===================== */}
       <MixExample locale={locale} />
-
-      {/* ===== THE MONTHLY FEE, THE ANNUAL RULE, ADS, AND THE TERMS ===== */}
-      {/* The tail of this page, rendered by the component the showcase home
-          renders too (bead hq-wrig5.15), so the terms have one home. */}
       <PricingDetails locale={locale} />
 
-      {/* ============================ DIAGNOSTIC ======================= */}
-      <section
-        className="section diagnostic"
-        id="diagnostic"
-        aria-labelledby="diag-title"
-      >
+      {/* The founding-client slot (BUSINESS-PLAN.md 5.4), one winery, through 31 December 2026. */}
+      <section className="section pr-founding" aria-label={d.hero.softwareHead.founding.kicker}>
         <div className="container">
           <Reveal>
-            <div className="diag-inner">
+            <div className="founding">
+              <span className="kicker clay">{d.hero.softwareHead.founding.kicker}</span>
+              <p className="founding-lead">{rich(d.hero.softwareHead.founding.lead)}</p>
+              <p className="founding-body">{d.hero.softwareHead.founding.body}</p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ WHAT WE DO NOT DO ============================ */}
+      <section className="section pr-notdo" aria-labelledby="notdo-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker gold">{d.hero.notDo.kicker}</span>
+              <h2 id="notdo-title">{d.hero.notDo.title}</h2>
+            </div>
+            <ul className="notdo-list">
+              {d.hero.notDo.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ DIAGNOSTIC ============================ */}
+      <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
+        <div className="container">
+          <Reveal>
+            <div className="diag-inner diag-inner-photo">
               <div className="diag-lead">
                 <span className="kicker clay">{s.diag.kicker}</span>
                 <h2 id="diag-title">{s.diag.title}</h2>
                 <p className="diag-desc">{d.close.desc}</p>
                 <div className="diag-actions">
-                  <a className="cta cta-lg" href={mailto}>
+                  <Link className="cta cta-lg" href={href("/contacto")}>
                     {s.diag.cta}
-                  </a>
+                  </Link>
                 </div>
                 <p className="diag-price">{rich(s.diag.price)}</p>
               </div>

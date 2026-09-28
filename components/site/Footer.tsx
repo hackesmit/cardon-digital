@@ -6,13 +6,15 @@ export default function Footer({ locale }: { locale: Locale }) {
   const s = site[locale];
   const t = s.footer;
   const href = (path: string) => localePath(locale, path);
-  // The site sells three areas only (bead hq-wrig5.11), so the footer carries
-  // the same flat list as the nav: pricing, wineries, the case work, about and
-  // contact. The former services and industries anchors are gone, and so is
-  // the modules entry, whose page is retired (bead hq-4pu0q.8).
+  // The arc of 2026-09-28: the footer carries the same flat list as the nav,
+  // the three services and the winery page first, then pricing, the cases,
+  // about and contact.
   const links = [
-    { href: href("/precios"), label: s.nav.pricing },
+    { href: href("/sitios-web"), label: s.nav.sitios },
+    { href: href("/anuncios"), label: s.nav.anuncios },
+    { href: href("/software"), label: s.nav.software },
     { href: href("/industries/winery"), label: s.nav.wineries },
+    { href: href("/precios"), label: s.nav.pricing },
     { href: href("/work/monte-xanic"), label: t.work },
     { href: href("/about"), label: t.about },
     { href: href("/contacto"), label: t.contact },

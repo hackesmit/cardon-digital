@@ -161,137 +161,54 @@ describe("the emphasis a visitor actually sees", () => {
   });
 });
 
-describe("the ads card carries the condition precios sets", () => {
+describe("the ads card carries the policy precios sets", () => {
   /**
-   * The claim, the two modules that make it true, the module it must never be
-   * offered on, and precios' own sentence. Read against the SERVED card bodies,
-   * because a claim moved into the component would leave the dictionary clean
-   * and the visitor still promised the thing.
+   * Since 2026-09-28 ad management is a standalone service at a flat fee,
+   * bought on its own or with a module (Daniel's direction; bunker
+   * research/2026-09/site-arc-digital-onboarding.md section 8). The card on
+   * this page that mentions ads must say the fee is flat and that the budget
+   * goes straight to Google, and precios' own ads block must say the same.
+   * Read against the SERVED card bodies, because a claim moved into the
+   * component would leave the dictionary clean and the visitor still promised
+   * the thing. The retired conditions (Hospitalidad and Restaurante only, from
+   * the middle size up, never on Produccion) are gone with the policy.
    */
-  const claims: Record<
-    Locale,
-    {
-      claim: RegExp;
-      modules: RegExp;
-      excluded: RegExp;
-      rule: RegExp;
-      sizeCondition: RegExp;
-      policyVerb: RegExp;
-      inclusionVerb: RegExp;
-    }
-  > = {
+  const words: Record<Locale, { ads: RegExp; flat: RegExp; direct: RegExp; share: RegExp }> = {
     en: {
-      claim: /ads[^.]*inside the monthly(?: service)? fee/i,
-      modules: /Hospitalidad and Restaurante/,
-      excluded: /Producci[o\u00f3]n/i,
-      // Intent, not phrasing: precios must still EXCLUDE Produccion from ads.
-      // A pinned phrase broke main once (see the case below), because the precios
-      // rewrite landed on the same day and reworded this sentence to "Neither
-      // attaches to Produccion".
-      rule: /\b(?:never|neither|do(?:es)? not|not)\s+attach(?:es|ed)?\s+to\s+Produccion\b/i,
-      sizeCondition: /middle size|medium size|from the middle/i,
-      policyVerb: /attach(?:es)? to/i,
-      inclusionVerb: /come[s]? with|included in|part of/i,
+      ads: /\bads\b|\bGoogle Ads\b/i,
+      flat: /\bflat (?:monthly )?fee\b/i,
+      direct: /straight to Google/i,
+      share: /\b(?:percent|percentage|share) of (?:what you )?spend/i,
     },
     es: {
-      claim: /[Aa]nuncios[^.]*dentro de la cuota mensual/,
-      modules: /Hospitalidad y a? ?Restaurante/,
-      excluded: /Producci[o\u00f3]n/i,
-      rule: /a Producci[oó]n\s+(?:nunca|no)\s+se\s+agrega/i,
-      sizeCondition: /tama\u00f1o mediano|desde el mediano/i,
-      policyVerb: /se agrega[n]? a/i,
-      inclusionVerb: /vienen? con|incluid[oa]s? en|forma[n]? parte de/i,
+      ads: /\banuncios\b/i,
+      flat: /\bcuota (?:mensual )?fija\b/i,
+      direct: /directo a Google/i,
+      share: /\bporcentaje de (?:lo que invierte|la inversi[oó]n|su presupuesto)/i,
     },
   };
 
   for (const locale of locales) {
-    const { claim, modules, excluded, rule, sizeCondition, policyVerb, inclusionVerb } =
-      claims[locale];
+    const { ads, flat, direct, share } = words[locale];
 
-    it(`${locale}: precios still states the rule this card is held to`, () => {
-      // Two halves, because this case broke main once on 2026-09-15 by pinning a
-      // phrase. The winery and precios rewrites were reviewed separately against
-      // main, each green alone, and precios reworded "never attach to
-      // Produccion" to "Neither attaches to Produccion" the same day. Merging
-      // both turned main red on an assertion about wording that no longer
-      // existed, and neither branch's own review could have seen it.
-      //
-      // The hard half is pricing, which cannot rot with a rewrite: ads are not
-      // available on Produccion at any size.
-      for (const size of ["S", "M", "L"] as const) {
-        expect(
-          addOnAvailable("google-ads-management", ["produccion"], size),
-          `lib/pricing.ts now offers ad management on Produccion at ${size}, so this whole card needs rewriting rather than this guard relaxing`,
-        ).toBe(false);
-      }
-      // The soft half is the copy. It matches the exclusion as a COMPLETE
-      // negated relationship, negation bound to the attachment verb bound to the
-      // module, not just the words in the same sentence. Cross-vendor review
-      // (lucy, gpt-5.6-sol) broke the first attempt with copy that reversed the
-      // policy and still passed: "Google ads attach to Produccion, not
-      // Hospitalidad and Restaurante" satisfied a regex that only wanted
-      // Produccion and a negation somewhere near it. A rewording that keeps the
-      // meaning still passes; one that inverts it does not.
-      expect(precios[locale].ads.body).toMatch(rule);
+    it(`${locale}: the served page mentions ads on exactly one card, and that card states the policy`, async () => {
+      const cards = servedCapBodies(await serve(locale)).filter((b) => ads.test(b));
+      expect(cards).toHaveLength(1);
+      expect(cards[0]).toMatch(flat);
+      expect(cards[0]).toMatch(direct);
     });
 
-    it(`${locale}: the served page claims ads inside the fee exactly once`, async () => {
-      const claiming = servedCapBodies(await serve(locale)).filter((b) => claim.test(b));
-      expect(claiming).toHaveLength(1);
-    });
-
-    it(`${locale}: that claim names both modules and offers Produccion none`, async () => {
-      const card = servedCapBodies(await serve(locale)).filter((b) => claim.test(b))[0];
-      expect(card, "no card claims ads inside the fee").toBeDefined();
-      expect(card).toMatch(modules);
-      // precios: ads attach to Hospitalidad and Restaurante, "never to
-      // Produccion". Naming the third module beside the claim would offer it.
-      expect(card).not.toMatch(excluded);
-    });
-
-    it(`${locale}: no dictionary card makes the claim without the condition`, () => {
-      const bad = winery[locale].caps.cards.filter(
-        (c) => claim.test(c.body) && !modules.test(c.body),
-      );
+    it(`${locale}: no dictionary card offers ads as a share of spend`, () => {
+      const bad = winery[locale].caps.cards.filter((c) => share.test(c.body) && !/nunca|never|at no point/i.test(c.body));
       expect(bad.map((c) => c.body)).toEqual([]);
     });
 
-    it(`${locale}: that claim carries the size condition while pricing refuses ads at the entry size`, async () => {
-      // hq-a4sy5 R2 and A2. lib/pricing.ts gives google-ads-management hours
-      // { S: null, M: 3, L: 3.5 }, so addOnAvailable at the entry size is false,
-      // and floorFor() builds the published entry price this same page
-      // advertises out of quote([module], "S"). A card that promises ads with no
-      // size condition therefore sells, at the entry price, a thing pricing
-      // refuses at the entry size. precios.ts carries the condition in words:
-      // "ad management from the middle size up" / "desde el tamano mediano".
-      //
-      // Derived from pricing, not asserted flat: if ads ever become available at
-      // S, this case stops demanding the condition instead of going stale.
-      const availableAtEntry = addOnAvailable(
-        "google-ads-management",
-        ["hospitalidad"],
-        "S",
-      );
-      const card = servedCapBodies(await serve(locale)).filter((b) => claim.test(b))[0];
-      expect(card, "no card claims ads inside the fee").toBeDefined();
-      if (!availableAtEntry) expect(card).toMatch(sizeCondition);
-    });
-
-    it(`${locale}: that claim uses the policy's verb, never an inclusion verb`, async () => {
-      // hq-a4sy5 R2. The fix round restored the module condition but changed the
-      // English verb from precios' "attach to" to "come with", while the Spanish
-      // half of the same commit kept "se agregan a". lib/pricing.ts prices
-      // google-ads-management as an add-on with its own monthly line, so a
-      // module does not come with it, and the two locales were left promising a
-      // different relationship.
-      const card = servedCapBodies(await serve(locale)).filter((b) => claim.test(b))[0];
-      expect(card, "no card claims ads inside the fee").toBeDefined();
-      expect(card).toMatch(policyVerb);
-      expect(card).not.toMatch(inclusionVerb);
-      expect(
-        addOnMonthly("google-ads-management", "M"),
-        "ads are no longer an add-on line, so the verb rule needs rethinking",
-      ).not.toBeNull();
+    it(`${locale}: precios still states the flat fee this card is held to`, () => {
+      expect(precios[locale].ads.body).toMatch(flat);
+      expect(precios[locale].ads.body).toMatch(direct);
+      // The standalone fee and the module add-on are one price by construction.
+      expect(addOnMonthly("google-ads-management", "M")).not.toBeNull();
+      expect(addOnAvailable("google-ads-management", ["hospitalidad"], "M")).toBe(true);
     });
   }
 });

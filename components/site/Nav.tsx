@@ -17,50 +17,37 @@ import {
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [svcOpen, setSvcOpen] = useState(false);
   const [mode, setMode] = useState<"dark" | "light">("light");
   // Identity v3: clay marks the one action we want taken, so no viewport ever
   // holds two clay elements. The nav action stays quiet while a page action is
   // on screen and takes the clay only once none is. Without JS it stays quiet,
   // which is the correct state at the top of every page.
   const [navIsOnlyAction, setNavIsOnlyAction] = useState(false);
-  // The one feedback page (bead hq-wrig5.15): with SHOWCASE=1 the home carries
-  // the modules and the pricing as sections of itself, so those two nav items
-  // scroll instead of leaving the page. The flag is a server-only environment
-  // variable, and this is a client component, so the page announces itself with
-  // the class on its own <main> rather than the nav reading process.env, which
-  // would be "1" on the server and undefined in the browser and mismatch on
-  // hydration. Both sides therefore start on the page links and the effect
-  // swaps them in after mount; without JS the pricing item stays a page link,
-  // which reaches the same copy on /precios.
-  const [showcaseAnchors, setShowcaseAnchors] = useState(false);
   const pathname = usePathname();
   const locale = useLocale();
   const t = site[locale].nav;
   const brandHome = site[locale].brandHome;
   const toggleBtn = useRef<HTMLButtonElement | null>(null);
+  const dropRef = useRef<HTMLLIElement | null>(null);
 
   const href = (path: string) => localePath(locale, path);
 
-  // Winery-led nav (2026-09-02): wineries is the practice, so it sits with the
-  // industry items. The site now sells three areas only, so the other-industries
-  // dropdown is gone (bead hq-wrig5.11) and the row is a flat list.
-  //
-  // Pricing leads the row ahead of it (2026-09-08, bead hq-wrig5.3): what it
-  // costs is the page the site routes a reader to first. Modules used to lead
-  // beside it and the page behind it is retired (bead hq-4pu0q.8), so the item
-  // survives only where it still goes somewhere: the showcase home carries the
-  // modules as a section of itself, so there it is an anchor, and on the
-  // ordinary site nothing takes its place. Repointing it at /precios would have
-  // put the same destination in the row twice under two names.
-  const linksBefore = [
-    ...(showcaseAnchors ? [{ href: "#modulos", label: t.modules }] : []),
-    showcaseAnchors
-      ? { href: "#precios", label: t.pricing }
-      : { href: href("/precios"), label: t.pricing },
+  // The arc of 2026-09-28: the site sells three services on their own and
+  // together, so the row opens with a Services dropdown carrying the three
+  // service pages and the winery page (the home ground), then pricing, the
+  // cases, about and contact. The dropdown reuses the Industries dropdown
+  // markup and CSS the site shipped before (has-drop, nav-drop, drop-trigger);
+  // on a phone the four links sit indented under the label, always visible.
+  const serviceLinks = [
+    { href: href("/sitios-web"), label: t.sitios },
+    { href: href("/anuncios"), label: t.anuncios },
+    { href: href("/software"), label: t.software },
     { href: href("/industries/winery"), label: t.wineries },
-    { href: href("/work/monte-xanic"), label: t.work },
   ];
   const linksAfter = [
+    { href: href("/precios"), label: t.pricing },
+    { href: href("/work/monte-xanic"), label: t.work },
     { href: href("/about"), label: t.about },
     { href: href("/contacto"), label: t.contact },
   ];
@@ -95,6 +82,10 @@ export default function Nav() {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
+      if (svcOpen) {
+        setSvcOpen(false);
+        return;
+      }
       if (open) {
         setOpen(false);
         toggleBtn.current?.focus();
@@ -102,7 +93,18 @@ export default function Nav() {
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
+  }, [open, svcOpen]);
+
+  useEffect(() => {
+    if (!svcOpen) return;
+    function onDown(e: PointerEvent) {
+      if (dropRef.current && !dropRef.current.contains(e.target as Node)) {
+        setSvcOpen(false);
+      }
+    }
+    document.addEventListener("pointerdown", onDown);
+    return () => document.removeEventListener("pointerdown", onDown);
+  }, [svcOpen]);
 
   useEffect(() => {
     if (!open) return;
@@ -130,11 +132,6 @@ export default function Nav() {
   }
 
   useEffect(() => {
-    // Only the showcase home carries #modulos and #precios as its own sections.
-    setShowcaseAnchors(!!document.querySelector("main.pg-showcase #modulos"));
-  }, [pathname]);
-
-  useEffect(() => {
     const actions = Array.from(document.querySelectorAll("main .cta"));
     if (!actions.length) {
       // Nothing else competes, so the nav action is the page's one clay mark.
@@ -153,6 +150,11 @@ export default function Nav() {
     actions.forEach((a) => io.observe(a));
     return () => io.disconnect();
   }, [pathname]);
+
+  const closeAll = () => {
+    setSvcOpen(false);
+    setOpen(false);
+  };
 
   return (
     <header className="site-header">
@@ -191,13 +193,57 @@ export default function Nav() {
             )}
           <div className={"nav-menu" + (open ? " open" : "")} id="nav-menu">
             <ul className="nav-list">
-              {linksBefore.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} onClick={() => setOpen(false)}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
+              <li
+                className={"has-drop" + (svcOpen ? " drop-open" : "")}
+                ref={dropRef}
+                onMouseEnter={() => setSvcOpen(true)}
+                onMouseLeave={() => setSvcOpen(false)}
+              >
+                <button
+                  className="drop-trigger"
+                  type="button"
+                  aria-expanded={svcOpen ? "true" : "false"}
+                  aria-controls="services-menu"
+                  onClick={() => setSvcOpen((v) => !v)}
+                >
+                  {t.services}
+                  <svg
+                    className="drop-caret"
+                    viewBox="0 0 10 6"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      d="M1 1 L5 5 L9 1"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                {/* On a phone the trigger is hidden and this label heads the
+                    indented list; it links to the services block on the home. */}
+                <Link
+                  className="drop-mobile-label"
+                  href={href("/#servicios")}
+                  onClick={closeAll}
+                >
+                  {t.services}
+                </Link>
+                <div className="nav-drop" id="services-menu">
+                  <ul className="nav-drop-panel" aria-label={t.servicesMenu}>
+                    {serviceLinks.map((l) => (
+                      <li key={l.href}>
+                        <Link href={l.href} onClick={closeAll}>
+                          {l.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
               {linksAfter.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} onClick={() => setOpen(false)}>
@@ -277,12 +323,15 @@ export default function Nav() {
                   <path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" />
                 </svg>
               </button>
+              {/* The action goes to the contact page and its three doors:
+                  WhatsApp is the door a Mexican owner actually uses, and a
+                  mail link hid it (Krug: never hide the phone number). */}
               <Link
                 className={
                   "cta cta-sm nav-cta" +
                   (navIsOnlyAction || open ? " is-primary" : "")
                 }
-                href={href("/#diagnostic")}
+                href={href("/contacto")}
                 onClick={() => setOpen(false)}
               >
                 {t.cta}

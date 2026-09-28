@@ -3,6 +3,7 @@ import type { Locale } from "@/lib/i18n/config";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
 import { sharedServiceBaseLines } from "@/lib/pricing";
+import { adsFill } from "@/lib/adsCopy";
 
 /**
  * The rest of the pricing page after the figures: what the monthly service fee
@@ -84,7 +85,7 @@ export default function PricingDetails({ locale }: { locale: Locale }) {
             <div className="pr-block">
               <span className="kicker">{d.ads.kicker}</span>
               <h2 id="ads-title">{d.ads.title}</h2>
-              <p className="pr-body">{rich(d.ads.body)}</p>
+              <p className="pr-body">{rich(adsFill(locale, d.ads.body))}</p>
             </div>
           </Reveal>
         </div>

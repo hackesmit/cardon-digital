@@ -1,0 +1,14 @@
+/* SiteRise, the websites service hero canvas. The component sets the exact
+   height from the measured width on mount (single source of truth); these
+   heights only hold the pre-hydration paint. */
+.rise-stage .rise-canvas {
+  display: block;
+  width: 100%;
+  height: 470px;
+}
+/* Compact composition (measured width < 780): a tall single column. */
+@media (max-width: 827px) {
+  .rise-stage .rise-canvas {
+    height: 700px;
+  }
+}
