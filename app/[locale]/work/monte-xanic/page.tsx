@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import Media from "@/components/site/Media";
 import VineyardMap from "@/components/pages/case/VineyardMap";
@@ -6,7 +7,7 @@ import BerryToBottle from "@/components/pages/case/BerryToBottle";
 import PlayOnceVis from "@/components/pages/case/PlayOnceVis";
 import CaseFacts from "@/components/pages/case/CaseFacts";
 import SpotlightFrames from "@/components/pages/case/SpotlightFrames";
-import { isLocale, type Locale } from "@/lib/i18n/config";
+import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
@@ -75,14 +76,12 @@ export default function MonteXanicCaseStudy({ params }: Params) {
    *  section 8 rule 5 counts apart from copy rather than trims to a budget. */
   const v = d.vis;
   const s = site[locale];
-  const mailto =
-    "mailto:daniel@cardondigital.com?subject=" +
-    encodeURIComponent(s.diag.mailSubject);
+  const href = (path: string) => localePath(locale, path);
 
   const cta = (
-    <a className="cta cta-lg" href={mailto}>
+    <Link className="cta cta-lg" href={href("/contacto")}>
       {s.diag.cta}
-    </a>
+    </Link>
   );
 
   return (

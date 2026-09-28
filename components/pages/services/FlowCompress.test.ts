@@ -19,7 +19,7 @@ import { software } from "../../../lib/i18n/software";
 async function render(locale: Locale) {
   const { default: FlowCompress } = await import("./FlowCompress");
   return renderToStaticMarkup(
-    React.createElement(LocaleProvider, { locale, children: React.createElement(FlowCompress) })
+    React.createElement(LocaleProvider, { locale }, React.createElement(FlowCompress))
   );
 }
 

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import { about } from "@/lib/i18n/about";
-import { isLocale, type Locale } from "@/lib/i18n/config";
+import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
@@ -22,9 +23,7 @@ export default function AboutPage({ params }: Params) {
   const locale = localeOf(params);
   const d = about[locale];
   const s = site[locale];
-  const mailto =
-    "mailto:daniel@cardondigital.com?subject=" +
-    encodeURIComponent(s.diag.mailSubject);
+  const href = (path: string) => localePath(locale, path);
 
   // Only the last chapter carries the credentials line, so the empty strings
   // give every chapter one shape and the render stays a plain truthiness test.
@@ -99,9 +98,9 @@ export default function AboutPage({ params }: Params) {
                 <h2 id="diag-title">{s.diag.title}</h2>
                 <p className="diag-desc">{d.diagDesc}</p>
                 <div className="diag-actions">
-                  <a className="cta cta-lg" href={mailto}>
+                  <Link className="cta cta-lg" href={href("/contacto")}>
                     {s.diag.cta}
-                  </a>
+                  </Link>
                 </div>
                 <p className="diag-price">{rich(s.diag.price)}</p>
               </div>
