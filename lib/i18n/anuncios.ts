@@ -78,7 +78,7 @@ const en = {
       "We never charge a percentage of what you spend. The fee is flat.",
       "The Google Ads account is yours, and the budget is paid by you straight to Google.",
       "Month to month, with 30 days notice. No lock-in.",
-      "Prices plus IVA, invoiced.",
+      "Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions.",
     ],
   },
   familiar: {
