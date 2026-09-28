@@ -330,12 +330,14 @@ export default function FlowCompress() {
         rt = window.setTimeout(relayout, 120);
       });
       ro.observe(vis);
-    } else {
-      window.addEventListener("resize", () => {
-        window.clearTimeout(rt);
-        rt = window.setTimeout(relayout, 120);
-      });
     }
+    // The fallback listener is named so the cleanup can remove it; an anonymous
+    // listener leaked on every unmount in browsers without ResizeObserver.
+    const onWindowResize = () => {
+      window.clearTimeout(rt);
+      rt = window.setTimeout(relayout, 120);
+    };
+    if (!ro) window.addEventListener("resize", onWindowResize);
 
     layout();
 
@@ -366,6 +368,7 @@ export default function FlowCompress() {
       window.clearTimeout(rt);
       if (io) io.disconnect();
       if (ro) ro.disconnect();
+      else window.removeEventListener("resize", onWindowResize);
       document.removeEventListener("visibilitychange", onVisibility);
       reduceMQ.removeEventListener("change", onReduceChange);
     };

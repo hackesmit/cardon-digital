@@ -73,7 +73,9 @@ export default function Home({ params }: Params) {
   const price = (amount: number) => formatPrice(locale, amount);
   const siteFrom = price(webPackageFrom("presencia")[cur]);
   const adsMonthly = price(adsScope("local").monthly[cur]);
-  const softFrom = price(moduleFloors.produccion.setup[cur]);
+  const softFrom = price(
+    Math.min(...Object.values(moduleFloors).map((f) => f.setup[cur])),
+  );
   const serviceLine: Record<string, string> = {
     sitios: d.services.fromLabel + " " + siteFrom,
     anuncios: adsMonthly + " " + d.services.perMonth,

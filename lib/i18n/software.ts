@@ -138,7 +138,7 @@ const es: typeof en = {
     title: "El trabajo repetitivo, hecho solo.",
     titleAccent: "Y el sistema es suyo.",
     sub: "Construimos el sistema con el que opera su negocio: el registro se anota una vez, donde ya se hace el trabajo, los reportes se arman solos y las cuentas amanecen al corriente. Probado en bodegas del Valle, hecho alrededor de cómo trabaja su equipo.",
-    proof: "Monte Xanic: una hora de trabajo financiero, hoy como dos minutos.",
+    proof: "Monte Xanic: como una hora de trabajo financiero, hoy como dos minutos.",
   },
   gets: {
     kicker: "Lo que se lleva",
