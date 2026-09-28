@@ -1,0 +1,23 @@
+/* ReachMap, the hero visual of the Google Ads service page. Everything is
+   scoped under .reach-stage so nothing leaks into the shared stage frame. The
+   heights here are only the pre-hydration paint: on mount the component sets
+   the exact height from the measured canvas width (single source of truth). */
+.reach-stage #reachCanvas {
+  display: block;
+  width: 100%;
+  height: clamp(440px, 44vw, 540px);
+}
+/* One-column range (measured width under 780): the portrait composition is
+   designed tall, so the fallback box is tall too and the first paint does not
+   jump. */
+@media (max-width: 827px) {
+  .reach-stage #reachCanvas {
+    height: clamp(560px, 170vw, 700px);
+  }
+}
+.reach-stage .stage-caption {
+  transition: color 0.4s ease;
+}
+.reach-stage .stage-caption[data-done="1"] {
+  color: var(--primary);
+}
