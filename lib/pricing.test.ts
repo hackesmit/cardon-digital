@@ -1459,12 +1459,12 @@ describe("website packages", () => {
     for (const p of webPackages) expect(p.marketFloor).toBeGreaterThanOrEqual(p.derived);
   });
 
-  it("delivery ranges, page counts and feature lists as the memo cards them", () => {
+  it("delivery ranges (shortened by Daniel, 2026-09-29), page counts and feature lists as carded", () => {
     expect(webPackages.map((p) => [p.deliveryDays.min, p.deliveryDays.max])).toEqual([
+      [3, 5],
       [7, 10],
-      [15, 15],
-      [20, 25],
-      [25, 35],
+      [12, 15],
+      [15, 20],
     ]);
     expect(webPackages.map((p) => p.pages)).toEqual([1, 6, 8, 6]);
     const [presencia, negocio, reservas, tienda] = webPackages;

@@ -1433,10 +1433,10 @@ function webPackage(
  * count bounds rather than a page count; the quote states that count.
  */
 export const webPackages: readonly WebPackage[] = [
-  webPackage("presencia", 4.5, 12500, { min: 7, max: 10 }, 1, presenciaFeatures),
-  webPackage("negocio", 8.5, 24000, { min: 15, max: 15 }, 6, negocioFeatures),
-  webPackage("reservas", 13.5, 38000, { min: 20, max: 25 }, 8, reservasFeatures),
-  webPackage("tienda", 20, 55000, { min: 25, max: 35 }, 6, tiendaFeatures),
+  webPackage("presencia", 4.5, 12500, { min: 3, max: 5 }, 1, presenciaFeatures),
+  webPackage("negocio", 8.5, 24000, { min: 7, max: 10 }, 6, negocioFeatures),
+  webPackage("reservas", 13.5, 38000, { min: 12, max: 15 }, 8, reservasFeatures),
+  webPackage("tienda", 20, 55000, { min: 15, max: 20 }, 6, tiendaFeatures),
 ];
 
 export function webPackageById(id: WebPackageId): WebPackage {
