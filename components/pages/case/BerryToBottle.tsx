@@ -212,43 +212,50 @@ function BerryToBottleDesktop({ width }: { width: number | null }) {
 
         <g className="b2b-station" id="b2b-st-0">
           <circle className="b2b-node" cx="140" cy="150" r="9" />
-          <g transform="translate(140,74)">
-            <circle className="b2b-ico-fill" cx="-7" cy="4" r="6" />
-            <circle className="b2b-ico-fill" cx="6" cy="2" r="6" />
-            <circle className="b2b-ico-fill" cx="-1" cy="14" r="6" />
-            <path className="b2b-ico" d="M0 -8 L4 -16" />
+          {/* Lucide "grape" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(140,80) scale(1.75) translate(-12,-12)">
+            <circle className="b2b-ico" cx="16.6" cy="15.89" r="3" />
+            <circle className="b2b-ico" cx="8.11" cy="7.4" r="3" />
+            <circle className="b2b-ico" cx="12.35" cy="11.65" r="3" />
+            <circle className="b2b-ico" cx="13.91" cy="5.85" r="3" />
+            <circle className="b2b-ico" cx="18.15" cy="10.09" r="3" />
+            <circle className="b2b-ico" cx="6.56" cy="13.2" r="3" />
+            <circle className="b2b-ico" cx="10.8" cy="17.44" r="3" />
+            <circle className="b2b-ico" cx="5" cy="19" r="3" />
+            <path className="b2b-ico" d="M22 5V2l-5.89 5.89" />
           </g>
           <text className="b2b-lab" x="140" y="196" textAnchor="middle">{t.berry}</text>
         </g>
 
         <g className="b2b-station" id="b2b-st-1">
           <circle className="b2b-node" cx="380" cy="150" r="9" />
-          <g transform="translate(380,66)">
-            <ellipse className="b2b-ico" cx="0" cy="0" rx="14" ry="5" />
-            <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
-            <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
+          {/* Lucide "cylinder" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(380,80) scale(1.75) translate(-12,-12)">
+            <ellipse className="b2b-ico" cx="12" cy="5" rx="9" ry="3" />
+            <path className="b2b-ico" d="M3 5v14a9 3 0 0 0 18 0V5" />
           </g>
           <text className="b2b-lab" x="380" y="196" textAnchor="middle">{t.tank}</text>
         </g>
 
         <g className="b2b-station" id="b2b-st-2">
           <circle className="b2b-node" cx="620" cy="150" r="9" />
-          <g transform="translate(620,70)">
-            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="2" />
-            <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
-            <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
+          {/* Lucide "barrel" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(620,80) scale(1.75) translate(-12,-12)">
+            <path className="b2b-ico" d="M10 3a41 41 0 000 18" />
+            <path className="b2b-ico" d="M14 3a41 41 0 010 18" />
+            <path className="b2b-ico" d="M16.997 21a2 2 0 001.68-.92 15.25 15.25 0 000-16.16 2 2 0 00-1.68-.92h-10a2 2 0 00-1.681.92 15.25 15.25 0 000 16.16 2 2 0 001.681.92z" />
+            <path className="b2b-ico" d="M3.54 16h16.914" />
+            <path className="b2b-ico" d="M3.54 8h16.914" />
           </g>
           <text className="b2b-lab" x="620" y="196" textAnchor="middle">{t.barrel}</text>
         </g>
 
         <g className="b2b-station" id="b2b-st-3">
           <circle className="b2b-node" cx="860" cy="150" r="9" />
-          <g transform="translate(860,60)">
-            <path
-              className="b2b-ico"
-              d="M-4 -6 L-4 4 C-9 8, -9 14, -9 20 L-9 40 L9 40 L9 20 C9 14, 9 8, 4 4 L4 -6 Z"
-            />
-            <line className="b2b-ico" x1="-4" y1="-6" x2="4" y2="-6" />
+          {/* Lucide "bottle-wine" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(860,80) scale(1.75) translate(-12,-12)">
+            <path className="b2b-ico" d="M10 3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a6 6 0 0 0 1.2 3.6l.6.8A6 6 0 0 1 17 13v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-8a6 6 0 0 1 1.2-3.6l.6-.8A6 6 0 0 0 10 5z" />
+            <path className="b2b-ico" d="M17 13h-4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h4" />
           </g>
           <text className="b2b-lab" x="860" y="196" textAnchor="middle">{t.bottle}</text>
         </g>
@@ -418,43 +425,50 @@ function BerryToBottleMobile({ width }: { width: number }) {
 
         <g className="b2b-station" id="b2b-m-0">
           <circle className="b2b-node" cx="58" cy="96" r="12" />
-          <g transform="translate(104,96) scale(1.2) translate(0,-7)">
-            <circle className="b2b-ico-fill" cx="-7" cy="4" r="6" />
-            <circle className="b2b-ico-fill" cx="6" cy="2" r="6" />
-            <circle className="b2b-ico-fill" cx="-1" cy="14" r="6" />
-            <path className="b2b-ico" d="M0 -8 L4 -16" />
+          {/* Lucide "grape" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(104,96) scale(2.1) translate(-12,-12)">
+            <circle className="b2b-ico" cx="16.6" cy="15.89" r="3" />
+            <circle className="b2b-ico" cx="8.11" cy="7.4" r="3" />
+            <circle className="b2b-ico" cx="12.35" cy="11.65" r="3" />
+            <circle className="b2b-ico" cx="13.91" cy="5.85" r="3" />
+            <circle className="b2b-ico" cx="18.15" cy="10.09" r="3" />
+            <circle className="b2b-ico" cx="6.56" cy="13.2" r="3" />
+            <circle className="b2b-ico" cx="10.8" cy="17.44" r="3" />
+            <circle className="b2b-ico" cx="5" cy="19" r="3" />
+            <path className="b2b-ico" d="M22 5V2l-5.89 5.89" />
           </g>
           <text className="b2b-lab b2b-lab-m" x="150" y="96" dominantBaseline="middle">{t.berry}</text>
         </g>
 
         <g className="b2b-station" id="b2b-m-1">
           <circle className="b2b-node" cx="58" cy="224" r="12" />
-          <g transform="translate(104,224) scale(1.2) translate(0,-15)">
-            <ellipse className="b2b-ico" cx="0" cy="0" rx="14" ry="5" />
-            <path className="b2b-ico" d="M-14 0 L-14 22 L14 22 L14 0" />
-            <path className="b2b-ico" d="M-9 22 L0 34 L9 22" />
+          {/* Lucide "cylinder" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(104,224) scale(2.1) translate(-12,-12)">
+            <ellipse className="b2b-ico" cx="12" cy="5" rx="9" ry="3" />
+            <path className="b2b-ico" d="M3 5v14a9 3 0 0 0 18 0V5" />
           </g>
           <text className="b2b-lab b2b-lab-m" x="150" y="224" dominantBaseline="middle">{t.tank}</text>
         </g>
 
         <g className="b2b-station" id="b2b-m-2">
           <circle className="b2b-node" cx="58" cy="352" r="12" />
-          <g transform="translate(104,352) scale(1.2) translate(0,-11)">
-            <rect className="b2b-ico" x="-16" y="-6" width="32" height="34" rx="2" />
-            <line className="b2b-ico" x1="-16" y1="4" x2="16" y2="4" />
-            <line className="b2b-ico" x1="-16" y1="18" x2="16" y2="18" />
+          {/* Lucide "barrel" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(104,352) scale(2.1) translate(-12,-12)">
+            <path className="b2b-ico" d="M10 3a41 41 0 000 18" />
+            <path className="b2b-ico" d="M14 3a41 41 0 010 18" />
+            <path className="b2b-ico" d="M16.997 21a2 2 0 001.68-.92 15.25 15.25 0 000-16.16 2 2 0 00-1.68-.92h-10a2 2 0 00-1.681.92 15.25 15.25 0 000 16.16 2 2 0 001.681.92z" />
+            <path className="b2b-ico" d="M3.54 16h16.914" />
+            <path className="b2b-ico" d="M3.54 8h16.914" />
           </g>
           <text className="b2b-lab b2b-lab-m" x="150" y="352" dominantBaseline="middle">{t.barrel}</text>
         </g>
 
         <g className="b2b-station" id="b2b-m-3">
           <circle className="b2b-node" cx="58" cy="480" r="12" />
-          <g transform="translate(104,480) scale(1.2) translate(0,-17)">
-            <path
-              className="b2b-ico"
-              d="M-4 -6 L-4 4 C-9 8, -9 14, -9 20 L-9 40 L9 40 L9 20 C9 14, 9 8, 4 4 L4 -6 Z"
-            />
-            <line className="b2b-ico" x1="-4" y1="-6" x2="4" y2="-6" />
+          {/* Lucide "bottle-wine" (lucide-static 1.48.0, ISC) */}
+          <g className="b2b-icon" transform="translate(104,480) scale(2.1) translate(-12,-12)">
+            <path className="b2b-ico" d="M10 3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a6 6 0 0 0 1.2 3.6l.6.8A6 6 0 0 1 17 13v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-8a6 6 0 0 1 1.2-3.6l.6-.8A6 6 0 0 0 10 5z" />
+            <path className="b2b-ico" d="M17 13h-4a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h4" />
           </g>
           <text className="b2b-lab b2b-lab-m" x="150" y="480" dominantBaseline="middle">{t.bottle}</text>
         </g>

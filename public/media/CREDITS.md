@@ -91,3 +91,15 @@ the screens in frame is in docs/media-clearances.md.
 - software/cellar-charts.webp, slot software/cellar-charts
 - software/cellar-laptop.webp, slot software/cellar-laptop
 - software/phone-at-barrel.webp, slot software/phone-at-barrel
+
+## Icons
+
+The four station icons in the berry-to-bottle visual on the Monte Xanic case
+page (components/pages/case/BerryToBottle.tsx) are Lucide icons, embedded as
+inline SVG path data.
+
+- Set: Lucide, package lucide-static, version 1.48.0
+- Licence: ISC, https://github.com/lucide-icons/lucide/blob/main/LICENSE
+- Source: https://cdn.jsdelivr.net/npm/lucide-static@1.48.0/icons/
+- Icons: grape (berry), cylinder (tank), barrel (barrel), bottle-wine (bottle)
+- Copyright (c) Lucide Icons and Contributors
