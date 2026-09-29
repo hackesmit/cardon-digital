@@ -63,7 +63,7 @@ const en = {
     },
     cellar: {
       cap: "The number you need at six in the morning is the one you get.",
-      alt: "Work in the cellar, the system within reach",
+      alt: "Barrels racked in a winery cellar under warm light",
     },
     tasting: {
       cap: "The guest who signed up here still hears from you after the visit.",
@@ -256,7 +256,7 @@ const es: typeof en = {
     },
     cellar: {
       cap: "El dato que necesita a las seis de la mañana es el que recibe.",
-      alt: "Trabajo en la bodega, con el sistema a la mano",
+      alt: "Barricas en la cava de una bodega, con luz cálida",
     },
     tasting: {
       cap: "El huésped que se dio de alta aquí sigue sabiendo de usted después de la visita.",

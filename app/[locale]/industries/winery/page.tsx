@@ -325,6 +325,7 @@ export default function WineryPage({ params }: Params) {
           <div className="media-pair">
             <Media
               slot="winery/cellar"
+              src="/media/winery/cellar.webp"
               caption={d.media.cellar.cap}
               alt={d.media.cellar.alt}
             />

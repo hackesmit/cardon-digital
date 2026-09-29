@@ -108,6 +108,7 @@ export default function PreciosPage({ params }: Params) {
             <Media
               className="pr-photo"
               slot="precios/handover"
+              src="/media/precios/handover.webp"
               tone="full"
               priority
               caption={d.media.handoverCap}
