@@ -1486,3 +1486,26 @@
     max-width: 1040px;
   }
 }
+
+/* Photographs at the top of the page: one per proof card and per service
+   card, full width of the card, the caption in the card's own small type.
+   The frame bleeds to the card edges so the card reads as one object. */
+.pg-home .proof-photo,
+.pg-home .svc-photo {
+  margin: calc(-1 * clamp(12px, 1.5vw, 16px)) calc(-1 * clamp(13px, 1.6vw, 18px)) 10px;
+}
+.pg-home .svc-photo {
+  margin: calc(-1 * clamp(20px, 2.4vw, 28px)) calc(-1 * clamp(20px, 2.4vw, 28px)) 12px;
+}
+.pg-home .proof-photo figcaption,
+.pg-home .svc-photo figcaption {
+  padding: 0 clamp(13px, 1.6vw, 18px);
+}
+.pg-home .svc-photo figcaption {
+  padding: 0 clamp(20px, 2.4vw, 28px);
+}
+/* Until every proof card carries its photograph, a card without one keeps
+   its own height rather than stretching to the tallest neighbour. */
+.pg-home .proof-grid-3 {
+  align-items: start;
+}

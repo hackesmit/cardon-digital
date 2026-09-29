@@ -5,7 +5,7 @@ import HeroAssembly from "@/components/pages/home/HeroAssembly";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
 import SectorMap from "@/components/pages/home/SectorMap";
 import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
-import Media from "@/components/site/Media";
+import Media, { type MediaPhotoSlot } from "@/components/site/Media";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { home } from "@/lib/i18n/home";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -34,6 +34,24 @@ function localeOf(params: { locale: string }): Locale {
  * as a plain card.
  */
 const CASE_ROUTES = ["/work/monte-xanic", "/work/enkanto"];
+
+/**
+ * The photographs at the top of the page, by slot, in the order of the proof
+ * cards and then the service cards. A slot with no file yet renders no frame
+ * at all here (the card stands as it did), because a hatched placeholder on
+ * the first screen reads as unfinished; the shot list in public/media/README.md
+ * carries the brief. Add the file and its path here.
+ */
+const PROOF_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
+  { slot: "home/proof-xanic", src: null },
+  { slot: "home/proof-enkanto", src: "/media/enkanto/cabana.webp" },
+  { slot: "home/proof-dharma", src: null },
+];
+const SERVICE_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
+  { slot: "home/service-sitios", src: null },
+  { slot: "home/service-anuncios", src: null },
+  { slot: "home/service-software", src: null },
+];
 
 /** The service page behind each of the three service cards, in dictionary order. */
 const SERVICE_ROUTES = ["/sitios-web", "/anuncios", "/software"];
@@ -81,6 +99,16 @@ export default function Home({ params }: Params) {
     anuncios: adsMonthly + " " + d.services.perMonth,
     software: d.services.fromLabel + " " + softFrom,
   };
+  const photo = (entry: { slot: MediaPhotoSlot; src: string | null }, className: string) =>
+    entry.src ? (
+      <Media
+        className={className}
+        slot={entry.slot}
+        src={entry.src}
+        caption={d.photos[entry.slot].cap}
+        alt={d.photos[entry.slot].alt}
+      />
+    ) : null;
   const callToAction = (
     <div className="cta-row">
       <Link className="cta" href={href("/contacto")}>
@@ -132,6 +160,7 @@ export default function Home({ params }: Params) {
           {d.proof.items.map((item, i) =>
             CASE_ROUTES[i] ? (
               <Link className="proof-item" key={item.name} href={href(CASE_ROUTES[i])}>
+                {photo(PROOF_PHOTOS[i], "proof-photo")}
                 <span className="proof-name">{item.name}</span>
                 <span className="proof-place mono">{item.place}</span>
                 <p className="proof-result">{item.result}</p>
@@ -139,6 +168,7 @@ export default function Home({ params }: Params) {
               </Link>
             ) : (
               <div className="proof-item proof-item-still" key={item.name}>
+                {photo(PROOF_PHOTOS[i], "proof-photo")}
                 <span className="proof-name">{item.name}</span>
                 <span className="proof-place mono">{item.place}</span>
                 <p className="proof-result">{item.result}</p>
@@ -167,6 +197,7 @@ export default function Home({ params }: Params) {
           <div className="svc-grid">
             {d.services.items.map((item, i) => (
               <Link className="svc-card" key={item.id} href={href(SERVICE_ROUTES[i])}>
+                {photo(SERVICE_PHOTOS[i], "svc-photo")}
                 <span className="svc-n mono">{"0" + (i + 1)}</span>
                 <span className="svc-name mono">{item.name}</span>
                 <h3 className="svc-title">{item.title}</h3>
