@@ -56,6 +56,12 @@ and upsizing is not.
 | --- | --- | --- | --- | --- |
 | `home/xanic-cellar` | photo | `3 / 2` | 3000 x 2000 px | Monte Xanic, barrel room. The winemaker taking a reading with the tablet in hand, at the barrel, mid task. Not posed, not looking at the camera. |
 | `home/xanic-tank-log` | video | `16 / 9` | 3840 x 2160 px | The same record being written at the tank: hand, tablet, tank in frame. Steady, tripod or a rested elbow, 8 to 12 seconds. |
+| `home/proof-xanic` | photo | `3 / 2` | 3000 x 2000 px | Monte Xanic, one frame that says winery: the barrel room, the tank hall or the vineyard rows, with the system on a screen if it is in shot. For the proof card on the home page. |
+| `home/proof-enkanto` | photo | `3 / 2` | 3000 x 2000 px | En'kanto, the property in one frame: the cabin, the restaurant terrace or the vines. For the proof card on the home page. |
+| `home/proof-dharma` | photo | `3 / 2` | 3000 x 2000 px | Dharma Ochoa's site on a real screen: a phone or laptop showing the portfolio or the store, in a lit room, not a flat screenshot. For the proof card on the home page. |
+| `home/service-sitios` | photo | `3 / 2` | 3000 x 2000 px | A website in use: a phone in someone's hand with a site open, outdoors or in a shop, screen legible. For the websites card on the home page. |
+| `home/service-anuncios` | photo | `3 / 2` | 3000 x 2000 px | A client arriving: a phone ringing or a WhatsApp message being answered at a counter, the business readable around it. For the ads card on the home page. |
+| `home/service-software` | photo | `3 / 2` | 3000 x 2000 px | The system at work: a tablet or screen with the day's board, in a cellar, a kitchen or a front desk, a person doing the job. For the software card on the home page. |
 | `home/phone-in-hand` | photo | `4 / 5` | 2000 x 2500 px | The same system on a phone, outdoors in the vineyard, screen legible in the frame. Portrait. |
 | `xanic/before-clipboard` | photo | `3 / 2` | 3000 x 2000 px | The old way: the paper sheet or notebook at the work station where the reading is taken. No tablet in the frame. |
 | `xanic/after-tablet` | photo | `3 / 2` | 3000 x 2000 px | The same station, same lens, same height, same light, with the tablet instead of the paper. The pair only works if the framing matches. |

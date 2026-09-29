@@ -111,6 +111,42 @@ export const MEDIA_SLOTS = {
     frame:
       "The same record being written at the tank: hand, tablet, tank in frame. Steady, tripod or a rested elbow, 8 to 12 seconds.",
   },
+  "home/proof-xanic": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "Monte Xanic, one frame that says winery: the barrel room, the tank hall or the vineyard rows, with the system on a screen if it is in shot. For the proof card on the home page.",
+  },
+  "home/proof-enkanto": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "En'kanto, the property in one frame: the cabin, the restaurant terrace or the vines. For the proof card on the home page.",
+  },
+  "home/proof-dharma": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "Dharma Ochoa's site on a real screen: a phone or laptop showing the portfolio or the store, in a lit room, not a flat screenshot. For the proof card on the home page.",
+  },
+  "home/service-sitios": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "A website in use: a phone in someone's hand with a site open, outdoors or in a shop, screen legible. For the websites card on the home page.",
+  },
+  "home/service-anuncios": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "A client arriving: a phone ringing or a WhatsApp message being answered at a counter, the business readable around it. For the ads card on the home page.",
+  },
+  "home/service-software": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "The system at work: a tablet or screen with the day's board, in a cellar, a kitchen or a front desk, a person doing the job. For the software card on the home page.",
+  },
   "home/phone-in-hand": {
     kind: "photo",
     ratio: "4 / 5",

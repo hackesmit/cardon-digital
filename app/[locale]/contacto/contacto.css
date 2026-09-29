@@ -7,7 +7,11 @@
 .pg-contacto .hero{padding-top:clamp(90px,12vw,140px);}
 
 /* ============================ DOORS ============================ */
-.doors-section{padding-top:clamp(20px,3vw,32px);}
+/* The doors sit tight under the hero and tight over the written door: the
+   shared section padding on both sides left a 200px gap between two blocks
+   that belong together (Daniel, 2026-09-29). */
+.doors-section{padding-top:clamp(20px,3vw,32px);padding-bottom:clamp(24px,3vw,36px);}
+.pg-contacto .form-section{padding-top:clamp(28px,4vw,48px);}
 .doors{display:grid;grid-template-columns:1fr;gap:16px;}
 .door{
   border:1px solid var(--line);border-radius:2px;

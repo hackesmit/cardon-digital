@@ -1,5 +1,8 @@
 import type { Dict } from "./rich";
 
+/** A photograph's caption (the result) and its alt text (the frame). */
+type HomePhoto = { cap: string; alt: string };
+
 /**
  * Home page copy.
  *
@@ -88,6 +91,15 @@ const en = {
     ],
     arcLine: "Each one works on its own. Together, your business is in the digital era end to end: they find you, they write to you, and the work runs itself.",
   },
+  /** The six photographs at the top of the page: one per proof card, one per service card. */
+  photos: {
+    "home/proof-xanic": { cap: "Monte Xanic opens the season in one live view.", alt: "Monte Xanic, the winery in one frame" },
+    "home/proof-enkanto": { cap: "En'kanto's cabin: every booking from every channel in one calendar.", alt: "En'kanto's cabin among succulents and vines" },
+    "home/proof-dharma": { cap: "Dharma Ochoa's portfolio and store, ready to sell from a phone.", alt: "Dharma Ochoa's site open on a phone" },
+    "home/service-sitios": { cap: "A site that reads on a phone and leads to a message.", alt: "A phone in hand with a website open" },
+    "home/service-anuncios": { cap: "The client who was searching arrives on WhatsApp, and gets counted.", alt: "A message being answered at a counter" },
+    "home/service-software": { cap: "The record is written once, where the work happens.", alt: "A tablet with the day's board, at work" },
+  } as Record<string, HomePhoto>,
   familiar: {
     kicker: "Objections",
     title: "Sound familiar?",
@@ -342,6 +354,14 @@ const es: typeof en = {
     ],
     arcLine: "Cada uno funciona por su cuenta. Juntos, su negocio queda en la era digital de punta a punta: lo encuentran, le escriben y el trabajo se hace solo.",
   },
+  photos: {
+    "home/proof-xanic": { cap: "Monte Xanic abre la temporada en una sola vista viva.", alt: "Monte Xanic, la bodega en una toma" },
+    "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reserva, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
+    "home/proof-dharma": { cap: "El portafolio y la tienda de Dharma Ochoa, listos para vender desde el teléfono.", alt: "El sitio de Dharma Ochoa abierto en un teléfono" },
+    "home/service-sitios": { cap: "Un sitio que se lee en el teléfono y lleva a escribirle.", alt: "Un teléfono en la mano con un sitio abierto" },
+    "home/service-anuncios": { cap: "El cliente que buscaba llega por WhatsApp, y queda contado.", alt: "Un mensaje que se contesta en el mostrador" },
+    "home/service-software": { cap: "El registro se anota una vez, donde se hace el trabajo.", alt: "Una tableta con el tablero del día, en el trabajo" },
+  } as Record<string, HomePhoto>,
   familiar: {
     kicker: "Objeciones",
     title: "¿Le suena?",
