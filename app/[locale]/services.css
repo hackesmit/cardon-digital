@@ -286,3 +286,8 @@
 .web-packages .pk-more, .ads-fee .fee-more { margin-top: clamp(16px, 2vw, 22px); font-size: 0.92rem; }
 .web-packages .pk-more a, .ads-fee .fee-more a { color: var(--secondary); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
 .web-packages .pk-more a:hover, .ads-fee .fee-more a:hover { color: var(--text); border-color: var(--primary-dim); }
+
+/* Three frames in a row on the software page; one column on a phone. */
+.pg-svc .photo-slot { padding: clamp(10px, 1.5vw, 18px) 0 clamp(30px, 4vw, 48px); }
+.pg-svc .media-trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(14px, 1.8vw, 22px); align-items: start; }
+@media (max-width: 900px) { .pg-svc .media-trio { grid-template-columns: 1fr; } }

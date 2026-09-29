@@ -23,6 +23,10 @@ const en = {
     titleAccent: "We build for anyone who runs a business by hand.",
     sub: "Cardon Digital builds websites, runs Google Ads and builds the software an owner-run business operates on. We come out of years inside a Valle winery, watching the number somebody needed go missing and the client somebody needed never find the door.",
   },
+  media: {
+    bandCap: "Years inside a cellar like this one are where the record problem was learned.",
+    bandAlt: "A barrel room under warm light",
+  },
   mission: {
     kicker: "Why we exist",
     title: "The wine gets careful attention. The record almost never does.",
@@ -65,6 +69,10 @@ const es: typeof en = {
     title: "Venimos del vino.",
     titleAccent: "Construimos para quien lleva su negocio a mano.",
     sub: "Cardon Digital hace sitios web, maneja anuncios en Google y construye el software con el que opera un negocio. Venimos de años dentro de una bodega del Valle, viendo cómo se pierde el dato que hacía falta y cómo el cliente que hacía falta nunca encuentra la puerta.",
+  },
+  media: {
+    bandCap: "Años dentro de una cava como esta son donde se aprendió el problema del registro.",
+    bandAlt: "Una cava de barricas con luz cálida",
   },
   mission: {
     kicker: "Por qué existimos",

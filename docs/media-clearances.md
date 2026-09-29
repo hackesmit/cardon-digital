@@ -49,9 +49,10 @@ recorded in `public/media/CREDITS.md`.
 
 ## Monte Xanic cellar and lab frames, 2026-09-29
 
-Seven files under public/media (home/proof-xanic, home/service-software,
+Ten files under public/media (home/proof-xanic, home/service-software,
 home/xanic-cellar, home/phone-in-hand, xanic/after-tablet,
-precios/diagnostic-session, winery/cellar).
+precios/diagnostic-session, winery/cellar, software/cellar-charts,
+software/cellar-laptop, software/phone-at-barrel).
 
 - Shot by: Cardon Digital (Daniel Hack), supplied 2026-09-29
 - Location: Monte Xanic, Valle de Guadalupe (cellar and lab)

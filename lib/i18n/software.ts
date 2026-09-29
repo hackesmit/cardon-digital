@@ -47,6 +47,15 @@ const en = {
       },
     ],
   },
+  /** The three frames between the results and the modules, each captioned with its result. */
+  media: {
+    chartsCap: "The season's numbers, read in the cellar where they were written.",
+    chartsAlt: "A laptop in the barrel cellar with the season's bar charts on screen",
+    laptopCap: "The harvest curve, current the morning after the last reading.",
+    laptopAlt: "A laptop on a barrel with the harvest curve on screen",
+    phoneCap: "The same record on the phone your team already carries.",
+    phoneAlt: "A phone held at the barrel with the curve on screen",
+  },
   modules: {
     kicker: "The three modules",
     title: "Start with the part of the operation that hurts most.",
@@ -161,6 +170,14 @@ const es: typeof en = {
         body: "Código, datos y cuentas a su nombre. Si el servicio se detiene, el sistema sigue corriendo.",
       },
     ],
+  },
+  media: {
+    chartsCap: "Los números de la temporada, leídos en la cava donde se anotaron.",
+    chartsAlt: "Una laptop en la cava de barricas con las gráficas de la temporada en pantalla",
+    laptopCap: "La curva de la cosecha, al corriente la mañana después de la última lectura.",
+    laptopAlt: "Una laptop sobre una barrica con la curva de la cosecha en pantalla",
+    phoneCap: "El mismo registro en el teléfono que su gente ya trae.",
+    phoneAlt: "Un teléfono sostenido junto a la barrica con la curva en pantalla",
   },
   modules: {
     kicker: "Los tres módulos",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
 import { about } from "@/lib/i18n/about";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
@@ -50,6 +51,22 @@ export default function AboutPage({ params }: Params) {
             <p className="hero-sub">{d.hero.sub}</p>
             <p className="brandline">{s.brandline}</p>
           </div>
+        </div>
+      </section>
+
+      {/* The one full-colour photograph on the page, under the sentence that
+          says where we come from. */}
+      <section className="photo-slot">
+        <div className="container">
+          <Media
+            className="media-band"
+            slot="about/cellar-band"
+            src="/media/about/cellar-band.webp"
+            tone="full"
+            priority
+            caption={d.media.bandCap}
+            alt={d.media.bandAlt}
+          />
         </div>
       </section>
 

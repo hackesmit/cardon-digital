@@ -62,6 +62,10 @@ and upsizing is not.
 | `home/service-sitios` | photo | `3 / 2` | 3000 x 2000 px | A website in use: a phone in someone's hand with a site open, outdoors or in a shop, screen legible. For the websites card on the home page. |
 | `home/service-anuncios` | photo | `3 / 2` | 3000 x 2000 px | A client arriving: a phone ringing or a WhatsApp message being answered at a counter, the business readable around it. For the ads card on the home page. |
 | `home/service-software` | photo | `3 / 2` | 3000 x 2000 px | The system at work: a tablet or screen with the day's board, in a cellar, a kitchen or a front desk, a person doing the job. For the software card on the home page. |
+| `software/cellar-charts` | photo | `3 / 2` | 3000 x 2000 px | The system open on a laptop in the barrel cellar, the bar charts of the season on screen, barrels racked behind. For the software page. |
+| `software/cellar-laptop` | photo | `3 / 2` | 3000 x 2000 px | A laptop on a barrel with the harvest curve on screen, the cellar lit warm behind it. For the software page. |
+| `software/phone-at-barrel` | photo | `3 / 2` | 3000 x 2000 px | The same record on a phone, held at the barrel in low cellar light, the curve legible. For the software page. |
+| `about/cellar-band` | photo | `21 / 9` | 3360 x 1440 px | A barrel room as one wide band: racked barrels under warm light, no people. For the about page, where the firm says it comes from wine. |
 | `home/phone-in-hand` | photo | `4 / 5` | 2000 x 2500 px | The same system on a phone, outdoors in the vineyard, screen legible in the frame. Portrait. |
 | `xanic/before-clipboard` | photo | `3 / 2` | 3000 x 2000 px | The old way: the paper sheet or notebook at the work station where the reading is taken. No tablet in the frame. |
 | `xanic/after-tablet` | photo | `3 / 2` | 3000 x 2000 px | The same station, same lens, same height, same light, with the tablet instead of the paper. The pair only works if the framing matches. |
