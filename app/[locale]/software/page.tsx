@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import FlowCompress from "@/components/pages/services/FlowCompress";
+import Media from "@/components/site/Media";
 import { demoHref } from "@/lib/demo";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -94,6 +95,20 @@ export default function SoftwarePage({ params }: Params) {
             </div>
           </Reveal>
           {cta}
+        </div>
+      </section>
+
+      {/* Three frames from the cellar, the system on a laptop and a phone,
+          each captioned with the result the block above promised. */}
+      <section className="photo-slot">
+        <div className="container">
+          <Reveal>
+            <div className="media-trio">
+              <Media slot="software/cellar-charts" src="/media/software/cellar-charts.webp" caption={d.media.chartsCap} alt={d.media.chartsAlt} />
+              <Media slot="software/cellar-laptop" src="/media/software/cellar-laptop.webp" caption={d.media.laptopCap} alt={d.media.laptopAlt} />
+              <Media slot="software/phone-at-barrel" src="/media/software/phone-at-barrel.webp" caption={d.media.phoneCap} alt={d.media.phoneAlt} />
+            </div>
+          </Reveal>
         </div>
       </section>
 

@@ -41,3 +41,6 @@
   .pg-about .about-head{position:static;}
   .pg-about .about-head h2{max-width:28ch;}
 }
+
+/* The cellar band under the hero. */
+.pg-about .photo-slot{padding:clamp(6px,1vw,12px) 0 clamp(26px,3.5vw,44px);}

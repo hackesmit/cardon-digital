@@ -147,6 +147,30 @@ export const MEDIA_SLOTS = {
     frame:
       "The system at work: a tablet or screen with the day's board, in a cellar, a kitchen or a front desk, a person doing the job. For the software card on the home page.",
   },
+  "software/cellar-charts": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "The system open on a laptop in the barrel cellar, the bar charts of the season on screen, barrels racked behind. For the software page.",
+  },
+  "software/cellar-laptop": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "A laptop on a barrel with the harvest curve on screen, the cellar lit warm behind it. For the software page.",
+  },
+  "software/phone-at-barrel": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "The same record on a phone, held at the barrel in low cellar light, the curve legible. For the software page.",
+  },
+  "about/cellar-band": {
+    kind: "photo",
+    ratio: "21 / 9",
+    frame:
+      "A barrel room as one wide band: racked barrels under warm light, no people. For the about page, where the firm says it comes from wine.",
+  },
   "home/phone-in-hand": {
     kind: "photo",
     ratio: "4 / 5",

@@ -56,6 +56,12 @@ Files Daniel supplied through the console inbox, cropped and encoded to WebP
 through Chrome's canvas (the box has no image library). The licence of the
 stock frame is recorded when Daniel names its source.
 
+### about/cellar-band.webp
+
+- Credit: stock, supplied by Daniel Hack, 2026-09-28; source and licence to record
+- Slot: about/cellar-band
+- Frame: barrels racked in a cellar under warm pendant light, cropped to 21:9
+
 ### precios/handover.webp
 
 - Credit: stock, supplied by Daniel Hack, 2026-09-28; source and licence to record
@@ -82,3 +88,6 @@ the screens in frame is in docs/media-clearances.md.
 - xanic/after-tablet.webp, slot xanic/after-tablet
 - precios/diagnostic-session.webp, slot precios/diagnostic-session
 - winery/cellar.webp, slot winery/cellar (replaces the stock barrel room of 2026-09-28)
+- software/cellar-charts.webp, slot software/cellar-charts
+- software/cellar-laptop.webp, slot software/cellar-laptop
+- software/phone-at-barrel.webp, slot software/phone-at-barrel
