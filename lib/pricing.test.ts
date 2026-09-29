@@ -1423,10 +1423,10 @@ describe("website packages", () => {
 
   it.each([
     // id, hours, cost recovery, derived, published, margin, USD, bound by
-    ["presencia", 4.5, 12150, 12500, 12500, 350, 740, "hours"],
-    ["negocio", 8.5, 22950, 23000, 24000, 1050, 1410, "market-floor"],
-    ["reservas", 13.5, 36450, 36500, 38000, 1550, 2240, "market-floor"],
-    ["tienda", 20, 54000, 54000, 55000, 1000, 3240, "market-floor"],
+    ["presencia", 2.75, 7425, 7500, 7500, 75, 440, "hours"],
+    ["negocio", 5.5, 14850, 15000, 15000, 150, 880, "hours"],
+    ["reservas", 9.5, 25650, 26000, 26000, 350, 1530, "hours"],
+    ["tienda", 14, 37800, 38000, 38000, 200, 2240, "hours"],
   ] as const)(
     "%s: %s h, cost %s, derived %s, published %s (clears by %s), %s USD",
     (id, hours, cost, derived, published, margin, usd, boundBy) => {

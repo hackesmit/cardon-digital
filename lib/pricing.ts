@@ -1416,27 +1416,29 @@ function webPackage(
 }
 
 /**
- * The four packages, smallest first. The arithmetic, per package:
+ * The four packages, smallest first. Repriced by Daniel on 2026-09-29 to the
+ * top of the freelancer band and under every agency (the memo's first card sat
+ * on the 25,000 line where mid agencies start, an agency price for a firm
+ * still building its name). The hours are Daniel hours only; drafting runs on
+ * terminal time the plan does not count. The arithmetic, per package:
  *
- *  - presencia: 4.5 h x 2,700 = 12,150, up to 12,500. The memo also says
- *    12,500, so the hours set it; it clears cost recovery by 350.
- *  - negocio: 8.5 h x 2,700 = 22,950, up to 23,000. The memo's 24,000, just
- *    under the 25,000 line where mid agencies start, is the floor; it clears
- *    cost recovery by 1,050.
- *  - reservas: 13.5 h x 2,700 = 36,450, up to 36,500. The memo's 38,000 is the
- *    floor; it clears cost recovery by 1,550.
- *  - tienda: 20 h x 2,700 = 54,000, already on a 500 and not a bare 10,000.
- *    The memo's e-commerce floor of 55,000 is the floor; it clears cost
- *    recovery by 1,000.
+ *  - presencia: 2.75 h x 2,700 = 7,425, up to 7,500; clears cost recovery by 75.
+ *  - negocio: 5.5 h x 2,700 = 14,850, up to 15,000; clears by 150.
+ *  - reservas: 9.5 h x 2,700 = 25,650, up to 26,000; clears by 350.
+ *  - tienda: 14 h x 2,700 = 37,800, up to 38,000; clears by 200.
+ *
+ * The market floor of each equals its hours-derived figure, so the hours set
+ * every price; if the logged hours of the first two builds run higher, the
+ * price moves up on its own.
  *
  * Tienda carries Negocio's six pages plus its product pages, which a product
  * count bounds rather than a page count; the quote states that count.
  */
 export const webPackages: readonly WebPackage[] = [
-  webPackage("presencia", 4.5, 12500, { min: 3, max: 5 }, 1, presenciaFeatures),
-  webPackage("negocio", 8.5, 24000, { min: 7, max: 10 }, 6, negocioFeatures),
-  webPackage("reservas", 13.5, 38000, { min: 12, max: 15 }, 8, reservasFeatures),
-  webPackage("tienda", 20, 55000, { min: 15, max: 20 }, 6, tiendaFeatures),
+  webPackage("presencia", 2.75, 7500, { min: 3, max: 5 }, 1, presenciaFeatures),
+  webPackage("negocio", 5.5, 15000, { min: 7, max: 10 }, 6, negocioFeatures),
+  webPackage("reservas", 9.5, 26000, { min: 12, max: 15 }, 8, reservasFeatures),
+  webPackage("tienda", 14, 38000, { min: 15, max: 20 }, 6, tiendaFeatures),
 ];
 
 export function webPackageById(id: WebPackageId): WebPackage {
