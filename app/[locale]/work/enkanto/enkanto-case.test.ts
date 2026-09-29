@@ -698,8 +698,8 @@ describe("the visuals this page may not lose", () => {
   const DRAWN_VISUALS = 5;
   /** One diagram per entry in `changed.items`. */
   const CHANGE_VISUALS = 4;
-  /** The cellar band, licensed stock standing in for En'kanto's own photograph. */
-  const BAND_SRC = "/media/enkanto-valle.webp";
+  /** The band: En'kanto's own cabin, supplied 2026-09-28 (public/media/CREDITS.md). */
+  const BAND_SRC = "/media/enkanto/cabana.webp";
 
   const spotlightPath = "components/pages/enkanto/SpotlightFrames.tsx";
 
@@ -862,7 +862,7 @@ describe("the visuals this page may not lose", () => {
 
     it("leaves this page's own mount and imports standing", () => {
       expect(pageCode).toContain("<SpotlightFrames />");
-      expect(pageCode).toContain("/media/enkanto-valle.webp");
+      expect(pageCode).toContain(BAND_SRC);
     });
   });
 

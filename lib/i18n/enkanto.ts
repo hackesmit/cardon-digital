@@ -168,8 +168,8 @@ const en = {
       foundation: "one foundation under both",
     },
     band: {
-      alt: "Oak barrels stacked in a winery cellar",
-      caption: "Stock photograph, standing in until En'kanto's own cellar shot lands.",
+      alt: "En'kanto's cabin among succulents and vines, San Antonio de las Minas",
+      caption: "En'kanto's cabin: every booking from every channel lands in one calendar.",
     },
   },
   system: {
@@ -390,8 +390,8 @@ const es: typeof en = {
       foundation: "un cimiento para los dos",
     },
     band: {
-      alt: "Barricas de roble apiladas en la cava de una bodega",
-      caption: "Fotografía de archivo, mientras llega la toma de la cava de En'kanto.",
+      alt: "La cabaña de En'kanto entre suculentas y viñas, en San Antonio de las Minas",
+      caption: "La cabaña de En'kanto: cada reserva, de cualquier canal, cae en un solo calendario.",
     },
   },
   system: {

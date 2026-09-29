@@ -150,16 +150,15 @@ export default function EnkantoCaseStudy({ params }: Params) {
       </section>
 
       {/* ============================ THE CELLAR BAND ============================
-          Licensed stock standing in until En'kanto's own cellar photograph
-          lands (public/media/CREDITS.md). It is captioned rather than silent,
-          because an uncaptioned photograph is inventory carrying no argument
-          and because a stand-in has to say that it is one. */}
+          En'kanto's own cabin, supplied by Daniel on 2026-09-28
+          (public/media/CREDITS.md), captioned with the result the booking
+          calendar gives it. */}
       <section className="photo-slot">
         <div className="container">
           <figure className="photoband">
             <img
               className="photoband-img"
-              src="/media/enkanto-valle.webp"
+              src="/media/enkanto/cabana.webp"
               alt={v.band.alt}
               loading="lazy"
               decoding="async"
