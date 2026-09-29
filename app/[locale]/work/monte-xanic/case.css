@@ -284,10 +284,10 @@
 .pg-case .b2b-prog{stroke:var(--wine-accent);stroke-width:3;stroke-linecap:round;}
 .pg-case .b2b-node{fill:var(--panel);stroke:var(--line);stroke-width:1.6;transition:stroke .4s ease, fill .4s ease;}
 .pg-case .b2b-station.reached .b2b-node{stroke:var(--wine-accent);fill:var(--wine-faint);}
-.pg-case .b2b-ico{fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s ease;}
-.pg-case .b2b-ico-fill{fill:var(--muted);stroke:none;transition:fill .4s ease;}
+/* station icons: Lucide outlines drawn in their own 24-unit space and scaled
+   onto the station, so this stroke width is in icon units (one width for all four) */
+.pg-case .b2b-ico{fill:none;stroke:var(--muted);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .4s ease;}
 .pg-case .b2b-station.reached .b2b-ico{stroke:var(--wine-accent);}
-.pg-case .b2b-station.reached .b2b-ico-fill{fill:var(--wine-accent);}
 .pg-case .b2b-lab{font-family:var(--mono);font-size:var(--b2b-fs,15px);fill:var(--text-dim);letter-spacing:0.04em;transition:fill .4s ease;}
 .pg-case .b2b-station.reached .b2b-lab{fill:var(--text);}
 /* mobile vertical thread: phone-legible station names (counter-scaled ~25px) */
