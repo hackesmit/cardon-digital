@@ -45,8 +45,8 @@ const en = {
       "The old way: the reading goes on paper, and the picture gets assembled later.",
     beforeAlt: "A paper record sheet at the work station.",
     afterCap:
-      "The same station today. The reading is taken once and the view is current from that moment.",
-    afterAlt: "The same station, with a tablet on it.",
+      "The lab bench today. The reading is taken once and the view is current from that moment.",
+    afterAlt: "The lab bench, with the record open on a laptop.",
     videoCap:
       "Harvest intake at the scale. What is recorded here lands in the view the cellar is reading.",
     videoAlt: "A load on the intake scale at harvest.",
@@ -250,8 +250,8 @@ const es: typeof en = {
       "Como era antes: la lectura se anota en papel y la imagen se arma después.",
     beforeAlt: "Una hoja de registro en papel en la estación.",
     afterCap:
-      "La misma estación hoy. La lectura se toma una vez y la vista queda al día.",
-    afterAlt: "La misma estación, ahora con una tableta.",
+      "La mesa del laboratorio hoy. La lectura se toma una vez y la vista queda al día.",
+    afterAlt: "La mesa del laboratorio, con el registro abierto en la laptop.",
     videoCap:
       "Recepción de uva en la báscula. Lo que se registra aquí cae en la vista que la bodega lee.",
     videoAlt: "Una carga en la báscula de recepción.",

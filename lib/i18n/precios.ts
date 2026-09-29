@@ -63,7 +63,7 @@ const en = {
       "A handshake across the counter on handover day.",
     diagCap:
       "Day one of the Diagnostic: your operation gone through module by module.",
-    diagAlt: "A working session at the winery, laptop and notes on the table.",
+    diagAlt: "A laptop with the system open on a barrel in the cellar.",
   },
 
   floors: {
@@ -302,7 +302,7 @@ const es: typeof en = {
       "Un apretón de manos sobre el mostrador el día de la entrega.",
     diagCap:
       "Día uno del Diagnóstico: su operación repasada módulo por módulo.",
-    diagAlt: "Una sesión de trabajo en la bodega, laptop y notas sobre la mesa.",
+    diagAlt: "Una laptop con el sistema abierto sobre una barrica, en la cava.",
   },
 
   floors: {

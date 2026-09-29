@@ -117,6 +117,7 @@ export default function MonteXanicCaseStudy({ params }: Params) {
             />
             <Media
               slot="xanic/after-tablet"
+              src="/media/xanic/after-tablet.webp"
               caption={d.media.afterCap}
               alt={d.media.afterAlt}
               tone="full"

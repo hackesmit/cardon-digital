@@ -46,3 +46,21 @@ None yet. The photography for the slots in `public/media/README.md` has not
 been shot. The two files in `public/media` today are licensed stock and carry
 no personal data, so they need no clearance: their licence and their credit are
 recorded in `public/media/CREDITS.md`.
+
+## Monte Xanic cellar and lab frames, 2026-09-29
+
+Seven files under public/media (home/proof-xanic, home/service-software,
+home/xanic-cellar, home/phone-in-hand, xanic/after-tablet,
+precios/diagnostic-session, winery/cellar).
+
+- Shot by: Cardon Digital (Daniel Hack), supplied 2026-09-29
+- Location: Monte Xanic, Valle de Guadalupe (cellar and lab)
+- People in frame: a hand holding a phone in three frames, no face
+- Release: not needed, no recognisable person
+- Client clearance: Monte Xanic's permission to name it and cite its results is
+  recorded in BUSINESS-PLAN.md 14 (2026-09-02, confirmed 2026-09-23); whether
+  that covers its dashboards on screen was left open there (FOR-DANIEL 6).
+  Daniel supplied these frames himself on 2026-09-29; confirm with him that the
+  screens are cleared before the site leaves the COMING_SOON gate.
+- Real numbers on screen: yes, the production dashboard, illegible at the
+  sizes served (2400 px wide at most, charts a few hundred pixels tall).

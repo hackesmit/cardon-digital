@@ -43,14 +43,14 @@ const CASE_ROUTES = ["/work/monte-xanic", "/work/enkanto"];
  * carries the brief. Add the file and its path here.
  */
 const PROOF_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
-  { slot: "home/proof-xanic", src: null },
+  { slot: "home/proof-xanic", src: "/media/home/proof-xanic.webp" },
   { slot: "home/proof-enkanto", src: "/media/enkanto/cabana.webp" },
   { slot: "home/proof-dharma", src: null },
 ];
 const SERVICE_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
   { slot: "home/service-sitios", src: null },
   { slot: "home/service-anuncios", src: null },
-  { slot: "home/service-software", src: null },
+  { slot: "home/service-software", src: "/media/home/service-software.webp" },
 ];
 
 /** The service page behind each of the three service cards, in dictionary order. */
@@ -109,6 +109,9 @@ export default function Home({ params }: Params) {
         alt={d.photos[entry.slot].alt}
       />
     ) : null;
+  // The three service cards carry their photographs together or not at all:
+  // one card with a picture and two without reads as an unfinished row.
+  const servicePhotosReady = SERVICE_PHOTOS.every((entry) => entry.src);
   const callToAction = (
     <div className="cta-row">
       <Link className="cta" href={href("/contacto")}>
@@ -197,7 +200,7 @@ export default function Home({ params }: Params) {
           <div className="svc-grid">
             {d.services.items.map((item, i) => (
               <Link className="svc-card" key={item.id} href={href(SERVICE_ROUTES[i])}>
-                {photo(SERVICE_PHOTOS[i], "svc-photo")}
+                {servicePhotosReady ? photo(SERVICE_PHOTOS[i], "svc-photo") : null}
                 <span className="svc-n mono">{"0" + (i + 1)}</span>
                 <span className="svc-name mono">{item.name}</span>
                 <h3 className="svc-title">{item.title}</h3>
@@ -331,6 +334,7 @@ export default function Home({ params }: Params) {
           <div className="case-grid">
             <Media
               slot="home/xanic-cellar"
+              src="/media/home/xanic-cellar.webp"
               tone="full"
               priority
               caption={d.xanic.cellarCap}
@@ -352,13 +356,24 @@ export default function Home({ params }: Params) {
             </div>
           </div>
 
-          <Media
-            className="case-clip"
-            slot="home/xanic-tank-log"
-            caption={d.xanic.tankCap}
-            alt={d.xanic.tankAlt}
-            labels={{ play: d.xanic.play, pause: d.xanic.pause }}
-          />
+          {/* The clip beside the phone: the record written at the tank, and
+              the same record read on the phone the team carries. */}
+          <div className="case-row">
+            <Media
+              className="case-clip"
+              slot="home/xanic-tank-log"
+              caption={d.xanic.tankCap}
+              alt={d.xanic.tankAlt}
+              labels={{ play: d.xanic.play, pause: d.xanic.pause }}
+            />
+            <Media
+              className="case-phone"
+              slot="home/phone-in-hand"
+              src="/media/home/phone-in-hand.webp"
+              caption={d.xanic.phoneCap}
+              alt={d.xanic.phoneAlt}
+            />
+          </div>
         </div>
       </section>
 

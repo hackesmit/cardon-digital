@@ -52,15 +52,9 @@ personal data, which is why these two entries are safe in a served file.
 
 ## Supplied files (2026-09-28)
 
-Three files Daniel supplied on 2026-09-28 through the console inbox, cropped and
-encoded to WebP through Chrome's canvas (the box has no image library). The
-licence of the two stock frames is recorded when Daniel names their source.
-
-### winery/cellar.webp
-
-- Credit: stock, supplied by Daniel Hack, 2026-09-28; source and licence to record
-- Slot: winery/cellar
-- Frame: barrels racked in a cellar under warm pendant light
+Files Daniel supplied through the console inbox, cropped and encoded to WebP
+through Chrome's canvas (the box has no image library). The licence of the
+stock frame is recorded when Daniel names its source.
 
 ### precios/handover.webp
 
@@ -74,3 +68,17 @@ licence of the two stock frames is recorded when Daniel names their source.
 - Year: 2026
 - Use: the En'kanto case band (app/[locale]/work/enkanto/page.tsx)
 - Frame: the cabin among succulents and vines, San Antonio de las Minas
+
+## Cardon Digital photography, shot at Monte Xanic (2026-09-29)
+
+Seven frames Daniel shot in the cellar and the lab, the system open on a
+laptop and on a phone. Credit: Cardon Digital, 2026. The clearance record for
+the screens in frame is in docs/media-clearances.md.
+
+- home/proof-xanic.webp, slot home/proof-xanic
+- home/service-software.webp, slot home/service-software
+- home/xanic-cellar.webp, slot home/xanic-cellar
+- home/phone-in-hand.webp, slot home/phone-in-hand
+- xanic/after-tablet.webp, slot xanic/after-tablet
+- precios/diagnostic-session.webp, slot precios/diagnostic-session
+- winery/cellar.webp, slot winery/cellar (replaces the stock barrel room of 2026-09-28)

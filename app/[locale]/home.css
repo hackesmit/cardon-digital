@@ -1509,3 +1509,25 @@
 .pg-home .proof-grid-3 {
   align-items: start;
 }
+
+/* The tank clip and the phone side by side under the case: the record
+   written where the work happens, and the same record read on the phone. */
+.pg-home .case-row {
+  margin-top: clamp(22px, 3vw, 38px);
+  display: grid;
+  grid-template-columns: minmax(0, 780px) minmax(220px, 300px);
+  gap: clamp(16px, 2.4vw, 30px);
+  align-items: start;
+}
+.pg-home .case-row .case-clip {
+  margin-top: 0;
+  max-width: none;
+}
+@media (max-width: 900px) {
+  .pg-home .case-row {
+    grid-template-columns: 1fr;
+  }
+  .pg-home .case-phone {
+    max-width: 360px;
+  }
+}

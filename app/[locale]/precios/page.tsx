@@ -171,6 +171,7 @@ export default function PreciosPage({ params }: Params) {
               <Media
                 className="diag-photo"
                 slot="precios/diagnostic-session"
+                src="/media/precios/diagnostic-session.webp"
                 caption={d.media.diagCap}
                 alt={d.media.diagAlt}
               />
