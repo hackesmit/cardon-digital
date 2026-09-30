@@ -48,8 +48,8 @@ const en = {
       "The lab bench today. The reading is taken once and the view is current from that moment.",
     afterAlt: "The lab bench, with the record open on a laptop.",
     videoCap:
-      "Harvest intake at the scale. What is recorded here lands in the view the cellar is reading.",
-    videoAlt: "A load on the intake scale at harvest.",
+      "Berry to bottle, the whole thread on the phone, read among the barrels it describes.",
+    videoAlt: "A hand scrolling the harvest record on a phone, barrels racked behind.",
     play: "Play",
     pause: "Pause",
   },
@@ -253,8 +253,8 @@ const es: typeof en = {
       "La mesa del laboratorio hoy. La lectura se toma una vez y la vista queda al día.",
     afterAlt: "La mesa del laboratorio, con el registro abierto en la laptop.",
     videoCap:
-      "Recepción de uva en la báscula. Lo que se registra aquí cae en la vista que la bodega lee.",
-    videoAlt: "Una carga en la báscula de recepción.",
+      "De la baya a la botella, el hilo completo en el teléfono, leído entre las barricas que describe.",
+    videoAlt: "Una mano recorre el registro de la cosecha en un teléfono, con barricas al fondo.",
     play: "Reproducir",
     pause: "Pausar",
   },

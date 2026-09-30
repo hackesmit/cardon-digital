@@ -362,6 +362,8 @@ export default function Home({ params }: Params) {
             <Media
               className="case-clip"
               slot="home/xanic-tank-log"
+              src="/media/home/xanic-tank-log.mp4"
+              poster="/media/home/xanic-tank-log-poster.webp"
               caption={d.xanic.tankCap}
               alt={d.xanic.tankAlt}
               labels={{ play: d.xanic.play, pause: d.xanic.pause }}
