@@ -47,12 +47,15 @@ been shot. The two files in `public/media` today are licensed stock and carry
 no personal data, so they need no clearance: their licence and their credit are
 recorded in `public/media/CREDITS.md`.
 
-## Monte Xanic cellar and lab frames, 2026-09-29
+## Monte Xanic cellar and lab frames, 2026-09-29 and 2026-09-30
 
 Ten files under public/media (home/proof-xanic, home/service-software,
 home/xanic-cellar, home/phone-in-hand, xanic/after-tablet,
 precios/diagnostic-session, winery/cellar, software/cellar-charts,
-software/cellar-laptop, software/phone-at-barrel).
+software/cellar-laptop, software/phone-at-barrel), plus the 2026-09-30 still
+(home/phone-in-hand) and two clips with their poster frames (home/xanic-tank-log,
+xanic/harvest-intake): the phone with the system open, at the barrels, trimmed
+to 9 and 11.5 seconds, muted, 1080p.
 
 - Shot by: Cardon Digital (Daniel Hack), supplied 2026-09-29
 - Location: Monte Xanic, Valle de Guadalupe (cellar and lab)

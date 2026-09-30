@@ -91,6 +91,9 @@ the screens in frame is in docs/media-clearances.md.
 - software/cellar-charts.webp, slot software/cellar-charts
 - software/cellar-laptop.webp, slot software/cellar-laptop
 - software/phone-at-barrel.webp, slot software/phone-at-barrel
+- home/phone-in-hand.webp, slot home/phone-in-hand (the 2026-09-30 still replaces the darker 2026-09-29 one)
+- home/xanic-tank-log.mp4 and its poster, slot home/xanic-tank-log (clip, 2026-09-30)
+- xanic/harvest-intake.mp4 and its poster, slot xanic/harvest-intake (clip, 2026-09-30)
 
 ## Icons
 

@@ -365,6 +365,8 @@ export default function MonteXanicCaseStudy({ params }: Params) {
             <Media
               className="case-media-wide"
               slot="xanic/harvest-intake"
+              src="/media/xanic/harvest-intake.mp4"
+              poster="/media/xanic/harvest-intake-poster.webp"
               caption={d.media.videoCap}
               alt={d.media.videoAlt}
               labels={{ play: d.media.play, pause: d.media.pause }}
