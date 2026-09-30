@@ -50,16 +50,19 @@ export default function ContactPage({ params }: Params) {
     <main id="main" className="pg-contacto">
       <section className="hero" aria-labelledby="contact-title">
         <div className="container">
+          <div className="hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">{d.eyebrow}</p>
             <h1 id="contact-title">{rich(intro.title, { hl: "accent" })}</h1>
             <p className="hero-sub">{rich(intro.sub)}</p>
             <p className="brandline">{d.reply}</p>
           </div>
+          {/* The doors sit beside the headline: the action is the first thing on
+              the right, and the page never opens with an empty half. */}
+          <ContactDoors />
+          </div>
         </div>
       </section>
-
-      <ContactDoors />
 
       <section className="section form-section" aria-labelledby="form-title">
         <div className="container">

@@ -819,3 +819,11 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.025em;}
   *{animation:none !important;transition:none !important;}
   .reveal{opacity:1 !important;transform:none !important;}
 }
+
+/* ============================ HERO, TWO COLUMNS ============================
+   A hero with nothing on its right half reads as an unfinished page (Daniel,
+   2026-09-30). Pages without a canvas under the hero put their first proof on
+   the right: the contact doors, a photograph. One column under 900px. */
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr);gap:clamp(24px,4vw,56px);align-items:center;}
+.hero-grid .hero-copy{max-width:none;}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
