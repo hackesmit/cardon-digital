@@ -265,8 +265,8 @@ const es: typeof en = {
   },
   proof: {
     kicker: "Caso de estudio",
-    title: "Una hora de trabajo financiero, ahora como dos minutos.",
-    desc: "Monte Xanic opera su cosecha y sus finanzas sobre un sistema que construimos y que hoy es suyo. Un flujo financiero que tomaba como una hora a mano ahora toma **como dos minutos**.",
+    title: "Una hora de trabajo financiero, ahora unos dos minutos.",
+    desc: "Monte Xanic opera su cosecha y sus finanzas sobre un sistema que construimos y que hoy es suyo. Un flujo financiero que tomaba cerca de una hora a mano ahora toma **unos dos minutos**.",
     ctaXanic: "Lea el caso de Monte Xanic",
     ctaEnkanto: "El caso de En'kanto",
     sealSub: "Valle de Guadalupe",

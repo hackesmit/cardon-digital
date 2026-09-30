@@ -147,7 +147,7 @@ const es: typeof en = {
     title: "El trabajo repetitivo, hecho solo.",
     titleAccent: "Y el sistema es suyo.",
     sub: "Construimos el sistema con el que opera su negocio: el registro se anota una vez, donde ya se hace el trabajo, los reportes se arman solos y las cuentas amanecen al corriente. Probado en bodegas del Valle, hecho alrededor de cómo trabaja su equipo.",
-    proof: "Monte Xanic: como una hora de trabajo financiero, hoy como dos minutos.",
+    proof: "Monte Xanic: una hora de trabajo financiero, hoy unos dos minutos.",
   },
   gets: {
     kicker: "Lo que se lleva",
@@ -209,7 +209,7 @@ const es: typeof en = {
   },
   proof: {
     kicker: "Caso de estudio",
-    title: "Una hora de trabajo financiero, hoy como dos minutos.",
+    title: "Una hora de trabajo financiero, hoy unos dos minutos.",
     body: "La cosecha vivía en un sistema de producción, en hojas de cálculo y en una libreta de campo, y alguien armaba la foto a mano. Hoy Monte Xanic abre una sola vista viva de la temporada. En Viñedo En'kanto, la producción, el restaurante y las reservas corren en un sistema, con una tienda enfrente.",
     readXanic: "Ver el caso de Monte Xanic",
     readEnkanto: "Ver el caso de En'kanto",
@@ -245,13 +245,13 @@ const es: typeof en = {
     "Diez días hábiles sobre su operación, su sitio y sus anuncios, y un informe escrito que es suyo: qué es cierto, qué está roto y qué construir primero.",
   vis: {
     ops: {
-      tag: "Monte Xanic: como una hora de trabajo financiero, hoy como dos minutos",
-      aria: "En Monte Xanic, como una hora de trabajo financiero se comprime en un solo paso automático y limpio de como dos minutos, como 97 por ciento menos tiempo, y se actualiza durante el día.",
+      tag: "Monte Xanic: de una hora de trabajo financiero a unos dos minutos",
+      aria: "En Monte Xanic, cerca de una hora de trabajo financiero se comprime en un solo paso automático y limpio de unos dos minutos, casi 97 por ciento menos tiempo, y se actualiza durante el día.",
       manual: "A MANO, CADA SEMANA",
       auto: "AUTOMATIZADO, CORRE SOLO",
-      badge: "como 97% menos tiempo",
-      long: "como 1 hora",
-      short: "como 2 min",
+      badge: "97% menos tiempo",
+      long: "1 hora",
+      short: "2 min",
       unit: "min",
       foot: "SE ACTUALIZA DURANTE EL DÍA",
     },
