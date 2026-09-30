@@ -356,7 +356,7 @@ export default function Home({ params }: Params) {
               <p className="case-job-body">{d.xanic.production.body}</p>
               <Media
                 slot="home/xanic-cellar"
-                src="/media/software/cellar-charts.webp"
+                src="/media/home/service-software.webp"
                 tone="full"
                 caption={d.xanic.production.cap}
                 alt={d.xanic.production.alt}
