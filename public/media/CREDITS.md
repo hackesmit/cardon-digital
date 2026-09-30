@@ -56,11 +56,11 @@ Files Daniel supplied through the console inbox, cropped and encoded to WebP
 through Chrome's canvas (the box has no image library). The licence of the
 stock frame is recorded when Daniel names its source.
 
-### about/cellar-band.webp
+### about/cellar.webp
 
 - Credit: stock, supplied by Daniel Hack, 2026-09-28; source and licence to record
-- Slot: about/cellar-band
-- Frame: barrels racked in a cellar under warm pendant light, cropped to 21:9
+- Slot: about/cellar
+- Frame: barrels racked in a cellar under warm pendant light, cropped to 4:3
 
 ### precios/handover.webp
 

@@ -54,6 +54,7 @@ export default function PreciosPage({ params }: Params) {
       <section className="hero" aria-label={d.hero.aria}>
         <div className="container">
           <Reveal>
+            <div className="hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">{d.hero.eyebrow}</p>
               <h1>
@@ -71,6 +72,17 @@ export default function PreciosPage({ params }: Params) {
                 </a>
               </div>
               <p className="hero-proof">{d.hero.proof}</p>
+            </div>
+            {/* The day the ownership promise is kept, beside the sentence that makes it. */}
+            <Media
+              className="hero-photo"
+              slot="precios/handover"
+              src="/media/precios/handover.webp"
+              tone="full"
+              priority
+              caption={d.media.handoverCap}
+              alt={d.media.handoverAlt}
+            />
             </div>
           </Reveal>
         </div>
@@ -102,18 +114,6 @@ export default function PreciosPage({ params }: Params) {
             <p className="more-link">
               <Link href={href("/software")}>{d.hero.softwareHead.more}</Link>
             </p>
-          </Reveal>
-          <Reveal>
-            {/* The day the ownership promise is kept, under the sentence that makes it. */}
-            <Media
-              className="pr-photo"
-              slot="precios/handover"
-              src="/media/precios/handover.webp"
-              tone="full"
-              priority
-              caption={d.media.handoverCap}
-              alt={d.media.handoverAlt}
-            />
           </Reveal>
         </div>
       </section>

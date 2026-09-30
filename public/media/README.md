@@ -65,7 +65,7 @@ and upsizing is not.
 | `software/cellar-charts` | photo | `3 / 2` | 3000 x 2000 px | The system open on a laptop in the barrel cellar, the bar charts of the season on screen, barrels racked behind. For the software page. |
 | `software/cellar-laptop` | photo | `3 / 2` | 3000 x 2000 px | A laptop on a barrel with the harvest curve on screen, the cellar lit warm behind it. For the software page. |
 | `software/phone-at-barrel` | photo | `3 / 2` | 3000 x 2000 px | The same record on a phone, held at the barrel in low cellar light, the curve legible. For the software page. |
-| `about/cellar-band` | photo | `21 / 9` | 3360 x 1440 px | A barrel room as one wide band: racked barrels under warm light, no people. For the about page, where the firm says it comes from wine. |
+| `about/cellar` | photo | `4 / 3` | 4000 x 3000 px | A barrel room: racked barrels under warm light, no people. Beside the about page hero, where the firm says it comes from wine. |
 | `home/phone-in-hand` | photo | `4 / 5` | 2000 x 2500 px | The same system on a phone, outdoors in the vineyard, screen legible in the frame. Portrait. |
 | `xanic/before-clipboard` | photo | `3 / 2` | 3000 x 2000 px | The old way: the paper sheet or notebook at the work station where the reading is taken. No tablet in the frame. |
 | `xanic/after-tablet` | photo | `3 / 2` | 3000 x 2000 px | The same station, same lens, same height, same light, with the tablet instead of the paper. The pair only works if the framing matches. |

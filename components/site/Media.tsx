@@ -165,11 +165,11 @@ export const MEDIA_SLOTS = {
     frame:
       "The same record on a phone, held at the barrel in low cellar light, the curve legible. For the software page.",
   },
-  "about/cellar-band": {
+  "about/cellar": {
     kind: "photo",
-    ratio: "21 / 9",
+    ratio: "4 / 3",
     frame:
-      "A barrel room as one wide band: racked barrels under warm light, no people. For the about page, where the firm says it comes from wine.",
+      "A barrel room: racked barrels under warm light, no people. Beside the about page hero, where the firm says it comes from wine.",
   },
   "home/phone-in-hand": {
     kind: "photo",

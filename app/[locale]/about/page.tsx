@@ -41,6 +41,7 @@ export default function AboutPage({ params }: Params) {
       {/* ============================ HERO ============================ */}
       <section className="hero" aria-labelledby="about-title">
         <div className="container">
+          <div className="hero-grid">
           <div className="hero-copy">
             <p className="eyebrow">{d.hero.eyebrow}</p>
             <h1 id="about-title">
@@ -51,22 +52,18 @@ export default function AboutPage({ params }: Params) {
             <p className="hero-sub">{d.hero.sub}</p>
             <p className="brandline">{s.brandline}</p>
           </div>
-        </div>
-      </section>
-
-      {/* The one full-colour photograph on the page, under the sentence that
-          says where we come from. */}
-      <section className="photo-slot">
-        <div className="container">
+          {/* The one full-colour photograph on the page, beside the sentence
+              that says where we come from. */}
           <Media
-            className="media-band"
-            slot="about/cellar-band"
-            src="/media/about/cellar-band.webp"
+            className="hero-photo"
+            slot="about/cellar"
+            src="/media/about/cellar.webp"
             tone="full"
             priority
             caption={d.media.bandCap}
             alt={d.media.bandAlt}
           />
+          </div>
         </div>
       </section>
 

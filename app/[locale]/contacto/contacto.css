@@ -99,3 +99,11 @@
 .pg-contacto .form-sent:focus-visible{outline:2px solid var(--primary-dim);outline-offset:3px;}
 .pg-contacto .form-sent h3{font-size:1.25rem;letter-spacing:-0.01em;margin:0 0 8px;}
 .pg-contacto .form-sent p{color:var(--text-dim);font-size:0.97rem;line-height:1.6;margin:0;max-width:46ch;}
+
+/* The doors live inside the hero grid now: no section padding of their own,
+   one door per row in the column, and a single column when no door is set. */
+.pg-contacto .hero .hero-grid:not(:has(.doors-section)){grid-template-columns:1fr;}
+.pg-contacto .hero .doors-section{padding:0;}
+.pg-contacto .hero .doors-section .container{padding:0;}
+.pg-contacto .hero .doors{grid-template-columns:1fr;gap:14px;}
+.pg-contacto .hero .door{padding:18px 18px 20px;}

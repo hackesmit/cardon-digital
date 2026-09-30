@@ -87,7 +87,6 @@ export default function Footer({ locale }: { locale: Locale }) {
           </div>
         </div>
         <div className="foot-bottom">
-          <span>{t.bottom}</span>
           <nav className="foot-legal" aria-label={t.legalLabel}>
             <Link href={href("/privacy")}>{t.privacy}</Link>
             <Link href={href("/terms")}>{t.terms}</Link>
