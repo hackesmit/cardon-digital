@@ -322,7 +322,11 @@ export default function Home({ params }: Params) {
         </div>
       </section>
 
-      {/* ============================ 5. THE CASE ============================ */}
+      {/* ============================ 5. THE CASE ============================
+          Two jobs at one winery, side by side, because they are two different
+          results (Daniel, 2026-09-30): the finance view that assembles itself,
+          with the one measured figure, and the production record that years of
+          notebooks became. The clip runs alone under them. */}
       <section className="section case" id="case" aria-labelledby="case-title">
         <div className="container">
           <div className="section-head">
@@ -331,16 +335,11 @@ export default function Home({ params }: Params) {
             <p className="section-sub">{d.xanic.body}</p>
           </div>
 
-          <div className="case-grid">
-            <Media
-              slot="home/xanic-cellar"
-              src="/media/home/xanic-cellar.webp"
-              tone="full"
-              priority
-              caption={d.xanic.cellarCap}
-              alt={d.xanic.cellarAlt}
-            />
-            <div className="case-figures">
+          <div className="case-two">
+            <div className="case-job case-finance">
+              <span className="kicker gold">{d.xanic.finance.kicker}</span>
+              <h3 className="case-job-title">{d.xanic.finance.title}</h3>
+              <p className="case-job-body">{d.xanic.finance.body}</p>
               <dl className="case-stats">
                 {d.xanic.stats.map((stat) => (
                   <div className="case-stat" key={stat.k}>
@@ -350,32 +349,34 @@ export default function Home({ params }: Params) {
                 ))}
               </dl>
               <p className="case-basis">{d.xanic.basis}</p>
-              <Link className="case-read" href={href(CASE_ROUTES[0])}>
-                {d.xanic.read}
-              </Link>
+            </div>
+            <div className="case-job case-production">
+              <span className="kicker gold">{d.xanic.production.kicker}</span>
+              <h3 className="case-job-title">{d.xanic.production.title}</h3>
+              <p className="case-job-body">{d.xanic.production.body}</p>
+              <Media
+                slot="home/xanic-cellar"
+                src="/media/software/cellar-charts.webp"
+                tone="full"
+                caption={d.xanic.production.cap}
+                alt={d.xanic.production.alt}
+              />
             </div>
           </div>
 
-          {/* The clip beside the phone: the record written at the tank, and
-              the same record read on the phone the team carries. */}
-          <div className="case-row">
-            <Media
-              className="case-clip"
-              slot="home/xanic-tank-log"
-              src="/media/home/xanic-tank-log.mp4"
-              poster="/media/home/xanic-tank-log-poster.webp"
-              caption={d.xanic.tankCap}
-              alt={d.xanic.tankAlt}
-              labels={{ play: d.xanic.play, pause: d.xanic.pause }}
-            />
-            <Media
-              className="case-phone"
-              slot="home/phone-in-hand"
-              src="/media/home/phone-in-hand.webp"
-              caption={d.xanic.phoneCap}
-              alt={d.xanic.phoneAlt}
-            />
-          </div>
+          <Link className="case-read" href={href(CASE_ROUTES[0])}>
+            {d.xanic.read}
+          </Link>
+
+          <Media
+            className="case-clip"
+            slot="home/xanic-tank-log"
+            src="/media/home/xanic-tank-log.mp4"
+            poster="/media/home/xanic-tank-log-poster.webp"
+            caption={d.xanic.tankCap}
+            alt={d.xanic.tankAlt}
+            labels={{ play: d.xanic.play, pause: d.xanic.pause }}
+          />
         </div>
       </section>
 

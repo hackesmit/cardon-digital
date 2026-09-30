@@ -235,15 +235,15 @@ const es: typeof en = {
   meta: {
     title: "Caso Monte Xanic",
     description:
-      "Un flujo financiero de Monte Xanic toma como 97 por ciento menos tiempo: de como una hora a unos dos minutos.",
+      "Un flujo financiero de Monte Xanic toma cerca de 97 por ciento menos tiempo: de una hora larga a unos dos minutos.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Caso",
     t1: "Un flujo financiero de Monte Xanic ahora toma ",
-    accent: "como 97 por ciento menos",
+    accent: "97 por ciento menos",
     t2: " tiempo.",
-    sub: "Como una hora de armado a mano, ahora unos dos minutos, con actualización durante el día. La cosecha detrás se lee en una sola vista.",
+    sub: "Cerca de una hora de armado a mano, ahora unos dos minutos, con actualización durante el día. La cosecha detrás se lee en una sola vista.",
   },
   media: {
     beforeCap:
@@ -271,12 +271,12 @@ const es: typeof en = {
       },
       {
         k: "Resultado",
-        v: "De como una hora de trabajo financiero a unos dos minutos, con actualización durante el día",
+        v: "De una hora de trabajo financiero a unos dos minutos, con actualización durante el día",
       },
     ],
     basisK: "Base",
     basis:
-      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización del tablero, y la vista se actualiza durante el día; la distancia entre las dos cifras es como 97 por ciento. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
+      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización del tablero, y la vista se actualiza durante el día; la distancia entre las dos cifras ronda el 97 por ciento. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
   },
   before: {
     kicker: "Antes",
@@ -296,16 +296,16 @@ const es: typeof en = {
   },
   number: {
     kicker: "El número",
-    title: "Como una hora de trabajo financiero, ahora unos dos minutos.",
+    title: "Una hora de trabajo financiero, ahora unos dos minutos.",
     sub: "El mismo flujo, reconstruido para actualizarse por sí solo durante el día.",
     manual: "A MANO",
     auto: "SE HACE SOLO",
-    long: "como 1 hora",
-    short: "como 2 min",
-    less: "como 97 por ciento menos",
+    long: "1 hora",
+    short: "2 min",
+    less: "97 por ciento menos",
     refreshed: "SE ACTUALIZA DURANTE EL DÍA",
-    tag: "de como una hora a unos dos minutos",
-    aria: "Un flujo manual de como una hora se comprime a unos dos minutos.",
+    tag: "de una hora a unos dos minutos",
+    aria: "Un flujo manual de cerca de una hora se comprime a unos dos minutos.",
   },
   result: {
     kicker: "Para su bodega",

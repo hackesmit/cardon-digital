@@ -1531,3 +1531,43 @@
     max-width: 360px;
   }
 }
+
+/* The case as two jobs side by side (2026-09-30). */
+.pg-home .case-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 3.6vw, 48px);
+  align-items: start;
+}
+.pg-home .case-job {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.pg-home .case-job-title {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+}
+.pg-home .case-job-body {
+  color: var(--text-dim);
+  font-size: 0.97rem;
+  line-height: 1.6;
+  max-width: 48ch;
+}
+.pg-home .case-two .case-stats {
+  margin-top: 6px;
+}
+.pg-home .case-two + .case-read {
+  display: inline-block;
+  margin-top: clamp(20px, 2.6vw, 30px);
+}
+@media (max-width: 900px) {
+  .pg-home .case-two {
+    grid-template-columns: 1fr;
+  }
+}

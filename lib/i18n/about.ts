@@ -29,7 +29,7 @@ const en = {
   },
   mission: {
     kicker: "Why we exist",
-    title: "The wine gets careful attention. The record almost never does.",
+    title: "All the care goes into the wine, and the record stays in a notebook.",
     body: [
       "Our founder, Daniel Hack, has worked in wine for years. What he saw repeats in most wineries: paper notebooks, data from past vintages nobody can find, wines that cannot be compared against each other with any precision, and a vintage that came out well and cannot be repeated, because nobody wrote down what was done.",
       "Other food industries moved ahead in the meantime. They measure more, they keep better records, and they learn from what they did last year. Wine depends more than any of them on what happened in the vintage before, and keeps the worst record of it.",
@@ -38,15 +38,15 @@ const en = {
   },
   beliefs: {
     kicker: "What we believe",
-    title: "A person makes the wine. The system holds the record.",
+    title: "A person makes the wine, and we do not change that.",
     body: [
       "Winemaking is human, natural, and different every year. Nobody automates that and we do not try. The goal is the highest quality the fruit allows, and that means every process done well, including the ones nobody sees.",
-      "Keeping and tracking the data properly is one of the most important parts of it. Seeing what was done and how it landed in each vintage and each harvest is not administration. It is the only way to repeat what worked.",
+      "Keeping the data in order is one of the most important parts of that, because seeing what was done and how it landed in each vintage is the only way to repeat what worked.",
     ],
   },
   how: {
     kicker: "How we work",
-    title: "We learn your method first. Then we build.",
+    title: "Before we build anything, we learn how you work today.",
     body: [
       "Before we propose anything we go through how you work now: where the information is kept, how it is analyzed, whether tests get run and what they are compared against, and how one vintage is set beside the ones before it. What to build, and in what order, comes out of that.",
       "During the build and after it we are on WhatsApp, and there is a call every week. The question goes to whoever built the system, with no help desk and no ticket number in between.",
@@ -76,7 +76,7 @@ const es: typeof en = {
   },
   mission: {
     kicker: "Por qué existimos",
-    title: "Al vino se le cuida. Al registro casi nunca.",
+    title: "Toda la atención va al vino, y el registro se queda en una libreta.",
     body: [
       "Nuestro fundador, Daniel Hack, lleva años trabajando en el vino. Lo que vio se repite en casi todas las bodegas: libretas de papel, datos de añadas pasadas que ya nadie encuentra, vinos que no se pueden comparar entre sí con precisión, y una añada que salió bien y no se puede repetir, porque nadie dejó por escrito qué se hizo.",
       "Mientras tanto, otras industrias de alimentos se adelantaron. Miden más, guardan mejor y aprenden de lo que hicieron el año pasado. El vino, que depende más que ninguna de lo que pasó en la añada anterior, es el que peor lo guarda.",
@@ -85,15 +85,15 @@ const es: typeof en = {
   },
   beliefs: {
     kicker: "En qué creemos",
-    title: "El vino lo hace una persona. El registro lo sostiene el sistema.",
+    title: "El vino lo hace una persona, y eso no lo cambiamos.",
     body: [
       "Hacer vino es un proceso humano, natural y distinto cada año. Nadie automatiza eso y nosotros no lo intentamos. La meta es la mayor calidad que dé la uva, y para eso cada proceso tiene que hacerse bien, no nada más el que se ve.",
-      "Guardar y seguir los datos con orden es una de las partes más importantes de eso. Ver qué se hizo y cómo le pegó a cada añada y a cada cosecha no es administración. Es la única forma de repetir lo que funcionó.",
+      "Guardar los datos con orden es una de las partes más importantes de eso, porque ver qué se hizo y cómo le pegó a cada añada es la única forma de repetir lo que funcionó.",
     ],
   },
   how: {
     kicker: "Cómo trabajamos",
-    title: "Primero entendemos su método. Después construimos.",
+    title: "Antes de construir nada, aprendemos cómo trabaja hoy.",
     body: [
       "Antes de proponer nada revisamos cómo trabaja hoy: dónde guarda la información, cómo la analiza, si hace pruebas y contra qué las compara, y cómo pone una añada junto a las anteriores. De ahí sale qué hay que construir, y en qué orden.",
       "Durante la construcción y después de ella estamos en WhatsApp, y hay una llamada cada semana. La pregunta llega a quien construyó el sistema, sin mesa de ayuda ni número de folio de por medio.",
