@@ -134,7 +134,7 @@ const en = {
     stats: [
       { n: "1 hour", k: "every week, by hand" },
       { n: "2 minutes", k: "now, refreshed through the day" },
-      { n: "97 percent less", k: "time on that one view" },
+      { n: "97% less", k: "time on that one view" },
     ],
     basis: "Timed by hand before the build, and the two minutes are the refresh the dashboard generates. No Monte Xanic production, sales or financial figures are published.",
     production: {
@@ -406,7 +406,7 @@ const es: typeof en = {
     stats: [
       { n: "1 hora", k: "cada semana, a mano" },
       { n: "2 minutos", k: "hoy, actualizados durante el día" },
-      { n: "97 por ciento menos", k: "tiempo en esa vista" },
+      { n: "97% menos", k: "tiempo en esa vista" },
     ],
     basis: "Cronometrado a mano antes de la construcción, y los dos minutos son la actualización que genera el tablero. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
     production: {
