@@ -193,12 +193,12 @@ const es: DemosDict = {
     rush: "la hora pico, visible una hora antes",
     captions: {
       begins: "empieza el servicio",
-      filling: "llenándose",
-      flagged: "la hora pico, avisada temprano",
-      peak: "servicio en su punto",
+      filling: "se va llenando",
+      flagged: "la hora pico, avisada con tiempo",
+      peak: "en plena hora pico",
     },
     fallback:
-      "Un plano del comedor visto desde arriba a lo largo de un servicio, de las 17:00 a las 23:00. Las reservaciones se acomodan en las mesas como fichas pequeñas, las mesas se calientan cuando se sientan y se enfrían cuando se desocupan, y una línea tranquila sigue a los comensales de la noche. Una hora antes del punto más alto, una marca serena muestra la hora pico llegando, visible con tiempo y no como sorpresa.",
+      "El plano de un comedor visto desde arriba durante un servicio, de las 17:00 a las 23:00. Las reservaciones se acomodan en las mesas como fichas pequeñas, las mesas toman un tono cálido cuando se ocupan y se enfrían cuando se desocupan, y una línea discreta va contando los comensales de la noche. Una hora antes del punto más alto, una marca tranquila avisa que se acerca la hora pico, para verla con tiempo y que no llegue de sorpresa.",
     tables: {
       twoWindow: "Mesa de 2 / ventana",
       fourCenter: "Mesa de 4 / centro",
@@ -207,28 +207,28 @@ const es: DemosDict = {
       largeTop: "Mesa grande / seis lugares",
       twoLower: "Mesa de 2 / salón bajo",
     },
-    party: "última reservación: mesa de {n} a las {time}",
+    party: "última reservación: {n} personas a las {time}",
     tableAria: {
       twoWindow:
-        "Mesa de dos junto a la ventana. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
+        "Mesa de dos junto a la ventana. Última reservación ilustrativa de la noche: {n} personas a las {time}.",
       fourCenter:
-        "Mesa de cuatro. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
+        "Mesa de cuatro. Última reservación ilustrativa de la noche: {n} personas a las {time}.",
       banquette:
-        "Banca de seis lugares. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
+        "Banca de seis lugares. Última reservación ilustrativa de la noche: {n} personas a las {time}.",
       fourLower:
-        "Mesa de cuatro. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
+        "Mesa de cuatro. Última reservación ilustrativa de la noche: {n} personas a las {time}.",
       largeTop:
-        "Mesa grande de seis lugares. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
+        "Mesa grande de seis lugares. Última reservación ilustrativa de la noche: {n} personas a las {time}.",
       twoLower:
-        "Mesa de dos. Última reservación ilustrativa de la noche: mesa de {n} a las {time}.",
+        "Mesa de dos. Última reservación ilustrativa de la noche: {n} personas a las {time}.",
     },
     readoutLabel: "Mesa seleccionada",
-    hint: "Elige una mesa para leer su última reservación de la noche.",
+    hint: "Elija una mesa para ver su última reservación de la noche.",
   },
 
   produccion: {
     title: "El viñedo y la bodega a lo largo de una vendimia",
-    tagSpan: "20 AGO a 1 OCT",
+    tagSpan: "20 AGO al 1 OCT",
     vineyard: "VIÑEDO",
     cellar: "BODEGA",
     brix: "GRADOS BRIX POR LOTE",
@@ -241,11 +241,11 @@ const es: DemosDict = {
     captions: {
       begins: "empieza la vendimia",
       ripening: "madurando",
-      flagged: "la ventana, avisada con cinco días",
+      flagged: "la ventana, avisada cinco días antes",
       picked: "cada lote, cortado en su ventana",
     },
     fallback:
-      "Un viñedo de seis lotes visto desde arriba con la bodega a un lado, a lo largo de una vendimia del 20 de agosto al 1 de octubre. Cada lote se oscurece conforme madura su fruta y se corta el día en que su lectura de azúcar entra en la ventana de corte, y la fruta viaja del lote a su propia cuba, que se va llenando. Abajo, las lecturas de los seis lotes en grados Brix suben hacia esa ventana, y cinco días antes de que el último lote entre en su ventana, una marca serena la muestra llegando, visible con tiempo y no como sorpresa.",
+      "Un viñedo de seis lotes visto desde arriba, con la bodega a un lado, durante una vendimia del 20 de agosto al 1 de octubre. Cada lote se oscurece conforme madura la uva y se corta el día en que su lectura de azúcar entra en la ventana de corte; la uva pasa del lote a su propio tanque, que se va llenando. Abajo, las lecturas de los seis lotes en grados Brix suben hacia esa ventana, y cinco días antes de que el último lote entre en la suya, una marca tranquila avisa que ya viene, para verla con tiempo y que no llegue de sorpresa.",
     varieties: {
       sauvignonBlanc: "Sauvignon Blanc",
       chardonnay: "Chardonnay",
@@ -259,18 +259,18 @@ const es: DemosDict = {
     lotAria:
       "Lote {k}, {variety}. Corte ilustrativo: {date}, {brix} grados Brix, {tons} toneladas.",
     readoutLabel: "Lote seleccionado",
-    hint: "Elige un lote para leer su corte.",
+    hint: "Elija un lote para ver su corte.",
   },
 
   hospitalidad: {
-    title: "La quincena llenándose, canal por canal",
+    title: "Cómo se llena la quincena, canal por canal",
     tagNights: "14 noches",
     dates: "LA QUINCENA, DEL 6 AL 19",
     datesCompact: "DEL 6 AL 19",
     daysOut: "A {n} DÍAS",
     arrival: "PRIMERA NOCHE",
     weekdayLetters: "LMXJVSD",
-    occupancy: "NOCHES VENDIDAS, POR NOCHE",
+    occupancy: "UNIDADES VENDIDAS POR NOCHE",
     illustrativeUpper: "ILUSTRATIVO",
     illustrative: "ilustrativo",
     directShare: "{p}% DIRECTAS",
@@ -283,13 +283,13 @@ const es: DemosDict = {
       ota: "por agencia",
     },
     captions: {
-      opens: "la quincena abre",
-      weekend: "el fin de semana se va primero",
-      filling: "la semana se llena alrededor",
-      full: "la quincena, en su mayoría directas",
+      opens: "se abre la quincena",
+      weekend: "el fin de semana se vende primero",
+      filling: "luego se llena entre semana",
+      full: "la quincena, en su mayoría directa",
     },
     fallback:
-      "Un calendario de catorce noches para las ocho unidades de una propiedad pequeña, llenándose conforme se cierra la ventana de reservación. Cada estancia es una barra sobre las noches que ocupa, y las barras se dibujan de dos maneras: las reservaciones que llegaron directas en el color del módulo, las que llegaron por agencia en un neutro rayado, cada una con su origen escrito encima. Los dos fines de semana se agotan mucho antes de que la semana se llene alrededor, y una banda bajo el calendario apila las noches vendidas por noche, las directas abajo y las de agencia arriba. La quincena termina casi llena, y la mayor parte de lo vendido llegó directo.",
+      "Un calendario de catorce noches para las ocho unidades de un hospedaje pequeño, que se va llenando conforme se acercan las fechas. Cada estancia es una barra sobre las noches que ocupa, y las barras se dibujan de dos maneras: las reservaciones que llegaron directas en el color del módulo, las que llegaron por agencia en un tono neutro con rayas, cada una con su origen escrito encima. Los dos fines de semana se agotan mucho antes de que se llenen los días entre semana, y una banda bajo el calendario apila las unidades vendidas cada noche, las directas abajo y las de agencia arriba. La quincena termina con la mayoría de las noches vendidas, y la mayor parte de lo vendido llegó directo.",
     units: {
       casitaJardin: "Casita / jardín",
       casitaVinedo: "Casita / viñedo",
@@ -300,18 +300,18 @@ const es: DemosDict = {
     stayLine: "estancia más larga: {n} noches ({dates}), {channel}",
     unitAria: {
       casitaJardin:
-        "Casita con jardín. Estancia más larga ilustrativa de la quincena: {n} noches, {dates}, {channel}.",
+        "Casita con jardín. Estancia ilustrativa, la más larga de la quincena: {n} noches, {dates}, {channel}.",
       casitaVinedo:
-        "Casita del viñedo. Estancia más larga ilustrativa de la quincena: {n} noches, {dates}, {channel}.",
+        "Casita del viñedo. Estancia ilustrativa, la más larga de la quincena: {n} noches, {dates}, {channel}.",
       suiteTerraza:
-        "Suite con terraza. Estancia más larga ilustrativa de la quincena: {n} noches, {dates}, {channel}.",
+        "Suite con terraza. Estancia ilustrativa, la más larga de la quincena: {n} noches, {dates}, {channel}.",
       loft:
-        "Loft. Estancia más larga ilustrativa de la quincena: {n} noches, {dates}, {channel}.",
+        "Loft. Estancia ilustrativa, la más larga de la quincena: {n} noches, {dates}, {channel}.",
       villa:
-        "Villa. Estancia más larga ilustrativa de la quincena: {n} noches, {dates}, {channel}.",
+        "Villa. Estancia ilustrativa, la más larga de la quincena: {n} noches, {dates}, {channel}.",
     },
     readoutLabel: "Unidad seleccionada",
-    hint: "Elige una unidad para leer su estancia más larga de la quincena.",
+    hint: "Elija una unidad para ver su estancia más larga de la quincena.",
   },
 };
 

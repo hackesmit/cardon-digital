@@ -15,7 +15,7 @@ const en = {
 const es: typeof en = {
   label: "Consentimiento de medición",
   title: "Una pregunta antes de medir",
-  body: "Queremos cargar la medición de Google Analytics y Google Ads para saber qué páginas nos traen trabajo. Nada de Google se carga hasta que usted acepte, nunca vendemos lo que recabamos, y usted puede cambiar de opinión borrando las cookies de este sitio.",
+  body: "Queremos activar la medición de Google Analytics y Google Ads para saber qué páginas nos traen trabajo. Nada de Google se carga hasta que usted acepte, nunca vendemos lo que recabamos y, si cambia de opinión, basta con borrar las cookies de este sitio.",
   accept: "Aceptar la medición",
   decline: "No, gracias",
   privacy: "Leer el aviso de privacidad",
