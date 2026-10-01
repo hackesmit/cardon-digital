@@ -70,6 +70,16 @@ export default function SitiosPage({ params }: Params) {
         </div>
       </section>
 
+      {/* The one link to the style samples: four invented businesses, four looks. */}
+      <div className="styles-band">
+        <div className="container">
+          <Link className="styles-link" href={href("/estilos")}>
+            <span className="styles-line">{d.styles.line}</span>
+            <span className="styles-go">{d.styles.cta}</span>
+          </Link>
+        </div>
+      </div>
+
       <section className="section" id="resultado" aria-labelledby="res-title">
         <div className="container">
           <Reveal>

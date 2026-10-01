@@ -1,10 +1,12 @@
 /**
- * The three loose animations Daniel picked from the prototype page
- * (2026-10-01): Rejilla for the home, Vinedo for the wineries page, Hilos for
- * the path from an ad to a client. Each is a pure drawing: init() sizes its
- * buffers for the measured canvas, frame() advances and paints one frame from
- * the shared state. Nothing here touches the DOM, so the three can be run
- * against a recording context in a test.
+ * The loose animations Daniel picked from the prototype page (2026-10-01):
+ * Rejilla for the home, Vinedo for the wineries page, Hilos for the path from
+ * an ad to a client, and three more for the style samples on /estilos:
+ * Corrientes (combed flowing lines), Constelacion (wandering nodes that
+ * gather into a lattice) and Medanos (stacked dune ridgelines). Each is a pure
+ * drawing: init() sizes its buffers for the measured canvas, frame() advances
+ * and paints one frame from the shared state. Nothing here touches the DOM,
+ * so all of them can be run against a recording context in a test.
  *
  * Every composition is derived from the measured width and height. `small` is
  * the phone composition, where the canvas is a band of its own under the copy
@@ -53,7 +55,7 @@ export interface Field {
   frame(ctx: CanvasRenderingContext2D, S: FieldState): void;
 }
 
-export type FieldKind = "rejilla" | "vinedo" | "hilos";
+export type FieldKind = "rejilla" | "vinedo" | "hilos" | "corrientes" | "constelacion" | "medanos";
 
 const TAU = Math.PI * 2;
 const rand = Math.random;
@@ -428,6 +430,275 @@ export function makeHilos(): Field {
   };
 }
 
+/* =====================================================================
+   Corrientes: a thousand short strokes drift in from the left on a noise
+   field and are combed, toward the right, into parallel lanes that ride one
+   slow wave. The pointer stirs them.
+   ===================================================================== */
+export function makeCorrientes(): Field {
+  const HL = 24, TS = 0.05;
+  const AA = [0.07, 0.17, 0.32, 0.58], RG = [0.6, 1.2];
+  let N = 0, gh = 0, acc = 0;
+  let X = new Float32Array(0), Y = X, HX = X, HY = X, AG = X, LF = X;
+  let GD = new Uint8Array(0);
+  function respawn(i: number, S: FieldState, anywhere: boolean) {
+    const x = anywhere ? rand() * S.W * 1.02 - 10 : -24 + Math.pow(rand(), 1.25) * S.W * 0.85;
+    const y = rand() * S.H;
+    X[i] = x; Y[i] = y;
+    const b = i * HL;
+    for (let k = 0; k < HL; k++) { HX[b + k] = x; HY[b + k] = y; }
+    AG[i] = 0; LF[i] = 16 + rand() * 18; GD[i] = rand() < 0.08 ? 1 : 0;
+  }
+  return {
+    still: 9,
+    init(S) {
+      N = S.small ? 520 : 1150;
+      X = new Float32Array(N); Y = new Float32Array(N); HX = new Float32Array(N * HL); HY = new Float32Array(N * HL);
+      AG = new Float32Array(N); LF = new Float32Array(N); GD = new Uint8Array(N);
+      gh = 0; acc = 0;
+      for (let i = 0; i < N; i++) respawn(i, S, true);
+    },
+    frame(ctx, S) {
+      const W = S.W, H = S.H, t = S.t, dt = S.dt, sc = 1 / (S.small ? 190 : 270), L = S.small ? 7 : 8.5;
+      const px = S.px, py = S.py, pin = S.pin;
+      let pr2 = S.small ? 90 : 130;
+      pr2 *= pr2;
+      const x0 = S.small ? 0.1 : 0.14, x1 = S.small ? 0.7 : 0.74;
+      for (let i = 0; i < N; i++) {
+        let x = X[i], y = Y[i];
+        const s = sstep(x0, x1, x / W);
+        const a = noise3(x * sc, y * sc, t * 0.07) * TAU * 1.15 * (1 - s);
+        const sp = 55 + 75 * s;
+        let vx = Math.cos(a) * sp + 42 * (1 - s), vy = Math.sin(a) * sp;
+        const ph = x * 0.0034 + t * 0.22, ph2 = x * 0.0088 - t * 0.35;
+        const wave = (Math.sin(ph) * 20 + Math.sin(ph2) * 6) * s;
+        const dw = (Math.cos(ph) * 20 * 0.0034 + Math.cos(ph2) * 6 * 0.0088) * s;
+        const ly = y - wave, lane = Math.round(ly / L) * L;
+        vy += (lane - ly) * 3.4 * s * s + dw * vx;
+        const dx = x - px, dy = y - py, f = pin * Math.exp(-(dx * dx + dy * dy) / pr2) * 1.5;
+        vx += -dy * f; vy += dx * f;
+        x += vx * dt; y += vy * dt;
+        X[i] = x; Y[i] = y; AG[i] += dt;
+        if (x > W + 30 || y < -50 || y > H + 50 || x < -60 || AG[i] > LF[i]) respawn(i, S, false);
+      }
+      acc += dt;
+      if (acc >= TS) {
+        acc -= TS;
+        if (acc > TS) acc = 0;
+        gh = (gh + 1) % HL;
+        for (let i = 0; i < N; i++) { HX[i * HL + gh] = X[i]; HY[i * HL + gh] = Y[i]; }
+      }
+      if (!S.draw) return;
+      ctx.lineCap = "round"; ctx.lineJoin = "round";
+      const o = (gh + 1) % HL, split = W * (x0 + x1) * 0.5;
+      for (let c = 0; c < 2; c++) {
+        ctx.strokeStyle = c ? S.c.gold : S.c.agave;
+        for (let rg = 0; rg < 2; rg++) {
+          for (let ab = 0; ab < 4; ab++) {
+            const s0 = Math.floor((ab * HL) / 4), s1 = Math.floor(((ab + 1) * HL) / 4);
+            let any = false;
+            ctx.beginPath();
+            for (let i = 0; i < N; i++) {
+              if (GD[i] !== c) continue;
+              if ((X[i] > split ? 1 : 0) !== rg) continue;
+              const b = i * HL;
+              let idx = (o + s0) % HL;
+              ctx.moveTo(HX[b + idx], HY[b + idx]);
+              for (let k = s0 + 1; k <= s1; k++) {
+                if (k >= HL) { ctx.lineTo(X[i], Y[i]); break; }
+                idx = (o + k) % HL;
+                ctx.lineTo(HX[b + idx], HY[b + idx]);
+              }
+              any = true;
+            }
+            if (any) { ctx.globalAlpha = AA[ab] * RG[rg] * (c ? 1.1 : 1); ctx.lineWidth = rg ? 1.05 : 0.85; ctx.stroke(); }
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+    },
+  };
+}
+
+/* =====================================================================
+   Constelacion: nodes wander on their own, gather into a slowly turning
+   hexagonal lattice, hold while one pulse crosses it, and let go again.
+   Neighbours are joined by a line whose weight follows their distance.
+   ===================================================================== */
+export function makeConstelacion(): Field {
+  let N = 0, NH = 0, a = 50, nE = 0;
+  let HXa = new Float32Array(0), HYa = HXa, DN = HXa, WX = HXa, WY = HXa, NO = HXa, PX = HXa, PY = HXa, PM = HXa, E = HXa;
+  let GD = new Uint8Array(0);
+  return {
+    still: 10.5,
+    init(S) {
+      const W = S.W, H = S.H;
+      a = S.small ? 40 : 54;
+      // The prototype's phone stage was a tall one with the lattice near its
+      // top; here the phone canvas is a band, so the lattice takes its height
+      // from the band and keeps a margin for the wanderers.
+      const rx = S.small ? W * 0.5 : W * 0.34, ry = S.small ? Math.min(H * 0.36, 150) : H * 0.4;
+      const hx: number[] = [], hy: number[] = [], dn: number[] = [], rh = a * 0.866;
+      for (let j = -Math.ceil(ry / rh); j <= Math.ceil(ry / rh); j++) {
+        for (let i = -Math.ceil(rx / a) - 1; i <= Math.ceil(rx / a) + 1; i++) {
+          const x = i * a + (j & 1 ? a / 2 : 0), y = j * rh, q = (x * x) / (rx * rx) + (y * y) / (ry * ry);
+          if (q <= 1) { hx.push(x); hy.push(y); dn.push(Math.sqrt(q)); }
+        }
+      }
+      NH = hx.length;
+      N = NH + Math.round(NH * 0.3);
+      HXa = new Float32Array(N); HYa = new Float32Array(N); DN = new Float32Array(N); WX = new Float32Array(N); WY = new Float32Array(N);
+      NO = new Float32Array(N); PX = new Float32Array(N); PY = new Float32Array(N); PM = new Float32Array(N); GD = new Uint8Array(N);
+      for (let i = 0; i < N; i++) {
+        if (i < NH) { HXa[i] = hx[i]; HYa[i] = hy[i]; DN[i] = dn[i]; } else DN[i] = 9;
+        WX[i] = rand() * W; WY[i] = H * 0.06 + rand() * H * 0.88; NO[i] = rand() * 100; GD[i] = rand() < 0.1 ? 1 : 0;
+      }
+      E = new Float32Array(N * 10 * 5);
+    },
+    frame(ctx, S) {
+      const W = S.W, t = S.t;
+      const T = 20, u = (((t % T) + T) % T) / T;
+      const G = u < 0.1 ? 0 : u < 0.48 ? (u - 0.1) / 0.38 : u < 0.8 ? 1 : u < 0.97 ? 1 - (u - 0.8) / 0.17 : 0;
+      const yaw = Math.sin(t * 0.08) * 0.34 + S.mx * 0.35, pt = 0.5 + Math.sin(t * 0.06) * 0.08 + S.my * 0.16;
+      const cyw = Math.cos(yaw), syw = Math.sin(yaw), cp = Math.cos(pt), sp = Math.sin(pt), F = W * 1.3, cx = S.fx, cy = S.fy;
+      const wave = u > 0.5 && u < 0.8 ? ((u - 0.5) / 0.3) * 1.4 : -1;
+      const px = S.px, py = S.py, pin = S.pin, pr = S.small ? 110 : 160;
+      for (let i = 0; i < N; i++) {
+        const wx = WX[i] + noise3(NO[i], t * 0.05, 0.5) * 90, wy = WY[i] + noise3(NO[i] + 31.7, t * 0.05, 2.5) * 90;
+        let m = 0, x = wx, y = wy;
+        if (i < NH) {
+          m = clamp(G * 1.7 - DN[i] * 0.7, 0, 1);
+          m = m * m * (3 - 2 * m);
+          const x1 = HXa[i] * cyw, z1 = -HXa[i] * syw, y2 = HYa[i] * cp - z1 * sp, z2 = HYa[i] * sp + z1 * cp, s = F / (F + z2);
+          x = lerp(wx, cx + x1 * s, m); y = lerp(wy, cy + y2 * s, m);
+        }
+        const dx = x - px, dy = y - py, d2 = dx * dx + dy * dy;
+        if (pin > 0 && d2 < pr * pr) { const f = pin * (1 - Math.sqrt(d2) / pr) * 0.28; x += dx * f; y += dy * f; }
+        PX[i] = x; PY[i] = y; PM[i] = m;
+      }
+      if (!S.draw) return;
+      const thr = a * 1.32, thr2 = thr * thr, maxE = E.length / 5;
+      nE = 0;
+      for (let i = 0; i < N; i++) {
+        const xi = PX[i], yi = PY[i];
+        for (let j = i + 1; j < N; j++) {
+          const ddx = PX[j] - xi;
+          if (ddx > thr || ddx < -thr) continue;
+          const ddy = PY[j] - yi;
+          if (ddy > thr || ddy < -thr) continue;
+          const dd = ddx * ddx + ddy * ddy;
+          if (dd > thr2 || nE >= maxE) continue;
+          const d = Math.sqrt(dd), al = sstep(thr, thr * 0.62, d) * (0.35 + 0.65 * (PM[i] + PM[j]) * 0.5), o = nE * 5;
+          E[o] = xi; E[o + 1] = yi; E[o + 2] = PX[j]; E[o + 3] = PY[j]; E[o + 4] = al;
+          nE++;
+        }
+      }
+      ctx.strokeStyle = S.c.agave; ctx.lineCap = "round";
+      for (let b = 0; b < 4; b++) {
+        const lo = b / 4, hi = (b + 1) / 4;
+        let any = false;
+        ctx.beginPath();
+        for (let i = 0; i < nE; i++) {
+          const al = E[i * 5 + 4];
+          if (al <= lo || al > hi) continue;
+          ctx.moveTo(E[i * 5], E[i * 5 + 1]); ctx.lineTo(E[i * 5 + 2], E[i * 5 + 3]);
+          any = true;
+        }
+        if (any) { ctx.globalAlpha = hi * 0.5; ctx.lineWidth = 0.7 + hi * 0.5; ctx.stroke(); }
+      }
+      // the pointer picks up the nodes around it
+      if (pin > 0.02) {
+        let any = false;
+        ctx.beginPath();
+        for (let i = 0; i < N; i++) {
+          const dx = PX[i] - px, dy = PY[i] - py;
+          if (dx * dx + dy * dy < pr * pr * 1.6) { ctx.moveTo(px, py); ctx.lineTo(PX[i], PY[i]); any = true; }
+        }
+        if (any) { ctx.globalAlpha = 0.16 * pin; ctx.lineWidth = 0.8; ctx.stroke(); }
+      }
+      // nodes, brighter while they hold the lattice and as the pulse passes
+      for (let c = 0; c < 2; c++) {
+        ctx.fillStyle = c ? S.c.gold : S.c.agave;
+        for (let b = 0; b < 3; b++) {
+          const lo = b / 3, hi = (b + 1) / 3;
+          let any = false;
+          ctx.beginPath();
+          for (let i = 0; i < N; i++) {
+            if (GD[i] !== c) continue;
+            const m = PM[i], w = wave > 0 && i < NH ? Math.exp(-((DN[i] - wave) * (DN[i] - wave)) / 0.012) : 0;
+            const lv = Math.min(1, 0.35 + 0.5 * m + 0.5 * w);
+            if (lv <= lo || lv > hi) continue;
+            const r = 1.3 + 1.0 * m + 1.6 * w;
+            ctx.moveTo(PX[i] + r, PY[i]); ctx.arc(PX[i], PY[i], r, 0, TAU);
+            any = true;
+          }
+          if (any) { ctx.globalAlpha = hi; ctx.fill(); }
+        }
+      }
+      ctx.globalAlpha = 1;
+    },
+  };
+}
+
+/* =====================================================================
+   Medanos: dune ridgelines stacked from far to near, each one hiding the
+   foot of the one behind it. The crests gather around the focus, drift
+   slowly, and one ridge wears the accent.
+   ===================================================================== */
+export function makeMedanos(): Field {
+  let nL = 40, stepX = 8;
+  return {
+    still: 5,
+    init(S) {
+      nL = S.small ? 26 : 42;
+      stepX = S.small ? 6 : 8;
+    },
+    frame(ctx, S) {
+      if (!S.draw) return;
+      const W = S.W, H = S.H, t = S.t;
+      const top = S.small ? H * 0.05 : H * 0.16, bot = S.small ? S.fy * 2.2 : H * 0.9, fx = S.fx;
+      const sw = S.small ? W * 0.38 : W * 0.2, gl = Math.round(nL * 0.62);
+      const px = S.px, py = S.py, pin = S.pin;
+      ctx.lineJoin = "round";
+      for (let j = 0; j < nL; j++) {
+        const y0 = top + ((bot - top) * j) / (nL - 1), rowEnv = Math.pow(Math.sin((Math.PI * (j + 0.5)) / nL), 0.6);
+        let first = true;
+        ctx.beginPath();
+        for (let x = -10; x <= W + 10; x += stepX) {
+          const dx = (x - fx) / sw, env = 0.08 + Math.exp(-dx * dx);
+          const nz = noise3(x * 0.0065, j * 0.19, t * 0.09) * 0.5 + 0.5, nz2 = noise3(x * 0.02 + 3, j * 0.33, t * 0.15) * 0.5 + 0.5;
+          let h = (nz * nz * 1.0 + nz2 * 0.12) * env * rowEnv * H * 0.2;
+          const pdx = (x - px) / 70, pdy = (y0 - py) / 80;
+          h += pin * H * 0.09 * Math.exp(-pdx * pdx - pdy * pdy);
+          if (first) { ctx.moveTo(x, y0 - h); first = false; } else ctx.lineTo(x, y0 - h);
+        }
+        // The farthest ridge is filled to the foot of the canvas, so the
+        // dunes stay one solid body when the page behind them is another
+        // colour than the ground (the sea behind the sand on /estilos). On a
+        // page of the ground colour it paints nothing the eye can tell apart.
+        const foot = j === 0 ? Math.max(H + 2, y0 + 3) : y0 + 3;
+        ctx.lineTo(W + 10, foot); ctx.lineTo(-10, foot); ctx.closePath();
+        ctx.globalAlpha = 1; ctx.fillStyle = S.c.ground; ctx.fill();
+        const front = j / (nL - 1);
+        ctx.strokeStyle = j === gl ? S.c.gold : S.c.agave;
+        ctx.globalAlpha = j === gl ? 0.85 : 0.2 + 0.55 * front;
+        ctx.lineWidth = j === gl ? 1.4 : 0.8 + 0.5 * front;
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    },
+  };
+}
+
+const MAKERS: Record<FieldKind, () => Field> = {
+  rejilla: makeRejilla,
+  vinedo: makeVinedo,
+  hilos: makeHilos,
+  corrientes: makeCorrientes,
+  constelacion: makeConstelacion,
+  medanos: makeMedanos,
+};
+
 export function makeField(kind: FieldKind): Field {
-  return kind === "rejilla" ? makeRejilla() : kind === "vinedo" ? makeVinedo() : makeHilos();
+  return MAKERS[kind]();
 }

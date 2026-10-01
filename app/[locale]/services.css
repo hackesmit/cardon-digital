@@ -184,6 +184,41 @@
    width it reads as a band, so it keeps a measure and sits centred. */
 .pg-software .ops-vis { max-width: 820px; margin-left: auto; margin-right: auto; }
 
+/* ---- the link to the style samples (/estilos), a single ruled line under the hero ---- */
+.pg-sitios .styles-band { margin-top: clamp(10px, 2vw, 22px); }
+.pg-sitios .styles-link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 28px;
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.2s ease;
+}
+.pg-sitios .styles-line { color: var(--text-dim); max-width: 62ch; }
+.pg-sitios .styles-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  color: var(--primary);
+  white-space: nowrap;
+}
+/* A rule after the words that lengthens on hover. */
+.pg-sitios .styles-go::after {
+  content: "";
+  width: 26px;
+  height: 1.5px;
+  background: currentColor;
+  transition: width 0.2s ease;
+}
+.pg-sitios .styles-link:hover { border-color: var(--primary-dim); }
+.pg-sitios .styles-link:hover .styles-go::after { width: 40px; }
+
 /* ---- the one action after each major block ---- */
 .pg-svc .cta-row {
   margin-top: clamp(28px, 3.6vw, 44px);
