@@ -6,7 +6,8 @@ import Footer from "@/components/site/Footer";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
 import { site } from "@/lib/i18n/site";
 import { htmlLang, type Locale } from "@/lib/i18n/config";
-import { archivo } from "@/lib/fonts";
+import { fontVariables } from "@/lib/fonts";
+import TitlePaint from "@/components/site/TitlePaint";
 
 // Pre-paint script: apply the stored mode before first paint so there is no
 // flash, and flag the document as JS-enabled so reveal-on-scroll can hide.
@@ -29,7 +30,7 @@ export default function SiteShell({
     <html
       lang={htmlLang[locale]}
       data-mode="light"
-      className={archivo.variable}
+      className={fontVariables}
       suppressHydrationWarning
     >
       <head>
@@ -43,6 +44,7 @@ export default function SiteShell({
           </a>
           <ContourField />
           <Nav />
+          <TitlePaint />
           {children}
           <Footer locale={locale} />
           <ConsentGate />
