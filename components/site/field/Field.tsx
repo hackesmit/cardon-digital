@@ -224,10 +224,10 @@ export default function Field({
         { threshold: 0.04 },
       );
       io.observe(box);
-    } else {
-      onscreen = true;
-      start();
     }
+    // A browser with no IntersectionObserver cannot tell when the canvas has
+    // left the screen, so it keeps the still frame layoutNow already painted
+    // instead of a loop that would never stop.
 
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
