@@ -16,7 +16,7 @@
 
 /* The route layout's wrapper only hands the font variables down. */
 .est-fonts{display:contents;}
-.pg-estilos{--est-head:64px;}
+.pg-estilos{--est-head:65px;}
 
 /* ---- hero: the title on the left, the sentence and the action on the right ---- */
 .pg-estilos .est-hero{padding-bottom:clamp(30px,4.4vw,56px);}
@@ -315,7 +315,8 @@
   .pg-estilos .sc-hotel .sc-art{height:300px;min-height:0;margin-top:4px;}
 }
 
-/* The narrowest phones: the marks give their room to the style's name. */
-@media (max-width:359px){
+/* Phones: the marks give their room to the word that names the scene a
+   sample and to the style's name, and the caption stays two rows tall. */
+@media (max-width:560px){
   .pg-estilos .est-cap-ticks{display:none;}
 }

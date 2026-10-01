@@ -45,6 +45,7 @@ export default function Field({
   focus,
   density,
   topInset,
+  cover,
 }: {
   kind: FieldKind;
   layout?: "behind" | "band" | "fill";
@@ -59,7 +60,13 @@ export default function Field({
   /** Pixels at the top of the window that sticky chrome covers. A canvas that
    *  only shows under that chrome counts as off screen and stops. */
   topInset?: number;
+  /** Elements that cover the top of the viewport (a sticky header, a sticky
+   *  caption). Their measured heights replace topInset once the page is laid
+   *  out, so a caption that wraps to two lines on a phone is counted in full.
+   *  Each selector is looked up inside the canvas's own section first. */
+  cover?: string[];
 }) {
+  const coverKey = cover ? cover.join("|") : "";
   const boxRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   // The palette is read by value, so a parent that builds the object again on
@@ -240,7 +247,10 @@ export default function Field({
     };
 
     let rt = 0;
+    // Set below, once the observer exists; a resize re-measures what covers the canvas.
+    let watch: () => void = () => {};
     const relayout = () => {
+      watch();
       const r = box.getBoundingClientRect();
       if (Math.abs(r.width - S.W) > 1 || Math.abs(r.height - S.H) > 1 || capDpr() !== dpr) layoutNow();
     };
@@ -261,17 +271,36 @@ export default function Field({
     layoutNow();
 
     let io: IntersectionObserver | null = null;
-    if ("IntersectionObserver" in window) {
+    let inset = -1;
+    const coverNow = () => {
+      if (!cover || !cover.length) return Math.round(topInset || 0);
+      const scope = box.closest("section");
+      let sum = 0;
+      for (const sel of cover) {
+        const el = (scope && scope.querySelector(sel)) || document.querySelector(sel);
+        if (el) sum += el.getBoundingClientRect().height;
+      }
+      return Math.round(sum > 0 ? sum : topInset || 0);
+    };
+    // The observer is rebuilt when what covers the canvas changes height, so
+    // "on screen" always means below the header and the caption.
+    watch = () => {
+      if (!("IntersectionObserver" in window)) return;
+      const next = coverNow();
+      if (io && next === inset) return;
+      inset = next;
+      if (io) io.disconnect();
       io = new IntersectionObserver(
         (en) => {
           onscreen = clearsThreshold(en[en.length - 1], 0.04);
           if (onscreen) start();
           else stop();
         },
-        topInset ? { threshold: 0.04, rootMargin: "-" + Math.round(topInset) + "px 0px 0px 0px" } : { threshold: 0.04 },
+        inset ? { threshold: 0.04, rootMargin: "-" + inset + "px 0px 0px 0px" } : { threshold: 0.04 },
       );
       io.observe(box);
-    }
+    };
+    watch();
     // A browser with no IntersectionObserver cannot tell when the canvas has
     // left the screen, so it keeps the still frame layoutNow already painted
     // instead of a loop that would never stop.
@@ -298,7 +327,9 @@ export default function Field({
       if (typeof reduceMQ.removeEventListener === "function") reduceMQ.removeEventListener("change", onReduceChange);
       else if (typeof reduceMQ.removeListener === "function") reduceMQ.removeListener(onReduceChange);
     };
-  }, [kind, layout, fixed, focus, density, topInset]);
+    // coverKey stands in for cover: the same selectors in a new array must not restart the canvas.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kind, layout, fixed, focus, density, topInset, coverKey]);
 
   return (
     <div
