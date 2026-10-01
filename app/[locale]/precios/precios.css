@@ -183,13 +183,13 @@
    THE FIGURES, DRAWN (bead hq-wrig5.13)
 
    Colour is the module and never its rank, so a re-ranking never repaints a
-   series: Produccion --primary, Hospitalidad --secondary, Restaurante
+   series: Produccion --primary, Hospitalidad --series-gold, Restaurante
    --energy-bright, and the shared service base --muted because it is not a
    module. --energy-bright rather than the raw --energy token because gold
    against clay is the one pair the brand gets wrong for this job: as tokens
    they sit a deuteranope delta E of 5.7 and a normal-vision delta E of 12.2
-   apart, both under the floor. Derived, the set resolves to #2E7D5C /
-   #B07E1E / #A1421C in light and #3FB58A / #D9A83A / #CA6941 in dark, and both
+   apart, both under the floor. Derived, the set resolves to #23664A /
+   #B07E1E / #A1411B in light and #3FB58A / #D9A83A / #CA6941 in dark, and both
    pass CVD separation, the normal-vision floor and contrast against their own
    surface. The one check still failing is the chroma floor on the brand green,
    which reads a little gray by design and is not this bead's to change; every
@@ -220,7 +220,7 @@
 .pg-precios .combo-key[data-part="produccion"] .combo-swatch{background:var(--primary);}
 .pg-precios .fc-bar[data-module="hospitalidad"],
 .pg-precios .combo-fill[data-part="hospitalidad"],
-.pg-precios .combo-key[data-part="hospitalidad"] .combo-swatch{background:var(--secondary);}
+.pg-precios .combo-key[data-part="hospitalidad"] .combo-swatch{background:var(--series-gold);}
 .pg-precios .fc-bar[data-module="restaurante"],
 .pg-precios .combo-fill[data-part="restaurante"],
 .pg-precios .combo-key[data-part="restaurante"] .combo-swatch{background:var(--energy-bright);}

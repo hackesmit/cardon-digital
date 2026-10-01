@@ -23,6 +23,7 @@
   --ground:#F3EEDF; --panel:#FFFDF6; --text:#17201A;
   --primary:#23664A; --secondary:#9A6A12; --energy:#C3491B;
 }
+:root[data-mode="light"]{--series-gold:#B07E1E;}
 
 :root{
   --tertiary:var(--primary);
@@ -37,6 +38,11 @@
   --primary-bright: color-mix(in srgb, var(--primary) 74%, var(--text) 26%);
   --secondary-bright: color-mix(in srgb, var(--secondary) 78%, var(--text) 22%);
   --energy-bright: color-mix(in srgb, var(--energy) 80%, var(--text) 20%);
+  /* The gold a chart series wears. In light mode the brand gold was deepened
+     for text contrast, which pulled it toward the clay; a series keeps the
+     lighter gold so Hospitalidad and Restaurante stay apart for a deuteranope
+     (OKLab dE 15.2 normal, 12.6 deuteranope against --energy-bright). */
+  --series-gold: var(--secondary);
   --header-bg: color-mix(in srgb, var(--ground) 85%, transparent);
   --scrim: color-mix(in srgb, var(--ground) 55%, transparent);
   --cta-ink:#FFF3EA;
@@ -858,14 +864,16 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
    The names of the businesses we have worked with, running under the hero. */
 .clients{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);padding:clamp(14px,2vw,22px) 0;overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
-.clients-track{display:flex;gap:clamp(40px,6vw,84px);width:max-content;animation:clientsSlide 34s linear infinite;
+.clients-track{display:flex;width:max-content;animation:clientsSlide 136s linear infinite;
   font-family:var(--display);font-weight:600;font-size:clamp(1.2rem,2.3vw,1.8rem);letter-spacing:-0.015em;color:var(--text);white-space:nowrap;}
-.clients-track span{display:inline-flex;align-items:center;gap:clamp(40px,6vw,84px);}
+.clients-track span{display:inline-flex;align-items:center;gap:clamp(40px,6vw,84px);padding-right:clamp(40px,6vw,84px);}
 .clients-track span::after{content:"";width:7px;height:7px;border-radius:2px;background:var(--secondary);}
 @keyframes clientsSlide{to{transform:translateX(-50%);}}
 .clients:hover .clients-track{animation-play-state:paused;}
 @media (prefers-reduced-motion: reduce){
   .clients{-webkit-mask-image:none;mask-image:none;}
-  .clients-track{width:auto;flex-wrap:wrap;justify-content:center;row-gap:10px;padding:0 24px;}
+  .clients-track{width:auto;flex-wrap:wrap;justify-content:center;gap:10px 30px;padding:0 24px;animation:none;}
+  .clients-track span{padding-right:0;}
+  .clients-track span::after{display:none;}
   .clients-track [aria-hidden="true"]{display:none;}
 }

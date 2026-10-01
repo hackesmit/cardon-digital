@@ -156,13 +156,14 @@ export default function Home({ params }: Params) {
         </div>
       </section>
 
-      {/* The client band: the names run twice so the loop has no seam, and the
-          second run is hidden from a screen reader. */}
+      {/* The client band: the names run eight times so half the track is four
+          full runs, wider than any screen, and the loop has no seam. Every
+          run after the first is hidden from a screen reader. */}
       <section className="clients" aria-label={d.clientsAria}>
         <div className="clients-track">
-          {[0, 1].map((run) =>
+          {[0, 1, 2, 3, 4, 5, 6, 7].map((run) =>
             CLIENTS.map((name) => (
-              <span key={run + name} aria-hidden={run === 1 ? "true" : undefined}>
+              <span key={run + name} aria-hidden={run > 0 ? "true" : undefined}>
                 {name}
               </span>
             )),

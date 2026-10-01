@@ -19,7 +19,7 @@ import {
  * would be comparable by accident and misleading by construction.
  *
  * Colour is the module, never its rank, so the order of the bars can change
- * without the colours moving: Produccion --primary, Hospitalidad --secondary,
+ * without the colours moving: Produccion --primary, Hospitalidad --series-gold,
  * Restaurante --energy-bright, the same three the module boards and the
  * stacked monthly bars use. --energy-bright rather than --energy because the
  * raw gold and clay tokens sit a deuteranope delta E of 5.7 apart, under the

@@ -32,7 +32,10 @@ export default function TitlePaint() {
     const supported =
       typeof CSS !== "undefined" &&
       (CSS.supports("background-clip", "text") || CSS.supports("-webkit-background-clip", "text"));
-    if (reduce || !supported || h1.dataset.tp === "1") {
+    // A script that arrives after the CSS fallback has already shown the title
+    // must not take it away again to repaint it.
+    const alreadyShown = getComputedStyle(h1).visibility === "visible";
+    if (reduce || !supported || alreadyShown || h1.dataset.tp === "1") {
       done();
       return;
     }
@@ -56,15 +59,14 @@ export default function TitlePaint() {
       el.style.setProperty("--tp-c", getComputedStyle(el).color);
       el.style.setProperty("--tp-n", String(i));
       el.classList.add("tp");
-      el.addEventListener(
-        "animationend",
-        () => {
-          el.classList.remove("tp");
-          el.style.removeProperty("--tp-c");
-          el.style.removeProperty("--tp-n");
-        },
-        { once: true },
-      );
+      const end = (e: AnimationEvent) => {
+        if (e.target !== el) return;
+        el.removeEventListener("animationend", end);
+        el.classList.remove("tp");
+        el.style.removeProperty("--tp-c");
+        el.style.removeProperty("--tp-n");
+      };
+      el.addEventListener("animationend", end);
     });
     done();
   }, [pathname]);
