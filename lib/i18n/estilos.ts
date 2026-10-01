@@ -66,7 +66,7 @@ const en = {
     action: "Book",
     title: "Breathe",
     titleAccent: "more slowly.",
-    sub: "Massages, steam baths and afternoon-long rituals in a quiet studio.",
+    sub: "Massages, steam baths and afternoon rituals in a quiet studio.",
     primary: "Book a ritual",
     secondary: "See the menu",
   },

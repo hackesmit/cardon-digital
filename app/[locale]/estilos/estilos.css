@@ -14,6 +14,8 @@
    Everything below 861px is the phone arrangement: title first, the drawing
    as a band of its own under the copy, never behind it. */
 
+/* The route layout's wrapper only hands the font variables down. */
+.est-fonts{display:contents;}
 .pg-estilos{--est-head:64px;}
 
 /* ---- hero: the title on the left, the sentence and the action on the right ---- */
@@ -137,7 +139,7 @@
   margin-left:auto;border:1px solid #2C3442;padding:8px 14px;
   font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;
 }
-.pg-estilos .sc-tech .sc-copy{flex:1;display:flex;flex-direction:column;justify-content:center;width:min(720px,56%);padding-top:36px;padding-bottom:36px;}
+.pg-estilos .sc-tech .sc-copy{flex:1;display:flex;flex-direction:column;justify-content:center;width:min(820px,60%);padding-right:0;padding-top:36px;padding-bottom:36px;}
 .pg-estilos .sc-tech .sc-kicker{
   font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
   color:var(--volt);margin-bottom:24px;
@@ -151,9 +153,9 @@
 .pg-estilos .sc-tech .sc-btn{background:var(--volt);color:#0A0C10;border:1px solid var(--volt);padding:13px 22px;font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;}
 .pg-estilos .sc-tech .sc-link{border:1px solid #2C3442;padding:13px 22px;font-size:0.94rem;font-weight:500;}
 .pg-estilos .sc-tech .sc-art{
-  top:0;right:0;bottom:0;width:62%;
-  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 30%);
-  mask-image:linear-gradient(to right,transparent 0,#000 30%);
+  top:0;right:0;bottom:0;width:56%;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 26%);
+  mask-image:linear-gradient(to right,transparent 0,#000 26%);
 }
 .pg-estilos .sc-tech .sc-tags{
   position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
@@ -200,10 +202,10 @@
 /* The canvas starts off the left edge, so what shows is where the strokes
    are already being combed into lanes; they thin out before the words. */
 .pg-estilos .sc-spa .sc-art{
-  left:-26%;top:13%;bottom:13%;width:90%;
-  -webkit-mask-image:linear-gradient(to right,#000 0,#000 66%,transparent 96%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
+  left:-26%;top:17%;bottom:17%;width:90%;
+  -webkit-mask-image:linear-gradient(to right,#000 0,#000 56%,transparent 87%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
   -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,#000 0,#000 66%,transparent 96%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 0,#000 56%,transparent 87%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
   mask-composite:intersect;
 }
 
@@ -224,13 +226,13 @@
   border:1px solid rgba(245,234,214,0.55);padding:12px 22px 9px;font-size:0.72rem;letter-spacing:0.24em;text-transform:uppercase;
 }
 .pg-estilos .sc-hotel .sc-copy{
-  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,0.7fr);gap:clamp(24px,5vw,96px);align-items:end;
+  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,0.78fr);gap:clamp(24px,4vw,72px);align-items:end;
   padding-top:clamp(22px,6vh,64px);
 }
-.pg-estilos .sc-hotel .sc-title{font-weight:300;text-transform:uppercase;font-size:clamp(2.4rem,5.5vw,5.2rem);line-height:1.06;letter-spacing:0.035em;}
+.pg-estilos .sc-hotel .sc-title{font-weight:300;text-transform:uppercase;font-size:clamp(2.4rem,5vw,4.7rem);line-height:1.08;letter-spacing:0.035em;}
 .pg-estilos .sc-hotel .sc-title em{font-style:normal;color:#F1BD8E;}
 .pg-estilos .sc-hotel .sc-sub{font-size:1.12rem;font-weight:300;line-height:1.6;color:rgba(245,234,214,0.92);max-width:34ch;}
-.pg-estilos .sc-hotel .sc-actions{margin-top:24px;gap:16px 28px;}
+.pg-estilos .sc-hotel .sc-actions{margin-top:24px;gap:16px 22px;}
 .pg-estilos .sc-hotel .sc-btn{
   background:#E9D6B4;color:#0F4A57;padding:15px 24px 11px;font-size:0.74rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;
 }
@@ -253,6 +255,7 @@
   .pg-estilos .est-hero-copy{grid-template-columns:1fr;gap:18px;}
   .pg-estilos .est-cap-row{flex-wrap:wrap;padding-top:9px;padding-bottom:9px;}
   .pg-estilos .est-cap-suits{order:5;flex-basis:100%;font-size:0.86rem;}
+  .pg-estilos .est-cap-ticks a{width:20px;}
 
   .pg-estilos .est-scene{min-height:0;}
   .pg-estilos .sc-links,.pg-estilos .sc-nav-action{display:none;}
@@ -271,8 +274,9 @@
   /* logistics */
   .pg-estilos .sc-tech .sc-nav{justify-content:space-between;}
   .pg-estilos .sc-tech .sc-menu{font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid #2C3442;padding:7px 12px;}
-  .pg-estilos .sc-tech .sc-copy{display:block;width:auto;padding-top:38px;padding-bottom:6px;}
+  .pg-estilos .sc-tech .sc-copy{display:block;width:auto;padding-right:var(--pad);padding-top:38px;padding-bottom:6px;}
   .pg-estilos .sc-tech .sc-kicker{margin-bottom:18px;}
+  .pg-estilos .sc-tech .sc-title{font-size:clamp(2.1rem,10.6vw,2.6rem);}
   .pg-estilos .sc-tech .sc-sub{margin-top:20px;font-size:1.02rem;}
   .pg-estilos .sc-tech .sc-actions{margin-top:26px;}
   .pg-estilos .sc-tech .sc-art{
@@ -306,6 +310,12 @@
   .pg-estilos .sc-hotel .sc-brand{font-size:1.05rem;letter-spacing:0.4em;}
   .pg-estilos .sc-hotel .sc-menu{font-size:0.7rem;letter-spacing:0.24em;text-transform:uppercase;}
   .pg-estilos .sc-hotel .sc-copy{grid-template-columns:1fr;gap:20px;padding-top:34px;padding-bottom:26px;}
+  .pg-estilos .sc-hotel .sc-title{font-size:clamp(1.8rem,9.3vw,2.4rem);}
   .pg-estilos .sc-hotel .sc-sub{font-size:1.06rem;}
   .pg-estilos .sc-hotel .sc-art{height:300px;min-height:0;margin-top:4px;}
+}
+
+/* The narrowest phones: the marks give their room to the style's name. */
+@media (max-width:359px){
+  .pg-estilos .est-cap-ticks{display:none;}
 }

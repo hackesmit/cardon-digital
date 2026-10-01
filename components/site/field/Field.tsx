@@ -43,6 +43,8 @@ export default function Field({
   className,
   colors,
   focus,
+  density,
+  topInset,
 }: {
   kind: FieldKind;
   layout?: "behind" | "band" | "fill";
@@ -51,6 +53,12 @@ export default function Field({
   colors?: FieldPalette;
   /** Where the composition centres on a wide canvas, 0 to 1 across its width. */
   focus?: number;
+  /** How much of the drawing a wide canvas carries; 1 is the design. A phone
+   *  canvas always draws at 1, where a band is already full. */
+  density?: number;
+  /** Pixels at the top of the window that sticky chrome covers. A canvas that
+   *  only shows under that chrome counts as off screen and stops. */
+  topInset?: number;
 }) {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -85,7 +93,7 @@ export default function Field({
 
     const S: FieldState = {
       W: 1, H: 1, t: 0, dt: 0, mx: 0, my: 0, px: 0, py: 0, rpx: 0, rpy: 0, pin: 0,
-      fx: 0, fy: 0, small: false, draw: true, dark: false,
+      fx: 0, fy: 0, small: false, dens: 1, draw: true, dark: false,
       c: { agave: "#23664A", agaveRgb: [35, 102, 74], gold: "#9A6A12", goldRgb: [154, 106, 18], ground: "#F3EEDF" },
     };
 
@@ -141,6 +149,7 @@ export default function Field({
       // parent's stylesheet has already put the box where the drawing belongs,
       // so the hero's 0.7 rule is not inherited. `focus` moves the centre on a
       // wide canvas when a scene asks for it; a phone composition stays centred.
+      S.dens = density !== undefined && !S.small ? Math.max(0.5, Math.min(2.5, density)) : 1;
       const asked = focus !== undefined && !S.small ? Math.max(0, Math.min(1, focus)) : null;
       S.fx = S.W * (asked !== null ? asked : behindNow ? 0.7 : 0.5);
       S.fy = S.H * 0.5;
@@ -259,7 +268,7 @@ export default function Field({
           if (onscreen) start();
           else stop();
         },
-        { threshold: 0.04 },
+        topInset ? { threshold: 0.04, rootMargin: "-" + Math.round(topInset) + "px 0px 0px 0px" } : { threshold: 0.04 },
       );
       io.observe(box);
     } else {
@@ -285,7 +294,7 @@ export default function Field({
       window.removeEventListener("cardon-mode", onMode);
       reduceMQ.removeEventListener("change", onReduceChange);
     };
-  }, [kind, layout, fixed, focus]);
+  }, [kind, layout, fixed, focus, density, topInset]);
 
   return (
     <div

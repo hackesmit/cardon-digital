@@ -42,6 +42,10 @@ export interface FieldState {
   fx: number;
   fy: number;
   small: boolean;
+  /** How much of a drawing there is: 1 is the composition as designed. Read
+   *  only by the drawings that have a count to scale (Corrientes, Constelacion,
+   *  Medanos); the first three ignore it. */
+  dens: number;
   /** False while warming up: advance the state, paint nothing. */
   draw: boolean;
   dark: boolean;
@@ -452,7 +456,7 @@ export function makeCorrientes(): Field {
   return {
     still: 9,
     init(S) {
-      N = S.small ? 520 : 1150;
+      N = Math.round((S.small ? 520 : 1150) * S.dens);
       X = new Float32Array(N); Y = new Float32Array(N); HX = new Float32Array(N * HL); HY = new Float32Array(N * HL);
       AG = new Float32Array(N); LF = new Float32Array(N); GD = new Uint8Array(N);
       gh = 0; acc = 0;
@@ -533,7 +537,7 @@ export function makeConstelacion(): Field {
     still: 10.5,
     init(S) {
       const W = S.W, H = S.H;
-      a = S.small ? 40 : 54;
+      a = (S.small ? 40 : 54) / Math.sqrt(S.dens);
       // The prototype's phone stage was a tall one with the lattice near its
       // top; here the phone canvas is a band, so the lattice takes its height
       // from the band and keeps a margin for the wanderers.
@@ -650,7 +654,7 @@ export function makeMedanos(): Field {
   return {
     still: 5,
     init(S) {
-      nL = S.small ? 26 : 42;
+      nL = Math.round((S.small ? 26 : 42) * S.dens);
       stepX = S.small ? 6 : 8;
     },
     frame(ctx, S) {
