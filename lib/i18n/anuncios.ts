@@ -132,13 +132,13 @@ const es: typeof en = {
   meta: {
     title: "Anuncios en Google",
     description:
-      "Clientes nuevos que ya estaban buscando lo que usted vende, con cada llamada y cada mensaje contados. Cuota fija al mes, y su presupuesto va directo a Google.",
+      "Clientes nuevos que ya estaban buscando lo que usted vende, medidos hasta la llamada o el mensaje. Cuota fija al mes, y su presupuesto va directo a Google.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Anuncios en Google",
     title: "Clientes nuevos que ya lo estaban buscando,",
-    titleAccent: "y cada mensaje se cuenta.",
+    titleAccent: "medidos hasta el mensaje.",
     sub: "Campañas en Google que muestran su negocio a la gente de su zona que busca lo que usted vende. Cuota fija al mes, y el presupuesto lo paga usted directo a Google, desde su propia cuenta.",
     proof: "Cuota fija desde {local} al mes. Presupuesto mínimo de {minLocal} al mes, directo a Google.",
   },
@@ -177,7 +177,7 @@ const es: typeof en = {
   pricing: {
     kicker: "Lo que cuesta",
     title: "Cuota fija. Su presupuesto va directo a Google.",
-    sub: "Dos planes, según cuántas campañas necesite. La cuota fija es la misma, invierta lo que invierta.",
+    sub: "Dos alcances, según cuántas campañas necesite. La cuota fija es la misma, invierta lo que invierta.",
     names: { local: "Local", crecimiento: "Crecimiento" } as Record<string, string>,
     scopes: {
       local: "Una campaña de búsqueda, una zona, hasta tres grupos de anuncios.",
@@ -219,7 +219,7 @@ const es: typeof en = {
       tagBefore: "gente buscando",
       tagMid: "clientes medidos",
       captionRun: "buscando",
-      captionDone: "cada mensaje, contado",
+      captionDone: "medido hasta el mensaje",
       aria: "Un mapa de la zona con el negocio al centro. Las búsquedas aparecen en las orillas; las que coinciden llegan hasta el negocio y se cuentan como llamadas y mensajes, y las que no coinciden se tachan. El presupuesto va directo a Google.",
       fallback: "Las búsquedas que coinciden llegan a usted y se cuentan. Las que no, se quedan fuera. Su presupuesto va directo a Google.",
       center: "Su negocio",

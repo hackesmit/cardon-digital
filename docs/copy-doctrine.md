@@ -594,17 +594,17 @@ What a copy bead's Definition of Done now carries, for any change that touches a
    A sentence nobody would say out loud is rewritten.
 2. No English metaphor or syntax carried over. The shapes found on the site and removed by
    hq-1q0f, kept here as the reference list: "construyamos o no" (nos contrate o no), "con llaves
-   y todo" and "las llaves en su mano" (accesos, a su nombre), "hecho alrededor de como trabaja"
-   (a la medida de como trabaja su equipo), "su trabajo doblado a la herramienta" (usted se adapta
-   al programa), "que es cierto, que esta roto" (que funciona, que falla), "una vista viva" (al
-   dia, en tiempo real), "un sitio por el que le escriben", "una tienda enfrente" (su tienda en
-   linea), "equipo entrenado" (equipo capacitado), "Construido para" as a proof line (Hemos
+   y todo" and "las llaves en su mano" (accesos, a su nombre), "hecho alrededor de cómo trabaja"
+   (a la medida de cómo trabaja su equipo), "su trabajo doblado a la herramienta" (usted se adapta
+   al programa), "qué es cierto, qué está roto" (qué funciona, qué falla), "una vista viva" (al
+   día, en tiempo real), "un sitio por el que le escriben", "una tienda enfrente" (su tienda en
+   línea), "equipo entrenado" (equipo capacitado), "Construido para" as a proof line (Hemos
    trabajado con), "flujo financiero" for a finance process (it reads as cash flow), "reclamar"
    for to claim (afirmar).
-3. One word per thing across the site: diagnostico and its written informe; reportes for what a
-   system generates; desarrollo for the build phase (the campaign label "Construccion de la
-   campana" stays, a test exemption names it); reservaciones for bookings in prose; cuota fija;
-   equipo capacitado; al dia or al corriente; vendimia in the wine pages.
+3. One word per thing across the site: diagnóstico and its written informe; reportes for what a
+   system generates; desarrollo for the build phase (the campaign label "Construcción de la
+   campaña" stays, a test exemption names it); reservaciones for bookings in prose; cuota fija;
+   equipo capacitado; al día or al corriente; vendimia in the wine pages.
 4. Facts, figures, hedges, placeholders and policy sentences are identical in both locales. A
    native rewrite never strengthens a claim.
 5. The adversarial review of a Spanish copy change includes a native-reader pass over the full

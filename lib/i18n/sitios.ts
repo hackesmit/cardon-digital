@@ -247,7 +247,7 @@ const es: typeof en = {
       "product-catalogue": "Catálogo de productos",
       "checkout": "Carrito y pago",
       "payment-provider-connector": "Cobro con tarjeta directo a su cuenta",
-      "shipping-and-pickup-rules": "Reglas de envío y de entrega en tienda",
+      "shipping-and-pickup-rules": "Reglas de envío y recolección en tienda",
       "order-notifications": "Avisos de cada pedido en su teléfono",
     } as Record<string, string>,
   },

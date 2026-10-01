@@ -272,7 +272,7 @@ const es: typeof en = {
     sealSub: "Valle de Guadalupe",
   },
   leak: {
-    kicker: "La fuga",
+    kicker: "Dónde se pierde",
     title: "Una bodega rara vez pierde por el vino. Pierde por los cabos sueltos.",
     items: [
       {
@@ -391,7 +391,7 @@ const es: typeof en = {
     termsLabel: "Condiciones",
     terms: [
       "La cuota va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede dejar el servicio cuando quiera, sin deber nada por él. O puede elegir la implementación más baja, que se financia con doce meses de servicio: si deja el servicio antes de esos doce, debe la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
+      "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede dejar el servicio cuando quiera, sin deber nada del desarrollo. O puede elegir la implementación más baja, que se financia con doce meses de servicio: si deja el servicio antes de esos doce, debe la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
       "Todos los precios más IVA.",
     ],
   },

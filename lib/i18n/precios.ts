@@ -292,7 +292,7 @@ const es: typeof en = {
     web: { kicker: "Sitios web", more: "La página de sitios web" },
     adsHead: { kicker: "Anuncios en Google", more: "La página de anuncios" },
     softwareHead: { kicker: "Software", title: "Software: tres módulos, cada uno con su precio de entrada.", sub: "La implementación paga el desarrollo, que es suyo. La mensualidad paga la operación. Al terminar el servicio no se mueve nada entre cuentas: usted queda como titular, le entregamos el método de pago y retiramos nuestro acceso.", more: "La página de software", founding: { kicker: "Bodega fundadora", lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción en tamaño mediano, a su precio de entrada.**", body: "Un solo lugar, y no se acumula con nada más. A cambio: un caso con nombre y los números reales de antes y después, y que nos presente con dos contactos en el Valle." } },
-    notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por licencia, ni mensualidades de por vida.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales como único servicio."] },
+    notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por asiento ni mensualidades de por vida.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales como único servicio."] },
   },
 
   media: {
@@ -321,7 +321,7 @@ const es: typeof en = {
     modules: {
       produccion: {
         name: "Producción",
-        tag: "Sepa qué cosechó, qué produjo y qué vendió.",
+        tag: "Sepa qué cosechó, qué elaboró y qué vendió.",
         up: "Lo suben más fuentes, más orígenes, más añadas anteriores, un modelo o la automatización financiera.",
         limit:
           "Un productor de uva recibe otro conjunto de funciones, con las mismas tarifas: cuadros, aplicaciones, riego y entregas.",
@@ -329,7 +329,7 @@ const es: typeof en = {
       },
       hospitalidad: {
         name: "Hospitalidad",
-        tag: "Llene los cuartos que dos calendarios dejaron vacíos.",
+        tag: "Llene las habitaciones que dos calendarios dejaban vacías.",
         up: "Lo suben más unidades, más canales o un channel manager, hasta 40 unidades.",
         limit:
           "En el tamaño de entrada se lee el calendario de cada canal, así que nombres e importes se capturan a mano hasta contratar un channel manager.",
@@ -438,7 +438,7 @@ const es: typeof en = {
     title: "Qué cubre la mensualidad.",
     sub: "Una parte compartida por cliente, más un costo de operación por módulo. Esta es la compartida.",
     lines: {
-      "hosting-monitoring-and-backups": "Hospedaje, monitoreo y respaldos",
+      "hosting-monitoring-and-backups": "Hosting, monitoreo y respaldos",
       "the-assistants-provider-account":
         "La cuenta del proveedor del asistente, que pagamos nosotros",
       "care-queue-and-judgement":
@@ -463,7 +463,7 @@ const es: typeof en = {
       "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación.",
       "La mitad de la firma se puede cubrir en tres pagos mensuales, sin recargo.",
       "La cuota mensual se paga por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede suspender el servicio cuando quiera, sin deber nada por él. O puede pagar la implementación más baja, que se financia con doce mensualidades de servicio: si deja el servicio antes de completarlas, le facturamos la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes y llega a cero al pagar las doce. En cualquier caso el sistema es suyo, y su cotización trae el monto exacto de cada mes.",
+      "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede suspender el servicio cuando quiera, sin deber nada del desarrollo. O puede pagar la implementación más baja, que se financia con doce mensualidades de servicio: si deja el servicio antes de completarlas, le facturamos la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes y llega a cero al pagar las doce. En cualquier caso el sistema es suyo, y su cotización trae el monto exacto de cada mes.",
       "Todos los precios son más IVA. Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
       "Cotizamos y facturamos en pesos mexicanos. Las cifras en dólares son conversiones redondeadas, así que una columna en dólares puede diferir de su propia suma por unos cuantos dólares.",
     ],

@@ -243,7 +243,7 @@ const es: typeof en = {
     t1: "Un proceso financiero de Monte Xanic ahora toma ",
     accent: "97% menos",
     t2: " tiempo.",
-    sub: "Cerca de una hora armándolo a mano, ahora unos dos minutos, con actualización durante el día. La vendimia que hay detrás se ve en una sola vista.",
+    sub: "Cerca de una hora de trabajo a mano, ahora unos dos minutos, con actualización durante el día. La vendimia que hay detrás se ve en una sola vista.",
   },
   media: {
     beforeCap:
