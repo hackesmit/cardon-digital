@@ -874,6 +874,9 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 .hero-stage > .container{position:relative;z-index:1;}
 /* The copy keeps a halo of ground colour, so a dot that drifts under a letter never touches it. */
 .hero-stage h1{text-shadow:0 0 22px var(--ground),0 0 8px var(--ground),0 0 2px var(--ground);}
+/* While the title paints itself in, its ink is a background clipped to
+   transparent text, and a shadow would be drawn over it and erase the fill. */
+.hero-stage h1 .tp{text-shadow:none;}
 .hero-stage .hero-sub,.hero-stage .hero-risk,.hero-stage .hero-proof{text-shadow:0 0 12px var(--ground),0 0 4px var(--ground),0 0 2px var(--ground);}
 .field-behind{position:absolute;z-index:0;left:0;right:0;top:calc(-1 * clamp(38px,6vw,72px));bottom:-18px;width:auto;
   -webkit-mask-image:linear-gradient(to right,transparent 0,transparent 42%,#000 74%,#000 94%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
@@ -882,8 +885,9 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   mask-composite:intersect;}
 /* Fills its positioned parent; that parent decides the place, the mask and the phone arrangement. */
 .field-fill{position:absolute;inset:0;width:auto;}
-@media (max-width:760px){
-  /* Title first on a phone: the grid becomes a band of its own under the copy. */
+@media (max-width:900px){
+  /* Title first on a phone or a narrow tablet, where the copy fills the
+     width: the grid becomes a band of its own under the copy. */
   .field-behind{position:relative;top:auto;bottom:auto;height:190px;margin-top:14px;
     -webkit-mask-image:linear-gradient(to right,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%);
     mask-image:linear-gradient(to right,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%);}
