@@ -278,21 +278,21 @@ const es: typeof en = {
   meta: {
     title: "Precios",
     description:
-      "Lo que cuesta un sitio web, el manejo de anuncios en Google con cuota fija y cada módulo de software, a la vista, con las condiciones. Cada precio de entrada está publicado.",
+      "Cuánto cuesta un sitio web, el manejo de anuncios en Google con cuota fija y cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
   },
 
   hero: {
     aria: "Presentación",
     eyebrow: "Lo que cuesta",
     t1: "Precios publicados, en pesos. ",
-    accent: "El diagnóstico fija la cotización.",
-    sub: "Sitios web por lo que incluyen, manejo de anuncios con cuota fija, y cada módulo de software desde su precio de entrada. Más IVA, con factura. **Todo lo que construimos queda a su nombre: dominio, cuentas, código y datos.**",
-    proof: "Construido para Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
+    accent: "El diagnóstico define la cotización.",
+    sub: "Sitios web según lo que incluyen, manejo de anuncios con cuota fija y cada módulo de software desde su precio de entrada. Más IVA, con factura. **Todo lo que construimos queda a su nombre: dominio, cuentas, código y datos.**",
+    proof: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
     ctaFloors: "Ver los precios",
     web: { kicker: "Sitios web", more: "La página de sitios web" },
     adsHead: { kicker: "Anuncios en Google", more: "La página de anuncios" },
-    softwareHead: { kicker: "Software", title: "Software: tres módulos, cada uno con su precio de entrada.", sub: "La implementación paga la construcción, que queda suya. La mensualidad paga operarla. Al terminar el servicio no se mueve nada entre cuentas: lo dejamos a usted como titular, le entregamos el método de pago y retiramos nuestro acceso.", more: "La página de software", founding: { kicker: "Bodega fundadora", lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción con la construcción mediana, a su precio de entrada.**", body: "Un solo lugar, y no se acumula con nada. A cambio: un caso con nombre y los números reales de antes y después, y dos presentaciones en el Valle." } },
-    notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por asiento ni por mes para siempre.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales por sí solas."] },
+    softwareHead: { kicker: "Software", title: "Software: tres módulos, cada uno con su precio de entrada.", sub: "La implementación paga el desarrollo, que es suyo. La mensualidad paga la operación. Al terminar el servicio no se mueve nada entre cuentas: usted queda como titular, le entregamos el método de pago y retiramos nuestro acceso.", more: "La página de software", founding: { kicker: "Bodega fundadora", lead: "**Una bodega fundadora, hasta el 31 de diciembre de 2026: el módulo de Producción en tamaño mediano, a su precio de entrada.**", body: "Un solo lugar, y no se acumula con nada más. A cambio: un caso con nombre y los números reales de antes y después, y que nos presente con dos contactos en el Valle." } },
+    notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por licencia, ni mensualidades de por vida.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales como único servicio."] },
   },
 
   media: {
@@ -301,46 +301,46 @@ const es: typeof en = {
     handoverAlt:
       "Un apretón de manos sobre el mostrador el día de la entrega.",
     diagCap:
-      "Día uno del Diagnóstico: su operación repasada módulo por módulo.",
+      "Primer día del Diagnóstico: revisamos su operación módulo por módulo.",
     diagAlt: "Una laptop con el sistema abierto sobre una barrica, en la cava.",
   },
 
   floors: {
     kicker: "De dónde parte cada módulo",
-    title: "De cuánto parte cada módulo, y qué trae.",
-    aloneLabel: "comprado solo",
+    title: "En cuánto empieza cada módulo y qué incluye.",
+    aloneLabel: "contratado solo",
     setupLabel: "Implementación",
     monthlyLabel: "Cada mes",
-    buildLabel: "La construcción completa",
-    upLabel: "Qué lo sube",
-    limitLabel: "Para tenerlo claro",
+    buildLabel: "Todo lo que incluye",
+    upLabel: "Qué sube el precio",
+    limitLabel: "Conviene saberlo",
     monthlyNote:
-      "Cada mensualidad es la base compartida, que se cobra una vez por cliente, más el costo del módulo.",
-    demoNote: "Los demos corren sobre una marca inventada, en una pestaña nueva.",
-    note: "Un precio de entrada solo sube, nunca baja: más fuentes, más unidades, más mesas, más añadas, un conector, un segundo módulo. Debajo de esa construcción no hay sistema, hay un informe. **El Diagnóstico fija la cotización final.**",
+      "Cada mensualidad es la base compartida, que se cobra una vez por cliente, más el costo de operación del módulo.",
+    demoNote: "Los demos usan una marca inventada y se abren en una pestaña nueva.",
+    note: "Un precio de entrada solo sube, nunca baja: más fuentes, más unidades, más mesas, más añadas, un conector, un segundo módulo. Por debajo del tamaño de entrada no hay sistema, solo un reporte. **El Diagnóstico define la cotización final.**",
     modules: {
       produccion: {
         name: "Producción",
-        tag: "Sepa qué cosechó, qué hizo y qué vendió.",
-        up: "Más fuentes, más orígenes, más añadas anteriores, un modelo o automatización financiera lo suben.",
+        tag: "Sepa qué cosechó, qué produjo y qué vendió.",
+        up: "Lo suben más fuentes, más orígenes, más añadas anteriores, un modelo o la automatización financiera.",
         limit:
-          "Un productor de uva lleva otro conjunto de funciones a las mismas tarifas: cuadros, aplicaciones, riego y entregas.",
+          "Un productor de uva recibe otro conjunto de funciones, con las mismas tarifas: cuadros, aplicaciones, riego y entregas.",
         demo: "Abrir el demo de Producción",
       },
       hospitalidad: {
         name: "Hospitalidad",
         tag: "Llene los cuartos que dos calendarios dejaron vacíos.",
-        up: "Más unidades, más canales o un channel manager lo suben, hasta 40 unidades.",
+        up: "Lo suben más unidades, más canales o un channel manager, hasta 40 unidades.",
         limit:
-          "La construcción de entrada lee el calendario de cada canal, así que nombres e importes se capturan a mano hasta contratar un channel manager.",
+          "En el tamaño de entrada se lee el calendario de cada canal, así que nombres e importes se capturan a mano hasta contratar un channel manager.",
         demo: "Abrir el demo de Hospitalidad",
       },
       restaurante: {
         name: "Restaurante",
         tag: "Cierre el día con el efectivo ya contado.",
-        up: "Más mesas, estaciones o comensales al día lo suben, hasta 60 mesas.",
+        up: "Lo suben más mesas, estaciones o comensales al día, hasta 60 mesas.",
         limit:
-          "Efectivo y tarjeta anotada a mano funcionan desde el día uno. El enlace de pago es un conector sobre su propia cuenta de proveedor, que se cotiza aparte, uno por proveedor, y su propio proveedor de facturación timbra la factura.",
+          "Efectivo y tarjeta anotada a mano funcionan desde el primer día. La liga de pago es un conector a su cuenta con el proveedor de pagos; se cotiza aparte, uno por proveedor, y su propio proveedor de facturación timbra la factura.",
         demo: "Abrir el demo de Restaurante",
       },
     },
@@ -355,12 +355,12 @@ const es: typeof en = {
     "channel-feed-connector": "Conector de canal de reservas",
     "master-calendar": "Calendario maestro",
     "day-view": "Vista del día",
-    "unit-status-board": "Tablero de unidades y vista de limpieza en teléfono",
+    "unit-status-board": "Tablero de unidades y vista de limpieza en el teléfono",
     "guest-record": "Registro del huésped",
-    "occupancy-and-revenue-by-channel": "Ocupación e ingreso por canal",
+    "occupancy-and-revenue-by-channel": "Ocupación e ingresos por canal",
     "menu-categories-and-modifiers": "Menú, categorías y modificadores",
-    "order-taking-on-the-phone": "Toma de orden en el teléfono del mesero",
-    "send-to-kitchen-and-course-firing": "Envío a cocina y disparo de tiempos",
+    "order-taking-on-the-phone": "Toma de comandas en el teléfono del mesero",
+    "send-to-kitchen-and-course-firing": "Envío a cocina y control de tiempos",
     "kitchen-screen": "Pantalla de cocina",
     "table-map-and-host-screen": "Mapa de mesas y pantalla de anfitrión",
     "checkout-with-split-and-tip": "Cobro con división de cuenta y propina",
@@ -369,8 +369,8 @@ const es: typeof en = {
     "cancellations-and-comps-log": "Registro de cancelaciones y cortesías",
     "daily-summary": "Resumen del día",
     "cash-cut": "Corte de caja",
-    "monthly-report-generator": "Generador del informe mensual",
-    "the-assistant": "El asistente sobre sus propios registros",
+    "monthly-report-generator": "Generador del reporte mensual",
+    "the-assistant": "El asistente que consulta sus propios registros",
     "training-and-handover-pack": "Paquete de capacitación y entrega",
   } as Record<string, string>,
 
@@ -378,8 +378,8 @@ const es: typeof en = {
 
   examples: {
     produccion:
-      "Un sitio de producción, una marca, dos fuentes de datos, una añada anterior.",
-    hospitalidad: "Una propiedad de seis unidades en dos canales de reserva.",
+      "Un lugar de producción, una marca, dos fuentes de datos y una añada anterior.",
+    hospitalidad: "Una propiedad de seis unidades en dos canales de reservas.",
     restaurante:
       "Doce mesas, una estación, cuatro teléfonos, una pantalla de cocina.",
   } as Record<string, string>,
@@ -387,31 +387,31 @@ const es: typeof en = {
   mix: {
     kicker: "Más de un módulo",
     title: "Dos módulos, o tres.",
-    sub: "El segundo módulo es una construcción más chica: la capacitación, el asistente, el informe y el ambiente ya están montados.",
+    sub: "Para el segundo módulo hay menos que construir: la capacitación, el asistente, el reporte y el ambiente ya están montados.",
     rules: [
       "La base de servicio compartida se cobra una sola vez, sea cual sea la combinación.",
-      "En la construcción, el módulo más grande va a precio completo, el segundo con {second} por ciento menos, el tercero con {third} por ciento menos.",
-      "Dentro de una combinación, una línea puede quedar debajo de lo que ese módulo cuesta solo, porque se cotiza sobre las horas que de verdad se construyen.",
+      "En el desarrollo, el módulo más grande va a precio completo, el segundo con {second} por ciento de descuento y el tercero con {third} por ciento.",
+      "Dentro de una combinación, un módulo puede quedar por debajo de lo que cuesta solo, porque se cotiza según las horas que realmente se trabajan.",
     ],
     combosKicker: "Las siete combinaciones",
-    combosTitle: "Lo que cuesta cada combinación en tamaño de entrada.",
+    combosTitle: "Lo que cuesta cada combinación en su tamaño de entrada.",
     combosLead:
-      "De mayor a menor, y cada renglón trae la construcción completa de cada módulo que nombra.",
-    combosLabel: "Las siete combinaciones en el tamaño de entrada",
+      "De mayor a menor precio, y cada renglón trae completo cada módulo que menciona.",
+    combosLabel: "Las siete combinaciones en su tamaño de entrada",
     baseLabel: "Base compartida",
-    legendNote: "El color marca solo los bloques mensuales. La barra de arranque de cada renglón usa un tono propio, ninguno de estos cuatro.",
-    comboLabel: "Lo que compra",
+    legendNote: "Los colores marcan solo los bloques mensuales. La barra de arranque de cada renglón lleva un tono propio, distinto de estos cuatro.",
+    comboLabel: "Lo que contrata",
     nameJoin: " y ",
-    pricedOnLead: "Cotizada sobre las horas que de verdad se construyen:",
+    pricedOnLead: "Cotizada según las horas que realmente se trabajan:",
     discountFull: "{module} a precio completo",
-    discountOff: "{module} con {percent} por ciento menos",
+    discountOff: "{module} con {percent} por ciento de descuento",
     bridgeNames: {
       "restaurant-bridge": "el puente con el restaurante",
       "wine-list-wired-to-the-cellar": "la carta de vinos conectada a la cava",
     } as Record<string, string>,
     bridgesNote:
-      "Cada puente se cotiza aparte, encima de estas cifras, y solo donde se compran los dos módulos que une: {list}.",
-    exampleKicker: "Ejemplo trabajado",
+      "Cada puente se cotiza aparte, además de estas cifras, y solo cuando se contratan los dos módulos que une: {list}.",
+    exampleKicker: "Ejemplo práctico",
     exampleTitle: "Una bodega con seis cuartos y restaurante.",
     exampleLead:
       "Los tres en su tamaño de entrada, ordenados por tamaño de obra:",
@@ -424,36 +424,36 @@ const es: typeof en = {
     togetherLabel: "Juntos",
     aloneLabel: "Por separado",
     savingLabel: "Lo que se ahorra",
-    note: "Este renglón es lo que cuesta esta configuración, cotizada sobre las horas que toma, y no fija un piso.",
+    note: "Este renglón es lo que cuesta esta configuración, cotizada según las horas que requiere, y no fija un precio mínimo.",
   },
 
   annual: {
     kicker: "Pagar el año por adelantado",
     title: "Un año en una sola exhibición cuesta menos.",
-    body: "Doce meses pagados al arranque cuestan menos que doce mensualidades: una factura al año nos cuesta menos que doce. Solo la cuota del servicio, nunca la implementación ni la inversión en anuncios. El año pagado corre completo: si se detiene a la mitad no hay nada más que facturar ni nada que devolver. El sistema sigue encendido hasta el aniversario y ahí puede irse. La cifra va en su cotización.",
+    body: "Doce meses pagados al inicio cuestan menos que doce mensualidades, porque una factura al año nos cuesta menos que doce. Solo la cuota del servicio, nunca la implementación ni la inversión en anuncios. El año pagado corre completo: si lo suspende a la mitad, no hay nada más que facturar ni nada que devolver. El sistema sigue encendido hasta el aniversario, y entonces puede retirarse. La cifra viene en su cotización.",
   },
 
   monthly: {
     kicker: "La cuota mensual del servicio",
-    title: "Qué paga la mensualidad.",
-    sub: "Una parte compartida por cliente, más un costo por módulo. Esta es la compartida.",
+    title: "Qué cubre la mensualidad.",
+    sub: "Una parte compartida por cliente, más un costo de operación por módulo. Esta es la compartida.",
     lines: {
       "hosting-monitoring-and-backups": "Hospedaje, monitoreo y respaldos",
       "the-assistants-provider-account":
-        "La cuenta de proveedor del asistente, pagada por nosotros",
+        "La cuenta del proveedor del asistente, que pagamos nosotros",
       "care-queue-and-judgement":
-        "Cuidado, correcciones y las decisiones que piden",
+        "Mantenimiento, correcciones y las decisiones que requieren",
       "weekly-call-and-whatsapp": "Una llamada semanal y WhatsApp",
-      "report-assembly-and-readout": "El informe mensual y su lectura",
+      "report-assembly-and-readout": "El reporte mensual y su revisión",
       "client-admin-and-case-study": "Su facturación y la administración de su cuenta",
     } as Record<string, string>,
-    foot: "Cada módulo agrega su propio costo de operación: sus fuentes, sus correcciones, su parte del informe y el asistente.",
+    foot: "Cada módulo agrega su propio costo de operación: fuentes, correcciones, su parte del reporte y el asistente.",
   },
 
   ads: {
     kicker: "Anuncios con un módulo",
     title: "El manejo de anuncios es un servicio aparte, con cuota fija.",
-    body: "Solo o junto con un módulo, la cuota fija es la misma: {local} al mes en el alcance Local con presupuesto mínimo de {minLocal}, o {crecimiento} al mes en Crecimiento con presupuesto mínimo de {minCrecimiento}, siempre pagado directo a Google y nunca un porcentaje de lo que invierte. El contenido se agrega a Hospitalidad y a Restaurante y se cotiza aparte.",
+    body: "Ya sea solo o junto con un módulo, la cuota fija es la misma: {local} al mes en el alcance Local, con presupuesto mínimo de {minLocal}, o {crecimiento} al mes en Crecimiento, con presupuesto mínimo de {minCrecimiento}. Ese presupuesto siempre se paga directo a Google, y la cuota nunca es un porcentaje de lo que invierte. El contenido se agrega a Hospitalidad y a Restaurante, y se cotiza aparte.",
   },
 
   terms: {
@@ -461,16 +461,16 @@ const es: typeof en = {
     title: "Las condiciones.",
     items: [
       "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación.",
-      "La mitad de la firma se puede pagar en tres mensualidades, sin recargo.",
-      "La cuota mensual va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Al firmar usted elige cómo se paga la construcción. Páguela completa y el servicio se puede detener cuando usted quiera, sin deber nada por ella. O pague la implementación más baja, la que financian doce mensualidades de servicio: si deja el servicio antes de esas doce, facturamos la parte de la construcción que la cuota todavía no había pagado. Esa parte baja cada mes y llega a cero cuando las doce están pagadas. El sistema queda suyo en cualquier caso, y su cotización trae el monto exacto de cada mes.",
+      "La mitad de la firma se puede cubrir en tres pagos mensuales, sin recargo.",
+      "La cuota mensual se paga por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
+      "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede suspender el servicio cuando quiera, sin deber nada por él. O puede pagar la implementación más baja, que se financia con doce mensualidades de servicio: si deja el servicio antes de completarlas, le facturamos la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes y llega a cero al pagar las doce. En cualquier caso el sistema es suyo, y su cotización trae el monto exacto de cada mes.",
       "Todos los precios son más IVA. Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
-      "Cotizamos y facturamos en pesos mexicanos. Las cifras en dólares son conversiones redondeadas, así que una columna en dólares puede quedar a unos dólares de su propia suma.",
+      "Cotizamos y facturamos en pesos mexicanos. Las cifras en dólares son conversiones redondeadas, así que una columna en dólares puede diferir de su propia suma por unos cuantos dólares.",
     ],
   },
 
   close: {
-    desc: "Diez días hábiles sobre sus fuentes, sus canales y su piso, y un informe escrito que es suyo en cualquier caso: qué es cierto, qué está roto y qué módulos construir primero, de qué tamaño.",
+    desc: "Diez días hábiles revisando las fuentes de datos, los canales y la operación de su negocio, y un informe escrito que es suyo, nos contrate o no: qué funciona, qué falla y qué módulos construir primero, de qué tamaño.",
   },
 };
 

@@ -62,16 +62,16 @@ const es: typeof en = {
   meta: {
     title: "Quiénes somos",
     description:
-      "Venimos de años trabajando en el vino. Cardon Digital construye el sistema con el que trabaja una bodega, para que una añada se pueda comparar, repetir y mejorar sobre su propio registro.",
+      "Venimos de años de trabajo en el vino. Cardon Digital construye el sistema con el que trabaja una bodega, para que una añada se pueda comparar, repetir y mejorar con base en su propio registro.",
   },
   hero: {
     eyebrow: "Quiénes somos",
     title: "Venimos del vino.",
     titleAccent: "Construimos para quien lleva su negocio a mano.",
-    sub: "Cardon Digital hace sitios web, maneja anuncios en Google y construye el software con el que opera un negocio. Venimos de años dentro de una bodega del Valle, viendo cómo se pierde el dato que hacía falta y cómo el cliente que hacía falta nunca encuentra la puerta.",
+    sub: "Cardon Digital hace sitios web, maneja anuncios en Google y construye el software con el que opera un negocio. Venimos de pasar años dentro de una bodega del Valle, viendo cómo se perdía el dato que alguien necesitaba y cómo el cliente que hacía falta nunca daba con la puerta.",
   },
   media: {
-    bandCap: "Años dentro de una cava como esta son donde se aprendió el problema del registro.",
+    bandCap: "El problema del registro lo aprendimos en años de trabajo dentro de una cava como esta.",
     bandAlt: "Una cava de barricas con luz cálida",
   },
   mission: {
@@ -79,30 +79,30 @@ const es: typeof en = {
     title: "Toda la atención va al vino, y el registro se queda en una libreta.",
     body: [
       "Nuestro fundador, Daniel Hack, lleva años trabajando en el vino. Lo que vio se repite en casi todas las bodegas: libretas de papel, datos de añadas pasadas que ya nadie encuentra, vinos que no se pueden comparar entre sí con precisión, y una añada que salió bien y no se puede repetir, porque nadie dejó por escrito qué se hizo.",
-      "Mientras tanto, otras industrias de alimentos se adelantaron. Miden más, guardan mejor y aprenden de lo que hicieron el año pasado. El vino, que depende más que ninguna de lo que pasó en la añada anterior, es el que peor lo guarda.",
-      "Cardon existe para cerrar esa distancia. Le damos a la bodega las herramientas para seguir sus propios procesos y hacer mejor vino a partir de un análisis más exacto, y le damos a cualquier negocio las mismas tres cosas: un sitio que la gente encuentra, anuncios que traen a la gente correcta y un sistema que guarda el registro para que su equipo no tenga que hacerlo.",
+      "Mientras tanto, otras industrias de alimentos se adelantaron. Miden más, llevan mejores registros y aprenden de lo que hicieron el año pasado. El vino, que depende más que ninguna de ellas de lo que pasó en la añada anterior, es el que peor lo registra.",
+      "Cardon existe para cerrar esa brecha. A la bodega le damos las herramientas para dar seguimiento a sus propios procesos y hacer mejor vino con un análisis más exacto, y a cualquier negocio le damos las mismas tres cosas: un sitio que la gente encuentra, anuncios que traen a la gente indicada y un sistema que guarda el registro para que su equipo no tenga que hacerlo.",
     ],
   },
   beliefs: {
     kicker: "En qué creemos",
     title: "El vino lo hace una persona, y eso no lo cambiamos.",
     body: [
-      "Hacer vino es un proceso humano, natural y distinto cada año. Nadie automatiza eso y nosotros no lo intentamos. La meta es la mayor calidad que dé la uva, y para eso cada proceso tiene que hacerse bien, no nada más el que se ve.",
-      "Guardar los datos con orden es una de las partes más importantes de eso, porque ver qué se hizo y cómo le pegó a cada añada es la única forma de repetir lo que funcionó.",
+      "Hacer vino es un proceso humano, natural y distinto cada año. Eso nadie lo automatiza, y nosotros no lo intentamos. La meta es la mayor calidad que dé la uva, y para eso cada proceso tiene que hacerse bien, incluso los que nadie ve.",
+      "Llevar los datos en orden es una de las partes más importantes de ese trabajo, porque ver qué se hizo y qué resultado dio en cada añada es la única forma de repetir lo que funcionó.",
     ],
   },
   how: {
     kicker: "Cómo trabajamos",
-    title: "Antes de construir nada, aprendemos cómo trabaja hoy.",
+    title: "Antes de construir nada, entendemos cómo trabaja usted hoy.",
     body: [
-      "Antes de proponer nada revisamos cómo trabaja hoy: dónde guarda la información, cómo la analiza, si hace pruebas y contra qué las compara, y cómo pone una añada junto a las anteriores. De ahí sale qué hay que construir, y en qué orden.",
-      "Durante la construcción y después de ella estamos en WhatsApp, y hay una llamada cada semana. La pregunta llega a quien construyó el sistema, sin mesa de ayuda ni número de folio de por medio.",
+      "Antes de proponer cualquier cosa revisamos cómo trabaja hoy: dónde guarda la información, cómo la analiza, si hace pruebas y contra qué las compara, y cómo contrasta una añada con las anteriores. De ahí sale qué hay que construir y en qué orden.",
+      "Mientras construimos, y también después, nos encuentra en WhatsApp y hay una llamada cada semana. Su pregunta le llega a quien construyó el sistema, sin mesa de ayuda ni número de folio de por medio.",
     ],
     credK: "En qué trabajamos",
-    cred: "Google Ads, sitios web, desarrollo de programas, automatización de procesos y sistemas de inteligencia artificial. En vino, WSET Nivel 2.",
+    cred: "Google Ads, sitios web, desarrollo de software, automatización de procesos y sistemas de inteligencia artificial. En vino, WSET Nivel 2.",
   },
   diagDesc:
-    "Diez días hábiles revisando sus registros, sus anuncios y su operación como un solo sistema. Usted recibe un informe escrito: qué es cierto, qué está roto y qué conviene construir primero.",
+    "Diez días hábiles en los que revisamos sus registros, sus anuncios y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
 };
 
 export type AboutDict = typeof en;
