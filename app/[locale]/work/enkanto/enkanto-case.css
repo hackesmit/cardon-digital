@@ -340,3 +340,7 @@
   color:var(--muted);
 }
 .pg-enkanto .case-basis-v{font-size:0.84rem;line-height:1.55;color:var(--muted);}
+
+/* A diagram starts under its tag: at phone widths the scaled drawing rose
+   into the tag line above it. */
+.pg-enkanto .vis-tag + .mini-svg{margin-top:18px;}

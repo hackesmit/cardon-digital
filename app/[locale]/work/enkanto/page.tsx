@@ -520,9 +520,9 @@ function paymentsVis(v: VisDict) {
         </text>
         <rect className="e-track" x="318" y="126" width="150" height="6" rx="2" />
         <rect className="e-fill" x="318" y="126" width="150" height="6" rx="2" />
-        <text className="e-clay mono" x="318" y="170" fontSize="14" fontWeight="600">{v.payments.placed}</text>
-        <circle className="e-clay-ring" cx="452" cy="165" r="10" />
-        <circle className="e-clay" cx="452" cy="165" r="3.4" />
+        <text className="e-clay mono" x="318" y="170" fontSize="12.5" fontWeight="600">{v.payments.placed}</text>
+        <circle className="e-clay-ring" cx="464" cy="165" r="9" />
+        <circle className="e-clay" cx="464" cy="165" r="3.2" />
         <text className="e-muted mono" x="318" y="196" fontSize="10.5">{v.payments.clears}</text>
       </svg>
     </div>
@@ -537,16 +537,19 @@ function shippingVis(v: VisDict) {
       <svg className="mini-svg" viewBox="0 0 520 240" role="img" aria-label={v.shipping.aria}>
         <circle className="e-node-live" cx="96" cy="150" r="9" />
         <text className="e-ink mono" x="96" y="184" fontSize="12" textAnchor="middle">{v.shipping.order}</text>
-        <path className="e-conn-enk" d="M105 145 C 150 128, 190 100, 236 92" />
-        <path className="e-conn-enk" d="M105 155 C 150 172, 190 200, 236 208" />
+        <path className="e-conn-enk" d="M105 145 C 140 128, 170 100, 196 92" />
+        <path className="e-conn-enk" d="M105 155 C 140 172, 170 200, 196 208" />
 
-        <circle className="e-node-live" cx="244" cy="90" r="7" />
-        <text className="e-ink mono" x="262" y="86" fontSize="12">{v.shipping.pickup}</text>
-        <text className="e-muted mono" x="262" y="104" fontSize="10.5">{v.shipping.atWinery}</text>
+        <circle className="e-node-live" cx="204" cy="90" r="7" />
+        <text className="e-ink mono" x="222" y="86" fontSize="12">{v.shipping.pickup}</text>
+        <text className="e-muted mono" x="222" y="104" fontSize="10.5">{v.shipping.atWinery}</text>
 
-        <circle className="e-node-live" cx="244" cy="210" r="7" />
-        <text className="e-ink mono" x="262" y="206" fontSize="12">{v.shipping.carrier}</text>
-        <text className="e-muted mono" x="262" y="224" fontSize="10.5">{v.shipping.packaging}</text>
+        {/* The middle column sits 40 units left of where it was drawn: the
+            Spanish carrier label ran through the divider and under the carry
+            lane's two lines (Daniel, 2026-09-30). */}
+        <circle className="e-node-live" cx="204" cy="210" r="7" />
+        <text className="e-ink mono" x="222" y="206" fontSize="12">{v.shipping.carrier}</text>
+        <text className="e-muted mono" x="222" y="224" fontSize="10.5">{v.shipping.packaging}</text>
 
         {/* The carry-home lane sits 12 units further left than the drawing it
             came from, and its heading spends less letter spacing. Measured, not
