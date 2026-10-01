@@ -310,7 +310,7 @@ const es: typeof en = {
     eyebrow: "Sitios web, anuncios y software. Ensenada, Baja California",
     title: "Que lo encuentren, que le compren,",
     titleAccent: "y que el trabajo se haga solo.",
-    sub: "Un sitio web por el que sí le escriben, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
+    sub: "Un sitio web para que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
     proofLine: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
   },

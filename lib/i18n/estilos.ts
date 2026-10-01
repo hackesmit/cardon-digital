@@ -98,7 +98,7 @@ const es: typeof en = {
     aria: "Presentación",
     eyebrow: "Estilos",
     title: "Su sitio,",
-    titleAccent: "tal como lo imagina.",
+    titleAccent: "como usted lo imagina.",
     sub: "Estos cuatro negocios son inventados y sirven para mostrar estilos. Su sitio se diseña desde cero, a partir de su marca.",
   },
   gallery: {
