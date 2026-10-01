@@ -18,6 +18,7 @@ import {
   webPackageFrom,
   currencyByLocale,
 } from "@/lib/pricing";
+import Field from "@/components/site/field/Field";
 import "./home.css";
 
 type Params = { params: { locale: string } };
@@ -132,7 +133,12 @@ export default function Home({ params }: Params) {
           sentence, the one action and the risk line land on a 390px screen
           before the visual. Under it, DigitalArc draws the same three clauses. */}
       <section className="hero" aria-label={d.hero.aria}>
-        <div className="container">
+        {/* The stage: the copy in front and the dot grid loose behind it, to
+            the right of the text on a wide screen. On a phone the grid is a
+            band under the copy, so the title, the action and the proof line
+            come first. */}
+        <div className="hero-stage">
+          <div className="container">
           <div className="hero-copy">
             <p className="eyebrow">{d.hero.eyebrow}</p>
             <h1>
@@ -151,7 +157,11 @@ export default function Home({ params }: Params) {
                 above the canvas so a 390px phone has all four before a scroll. */}
             <p className="hero-proof">{d.hero.proofLine}</p>
           </div>
+          </div>
+          <Field kind="rejilla" layout="behind" />
+        </div>
 
+        <div className="container">
           <DigitalArc />
         </div>
       </section>
