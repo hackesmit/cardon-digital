@@ -269,25 +269,25 @@ const es: typeof en = {
   meta: {
     title: "Caso Viñedo En'kanto",
     description:
-      "Hoy una botella puede salir de la tienda de En'kanto pagada y enviada, en los dos idiomas. Detrás de las tres líneas hay un sistema construido y abierto para recorrerlo.",
+      "Hoy una botella puede salir de la tienda de En'kanto pagada y enviada, en los dos idiomas. Detrás de los tres giros hay un sistema construido y abierto para recorrerlo.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Caso",
-    t1: "Hoy una botella puede salir de la tienda de la bodega, ",
+    t1: "Hoy una botella puede salir de la tienda en línea de En'kanto, ",
     accent: "pagada y enviada",
     t2: ".",
-    sub: "Hoy el pago se completa y el vino llega a una puerta dentro de México. Detrás de la bodega, los cuartos y el comedor hay un sistema construido y abierto para recorrerlo.",
+    sub: "El pago ya se completa y el vino llega a domicilio dentro de México. Detrás de la vinícola, los cuartos y el comedor hay un sistema construido y abierto para recorrerlo.",
   },
   media: {
     deskCap:
-      "La recepción de En'kanto. El calendario que construimos junta todos los canales en una sola pantalla, con el día ya contado.",
+      "La recepción de En'kanto. El calendario que construimos junta todos los canales en una sola pantalla, con el conteo del día ya hecho.",
     deskAlt: "Registro de llegada en la recepción, del lado del huésped.",
     passCap:
-      "El pase en servicio. La pantalla que construimos recibe la comanda como la escribió el mesero, una sola vez, con su propio reloj.",
-    passAlt: "Una comanda saliendo en el pase, con la pantalla en su lugar de trabajo.",
+      "El pase en pleno servicio. La pantalla que construimos recibe cada comanda tal como la escribió el mesero, una sola vez y con su propio reloj.",
+    passAlt: "Una comanda que sale por el pase, con la pantalla instalada en su lugar.",
     videoCap:
-      "Un cargo del restaurante aplicado a una habitación, en el sistema que construimos. La recepción lee ese total y nunca escribe uno.",
+      "Un cargo del restaurante que pasa a la cuenta de una habitación, en el sistema que construimos. La recepción lee ese total y nunca escribe uno.",
     videoAlt: "Una tableta en la mesa y luego la cuenta del huésped en recepción.",
     honest:
       "Fotos de En'kanto. El sistema que describen estos pies de foto está construido y todavía no está en servicio ahí.",
@@ -295,66 +295,66 @@ const es: typeof en = {
     pause: "Pausar",
   },
   facts: {
-    aria: "Datos del caso y su base",
+    aria: "Datos del caso y su sustento",
     rows: [
       { k: "Cliente", v: "Viñedo En'kanto" },
-      { k: "Sector", v: "Bodega, hotel y restaurante" },
+      { k: "Sector", v: "Vinícola, hotel y restaurante" },
       { k: "Lugar", v: "San Antonio de las Minas, Valle de Guadalupe" },
       { k: "Relación", v: "Construcción y trabajo continuo" },
       {
         k: "Lo que construimos",
-        v: "Tienda en línea, estructura y búsqueda, pagos y envíos como se paga y se envía en México, construcción bilingüe, y un solo sistema para las tres líneas",
+        v: "Tienda en línea, estructura y búsqueda, pagos y envíos como se paga y se envía en México, versión bilingüe, y un solo sistema para los tres giros",
       },
       {
         k: "Resultado",
-        v: "La tienda toma un pedido de verdad en los dos idiomas; el sistema de las tres líneas está construido y abierto para recorrerlo",
+        v: "La tienda toma un pedido real en los dos idiomas; el sistema de los tres giros está construido y abierto para recorrerlo",
       },
     ],
-    basisK: "Base",
+    basisK: "Sustento",
     basis:
       "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los conteos de la construcción al 9 de septiembre de 2026 son: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal que define su propia tabla de rutas, y las cuatro páginas de inicio que despublicamos.",
   },
   before: {
     kicker: "Antes",
-    title: "Tres negocios en una propiedad, y nada que los sostuviera juntos.",
-    p1: "Viñedo En'kanto está en San Antonio de las Minas: una bodega boutique, cuartos para quien quiere amanecer en el Valle y un restaurante. Tres líneas, un mismo lugar.",
-    p2: "En línea, la tienda existía solo de nombre: productos sin precio, sin manera de enviar, cinco páginas de inicio peleándose al mismo visitante. La comanda se escribía en papel y las reservas llegaban a tantos lugares como canales había.",
+    title: "Tres negocios en una propiedad, y nada que los uniera.",
+    p1: "Viñedo En'kanto está en San Antonio de las Minas: una vinícola boutique, cuartos para quien quiere amanecer en el Valle y un restaurante. Tres giros, un mismo lugar.",
+    p2: "En línea, la tienda existía solo de nombre: productos sin precio, sin forma de envío y cinco páginas de inicio peleándose por el mismo visitante. La comanda se escribía en papel y las reservas llegaban a tantos lugares como canales había.",
   },
   changed: {
     kicker: "Lo que cambió",
-    title: "La tienda toma el pedido y el vino llega a la puerta.",
-    sub: "Productos de verdad con precio, peso e imagen, y un pago que se completa.",
+    title: "La tienda toma el pedido y el vino llega a domicilio.",
+    sub: "Productos reales, con precio, peso e imagen, y un pago que sí se completa.",
     items: [
       {
         lead: "Una sola dirección para todo el negocio.",
-        body: "Las duplicadas se bajaron, una sola página representa al vino, el hospedaje y el restaurante, y la búsqueda lee el sitio como lo lee un visitante.",
+        body: "Las páginas duplicadas se dieron de baja, una sola representa al vino, al hospedaje y al restaurante, y los buscadores leen el sitio igual que un visitante.",
       },
       {
-        lead: "Se paga como aquí se paga.",
-        body: "Tarjeta y efectivo llegan los dos a un pedido realizado, y el carrito deja de ser donde una venta se muere sola.",
+        lead: "Se paga como se acostumbra aquí.",
+        body: "Con tarjeta o en efectivo, el pago termina en un pedido realizado, y el carrito deja de ser el lugar donde se pierde la venta.",
       },
       {
-        lead: "Una botella llega a una puerta dentro de México.",
-        body: "Paquetería nacional y empaque que cumple. Vender del otro lado de la frontera siendo una bodega mexicana no es algo que la ley permita, así que los huéspedes del norte se llevan su vino bajo la franquicia personal, y la tienda lo dice.",
+        lead: "Una botella llega a domicilio dentro de México.",
+        body: "Paquetería nacional y empaque en regla. A una vinícola mexicana la ley no le permite vender del otro lado de la frontera, así que los visitantes del norte se llevan su vino dentro de la franquicia personal, y la tienda lo dice.",
       },
       {
         lead: "Una tienda completa en dos idiomas.",
-        body: "Español e inglés sobre un mismo cimiento, para que un huésped del Valle y uno del norte encuentren el mismo negocio.",
+        body: "Español e inglés sobre una misma base, para que un visitante del Valle y uno del norte encuentren el mismo negocio.",
       },
     ],
   },
   vis: {
     card: {
-      tag: "vacía de nombre, después construida",
-      aria: "Una tarjeta de producto vacía se vuelve una real con imagen, nombre, precio y peso.",
+      tag: "solo de nombre, después completa",
+      aria: "Una tarjeta de producto vacía se convierte en una real, con imagen, nombre, precio y peso.",
       honest: "Tarjeta ilustrativa, producto inventado.",
       inNameOnly: "SOLO DE NOMBRE",
-      builtOut: "CONSTRUIDA",
+      builtOut: "COMPLETA",
       add: "agregar",
     },
     structure: {
-      tag: "cinco puertas, después una",
-      aria: "Cinco páginas de inicio que competían se resuelven en una sola página de tienda, con el sitemap y el robots limpios.",
+      tag: "cinco entradas, después una sola",
+      aria: "Cinco páginas de inicio que competían se reducen a una sola página de tienda, con el sitemap y el archivo robots limpios.",
       homepages: "PÁGINAS DE INICIO",
       unpublished: "despublicada",
       canonical: "tienda canónica",
@@ -363,7 +363,7 @@ const es: typeof en = {
     },
     payments: {
       tag: "tarjeta y efectivo, un solo pago",
-      aria: "Tarjeta, efectivo y transferencia alimentan un solo pago que llega a pedido realizado.",
+      aria: "Tarjeta, efectivo y transferencia entran a un solo pago que termina en pedido realizado.",
       card: "Tarjeta",
       cash: "Efectivo",
       transfer: "Transferencia",
@@ -371,23 +371,23 @@ const es: typeof en = {
       clears: "el pedido se libera",
     },
     shipping: {
-      tag: "recolección, envío nacional y un traslado honesto",
-      aria: "Un pedido se abre a recolección en la bodega y a paquetería nacional. Un carril punteado aparte muestra a los huéspedes llevándose el vino ellos mismos bajo la franquicia personal.",
+      tag: "recolección, envío nacional y el cruce, dicho como es",
+      aria: "Un pedido se divide entre recolección en la bodega y paquetería nacional. Aparte, un carril punteado muestra a los visitantes que se llevan el vino ellos mismos, dentro de la franquicia personal.",
       order: "Pedido",
       pickup: "Recolección",
       atWinery: "en la bodega",
       carrier: "Paquetería nacional",
-      packaging: "empaque que cumple",
-      acrossBorder: "CRUZANDO LA FRONTERA",
-      carried: "llevado en persona,",
+      packaging: "empaque en regla",
+      acrossBorder: "AL CRUZAR LA FRONTERA",
+      carried: "se lleva en persona,",
       allowance: "franquicia personal",
     },
     bilingual: {
-      tag: "ES y EN, un solo cimiento",
-      aria: "Los carriles de español y de inglés convergen en un solo cimiento de tienda.",
+      tag: "ES y EN, una sola base",
+      aria: "Los carriles de español y de inglés se unen en una sola base de tienda.",
       oneStore: "Una tienda",
       readWhole: "completa en los dos",
-      foundation: "un cimiento para los dos",
+      foundation: "una base para los dos",
     },
     band: {
       alt: "La cabaña de En'kanto entre suculentas y viñas, en San Antonio de las Minas",
@@ -397,41 +397,41 @@ const es: typeof en = {
   system: {
     kicker: "El sistema",
     title: "Un solo registro para la bodega, el comedor y los cuartos.",
-    p1: "Tres operaciones compartían la propiedad y ningún registro. Construimos el que sí comparten: diecinueve pantallas, con un juego por área, para que cada parte del negocio trabaje desde la suya.",
+    p1: "Tres operaciones compartían la propiedad, pero ningún registro. Construimos el que ahora comparten: diecinueve pantallas, un juego para cada área, y cada una trabaja con el suyo.",
     screensK: "Pantallas",
     modules: [
       {
         num: "01",
         name: "Producción",
-        title: "El registro de la añada, del cuartel a la barrica.",
-        body: "El viñedo y sus cuarteles, la temporada y la ventana de cosecha, fechas de pizca y análisis por lote, fermentación por tanque, y la sala de barricas ficha por ficha.",
+        title: "El registro de la añada, del cuadro a la barrica.",
+        body: "El viñedo y sus cuadros, la temporada y la ventana de vendimia, fechas de pizca y análisis por lote, fermentación por tanque, y la cava de barricas ficha por ficha.",
         screens: ["Viñedo", "Añadas", "Cosecha", "Fermentación", "Crianza y Barricas"],
       },
       {
         num: "02",
         name: "Restaurante",
         title: "Una comanda, del teléfono del mesero al corte de caja.",
-        body: "Se escribe una sola vez en la mesa, se cronometra en cocina, se sienta desde el mapa de mesas, y el día cierra con resumen y corte.",
+        body: "Se escribe una sola vez en la mesa y se cronometra en cocina. Las mesas se asignan desde el mapa, y el día cierra con resumen y corte.",
         screens: ["Mesero", "Cocina", "Anfitrión", "Resumen del día", "Corte del día"],
       },
       {
         num: "03",
         name: "Hospedaje",
-        title: "Todas las reservas en un calendario, y el día ya contado.",
-        body: "Cada canal en un solo calendario, las llegadas y salidas del día, ocupación e ingreso por canal, una ficha de huésped que dura más que la reserva, y limpieza desde el teléfono.",
+        title: "Todas las reservas en un solo calendario, y el conteo del día ya hecho.",
+        body: "Todos los canales en un solo calendario, las llegadas y salidas del día, ocupación e ingreso por canal, una ficha de huésped que se conserva después de la reserva, y la limpieza desde el teléfono.",
         screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
     limitsKicker: "Lo que no promete",
-    limitsTitle: "Los bordes, escritos en las pantallas.",
+    limitsTitle: "Los límites, escritos en las pantallas.",
     limits: [
       {
-        lead: "Es un espejo de los canales. No les escribe.",
-        body: "Airbnb no publica una interfaz abierta para un anfitrión, así que el calendario lee los feeds iCal, que se refrescan en horas. Una fecha bloqueada aquí sigue abierta allá, y la pantalla lo dice.",
+        lead: "Refleja los canales. No escribe en ellos.",
+        body: "Airbnb no ofrece una interfaz abierta para anfitriones, así que el calendario lee los feeds iCal, que tardan horas en actualizarse. Una fecha bloqueada aquí sigue abierta allá, y la pantalla lo dice.",
       },
       {
-        lead: "Lee OpenTable. No lo raspa.",
-        body: "Las reservas de mesa viven en OpenTable, abierto a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reserva se captura a mano y se concilia contra la exportación por huésped y hora, para que una siga siendo una.",
+        lead: "Lee OpenTable. No le extrae datos por fuera.",
+        body: "Las reservas de mesa están en OpenTable, que da acceso a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reserva se captura a mano y se concilia con la exportación por comensal y hora, para que no se duplique.",
       },
       {
         lead: "La cuenta de la habitación suma los cargos del restaurante. Nunca escribe uno.",
@@ -439,29 +439,29 @@ const es: typeof en = {
       },
       {
         lead: "Está construido. Todavía no está en servicio en En'kanto.",
-        body: "Todo lo de esta página ya está integrado y corre. Meterlo al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase no reclamamos nada sobre lo que cambió.",
+        body: "Todo lo de esta página ya está integrado y funcionando. Llevarlo al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase no afirmamos nada sobre lo que cambió.",
       },
     ],
     demo: {
       kicker: "Véalo",
       title: "El sistema está abierto. Recórralo usted mismo.",
-      body: "Corre como demostración pública bajo un nombre ficticio, armada con una lista blanca que deja fuera del despliegue los archivos de datos de En'kanto. Abra un módulo, elija uno de los diez puestos, recorra sus pantallas.",
+      body: "Funciona como demostración pública con un nombre ficticio, armada con una lista de lo que sí se publica, que deja fuera los archivos de datos de En'kanto. Abra un módulo, elija uno de los diez puestos y recorra sus pantallas.",
       cta: "Abrir el demo",
-      note: "Datos ilustrativos bajo un nombre ficticio. Nada de ahí es de un cliente.",
+      note: "Datos ilustrativos con un nombre ficticio. Nada de lo que aparece ahí es de un cliente.",
     },
   },
   pending: {
     marker: "MARCADOR. No publicable.",
     title: "Aquí va lo que el sistema le cambió a En'kanto.",
-    body: "Vacío hasta tener las cifras de la propia En'kanto: cuánto tomaba una tarea antes, cuánto toma ahora, sobre una ventana declarada.",
+    body: "Vacío hasta tener las cifras de En'kanto: cuánto tomaba una tarea antes y cuánto toma ahora, en un periodo declarado.",
   },
   result: {
     kicker: "Para su propiedad",
-    title: "Lo que cambia si usted vive de más de una línea.",
+    title: "Lo que cambia si su negocio tiene más de un giro.",
     items: [
       {
         lead: "La venta se completa.",
-        body: "Precio, peso, manera de enviar, y un pago que termina en pedido realizado.",
+        body: "Precio, peso, forma de envío y un pago que termina en pedido realizado.",
       },
       {
         lead: "La comanda se escribe una sola vez.",
@@ -474,15 +474,15 @@ const es: typeof en = {
     ],
   },
   diagDesc:
-    "Diez días hábiles sobre su tienda, su sitio y su operación, y al final un informe escrito.",
+    "Diez días hábiles dedicados a su tienda, el sitio y la operación, y al final un informe escrito.",
   diagSpecs: [
-    { d: "Día 1", t: "Una sesión de trabajo sobre los tres." },
-    { d: "Días 2 a 9", t: "Escarbamos en los números detrás de los números." },
+    { d: "Día 1", t: "Una sesión de trabajo para revisar los tres." },
+    { d: "Días 2 a 9", t: "Revisamos a fondo lo que hay detrás de los números." },
     {
       d: "Día 10",
-      t: "Llega el informe: qué es cierto, qué está roto y qué construir primero.",
+      t: "Le entregamos el informe: qué funciona, qué falla y por dónde empezar.",
     },
-    { d: "Después", t: "Proponemos la construcción, o usted se lleva el informe." },
+    { d: "Después", t: "Le proponemos la construcción, o usted se lleva el informe y ahí termina." },
   ],
 };
 

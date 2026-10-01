@@ -240,14 +240,14 @@ const es: typeof en = {
   meta: {
     title: "Sistemas para bodegas",
     description:
-      "Cosecha, laboratorio, tanques y añadas en una sola vista, con el mapa de sus cuadros y la trazabilidad de la baya a la botella.",
+      "Vendimia, laboratorio, tanques y añadas en una sola vista, con el mapa de sus cuadros y la trazabilidad de la uva a la botella.",
   },
   hero: {
     aria: "Presentación para bodegas",
     eyebrow: "Bodegas, nuestro terreno",
     title: "El vino lo hace usted.",
-    titleAccent: "La temporada se lleva sola.",
-    sub: "Deje de reconstruir la cosecha de memoria. Lea la temporada de un vistazo, y quédese con el registro.",
+    titleAccent: "El registro se lleva solo.",
+    sub: "Deje de reconstruir la vendimia de memoria. Vea de un vistazo cómo va la temporada, con un registro que es suyo.",
   },
   media: {
     vineyard: {
@@ -255,40 +255,40 @@ const es: typeof en = {
       alt: "Hileras de vid en una ladera al atardecer",
     },
     cellar: {
-      cap: "El dato que necesita a las seis de la mañana es el que recibe.",
+      cap: "A las seis de la mañana tiene en pantalla justo el dato que necesita.",
       alt: "Una laptop con el sistema abierto entre las barricas de la cava",
     },
     tasting: {
-      cap: "El huésped que se dio de alta aquí sigue sabiendo de usted después de la visita.",
+      cap: "Quien se registró aquí sigue sabiendo de usted después de la visita.",
       alt: "Una sala de degustación en uso, con una copa servida",
     },
   },
   proof: {
     kicker: "Caso de estudio",
     title: "Una hora de trabajo financiero, ahora unos dos minutos.",
-    desc: "Monte Xanic opera su cosecha y sus finanzas sobre un sistema que construimos y que hoy es suyo. Un flujo financiero que tomaba cerca de una hora a mano ahora toma **unos dos minutos**.",
-    ctaXanic: "Lea el caso de Monte Xanic",
+    desc: "Monte Xanic lleva su vendimia y sus finanzas en un sistema que construimos y que hoy es de la vinícola. Un proceso financiero que a mano tomaba cerca de una hora ahora toma **unos dos minutos**.",
+    ctaXanic: "Ver el caso de Monte Xanic",
     ctaEnkanto: "El caso de En'kanto",
     sealSub: "Valle de Guadalupe",
   },
   leak: {
     kicker: "La fuga",
-    title: "Una bodega rara vez pierde en el vino. Pierde en las costuras.",
+    title: "Una bodega rara vez pierde por el vino. Pierde por los cabos sueltos.",
     items: [
       {
         num: "01",
-        h: "La temporada vive en tres lugares a la vez.",
+        h: "La temporada está repartida en tres lugares.",
         body: "Un sistema viejo, hojas de cálculo y una libreta de bodega, y los tres dicen cosas distintas. Ese es el nudo que desatamos en Monte Xanic.",
       },
       {
         num: "02",
-        h: "La visita es lo último que sabe de usted.",
-        body: "El club se gana en el mostrador, con la copa en la mano. Después no pasa nada, y para cuando alguien escribe la visita ya se enfrió.",
+        h: "Después de la visita, no vuelven a saber de usted.",
+        body: "El club se gana en la barra, con la copa en la mano. Después no pasa nada, y cuando por fin alguien escribe, la visita ya se enfrió.",
       },
       {
         num: "03",
-        h: "Cuatro suscripciones que nunca se hablan.",
-        body: "La herramienta de producción, la plataforma del club, la página de reservas y la tienda cobran cada mes. Usted las concilia a mano.",
+        h: "Cuatro suscripciones que no se conectan entre sí.",
+        body: "La herramienta de producción, la plataforma del club, la página de reservas y la tienda en línea cobran cada mes. Usted las concilia a mano.",
       },
     ],
   },
@@ -298,40 +298,40 @@ const es: typeof en = {
     cards: [
       {
         num: "01",
-        h: "La temporada se lee de un vistazo.",
-        body: "Pesos, muestras, movimientos de tanque y notas en una vista que se actualiza sola.",
+        h: "La temporada se ve de un vistazo.",
+        body: "Pesajes, muestreos, movimientos de tanque y notas de bodega en una vista que se actualiza sola.",
       },
       {
         num: "02",
         h: "Cada número tiene su lugar en el mapa.",
-        body: "Cada lectura queda en su cuadro y su hilera, así todo el equipo lee el viñedo igual.",
+        body: "Cada lectura queda en su cuadro y su hilera, y todo el equipo ve el mismo viñedo.",
       },
       {
         num: "03",
         h: "El corte se planea.",
-        body: "El aviso de madurez se construye con la vara de calidad de su enólogo, y llega al equipo con tiempo.",
+        body: "El aviso de madurez se basa en el criterio de calidad de su enólogo, y le llega al equipo con tiempo.",
       },
       {
         num: "04",
-        h: "De la baya a la botella, un solo hilo.",
-        body: "Qué hileras, qué corte, qué tanque, qué barrica. La pregunta del distribuidor es una consulta.",
+        h: "De la uva a la botella, sin perder el hilo.",
+        body: "Qué hileras, qué corte, qué tanque, qué barrica. La pregunta de un distribuidor se responde con una consulta.",
       },
       {
         num: "05",
         h: "Llene la sala, el club y la venta directa.",
-        body: "Un sitio en los dos idiomas y anuncios en Google con cuota fija al mes, solos o junto con un módulo, y el presupuesto va directo a Google.",
+        body: "Un sitio bilingüe y anuncios en Google con cuota fija al mes, por separado o junto con un módulo. El presupuesto de anuncios va directo a Google.",
       },
     ],
   },
   assist: {
     kicker: "El asistente",
-    title: "Pregúntele a su bodega. La respuesta es su propio registro.",
+    title: "Pregúntele a su bodega. Le responde con su propio registro.",
     body: [
-      "Pregunte qué hizo la acidez total del Cabernet la semana pasada y recibe el registro de laboratorio que leyó, con fecha y lote. Donde no hay registro lo dice, porque un número verosímil es peor que ninguno.",
-      "Aquí nada decide sobre su vino. La mezcla, la fecha de corte y el tiempo en pieles siguen siendo suyos.",
+      "Pregunte cómo se movió la acidez total del Cabernet la semana pasada y le muestra el registro de laboratorio que consultó, con fecha y lote. Si no hay registro, lo dice, porque un número que suena creíble es peor que ninguno.",
+      "El sistema no decide nada sobre su vino. La mezcla, la fecha de corte y el tiempo de maceración los sigue decidiendo usted.",
     ],
     demo: {
-      aria: "Un tablero de bodega y un asistente. Cada respuesta nombra su registro, y la segunda reporta que no hay dato.",
+      aria: "Un tablero de bodega y un asistente. Cada respuesta cita su registro, y la segunda avisa que no hay dato.",
       boardTitle: "Vista de bodega",
       live: "AL DÍA",
       chartK: "Brix, Cabernet",
@@ -347,8 +347,8 @@ const es: typeof en = {
         {
           q: "¿Cómo va el Cabernet en grados Brix esta semana?",
           a: [
-            "24.3 Bx, ponderado por tonelaje de 6 muestras.",
-            "La misma semana de 2025: 23.8 Bx, unos 5 días atrás.",
+            "24.3 Bx, promedio ponderado por tonelaje de 6 muestras.",
+            "La misma semana de 2025: 23.8 Bx. Este año va unos 5 días adelantado.",
           ],
           cite: "Muestreo de bayas, 28 de agosto de 2026, 6 lotes.",
         },
@@ -356,7 +356,7 @@ const es: typeof en = {
           q: "¿Cuánta uva recibimos ayer?",
           a: [
             "No hay nada capturado para el 1 de septiembre de 2026.",
-            "La última es del 30 de agosto: 18.4 t de Chenin Blanc.",
+            "La última recepción es del 30 de agosto: 18.4 t de Chenin Blanc.",
           ],
           cite: "Recepción de tanque, 30 de agosto de 2026.",
         },
@@ -365,33 +365,33 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Dos cuotas, sin licencia, y la construcción queda de la bodega.",
-    sub: "La implementación paga la construcción. La cuota mensual paga operarla: hospedaje, cuidado, correcciones, el informe, el asistente.",
-    modulesLabel: "Los módulos que compra una bodega",
+    title: "Dos cuotas, sin licencias, y la construcción queda a nombre de la bodega.",
+    sub: "La implementación paga la construcción. La cuota mensual cubre la operación: hosting, mantenimiento, correcciones, el reporte y el asistente.",
+    modulesLabel: "Los módulos que contrata una bodega",
     modules: [
       {
         name: "Producción",
         scale: "El registro propio de la bodega",
-        body: "Producción, comparación de añadas, el registro comercial, el informe y el asistente.",
+        body: "Producción, comparación de añadas, el registro comercial, el reporte y el asistente.",
       },
       {
         name: "Hospitalidad",
         scale: "Cuartos, sala de degustación y eventos",
-        body: "Cada reserva de cada canal en un calendario, y el huésped conservado entre visitas.",
+        body: "Las reservas de todos los canales en un solo calendario, y el huésped no se pierde entre visitas.",
       },
       {
         name: "Restaurante",
         scale: "El comedor",
-        body: "Del teléfono del mesero al corte de caja, con la carta viva desde la cava.",
+        body: "Del teléfono del mesero al corte de caja, con la carta de vinos al día desde la cava.",
       },
     ],
     moreLead:
-      "Cada módulo tiene su precio de entrada publicado, y las reglas están escritas como la política que son.",
+      "Cada módulo tiene publicado su precio de entrada, y las reglas están por escrito, como la política que son.",
     moreCta: "Ver precios",
     termsLabel: "Condiciones",
     terms: [
       "La cuota va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Al firmar usted elige cómo se paga la construcción. Páguela completa y deje el servicio cuando quiera, sin deber nada por ella. O tome la implementación más baja, la que financian doce meses de servicio: si deja el servicio antes de esos doce, debe la parte de la construcción que la cuota todavía no había pagado. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
+      "Al firmar usted elige cómo se paga la construcción. Si la paga completa, puede dejar el servicio cuando quiera, sin deber nada por ella. O puede elegir la implementación más baja, la que financian doce meses de servicio: si deja el servicio antes de esos doce, debe la parte de la construcción que la cuota todavía no había pagado. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
       "Todos los precios más IVA.",
     ],
   },
@@ -399,7 +399,7 @@ const es: typeof en = {
     tagBefore: "registros dispersos",
     tagMid: "conectados en",
     tagAfter: "una vista",
-    aria: "Libretas, hojas de cálculo y un sistema antiguo se vacían en un canal que llena una botella, y la bitácora queda al día.",
+    aria: "Libretas, hojas de cálculo y un sistema antiguo desembocan en un solo canal que llena una botella, y la bitácora queda al día.",
     fallback: "Registros dispersos, conectados en una sola vista de bodega.",
     header: "Una vista de bodega",
     current: "AL CORRIENTE",
@@ -413,11 +413,11 @@ const es: typeof en = {
     ledgerNowText: "una vista, al día ",
   },
   diagDesc:
-    "Diez días hábiles sobre los datos de su cosecha, sus anuncios y sus cuentas, y un informe escrito.",
+    "Diez días hábiles con los datos de su vendimia, los anuncios y las cuentas, y al final un informe escrito.",
   diagSpecs: [
-    "Día 1. Una sesión de trabajo sobre su viñedo, su bodega, sus anuncios y sus cuentas.",
-    "Días 2 a 9. Escarbamos: los datos, la medición, las tareas manuales.",
-    "Día 10. Llega el informe: qué es cierto, qué está roto y qué construir primero. Es suyo.",
+    "Día 1. Una sesión de trabajo para revisar viñedo, bodega, anuncios y cuentas.",
+    "Días 2 a 9. Revisamos a fondo los datos, la medición y las tareas manuales.",
+    "Día 10. Le entregamos el informe: qué funciona, qué falla y por dónde empezar. Es suyo.",
   ],
 };
 
