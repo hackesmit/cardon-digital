@@ -13,7 +13,11 @@ function recorder(keepArcs = false) {
   const bad: string[] = [];
   const arcs: number[][] = [];
   let depth = 0;
-  const gradient = { addColorStop() {} };
+  const gradient = {
+    addColorStop(at: number, colour: string) {
+      if (!Number.isFinite(at) || /NaN|undefined/.test(colour)) bad.push("addColorStop got " + at + " " + colour);
+    },
+  };
   const target: Record<string, unknown> = { globalAlpha: 1 };
   const fns: Record<string, (...args: number[]) => unknown> = {};
   const fn = (prop: string) => {
@@ -34,13 +38,15 @@ function recorder(keepArcs = false) {
   const ctx = new Proxy(target, {
     get: (t, prop: string) => (prop in t ? t[prop] : fn(prop)),
     set(t, prop: string, value) {
+      if (typeof value === "number" && !Number.isFinite(value)) bad.push(prop + " set to " + value);
       t[prop] = value;
       return true;
     },
   });
   return {
     ctx: ctx as unknown as CanvasRenderingContext2D,
-    painted: () => (count.fill || 0) + (count.stroke || 0) + (count.fillRect || 0),
+    painted: () =>
+      (count.fill || 0) + (count.stroke || 0) + (count.fillRect || 0) + (count.strokeRect || 0) + (count.clearRect || 0),
     bad,
     arcs,
     alpha: () => target.globalAlpha as number,
@@ -48,11 +54,11 @@ function recorder(keepArcs = false) {
   };
 }
 
-function state(W: number, H: number, behind: boolean): FieldState {
+function state(W: number, H: number, behind: boolean, dark = false): FieldState {
   const small = W < 700;
   return {
     W, H, t: 0, dt: 0, mx: 0.3, my: -0.2, px: W * 0.6, py: H * 0.4, rpx: W * 0.6, rpy: H * 0.4, pin: 1,
-    fx: behind && !small ? W * 0.7 : W * 0.5, fy: H * 0.5, small, draw: true, dark: false,
+    fx: behind && !small ? W * 0.7 : W * 0.5, fy: H * 0.5, small, draw: true, dark,
     c: { agave: "#23664A", agaveRgb: [35, 102, 74], gold: "#9A6A12", goldRgb: [154, 106, 18], ground: "#F3EEDF" },
   };
 }
@@ -67,10 +73,10 @@ const SIZES: [string, number, number, boolean][] = [
 
 describe("the loose animations", () => {
   for (const kind of KINDS) {
-    for (const [label, W, H, behind] of SIZES) {
-      it(kind + " draws on " + label + " with finite numbers and leaves the canvas clean", () => {
+    for (const [label, W, H, behind] of SIZES) for (const dark of [false, true]) {
+      it(kind + " draws on " + label + (dark ? ", dark," : ", light,") + " with finite numbers and leaves the canvas clean", () => {
         const field = makeField(kind);
-        const S = state(W, H, behind);
+        const S = state(W, H, behind, dark);
         const rec = recorder();
         field.init(S);
         // Warm up: the state advances and nothing is painted.
