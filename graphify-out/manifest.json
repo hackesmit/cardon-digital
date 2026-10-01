@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/coming-soon.ts": {
-    "mtime": 1790639757.5659585,
-    "ast_hash": "1816b63e46ae5a12f9e8a4c78ea607dc",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "673a3e5590ac115f58223c9cd3d2a225",
     "semantic_hash": ""
   },
   "lib/i18n/config.ts": {
@@ -305,13 +305,13 @@
     "semantic_hash": ""
   },
   "lib/i18n/enkanto.ts": {
-    "mtime": 1790640114.0152655,
-    "ast_hash": "708785c0582e84858290450319dfa150",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "083be88404d88552b81fac5ec2b20f79",
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1790826531.7768815,
-    "ast_hash": "1dfeeb45f05d7fb6156d4da11d5b25db",
+    "mtime": 1790881974.3999615,
+    "ast_hash": "37e7f8f5e952da18ec1e15eb24961bbf",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -320,8 +320,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/monte-xanic.ts": {
-    "mtime": 1790812034.3830793,
-    "ast_hash": "dd6246387972eb7838042cee72c1209c",
+    "mtime": 1790881974.3999615,
+    "ast_hash": "93f5ab09c19fe94e1944578857d43b7e",
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
@@ -335,8 +335,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/site.ts": {
-    "mtime": 1790811894.6348379,
-    "ast_hash": "2004a113eb78b0e57249ce94112fad10",
+    "mtime": 1790881974.3999615,
+    "ast_hash": "9bc800175235be238cafb578acc1e3f1",
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
@@ -345,8 +345,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1790787842.5637615,
-    "ast_hash": "ca8c0c8f341434bc766a15780ee43bdd",
+    "mtime": 1790881974.4009616,
+    "ast_hash": "8652253ae2c60dbd6b7e3b0f36d0c919",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/consent.ts": {
-    "mtime": 1790582402.7095878,
-    "ast_hash": "496b6682d75b6bf0a7dbdd28bb79d946",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "7047ea060e73d14c09b7ffd421d41cfd",
     "semantic_hash": ""
   },
   "app/[locale]/about/page.tsx": {
@@ -430,8 +430,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/about.ts": {
-    "mtime": 1790787842.5637615,
-    "ast_hash": "c40fd7b780943bfa5a881ad4a543e6e7",
+    "mtime": 1790881974.3979616,
+    "ast_hash": "772e1584acdb07f5a4035886ccb1ee35",
     "semantic_hash": ""
   },
   "app/[locale]/contacto/page.tsx": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/contact.ts": {
-    "mtime": 1790639757.5659585,
-    "ast_hash": "06cefeb38787d139e17aa304c7884fca",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "b709800ca3585a323ee71d53d4836100",
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
@@ -580,8 +580,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1790707762.740908,
-    "ast_hash": "18cedd3d7ada7367e56f78cad32a9a99",
+    "mtime": 1790881974.3999615,
+    "ast_hash": "75cb095166f6410ab47df7062b1d2f4a",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/demo.ts": {
-    "mtime": 1790582402.7105877,
-    "ast_hash": "83c2aaeb8d4e69ededf4087d99719422",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "44aca4fe05bdcf2f769e5ee510f3e0f2",
     "semantic_hash": ""
   },
   "components/site/Media.test.tsx": {
@@ -740,8 +740,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/demos.ts": {
-    "mtime": 1790582402.7105877,
-    "ast_hash": "d4303c3f79360fa0b3245d0985258217",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "e0074c0fd9a7a6a00f3bff495d9fe1aa",
     "semantic_hash": ""
   },
   "scripts/copy-check.mjs": {
@@ -755,8 +755,8 @@
     "semantic_hash": ""
   },
   "docs/copy-doctrine.md": {
-    "mtime": 1790582402.6755874,
-    "ast_hash": "f33fa28ea17f2c38c9b95304f04f21cc",
+    "mtime": 1790881974.3979616,
+    "ast_hash": "c662038be1aaad3d401219df85ecb369",
     "semantic_hash": ""
   },
   "scripts/visuals-check.mjs": {
@@ -1235,18 +1235,18 @@
     "semantic_hash": ""
   },
   "lib/i18n/anuncios.ts": {
-    "mtime": 1790639757.5659585,
-    "ast_hash": "734376e8de7bc1ec6cafd389d67a6ddd",
+    "mtime": 1790881974.3979616,
+    "ast_hash": "44dbee169cf31d444204467be4f2e9af",
     "semantic_hash": ""
   },
   "lib/i18n/sitios.ts": {
-    "mtime": 1790840309.5452478,
-    "ast_hash": "35354083a146c4e25bc67a2183b9d403",
+    "mtime": 1790881974.3999615,
+    "ast_hash": "07436caad01db9bbeddfb88945a06ea3",
     "semantic_hash": ""
   },
   "lib/i18n/software.ts": {
-    "mtime": 1790787842.5637615,
-    "ast_hash": "c7d25bd79edab6faa646e5cbc6ff1f77",
+    "mtime": 1790881974.3999615,
+    "ast_hash": "25fbab0dd296da0ff57f8bcd311c77ae",
     "semantic_hash": ""
   },
   "state/review/r-arc-fable/check-ads-outcome-claim.sh": {
@@ -1375,8 +1375,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/estilos.ts": {
-    "mtime": 1790840309.5452478,
-    "ast_hash": "2c703a3cd4e32a9b7b51e437f4fe89ec",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "7d0ec37990a50dbe69d3898cd0c3b8ca",
     "semantic_hash": ""
   }
 }
