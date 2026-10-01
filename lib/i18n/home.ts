@@ -40,6 +40,7 @@ const en = {
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
     proofLine: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
   },
+  clientsAria: "Businesses we have worked with",
   proof: {
     aria: "Businesses already built for",
     read: "Read the case",
@@ -313,6 +314,7 @@ const es: typeof en = {
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, construyamos o no.",
     proofLine: "Construido para Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
   },
+  clientsAria: "Empresas con las que hemos trabajado",
   proof: {
     aria: "Negocios para los que ya construimos",
     read: "Ver el caso",

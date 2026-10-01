@@ -56,6 +56,9 @@ const SERVICE_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
 /** The service page behind each of the three service cards, in dictionary order. */
 const SERVICE_ROUTES = ["/sitios-web", "/anuncios", "/software"];
 
+/** The businesses we have worked with (Daniel, 2026-10-01). Names, so not copy. */
+const CLIENTS = ["Monte Xanic", "Viñedo En'kanto", "BrighterHire", "RLogistics", "Aperta Media"];
+
 export function generateMetadata({ params }: Params): Metadata {
   const locale = localeOf(params);
   return pageMetadata(locale, "/", home[locale].meta, true);
@@ -150,6 +153,20 @@ export default function Home({ params }: Params) {
           </div>
 
           <DigitalArc />
+        </div>
+      </section>
+
+      {/* The client band: the names run twice so the loop has no seam, and the
+          second run is hidden from a screen reader. */}
+      <section className="clients" aria-label={d.clientsAria}>
+        <div className="clients-track">
+          {[0, 1].map((run) =>
+            CLIENTS.map((name) => (
+              <span key={run + name} aria-hidden={run === 1 ? "true" : undefined}>
+                {name}
+              </span>
+            )),
+          )}
         </div>
       </section>
 

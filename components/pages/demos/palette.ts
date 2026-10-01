@@ -96,11 +96,11 @@ const BRIGHT_MIX: Record<DemoHue, number> = {
     parses globals.css and fails if a mode's six ever drift apart. */
 const FALLBACK: Record<"light" | "dark", Record<string, string>> = {
   light: {
-    ground: "#EDE7D6",
-    panel: "#F5F0E2",
-    text: "#1B241E",
-    primary: "#2E7D5C",
-    secondary: "#B07E1E",
+    ground: "#F3EEDF",
+    panel: "#FFFDF6",
+    text: "#17201A",
+    primary: "#23664A",
+    secondary: "#9A6A12",
     energy: "#C3491B",
   },
   dark: {
