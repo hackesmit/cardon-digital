@@ -10,7 +10,7 @@ import {
 
 /**
  * The typefaces of the four style samples on /estilos. They are declared in
- * this module and applied on that page's root only, so no other route loads
+ * this module and applied by that route's own layout, so no other route loads
  * them. None is preloaded: every sample sits below the page's own hero, and
  * seven preloads would compete with the fonts the hero is set in.
  *
@@ -72,7 +72,7 @@ const hotelDisplay = Josefin_Sans({
   variable: "--f-hotel-display",
 });
 
-/** Every sample's font variable, for the class of the page root. */
+/** Every sample's font variable, for the class of the route's wrapper. */
 export const sceneFontVariables = [
   vinDisplay,
   vinText,

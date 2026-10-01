@@ -8,7 +8,6 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import { estilos } from "@/lib/i18n/estilos";
-import { sceneFontVariables } from "./fonts";
 import "./estilos.css";
 
 type Params = { params: { locale: string } };
@@ -23,6 +22,10 @@ export function generateMetadata({ params }: Params): Metadata {
 }
 
 const KEYS = ["vinedo", "tech", "spa", "hotel"] as const;
+
+/** The site header and the caption that sticks under it cover this much of
+ *  the window's top; a canvas showing only there is hidden, so it stops. */
+const CHROME = 110;
 type Key = (typeof KEYS)[number];
 
 /**
@@ -33,7 +36,7 @@ type Key = (typeof KEYS)[number];
 const PALETTE: Record<Key, FieldPalette> = {
   vinedo: { line: "#F3DFC0", accent: "#F4B44E", ground: "#6F2A1B", dark: true },
   tech: { line: "#A9B6CC", accent: "#C8FF3A", ground: "#0A0C10", dark: true },
-  spa: { line: "#766BBD", accent: "#E28A5F", ground: "#EFEDF6", dark: false },
+  spa: { line: "#473C96", accent: "#D96F3F", ground: "#EFEDF6", dark: false },
   hotel: { line: "#1D6472", accent: "#D9603A", ground: "#E9D6B4", dark: false },
 };
 
@@ -47,7 +50,9 @@ const PALETTE: Record<Key, FieldPalette> = {
  * is plain CSS, so it works without JavaScript.
  *
  * Everything inside a scene is inert. The one action on the page is
- * site.diag.cta, in the hero and in the close.
+ * site.diag.cta, in the hero and in the close. A scene's copy arrives with
+ * the same reveal the rest of the site uses, which shows it at once without
+ * JavaScript or under reduced motion.
  */
 export default function EstilosPage({ params }: Params) {
   const locale = localeOf(params);
@@ -88,7 +93,7 @@ export default function EstilosPage({ params }: Params) {
   };
 
   return (
-    <main id="main" className={"pg-estilos " + sceneFontVariables}>
+    <main id="main" className="pg-estilos">
       <span id="top" />
 
       <section className="hero est-hero" aria-label={d.hero.aria}>
@@ -139,7 +144,7 @@ export default function EstilosPage({ params }: Params) {
               </span>
             </div>
             <div className="sc-stage">
-              <div className="sc-copy">
+              <Reveal className="sc-copy">
                 <p className="sc-title">
                   {d.vinedo.title} <em>{d.vinedo.titleAccent}</em>
                 </p>
@@ -148,9 +153,9 @@ export default function EstilosPage({ params }: Params) {
                   <span className="sc-btn">{d.vinedo.primary}</span>
                   <span className="sc-link">{d.vinedo.secondary}</span>
                 </div>
-              </div>
+              </Reveal>
               <div className="sc-art">
-                <Field kind="vinedo" layout="fill" colors={PALETTE.vinedo} />
+                <Field kind="vinedo" layout="fill" colors={PALETTE.vinedo} topInset={CHROME} />
               </div>
             </div>
           </div>,
@@ -175,7 +180,7 @@ export default function EstilosPage({ params }: Params) {
               </span>
             </div>
             <div className="sc-stage">
-              <div className="sc-copy">
+              <Reveal className="sc-copy">
                 <p className="sc-kicker">{d.tech.kind}</p>
                 <p className="sc-title">
                   {d.tech.title} <em>{d.tech.titleAccent}</em>
@@ -185,9 +190,9 @@ export default function EstilosPage({ params }: Params) {
                   <span className="sc-btn">{d.tech.primary}</span>
                   <span className="sc-link">{d.tech.secondary}</span>
                 </div>
-              </div>
+              </Reveal>
               <div className="sc-art">
-                <Field kind="constelacion" layout="fill" colors={PALETTE.tech} />
+                <Field kind="constelacion" layout="fill" colors={PALETTE.tech} topInset={CHROME} />
               </div>
             </div>
             <p className="sc-tags" aria-hidden="true">
@@ -217,7 +222,7 @@ export default function EstilosPage({ params }: Params) {
               </span>
             </div>
             <div className="sc-stage">
-              <div className="sc-copy">
+              <Reveal className="sc-copy">
                 <p className="sc-kicker">{d.spa.kind}</p>
                 <p className="sc-title">
                   {d.spa.title} <em>{d.spa.titleAccent}</em>
@@ -227,9 +232,9 @@ export default function EstilosPage({ params }: Params) {
                   <span className="sc-btn">{d.spa.primary}</span>
                   <span className="sc-link">{d.spa.secondary}</span>
                 </div>
-              </div>
+              </Reveal>
               <div className="sc-art">
-                <Field kind="corrientes" layout="fill" colors={PALETTE.spa} />
+                <Field kind="corrientes" layout="fill" colors={PALETTE.spa} density={1.9} topInset={CHROME} />
               </div>
             </div>
           </div>,
@@ -254,7 +259,7 @@ export default function EstilosPage({ params }: Params) {
               </span>
             </div>
             <div className="sc-stage">
-              <div className="sc-copy">
+              <Reveal className="sc-copy">
                 <p className="sc-title">
                   {d.hotel.title} <em>{d.hotel.titleAccent}</em>
                 </p>
@@ -265,9 +270,9 @@ export default function EstilosPage({ params }: Params) {
                     <span className="sc-link">{d.hotel.secondary}</span>
                   </div>
                 </div>
-              </div>
+              </Reveal>
               <div className="sc-art">
-                <Field kind="medanos" layout="fill" colors={PALETTE.hotel} focus={0.66} />
+                <Field kind="medanos" layout="fill" colors={PALETTE.hotel} focus={0.66} topInset={CHROME} />
               </div>
             </div>
           </div>,

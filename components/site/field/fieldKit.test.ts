@@ -58,7 +58,7 @@ function state(W: number, H: number, behind: boolean, dark = false): FieldState 
   const small = W < 700;
   return {
     W, H, t: 0, dt: 0, mx: 0.3, my: -0.2, px: W * 0.6, py: H * 0.4, rpx: W * 0.6, rpy: H * 0.4, pin: 1,
-    fx: behind && !small ? W * 0.7 : W * 0.5, fy: H * 0.5, small, draw: true, dark,
+    fx: behind && !small ? W * 0.7 : W * 0.5, fy: H * 0.5, small, dens: 1, draw: true, dark,
     c: { agave: "#23664A", agaveRgb: [35, 102, 74], gold: "#9A6A12", goldRgb: [154, 106, 18], ground: "#F3EEDF" },
   };
 }
@@ -108,6 +108,39 @@ describe("the loose animations", () => {
     expect(stills.every((s) => Number.isFinite(s) && s > 0)).toBe(true);
     // Two kinds sharing one factory would share its still moment too.
     expect(new Set(KINDS.map((kind) => makeField(kind).frame.toString())).size).toBe(KINDS.length);
+  });
+
+  it("scales what a drawing carries with its density and stays finite", () => {
+    for (const kind of ["corrientes", "constelacion", "medanos"] as FieldKind[]) {
+      const strokes: number[] = [];
+      for (const dens of [1, 2]) {
+        const field = makeField(kind);
+        const S = state(1296, 500, false);
+        S.dens = dens;
+        const rec = recorder(true);
+        let lines = 0;
+        const ctx = new Proxy(rec.ctx, {
+          get(t, prop: string) {
+            const value = (t as unknown as Record<string, unknown>)[prop];
+            if (prop === "lineTo" || prop === "arc") return (...args: number[]) => { lines++; return (value as (...a: number[]) => unknown)(...args); };
+            return value;
+          },
+          set(t, prop: string, value) {
+            (t as unknown as Record<string, unknown>)[prop] = value;
+            return true;
+          },
+        });
+        field.init(S);
+        for (let i = 0; i < 60; i++) {
+          S.dt = 1 / 60;
+          S.t += S.dt;
+          field.frame(ctx, S);
+        }
+        expect(rec.bad.slice(0, 3)).toEqual([]);
+        strokes.push(lines);
+      }
+      expect(strokes[1], kind + " draws more at twice the density").toBeGreaterThan(strokes[0] * 1.4);
+    }
   });
 
   it("fills the farthest dune ridge to the foot of the canvas and no other", () => {
