@@ -41,7 +41,7 @@
   /* The gold a chart series wears. In light mode the brand gold was deepened
      for text contrast, which pulled it toward the clay; a series keeps the
      lighter gold so Hospitalidad and Restaurante stay apart for a deuteranope
-     (OKLab dE 15.2 normal, 12.6 deuteranope against --energy-bright). */
+     (OKLab dE 15.5 normal, 12.9 deuteranope against --energy-bright). */
   --series-gold: var(--secondary);
   --header-bg: color-mix(in srgb, var(--ground) 85%, transparent);
   --scrim: color-mix(in srgb, var(--ground) 55%, transparent);
