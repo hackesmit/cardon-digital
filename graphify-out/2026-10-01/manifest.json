@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1790639757.5639586,
-    "ast_hash": "ae4500c594930c997a5e1b7070143f8b",
+    "mtime": 1790840309.5442476,
+    "ast_hash": "ddcba89936fdbda7dab7d7f84439a762",
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
@@ -745,8 +745,8 @@
     "semantic_hash": ""
   },
   "scripts/copy-check.mjs": {
-    "mtime": 1790639757.5689585,
-    "ast_hash": "11c41b15e160f6c99bbd7c972131801c",
+    "mtime": 1790840309.5462477,
+    "ast_hash": "59e7a9393765faec3fe2e63bc384e473",
     "semantic_hash": ""
   },
   "scripts/copy-check.test.mjs": {
@@ -1170,8 +1170,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/sitios-web/page.tsx": {
-    "mtime": 1790639757.5619586,
-    "ast_hash": "b61d9b8218676d372dacf17d4ceef3ec",
+    "mtime": 1790840309.5432477,
+    "ast_hash": "1a5456a5a22367d87f38e5540186a650",
     "semantic_hash": ""
   },
   "app/[locale]/software/page.tsx": {
@@ -1240,8 +1240,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/sitios.ts": {
-    "mtime": 1790813348.6113143,
-    "ast_hash": "011ceb67804ae3d7c76176b42eea6ea3",
+    "mtime": 1790840309.5452478,
+    "ast_hash": "35354083a146c4e25bc67a2183b9d403",
     "semantic_hash": ""
   },
   "lib/i18n/software.ts": {
@@ -1260,18 +1260,18 @@
     "semantic_hash": ""
   },
   "components/site/field/Field.tsx": {
-    "mtime": 1790834597.996149,
-    "ast_hash": "a9894720f4c042be16cfde41c4ec25e0",
+    "mtime": 1790840309.5442476,
+    "ast_hash": "492aed5803d9860dcf8a18ca67582ce7",
     "semantic_hash": ""
   },
   "components/site/field/fieldKit.test.ts": {
-    "mtime": 1790834597.996149,
-    "ast_hash": "c30cf588a2554b0cafe6c1aac8f3ace3",
+    "mtime": 1790840309.5442476,
+    "ast_hash": "c5a05e489371a7c8adc86ead73c4c764",
     "semantic_hash": ""
   },
   "components/site/field/fieldKit.ts": {
-    "mtime": 1790834597.996149,
-    "ast_hash": "e80c83e1d711cca976d2b968776ebdbe",
+    "mtime": 1790840309.5452478,
+    "ast_hash": "c444c732a2d18654fc4af4495ecda153",
     "semantic_hash": ""
   },
   "public/media/about/cellar.webp": {
@@ -1357,6 +1357,26 @@
   "public/media/xanic/harvest-intake.mp4": {
     "mtime": 1790729810.4585507,
     "ast_hash": "991a766091eb036ccde1afc27f8a7df8",
+    "semantic_hash": ""
+  },
+  "app/[locale]/estilos/fonts.ts": {
+    "mtime": 1790840309.5432477,
+    "ast_hash": "b46afd4e34ff20154661b34b93b6687d",
+    "semantic_hash": ""
+  },
+  "app/[locale]/estilos/layout.tsx": {
+    "mtime": 1790840309.5432477,
+    "ast_hash": "b63cbd8aaf4dcbf831e2d6212fc15cdb",
+    "semantic_hash": ""
+  },
+  "app/[locale]/estilos/page.tsx": {
+    "mtime": 1790840309.5432477,
+    "ast_hash": "620e1c03f7a9ba6ac0a27e4f56538a9e",
+    "semantic_hash": ""
+  },
+  "lib/i18n/estilos.ts": {
+    "mtime": 1790840309.5452478,
+    "ast_hash": "2c703a3cd4e32a9b7b51e437f4fe89ec",
     "semantic_hash": ""
   }
 }
