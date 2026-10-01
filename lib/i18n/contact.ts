@@ -140,33 +140,34 @@ const en = {
   },
 };
 
+/* The two-door variants read the same whichever door stands beside the
+   written one, so the Spanish is declared once and both keys point at it. */
+const esDosFormas: Intro = {
+  title: "Dos formas de __empezar__.",
+  sub: "Escoja la que más le acomode. Las dos llegan a la misma persona, la que hace el trabajo.",
+};
+
 const esIntro: Record<DoorVariant, Intro> = {
   all: {
     title: "Tres formas de __empezar__.",
-    sub: "Escoja la que le acomode. Las tres llegan a la misma persona, y esa persona es quien hace el trabajo.",
+    sub: "Escoja la que más le acomode. Las tres llegan a la misma persona, la que hace el trabajo.",
   },
-  whatsappForm: {
-    title: "Dos formas de __empezar__.",
-    sub: "Escoja la que le acomode. Las dos llegan a la misma persona, y esa persona es quien hace el trabajo.",
-  },
-  bookingForm: {
-    title: "Dos formas de __empezar__.",
-    sub: "Escoja la que le acomode. Las dos llegan a la misma persona, y esa persona es quien hace el trabajo.",
-  },
+  whatsappForm: esDosFormas,
+  bookingForm: esDosFormas,
   formOnly: {
     title: "Empiece con un __mensaje__.",
-    sub: "Déjenos unas líneas. Llegan a quien hace el trabajo, y esa persona es quien le contesta.",
+    sub: "Déjenos unas líneas. Las lee quien hace el trabajo, y esa misma persona le contesta.",
   },
 };
 
 const esDescription: Record<DoorVariant, string> = {
-  all: "Tres formas de llegar a Cardon Digital: WhatsApp, una llamada agendada o un mensaje corto. Las tres llegan a quien hace el trabajo.",
+  all: "Tres formas de contactar a Cardon Digital: WhatsApp, una llamada agendada o un mensaje corto. Las tres llegan a quien hace el trabajo.",
   whatsappForm:
-    "Dos formas de llegar a Cardon Digital: WhatsApp o un mensaje corto. Las dos llegan a quien hace el trabajo.",
+    "Dos formas de contactar a Cardon Digital: WhatsApp o un mensaje corto. Las dos llegan a quien hace el trabajo.",
   bookingForm:
-    "Dos formas de llegar a Cardon Digital: una llamada agendada o un mensaje corto. Las dos llegan a quien hace el trabajo.",
+    "Dos formas de contactar a Cardon Digital: una llamada agendada o un mensaje corto. Las dos llegan a quien hace el trabajo.",
   formOnly:
-    "Escriba a Cardon Digital con un mensaje corto. Llega a quien hace el trabajo.",
+    "Escriba un mensaje corto a Cardon Digital. Le llega a quien hace el trabajo.",
 };
 
 const es: typeof en = {
@@ -176,31 +177,31 @@ const es: typeof en = {
   },
   eyebrow: "Contacto",
   intro: esIntro,
-  reply: "Respondemos dentro del siguiente día hábil.",
+  reply: "Respondemos a más tardar al siguiente día hábil.",
 
   doorsAria: "Formas de contactarnos",
   whatsapp: {
     kicker: "Lo más rápido",
     title: "WhatsApp",
-    body: "Escriba como le escribiría a cualquiera. Díganos cuál es su negocio y qué no está funcionando, y de ahí seguimos nosotros.",
+    body: "Escríbanos como le escribiría a cualquier persona. Cuéntenos a qué se dedica su negocio y qué no le está funcionando, y de ahí seguimos nosotros.",
     cta: "Escribir por WhatsApp",
     prefill:
       "Hola. Vi el sitio de Cardon Digital y quiero platicar sobre mi negocio.",
   },
   booking: {
     kicker: "Agenda",
-    title: "Una llamada, a su hora",
-    body: "Treinta minutos, sin costo y sin discurso de venta. Preguntamos qué vende, cómo le llega el trabajo y dónde se le atora.",
+    title: "Una llamada, a la hora que le convenga",
+    body: "Treinta minutos, sin costo y sin discurso de venta. Le preguntamos qué vende, cómo le llega el trabajo y dónde se le atora.",
     cta: "Agendar una llamada",
   },
 
   mail: {
     kicker: "Por correo",
     title: "Escríbanos un correo",
-    sub: "Por ahora el contacto por escrito es un correo directo. Llega a quien hace el trabajo, y esa persona es quien le contesta.",
+    sub: "Por ahora, el contacto por escrito es por correo directo. Le llega a quien hace el trabajo, y esa misma persona le contesta.",
     body: "Díganos qué vende, qué no está funcionando y qué le gustaría que fuera distinto. Entre más concreto el mensaje, más útil la respuesta.",
     subject: "Contacto desde el sitio",
-    note: "El correo sale de su propio programa de correo, así que la copia se queda con usted. No alimenta ninguna lista y no lo compartimos con nadie.",
+    note: "El mensaje sale desde su propio programa de correo, así que la copia se queda con usted. No se agrega a ninguna lista de correos y no lo compartimos con nadie.",
   },
 
   form: {
@@ -212,7 +213,7 @@ const es: typeof en = {
     wineryLabel: "Negocio o empresa",
     wineryPlaceholder: "Cómo se llama",
     emailLabel: "Correo",
-    emailPlaceholder: "usted@sunegocio.com",
+    emailPlaceholder: "nombre@sunegocio.com",
     whatsappLabel: "WhatsApp",
     whatsappPlaceholder: "Con lada del país",
     messageLabel: "Mensaje",
@@ -225,13 +226,13 @@ const es: typeof en = {
     honeypot: "Deje este campo vacío",
     privacy: {
       body:
-        "Lo que escriba aquí lo usamos solo para responderle. Llega a nuestro propio correo a través del servicio que entrega el correo de este sitio, no alimenta ninguna lista y nunca vendemos ni compartimos sus datos con fines de mercadotecnia. Si usted aceptó la medición, un mensaje entregado se cuenta como una conversión.",
-      link: "Qué recaba este sitio, completo",
+        "Lo que escriba aquí lo usamos solo para responderle. Llega a nuestro propio correo a través del servicio que entrega el correo de este sitio, no se agrega a ninguna lista de correos y nunca vendemos ni compartimos sus datos con fines de mercadotecnia. Si usted aceptó la medición, un mensaje entregado se cuenta como una conversión.",
+      link: "Todo lo que recaba este sitio",
     },
     errors: {
       name: "Escriba su nombre, por favor.",
       winery: "Ese nombre es más largo de lo que acepta el campo.",
-      email: "Esa dirección no se lee como una dirección válida.",
+      email: "Esa dirección de correo no parece válida.",
       whatsapp: "Solo números, con lada del país.",
       message: "Cuéntenos un poco más, aunque sean unas líneas.",
       general: {
@@ -249,8 +250,8 @@ const es: typeof en = {
     sentTitle: "Recibido.",
     sentBody: {
       withWhatsapp:
-        "Le respondemos por correo dentro del siguiente día hábil. Si prefiere no esperar, WhatsApp está arriba.",
-      alone: "Le respondemos por correo dentro del siguiente día hábil.",
+        "Le respondemos por correo a más tardar al siguiente día hábil. Si prefiere no esperar, el WhatsApp está aquí arriba.",
+      alone: "Le respondemos por correo a más tardar al siguiente día hábil.",
     },
   },
 };
