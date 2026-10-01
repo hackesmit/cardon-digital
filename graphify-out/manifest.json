@@ -55,8 +55,8 @@
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
-    "mtime": 1790712193.732716,
-    "ast_hash": "7403d186036794704cfea0a923713a09",
+    "mtime": 1790582402.6695874,
+    "ast_hash": "f45f1bacd6b756489e6321e0302d8bf0",
     "semantic_hash": ""
   },
   "components/pages/case/PlayOnceVis.tsx": {
@@ -120,8 +120,8 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1790811894.6348379,
-    "ast_hash": "de710d77073bc60bbccf05315930d28b",
+    "mtime": 1790639757.5659585,
+    "ast_hash": "dee646627cc5a62b772f648a671312ab",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
@@ -215,8 +215,13 @@
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
-    "mtime": 1790811894.6348379,
-    "ast_hash": "0e3e5311ac0d8d2183f9e7659527a859",
+    "mtime": 1790582402.7155879,
+    "ast_hash": "ecfa5b2f88273159e7b0bf740c74b26e",
+    "semantic_hash": ""
+  },
+  "public/media/enkanto-valle.webp": {
+    "mtime": 1790582402.7155879,
+    "ast_hash": "1f2978de19f48aa4da9bcb654f021e26",
     "semantic_hash": ""
   },
   "public/media/valle-vineyard.webp": {
@@ -235,8 +240,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/page.tsx": {
-    "mtime": 1790640114.0132654,
-    "ast_hash": "d3b30e5e91eed8fec259795be936b346",
+    "mtime": 1790639757.5609586,
+    "ast_hash": "908ee8f0af7baadcad85f2d8fb47cb6f",
     "semantic_hash": ""
   },
   "app/[locale]/layout.tsx": {
@@ -245,8 +250,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1790826531.7748814,
-    "ast_hash": "7a8315a14ed9be7b26198a2a02f81501",
+    "mtime": 1790639757.5619586,
+    "ast_hash": "85f99fee51312091b94d5240de122485",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -260,13 +265,13 @@
     "semantic_hash": ""
   },
   "app/[locale]/work/enkanto/page.tsx": {
-    "mtime": 1790813348.6113143,
-    "ast_hash": "e338a60a0993047db271c2044f8983e5",
+    "mtime": 1790639757.5629585,
+    "ast_hash": "36a9e1bc56a1875876c80eb0f0a43c15",
     "semantic_hash": ""
   },
   "app/[locale]/work/monte-xanic/page.tsx": {
-    "mtime": 1790729810.4535506,
-    "ast_hash": "e7dfb76e290dc66e7cd91b3b5728a9f8",
+    "mtime": 1790639757.5629585,
+    "ast_hash": "83864685eb3f40a572b65d41274cab35",
     "semantic_hash": ""
   },
   "app/not-found.tsx": {
@@ -280,13 +285,13 @@
     "semantic_hash": ""
   },
   "components/site/SiteShell.tsx": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "b8be318d62700a515c2c3f11dc3744a4",
+    "mtime": 1790582402.6755874,
+    "ast_hash": "be2a843518e8e52c8dba286f4b3a4262",
     "semantic_hash": ""
   },
   "lib/fonts.ts": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "839deabeb10192c953c27da44e784760",
+    "mtime": 1790582402.7095878,
+    "ast_hash": "514f4eeec0848cbe786de22cc3b38ca8",
     "semantic_hash": ""
   },
   "lib/i18n/LocaleProvider.tsx": {
@@ -305,13 +310,13 @@
     "semantic_hash": ""
   },
   "lib/i18n/enkanto.ts": {
-    "mtime": 1790640114.0152655,
-    "ast_hash": "708785c0582e84858290450319dfa150",
+    "mtime": 1790582402.7105877,
+    "ast_hash": "a8de643edafe031d26a4c97a3bbc91c5",
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1790826531.7768815,
-    "ast_hash": "1dfeeb45f05d7fb6156d4da11d5b25db",
+    "mtime": 1790639757.5669587,
+    "ast_hash": "0628d0737d4e2e1db1062f5696b1e59a",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -320,8 +325,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/monte-xanic.ts": {
-    "mtime": 1790812034.3830793,
-    "ast_hash": "dd6246387972eb7838042cee72c1209c",
+    "mtime": 1790582402.7105877,
+    "ast_hash": "8049efc1a2512c885e126a4c1e87d8fe",
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
@@ -335,8 +340,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/site.ts": {
-    "mtime": 1790811894.6348379,
-    "ast_hash": "2004a113eb78b0e57249ce94112fad10",
+    "mtime": 1790639757.5669587,
+    "ast_hash": "064b4c84e17fb1dfaa1004d461d9382c",
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
@@ -345,13 +350,13 @@
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1790787842.5637615,
-    "ast_hash": "ca8c0c8f341434bc766a15780ee43bdd",
+    "mtime": 1790639757.5679586,
+    "ast_hash": "118e45d1fb19b14cdeb866dad176bbea",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
-    "mtime": 1790714316.809635,
-    "ast_hash": "52fad683df56c5c8c6a1189d5792f585",
+    "mtime": 1790639757.5679586,
+    "ast_hash": "ca99397d7c3761ea3414ce39524526ad",
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
@@ -410,8 +415,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/about/page.tsx": {
-    "mtime": 1790811894.633838,
-    "ast_hash": "09e9003940e2fb798cc3203ea82b0b63",
+    "mtime": 1790639757.5599585,
+    "ast_hash": "96438a962f845186c8a17c5542d1b133",
     "semantic_hash": ""
   },
   "components/pages/case/CaseFacts.tsx": {
@@ -430,13 +435,13 @@
     "semantic_hash": ""
   },
   "lib/i18n/about.ts": {
-    "mtime": 1790787842.5637615,
-    "ast_hash": "c40fd7b780943bfa5a881ad4a543e6e7",
+    "mtime": 1790639757.5659585,
+    "ast_hash": "7ee8bbe43db1996f89cecd3086b6017a",
     "semantic_hash": ""
   },
   "app/[locale]/contacto/page.tsx": {
-    "mtime": 1790811894.633838,
-    "ast_hash": "85c611098c6d2d2488d428d27fc6dd08",
+    "mtime": 1790582402.663587,
+    "ast_hash": "27e618ef3e639862f30665c000983ffa",
     "semantic_hash": ""
   },
   "app/api/contact/route.ts": {
@@ -550,8 +555,8 @@
     "semantic_hash": ""
   },
   "lib/pricing.test.ts": {
-    "mtime": 1790714316.809635,
-    "ast_hash": "f9b4d44299810a4ae908b2f5095c7d78",
+    "mtime": 1790639757.5679586,
+    "ast_hash": "10d202d7c7b6cc06c289d0d666f9ce96",
     "semantic_hash": ""
   },
   "components/pages/modulos/BridgeMap.tsx": {
@@ -565,8 +570,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
-    "mtime": 1790811894.633838,
-    "ast_hash": "c7e42eca5d002bb49b715f39b465fa3d",
+    "mtime": 1790639757.5619586,
+    "ast_hash": "1f1412af579ac8e1a1b667de208288c7",
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
@@ -580,8 +585,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1790707762.740908,
-    "ast_hash": "18cedd3d7ada7367e56f78cad32a9a99",
+    "mtime": 1790639757.5669587,
+    "ast_hash": "47fc0bfcca7ca881b8df6c56a9b9b6fa",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
@@ -650,8 +655,8 @@
     "semantic_hash": ""
   },
   "components/pages/precios/FloorChart.tsx": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "8894d726fc478f434247decd6c3dc6ce",
+    "mtime": 1790582402.6735873,
+    "ast_hash": "f25001f5053f29ef793b04fa87fd2af5",
     "semantic_hash": ""
   },
   "components/pages/showcase/VintageCompare.tsx": {
@@ -660,8 +665,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/work/enkanto/enkanto-case.test.ts": {
-    "mtime": 1790640114.0142653,
-    "ast_hash": "a009999ae9d9bf3476d922896add4e80",
+    "mtime": 1790639757.5629585,
+    "ast_hash": "2f9eb5bc48317e905a20fd5b1f006d64",
     "semantic_hash": ""
   },
   "app/[locale]/work/enkanto/pending.ts": {
@@ -695,8 +700,8 @@
     "semantic_hash": ""
   },
   "components/site/Media.tsx": {
-    "mtime": 1790811894.6348379,
-    "ast_hash": "3ccda9d6c15cbe769aab4f2109d17c37",
+    "mtime": 1790582402.6755874,
+    "ast_hash": "8ffe510e265ac68ff5148a29e884d4aa",
     "semantic_hash": ""
   },
   "vitest.config.ts": {
@@ -705,13 +710,13 @@
     "semantic_hash": ""
   },
   "docs/media-clearances.md": {
-    "mtime": 1790729810.4535506,
-    "ast_hash": "9833a2dd591bdec48a0505e8411fe6a3",
+    "mtime": 1790582402.6755874,
+    "ast_hash": "eae24488320b6ae302211b05aa3d7ada",
     "semantic_hash": ""
   },
   "public/media/README.md": {
-    "mtime": 1790811894.6348379,
-    "ast_hash": "b856fa3691403f97dc7dbe6add7a1860",
+    "mtime": 1790582402.7155879,
+    "ast_hash": "ef9b1f3e62e9468cdb2a3a407ad5c6e8",
     "semantic_hash": ""
   },
   "components/pages/demos/RestauranteDemo.tsx": {
@@ -735,8 +740,8 @@
     "semantic_hash": ""
   },
   "components/pages/demos/palette.ts": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "93017a10fe8fc5c2d05375c556fba505",
+    "mtime": 1790582402.6715872,
+    "ast_hash": "838a456cd58c79ecd835e0076d89c845",
     "semantic_hash": ""
   },
   "lib/i18n/demos.ts": {
@@ -1175,8 +1180,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/software/page.tsx": {
-    "mtime": 1790711797.7890818,
-    "ast_hash": "2cadeb86b453a11a9151bb334e5f3566",
+    "mtime": 1790639757.5619586,
+    "ast_hash": "4ca1e5ba05442cabcd795415c393bbf9",
     "semantic_hash": ""
   },
   "components/pages/home/DigitalArc.test.tsx": {
@@ -1195,8 +1200,8 @@
     "semantic_hash": ""
   },
   "components/pages/precios/WebPackages.tsx": {
-    "mtime": 1790813348.6113143,
-    "ast_hash": "038e5497e3c61a6d5f6bc1040397547b",
+    "mtime": 1790639757.5639586,
+    "ast_hash": "6a759168c4653da790405b4a803d2b80",
     "semantic_hash": ""
   },
   "components/pages/services/FlowCompress.test.ts": {
@@ -1240,108 +1245,18 @@
     "semantic_hash": ""
   },
   "lib/i18n/sitios.ts": {
-    "mtime": 1790813348.6113143,
-    "ast_hash": "011ceb67804ae3d7c76176b42eea6ea3",
+    "mtime": 1790639757.5669587,
+    "ast_hash": "ea5f19aa6d16dfc6ca1ee5604f5b093a",
     "semantic_hash": ""
   },
   "lib/i18n/software.ts": {
-    "mtime": 1790787842.5637615,
-    "ast_hash": "c7d25bd79edab6faa646e5cbc6ff1f77",
+    "mtime": 1790639757.5669587,
+    "ast_hash": "78d5066ae6a740026c599ec2211c21e4",
     "semantic_hash": ""
   },
   "state/review/r-arc-fable/check-ads-outcome-claim.sh": {
     "mtime": 1790639757.5689585,
     "ast_hash": "a7f39646e20756d43b827d05f0d5596f",
-    "semantic_hash": ""
-  },
-  "components/site/TitlePaint.tsx": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "afb650dec5b3e4ccfb4f372f2f3dcbc5",
-    "semantic_hash": ""
-  },
-  "public/media/about/cellar.webp": {
-    "mtime": 1790811894.635838,
-    "ast_hash": "18fcdf85ade769146c6037eaa6f4556e",
-    "semantic_hash": ""
-  },
-  "public/media/enkanto/cabana.webp": {
-    "mtime": 1790640114.0152655,
-    "ast_hash": "688e4bfdd8ef4123986721bff98195ef",
-    "semantic_hash": ""
-  },
-  "public/media/home/phone-in-hand.webp": {
-    "mtime": 1790729810.4545507,
-    "ast_hash": "bcfc2b7846577716544596964223a3c4",
-    "semantic_hash": ""
-  },
-  "public/media/home/proof-xanic.webp": {
-    "mtime": 1790707762.7419078,
-    "ast_hash": "75bb8da766c2ef9dec3c238a5d8f61d8",
-    "semantic_hash": ""
-  },
-  "public/media/home/service-software.webp": {
-    "mtime": 1790707762.7419078,
-    "ast_hash": "5814f07b5f31adb271a93697eec1c251",
-    "semantic_hash": ""
-  },
-  "public/media/home/xanic-cellar.webp": {
-    "mtime": 1790707762.742908,
-    "ast_hash": "055791f9ee7abd55dac6072211a92621",
-    "semantic_hash": ""
-  },
-  "public/media/home/xanic-tank-log-poster.webp": {
-    "mtime": 1790729810.4545507,
-    "ast_hash": "907368a7115c037a40b45b82b54bcc7e",
-    "semantic_hash": ""
-  },
-  "public/media/precios/diagnostic-session.webp": {
-    "mtime": 1790707762.742908,
-    "ast_hash": "f427b28c01844cd7d9e9981fc6262559",
-    "semantic_hash": ""
-  },
-  "public/media/precios/handover.webp": {
-    "mtime": 1790640114.0162654,
-    "ast_hash": "b89ca1c26094032171263141fb1b0693",
-    "semantic_hash": ""
-  },
-  "public/media/software/cellar-charts.webp": {
-    "mtime": 1790711797.791082,
-    "ast_hash": "8c9ed09e87d7018c9e5db59d5bbb5e4c",
-    "semantic_hash": ""
-  },
-  "public/media/software/cellar-laptop.webp": {
-    "mtime": 1790711797.791082,
-    "ast_hash": "7ded6f11e942c591080f383838c72403",
-    "semantic_hash": ""
-  },
-  "public/media/software/phone-at-barrel.webp": {
-    "mtime": 1790711797.7920818,
-    "ast_hash": "99a550b11faef5cbe60bff9f881e6b58",
-    "semantic_hash": ""
-  },
-  "public/media/winery/cellar.webp": {
-    "mtime": 1790707762.742908,
-    "ast_hash": "ba8d2247b00ebdbd1e1bd0835cd91098",
-    "semantic_hash": ""
-  },
-  "public/media/xanic/after-tablet.webp": {
-    "mtime": 1790707762.743908,
-    "ast_hash": "5bb45cd9ba0024081c509c017c1c790b",
-    "semantic_hash": ""
-  },
-  "public/media/xanic/harvest-intake-poster.webp": {
-    "mtime": 1790729810.4565506,
-    "ast_hash": "3d4732ad59382adfadedb86a884e3869",
-    "semantic_hash": ""
-  },
-  "public/media/home/xanic-tank-log.mp4": {
-    "mtime": 1790729810.4565506,
-    "ast_hash": "0161ac8b708ab411e5c20dd9b4f06573",
-    "semantic_hash": ""
-  },
-  "public/media/xanic/harvest-intake.mp4": {
-    "mtime": 1790729810.4585507,
-    "ast_hash": "991a766091eb036ccde1afc27f8a7df8",
     "semantic_hash": ""
   }
 }
