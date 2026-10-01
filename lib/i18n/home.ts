@@ -303,14 +303,14 @@ const es: typeof en = {
   meta: {
     title: "Cardon Digital | Que lo encuentren, que le compren, y que el trabajo se haga solo",
     description:
-      "Sitios web, anuncios en Google y software a la medida para negocios en Baja California. Precios publicados en pesos, diagnóstico sin costo, y todo lo que hacemos queda a su nombre.",
+      "Sitios web, anuncios en Google y software a la medida para negocios en Baja California. Precios publicados en pesos, diagnóstico sin costo, y todo lo que construimos queda a su nombre.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Sitios web, anuncios y software. Ensenada, Baja California",
     title: "Que lo encuentren, que le compren,",
     titleAccent: "y que el trabajo se haga solo.",
-    sub: "Un sitio web que hace que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que hacemos queda a su nombre.",
+    sub: "Un sitio web por el que sí le escriben, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
     proofLine: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
   },
@@ -352,7 +352,7 @@ const es: typeof en = {
       {
         id: "anuncios",
         name: "Anuncios en Google",
-        title: "Clientes nuevos que ya lo buscaban, y todo medido.",
+        title: "Clientes nuevos que ya lo buscaban, medidos.",
         body: "Campañas para la gente que ya está buscando lo que usted vende. Cuota fija al mes, y su presupuesto va directo a Google.",
         cta: "Ver anuncios",
       },
@@ -367,7 +367,7 @@ const es: typeof en = {
     arcLine: "Cada uno funciona por sí solo. Con los tres, su negocio entra a la era digital de principio a fin: lo encuentran, le escriben y el trabajo se hace solo.",
   },
   photos: {
-    "home/proof-xanic": { cap: "Monte Xanic abre la temporada con todo al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
+    "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
     "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reservación, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
     "home/proof-dharma": { cap: "El portafolio y la tienda de Dharma Ochoa, listos para vender desde el teléfono.", alt: "El sitio de Dharma Ochoa abierto en un teléfono" },
     "home/service-sitios": { cap: "Un sitio que se lee bien en el teléfono y termina en un mensaje.", alt: "Un teléfono en la mano con un sitio abierto" },
@@ -432,7 +432,7 @@ const es: typeof en = {
   },
   how: {
     kicker: "Cómo funciona",
-    title: "Del primer mensaje a un sistema que su equipo maneja solo.",
+    title: "Del primer mensaje al sistema con el que trabaja su equipo.",
     steps: [
       { k: "01", body: "El diagnóstico, sin costo. Diez días hábiles y un informe por escrito que se queda con usted." },
       { k: "02", body: "El desarrollo. Precio fijo, acordado antes de empezar." },
@@ -464,7 +464,7 @@ const es: typeof en = {
   pricing: {
     kicker: "Lo que cuesta",
     title: "Precios publicados, en pesos.",
-    sub: "Cada servicio tiene su precio de entrada a la vista, más IVA y con factura. El diagnóstico fija la cotización final.",
+    sub: "Cada servicio tiene su precio de entrada a la vista, más IVA y con factura. El diagnóstico define la cotización final.",
     siteK: "Sitio web",
     adsK: "Anuncios en Google",
     softK: "Software",
@@ -528,9 +528,9 @@ const es: typeof en = {
       ],
       rows: [
         { k: "COSECHA", v: "al día" },
-        { k: "LOTES", v: "con fecha" },
+        { k: "LOTES", v: "fechados" },
         { k: "TANQUES", v: "al corriente" },
-        { k: "RESERVAS", v: "unificadas" },
+        { k: "RESERVAS", v: "juntas" },
         { k: "SERVICIO", v: "medido" },
         { k: "FINANZAS", v: "al corriente" },
       ],

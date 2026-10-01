@@ -397,7 +397,7 @@ const es: typeof en = {
   system: {
     kicker: "El sistema",
     title: "Un solo registro para la bodega, el comedor y los cuartos.",
-    p1: "Tres operaciones compartían la propiedad, pero ningún registro. Construimos el que ahora comparten: diecinueve pantallas, un juego para cada área, y cada una trabaja con el suyo.",
+    p1: "Tres operaciones compartían la propiedad, pero ningún registro. Construimos el que les faltaba: diecinueve pantallas, un juego para cada área, para que cada una trabaje con el suyo.",
     screensK: "Pantallas",
     modules: [
       {
@@ -418,7 +418,7 @@ const es: typeof en = {
         num: "03",
         name: "Hospedaje",
         title: "Todas las reservaciones en un solo calendario, y el conteo del día ya hecho.",
-        body: "Todos los canales en un solo calendario, las llegadas y salidas del día, ocupación e ingreso por canal, una ficha de huésped que se conserva después de la reservación, y la limpieza desde el teléfono.",
+        body: "Todos los canales en un solo calendario, las llegadas y salidas del día, ocupación e ingresos por canal, una ficha de huésped que se conserva después de la reservación, y la limpieza desde el teléfono.",
         screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
@@ -430,7 +430,7 @@ const es: typeof en = {
         body: "Airbnb no ofrece una interfaz abierta para anfitriones, así que el calendario lee los feeds iCal, que tardan horas en actualizarse. Una fecha bloqueada aquí sigue abierta allá, y la pantalla lo dice.",
       },
       {
-        lead: "Lee OpenTable. No le extrae datos por fuera.",
+        lead: "Lee OpenTable. No saca sus datos por fuera.",
         body: "Las reservaciones de mesa están en OpenTable, que da acceso a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reservación se captura a mano y se concilia con la exportación por comensal y hora, para que no se duplique.",
       },
       {

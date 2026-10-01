@@ -194,7 +194,7 @@ const es: typeof en = {
         id: "hospitalidad",
         name: "Hospitalidad",
         title: "Llene las habitaciones que dos calendarios dejaban vacías.",
-        body: "Las reservaciones de todos los canales en un solo calendario, y cada huésped reconocido cuando regresa.",
+        body: "Las reservaciones de todos los canales en un solo calendario, y el huésped no se pierde entre visitas.",
       },
       {
         id: "restaurante",
@@ -216,7 +216,7 @@ const es: typeof en = {
   },
   how: {
     kicker: "Cómo funciona",
-    title: "De la primera sesión al sistema que maneja su equipo.",
+    title: "De la primera sesión al sistema con el que trabaja su equipo.",
     steps: [
       { k: "01", body: "El diagnóstico, sin costo. Diez días hábiles y un informe por escrito que es suyo." },
       { k: "02", body: "El desarrollo. Precio fijo por módulo, acordado antes de empezar." },
@@ -246,7 +246,7 @@ const es: typeof en = {
   vis: {
     ops: {
       tag: "Monte Xanic: de una hora de trabajo financiero a unos dos minutos",
-      aria: "En Monte Xanic, cerca de una hora de trabajo financiero se comprime en un solo paso automático y limpio de unos dos minutos, casi 97 por ciento menos tiempo, y se actualiza durante el día.",
+      aria: "En Monte Xanic, cerca de una hora de trabajo financiero se reduce a un solo paso automático de unos dos minutos, casi 97 por ciento menos tiempo, y se actualiza durante el día.",
       manual: "A MANO, CADA SEMANA",
       auto: "AUTOMATIZADO, SE HACE SOLO",
       badge: "97% menos tiempo",
