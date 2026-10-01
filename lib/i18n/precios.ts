@@ -317,7 +317,7 @@ const es: typeof en = {
     monthlyNote:
       "Cada mensualidad es la base compartida, que se cobra una vez por cliente, más el costo de operación del módulo.",
     demoNote: "Los demos usan una marca inventada y se abren en una pestaña nueva.",
-    note: "Un precio de entrada solo sube, nunca baja: más fuentes, más unidades, más mesas, más añadas, un conector, un segundo módulo. Por debajo del tamaño de entrada no hay sistema, solo un reporte. **El Diagnóstico define la cotización final.**",
+    note: "Un precio de entrada solo sube, nunca baja: más fuentes, más unidades, más mesas, más añadas, un conector, un segundo módulo. Por debajo del tamaño de entrada no hay sistema, solo un informe. **El Diagnóstico define la cotización final.**",
     modules: {
       produccion: {
         name: "Producción",
@@ -352,7 +352,7 @@ const es: typeof en = {
     "commercial-record": "Registro comercial",
     "historical-vintage-load": "Una añada histórica cargada",
     "unit-and-stay-record": "Registro de unidades y estancias",
-    "channel-feed-connector": "Conector de canal de reservas",
+    "channel-feed-connector": "Conector de canal de reservación",
     "master-calendar": "Calendario maestro",
     "day-view": "Vista del día",
     "unit-status-board": "Tablero de unidades y vista de limpieza en el teléfono",
@@ -379,7 +379,7 @@ const es: typeof en = {
   examples: {
     produccion:
       "Un lugar de producción, una marca, dos fuentes de datos y una añada anterior.",
-    hospitalidad: "Una propiedad de seis unidades en dos canales de reservas.",
+    hospitalidad: "Una propiedad de seis unidades en dos canales de reservación.",
     restaurante:
       "Doce mesas, una estación, cuatro teléfonos, una pantalla de cocina.",
   } as Record<string, string>,

@@ -288,7 +288,7 @@ const es: typeof en = {
       {
         num: "03",
         h: "Cuatro suscripciones que no se conectan entre sí.",
-        body: "La herramienta de producción, la plataforma del club, la página de reservas y la tienda en línea cobran cada mes. Usted las concilia a mano.",
+        body: "La herramienta de producción, la plataforma del club, la página de reservaciones y la tienda en línea cobran cada mes. Usted las concilia a mano.",
       },
     ],
   },
@@ -365,8 +365,8 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Dos cuotas, sin licencias, y la construcción queda a nombre de la bodega.",
-    sub: "La implementación paga la construcción. La cuota mensual cubre la operación: hosting, mantenimiento, correcciones, el reporte y el asistente.",
+    title: "Dos cuotas, sin licencias, y el sistema queda a nombre de la bodega.",
+    sub: "La implementación paga el desarrollo. La cuota mensual cubre la operación: hosting, mantenimiento, correcciones, el reporte y el asistente.",
     modulesLabel: "Los módulos que contrata una bodega",
     modules: [
       {
@@ -377,7 +377,7 @@ const es: typeof en = {
       {
         name: "Hospitalidad",
         scale: "Cuartos, sala de degustación y eventos",
-        body: "Las reservas de todos los canales en un solo calendario, y el huésped no se pierde entre visitas.",
+        body: "Las reservaciones de todos los canales en un solo calendario, y el huésped no se pierde entre visitas.",
       },
       {
         name: "Restaurante",
@@ -391,7 +391,7 @@ const es: typeof en = {
     termsLabel: "Condiciones",
     terms: [
       "La cuota va por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
-      "Al firmar usted elige cómo se paga la construcción. Si la paga completa, puede dejar el servicio cuando quiera, sin deber nada por ella. O puede elegir la implementación más baja, la que financian doce meses de servicio: si deja el servicio antes de esos doce, debe la parte de la construcción que la cuota todavía no había pagado. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
+      "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede dejar el servicio cuando quiera, sin deber nada por él. O puede elegir la implementación más baja, que se financia con doce meses de servicio: si deja el servicio antes de esos doce, debe la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes hasta cero, y su cotización la trae mes por mes.",
       "Todos los precios más IVA.",
     ],
   },

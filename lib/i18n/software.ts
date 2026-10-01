@@ -159,7 +159,7 @@ const es: typeof en = {
       },
       {
         h: "Un solo registro.",
-        body: "Cosecha, reservas, comandas, facturas y cuentas dejan de estar repartidas en diez lugares que nunca cuadran entre sí.",
+        body: "Cosecha, reservaciones, comandas, facturas y cuentas dejan de estar repartidas en diez lugares que nunca cuadran entre sí.",
       },
       {
         h: "Respuestas con sus propios datos.",
@@ -194,7 +194,7 @@ const es: typeof en = {
         id: "hospitalidad",
         name: "Hospitalidad",
         title: "Llene las habitaciones que dos calendarios dejaban vacías.",
-        body: "Las reservas de todos los canales en un solo calendario, y cada huésped reconocido cuando regresa.",
+        body: "Las reservaciones de todos los canales en un solo calendario, y cada huésped reconocido cuando regresa.",
       },
       {
         id: "restaurante",
@@ -210,7 +210,7 @@ const es: typeof en = {
   proof: {
     kicker: "Caso de estudio",
     title: "Una hora de trabajo financiero, hoy unos dos minutos.",
-    body: "La cosecha estaba repartida entre un sistema de producción, hojas de cálculo y una libreta de campo, y alguien armaba el panorama a mano. Hoy Monte Xanic ve la temporada al día en una sola pantalla. En Viñedo En'kanto, la producción, el restaurante y las reservas se llevan en un solo sistema, con su tienda en línea.",
+    body: "La cosecha estaba repartida entre un sistema de producción, hojas de cálculo y una libreta de campo, y alguien armaba el panorama a mano. Hoy Monte Xanic ve la temporada al día en una sola pantalla. En Viñedo En'kanto, la producción, el restaurante y las reservaciones se llevan en un solo sistema, con su tienda en línea.",
     readXanic: "Ver el caso de Monte Xanic",
     readEnkanto: "Ver el caso de En'kanto",
   },
@@ -219,7 +219,7 @@ const es: typeof en = {
     title: "De la primera sesión al sistema que maneja su equipo.",
     steps: [
       { k: "01", body: "El diagnóstico, sin costo. Diez días hábiles y un informe por escrito que es suyo." },
-      { k: "02", body: "La construcción. Precio fijo por módulo, acordado antes de empezar." },
+      { k: "02", body: "El desarrollo. Precio fijo por módulo, acordado antes de empezar." },
       { k: "03", body: "La entrega. Su equipo capacitado, las cuentas a su nombre y una llamada cada semana mientras dure el servicio." },
     ],
   },

@@ -300,7 +300,7 @@ const es: typeof en = {
       { k: "Cliente", v: "Viñedo En'kanto" },
       { k: "Sector", v: "Vinícola, hotel y restaurante" },
       { k: "Lugar", v: "San Antonio de las Minas, Valle de Guadalupe" },
-      { k: "Relación", v: "Construcción y trabajo continuo" },
+      { k: "Relación", v: "Desarrollo y trabajo continuo" },
       {
         k: "Lo que construimos",
         v: "Tienda en línea, estructura y búsqueda, pagos y envíos como se paga y se envía en México, versión bilingüe, y un solo sistema para los tres giros",
@@ -318,7 +318,7 @@ const es: typeof en = {
     kicker: "Antes",
     title: "Tres negocios en una propiedad, y nada que los uniera.",
     p1: "Viñedo En'kanto está en San Antonio de las Minas: una vinícola boutique, cuartos para quien quiere amanecer en el Valle y un restaurante. Tres giros, un mismo lugar.",
-    p2: "En línea, la tienda existía solo de nombre: productos sin precio, sin forma de envío y cinco páginas de inicio peleándose por el mismo visitante. La comanda se escribía en papel y las reservas llegaban a tantos lugares como canales había.",
+    p2: "En línea, la tienda existía solo de nombre: productos sin precio, sin forma de envío y cinco páginas de inicio peleándose por el mismo visitante. La comanda se escribía en papel y las reservaciones llegaban a tantos lugares como canales había.",
   },
   changed: {
     kicker: "Lo que cambió",
@@ -391,7 +391,7 @@ const es: typeof en = {
     },
     band: {
       alt: "La cabaña de En'kanto entre suculentas y viñas, en San Antonio de las Minas",
-      caption: "La cabaña de En'kanto: cada reserva, de cualquier canal, cae en un solo calendario.",
+      caption: "La cabaña de En'kanto: cada reservación, de cualquier canal, cae en un solo calendario.",
     },
   },
   system: {
@@ -417,8 +417,8 @@ const es: typeof en = {
       {
         num: "03",
         name: "Hospedaje",
-        title: "Todas las reservas en un solo calendario, y el conteo del día ya hecho.",
-        body: "Todos los canales en un solo calendario, las llegadas y salidas del día, ocupación e ingreso por canal, una ficha de huésped que se conserva después de la reserva, y la limpieza desde el teléfono.",
+        title: "Todas las reservaciones en un solo calendario, y el conteo del día ya hecho.",
+        body: "Todos los canales en un solo calendario, las llegadas y salidas del día, ocupación e ingreso por canal, una ficha de huésped que se conserva después de la reservación, y la limpieza desde el teléfono.",
         screens: ["Calendario", "Día", "Ocupación", "Ingresos", "Huéspedes", "Cargos", "Mesas", "Tablero", "Limpieza"],
       },
     ],
@@ -431,7 +431,7 @@ const es: typeof en = {
       },
       {
         lead: "Lee OpenTable. No le extrae datos por fuera.",
-        body: "Las reservas de mesa están en OpenTable, que da acceso a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reserva se captura a mano y se concilia con la exportación por comensal y hora, para que no se duplique.",
+        body: "Las reservaciones de mesa están en OpenTable, que da acceso a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reservación se captura a mano y se concilia con la exportación por comensal y hora, para que no se duplique.",
       },
       {
         lead: "La cuenta de la habitación suma los cargos del restaurante. Nunca escribe uno.",
@@ -482,7 +482,7 @@ const es: typeof en = {
       d: "Día 10",
       t: "Le entregamos el informe: qué funciona, qué falla y por dónde empezar.",
     },
-    { d: "Después", t: "Le proponemos la construcción, o usted se lleva el informe y ahí termina." },
+    { d: "Después", t: "Le presentamos una propuesta, o usted se lleva el informe y ahí termina." },
   ],
 };
 
