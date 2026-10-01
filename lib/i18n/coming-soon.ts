@@ -17,7 +17,7 @@ const es: typeof en = {
   meta: {
     title: "Cardon Digital",
     description:
-      "Sistemas de crecimiento para bodegas del Valle de Guadalupe y Ensenada. El sitio completo va en camino.",
+      "Sistemas para hacer crecer su bodega, en el Valle de Guadalupe y Ensenada. El sitio completo viene en camino.",
   },
   line: "Que lo encuentren, que le compren, y que el trabajo se haga solo.",
   sub: "Estamos armando el sitio completo. Si prefiere no esperar:",

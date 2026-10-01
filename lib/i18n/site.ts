@@ -80,8 +80,8 @@ const es: typeof en = {
   notFound: {
     metaTitle: "Página no encontrada",
     eyebrow: "404",
-    title: "Esa página no está aquí.",
-    body: "Puede que el enlace ya esté viejo o que la dirección traiga un error de dedo. Los servicios, los casos y el diagnóstico quedan a un paso desde la página de inicio.",
+    title: "No encontramos esa página.",
+    body: "Puede que el enlace sea viejo o que la dirección traiga un error de dedo. Los servicios, los casos y el diagnóstico están a un paso de la página de inicio.",
     home: "Volver al inicio",
   },
   meta: {
@@ -122,7 +122,7 @@ const es: typeof en = {
     cta: "Pedir el diagnóstico sin costo",
     mailSubject: "Diagnóstico de Crecimiento",
     price:
-      "**Sin costo.** Sin anticipo y sin compromiso. Si el informe muestra trabajo que vale la pena, proponemos la construcción y usted decide.",
+      "**Sin costo.** Sin anticipo y sin compromiso. Si el informe muestra trabajo que vale la pena hacer, le presentamos una propuesta y usted decide.",
   },
   footer: {
     label: "Pie de página",

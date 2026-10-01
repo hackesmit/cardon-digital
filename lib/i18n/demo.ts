@@ -48,20 +48,20 @@ const es: typeof en = {
   meta: {
     title: "Demos",
     description:
-      "Los demos interactivos todavía no están abiertos. Mientras tanto, vea los tres módulos, los precios y el Diagnóstico de Crecimiento sin costo.",
+      "Los demos interactivos todavía no están disponibles. Mientras tanto, conozca los tres módulos, los precios y el Diagnóstico de Crecimiento sin costo.",
   },
   eyebrow: "Demos",
-  title: "Los demos todavía no están abiertos",
-  lead: "Estamos terminando los demos interactivos. Cada uno recorre un módulo funcionando con datos de muestra, y abren aquí muy pronto. Mientras tanto, aquí es dónde mirar.",
-  modulesLead: "Tres módulos, un demo cada uno:",
+  title: "Los demos todavía no están disponibles",
+  lead: "Estamos terminando los demos interactivos. Cada uno recorre un módulo en funcionamiento, con datos de muestra, y muy pronto estarán aquí. Mientras tanto, esto es lo que puede ver.",
+  modulesLead: "Tres módulos, cada uno con su demo:",
   modules: [
     {
       name: "Producción",
-      body: "El registro de la bodega de lo que cultivó, produjo y vendió, con fecha y respondido desde un solo lugar.",
+      body: "El registro de lo que la bodega cultivó, elaboró y vendió, con fecha y listo para consultarse desde un solo lugar.",
     },
     {
       name: "Hospitalidad",
-      body: "Cada reserva de cada canal en un solo calendario, con la vista del día desde la que trabaja la propiedad.",
+      body: "Cada reserva, de cualquier canal, en un solo calendario, con la vista del día con la que trabaja el personal.",
     },
     {
       name: "Restaurante",
@@ -70,7 +70,7 @@ const es: typeof en = {
   ],
   linksLead: "Mientras terminamos los demos:",
   links: {
-    pricing: "Vea los precios",
+    pricing: "Ver los precios",
   },
 };
 
