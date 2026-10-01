@@ -132,65 +132,65 @@ const es: typeof en = {
   meta: {
     title: "Anuncios en Google",
     description:
-      "Clientes nuevos que ya estaban buscando lo que usted vende, medidos hasta la llamada o el mensaje. Cuota fija al mes, y su presupuesto va directo a Google.",
+      "Clientes nuevos que ya estaban buscando lo que usted vende, con cada llamada y cada mensaje contados. Cuota fija al mes, y su presupuesto va directo a Google.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Anuncios en Google",
     title: "Clientes nuevos que ya lo estaban buscando,",
-    titleAccent: "medidos hasta el mensaje.",
-    sub: "Campañas en Google que ponen su negocio frente a la gente que busca lo que usted vende, en su zona. Cuota fija al mes, y su presupuesto se paga directo a Google, en su propia cuenta.",
+    titleAccent: "y cada mensaje se cuenta.",
+    sub: "Campañas en Google que muestran su negocio a la gente de su zona que busca lo que usted vende. Cuota fija al mes, y el presupuesto lo paga usted directo a Google, desde su propia cuenta.",
     proof: "Cuota fija desde {local} al mes. Presupuesto mínimo de {minLocal} al mes, directo a Google.",
   },
   path: {
     kicker: "Cómo llega un cliente",
-    title: "De la búsqueda al mensaje, con cada paso contado.",
+    title: "De la búsqueda al mensaje, contando cada paso.",
     steps: [
-      "Alguien cerca de usted busca lo que usted vende.",
+      "Alguien cerca de su negocio busca lo que usted vende.",
       "Su anuncio aparece y lo lleva a una página que dice lo mismo que el anuncio.",
-      "Le llama, o le escribe por WhatsApp.",
-      "La llamada o el mensaje queda contado, con el anuncio que lo trajo.",
+      "Le llama o le escribe por WhatsApp.",
+      "La llamada o el mensaje queda registrado, junto con el anuncio que lo trajo.",
     ],
   },
   month: {
     kicker: "Lo que hacemos cada mes",
-    title: "Lo que paga la cuota.",
+    title: "Lo que incluye la cuota.",
     items: [
       {
         h: "Las palabras con las que lo buscan, y las que no.",
-        body: "Cada semana leemos qué buscó de verdad la gente que hizo clic, y bloqueamos lo que nunca fue un cliente.",
+        body: "Cada semana revisamos qué buscó en realidad la gente que hizo clic, y bloqueamos las búsquedas que nunca iban a traer un cliente.",
       },
       {
         h: "Anuncios que dicen lo que usted vende.",
-        body: "Escritos para su negocio, probados unos contra otros, renovados cuando se cansan.",
+        body: "Escritos para su negocio, probados unos contra otros y renovados cuando dejan de rendir.",
       },
       {
         h: "Una página que convence.",
-        body: "La página a la que llega el clic repite la promesa del anuncio y tiene un solo botón.",
+        body: "La página a la que llega quien hace clic repite lo que prometió el anuncio y tiene un solo botón.",
       },
       {
         h: "Un reporte que se entiende.",
-        body: "Una página al mes: cuánto se invirtió, cuántas llamadas y mensajes llegaron, y qué costó cada uno. Y una llamada de veinte minutos.",
+        body: "Una página al mes: cuánto se invirtió, cuántas llamadas y mensajes llegaron y cuánto costó cada uno. Además, una llamada de veinte minutos.",
       },
     ],
   },
   pricing: {
     kicker: "Lo que cuesta",
     title: "Cuota fija. Su presupuesto va directo a Google.",
-    sub: "Dos alcances, según cuántas campañas necesita. La cuota fija no cambia con lo que invierte.",
+    sub: "Dos planes, según cuántas campañas necesite. La cuota fija es la misma, invierta lo que invierta.",
     names: { local: "Local", crecimiento: "Crecimiento" } as Record<string, string>,
     scopes: {
       local: "Una campaña de búsqueda, una zona, hasta tres grupos de anuncios.",
       crecimiento: "Hasta tres campañas y diez grupos de anuncios, o una segunda zona.",
     } as Record<string, string>,
     monthlyLabel: "Cuota mensual fija",
-    setupLabel: "Construcción de la campaña, una vez",
+    setupLabel: "Construcción de la campaña, pago único",
     minLabel: "Presupuesto mínimo al mes, directo a Google",
     scopeLabel: "Alcance",
     rules: [
       "Nunca cobramos un porcentaje de lo que invierte. La cuota es fija.",
       "La cuenta de Google Ads es suya, y el presupuesto lo paga usted directo a Google.",
-      "Mes con mes, con 30 días de aviso. Sin permanencia.",
+      "Mes con mes, con 30 días de aviso para cancelar. Sin plazo forzoso.",
       "Precios más IVA, con factura.",
     ],
   },
@@ -200,7 +200,7 @@ const es: typeof en = {
     items: [
       {
         q: "Ya probé anuncios y tiré el dinero.",
-        a: "Casi siempre fueron palabras mal elegidas y una página que no convencía. Por eso las palabras se revisan cada semana y la página se construye para el anuncio.",
+        a: "Casi siempre fueron palabras mal elegidas y una página que no convencía. Por eso revisamos las palabras cada semana y hacemos la página a la medida del anuncio.",
       },
       {
         q: "¿Con cuánto presupuesto empiezo?",
@@ -208,19 +208,19 @@ const es: typeof en = {
       },
       {
         q: "¿Y Facebook o Instagram?",
-        a: "Empezamos por Google, donde la gente ya está buscando. Redes sociales por sí solas son un trabajo que no tomamos.",
+        a: "Empezamos por Google, donde la gente ya está buscando. Las redes sociales por sí solas son un trabajo que no tomamos.",
       },
     ],
   },
   diagDesc:
-    "Diez días hábiles sobre sus anuncios, su sitio y su operación, y un informe escrito que es suyo: qué es cierto, qué está roto y qué construir primero.",
+    "Diez días hábiles para revisar los anuncios, el sitio y la operación de su negocio, y un informe por escrito que es suyo: qué funciona, qué falla y por dónde empezar.",
   vis: {
     reach: {
       tagBefore: "gente buscando",
       tagMid: "clientes medidos",
       captionRun: "buscando",
-      captionDone: "medido hasta el mensaje",
-      aria: "Un mapa local con el negocio al centro. Las búsquedas aparecen en las orillas; las que coinciden viajan hasta el negocio y se cuentan como llamadas y mensajes, las que no se tachan. El presupuesto va directo a Google.",
+      captionDone: "cada mensaje, contado",
+      aria: "Un mapa de la zona con el negocio al centro. Las búsquedas aparecen en las orillas; las que coinciden llegan hasta el negocio y se cuentan como llamadas y mensajes, y las que no coinciden se tachan. El presupuesto va directo a Google.",
       fallback: "Las búsquedas que coinciden llegan a usted y se cuentan. Las que no, se quedan fuera. Su presupuesto va directo a Google.",
       center: "Su negocio",
       queries: [

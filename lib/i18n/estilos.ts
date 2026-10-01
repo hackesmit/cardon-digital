@@ -92,14 +92,14 @@ const es: typeof en = {
   meta: {
     title: "Estilos",
     description:
-      "Cuatro estilos de sitio web sobre negocios inventados: una vinícola, una empresa de logística, un spa y un hotel pequeño de costa. El suyo se diseña desde cero a partir de su marca.",
+      "Cuatro estilos de sitio web, mostrados con negocios inventados: una vinícola, una empresa de logística, un spa y un hotel pequeño de playa. El suyo se diseña desde cero, a partir de su marca.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Estilos",
-    title: "Su visión,",
-    titleAccent: "hecha sitio.",
-    sub: "Estos cuatro negocios son inventados y están aquí para mostrar estilos; su sitio se diseña desde cero a partir de su marca.",
+    title: "Su sitio,",
+    titleAccent: "tal como lo imagina.",
+    sub: "Estos cuatro negocios son inventados y sirven para mostrar estilos. Su sitio se diseña desde cero, a partir de su marca.",
   },
   gallery: {
     aria: "Muestras de estilo",
@@ -113,11 +113,11 @@ const es: typeof en = {
     style: "Editorial cálido",
     suits: "Para vinícolas, restaurantes y hoteles boutique.",
     brand: "Tardeoro",
-    kind: "Viña",
+    kind: "Vinícola",
     nav: ["Vinos", "La casa", "Visitas", "Club"],
     title: "La tarde,",
     titleAccent: "embotellada.",
-    sub: "Tintos de parcela, cosechados a mano y servidos en la terraza frente al viñedo.",
+    sub: "Tintos de parcela, vendimiados a mano y servidos en la terraza, frente al viñedo.",
     primary: "Reservar una cata",
     secondary: "Conocer los vinos",
   },
@@ -142,17 +142,17 @@ const es: typeof en = {
     kind: "Estudio de bienestar",
     nav: ["Rituales", "El estudio", "Regalos"],
     action: "Agendar",
-    title: "Respire",
+    title: "Respira",
     titleAccent: "más despacio.",
-    sub: "Masajes, baños de vapor y tardes sin prisa en un estudio en calma.",
-    primary: "Agendar un ritual",
+    sub: "Masajes, baños de vapor y tardes sin prisa en un estudio tranquilo.",
+    primary: "Agenda tu ritual",
     secondary: "Ver el menú",
   },
   hotel: {
     style: "Costa en calma",
     suits: "Para hoteles pequeños, rentas vacacionales y restaurantes frente al mar.",
     brand: "Sotaduna",
-    kind: "Hotel de costa",
+    kind: "Hotel de playa",
     nav: ["Habitaciones", "La playa", "Restaurante", "Cómo llegar"],
     action: "Reservar",
     title: "Entre la duna",
@@ -162,7 +162,7 @@ const es: typeof en = {
     secondary: "Ver habitaciones",
   },
   diagDesc:
-    "Cuéntenos cómo imagina su sitio. El diagnóstico son diez días hábiles sobre su sitio, sus anuncios y su operación, y un informe escrito que es suyo.",
+    "Cuéntenos cómo imagina su sitio. El diagnóstico son diez días hábiles para revisar el sitio, los anuncios y la operación de su negocio, y un informe por escrito que es suyo.",
 };
 
 export type EstilosDict = typeof en;
