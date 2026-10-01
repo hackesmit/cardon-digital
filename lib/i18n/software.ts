@@ -87,7 +87,7 @@ const en = {
   proof: {
     kicker: "Case study",
     title: "An hour of finance work, about two minutes now.",
-    body: "The harvest lived in a production system, spreadsheets and a field notebook, and someone assembled the picture by hand. Now Monte Xanic opens one live view of the season. At Vinedo En'kanto, production, the restaurant and the bookings run on one system, with a store in front of it.",
+    body: "The harvest lived in a production system, spreadsheets and a field notebook, and someone assembled the picture by hand. Now Monte Xanic opens one live view of the season. For Vinedo En'kanto we built one system for production, the restaurant and the bookings, with an online store that already takes orders.",
     readXanic: "Read the Monte Xanic case",
     readEnkanto: "Read the En'kanto case",
   },
@@ -210,7 +210,7 @@ const es: typeof en = {
   proof: {
     kicker: "Caso de estudio",
     title: "Una hora de trabajo financiero, hoy unos dos minutos.",
-    body: "La cosecha estaba repartida entre un sistema de producción, hojas de cálculo y una libreta de campo, y alguien armaba el panorama a mano. Hoy Monte Xanic ve la temporada al día en una sola pantalla. En Viñedo En'kanto, la producción, el restaurante y las reservaciones se llevan en un solo sistema, con su tienda en línea.",
+    body: "La cosecha estaba repartida entre un sistema de producción, hojas de cálculo y una libreta de campo, y alguien armaba el panorama a mano. Hoy Monte Xanic ve la temporada al día en una sola pantalla. Para Viñedo En'kanto construimos un solo sistema para la producción, el restaurante y las reservaciones, con una tienda en línea que ya toma pedidos.",
     readXanic: "Ver el caso de Monte Xanic",
     readEnkanto: "Ver el caso de En'kanto",
   },
