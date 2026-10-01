@@ -235,69 +235,69 @@ const es: typeof en = {
   meta: {
     title: "Caso Monte Xanic",
     description:
-      "Un flujo financiero de Monte Xanic toma cerca de 97 por ciento menos tiempo: de una hora larga a unos dos minutos.",
+      "Un proceso financiero de Monte Xanic toma cerca de 97 por ciento menos tiempo: de una hora larga a unos dos minutos.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Caso",
-    t1: "Un flujo financiero de Monte Xanic ahora toma ",
+    t1: "Un proceso financiero de Monte Xanic ahora toma ",
     accent: "97% menos",
     t2: " tiempo.",
-    sub: "Cerca de una hora de armado a mano, ahora unos dos minutos, con actualización durante el día. La cosecha detrás se lee en una sola vista.",
+    sub: "Cerca de una hora armándolo a mano, ahora unos dos minutos, con actualización durante el día. La vendimia que hay detrás se ve en una sola vista.",
   },
   media: {
     beforeCap:
-      "Como era antes: la lectura se anota en papel y la imagen se arma después.",
-    beforeAlt: "Una hoja de registro en papel en la estación.",
+      "Así era antes: la lectura se anotaba en papel y el panorama se armaba después.",
+    beforeAlt: "Una hoja de registro en papel en la estación de trabajo.",
     afterCap:
-      "La mesa del laboratorio hoy. La lectura se toma una vez y la vista queda al día.",
+      "La mesa del laboratorio hoy. La lectura se toma una sola vez y la vista queda al día desde ese momento.",
     afterAlt: "La mesa del laboratorio, con el registro abierto en la laptop.",
     videoCap:
-      "De la baya a la botella, el hilo completo en el teléfono, leído entre las barricas que describe.",
-    videoAlt: "Una mano recorre el registro de la cosecha en un teléfono, con barricas al fondo.",
+      "De la uva a la botella, el hilo completo en el teléfono, consultado entre las mismas barricas que describe.",
+    videoAlt: "Una mano recorre el registro de la vendimia en un teléfono, con barricas al fondo.",
     play: "Reproducir",
     pause: "Pausar",
   },
   facts: {
-    aria: "Datos del caso y su base",
+    aria: "Datos del caso y su sustento",
     rows: [
       { k: "Cliente", v: "Monte Xanic" },
-      { k: "Sector", v: "Bodega" },
+      { k: "Sector", v: "Vinícola" },
       { k: "Lugar", v: "Valle de Guadalupe, Baja California" },
       { k: "Relación", v: "Construcción y trabajo continuo" },
       {
         k: "Lo que construimos",
-        v: "Vista de cosecha al día, mapas de cuadros, predicción de madurez, seguimiento de la baya a la botella, reportes financieros automáticos",
+        v: "Vista de vendimia al día, mapas por cuadro, predicción de madurez, seguimiento de la uva a la botella, reportes financieros automáticos",
       },
       {
         k: "Resultado",
         v: "De una hora de trabajo financiero a unos dos minutos, con actualización durante el día",
       },
     ],
-    basisK: "Base",
+    basisK: "Sustento",
     basis:
       "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización del tablero, y la vista se actualiza durante el día; la distancia entre las dos cifras ronda el 97 por ciento. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
   },
   before: {
     kicker: "Antes",
-    title: "La cosecha vivía en tres lugares y no coincidía en ninguno.",
-    p1: "Monte Xanic hace vino en el Valle de Guadalupe y es meticulosa con lo que va en la botella. La cosecha detrás merece la misma claridad.",
-    p2: "Los números estaban en un sistema de producción, en archivos de Excel y en libretas de campo allá en los surcos. Ver la cosecha completa obligaba a juntarlos a mano, y para entonces la imagen ya estaba vieja. Un corte se define por uno o dos días.",
+    title: "La vendimia estaba repartida en tres lugares que no coincidían entre sí.",
+    p1: "Monte Xanic hace vino en el Valle de Guadalupe y es meticulosa con lo que llega a la botella. La vendimia que hay detrás merece la misma claridad.",
+    p2: "Los números estaban en un sistema de producción, en archivos de Excel y en libretas de campo, allá entre las hileras. Para ver la vendimia completa había que juntarlos a mano, y para entonces el panorama ya estaba atrasado. En un corte, uno o dos días hacen la diferencia.",
   },
   changed: {
     kicker: "Lo que cambió",
-    title: "Una sola vista al día, y cada número parado en su cuadro.",
-    sub: "Las tres fuentes alimentan una vista que se actualiza sola, amarrada a los cuadros reales del viñedo. La madurez se califica contra el estándar de la bodega, así que el cuadro se ve venir.",
+    title: "Una sola vista al día, y cada número en su cuadro.",
+    sub: "Las tres fuentes alimentan una vista que se actualiza sola, ligada a los cuadros reales del viñedo. La madurez se califica con el estándar de la propia vinícola, así que se ve venir cuándo le toca a cada cuadro.",
   },
   thread: {
-    kicker: "De la baya a la botella",
+    kicker: "De la uva a la botella",
     title: "Un solo hilo, de la vid a la botella.",
-    sub: "Cada etapa vive en el mismo hilo, así que un ajuste cae en temporada, cuando todavía cambia el vino.",
+    sub: "Todas las etapas quedan en el mismo hilo, así que un ajuste llega en plena temporada, cuando todavía puede cambiar el vino.",
   },
   number: {
     kicker: "El número",
     title: "Una hora de trabajo financiero, ahora unos dos minutos.",
-    sub: "El mismo flujo, reconstruido para actualizarse por sí solo durante el día.",
+    sub: "El mismo proceso, rehecho para que se actualice solo durante el día.",
     manual: "A MANO",
     auto: "SE HACE SOLO",
     long: "1 hora",
@@ -305,27 +305,27 @@ const es: typeof en = {
     less: "97% menos",
     refreshed: "SE ACTUALIZA DURANTE EL DÍA",
     tag: "de una hora a unos dos minutos",
-    aria: "Un flujo manual de cerca de una hora se comprime a unos dos minutos.",
+    aria: "Un proceso manual de cerca de una hora se reduce a unos dos minutos.",
   },
   result: {
     kicker: "Para su bodega",
-    title: "Lo que cambia si su cosecha vive en tres lugares.",
+    title: "Lo que cambia si su vendimia está repartida en tres lugares.",
     items: [
       {
-        lead: "Ya nadie arma la imagen a mano.",
-        body: "Una sola vista, al corriente sola, toda la temporada.",
+        lead: "Ya nadie arma el panorama a mano.",
+        body: "Una sola vista que se mantiene al corriente sola, toda la temporada.",
       },
       {
-        lead: "Cada número se para en su cuadro.",
-        body: "Se lee como la tierra que se camina.",
+        lead: "Cada número queda en su cuadro.",
+        body: "Se lee igual que se recorre el viñedo.",
       },
       {
         lead: "La madurez se ve venir.",
-        body: "Contra el estándar de su propia bodega, antes del corte.",
+        body: "Calificada con el estándar de su propia bodega, antes del corte.",
       },
       {
         lead: "Un lote se sigue de principio a fin.",
-        body: "Baya, tanque, barrica y botella en un solo hilo.",
+        body: "Uva, tanque, barrica y botella en un solo hilo.",
       },
     ],
   },
@@ -334,15 +334,15 @@ const es: typeof en = {
     view: {
       tag: "ya nadie la arma a mano",
       caption:
-        "La mañana empieza con la cosecha ya armada. Los tres lugares siguen ahí con sus números, y ya nadie tiene que ir a juntarlos.",
+        "La mañana empieza con la vendimia ya armada. Los tres lugares siguen ahí con sus números, y ya nadie tiene que ir a juntarlos.",
       aria:
-        "Un sistema de producción, hojas de cálculo y libretas de campo llegando a una sola vista de la cosecha, al día.",
+        "Un sistema de producción, hojas de cálculo y libretas de campo llegan a una sola vista de la vendimia, al día.",
       system: "sistema",
       spreadsheets: "hojas de cálculo",
       notebooks: "libretas de campo",
-      panel: "La cosecha, hoy",
+      panel: "La vendimia, hoy",
       live: "AL DÍA",
-      harvest: "COSECHA",
+      harvest: "VENDIMIA",
       inSeason: "en temporada",
       ripeness: "MADUREZ",
       reading: "lectura al día",
@@ -352,26 +352,26 @@ const es: typeof en = {
       tracked: "con seguimiento",
     },
     place: {
-      tag: "el cuadro, ya en la pantalla",
+      tag: "el cuadro, ya en pantalla",
       caption:
-        "El renglón dice que B3 se acerca, y el cuadro del que habla está ahí mismo. Ya nadie tiene que imaginarse el viñedo para actuar sobre una lectura.",
+        "El renglón dice que B3 se acerca, y el cuadro del que habla está ahí mismo. Ya nadie necesita imaginarse el viñedo para saber qué hacer con una lectura.",
       aria:
-        "El renglón del cuadro B3, amarrado a su polígono en un mapa del viñedo.",
+        "El renglón del cuadro B3, ligado a su polígono en un mapa del viñedo.",
       section: "CUADRO",
       state: "ESTADO",
       hold: "esperar",
       approaching: "acercándose",
-      atTarget: "en punto",
+      atTarget: "en su punto",
     },
     ahead: {
       tag: "el corte, primero en el calendario",
       caption:
-        "La madurez llega al calendario antes de llegar a los surcos, así que el corte se planea con tiempo de ventaja.",
+        "La madurez llega al calendario antes que a las hileras, así que el corte se planea con tiempo.",
       aria:
-        "Una curva de madurez subiendo hasta la línea del estándar de Monte Xanic, con un punto proyectado en la fecha en que el cuadro llega a punto.",
+        "Una curva de madurez que sube hasta la línea del estándar de Monte Xanic, con un punto proyectado en la fecha en que el cuadro llega a su punto.",
       readiness: "MADUREZ",
       standard: "ESTÁNDAR MONTE XANIC",
-      anticipated: "anticipada",
+      anticipated: "prevista",
     },
     map: {
       legendMain: "Cuadros del viñedo",
@@ -391,35 +391,35 @@ const es: typeof en = {
       meets: "cumple el estándar, cosechar",
       below: "por debajo del estándar, esperar",
       fallback:
-        "Nueve cuadros del viñedo calificando contra el estándar de Monte Xanic conforme se acumula el calor de la temporada.",
+        "Nueve cuadros del viñedo se califican contra el estándar de Monte Xanic conforme se acumula el calor de la temporada.",
       seasonLab: "Temporada, calor acumulado",
       early: "temprano",
-      harvest: "cosecha",
+      harvest: "vendimia",
       rangeAria:
         "Calor de la temporada. Arrastre para calificar cada cuadro contra el estándar.",
     },
     b2b: {
-      berry: "Baya",
+      berry: "Uva",
       tank: "Tanque",
       barrel: "Barrica",
       bottle: "Botella",
       note: "de la vid a la botella, un hilo",
-      ariaH: "Un hilo por cuatro estaciones: baya, tanque, barrica, botella.",
-      ariaV: "Un hilo de arriba abajo por cuatro estaciones: baya, tanque, barrica, botella.",
+      ariaH: "Un hilo que pasa por cuatro estaciones: uva, tanque, barrica, botella.",
+      ariaV: "Un hilo que baja por cuatro estaciones: uva, tanque, barrica, botella.",
       fallback:
-        "Baya, tanque, barrica, botella: un solo hilo de la vid a la botella.",
+        "Uva, tanque, barrica, botella: un solo hilo de la vid a la botella.",
     },
   },
   diagDesc:
-    "Diez días hábiles sobre sus anuncios, su sitio y su operación, y al final un informe escrito.",
+    "Diez días hábiles dedicados a sus anuncios, el sitio y la operación, y al final un informe escrito.",
   diagSpecs: [
-    { d: "Día 1", t: "Una sesión de trabajo sobre los tres." },
-    { d: "Días 2 a 9", t: "Escarbamos en los números detrás de los números." },
+    { d: "Día 1", t: "Una sesión de trabajo para revisar los tres." },
+    { d: "Días 2 a 9", t: "Revisamos a fondo lo que hay detrás de los números." },
     {
       d: "Día 10",
-      t: "Llega el informe: qué es cierto, qué está roto y qué construir primero.",
+      t: "Le entregamos el informe: qué funciona, qué falla y por dónde empezar.",
     },
-    { d: "Después", t: "Proponemos la construcción, o usted se lleva el informe." },
+    { d: "Después", t: "Le proponemos la construcción, o usted se lleva el informe y ahí termina." },
   ],
 };
 
