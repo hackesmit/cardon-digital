@@ -577,3 +577,39 @@ clause. Once applied, the next review asks for honest coverage rather than an un
 for the next hole. This does not license anyone to route around a check: the loophole fixtures
 already in the suites stay, because they also catch an honest per-file regression, and the
 honest path to a rule that does not fit is to change the check in the open, not to slip past it.
+
+## 11. Spanish is written, never translated (binding)
+
+Daniel, 2026-10-01, reading the live site: "The writing in english is good and structured, but
+spanish looks like a sloppy translation." Recorded here by hq-1q0f, which rewrote the Spanish of
+every served page.
+
+Spanish is the authoritative locale and it is written first, in Spanish, for a business owner in
+Baja California, in the usted form. The English is then a faithful version of it. A Spanish
+string that was thought in English fails this standard even when every word is correct.
+
+What a copy bead's Definition of Done now carries, for any change that touches a Spanish string:
+
+1. The Spanish is read aloud, in the author's head, as something said to a client in Ensenada.
+   A sentence nobody would say out loud is rewritten.
+2. No English metaphor or syntax carried over. The shapes found on the site and removed by
+   hq-1q0f, kept here as the reference list: "construyamos o no" (nos contrate o no), "con llaves
+   y todo" and "las llaves en su mano" (accesos, a su nombre), "hecho alrededor de como trabaja"
+   (a la medida de como trabaja su equipo), "su trabajo doblado a la herramienta" (usted se adapta
+   al programa), "que es cierto, que esta roto" (que funciona, que falla), "una vista viva" (al
+   dia, en tiempo real), "un sitio por el que le escriben", "una tienda enfrente" (su tienda en
+   linea), "equipo entrenado" (equipo capacitado), "Construido para" as a proof line (Hemos
+   trabajado con), "flujo financiero" for a finance process (it reads as cash flow), "reclamar"
+   for to claim (afirmar).
+3. One word per thing across the site: diagnostico and its written informe; reportes for what a
+   system generates; desarrollo for the build phase (the campaign label "Construccion de la
+   campana" stays, a test exemption names it); reservaciones for bookings in prose; cuota fija;
+   equipo capacitado; al dia or al corriente; vendimia in the wine pages.
+4. Facts, figures, hedges, placeholders and policy sentences are identical in both locales. A
+   native rewrite never strengthens a claim.
+5. The adversarial review of a Spanish copy change includes a native-reader pass over the full
+   diff, and it is run on every such change, not only on new pages.
+
+The mechanism is this section plus item 5 in the reviewer's brief for copy beads. A calque list
+in `scripts/copy-check.mjs` is filed as its own bead, because a change to the checker is reviewed
+as a check under section 10.

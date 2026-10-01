@@ -327,7 +327,7 @@ const es: typeof en = {
       {
         name: "Viñedo En'kanto",
         place: "San Antonio de las Minas",
-        result: "Producción, restaurante y reservas en un solo sistema, con su tienda en línea",
+        result: "Producción, restaurante y reservaciones en un solo sistema, con su tienda en línea",
       },
       {
         name: "Dharma Ochoa",
@@ -368,7 +368,7 @@ const es: typeof en = {
   },
   photos: {
     "home/proof-xanic": { cap: "Monte Xanic abre la temporada con todo al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
-    "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reserva, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
+    "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reservación, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
     "home/proof-dharma": { cap: "El portafolio y la tienda de Dharma Ochoa, listos para vender desde el teléfono.", alt: "El sitio de Dharma Ochoa abierto en un teléfono" },
     "home/service-sitios": { cap: "Un sitio que se lee bien en el teléfono y termina en un mensaje.", alt: "Un teléfono en la mano con un sitio abierto" },
     "home/service-anuncios": { cap: "El cliente que lo buscaba llega por WhatsApp y queda registrado.", alt: "Un mensaje que se contesta en el mostrador" },
@@ -410,7 +410,7 @@ const es: typeof en = {
       { n: "2 minutos", k: "hoy, y se actualiza durante el día" },
       { n: "97% menos", k: "tiempo en esa vista" },
     ],
-    basis: "La hora se cronometró a mano antes de la construcción, y los dos minutos son la actualización que genera el tablero. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
+    basis: "La hora se cronometró a mano antes del desarrollo, y los dos minutos son la actualización que genera el tablero. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
     production: {
       kicker: "Producción",
       title: "Años de cosechas, por fin a la mano.",
@@ -427,15 +427,15 @@ const es: typeof en = {
   system: {
     kicker: "Un solo sistema",
     title: "Deje de discutir cuál hoja de cálculo es la buena.",
-    body: "Facturas, mensajes, reservas, cosecha y cuentas se registran una sola vez y quedan en un tablero que se mantiene al corriente solo. Es lo que hicimos para Monte Xanic y para En'kanto, y lo que el servicio de software hace para usted.",
+    body: "Facturas, mensajes, reservaciones, cosecha y cuentas se registran una sola vez y quedan en un tablero que se mantiene al corriente solo. Es lo que hicimos para Monte Xanic y para En'kanto, y lo que el servicio de software hace para usted.",
     more: "Ver el software",
   },
   how: {
     kicker: "Cómo funciona",
-    title: "Del primer mensaje a un sistema que maneja su propio equipo.",
+    title: "Del primer mensaje a un sistema que su equipo maneja solo.",
     steps: [
       { k: "01", body: "El diagnóstico, sin costo. Diez días hábiles y un informe por escrito que se queda con usted." },
-      { k: "02", body: "La construcción. Precio fijo, acordado antes de empezar." },
+      { k: "02", body: "El desarrollo. Precio fijo, acordado antes de empezar." },
       { k: "03", body: "La entrega. Su equipo capacitado, y las cuentas y los accesos a su nombre." },
     ],
     anywhere: "Puede empezar por cualquiera de los tres: un sitio, una campaña o un sistema. El diagnóstico dice cuál le conviene primero.",
@@ -478,7 +478,7 @@ const es: typeof en = {
       },
       {
         k: "Condiciones",
-        body: "Cotizamos en pesos, más IVA y con factura. La construcción se paga mitad al empezar y mitad contra entrega.",
+        body: "Cotizamos en pesos, más IVA y con factura. El desarrollo se paga la mitad al empezar y la mitad contra entrega.",
       },
     ],
   },

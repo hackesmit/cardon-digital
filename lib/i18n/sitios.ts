@@ -222,7 +222,7 @@ const es: typeof en = {
     names: {
       presencia: "Una página",
       negocio: "Sitio completo",
-      reservas: "Sitio con reservas",
+      reservas: "Sitio con reservaciones",
       tienda: "Tienda en línea",
     } as Record<string, string>,
     tags: {
@@ -240,7 +240,7 @@ const es: typeof en = {
       "google-business-profile-optimisation": "Perfil de Negocio de Google optimizado",
       "editable-section": "Una sección que usted mismo edita",
       "bilingual-pages": "Español e inglés",
-      "booking-path": "Reservas desde el sitio",
+      "booking-path": "Reservaciones desde el sitio",
       "extra-form": "Un formulario adicional: cotizaciones o eventos",
       "confirmation-and-follow-up": "Confirmación y un mensaje de seguimiento",
       "training": "Una sesión para enseñarle a hacer cambios",

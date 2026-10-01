@@ -61,7 +61,7 @@ const es: typeof en = {
     },
     {
       name: "Hospitalidad",
-      body: "Cada reserva, de cualquier canal, en un solo calendario, con la vista del día con la que trabaja el personal.",
+      body: "Cada reservación, de cualquier canal, en un solo calendario, con la vista del día con la que trabaja el personal.",
     },
     {
       name: "Restaurante",

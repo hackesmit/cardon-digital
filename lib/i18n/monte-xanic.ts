@@ -235,7 +235,7 @@ const es: typeof en = {
   meta: {
     title: "Caso Monte Xanic",
     description:
-      "Un proceso financiero de Monte Xanic toma cerca de 97 por ciento menos tiempo: de una hora larga a unos dos minutos.",
+      "Un proceso financiero de Monte Xanic toma cerca de 97 por ciento menos tiempo: de cerca de una hora a unos dos minutos.",
   },
   hero: {
     aria: "Presentación",
@@ -264,7 +264,7 @@ const es: typeof en = {
       { k: "Cliente", v: "Monte Xanic" },
       { k: "Sector", v: "Vinícola" },
       { k: "Lugar", v: "Valle de Guadalupe, Baja California" },
-      { k: "Relación", v: "Construcción y trabajo continuo" },
+      { k: "Relación", v: "Desarrollo y trabajo continuo" },
       {
         k: "Lo que construimos",
         v: "Vista de vendimia al día, mapas por cuadro, predicción de madurez, seguimiento de la uva a la botella, reportes financieros automáticos",
@@ -276,7 +276,7 @@ const es: typeof en = {
     ],
     basisK: "Sustento",
     basis:
-      "La hora se cronometró a mano antes de la construcción; los dos minutos son la actualización del tablero, y la vista se actualiza durante el día; la distancia entre las dos cifras ronda el 97 por ciento. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
+      "La hora se cronometró a mano antes del desarrollo; los dos minutos son la actualización del tablero, y la vista se actualiza durante el día; la distancia entre las dos cifras ronda el 97 por ciento. Aquí no aparece ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
   },
   before: {
     kicker: "Antes",
@@ -419,7 +419,7 @@ const es: typeof en = {
       d: "Día 10",
       t: "Le entregamos el informe: qué funciona, qué falla y por dónde empezar.",
     },
-    { d: "Después", t: "Le proponemos la construcción, o usted se lleva el informe y ahí termina." },
+    { d: "Después", t: "Le presentamos una propuesta, o usted se lleva el informe y ahí termina." },
   ],
 };
 
