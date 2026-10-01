@@ -48,6 +48,13 @@ export default function Field({
     let tpin = 0;
     let tmx = 0;
     let tmy = 0;
+    let modeRaf = 0;
+    let laidOut = false;
+    // The ratio the backing store was sized for. Every frame draws with this
+    // one, never with a fresh reading, so a window dragged to a screen of
+    // another density is laid out again instead of drawing at the wrong scale.
+    const capDpr = () => Math.min(2, window.devicePixelRatio || 1);
+    let dpr = capDpr();
 
     const S: FieldState = {
       W: 1, H: 1, t: 0, dt: 0, mx: 0, my: 0, px: 0, py: 0, rpx: 0, rpy: 0, pin: 0,
@@ -63,7 +70,6 @@ export default function Field({
 
     const render = () => {
       if (!ctx) return;
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.globalAlpha = 1;
       ctx.clearRect(0, 0, S.W, S.H);
@@ -91,10 +97,14 @@ export default function Field({
       if (r.width < 2 || r.height < 2) return;
       S.W = r.width;
       S.H = r.height;
+      dpr = capDpr();
       // The phone composition is decided by the canvas, never by the window.
       S.small = S.W < 700;
-      // Behind a hero the copy holds the left, so the drawing centres right of it.
-      S.fx = layout === "behind" && !S.small ? S.W * 0.7 : S.W * 0.5;
+      // Behind a hero the copy holds the left, so the drawing centres right of
+      // it. The stylesheet decides when the canvas is behind the copy and when
+      // it is a band under it, so ask the stylesheet.
+      const behindNow = layout === "behind" && getComputedStyle(box).position === "absolute";
+      S.fx = behindNow ? S.W * 0.7 : S.W * 0.5;
       S.fy = S.H * 0.5;
       if (!S.pin) {
         S.px = S.fx;
@@ -104,13 +114,18 @@ export default function Field({
       }
       ctx = fitCanvas(canvas, S.W, S.H);
       field.init(S);
-      warm();
+      // Only the first layout, and a still frame, start from the settled
+      // moment. A later resize keeps the clock, so the picture does not jump
+      // back every time the window settles.
+      if (!laidOut || reduced()) warm();
+      laidOut = true;
       render();
     };
 
     const loop = (now: number) => {
       if (!running) return;
       raf = requestAnimationFrame(loop);
+      if (capDpr() !== dpr) layoutNow();
       const rdt = Math.min(0.05, (now - last) / 1000);
       last = now;
       const k = 1 - Math.exp(-rdt * 3.2);
@@ -161,7 +176,8 @@ export default function Field({
     };
     const onMode = () => {
       // The attribute is set in the same tick as the event; read after it lands.
-      requestAnimationFrame(() => {
+      cancelAnimationFrame(modeRaf);
+      modeRaf = requestAnimationFrame(() => {
         readColors();
         if (!running) render();
       });
@@ -179,7 +195,7 @@ export default function Field({
     let rt = 0;
     const relayout = () => {
       const r = box.getBoundingClientRect();
-      if (Math.abs(r.width - S.W) > 1 || Math.abs(r.height - S.H) > 1) layoutNow();
+      if (Math.abs(r.width - S.W) > 1 || Math.abs(r.height - S.H) > 1 || capDpr() !== dpr) layoutNow();
     };
     let ro: ResizeObserver | null = null;
     const onResize = () => {
@@ -189,9 +205,10 @@ export default function Field({
     if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver(onResize);
       ro.observe(box);
-    } else {
-      window.addEventListener("resize", onResize);
     }
+    // The window listener stays even with a ResizeObserver: a change of pixel
+    // density leaves the box the same size, and only the window says so.
+    window.addEventListener("resize", onResize);
 
     readColors();
     layoutNow();
@@ -219,10 +236,11 @@ export default function Field({
 
     return () => {
       stop();
+      cancelAnimationFrame(modeRaf);
       window.clearTimeout(rt);
       if (io) io.disconnect();
       if (ro) ro.disconnect();
-      else window.removeEventListener("resize", onResize);
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("cardon-mode", onMode);
