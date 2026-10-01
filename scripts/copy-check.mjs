@@ -81,6 +81,11 @@ export const PAGES = {
   sitios: { en: { budget: 372, measured: 744 }, es: { budget: 400, measured: 800 } },
   anuncios: { en: { budget: 340, measured: 680 }, es: { budget: 365, measured: 730 } },
   software: { en: { budget: 330, measured: 660 }, es: { budget: 350, measured: 700 } },
+  /**
+   * The style samples page (2026-10-01), a new page measured when it was
+   * written. Most of its words are the mock sites' own menus and titles.
+   */
+  estilos: { en: { budget: 134, measured: 268 }, es: { budget: 141, measured: 281 } },
 };
 
 /**

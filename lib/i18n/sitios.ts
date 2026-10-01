@@ -24,6 +24,11 @@ const en = {
     sub: "We design and build your business's website so it loads fast, reads on a phone and takes the visitor to a call or a WhatsApp message. The price is published by what it includes, and the domain and the site stay in your name.",
     proof: "Sites built for Vinedo En'kanto and Dharma Ochoa, delivered in their names.",
   },
+  /** The one link to the style samples page (/estilos). */
+  styles: {
+    line: "A winery, a logistics company, a spa and a coastal hotel, each in a style of its own.",
+    cta: "See the styles",
+  },
   gets: {
     kicker: "What your site has to do",
     title: "Four things, in this order.",
@@ -170,6 +175,10 @@ const es: typeof en = {
     titleAccent: "y le escriban desde el teléfono.",
     sub: "Diseñamos y construimos el sitio de su negocio para que cargue rápido, se lea en el teléfono y lleve al visitante a llamarle o escribirle por WhatsApp. El precio está publicado por lo que incluye, y el dominio y el sitio quedan a su nombre.",
     proof: "Sitios hechos para Viñedo En'kanto y Dharma Ochoa, entregados a su nombre.",
+  },
+  styles: {
+    line: "Una vinícola, una empresa de logística, un spa y un hotel de costa, cada uno con su propio estilo.",
+    cta: "Ver estilos",
   },
   gets: {
     kicker: "Lo que su sitio tiene que lograr",

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { makeField, type FieldKind, type FieldState } from "./fieldKit";
 
 /**
- * The three loose animations, run against a recording context. Each must draw
+ * The loose animations, run against a recording context. Each must draw
  * something at a phone band and at a wide hero, hand the canvas only finite
  * numbers, paint nothing while it is warming up, and never leave the canvas
  * with a transparency or a clip it set for itself.
@@ -57,12 +57,13 @@ function state(W: number, H: number, behind: boolean): FieldState {
   };
 }
 
-const KINDS: FieldKind[] = ["rejilla", "vinedo", "hilos"];
+const KINDS: FieldKind[] = ["rejilla", "vinedo", "hilos", "corrientes", "constelacion", "medanos"];
 const SIZES: [string, number, number, boolean][] = [
   ["a phone band", 390, 190, true],
   ["a narrow phone band", 320, 230, false],
   ["a wide hero", 1440, 620, true],
   ["a wide band", 1920, 400, false],
+  ["a tall scene", 900, 760, false],
 ];
 
 describe("the loose animations", () => {
@@ -95,6 +96,36 @@ describe("the loose animations", () => {
       });
     }
   }
+
+  it("hands back a drawing of its own for every kind", () => {
+    const stills = KINDS.map((kind) => makeField(kind).still);
+    expect(stills.every((s) => Number.isFinite(s) && s > 0)).toBe(true);
+    // Two kinds sharing one factory would share its still moment too.
+    expect(new Set(KINDS.map((kind) => makeField(kind).frame.toString())).size).toBe(KINDS.length);
+  });
+
+  it("fills the farthest dune ridge to the foot of the canvas and no other", () => {
+    const field = makeField("medanos");
+    const S = state(1440, 420, false);
+    const ys: number[] = [];
+    const rec = recorder();
+    const ctx = new Proxy(rec.ctx, {
+      get(t, prop: string) {
+        if (prop === "lineTo") return (_x: number, y: number) => void ys.push(y);
+        return (t as unknown as Record<string, unknown>)[prop];
+      },
+      set(t, prop: string, value) {
+        (t as unknown as Record<string, unknown>)[prop] = value;
+        return true;
+      },
+    });
+    field.init(S);
+    S.dt = 1 / 60;
+    S.t = 5;
+    field.frame(ctx, S);
+    // Two closing points per ridge, and only the first ridge reaches the foot.
+    expect(ys.filter((y) => y >= S.H).length).toBe(2);
+  });
 
   it("keeps every dot of the phone grid inside a band a little larger than the canvas", () => {
     const field = makeField("rejilla");

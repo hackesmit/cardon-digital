@@ -12,6 +12,7 @@ const routes = [
   { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const },
+  { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const },
   { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const },

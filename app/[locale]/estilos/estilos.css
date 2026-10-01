@@ -1,0 +1,311 @@
+/* ============================ STYLE SAMPLES (/estilos) ============================
+   A short hero in the house style, four scenes and the diagnostic close.
+
+   Each scene is the top of a home page for an invented business. Its colours
+   are fixed values on purpose: a sample is somebody else's site, so it does
+   not follow this site's light and dark modes. The caption above each scene
+   is the house voice (site tokens, so it does follow the mode) and stays
+   under the header while its scene passes, which is the gallery's index and
+   needs no script.
+
+   Each scene's ground is repeated in page.tsx (PALETTE), because the canvas
+   fills with it.
+
+   Everything below 861px is the phone arrangement: title first, the drawing
+   as a band of its own under the copy, never behind it. */
+
+.pg-estilos{--est-head:64px;}
+
+/* ---- hero: the title on the left, the sentence and the action on the right ---- */
+.pg-estilos .est-hero{padding-bottom:clamp(30px,4.4vw,56px);}
+.pg-estilos .est-hero-copy{
+  max-width:none;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr);
+  gap:clamp(20px,5vw,80px);align-items:end;
+}
+.pg-estilos .est-hero .eyebrow{margin-bottom:18px;}
+.pg-estilos .est-hero-side .hero-sub{margin-top:0;max-width:44ch;}
+.pg-estilos .est-hero-side .hero-actions{margin-top:22px;}
+.pg-estilos .diag-inner{grid-template-columns:1fr;}
+.pg-estilos .diag-lead h2{max-width:18ch;}
+
+/* ---- the caption: number, style, who it suits, and four marks to jump with ---- */
+.pg-estilos .est-plate{scroll-margin-top:var(--est-head);}
+.pg-estilos .est-cap{
+  position:sticky;top:var(--est-head);z-index:20;
+  background:var(--ground);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.pg-estilos .est-cap-row{display:flex;align-items:baseline;gap:6px 18px;padding-top:11px;padding-bottom:11px;}
+.pg-estilos .est-cap-n{font-size:0.76rem;letter-spacing:0.14em;color:var(--primary);white-space:nowrap;}
+.pg-estilos .est-cap-style{font-size:1.06rem;font-weight:600;letter-spacing:-0.01em;line-height:1.3;white-space:nowrap;}
+.pg-estilos .est-cap-suits{color:var(--text-dim);font-size:0.92rem;line-height:1.3;}
+.pg-estilos .est-cap-ticks{margin-left:auto;display:flex;align-self:center;gap:6px;flex-shrink:0;}
+.pg-estilos .est-cap-ticks a{display:block;width:26px;height:24px;position:relative;}
+.pg-estilos .est-cap-ticks a::before{
+  content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;
+  background:var(--primary-dim);opacity:0.5;transition:opacity .2s ease, background .2s ease;
+}
+.pg-estilos .est-cap-ticks a:hover::before{opacity:1;}
+.pg-estilos .est-cap-ticks a.is-here::before{background:var(--primary);opacity:1;height:3px;}
+
+/* ---- what every scene shares: a full-bleed plate with a stage under its menu ---- */
+.pg-estilos .est-scene{
+  --pad:clamp(20px,4.6vw,76px);
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;
+  min-height:clamp(600px,calc(100svh - var(--est-head) - 47px),920px);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.pg-estilos .est-scene p{margin:0;}
+.pg-estilos .sc-flag,.pg-estilos .sc-nav{position:relative;z-index:2;}
+.pg-estilos .sc-nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px var(--pad);}
+.pg-estilos .sc-links{display:flex;white-space:nowrap;}
+.pg-estilos .sc-menu{display:none;}
+.pg-estilos .sc-stage{position:relative;flex:1;display:flex;flex-direction:column;}
+.pg-estilos .sc-copy{position:relative;z-index:2;padding-inline:var(--pad);}
+.pg-estilos .sc-title{overflow-wrap:break-word;}
+.pg-estilos .sc-title em{display:block;}
+.pg-estilos .sc-actions{display:flex;flex-wrap:wrap;align-items:center;}
+.pg-estilos .sc-btn,.pg-estilos .sc-link,.pg-estilos .sc-nav-action{display:inline-block;white-space:nowrap;cursor:default;}
+.pg-estilos .sc-art{position:absolute;z-index:0;pointer-events:none;}
+
+/* =====================================================================
+   01 Winery. Burnt earth, cream and a low gold sun. A didone set large and
+   centred over the vineyard, which runs edge to edge along the foot.
+   ===================================================================== */
+.pg-estilos .sc-vin{background:#6F2A1B;color:#F7EAD5;font-family:var(--f-vin-text),system-ui,sans-serif;}
+.pg-estilos .sc-vin .sc-flag{
+  text-align:center;font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;
+  padding:10px var(--pad) 9px;color:rgba(247,234,213,0.82);border-bottom:1px solid rgba(247,234,213,0.16);
+}
+.pg-estilos .sc-vin .sc-nav{display:grid;grid-template-columns:1fr auto 1fr;padding-top:22px;padding-bottom:0;}
+.pg-estilos .sc-vin .sc-links{gap:36px;font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;}
+.pg-estilos .sc-vin .sc-links-end{justify-content:flex-end;}
+.pg-estilos .sc-vin .sc-brand{
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  font-family:var(--f-vin-display),Georgia,serif;font-style:italic;font-size:2rem;line-height:1;letter-spacing:0.005em;
+}
+.pg-estilos .sc-vin .sc-brand small{
+  font-family:var(--f-vin-text),system-ui,sans-serif;font-style:normal;font-size:0.6rem;letter-spacing:0.36em;
+  text-transform:uppercase;padding-left:0.36em;opacity:0.85;
+}
+.pg-estilos .sc-vin .sc-copy{display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:clamp(18px,4.6vh,54px);}
+.pg-estilos .sc-vin .sc-title{
+  font-family:var(--f-vin-display),Georgia,serif;font-weight:400;font-optical-sizing:auto;
+  font-size:clamp(3.1rem,7.6vw,7.2rem);line-height:0.96;letter-spacing:-0.018em;
+}
+.pg-estilos .sc-vin .sc-title em{font-style:italic;color:#F4B44E;}
+.pg-estilos .sc-vin .sc-sub{margin-top:24px;max-width:41ch;font-size:1.04rem;line-height:1.6;color:rgba(247,234,213,0.9);}
+.pg-estilos .sc-vin .sc-actions{margin-top:26px;gap:16px 30px;justify-content:center;}
+.pg-estilos .sc-vin .sc-btn{
+  background:#F7EAD5;color:#5B2013;padding:14px 28px;font-size:0.72rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;
+}
+.pg-estilos .sc-vin .sc-link{
+  font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;padding-bottom:5px;border-bottom:1px solid rgba(247,234,213,0.6);
+}
+/* The vineyard takes what the copy leaves. It is pulled up under the copy by
+   less than its own sky, so the hills and the sun always clear the buttons. */
+.pg-estilos .sc-vin .sc-art{
+  position:relative;flex:1 1 auto;min-height:330px;margin-top:-58px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 24%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 24%);
+}
+
+/* =====================================================================
+   02 Logistics software. Near black, cool greys and one electric lime. A
+   tight grotesque with monospace labels, the copy on the left and the
+   network gathering on the right.
+   ===================================================================== */
+.pg-estilos .sc-tech{
+  --rule:#1C212B;--dim:#9AA4B4;--volt:#C8FF3A;
+  background:#0A0C10;color:#F2F5F9;font-family:var(--f-tech-display),system-ui,sans-serif;
+}
+.pg-estilos .sc-tech .sc-flag{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;
+  padding:9px var(--pad);color:var(--dim);border-bottom:1px solid var(--rule);
+}
+.pg-estilos .sc-tech .sc-flag::before{content:"";width:6px;height:6px;background:var(--volt);flex-shrink:0;}
+.pg-estilos .sc-tech .sc-nav{justify-content:flex-start;padding-top:15px;padding-bottom:15px;border-bottom:1px solid var(--rule);}
+.pg-estilos .sc-tech .sc-brand{font-weight:800;font-size:1.32rem;letter-spacing:-0.045em;line-height:1;}
+.pg-estilos .sc-tech .sc-brand::after{content:"";display:inline-block;width:0.3em;height:0.3em;margin-left:0.14em;background:var(--volt);}
+.pg-estilos .sc-tech .sc-links{
+  gap:30px;margin-left:clamp(16px,4vw,64px);
+  font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--dim);
+}
+.pg-estilos .sc-tech .sc-nav-action{
+  margin-left:auto;border:1px solid #2C3442;padding:8px 14px;
+  font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;
+}
+.pg-estilos .sc-tech .sc-copy{flex:1;display:flex;flex-direction:column;justify-content:center;width:min(720px,56%);padding-top:36px;padding-bottom:36px;}
+.pg-estilos .sc-tech .sc-kicker{
+  font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--volt);margin-bottom:24px;
+}
+.pg-estilos .sc-tech .sc-kicker::before{content:"[ ";color:var(--dim);}
+.pg-estilos .sc-tech .sc-kicker::after{content:" ]";color:var(--dim);}
+.pg-estilos .sc-tech .sc-title{font-weight:700;font-size:clamp(2.5rem,5.8vw,5.5rem);line-height:0.97;letter-spacing:-0.05em;}
+.pg-estilos .sc-tech .sc-title em{font-style:normal;color:#7C8798;}
+.pg-estilos .sc-tech .sc-sub{margin-top:26px;max-width:36ch;font-size:1.08rem;line-height:1.5;color:#AEB7C6;}
+.pg-estilos .sc-tech .sc-actions{margin-top:32px;gap:12px;}
+.pg-estilos .sc-tech .sc-btn{background:var(--volt);color:#0A0C10;border:1px solid var(--volt);padding:13px 22px;font-size:0.94rem;font-weight:700;letter-spacing:-0.01em;}
+.pg-estilos .sc-tech .sc-link{border:1px solid #2C3442;padding:13px 22px;font-size:0.94rem;font-weight:500;}
+.pg-estilos .sc-tech .sc-art{
+  top:0;right:0;bottom:0;width:62%;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 30%);
+  mask-image:linear-gradient(to right,transparent 0,#000 30%);
+}
+.pg-estilos .sc-tech .sc-tags{
+  position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  border-top:1px solid var(--rule);
+  font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);
+}
+.pg-estilos .sc-tech .sc-tags span{padding:14px var(--pad);border-left:1px solid var(--rule);white-space:nowrap;}
+.pg-estilos .sc-tech .sc-tags span:first-child{border-left:0;}
+
+/* =====================================================================
+   03 Wellness studio. Pale lilac mist, aubergine ink, a breath of peach.
+   A light garalde with its italic, a lot of air, the lines drifting in from
+   the left and thinning out before they reach the words.
+   ===================================================================== */
+.pg-estilos .sc-spa{background:#EFEDF6;color:#3A3454;font-family:var(--f-spa-text),system-ui,sans-serif;font-weight:300;}
+.pg-estilos .sc-spa .sc-flag{
+  text-align:center;font-family:var(--f-spa-display),Georgia,serif;font-style:italic;font-size:1rem;letter-spacing:0.01em;
+  padding:12px var(--pad) 0;color:#5B557C;
+}
+.pg-estilos .sc-spa .sc-nav{display:grid;grid-template-columns:1fr auto 1fr;padding-top:12px;}
+.pg-estilos .sc-spa .sc-brand{font-family:var(--f-spa-display),Georgia,serif;font-weight:400;font-size:2rem;line-height:1;letter-spacing:0.005em;}
+.pg-estilos .sc-spa .sc-links{gap:40px;font-size:0.76rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;}
+.pg-estilos .sc-spa .sc-nav-action{
+  justify-self:end;border:1px solid rgba(58,52,84,0.42);border-radius:999px;padding:9px 24px;
+  font-size:0.74rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;
+}
+.pg-estilos .sc-spa .sc-copy{flex:1;display:flex;flex-direction:column;justify-content:center;margin-left:auto;width:47%;padding-left:0;padding-top:30px;padding-bottom:56px;}
+.pg-estilos .sc-spa .sc-kicker{font-size:0.72rem;font-weight:400;letter-spacing:0.26em;text-transform:uppercase;color:#665F8C;margin-bottom:22px;}
+.pg-estilos .sc-spa .sc-title{
+  font-family:var(--f-spa-display),Georgia,serif;font-weight:300;
+  font-size:clamp(3.4rem,8vw,7.8rem);line-height:0.9;letter-spacing:-0.015em;
+}
+.pg-estilos .sc-spa .sc-title em{font-style:italic;color:#6E63B5;}
+.pg-estilos .sc-spa .sc-sub{margin-top:30px;max-width:31ch;font-size:1.1rem;line-height:1.7;color:#514B70;}
+.pg-estilos .sc-spa .sc-actions{margin-top:30px;gap:16px 28px;}
+.pg-estilos .sc-spa .sc-btn{
+  background:#3A3454;color:#F5F3FB;border-radius:999px;padding:15px 32px;
+  font-size:0.74rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;
+}
+.pg-estilos .sc-spa .sc-link{
+  font-family:var(--f-spa-display),Georgia,serif;font-style:italic;font-weight:400;font-size:1.32rem;line-height:1.2;
+  border-bottom:1px solid rgba(58,52,84,0.4);
+}
+/* The canvas starts off the left edge, so what shows is where the strokes
+   are already being combed into lanes; they thin out before the words. */
+.pg-estilos .sc-spa .sc-art{
+  left:-26%;top:13%;bottom:13%;width:90%;
+  -webkit-mask-image:linear-gradient(to right,#000 0,#000 66%,transparent 96%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,#000 0,#000 66%,transparent 96%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
+  mask-composite:intersect;
+}
+
+/* =====================================================================
+   04 Coastal hotel. Deep sea above, sand below. One geometric sans set
+   light and wide, the title and its sentence side by side over the water,
+   the dunes rising along the foot.
+   ===================================================================== */
+.pg-estilos .sc-hotel{background:#0F4A57;color:#F5EAD6;font-family:var(--f-hotel-display),system-ui,sans-serif;}
+.pg-estilos .sc-hotel .sc-flag{
+  text-align:right;font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;
+  padding:14px var(--pad) 0;color:rgba(245,234,214,0.84);
+}
+.pg-estilos .sc-hotel .sc-nav{padding-top:14px;}
+.pg-estilos .sc-hotel .sc-brand{font-size:1.2rem;font-weight:400;letter-spacing:0.46em;text-transform:uppercase;line-height:1;}
+.pg-estilos .sc-hotel .sc-links{gap:36px;font-size:0.74rem;letter-spacing:0.24em;text-transform:uppercase;}
+.pg-estilos .sc-hotel .sc-nav-action{
+  border:1px solid rgba(245,234,214,0.55);padding:12px 22px 9px;font-size:0.72rem;letter-spacing:0.24em;text-transform:uppercase;
+}
+.pg-estilos .sc-hotel .sc-copy{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,0.7fr);gap:clamp(24px,5vw,96px);align-items:end;
+  padding-top:clamp(22px,6vh,64px);
+}
+.pg-estilos .sc-hotel .sc-title{font-weight:300;text-transform:uppercase;font-size:clamp(2.4rem,5.5vw,5.2rem);line-height:1.06;letter-spacing:0.035em;}
+.pg-estilos .sc-hotel .sc-title em{font-style:normal;color:#F1BD8E;}
+.pg-estilos .sc-hotel .sc-sub{font-size:1.12rem;font-weight:300;line-height:1.6;color:rgba(245,234,214,0.92);max-width:34ch;}
+.pg-estilos .sc-hotel .sc-actions{margin-top:24px;gap:16px 28px;}
+.pg-estilos .sc-hotel .sc-btn{
+  background:#E9D6B4;color:#0F4A57;padding:15px 24px 11px;font-size:0.74rem;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;
+}
+.pg-estilos .sc-hotel .sc-link{
+  font-size:0.74rem;letter-spacing:0.22em;text-transform:uppercase;padding-bottom:3px;border-bottom:1px solid rgba(245,234,214,0.6);
+}
+/* The dunes take what the copy leaves; the top sixth of the canvas is open
+   water, so the shoreline always sits clear of the copy. */
+.pg-estilos .sc-hotel .sc-art{position:relative;flex:1 1 auto;min-height:340px;}
+
+/* ---- a narrow desktop: the menus tighten before the phone arrangement takes over ---- */
+@media (max-width:1100px){
+  .pg-estilos .sc-vin .sc-links,.pg-estilos .sc-hotel .sc-links{gap:22px;}
+  .pg-estilos .sc-tech .sc-links,.pg-estilos .sc-spa .sc-links{gap:20px;}
+  .pg-estilos .sc-hotel .sc-brand{letter-spacing:0.3em;}
+}
+
+/* ============================ PHONE ============================ */
+@media (max-width:860px){
+  .pg-estilos .est-hero-copy{grid-template-columns:1fr;gap:18px;}
+  .pg-estilos .est-cap-row{flex-wrap:wrap;padding-top:9px;padding-bottom:9px;}
+  .pg-estilos .est-cap-suits{order:5;flex-basis:100%;font-size:0.86rem;}
+
+  .pg-estilos .est-scene{min-height:0;}
+  .pg-estilos .sc-links,.pg-estilos .sc-nav-action{display:none;}
+  .pg-estilos .sc-menu{display:inline-block;}
+  .pg-estilos .sc-stage{display:block;}
+  .pg-estilos .sc-art{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;min-height:0;margin-top:0;}
+
+  /* winery */
+  .pg-estilos .sc-vin .sc-nav{grid-template-columns:1fr auto 1fr;}
+  .pg-estilos .sc-vin .sc-brand{grid-column:2;font-size:1.7rem;}
+  .pg-estilos .sc-vin .sc-menu{grid-column:3;justify-self:end;font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;}
+  .pg-estilos .sc-vin .sc-copy{padding-top:34px;}
+  .pg-estilos .sc-vin .sc-sub{margin-top:18px;font-size:1rem;}
+  .pg-estilos .sc-vin .sc-art{height:300px;min-height:0;margin-top:-6px;}
+
+  /* logistics */
+  .pg-estilos .sc-tech .sc-nav{justify-content:space-between;}
+  .pg-estilos .sc-tech .sc-menu{font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid #2C3442;padding:7px 12px;}
+  .pg-estilos .sc-tech .sc-copy{display:block;width:auto;padding-top:38px;padding-bottom:6px;}
+  .pg-estilos .sc-tech .sc-kicker{margin-bottom:18px;}
+  .pg-estilos .sc-tech .sc-sub{margin-top:20px;font-size:1.02rem;}
+  .pg-estilos .sc-tech .sc-actions{margin-top:26px;}
+  .pg-estilos .sc-tech .sc-art{
+    height:300px;width:auto;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 90%,transparent 100%);
+    mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 90%,transparent 100%);
+  }
+  .pg-estilos .sc-tech .sc-tags{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .pg-estilos .sc-tech .sc-tags span{padding-top:12px;padding-bottom:12px;}
+  .pg-estilos .sc-tech .sc-tags span:nth-child(odd){border-left:0;}
+  .pg-estilos .sc-tech .sc-tags span:nth-child(n+3){border-top:1px solid var(--rule);}
+
+  /* wellness */
+  .pg-estilos .sc-spa .sc-flag{font-size:0.95rem;}
+  .pg-estilos .sc-spa .sc-nav{grid-template-columns:1fr auto;}
+  .pg-estilos .sc-spa .sc-brand{font-size:1.8rem;}
+  .pg-estilos .sc-spa .sc-menu{font-size:0.7rem;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;}
+  .pg-estilos .sc-spa .sc-copy{display:block;width:auto;margin-left:0;padding:36px var(--pad) 8px;}
+  .pg-estilos .sc-spa .sc-sub{margin-top:22px;font-size:1.04rem;}
+  .pg-estilos .sc-spa .sc-art{
+    height:250px;left:-34%;width:134%;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 82%,transparent 100%);
+    -webkit-mask-composite:source-over;
+    mask-image:linear-gradient(to bottom,transparent 0,#000 22%,#000 82%,transparent 100%);
+    mask-composite:add;
+  }
+
+  /* hotel */
+  .pg-estilos .sc-hotel .sc-flag{text-align:left;padding-top:13px;}
+  .pg-estilos .sc-hotel .sc-nav{padding-top:20px;}
+  .pg-estilos .sc-hotel .sc-brand{font-size:1.05rem;letter-spacing:0.4em;}
+  .pg-estilos .sc-hotel .sc-menu{font-size:0.7rem;letter-spacing:0.24em;text-transform:uppercase;}
+  .pg-estilos .sc-hotel .sc-copy{grid-template-columns:1fr;gap:20px;padding-top:34px;padding-bottom:26px;}
+  .pg-estilos .sc-hotel .sc-sub{font-size:1.06rem;}
+  .pg-estilos .sc-hotel .sc-art{height:300px;min-height:0;margin-top:4px;}
+}

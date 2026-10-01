@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { clearsThreshold } from "@/lib/onscreen";
-import { fitCanvas, readPalette } from "@/components/pages/home/canvasKit";
+import { fitCanvas, hexToRgb, readPalette } from "@/components/pages/home/canvasKit";
 import { makeField, type FieldKind, type FieldState } from "./fieldKit";
 
 /**
@@ -13,23 +13,50 @@ import { makeField, type FieldKind, type FieldState } from "./fieldKit";
  * `behind` runs under a hero's copy on a wide screen, masked so it fades in
  * to the right of the text, and becomes a band of its own under the copy on a
  * phone, where the title goes first. `band` is always a band in the flow.
+ * `fill` takes the whole of its positioned parent and leaves the placement,
+ * the mask and the phone arrangement to that parent's stylesheet, which is
+ * how a style sample on /estilos puts a drawing where its own design wants it.
+ *
+ * `colors` hands the drawing a fixed palette of its own in place of the
+ * site's. A canvas given one never reads the site tokens, so it keeps its
+ * colours when the visitor switches between light and dark.
  *
  * It is decoration: hidden from a screen reader, no text of its own. The
  * house canvas rules apply. The pixel ratio is capped at two, the loop stops
  * when the canvas leaves the screen or the tab is hidden, the colours are
  * read again when the mode changes, and reduced motion gets one still frame.
  */
+export interface FieldPalette {
+  /** The main line colour, as a hex value. */
+  line: string;
+  /** The accent a few marks wear, as a hex value. */
+  accent: string;
+  /** The colour the drawing sits on, as a hex value. Some drawings fill with it. */
+  ground: string;
+  /** Whether that ground is a dark one. */
+  dark: boolean;
+}
+
 export default function Field({
   kind,
   layout = "band",
   className,
+  colors,
+  focus,
 }: {
   kind: FieldKind;
-  layout?: "behind" | "band";
+  layout?: "behind" | "band" | "fill";
   className?: string;
+  /** A fixed palette. Without it the drawing wears the site's and follows the mode. */
+  colors?: FieldPalette;
+  /** Where the composition centres on a wide canvas, 0 to 1 across its width. */
+  focus?: number;
 }) {
   const boxRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  // The palette is read by value, so a parent that builds the object again on
+  // every render does not tear the canvas down.
+  const fixed = colors ? [colors.line, colors.accent, colors.ground, colors.dark ? "1" : "0"].join("|") : "";
 
   useEffect(() => {
     const box = boxRef.current;
@@ -56,6 +83,12 @@ export default function Field({
     };
 
     const readColors = () => {
+      if (fixed) {
+        const [line, accent, ground, dark] = fixed.split("|");
+        S.dark = dark === "1";
+        S.c = { agave: line, agaveRgb: hexToRgb(line), gold: accent, goldRgb: hexToRgb(accent), ground };
+        return;
+      }
       const p = readPalette(document.documentElement);
       S.dark = p.dark;
       S.c = { agave: p.primary, agaveRgb: p.primaryRgb, gold: p.secondary, goldRgb: p.secondaryRgb, ground: p.ground };
@@ -94,7 +127,8 @@ export default function Field({
       // The phone composition is decided by the canvas, never by the window.
       S.small = S.W < 700;
       // Behind a hero the copy holds the left, so the drawing centres right of it.
-      S.fx = layout === "behind" && !S.small ? S.W * 0.7 : S.W * 0.5;
+      const wide = focus === undefined ? (layout === "behind" ? 0.7 : 0.5) : Math.max(0, Math.min(1, focus));
+      S.fx = S.small ? S.W * 0.5 : S.W * wide;
       S.fy = S.H * 0.5;
       if (!S.pin) {
         S.px = S.fx;
@@ -214,7 +248,8 @@ export default function Field({
 
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
-    window.addEventListener("cardon-mode", onMode);
+    // A canvas with a palette of its own has nothing to read on a mode change.
+    if (!fixed) window.addEventListener("cardon-mode", onMode);
     reduceMQ.addEventListener("change", onReduceChange);
 
     return () => {
@@ -228,7 +263,7 @@ export default function Field({
       window.removeEventListener("cardon-mode", onMode);
       reduceMQ.removeEventListener("change", onReduceChange);
     };
-  }, [kind, layout]);
+  }, [kind, layout, fixed, focus]);
 
   return (
     <div
