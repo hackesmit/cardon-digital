@@ -262,6 +262,15 @@ export default function Field({
     if (typeof ResizeObserver !== "undefined") {
       ro = new ResizeObserver(onResize);
       ro.observe(box);
+      // What covers the canvas can change height with no window resize (a
+      // text-size change wraps the caption), so it is watched as well.
+      if (cover) {
+        const scope = box.closest("section");
+        for (const sel of cover) {
+          const el = (scope && scope.querySelector(sel)) || document.querySelector(sel);
+          if (el) ro.observe(el);
+        }
+      }
     }
     // The window listener stays even with a ResizeObserver: a change of pixel
     // density leaves the box the same size, and only the window says so.
