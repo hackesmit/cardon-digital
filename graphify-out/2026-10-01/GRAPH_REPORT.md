@@ -1,16 +1,16 @@
-# Graph Report - cardon-digital  (2026-10-01)
+# Graph Report - cardon-digital  (2026-09-28)
 
 ## Corpus Check
-- 225 files · ~453,732 words
+- 221 files · ~358,481 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1562 nodes · 3708 edges · 79 communities (66 shown, 13 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 48 edges (avg confidence: 0.74)
+- 1520 nodes · 3632 edges · 77 communities (63 shown, 14 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 41 edges (avg confidence: 0.73)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a8f0c88a`
+- Built from commit: `838ed583`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -89,8 +89,6 @@
 - collapse.mjs
 - FlowCompress.test.ts
 - check-ads-outcome-claim.sh
-- VineyardMap.tsx
-- round100
 
 ## God Nodes (most connected - your core abstractions)
 1. `useDict()` - 66 edges
@@ -109,49 +107,49 @@
   app/[locale]/ads-claim.test.ts → lib/i18n/LocaleProvider.tsx
 - `shell()` --indirect_call--> `LocaleProvider()`  [INFERRED]
   app/[locale]/ads-claim.test.ts → lib/i18n/LocaleProvider.tsx
-- `offers()` --indirect_call--> `page()`  [INFERRED]
-  app/[locale]/ads-claim.test.ts → components/consent/ConversionListeners.test.tsx
+- `run()` --indirect_call--> `page()`  [INFERRED]
+  scripts/copy-check.mjs → components/consent/ConversionListeners.test.tsx
+- `OwnClock()` --calls--> `observeOnscreen()`  [EXTRACTED]
+  lib/testing/loopholes/demos/CaptionClockDemo.tsx → components/pages/demos/motion.ts
 - `rich()` --indirect_call--> `line()`  [INFERRED]
   lib/i18n/rich.tsx → components/pages/home/canvasKit.ts
-- `runCostBreakdown()` --indirect_call--> `line()`  [INFERRED]
-  lib/pricing.ts → components/pages/home/canvasKit.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (79 total, 13 thin omitted)
+## Communities (77 total, 14 thin omitted)
 
 ### Community 0 - "canvasKit.ts"
-Cohesion: 0.11
-Nodes (30): FakeObserver, here, bands, CAPTION_KEYS, CaptionKey, captionKeyFor(), clampN(), clockLabel() (+22 more)
+Cohesion: 0.12
+Nodes (27): FakeObserver, here, bands, CAPTION_KEYS, CaptionKey, captionKeyFor(), clampN(), clockLabel() (+19 more)
 
 ### Community 1 - "compilerOptions"
 Cohesion: 0.07
 Nodes (27): ./*, dom, dom.iterable, esnext, next-env.d.ts, .next/types/**/*.ts, node_modules, **/*.ts (+19 more)
 
 ### Community 2 - "site.ts"
-Cohesion: 0.17
-Nodes (12): page(), checkSource(), countEmphasis(), countWords(), main(), run(), check(), CONTRAST_FIXTURES (+4 more)
+Cohesion: 0.06
+Nodes (43): cssSource, decodeEntities(), FRAMES, here, KEYS, pageSource, visibleText(), CENTROIDS (+35 more)
 
 ### Community 3 - "page.tsx"
 Cohesion: 0.06
-Nodes (35): AddOn, addOns, AdsScopeId, BundleItem, BySize, CatalogueFeature, groupLocale, growerBundleS (+27 more)
+Nodes (37): AddOn, addOns, addOnSize(), AdsScopeId, BundleItem, BySize, CatalogueFeature, groupLocale (+29 more)
 
 ### Community 4 - "config.ts"
 Cohesion: 0.12
-Nodes (16): DYNAMIC_HREFS, existingRoutes, Link, links, ROOT, ROUTE_ROOT, sourceFiles, routes (+8 more)
+Nodes (17): DYNAMIC_HREFS, existingRoutes, Link, links, ROOT, ROUTE_ROOT, sourceFiles, routes (+9 more)
 
 ### Community 5 - "ModuleScreen.tsx"
 Cohesion: 0.15
 Nodes (31): bands, board, CAPTION_KEYS, CaptionKey, captionKeyFor(), Channel, clampN(), cycleFrame (+23 more)
 
 ### Community 6 - "ClinicSchedule.tsx"
-Cohesion: 0.23
-Nodes (10): AnunciosPage(), generateMetadata(), localeOf(), Params, PricingDetails(), adsFill(), anuncios, AnunciosDict (+2 more)
+Cohesion: 0.16
+Nodes (17): AnunciosPage(), generateMetadata(), localeOf(), Params, generateMetadata(), localeOf(), Params, PreciosPage() (+9 more)
 
 ### Community 7 - "page.tsx"
 Cohesion: 0.12
-Nodes (22): capGlyphs, generateMetadata(), localeOf(), Params, WineryPage(), metadata, PricingBundles(), SpotlightFrames() (+14 more)
+Nodes (19): capGlyphs, generateMetadata(), localeOf(), Params, WineryPage(), metadata, PricingBundles(), SpotlightFrames() (+11 more)
 
 ### Community 8 - "devDependencies"
 Cohesion: 0.05
@@ -162,8 +160,8 @@ Cohesion: 0.06
 Nodes (52): assertMediaText(), assertVideoLabels(), exportWidth(), IntentUpdate, isVideoProps(), Media(), MEDIA_PENDING_LABEL, MEDIA_RATIOS (+44 more)
 
 ### Community 10 - "page.tsx"
-Cohesion: 0.09
-Nodes (40): ConsentBanner(), ContactDoors(), ContactForm(), EMPTY, Status, Values, ContactMail(), Attribution (+32 more)
+Cohesion: 0.07
+Nodes (50): ContactPage(), DOORS, generateMetadata(), localeOf(), Params, ContactDoors(), ContactForm(), EMPTY (+42 more)
 
 ### Community 11 - "Agent Instructions"
 Cohesion: 0.11
@@ -194,20 +192,20 @@ Cohesion: 0.08
 Nodes (23): 10. The checks protect a good-faith author (binding), 1. What the two books actually teach, 2. What is wrong with the site today (measured, not asserted), 3. The rules, 4. Home page architecture, 5. Demos and motion, 6. Media, 7. Definition of done for any copy bead (+15 more)
 
 ### Community 21 - "middleware.ts"
-Cohesion: 0.06
-Nodes (42): ConsentGate(), ConversionListeners(), countedOnSubmit(), DESTINATIONS, kindFromAttribute(), submitsACountedForm(), calls, MeasurementScripts() (+34 more)
+Cohesion: 0.10
+Nodes (37): ConsentBanner(), ConsentGate(), ConversionListeners(), countedOnSubmit(), DESTINATIONS, kindFromAttribute(), submitsACountedForm(), calls (+29 more)
 
 ### Community 27 - "checks.tsx"
-Cohesion: 0.10
-Nodes (17): BOX, checks, Demo, describeEl(), failing(), flat(), GHOST, HINT_TEXTS (+9 more)
+Cohesion: 0.11
+Nodes (16): BOX, checks, Demo, describeEl(), failing(), flat(), GHOST, HINT_TEXTS (+8 more)
 
 ### Community 28 - "page.tsx"
 Cohesion: 0.11
 Nodes (14): accessibleText(), blocks(), decodeEntities(), Env, html(), pageCode, pageSource, renderedText() (+6 more)
 
 ### Community 32 - "page.tsx"
-Cohesion: 0.09
-Nodes (25): AboutPage(), generateMetadata(), localeOf(), Params, generateMetadata(), localeOf(), Params, SitiosPage() (+17 more)
+Cohesion: 0.14
+Nodes (16): AboutPage(), generateMetadata(), localeOf(), Params, about, AboutDict, en, es (+8 more)
 
 ### Community 33 - "page.tsx"
 Cohesion: 0.29
@@ -215,103 +213,103 @@ Nodes (6): 1. What you write, 2. What you do not write, and what each piece is f
 
 ### Community 34 - "VineField.tsx"
 Cohesion: 0.08
-Nodes (24): absorbedProviderCash(), AddOnId, adsMinimumBudget(), combinations, legacyWineryBundles, legacyWinerySetupFloor(), modules, ModuleSelection (+16 more)
+Nodes (25): absorbedProviderCash(), AddOnId, adsMinimumBudget(), combinations, legacyWineryBundles, legacyWinerySetupFloor(), mixDiscountByRank, modules (+17 more)
 
 ### Community 35 - "SitePlanVisual.tsx"
-Cohesion: 0.13
-Nodes (13): demoFiles(), MACHINERY, broken(), classPrefix(), literal(), LIVE_ROLES, OPERABLE, SourceRuleContext (+5 more)
+Cohesion: 0.09
+Nodes (29): demoFiles(), MACHINERY, broken(), classPrefix(), literal(), LIVE_ROLES, OPERABLE, SourceRuleContext (+21 more)
 
 ### Community 36 - "useDemoStage.ts"
-Cohesion: 0.15
-Nodes (8): DemoHue, ClockSpec, createClock(), DemoClock, DemoScene, LiveText, StageRefs, useDemoStage()
+Cohesion: 0.12
+Nodes (14): DemoPalette, GEOMETRY, PAL, SpecViolation, strictCtx(), ClockSpec, createClock(), DemoClock (+6 more)
 
 ### Community 37 - "case-page.test.ts"
-Cohesion: 0.20
-Nodes (16): escapesIn(), NOT_JUDGED, ObserverSite, observerSites(), read(), READS_ISINTERSECTING, root, sitesIn() (+8 more)
+Cohesion: 0.35
+Nodes (10): BRIGHT_MIX, FALLBACK, readDemoPalette(), BLACK, hexToRgb(), mix(), readPalette(), RGB (+2 more)
 
 ### Community 38 - "page.tsx"
 Cohesion: 0.08
 Nodes (41): showcaseEnabled(), ACID, ACID_RANGE, ACID_TICKS, BRIX, BRIX_RANGE, BRIX_TICKS, DAY_TICKS (+33 more)
 
 ### Community 39 - "canvasKit.ts"
-Cohesion: 0.05
-Nodes (65): BRIGHT_MIX, FALLBACK, readDemoPalette(), BLACK, clamp01(), dedupe(), drawFlow(), easeInOut() (+57 more)
+Cohesion: 0.11
+Nodes (23): dedupe(), makeTrace(), Palette, Pt, strokeTraceUpTo(), Trace, Box, Dot (+15 more)
 
 ### Community 40 - "ModuleFloors.tsx"
 Cohesion: 0.07
-Nodes (22): DENIED_BEFORE, dictionaryFiles, FLAT, flatPolicy, here, I18N_MACHINERY, i18nDir, MINIMUM_BUDGET (+14 more)
+Nodes (32): amountsIn(), budgetProblem(), DENIED_BEFORE, dictionaryFiles, figure(), FLAT, flatPolicy, here (+24 more)
 
 ### Community 42 - "localePath"
 Cohesion: 0.25
 Nodes (7): Export and drop in, How a slot works, Media: the shot list, Ratios, and the size to shoot to, Shooting notes, The slots, Video
 
 ### Community 43 - "Media credits"
-Cohesion: 0.18
-Nodes (10): about/cellar.webp, Cardon Digital photography, shot at Monte Xanic (2026-09-29), enkanto/cabana.webp, Icons, Media credits, Our own material, Placeholder stock, precios/handover.webp (+2 more)
+Cohesion: 0.33
+Nodes (5): enkanto-valle.webp, Media credits, Our own material, Placeholder stock, valle-vineyard.webp
 
 ### Community 44 - "Media clearances"
-Cohesion: 0.33
-Nodes (5): Entries, Media clearances, Monte Xanic cellar and lab frames, 2026-09-29 and 2026-09-30, The entry, Two clearances, both required
+Cohesion: 0.40
+Nodes (4): Entries, Media clearances, The entry, Two clearances, both required
 
 ### Community 46 - "useDict"
-Cohesion: 0.19
-Nodes (8): BerryToBottleDesktop(), BerryToBottleMobile(), wrap(), ContourField(), en, es, monteXanic, MonteXanicDict
+Cohesion: 0.16
+Nodes (19): BerryToBottleDesktop(), BerryToBottleMobile(), clamp01(), drawFlow(), easeInOut(), fitCanvas(), pointAtLen(), DigitalArc() (+11 more)
 
 ### Community 47 - "page.tsx"
 Cohesion: 0.10
-Nodes (52): line(), arrivalsOutside(), canvasCount(), changedSince(), classify(), compareVisual(), defaultBranch(), facultyMoved() (+44 more)
+Nodes (51): arrivalsOutside(), canvasCount(), changedSince(), classify(), compareVisual(), defaultBranch(), facultyMoved(), filesAt() (+43 more)
 
 ### Community 48 - "precios.ts"
-Cohesion: 0.24
-Nodes (15): MixExample(), bridgesSentence(), comboName(), comboPricingClause(), en, es, mixRankingSentence(), mixRules() (+7 more)
+Cohesion: 0.25
+Nodes (14): MixExample(), bridgesSentence(), comboName(), comboPricingClause(), en, es, mixRankingSentence(), mixRules() (+6 more)
 
 ### Community 49 - "localePath"
-Cohesion: 0.17
-Nodes (11): Geom, Pt, RGB, Source, SourceKind, Trace, VineField(), en (+3 more)
+Cohesion: 0.14
+Nodes (14): AssistantDemo(), BARS, CITED_ROW, Geom, Pt, RGB, Source, SourceKind (+6 more)
 
 ### Community 50 - "bumpOffBareMultiple"
-Cohesion: 0.33
-Nodes (7): bundleHours(), featureOf(), floorFor(), hours3(), runCostHours(), sharedBuildHours(), sharedServiceBaseHours()
+Cohesion: 0.22
+Nodes (10): bundleHours(), featureHours(), featureOf(), featureSetup(), floorFor(), growerBundleHours(), hours3(), runCostHours() (+2 more)
 
 ### Community 51 - "page.tsx"
 Cohesion: 0.06
-Nodes (36): fail(), JSON_HEADERS, POST(), BoundedBody, readBoundedText(), bodyFor(), buildEmail(), deliver() (+28 more)
+Nodes (38): fail(), JSON_HEADERS, POST(), BoundedBody, readBoundedText(), bodyFor(), buildEmail(), deliver() (+30 more)
 
 ### Community 52 - "page.tsx"
-Cohesion: 0.12
-Nodes (35): bands, brixAt(), CAPTION_KEYS, CaptionKey, captionKeyFor(), CENTRES, chart(), ChartGeom (+27 more)
+Cohesion: 0.14
+Nodes (31): bands, brixAt(), CAPTION_KEYS, CaptionKey, captionKeyFor(), CENTRES, chart(), ChartGeom (+23 more)
 
 ### Community 53 - "SpotlightFrames.test.ts"
 Cohesion: 0.28
 Nodes (6): SpotlightFrames(), spotlightVars(), CASE_CSS, GLOBALS, PAGE, ROOT
 
 ### Community 54 - "Nav.tsx"
-Cohesion: 0.19
-Nodes (12): ADVISORY_SHAPES, CONTRAST_ALLOWLIST, countClusters(), describe(), excerpt(), extractLocaleStrings(), findAssignment(), matchShapes() (+4 more)
+Cohesion: 0.25
+Nodes (8): generateMetadata(), localeOf(), MonteXanicCaseStudy(), Params, CaseFact, CaseFacts(), PlayOnceVis(), PlayOnceVisProps
 
 ### Community 55 - "page.tsx"
-Cohesion: 0.17
-Nodes (14): BRIDGE_NODES, bridgeLabels(), bridgeMask(), BridgeModuleId, label, CombinationPicker(), MODULE_IDS, Combinations() (+6 more)
+Cohesion: 0.09
+Nodes (26): BRIDGE_NODES, bridgeLabels(), bridgeMask(), BridgeModuleId, label, CombinationPicker(), MODULE_IDS, Combinations() (+18 more)
 
 ### Community 56 - "page.tsx"
-Cohesion: 0.14
-Nodes (23): ContactPage(), DOORS, generateMetadata(), localeOf(), Params, generateMetadata(), LocaleLayout(), generateMetadata() (+15 more)
+Cohesion: 0.18
+Nodes (18): generateMetadata(), LocaleLayout(), generateMetadata(), localeOf(), Params, PrivacyPage(), generateMetadata(), localeOf() (+10 more)
 
 ### Community 57 - "bumpOffBareMultiple"
 Cohesion: 0.19
-Nodes (21): addOnAvailable(), addOnMonthly(), addOnOf(), addOnSize(), adsScopeOf(), annualPrepay, buildOnly(), bumpOffBareMultiple() (+13 more)
+Nodes (23): addOnAvailable(), addOnMonthly(), addOnOf(), adsScopeOf(), annualPrepay, buildOnly(), bumpOffBareMultiple(), ceilTo() (+15 more)
 
 ### Community 58 - "DemoScene"
 Cohesion: 0.08
-Nodes (47): DemoFigure(), DemoFigureProps, HIDDEN_WITHOUT_SCRIPT, Hotspot(), HotspotProps, PickBox(), PickBoxProps, AssistantDemo() (+39 more)
+Nodes (42): DemoFigure(), DemoFigureProps, HIDDEN_WITHOUT_SCRIPT, Hotspot(), HotspotProps, PickBox(), PickBoxProps, demos (+34 more)
 
 ### Community 59 - "observeOnscreen"
-Cohesion: 0.24
-Nodes (9): DemoMotionState, observeOnscreen(), shouldAnimate(), CaptionClockDemo(), captionScene(), OwnClock(), HospitalidadDemo(), ProduccionDemo() (+1 more)
+Cohesion: 0.33
+Nodes (6): DemoMotionState, observeOnscreen(), shouldAnimate(), HospitalidadDemo(), ProduccionDemo(), StringDemo()
 
 ### Community 60 - "priced"
-Cohesion: 0.19
-Nodes (11): DemoPage(), generateMetadata(), localeOf(), Params, clearedPage(), { redirect }, allModules, DemoDict (+3 more)
+Cohesion: 0.67
+Nodes (3): CapturedClockDemo(), cellarScene(), now
 
 ### Community 61 - "BridgeMap.tsx"
 Cohesion: 0.14
@@ -322,76 +320,64 @@ Cohesion: 0.21
 Nodes (10): ComingSoonPage(), generateMetadata(), localeOf(), Params, Mark(), MarkVariant, comingSoon, ComingSoonDict (+2 more)
 
 ### Community 63 - "World"
-Cohesion: 0.17
+Cohesion: 0.16
 Nodes (4): withWorld(), INERT, lastFrame(), World
 
 ### Community 64 - "page.tsx"
-Cohesion: 0.17
-Nodes (12): CASE_ROUTES, CLIENTS, generateMetadata(), Home(), localeOf(), Params, PROOF_PHOTOS, SERVICE_PHOTOS (+4 more)
+Cohesion: 0.23
+Nodes (8): CASE_ROUTES, generateMetadata(), Home(), localeOf(), Params, SERVICE_ROUTES, PlayOnceVis(), SpotlightFrames()
 
 ### Community 65 - "ModuleFloors.tsx"
-Cohesion: 0.14
+Cohesion: 0.15
 Nodes (10): serve(), basisMarkup(), serve(), render(), render(), render(), locales, LocaleProvider() (+2 more)
 
 ### Community 66 - "BridgeMap.tsx"
-Cohesion: 0.11
-Nodes (16): CHANGE_VISUALS, EnkantoCaseStudy(), generateMetadata(), localeOf(), Params, showPending, VisDict, generateMetadata() (+8 more)
-
-### Community 67 - "Page"
-Cohesion: 0.15
-Nodes (10): ChannelId, CHANNELS, LotBoard(), LOTS, ModuleScreen(), oneDecimal(), STAYS, TABLES (+2 more)
+Cohesion: 0.18
+Nodes (8): CHANGE_VISUALS, EnkantoCaseStudy(), generateMetadata(), localeOf(), Params, showPending, VisDict, SpotlightFrames()
 
 ### Community 68 - "metadata.ts"
-Cohesion: 0.16
-Nodes (21): generateMetadata(), localeOf(), Params, PreciosPage(), AdsFee(), FloorChart(), bundleLines(), ModuleFloors() (+13 more)
+Cohesion: 0.13
+Nodes (24): DemoPage(), generateMetadata(), localeOf(), Params, clearedPage(), { redirect }, AdsFee(), FloorChart() (+16 more)
 
 ### Community 69 - "winery-page.test.ts"
 Cohesion: 0.48
 Nodes (6): captures(), declaredSpans(), pageSource, servedCapBodies(), servedSpans(), strings()
 
 ### Community 71 - "OpenedAtDemo.tsx"
-Cohesion: 0.18
-Nodes (9): cssSource, decodeEntities(), FRAMES, here, KEYS, pageSource, visibleText(), BLOCKING_SHAPES (+1 more)
+Cohesion: 0.67
+Nodes (3): cellarScene(), openedAt, OpenedAtDemo()
 
 ### Community 72 - "PickStuckDemo.tsx"
 Cohesion: 0.27
-Nodes (10): amountsIn(), budgetProblem(), figure(), judge(), offerIn(), scope(), sentencesOf(), shareOfSpendClaims() (+2 more)
+Nodes (8): generateMetadata(), localeOf(), Params, SitiosPage(), en, es, sitios, SitiosDict
 
 ### Community 73 - "ResizeMemoryDemo.tsx"
-Cohesion: 0.32
-Nodes (8): blocksOf(), decode(), dictionaries(), judged(), offers(), served(), shell(), strings()
+Cohesion: 0.28
+Nodes (9): blocksOf(), decode(), dictionaries(), judged(), offers(), served(), shell(), strings() (+1 more)
 
 ### Community 75 - "FlowCompress.test.ts"
-Cohesion: 0.40
+Cohesion: 0.33
 Nodes (4): en, es, software, SoftwareDict
 
-### Community 77 - "VineyardMap.tsx"
-Cohesion: 0.28
-Nodes (7): CENTROIDS, FLAG_ANCHORS, pathD(), Plot, PLOTS, RGB, VineyardMap()
-
-### Community 78 - "round100"
-Cohesion: 0.29
-Nodes (7): featureHours(), featureSetup(), round100(), runCost(), runCostBreakdown(), serviceLineMonthly(), sharedServiceBaseBreakdown()
-
 ## Knowledge Gaps
-- **458 isolated node(s):** `extends`, `next/core-web-vitals`, `Params`, `Params`, `PageModule` (+453 more)
+- **443 isolated node(s):** `extends`, `next/core-web-vitals`, `Params`, `Params`, `PageModule` (+438 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Locale` connect `metadata.ts` to `page.tsx`, `ClinicSchedule.tsx`, `page.tsx`, `pageMetadata`, `middleware.ts`, `page.tsx`, `page.tsx`, `page.tsx`, `ModuleFloors.tsx`, `precios.ts`, `page.tsx`, `page.tsx`, `page.tsx`, `DemoScene`, `priced`, `palette.ts`, `page.tsx`, `ModuleFloors.tsx`, `BridgeMap.tsx`, `Page`, `winery-page.test.ts`, `OpenedAtDemo.tsx`?**
-  _High betweenness centrality (0.083) - this node is a cross-community bridge._
+- **Why does `Locale` connect `page.tsx` to `site.ts`, `page.tsx`, `ClinicSchedule.tsx`, `page.tsx`, `pageMetadata`, `page.tsx`, `page.tsx`, `page.tsx`, `page.tsx`, `ModuleFloors.tsx`, `precios.ts`, `page.tsx`, `Nav.tsx`, `page.tsx`, `palette.ts`, `page.tsx`, `ModuleFloors.tsx`, `BridgeMap.tsx`, `Page`, `metadata.ts`, `winery-page.test.ts`, `PickStuckDemo.tsx`, `FlowCompress.test.ts`?**
+  _High betweenness centrality (0.102) - this node is a cross-community bridge._
 - **Why does `react` connect `ModuleFloors.tsx` to `devDependencies`, `ResizeMemoryDemo.tsx`, `page.tsx`?**
-  _High betweenness centrality (0.058) - this node is a cross-community bridge._
+  _High betweenness centrality (0.060) - this node is a cross-community bridge._
 - **Why does `dependencies` connect `devDependencies` to `ModuleFloors.tsx`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+  _High betweenness centrality (0.058) - this node is a cross-community bridge._
 - **What connects `extends`, `next/core-web-vitals`, `Params` to the rest of the system?**
-  _458 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _443 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `canvasKit.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.10897435897435898 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11587301587301588 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
-- **Should `page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.059743954480796585 - nodes in this community are weakly interconnected._
+- **Should `site.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.05714285714285714 - nodes in this community are weakly interconnected._

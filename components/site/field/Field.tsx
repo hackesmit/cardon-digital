@@ -271,16 +271,19 @@ export default function Field({
         topInset ? { threshold: 0.04, rootMargin: "-" + Math.round(topInset) + "px 0px 0px 0px" } : { threshold: 0.04 },
       );
       io.observe(box);
-    } else {
-      onscreen = true;
-      start();
     }
+    // A browser with no IntersectionObserver cannot tell when the canvas has
+    // left the screen, so it keeps the still frame layoutNow already painted
+    // instead of a loop that would never stop.
 
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     // A canvas with a palette of its own has nothing to read on a mode change.
     if (!fixed) window.addEventListener("cardon-mode", onMode);
-    reduceMQ.addEventListener("change", onReduceChange);
+    // Safari before 14 has only the older addListener on a media query list,
+    // and a throw here would leave every listener above installed for good.
+    if (typeof reduceMQ.addEventListener === "function") reduceMQ.addEventListener("change", onReduceChange);
+    else if (typeof reduceMQ.addListener === "function") reduceMQ.addListener(onReduceChange);
 
     return () => {
       stop();
@@ -292,7 +295,8 @@ export default function Field({
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("cardon-mode", onMode);
-      reduceMQ.removeEventListener("change", onReduceChange);
+      if (typeof reduceMQ.removeEventListener === "function") reduceMQ.removeEventListener("change", onReduceChange);
+      else if (typeof reduceMQ.removeListener === "function") reduceMQ.removeListener(onReduceChange);
     };
   }, [kind, layout, fixed, focus, density, topInset]);
 
