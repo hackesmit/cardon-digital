@@ -25,13 +25,17 @@ const KEYS = ["vinedo", "tech", "spa", "hotel"] as const;
 
 /** The site header and the caption that sticks under it cover this much of
  *  the window's top; a canvas showing only there is hidden, so it stops. */
-const CHROME = 110;
+const CHROME = 112;
+/** What covers the top of a scene: the site header and the scene's own sticky caption. */
+const COVER = [".site-header", ".est-cap"];
 type Key = (typeof KEYS)[number];
 
 /**
  * Each sample's canvas colours. They are fixed: a sample is somebody else's
  * site, so it does not follow this site's light and dark modes. The grounds
- * are repeated in estilos.css, where each scene paints its own background.
+ * are repeated in estilos.css, where each scene paints its own background,
+ * except the hotel: its canvas ground is the sand of the dunes and its scene
+ * ground is the sea behind the title.
  */
 const PALETTE: Record<Key, FieldPalette> = {
   vinedo: { line: "#F3DFC0", accent: "#F4B44E", ground: "#6F2A1B", dark: true },
@@ -67,8 +71,10 @@ export default function EstilosPage({ params }: Params) {
       <section className={"est-plate est-plate-" + key} id={"estilo-" + key} aria-labelledby={"est-h-" + key} key={key}>
         <div className="est-cap">
           <div className="container est-cap-row">
+            {/* The word stays in the sticky caption, so a scene is named a
+                sample for as long as any part of it is on screen. */}
             <span className="est-cap-n mono">
-              {"0" + n} / {"0" + KEYS.length}
+              {g.sampleShort} {"0" + n} / {"0" + KEYS.length}
             </span>
             <h2 className="est-cap-style" id={"est-h-" + key}>
               {d[key].style}
@@ -155,7 +161,7 @@ export default function EstilosPage({ params }: Params) {
                 </div>
               </Reveal>
               <div className="sc-art">
-                <Field kind="vinedo" layout="fill" colors={PALETTE.vinedo} topInset={CHROME} />
+                <Field kind="vinedo" layout="fill" colors={PALETTE.vinedo} topInset={CHROME} cover={COVER} />
               </div>
             </div>
           </div>,
@@ -192,7 +198,7 @@ export default function EstilosPage({ params }: Params) {
                 </div>
               </Reveal>
               <div className="sc-art">
-                <Field kind="constelacion" layout="fill" colors={PALETTE.tech} topInset={CHROME} />
+                <Field kind="constelacion" layout="fill" colors={PALETTE.tech} topInset={CHROME} cover={COVER} />
               </div>
             </div>
             <p className="sc-tags" aria-hidden="true">
@@ -234,7 +240,7 @@ export default function EstilosPage({ params }: Params) {
                 </div>
               </Reveal>
               <div className="sc-art">
-                <Field kind="corrientes" layout="fill" colors={PALETTE.spa} density={1.9} topInset={CHROME} />
+                <Field kind="corrientes" layout="fill" colors={PALETTE.spa} density={1.9} topInset={CHROME} cover={COVER} />
               </div>
             </div>
           </div>,
@@ -272,7 +278,7 @@ export default function EstilosPage({ params }: Params) {
                 </div>
               </Reveal>
               <div className="sc-art">
-                <Field kind="medanos" layout="fill" colors={PALETTE.hotel} focus={0.66} topInset={CHROME} />
+                <Field kind="medanos" layout="fill" colors={PALETTE.hotel} focus={0.66} topInset={CHROME} cover={COVER} />
               </div>
             </div>
           </div>,

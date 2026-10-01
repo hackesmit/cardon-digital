@@ -26,7 +26,7 @@ const en = {
   },
   /** The one link to the style samples page (/estilos). */
   styles: {
-    line: "A winery, a logistics company, a spa and a coastal hotel, each in a style of its own.",
+    line: "Four invented businesses, each in a style of its own: a winery, a logistics company, a spa and a coastal hotel.",
     cta: "See the styles",
   },
   gets: {
@@ -177,7 +177,7 @@ const es: typeof en = {
     proof: "Sitios hechos para Viñedo En'kanto y Dharma Ochoa, entregados a su nombre.",
   },
   styles: {
-    line: "Una vinícola, una empresa de logística, un spa y un hotel de costa, cada uno con su propio estilo.",
+    line: "Cuatro negocios inventados, cada uno con su propio estilo: una vinícola, una empresa de logística, un spa y un hotel de costa.",
     cta: "Ver estilos",
   },
   gets: {
