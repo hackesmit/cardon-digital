@@ -133,7 +133,7 @@ const es: typeof en = {
     sub: "Rutas, almacenes y entregas coordinados en tiempo real desde un solo tablero.",
     primary: "Solicitar demo",
     secondary: "Ver la plataforma",
-    tags: ["Rutas", "Almacenes", "Última milla", "Flotillas"],
+    tags: ["Rutas", "Almacenes", "Última milla", "Flotilla"],
   },
   spa: {
     style: "Fluido y natural",
@@ -153,7 +153,7 @@ const es: typeof en = {
     suits: "Para hoteles pequeños, rentas vacacionales y restaurantes frente al mar.",
     brand: "Sotaduna",
     kind: "Hotel de costa",
-    nav: ["Habitaciones", "La playa", "Mesa", "Cómo llegar"],
+    nav: ["Habitaciones", "La playa", "Restaurante", "Cómo llegar"],
     action: "Reservar",
     title: "Entre la duna",
     titleAccent: "y el mar.",
