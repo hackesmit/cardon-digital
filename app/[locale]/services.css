@@ -195,54 +195,41 @@
 .pg-svc .diag-inner { grid-template-columns: 1fr; }
 .pg-svc .diag-lead h2 { max-width: 18ch; }
 
-/* ---- website packages (shared with /precios) ---- */
-.web-packages .pk-grid {
+/* ---- website packages (shared with /precios) ----
+   A price list: name and promise on the left, what the row adds in the
+   middle, the price large on the right. One rule per row, no cards. */
+.web-packages .pk-list { border-top: 2px solid var(--text); }
+.web-packages .pk-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(12px, 1.5vw, 18px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr) auto;
+  gap: 14px clamp(18px, 3vw, 44px);
+  align-items: start;
+  padding: clamp(20px, 2.6vw, 32px) 0;
+  border-bottom: 1px solid var(--line);
+  transition: background .25s ease;
 }
-.web-packages .pk {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-  padding: clamp(18px, 2vw, 24px);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 2px;
+.web-packages .pk-row:hover { background: var(--primary-faint); }
+.web-packages .pk-name { font-size: clamp(1.35rem, 2.4vw, 1.9rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.1; }
+.web-packages .pk-tag { margin-top: 6px; color: var(--text-dim); font-size: 1rem; line-height: 1.45; max-width: 30ch; }
+.web-packages .pk-meta { margin-top: 12px; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.web-packages .pk-plus { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+.web-packages .pk-feats { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.web-packages .pk-feats li {
+  font-size: 0.9rem; line-height: 1.35; color: var(--text-dim);
+  border: 1px solid var(--line); border-radius: 2px; padding: 6px 10px;
+  background: color-mix(in srgb, var(--panel) 60%, transparent);
 }
-.web-packages .pk-lead {
-  border-color: var(--primary-dim);
-  background: linear-gradient(150deg, var(--primary-faint), var(--card) 62%);
-}
-.web-packages .pk-head { display: flex; flex-direction: column; gap: 4px; }
-.web-packages .pk-n { font-size: 0.7rem; letter-spacing: 0.16em; color: var(--secondary); }
-.web-packages .pk-name { font-size: 1.16rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.16; }
-.web-packages .pk-tag { color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
-.web-packages .pk-price { font-family: var(--mono); font-size: 0.8rem; color: var(--text-dim); letter-spacing: 0.02em; }
-.web-packages .pk-price b { font-size: 1.5rem; font-weight: 600; color: var(--primary); letter-spacing: -0.01em; }
-.web-packages .pk-from { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.web-packages .pk-facts { display: flex; gap: 18px; margin: 0; padding: 10px 0; border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
-.web-packages .pk-facts div { display: flex; flex-direction: column; gap: 2px; }
-.web-packages .pk-facts dt { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-.web-packages .pk-facts dd { margin: 0; font-size: 0.9rem; color: var(--text); }
-.web-packages .pk-k { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-.web-packages .pk-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
-.web-packages .pk-list li { position: relative; padding-left: 14px; color: var(--text-dim); font-size: 0.88rem; line-height: 1.42; }
-.web-packages .pk-list li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 6px; height: 1px; background: var(--primary); opacity: 0.7; }
-.web-packages .pk-care {
-  margin-top: clamp(18px, 2.4vw, 26px);
-  padding-top: clamp(18px, 2.4vw, 26px);
-  border-top: 1px solid var(--line-soft);
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  gap: 8px 22px;
-  align-items: baseline;
-}
+.web-packages .pk-price { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; white-space: nowrap; }
+.web-packages .pk-price b { font-size: clamp(1.7rem, 3.2vw, 2.6rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--primary); }
+.web-packages .pk-from { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.web-packages .pk-care { margin-top: clamp(16px, 2vw, 22px); display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; color: var(--text-dim); font-size: 0.95rem; }
 .web-packages .pk-care-k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--secondary); }
-.web-packages .pk-care-v { color: var(--text-dim); font-size: 0.9rem; white-space: nowrap; }
-.web-packages .pk-care-v b { font-size: 1.2rem; color: var(--primary); font-weight: 600; }
-.web-packages .pk-care-body { color: var(--text-dim); font-size: 0.92rem; line-height: 1.55; max-width: 60ch; }
+.web-packages .pk-care b { color: var(--text); font-weight: 600; }
+.web-packages .pk-care-body { flex-basis: 100%; max-width: 60ch; }
+@media (max-width: 820px) {
+  .web-packages .pk-row { grid-template-columns: 1fr; }
+  .web-packages .pk-price { text-align: left; align-items: flex-start; flex-direction: row; align-items: baseline; gap: 10px; order: -1; }
+}
 
 /* ---- ad management fee (shared with /precios) ---- */
 .ads-fee .fee-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(14px, 1.8vw, 22px); max-width: 860px; }
@@ -267,18 +254,13 @@
 .ads-fee .fee-rules li { position: relative; padding-left: 16px; color: var(--text-dim); font-size: 0.94rem; line-height: 1.5; }
 .ads-fee .fee-rules li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 1px; background: var(--primary); }
 
-@media (max-width: 1000px) {
-  .web-packages .pk-grid { grid-template-columns: repeat(2, 1fr); }
-}
 @media (max-width: 900px) {
   .pg-svc .path { grid-template-columns: repeat(2, 1fr); }
   .pg-svc .steps { grid-template-columns: 1fr; }
   .pg-svc .mod-grid { grid-template-columns: 1fr; }
-  .web-packages .pk-care { grid-template-columns: 1fr; gap: 6px; }
 }
 @media (max-width: 640px) {
   .pg-svc .res-grid, .pg-svc .fam-grid, .pg-svc .path { grid-template-columns: 1fr; }
-  .web-packages .pk-grid { grid-template-columns: 1fr; }
   .ads-fee .fee-grid, .ads-fee .fee-rules { grid-template-columns: 1fr; }
 }
 
