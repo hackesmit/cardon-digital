@@ -9,6 +9,7 @@ import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
+import Field from "@/components/site/field/Field";
 import "../services.css";
 
 type Params = { params: { locale: string } };
@@ -81,6 +82,11 @@ export default function AnunciosPage({ params }: Params) {
               <h2 id="path-title">{d.path.title}</h2>
             </div>
           </Reveal>
+        </div>
+        {/* Many searches run into one knot and leave as a single line: the
+            path the four steps below describe. */}
+        <Field kind="hilos" layout="band" />
+        <div className="container">
           <Reveal>
             <ol className="path">
               {d.path.steps.map((step, i) => (

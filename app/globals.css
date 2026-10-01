@@ -860,6 +860,33 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   .js main .hero h1:not(.tp-ready){visibility:visible;}
 }
 
+/* ============================ FIELDS ============================
+   The loose animations (components/site/field). No frame, no panel: the
+   canvas fades into the page at its edges. */
+.field{position:relative;display:block;width:100%;pointer-events:none;}
+.field canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.field-band{height:clamp(230px,30vw,400px);margin-block:clamp(6px,1.6vw,20px);
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 14%,#000 86%,transparent 100%);
+  mask-composite:intersect;}
+.hero-stage{position:relative;isolation:isolate;}
+.hero-stage > .container{position:relative;z-index:1;}
+/* The copy keeps a halo of ground colour, so a dot that drifts under a letter never touches it. */
+.hero-stage h1{text-shadow:0 0 22px var(--ground),0 0 8px var(--ground),0 0 2px var(--ground);}
+.hero-stage .hero-sub,.hero-stage .hero-risk,.hero-stage .hero-proof{text-shadow:0 0 12px var(--ground),0 0 4px var(--ground),0 0 2px var(--ground);}
+.field-behind{position:absolute;z-index:0;left:0;right:0;top:calc(-1 * clamp(38px,6vw,72px));bottom:-18px;width:auto;
+  -webkit-mask-image:linear-gradient(to right,transparent 0,transparent 42%,#000 74%,#000 94%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,transparent 42%,#000 74%,#000 94%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 16%,#000 84%,transparent 100%);
+  mask-composite:intersect;}
+@media (max-width:760px){
+  /* Title first on a phone: the grid becomes a band of its own under the copy. */
+  .field-behind{position:relative;top:auto;bottom:auto;height:190px;margin-top:14px;
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%);
+    mask-image:linear-gradient(to right,transparent 0,#000 10%,#000 90%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%);}
+}
+
 /* ============================ CLIENT BAND ============================
    The names of the businesses we have worked with, running under the hero. */
 .clients{border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);padding:clamp(14px,2vw,22px) 0;overflow:hidden;

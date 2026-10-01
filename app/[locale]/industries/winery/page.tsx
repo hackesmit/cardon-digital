@@ -11,6 +11,7 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import { winery } from "@/lib/i18n/winery";
+import Field from "@/components/site/field/Field";
 import "./winery.css";
 
 type Params = { params: { locale: string } };
@@ -365,6 +366,9 @@ export default function WineryPage({ params }: Params) {
       <Reveal>
         <PricingBundles locale={locale} />
       </Reveal>
+
+      {/* The vineyard, loose on the page, before the closing call. */}
+      <Field kind="vinedo" layout="band" />
 
       {/* ============================ DIAGNOSTIC ============================ */}
       <section

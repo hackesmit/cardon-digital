@@ -1,0 +1,242 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { clearsThreshold } from "@/lib/onscreen";
+import { fitCanvas, readPalette } from "@/components/pages/home/canvasKit";
+import { makeField, type FieldKind, type FieldState } from "./fieldKit";
+
+/**
+ * One of the loose animations, drawn straight onto the page with no frame
+ * around it (Daniel, 2026-10-01: the animations belong to the page, they do
+ * not sit in boxes).
+ *
+ * `behind` runs under a hero's copy on a wide screen, masked so it fades in
+ * to the right of the text, and becomes a band of its own under the copy on a
+ * phone, where the title goes first. `band` is always a band in the flow.
+ *
+ * It is decoration: hidden from a screen reader, no text of its own. The
+ * house canvas rules apply. The pixel ratio is capped at two, the loop stops
+ * when the canvas leaves the screen or the tab is hidden, the colours are
+ * read again when the mode changes, and reduced motion gets one still frame.
+ */
+export default function Field({
+  kind,
+  layout = "band",
+  className,
+}: {
+  kind: FieldKind;
+  layout?: "behind" | "band";
+  className?: string;
+}) {
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const box = boxRef.current;
+    const canvas = canvasRef.current;
+    if (!box || !canvas) return;
+
+    const field = makeField(kind);
+    const reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reduced = () => reduceMQ.matches;
+    let ctx: CanvasRenderingContext2D | null = null;
+    let raf = 0;
+    let last = 0;
+    let running = false;
+    let onscreen = false;
+    let docVisible = !document.hidden;
+    let tpin = 0;
+    let tmx = 0;
+    let tmy = 0;
+
+    const S: FieldState = {
+      W: 1, H: 1, t: 0, dt: 0, mx: 0, my: 0, px: 0, py: 0, rpx: 0, rpy: 0, pin: 0,
+      fx: 0, fy: 0, small: false, draw: true, dark: false,
+      c: { agave: "#23664A", agaveRgb: [35, 102, 74], gold: "#9A6A12", goldRgb: [154, 106, 18], ground: "#F3EEDF" },
+    };
+
+    const readColors = () => {
+      const p = readPalette(document.documentElement);
+      S.dark = p.dark;
+      S.c = { agave: p.primary, agaveRgb: p.primaryRgb, gold: p.secondary, goldRgb: p.secondaryRgb, ground: p.ground };
+    };
+
+    const render = () => {
+      if (!ctx) return;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalAlpha = 1;
+      ctx.clearRect(0, 0, S.W, S.H);
+      S.draw = true;
+      field.frame(ctx, S);
+    };
+
+    // Run the drawing forward without painting, so the first frame shown is a
+    // settled one and a still frame is a good one.
+    const warm = () => {
+      if (!ctx) return;
+      const steps = reduced() ? 110 : 70;
+      S.t = Math.max(0, field.still - steps / 30);
+      S.draw = false;
+      for (let i = 0; i < steps; i++) {
+        S.dt = 1 / 30;
+        S.t += S.dt;
+        field.frame(ctx, S);
+      }
+      S.draw = true;
+    };
+
+    const layoutNow = () => {
+      const r = box.getBoundingClientRect();
+      if (r.width < 2 || r.height < 2) return;
+      S.W = r.width;
+      S.H = r.height;
+      // The phone composition is decided by the canvas, never by the window.
+      S.small = S.W < 700;
+      // Behind a hero the copy holds the left, so the drawing centres right of it.
+      S.fx = layout === "behind" && !S.small ? S.W * 0.7 : S.W * 0.5;
+      S.fy = S.H * 0.5;
+      if (!S.pin) {
+        S.px = S.fx;
+        S.py = S.fy;
+        S.rpx = S.fx;
+        S.rpy = S.fy;
+      }
+      ctx = fitCanvas(canvas, S.W, S.H);
+      field.init(S);
+      warm();
+      render();
+    };
+
+    const loop = (now: number) => {
+      if (!running) return;
+      raf = requestAnimationFrame(loop);
+      const rdt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const k = 1 - Math.exp(-rdt * 3.2);
+      S.mx += (tmx - S.mx) * k;
+      S.my += (tmy - S.my) * k;
+      S.px += (S.rpx - S.px) * k * 1.4;
+      S.py += (S.rpy - S.py) * k * 1.4;
+      S.pin += (tpin - S.pin) * k;
+      S.dt = rdt;
+      S.t += rdt;
+      render();
+    };
+    const start = () => {
+      if (running || reduced() || !onscreen || !docVisible || !ctx) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    // The pointer is read on the window because the canvas sits under the copy
+    // and takes no pointer events of its own.
+    const onMove = (e: PointerEvent) => {
+      if (!onscreen || e.pointerType === "touch") return;
+      const r = box.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) {
+        tpin = 0;
+        tmx = 0;
+        tmy = 0;
+        return;
+      }
+      S.rpx = x;
+      S.rpy = y;
+      tmx = Math.max(-1, Math.min(1, (x / r.width - 0.5) * 2));
+      tmy = Math.max(-1, Math.min(1, (y / r.height - 0.5) * 2));
+      tpin = 1;
+    };
+
+    const onVisibility = () => {
+      docVisible = !document.hidden;
+      if (docVisible) start();
+      else stop();
+    };
+    const onMode = () => {
+      // The attribute is set in the same tick as the event; read after it lands.
+      requestAnimationFrame(() => {
+        readColors();
+        if (!running) render();
+      });
+    };
+    const onReduceChange = () => {
+      if (reduced()) {
+        stop();
+        warm();
+        render();
+      } else {
+        start();
+      }
+    };
+
+    let rt = 0;
+    const relayout = () => {
+      const r = box.getBoundingClientRect();
+      if (Math.abs(r.width - S.W) > 1 || Math.abs(r.height - S.H) > 1) layoutNow();
+    };
+    let ro: ResizeObserver | null = null;
+    const onResize = () => {
+      window.clearTimeout(rt);
+      rt = window.setTimeout(relayout, 140);
+    };
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(onResize);
+      ro.observe(box);
+    } else {
+      window.addEventListener("resize", onResize);
+    }
+
+    readColors();
+    layoutNow();
+
+    let io: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      io = new IntersectionObserver(
+        (en) => {
+          onscreen = clearsThreshold(en[en.length - 1], 0.04);
+          if (onscreen) start();
+          else stop();
+        },
+        { threshold: 0.04 },
+      );
+      io.observe(box);
+    } else {
+      onscreen = true;
+      start();
+    }
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("cardon-mode", onMode);
+    reduceMQ.addEventListener("change", onReduceChange);
+
+    return () => {
+      stop();
+      window.clearTimeout(rt);
+      if (io) io.disconnect();
+      if (ro) ro.disconnect();
+      else window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onMove);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("cardon-mode", onMode);
+      reduceMQ.removeEventListener("change", onReduceChange);
+    };
+  }, [kind, layout]);
+
+  return (
+    <div
+      ref={boxRef}
+      className={"field field-" + layout + " field-" + kind + (className ? " " + className : "")}
+      aria-hidden="true"
+    >
+      <canvas ref={canvasRef} />
+    </div>
+  );
+}
