@@ -246,7 +246,7 @@ const es: typeof en = {
       "training": "Una sesión para enseñarle a hacer cambios",
       "product-catalogue": "Catálogo de productos",
       "checkout": "Carrito y pago",
-      "payment-provider-connector": "Cobro con tarjeta directo a su cuenta",
+      "payment-provider-connector": "Cobro con tarjeta en su propia cuenta",
       "shipping-and-pickup-rules": "Reglas de envío y recolección en tienda",
       "order-notifications": "Avisos de cada pedido en su teléfono",
     } as Record<string, string>,
