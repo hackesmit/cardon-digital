@@ -453,10 +453,10 @@
 
    Chart colour. The three modules wear the three brand hues and nothing else
    in this file invents a colour: Produccion --primary, Hospitalidad
-   --secondary, Restaurante --energy-bright. The pair that the raw tokens get
+   --series-gold, Restaurante --energy-bright. The pair that the raw tokens get
    wrong is gold against clay (deuteranope dE 5.7, normal-vision dE 12.2, both
    under the floor), which is why Restaurante takes --energy-bright rather
-   than --energy: light mode then resolves to #2E7D5C / #B07E1E / #A1421C and
+   than --energy: light mode then resolves to #23664A / #B07E1E / #A1411B and
    dark to #3FB58A / #D9A83A / #CA6941, and both pass CVD separation, the
    normal-vision floor and contrast against their own surface. The one check
    that still fails is the chroma floor on the brand green, which reads a
@@ -529,7 +529,7 @@
   color: var(--primary-bright);
 }
 .ms-chip[data-channel="ota1"] {
-  border-color: var(--secondary);
+  border-color: var(--series-gold);
   color: var(--secondary-bright);
 }
 .ms-chip[data-channel="ota2"] {
@@ -668,7 +668,7 @@
   background: var(--primary);
 }
 .ms-stay[data-channel="ota1"] {
-  background: var(--secondary);
+  background: var(--series-gold);
 }
 .ms-stay[data-channel="ota2"] {
   background: var(--energy-bright);
