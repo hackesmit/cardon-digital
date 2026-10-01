@@ -232,7 +232,10 @@ export default function Field({
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("cardon-mode", onMode);
-    reduceMQ.addEventListener("change", onReduceChange);
+    // Safari before 14 has only the older addListener on a media query list,
+    // and a throw here would leave every listener above installed for good.
+    if (typeof reduceMQ.addEventListener === "function") reduceMQ.addEventListener("change", onReduceChange);
+    else if (typeof reduceMQ.addListener === "function") reduceMQ.addListener(onReduceChange);
 
     return () => {
       stop();
@@ -244,7 +247,8 @@ export default function Field({
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("cardon-mode", onMode);
-      reduceMQ.removeEventListener("change", onReduceChange);
+      if (typeof reduceMQ.removeEventListener === "function") reduceMQ.removeEventListener("change", onReduceChange);
+      else if (typeof reduceMQ.removeListener === "function") reduceMQ.removeListener(onReduceChange);
     };
   }, [kind, layout]);
 
