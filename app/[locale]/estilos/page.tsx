@@ -48,8 +48,8 @@ const PALETTE: Record<Key, FieldPalette> = {
  * The style samples page: a short hero, four scenes to scroll through and the
  * diagnostic close. Each scene is the top of a home page for an invented
  * business, in a look of its own (palette, typefaces, drawing), and says on
- * its face that it is a sample. The caption above each scene is this site's
- * own voice: it names the style and the businesses it suits, and it stays
+ * its face that it is a sample. The scene's big title names the industry the
+ * style is for. The caption above each scene names the style, and it stays
  * under the header while its scene passes, which is the gallery's index. That
  * is plain CSS, so it works without JavaScript.
  *
@@ -79,7 +79,6 @@ export default function EstilosPage({ params }: Params) {
             <h2 className="est-cap-style" id={"est-h-" + key}>
               {d[key].style}
             </h2>
-            <p className="est-cap-suits">{d[key].suits}</p>
             <nav className="est-cap-ticks" aria-label={g.jump}>
               {KEYS.map((k, i) => (
                 <a
