@@ -30,7 +30,7 @@
 .pg-estilos .diag-inner{grid-template-columns:1fr;}
 .pg-estilos .diag-lead h2{max-width:18ch;}
 
-/* ---- the caption: number, style, who it suits, and four marks to jump with ---- */
+/* ---- the caption: number, style, and four marks to jump with ---- */
 .pg-estilos .est-plate{scroll-margin-top:var(--est-head);}
 .pg-estilos .est-cap{
   position:sticky;top:var(--est-head);z-index:20;
@@ -39,7 +39,6 @@
 .pg-estilos .est-cap-row{display:flex;align-items:baseline;gap:6px 18px;padding-top:11px;padding-bottom:11px;}
 .pg-estilos .est-cap-n{font-size:0.76rem;letter-spacing:0.14em;color:var(--primary);white-space:nowrap;flex-shrink:0;}
 .pg-estilos .est-cap-style{font-size:1.06rem;font-weight:600;letter-spacing:-0.01em;line-height:1.3;white-space:nowrap;flex-shrink:0;}
-.pg-estilos .est-cap-suits{color:var(--text-dim);font-size:0.92rem;line-height:1.3;}
 .pg-estilos .est-cap-ticks{margin-left:auto;display:flex;align-self:center;gap:6px;flex-shrink:0;}
 .pg-estilos .est-cap-ticks a{display:block;width:26px;height:24px;position:relative;}
 .pg-estilos .est-cap-ticks a::before{
@@ -254,7 +253,6 @@
 @media (max-width:860px){
   .pg-estilos .est-hero-copy{grid-template-columns:1fr;gap:18px;}
   .pg-estilos .est-cap-row{flex-wrap:wrap;padding-top:9px;padding-bottom:9px;}
-  .pg-estilos .est-cap-suits{order:5;flex-basis:100%;font-size:0.86rem;}
   .pg-estilos .est-cap-ticks a{width:20px;}
 
   .pg-estilos .est-scene{min-height:0;}
@@ -319,4 +317,10 @@
    sample and to the style's name, and the caption stays two rows tall. */
 @media (max-width:560px){
   .pg-estilos .est-cap-ticks{display:none;}
+}
+
+/* The narrowest phones: the winery title names two industries, and its second
+   line has to stay on one line. */
+@media (max-width:359px){
+  .pg-estilos .sc-vin .sc-title{font-size:2.15rem;}
 }
