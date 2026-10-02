@@ -319,8 +319,9 @@
   .pg-estilos .est-cap-ticks{display:none;}
 }
 
-/* The narrowest phones: the winery title names two industries, and its second
-   line has to stay on one line. */
-@media (max-width:359px){
-  .pg-estilos .sc-vin .sc-title{font-size:2.15rem;}
+/* Phones: the winery title names two industries, and its second line has to
+   stay on one line in both languages, so the size follows the width of the
+   column instead of stepping at one breakpoint. */
+@media (max-width:430px){
+  .pg-estilos .sc-vin .sc-title{font-size:min(3.1rem,calc((100vw - 40px) / 7.4));}
 }
