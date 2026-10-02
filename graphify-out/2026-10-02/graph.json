@@ -10117,7 +10117,7 @@
       "label": "en",
       "file_type": "code",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L15",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "lib_i18n_estilos_en",
       "community": 59,
@@ -10127,7 +10127,7 @@
       "label": "es",
       "file_type": "code",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L88",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "lib_i18n_estilos_es",
       "community": 59,
@@ -10137,7 +10137,7 @@
       "label": "EstilosDict",
       "file_type": "code",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L161",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "lib_i18n_estilos_estilosdict",
       "community": 59,
@@ -10147,7 +10147,7 @@
       "label": "estilos",
       "file_type": "code",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L162",
+      "source_location": "L169",
       "_origin": "ast",
       "id": "lib_i18n_estilos_estilos",
       "community": 59,
@@ -11300,7 +11300,7 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "lib_pricing_largestsize",
-      "community": 50,
+      "community": 57,
       "norm_label": "largestsize()"
     },
     {
@@ -11350,7 +11350,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "lib_pricing_round500",
-      "community": 50,
+      "community": 57,
       "norm_label": "round500()"
     },
     {
@@ -11360,7 +11360,7 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "lib_pricing_round100",
-      "community": 57,
+      "community": 78,
       "norm_label": "round100()"
     },
     {
@@ -11380,7 +11380,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "lib_pricing_bumpoffbaremultiple",
-      "community": 57,
+      "community": 78,
       "norm_label": "bumpoffbaremultiple()"
     },
     {
@@ -11580,7 +11580,7 @@
       "source_location": "L545",
       "_origin": "ast",
       "id": "lib_pricing_featurehours",
-      "community": 34,
+      "community": 50,
       "norm_label": "featurehours()"
     },
     {
@@ -11590,7 +11590,7 @@
       "source_location": "L557",
       "_origin": "ast",
       "id": "lib_pricing_featuresetup",
-      "community": 34,
+      "community": 50,
       "norm_label": "featuresetup()"
     },
     {
@@ -11620,7 +11620,7 @@
       "source_location": "L607",
       "_origin": "ast",
       "id": "lib_pricing_servicelinemonthly",
-      "community": 57,
+      "community": 78,
       "norm_label": "servicelinemonthly()"
     },
     {
@@ -11640,7 +11640,7 @@
       "source_location": "L643",
       "_origin": "ast",
       "id": "lib_pricing_sharedservicebasebreakdown",
-      "community": 57,
+      "community": 78,
       "norm_label": "sharedservicebasebreakdown()"
     },
     {
@@ -11650,7 +11650,7 @@
       "source_location": "L653",
       "_origin": "ast",
       "id": "lib_pricing_sharedservicebase",
-      "community": 57,
+      "community": 78,
       "norm_label": "sharedservicebase()"
     },
     {
@@ -11680,7 +11680,7 @@
       "source_location": "L679",
       "_origin": "ast",
       "id": "lib_pricing_runcostbreakdown",
-      "community": 57,
+      "community": 78,
       "norm_label": "runcostbreakdown()"
     },
     {
@@ -11690,7 +11690,7 @@
       "source_location": "L704",
       "_origin": "ast",
       "id": "lib_pricing_runcost",
-      "community": 57,
+      "community": 78,
       "norm_label": "runcost()"
     },
     {
@@ -11740,7 +11740,7 @@
       "source_location": "L759",
       "_origin": "ast",
       "id": "lib_pricing_addonof",
-      "community": 50,
+      "community": 57,
       "norm_label": "addonof()"
     },
     {
@@ -11760,7 +11760,7 @@
       "source_location": "L774",
       "_origin": "ast",
       "id": "lib_pricing_addonavailable",
-      "community": 50,
+      "community": 57,
       "norm_label": "addonavailable()"
     },
     {
@@ -11770,7 +11770,7 @@
       "source_location": "L793",
       "_origin": "ast",
       "id": "lib_pricing_buildonly",
-      "community": 50,
+      "community": 57,
       "norm_label": "buildonly()"
     },
     {
@@ -11810,7 +11810,7 @@
       "source_location": "L995",
       "_origin": "ast",
       "id": "lib_pricing_quote",
-      "community": 50,
+      "community": 57,
       "norm_label": "quote"
     },
     {
@@ -11850,7 +11850,7 @@
       "source_location": "L963",
       "_origin": "ast",
       "id": "lib_pricing_addonsize",
-      "community": 50,
+      "community": 57,
       "norm_label": "addonsize()"
     },
     {
@@ -11890,7 +11890,7 @@
       "source_location": "L1143",
       "_origin": "ast",
       "id": "lib_pricing_annualprepay",
-      "community": 57,
+      "community": 78,
       "norm_label": "annualprepay"
     },
     {
@@ -11960,7 +11960,7 @@
       "source_location": "L1289",
       "_origin": "ast",
       "id": "lib_pricing_growerbundlehours",
-      "community": 50,
+      "community": 57,
       "norm_label": "growerbundlehours()"
     },
     {
@@ -11970,7 +11970,7 @@
       "source_location": "L1308",
       "_origin": "ast",
       "id": "lib_pricing_growersetups",
-      "community": 50,
+      "community": 57,
       "norm_label": "growersetups()"
     },
     {
@@ -18808,7 +18808,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/[locale]/estilos/page.tsx",
-      "source_location": "L300",
+      "source_location": "L301",
       "weight": 1.0,
       "source": "app_locale_estilos_page_estilospage",
       "target": "lib_i18n_rich_rich"
@@ -46579,7 +46579,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "lib_i18n_estilos",
       "target": "lib_i18n_estilos_en",
@@ -46589,7 +46589,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L88",
+      "source_location": "L91",
       "weight": 1.0,
       "source": "lib_i18n_estilos",
       "target": "lib_i18n_estilos_es",
@@ -46599,7 +46599,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L162",
+      "source_location": "L169",
       "weight": 1.0,
       "source": "lib_i18n_estilos",
       "target": "lib_i18n_estilos_estilos",
@@ -46609,7 +46609,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/i18n/estilos.ts",
-      "source_location": "L161",
+      "source_location": "L168",
       "weight": 1.0,
       "source": "lib_i18n_estilos",
       "target": "lib_i18n_estilos_estilosdict",
@@ -56101,5 +56101,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "6f3459581709311c5d78a6e6ba1772683efc3983"
+  "built_at_commit": "c38593fff3a5e1c72e30e06083246566200d8d9d"
 }

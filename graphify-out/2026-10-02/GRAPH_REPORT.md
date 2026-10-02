@@ -1,16 +1,16 @@
-# Graph Report - cardon-digital  (2026-10-02)
+# Graph Report - cardon-digital  (2026-10-01)
 
 ## Corpus Check
-- 229 files · ~460,349 words
+- 229 files · ~460,477 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1596 nodes · 3764 edges · 85 communities (72 shown, 13 thin omitted)
+- 1596 nodes · 3764 edges · 86 communities (73 shown, 13 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 55 edges (avg confidence: 0.72)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6f345958`
+- Built from commit: `c38593ff`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -90,6 +90,7 @@
 - FlowCompress.test.ts
 - check-ads-outcome-claim.sh
 - VineyardMap.tsx
+- round100
 - fonts.ts
 - Page
 - fieldKit.test.ts
@@ -125,7 +126,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (85 total, 13 thin omitted)
+## Communities (86 total, 13 thin omitted)
 
 ### Community 0 - "canvasKit.ts"
 Cohesion: 0.12
@@ -221,7 +222,7 @@ Nodes (6): 1. What you write, 2. What you do not write, and what each piece is f
 
 ### Community 34 - "VineField.tsx"
 Cohesion: 0.08
-Nodes (26): absorbedProviderCash(), AddOnId, adsMinimumBudget(), combinations, featureHours(), featureSetup(), legacyWineryBundles, legacyWinerySetupFloor() (+18 more)
+Nodes (24): absorbedProviderCash(), AddOnId, adsMinimumBudget(), combinations, legacyWineryBundles, legacyWinerySetupFloor(), modules, ModuleSelection (+16 more)
 
 ### Community 35 - "SitePlanVisual.tsx"
 Cohesion: 0.09
@@ -276,8 +277,8 @@ Cohesion: 0.13
 Nodes (17): captures(), declaredSpans(), pageSource, servedCapBodies(), servedSpans(), strings(), Geom, Pt (+9 more)
 
 ### Community 50 - "bumpOffBareMultiple"
-Cohesion: 0.21
-Nodes (15): addOnAvailable(), addOnOf(), addOnSize(), buildOnly(), bundleHours(), featureOf(), growerBundleHours(), growerSetupS() (+7 more)
+Cohesion: 0.29
+Nodes (8): bundleHours(), featureHours(), featureOf(), featureSetup(), hours3(), runCostHours(), sharedBuildHours(), sharedServiceBaseHours()
 
 ### Community 51 - "page.tsx"
 Cohesion: 0.06
@@ -305,7 +306,7 @@ Nodes (18): generateMetadata(), LocaleLayout(), generateMetadata(), localeOf(), 
 
 ### Community 57 - "bumpOffBareMultiple"
 Cohesion: 0.16
-Nodes (20): baseOf(), WebPackages(), addOnMonthly(), adsScopeOf(), annualPrepay, bumpOffBareMultiple(), ceilTo(), floorFor() (+12 more)
+Nodes (21): baseOf(), WebPackages(), addOnAvailable(), addOnMonthly(), addOnOf(), addOnSize(), adsScopeOf(), buildOnly() (+13 more)
 
 ### Community 58 - "DemoScene"
 Cohesion: 0.10
@@ -374,6 +375,10 @@ Nodes (7): capGlyphs, generateMetadata(), localeOf(), Params, WineryPage(), Pric
 ### Community 77 - "VineyardMap.tsx"
 Cohesion: 0.28
 Nodes (7): CENTROIDS, FLAG_ANCHORS, pathD(), Plot, PLOTS, RGB, VineyardMap()
+
+### Community 78 - "round100"
+Cohesion: 0.36
+Nodes (8): annualPrepay, bumpOffBareMultiple(), round100(), runCost(), runCostBreakdown(), serviceLineMonthly(), sharedServiceBase(), sharedServiceBaseBreakdown()
 
 ### Community 79 - "fonts.ts"
 Cohesion: 0.20

@@ -1370,13 +1370,13 @@
     "semantic_hash": ""
   },
   "app/[locale]/estilos/page.tsx": {
-    "mtime": 1790922409.536837,
-    "ast_hash": "2c2f0bc69e396377413335535492295d",
+    "mtime": 1790840309.5432477,
+    "ast_hash": "620e1c03f7a9ba6ac0a27e4f56538a9e",
     "semantic_hash": ""
   },
   "lib/i18n/estilos.ts": {
-    "mtime": 1790922409.536837,
-    "ast_hash": "daf2d7dc8f725d6f1ea51ddd3cce3871",
+    "mtime": 1790881974.3989615,
+    "ast_hash": "7d0ec37990a50dbe69d3898cd0c3b8ca",
     "semantic_hash": ""
   }
 }
