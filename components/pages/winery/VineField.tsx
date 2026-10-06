@@ -129,7 +129,7 @@ export default function VineField() {
       const ground = hexToRgb(cssVar("--ground") || "#120F12");
       const panel = hexToRgb(cssVar("--panel") || "#1C161B");
       const text = hexToRgb(cssVar("--text") || "#EFE4E6");
-      const primary = hexToRgb(cssVar("--primary") || "#B8445C");
+      const primary = hexToRgb(cssVar("--primary") || "#BD5268");
       const secondary = hexToRgb(cssVar("--secondary") || "#D1AC55");
       const energy = hexToRgb(cssVar("--energy") || "#B4561A");
       const dark = root.getAttribute("data-mode") !== "light";
