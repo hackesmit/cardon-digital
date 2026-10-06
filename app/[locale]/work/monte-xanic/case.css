@@ -97,6 +97,7 @@
 .pg-case .d-dim{fill:var(--text-dim);}
 .pg-case .d-ink{fill:var(--text);}
 .pg-case .d-primary{fill:var(--primary);}
+.pg-case .d-primary-text{fill:var(--primary-text);}
 .pg-case .d-secondary{fill:var(--secondary);}
 .pg-case .d-wine{fill:var(--wine-accent);}
 .pg-case .d-conn{fill:none;stroke:var(--primary-dim);stroke-width:1.4;stroke-linecap:round;}

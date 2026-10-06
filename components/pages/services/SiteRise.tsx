@@ -593,7 +593,7 @@ export default function SiteRise() {
           c.strokeStyle = PAL.primary;
           c.lineWidth = 1.3;
           c.stroke();
-          c.fillStyle = PAL.primary;
+          c.fillStyle = PAL.primaryText;
         }
         c.font = LABEL;
         c.textAlign = "center";

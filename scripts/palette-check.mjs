@@ -217,8 +217,8 @@ const DISPLAY_PRIMARY = new Set([
   ".pg-showcase .accent",
   ".pg-modulos .accent",
   ".pg-enkanto h2 .accent",
-  ".tier-lead .tier-n",
-  /* icons, dots, bars and cores: SVG shapes, not text */
+  /* icons, dots, bars and cores: SVG shapes, not text. A class here must never
+     sit on an SVG <text>; the TSX scan below enforces that. */
   ".pg-winery .cap-glyph",
   ".dm-knob-halo",
   ".dm-knob-core",
@@ -270,6 +270,47 @@ for (const file of [...cssFiles(join(root, "app")), ...cssFiles(join(root, "comp
   }
 }
 if (!usageHits) console.log("  ok    none outside the allowlist");
+
+/* TSX: an allowlisted shape class on an SVG <text>, and canvas text filled with
+   the raw wine. The canvas scan tracks the last fillStyle assignment before
+   each fillText, which is how every canvas in this codebase paints; an
+   indirection (a variable holding PAL.primary) is not followed. */
+function tsxFiles(dir, out = []) {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (name === "node_modules") continue;
+    if (statSync(p).isDirectory()) tsxFiles(p, out);
+    else if (name.endsWith(".tsx")) out.push(p);
+  }
+  return out;
+}
+const shapeClasses = new Set([...DISPLAY_PRIMARY].map((s) => s.split(/[\s:]/).pop().replace(/^\./, "")).filter((c) => /^[\w-]+$/.test(c)));
+console.log("\ntsx: shape classes on <text>, and canvas text filled with PAL.primary");
+let tsxHits = 0;
+for (const file of [...tsxFiles(join(root, "app")), ...tsxFiles(join(root, "components"))]) {
+  const text = readFileSync(file, "utf8");
+  for (const m of text.matchAll(/<text\b[^>]*className=\{?["'\`]([^"'\`]*)["'\`]/g)) {
+    const bad = m[1].split(/\s+/).filter((c) => shapeClasses.has(c));
+    if (!bad.length) continue;
+    tsxHits++;
+    blocking++;
+    console.log(`  FAIL  ${file.slice(root.length + 1)}  <text class="${m[1]}">  wears shape class ${bad.join(", ")}; text takes a --primary-text class`);
+  }
+  let lastFill = null;
+  let lastLine = 0;
+  text.split("\n").forEach((line, i) => {
+    if (/fillStyle\s*=/.test(line)) {
+      lastFill = line;
+      lastLine = i + 1;
+    }
+    if (/fillText\(/.test(line) && lastFill && /PAL\.primary(?![A-Za-z])/.test(lastFill)) {
+      tsxHits++;
+      blocking++;
+      console.log(`  FAIL  ${file.slice(root.length + 1)}:${i + 1}  fillText after fillStyle at line ${lastLine} uses PAL.primary; canvas text takes PAL.primaryText`);
+    }
+  });
+}
+if (!tsxHits) console.log("  ok    none");
 
 console.log("");
 if (blocking) {

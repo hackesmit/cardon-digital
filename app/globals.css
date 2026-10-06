@@ -618,7 +618,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   font-family:var(--mono);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--muted);
 }
-.tier-lead .tier-n{color:var(--primary);}
+.tier-lead .tier-n{color:var(--primary-text);}
 .tier-name{font-size:1.16rem;font-weight:600;color:var(--text);margin:2px 0 4px;line-height:1.2;}
 .tier-time{
   font-family:var(--mono);font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;
