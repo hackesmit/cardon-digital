@@ -89,11 +89,6 @@
     "ast_hash": "16fffa0a51e29a3c4a4ba09e92b813c6",
     "semantic_hash": ""
   },
-  "components/pages/home/SectorMap.tsx": {
-    "mtime": 1790582402.6725874,
-    "ast_hash": "99bb5c942df5b61f101139062865c423",
-    "semantic_hash": ""
-  },
   "components/pages/home/SpotlightFrames.tsx": {
     "mtime": 1787812317.8144155,
     "ast_hash": "adc6e4edf58e9f084394dc5450222db9",
@@ -245,8 +240,8 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1790834597.9951491,
-    "ast_hash": "1173fbf5be9d15ac26286efbfec53abb",
+    "mtime": 1791323030.0265307,
+    "ast_hash": "1920d7bf13d85de292828da515ff8c88",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -310,8 +305,8 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1790881974.3999615,
-    "ast_hash": "37e7f8f5e952da18ec1e15eb24961bbf",
+    "mtime": 1791323254.3616426,
+    "ast_hash": "036d18ffacac1f42e939011545b1d37b",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -760,13 +755,13 @@
     "semantic_hash": ""
   },
   "scripts/visuals-check.mjs": {
-    "mtime": 1790582402.7165878,
-    "ast_hash": "61be37fcc91b3a1684501779d3ea16f0",
+    "mtime": 1791323030.0275307,
+    "ast_hash": "984003c1c3c03dd585ffc2cdd21821e3",
     "semantic_hash": ""
   },
   "scripts/visuals-check.test.mjs": {
-    "mtime": 1790582402.7165878,
-    "ast_hash": "7b2e8b92417bdabb9f1fdf15bc40773b",
+    "mtime": 1791323030.0275307,
+    "ast_hash": "f28fe8be76a8b2da66ed02705362ab58",
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/winery-page.test.ts": {
@@ -775,8 +770,8 @@
     "semantic_hash": ""
   },
   "lib/onscreen.test.ts": {
-    "mtime": 1790582402.7115877,
-    "ast_hash": "06d29748475a933cfc766630821bdd99",
+    "mtime": 1791323030.0275307,
+    "ast_hash": "21ef835f01c467404a06a4027cd834c7",
     "semantic_hash": ""
   },
   "lib/onscreen.ts": {
@@ -810,8 +805,8 @@
     "semantic_hash": ""
   },
   "app/routes.test.ts": {
-    "mtime": 1790639757.5639586,
-    "ast_hash": "9c7711f254e846ee3bb1ddac589935f5",
+    "mtime": 1791323030.0265307,
+    "ast_hash": "14c26139ba5964171fc30b55760db0b9",
     "semantic_hash": ""
   },
   "lib/routes.ts": {
@@ -1380,8 +1375,18 @@
     "semantic_hash": ""
   },
   "scripts/palette-check.mjs": {
-    "mtime": 1791275598.5355017,
-    "ast_hash": "1ffec5279e588f98e14065b19df5bb47",
+    "mtime": 1791323030.0275307,
+    "ast_hash": "83ee12e9ee6616b7d7923cce1098fafd",
+    "semantic_hash": ""
+  },
+  "components/pages/home/ClientOrbit.tsx": {
+    "mtime": 1791323254.3616426,
+    "ast_hash": "58d5094ca694818838777b5d1664e2d6",
+    "semantic_hash": ""
+  },
+  "components/pages/home/clientMarks.tsx": {
+    "mtime": 1791323030.0265307,
+    "ast_hash": "7934857076362c6a6dc5b67499ab2ba0",
     "semantic_hash": ""
   }
 }
