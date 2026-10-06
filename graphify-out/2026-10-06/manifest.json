@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "components/pages/home/HeroAssembly.tsx": {
-    "mtime": 1790582402.6725874,
-    "ast_hash": "e6eeb81b37bf522eccc0416abcb9b282",
+    "mtime": 1791275598.5335019,
+    "ast_hash": "01d71fc9c4b9e66a3bd9500298a2add9",
     "semantic_hash": ""
   },
   "components/pages/home/PlayOnceVis.tsx": {
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "components/pages/home/canvasKit.ts": {
-    "mtime": 1790582402.6735873,
-    "ast_hash": "05551d8394138b35dc12b75568d5a6a1",
+    "mtime": 1791275598.5335019,
+    "ast_hash": "6a7d35a89a5ef131861ff4da279bdb00",
     "semantic_hash": ""
   },
   "components/pages/winery/SpotlightFrames.tsx": {
@@ -110,13 +110,13 @@
     "semantic_hash": ""
   },
   "components/pages/winery/VineField.tsx": {
-    "mtime": 1790582402.6745872,
-    "ast_hash": "fe56a2e27e2a5b039263e3a57494c078",
+    "mtime": 1791275598.5345018,
+    "ast_hash": "45ec945a8d108cac65f1013a7e3882c8",
     "semantic_hash": ""
   },
   "components/site/ContourField.tsx": {
-    "mtime": 1787812317.8154154,
-    "ast_hash": "1a458795403dddfcdd1c5a55d1df1719",
+    "mtime": 1791275598.5345018,
+    "ast_hash": "c35f6f71bd4368347cf75bbef1fcacb5",
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1790582402.7145877,
-    "ast_hash": "245febeeee029d4f5570ed1857a33d97",
+    "mtime": 1791275598.5345018,
+    "ast_hash": "fcc6283e061fb0a9a363e2f899c92111",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -260,13 +260,13 @@
     "semantic_hash": ""
   },
   "app/[locale]/work/enkanto/page.tsx": {
-    "mtime": 1790813348.6113143,
-    "ast_hash": "e338a60a0993047db271c2044f8983e5",
+    "mtime": 1791275598.5315018,
+    "ast_hash": "efb4d6037ce5444c0ae119925f6bcdd9",
     "semantic_hash": ""
   },
   "app/[locale]/work/monte-xanic/page.tsx": {
-    "mtime": 1790729810.4535506,
-    "ast_hash": "e7dfb76e290dc66e7cd91b3b5728a9f8",
+    "mtime": 1791275598.5315018,
+    "ast_hash": "a50765be49ea6753e8e3a8f056b4bbcd",
     "semantic_hash": ""
   },
   "app/not-found.tsx": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "components/pages/precios/FloorChart.tsx": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "8894d726fc478f434247decd6c3dc6ce",
+    "mtime": 1791275598.5335019,
+    "ast_hash": "5153e86a3407d7f92271bdb4aa0abaaf",
     "semantic_hash": ""
   },
   "components/pages/showcase/VintageCompare.tsx": {
@@ -735,8 +735,8 @@
     "semantic_hash": ""
   },
   "components/pages/demos/palette.ts": {
-    "mtime": 1790826531.7758815,
-    "ast_hash": "93017a10fe8fc5c2d05375c556fba505",
+    "mtime": 1791275598.5325017,
+    "ast_hash": "3e4877a248213e5358ead32020e971a8",
     "semantic_hash": ""
   },
   "lib/i18n/demos.ts": {
@@ -1185,8 +1185,8 @@
     "semantic_hash": ""
   },
   "components/pages/home/DigitalArc.tsx": {
-    "mtime": 1790639757.5639586,
-    "ast_hash": "851181f0a2a63d9816ae106f8e3d2dad",
+    "mtime": 1791275598.5325017,
+    "ast_hash": "16d7ca407882b5d6165f8a9639539839",
     "semantic_hash": ""
   },
   "components/pages/precios/AdsFee.tsx": {
@@ -1215,8 +1215,8 @@
     "semantic_hash": ""
   },
   "components/pages/services/ReachMap.tsx": {
-    "mtime": 1790639757.5649586,
-    "ast_hash": "0ef6bb1eb18d2ffdd0d2afed391250e3",
+    "mtime": 1791275598.5335019,
+    "ast_hash": "fcebf29c8cea0641e488deb0f768d436",
     "semantic_hash": ""
   },
   "components/pages/services/SiteRise.test.ts": {
@@ -1225,8 +1225,8 @@
     "semantic_hash": ""
   },
   "components/pages/services/SiteRise.tsx": {
-    "mtime": 1790639757.5649586,
-    "ast_hash": "22666785c3729578d4ce10e8442d4eab",
+    "mtime": 1791275598.5335019,
+    "ast_hash": "302944ce4ab96885759ca546bd2b22fe",
     "semantic_hash": ""
   },
   "lib/adsCopy.ts": {
@@ -1260,13 +1260,13 @@
     "semantic_hash": ""
   },
   "components/site/field/Field.tsx": {
-    "mtime": 1790840309.5442476,
-    "ast_hash": "492aed5803d9860dcf8a18ca67582ce7",
+    "mtime": 1791275598.5345018,
+    "ast_hash": "a505fccc8c16ea281039839596877eca",
     "semantic_hash": ""
   },
   "components/site/field/fieldKit.test.ts": {
-    "mtime": 1790840309.5442476,
-    "ast_hash": "c5a05e489371a7c8adc86ead73c4c764",
+    "mtime": 1791275598.5345018,
+    "ast_hash": "6cee88411237a387dec4dfe13fdcf7fa",
     "semantic_hash": ""
   },
   "components/site/field/fieldKit.ts": {
@@ -1377,6 +1377,11 @@
   "lib/i18n/estilos.ts": {
     "mtime": 1790922409.536837,
     "ast_hash": "daf2d7dc8f725d6f1ea51ddd3cce3871",
+    "semantic_hash": ""
+  },
+  "scripts/palette-check.mjs": {
+    "mtime": 1791275598.5355017,
+    "ast_hash": "1ffec5279e588f98e14065b19df5bb47",
     "semantic_hash": ""
   }
 }
