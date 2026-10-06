@@ -100,7 +100,7 @@ const FALLBACK: Record<"light" | "dark", Record<string, string>> = {
     panel: "#FFFCFB",
     text: "#221418",
     primary: "#7A1F38",
-    secondary: "#8A6A17",
+    secondary: "#806315",
     energy: "#B4561A",
   },
   dark: {
