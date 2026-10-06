@@ -77,21 +77,11 @@
   "75": "FlowCompress.test.ts",
   "76": "check-ads-outcome-claim.sh",
   "77": "VineyardMap.tsx",
-  "78": "LocaleProvider",
   "79": "fonts.ts",
   "80": "Page",
   "81": "fieldKit.test.ts",
   "82": "useLocale",
   "83": ".frame",
   "84": "DemoClock",
-  "85": "enkanto.ts",
-  "86": "budgetProblem",
-  "87": "LocaleProvider.tsx",
-  "88": "shell",
-  "89": "FlowCompress.test.ts",
-  "90": "winery-page.test.ts",
-  "91": "CapturedClockDemo.tsx",
-  "92": "OpenedAtDemo.tsx",
-  "93": "FeatureDetectDemo.tsx",
-  "94": "TapRestartDemo.tsx"
+  "85": "enkanto.ts"
 }
