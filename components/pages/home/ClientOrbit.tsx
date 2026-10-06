@@ -24,16 +24,17 @@ import { CLIENT_MARKS, CLIENT_ORDER, type ClientId } from "./clientMarks";
  * back for depth.
  *
  * Pointer, keyboard and touch each have their own state: hover (mouse and pen
- * pointers only, so touch compatibility events never leave a ghost hover),
- * focus (keyboard only: a focus that follows a pointer press is ignored) and
- * a pinned client toggled by click or tap, and the active one is focus, then
- * hover, then pinned, so leaving with the mouse never cancels a focus and a
- * tap on a medallion with no case page keeps its caption up until the next
- * tap (aria-pressed says so). A persistent pause control sits in the stage
+ * pointers only, and a touch press clears it, so a cursor parked on one
+ * client never outranks a tap on another), focus (keyboard only, read from
+ * :focus-visible so a focus that follows a click does not count) and a pinned
+ * client toggled by click or tap, and the active one is focus, then hover,
+ * then pinned, so leaving with the mouse never cancels a focus and a tap on a
+ * medallion with no case page keeps its caption up until the next tap
+ * (aria-pressed says so). A persistent pause control sits in the stage
  * corner, because motion that runs for more than five seconds needs one a
- * visitor can operate (WCAG 2.2.2); reduced motion only sets its initial
- * state, so a visitor who presses Resume gets motion and the label is never a
- * lie. Redraws after any state change come from an effect, not from the
+ * visitor can operate (WCAG 2.2.2); reduced motion sets its initial state and
+ * follows changes of the preference only until the visitor presses the
+ * control, after which their choice stands. Redraws after any state change come from an effect, not from the
  * event, so a still frame is never one update behind. Before the loop runs
  * (server render, no JS) each element sits at its t=0 place on the ellipse
  * through percentage offsets, so nothing piles up in a corner.
@@ -65,6 +66,17 @@ function restingSeat(i: number) {
   return { left: x.toFixed(2) + "%", top: y.toFixed(2) + "%", nameTop: "calc(" + y.toFixed(2) + "% + 36px)" };
 }
 
+/* Keyboard focus, as the browser itself judges it: a focus that follows a
+   click or a tap is not :focus-visible. Browsers without the selector count
+   every focus, which errs toward showing the caption. */
+function isKeyboardFocus(el: HTMLElement): boolean {
+  try {
+    return el.matches(":focus-visible");
+  } catch {
+    return true;
+  }
+}
+
 export default function ClientOrbit() {
   const locale = useLocale();
   const t = home[locale].vis.orbit;
@@ -83,9 +95,9 @@ export default function ClientOrbit() {
   const pausedRef = useRef(false);
   /* The loop's draw and start/stop, exposed to the state effect below. */
   const loopRef = useRef<{ draw: () => void; sync: () => void } | null>(null);
-  /* Set on pointerdown so the focus that follows a mouse click or a tap does
-     not count as keyboard focus; cleared by that focus event. */
-  const pointerFocusRef = useRef(false);
+  /* Once the visitor has pressed pause or resume, the motion preference no
+     longer moves the pause state. */
+  const pauseOverrideRef = useRef(false);
   activeRef.current = active;
   pausedRef.current = paused;
 
@@ -276,7 +288,7 @@ export default function ClientOrbit() {
       draw(0);
     };
     const onReduceChange = () => {
-      setPaused(reduced());
+      if (!pauseOverrideRef.current) setPaused(reduced());
     };
 
     const THRESHOLD = 0.08;
@@ -343,12 +355,11 @@ export default function ClientOrbit() {
               if (e.pointerType !== "touch") setHoverId(id);
             },
             onPointerLeave: () => setHoverId((h) => (h === id ? null : h)),
-            onPointerDown: () => {
-              pointerFocusRef.current = true;
+            onPointerDown: (e: React.PointerEvent) => {
+              if (e.pointerType === "touch") setHoverId(null);
             },
-            onFocus: () => {
-              if (pointerFocusRef.current) pointerFocusRef.current = false;
-              else setFocusId(id);
+            onFocus: (e: React.FocusEvent<HTMLElement>) => {
+              if (isKeyboardFocus(e.currentTarget)) setFocusId(id);
             },
             onBlur: () => setFocusId((f) => (f === id ? null : f)),
           };
@@ -410,8 +421,10 @@ export default function ClientOrbit() {
         <button
           type="button"
           className="orbit-pause mono"
-          aria-pressed={paused}
-          onClick={() => setPaused((p) => !p)}
+          onClick={() => {
+            pauseOverrideRef.current = true;
+            setPaused((p) => !p);
+          }}
         >
           {paused ? t.resume : t.pause}
         </button>
