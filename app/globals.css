@@ -37,7 +37,7 @@
      the ground and the primary is deep, because ground and panel three tones
      apart read as one beige (Daniel). */
   --ground:#F4EDEA; --panel:#FFFCFB; --text:#221418;
-  --primary:#7A1F38; --secondary:#8A6A17; --energy:#B4561A;
+  --primary:#7A1F38; --secondary:#806315; --energy:#B4561A;
 }
 :root[data-mode="light"]{--series-gold:#B5812F;}
 

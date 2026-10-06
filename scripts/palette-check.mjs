@@ -21,6 +21,14 @@
  *   muted captions, CTA ink on energy, and the three chart series on the panel
  *   they sit in.
  *
+ *   Usage (the stylesheets themselves). Blocking. A rule that paints text
+ *   with var(--primary) or var(--tertiary) is only allowed for the display
+ *   and non-text selectors listed in DISPLAY_PRIMARY; every other text use
+ *   must go through --primary-text, which is what keeps the two tiers honest
+ *   when someone adds a rule later. Parsed with a block regex over app/ and
+ *   components/ (app/[locale]/estilos has its own per-scene palettes and is
+ *   skipped), which is enough for this codebase's flat CSS.
+ *
  *   Separation (OKLab delta E, times 100, between the three chart series as
  *   derived in modulos.css and precios.css: --primary, --series-gold,
  *   --energy-bright). Reported for normal vision and for a deuteranope
@@ -31,13 +39,19 @@
  * Derived tokens are recomputed here the way globals.css derives them, in
  * sRGB with the same percentages, so the check moves if those percentages do.
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const strict = process.argv.includes("--strict");
-const css = readFileSync(join(here, "..", "app", "globals.css"), "utf8");
+let css;
+try {
+  css = readFileSync(join(here, "..", "app", "globals.css"), "utf8");
+} catch (e) {
+  console.error(`palette-check: cannot read app/globals.css (${e.code || e.message})`);
+  process.exit(2);
+}
 
 const FLOOR = { text: 4.5, large: 3.0, cvdNormal: 14, cvdDeut: 10 };
 
@@ -138,7 +152,8 @@ for (const mode of ["light", "dark"]) {
   row(c(primaryText, card) >= FLOOR.text, "block", "primary-text on card (module tags, prices)", c(primaryText, card), FLOOR.text);
   row(c(T.primary, T.panel) >= FLOOR.large, "block", "primary on panel (display, strokes, 3:1)", c(T.primary, T.panel), FLOOR.large);
   row(c(T.primary, T.ground) >= FLOOR.large, "block", "primary on ground (h1 accent, 3:1)", c(T.primary, T.ground), FLOOR.large);
-  row(c(T.secondary, T.ground) >= FLOOR.large, "block", "secondary on ground (kickers, large)", c(T.secondary, T.ground), FLOOR.large);
+  row(c(T.secondary, T.ground) >= FLOOR.text, "block", "secondary on ground (gold kickers)", c(T.secondary, T.ground), FLOOR.text);
+  row(c(T.secondary, card) >= FLOOR.text, "block", "secondary on card (gold kickers)", c(T.secondary, card), FLOOR.text);
   row(c(muted, T.panel) >= FLOOR.large, "block", "muted on panel (mono captions, 3:1)", c(muted, T.panel), FLOOR.large);
   row(c(ctaInk, T.energy) >= FLOOR.text, "block", "cta ink on energy (buttons)", c(ctaInk, T.energy), FLOOR.text);
   row(c(energyBright, T.panel) >= FLOOR.text, "block", "energy-bright on panel (series, legend)", c(energyBright, T.panel), FLOOR.text);
@@ -157,6 +172,41 @@ for (const mode of ["light", "dark"]) {
     }
   }
 }
+
+/* Usage: text painted with the deep wine outside the display allowlist. */
+const DISPLAY_PRIMARY = new Set([
+  "h1 .accent",
+  ".pg-showcase .accent",
+  ".pg-modulos .accent",
+  ".pg-enkanto h2 .accent",
+  ".pg-winery .cap-glyph",
+  ".tier-lead .tier-n",
+]);
+function cssFiles(dir, out = []) {
+  for (const name of readdirSync(dir)) {
+    const p = join(dir, name);
+    if (name === "node_modules" || name === "estilos") continue;
+    if (statSync(p).isDirectory()) cssFiles(p, out);
+    else if (name.endsWith(".css")) out.push(p);
+  }
+  return out;
+}
+const root = join(here, "..");
+const textPrimary = /(^|[^-])color:\s*var\(--(primary|tertiary)\)/;
+console.log("\nusage: text painted with var(--primary) outside the display allowlist");
+let usageHits = 0;
+for (const file of [...cssFiles(join(root, "app")), ...cssFiles(join(root, "components"))]) {
+  const text = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!textPrimary.test(m[2])) continue;
+    const selector = m[1].trim().split("\n").pop().trim();
+    if (DISPLAY_PRIMARY.has(selector)) continue;
+    usageHits++;
+    blocking++;
+    console.log(`  FAIL  ${file.slice(root.length + 1)}  ${selector}  paints text with var(--primary); use var(--primary-text)`);
+  }
+}
+if (!usageHits) console.log("  ok    none outside the allowlist");
 
 console.log("");
 if (blocking) {

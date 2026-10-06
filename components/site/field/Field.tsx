@@ -101,7 +101,7 @@ export default function Field({
     const S: FieldState = {
       W: 1, H: 1, t: 0, dt: 0, mx: 0, my: 0, px: 0, py: 0, rpx: 0, rpy: 0, pin: 0,
       fx: 0, fy: 0, small: false, dens: 1, draw: true, dark: false,
-      c: { agave: "#7A1F38", agaveRgb: [122, 31, 56], gold: "#8A6A17", goldRgb: [138, 106, 23], ground: "#F4EDEA" },
+      c: { agave: "#7A1F38", agaveRgb: [122, 31, 56], gold: "#806315", goldRgb: [128, 99, 21], ground: "#F4EDEA" },
     };
 
     const readColors = () => {
