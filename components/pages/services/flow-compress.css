@@ -14,9 +14,9 @@
 .ov-bar-gold{fill:var(--secondary);}
 .ov-track{fill:var(--line-soft);}
 .ov-lab-manual{fill:var(--muted);}
-.ov-lab-auto{fill:var(--primary);}
+.ov-lab-auto{fill:var(--primary-text);}
 .ov-time-long{fill:var(--secondary);}
-.ov-time-short{fill:var(--primary);}
+.ov-time-short{fill:var(--primary-text);}
 .ov-badge-box{fill:none;stroke:var(--primary);stroke-width:1.4;}
-.ov-badge-text{fill:var(--primary);}
+.ov-badge-text{fill:var(--primary-text);}
 .ov-foot{fill:var(--muted);}

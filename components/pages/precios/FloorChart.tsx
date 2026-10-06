@@ -22,8 +22,9 @@ import {
  * without the colours moving: Produccion --primary, Hospitalidad --series-gold,
  * Restaurante --energy-bright, the same three the module boards and the
  * stacked monthly bars use. --energy-bright rather than --energy because the
- * raw gold and clay tokens sit a deuteranope delta E of 5.7 apart, under the
- * floor; the derived pair passes on both modes (see the note in precios.css).
+ * raw gold and clay tokens sit a deuteranope delta E under the floor; the
+ * derived pair passes in light mode and the dark mode gap is bead hq-8dnn
+ * (see the note in precios.css and scripts/palette-check.mjs).
  * Every bar is direct-labelled with its own figure as well, so no reading here
  * depends on telling two colours apart.
  *

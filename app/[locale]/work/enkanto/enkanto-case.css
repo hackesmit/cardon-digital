@@ -73,6 +73,7 @@
 .pg-enkanto .e-ink{fill:var(--text);}
 .pg-enkanto .e-muted{fill:var(--muted);}
 .pg-enkanto .e-primary{fill:var(--primary);}
+.pg-enkanto .e-primary-text{fill:var(--primary-text);}
 .pg-enkanto .e-gold{fill:var(--secondary);}
 .pg-enkanto .e-enk{fill:var(--enk-accent);}
 .pg-enkanto .e-clay{fill:var(--energy);}

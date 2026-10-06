@@ -584,16 +584,19 @@ export default function SiteRise() {
         c.globalAlpha = e * fo;
         rr(c, b.x, b.y + dy, b.w, b.h, 2);
         if (clay) {
-          // Agave, not clay: the page's hero action is the one clay element in the
-          // viewport this canvas shares with it (identity v3, clay once).
-          c.fillStyle = press > 0 ? PAL.primaryBright : PAL.primary;
+          // Wine, not clay: the page's hero action is the one clay element in the
+          // viewport this canvas shares with it (identity v3, clay once). The
+          // fill is the lifted wine (toward white in dark, toward black in
+          // light) so the panel-coloured label reads at 4.5:1 in both modes;
+          // the raw dark wine under a panel label is 3.9:1 (bead hq-x0h3).
+          c.fillStyle = press > 0 ? PAL.primaryText : PAL.primaryBright;
           c.fill();
           c.fillStyle = PAL.panel;
         } else {
           c.strokeStyle = PAL.primary;
           c.lineWidth = 1.3;
           c.stroke();
-          c.fillStyle = PAL.primary;
+          c.fillStyle = PAL.primaryText;
         }
         c.font = LABEL;
         c.textAlign = "center";

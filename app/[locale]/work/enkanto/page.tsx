@@ -219,7 +219,7 @@ export default function EnkantoCaseStudy({ params }: Params) {
                       750 ml
                     </text>
                     <rect className="e-add" x="408" y="170" width="54" height="22" rx="2" />
-                    <text className="e-primary mono" x="435" y="185" fontSize="11" fontWeight="600" textAnchor="middle">{v.card.add}</text>
+                    <text className="e-primary-text mono" x="435" y="185" fontSize="11" fontWeight="600" textAnchor="middle">{v.card.add}</text>
                   </svg>
                 </div>
                 <p className="vis-honest mono">{v.card.honest}</p>
@@ -477,12 +477,12 @@ function structureVis(v: VisDict) {
         <text className="e-lab mono" x="322" y="122" fontSize="11" letterSpacing="1">
           sitemap.xml
         </text>
-        <text className="e-primary mono" x="468" y="122" fontSize="11" textAnchor="end">{v.structure.clean}</text>
+        <text className="e-primary-text mono" x="468" y="122" fontSize="11" textAnchor="end">{v.structure.clean}</text>
         <line className="e-line-soft" x1="322" y1="138" x2="468" y2="138" />
         <text className="e-lab mono" x="322" y="164" fontSize="11" letterSpacing="1">
           robots.txt
         </text>
-        <text className="e-primary mono" x="468" y="164" fontSize="11" textAnchor="end">{v.structure.clean}</text>
+        <text className="e-primary-text mono" x="468" y="164" fontSize="11" textAnchor="end">{v.structure.clean}</text>
         <line className="e-line-soft" x1="322" y1="180" x2="468" y2="180" />
         <text className="e-muted mono" x="322" y="196" fontSize="10.5">{v.structure.descriptions}</text>
       </svg>
@@ -595,7 +595,7 @@ function bilingualVis(v: VisDict) {
         <rect className="e-panel" x="300" y="56" width="198" height="104" rx="2" />
         <text className="e-ink mono" x="318" y="86" fontSize="14" fontWeight="600">{v.bilingual.oneStore}</text>
         <text className="e-muted mono" x="318" y="110" fontSize="11">{v.bilingual.readWhole}</text>
-        <text className="e-primary mono" x="318" y="140" fontSize="10.5">{v.bilingual.foundation}</text>
+        <text className="e-primary-text mono" x="318" y="140" fontSize="10.5">{v.bilingual.foundation}</text>
       </svg>
     </div>
   );
