@@ -188,13 +188,14 @@
    module. --energy-bright rather than the raw --energy token because gold
    against clay is the one pair the brand gets wrong for this job: as tokens
    they sit a deuteranope delta E of 5.7 and a normal-vision delta E of 12.2
-   apart, both under the floor. Derived, the set resolves to #23664A /
-   #B07E1E / #A1411B in light and #3FB58A / #D9A83A / #CA6941 in dark, and both
-   pass CVD separation, the normal-vision floor and contrast against their own
-   surface. The one check still failing is the chroma floor on the brand green,
-   which reads a little gray by design and is not this bead's to change; every
-   series is named in text as well, so nothing here is identified by colour
-   alone.
+   apart, both under the floor. Under Tinto y Laton (bead hq-x0h3, 2026-10-06)
+   the set resolves to #7A1F38 / #B5812F / #97491A in light, which passes CVD
+   separation, the normal-vision floor and contrast against its own surface,
+   and to #D0617B / #D1AC55 / #C07243 in dark, which keeps contrast but puts
+   the wine under the deuteranope floor against gold and clay (dE 5.1 and
+   4.2): the dark fix is bead hq-8dnn, the numbers come from
+   scripts/palette-check.mjs. Every series is named in text as well, so
+   nothing here is identified by colour alone.
 
    The build bar (data-part="setup") is not a module and was never meant to be
    in the legend's four; drawing it in --primary was a bug, not a choice, since

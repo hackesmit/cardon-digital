@@ -8,22 +8,31 @@
 /* ============================ THEME TOKENS ============================
    Six core tokens per mode (ground, panel, text, primary, secondary, energy).
    Everything else derives once from those, so a mode change recolors the whole
-   page, the contour field, and every visual. */
+   page, the contour field, and every visual.
+
+   Palette: Tinto y Laton (bead hq-x0h3, chosen by Daniel 2026-10-06 from the
+   colorway canvas). Wine primary, brass secondary, clay energy; the clay is the
+   same hex in both modes because the CTA ink is one colour. Every hex here is
+   measured by scripts/palette-check.mjs, which runs inside npm test: text uses
+   of a token meet 4.5:1 on their surface in both modes. The dark primary is a
+   lighter wine than the brand would pick by eye because 4.5:1 on the dark
+   panel needs it; the price is chart-series separation for a deuteranope in
+   dark mode, tracked in bead hq-8dnn. */
 
 :root[data-mode="dark"]{
   color-scheme:dark;
-  --ground:#0F1410; --panel:#16201A; --text:#E4EAD9;
-  --primary:#3FB58A; --secondary:#D9A83A; --energy:#C3491B;
+  --ground:#120F12; --panel:#1C161B; --text:#EFE4E6;
+  --primary:#D0617B; --secondary:#D1AC55; --energy:#B4561A;
 }
 :root[data-mode="light"]{
   color-scheme:light;
-  /* Light mode, corrected 2026-10-01: the panel is near white over the sand
-     and the agave is deeper, because ground and panel three tones apart read
-     as one beige (Daniel). */
-  --ground:#F3EEDF; --panel:#FFFDF6; --text:#17201A;
-  --primary:#23664A; --secondary:#9A6A12; --energy:#C3491B;
+  /* Light mode keeps the 2026-10-01 correction: the panel is near white over
+     the ground and the primary is deep, because ground and panel three tones
+     apart read as one beige (Daniel). */
+  --ground:#F4EDEA; --panel:#FFFCFB; --text:#221418;
+  --primary:#7A1F38; --secondary:#8A6A17; --energy:#B4561A;
 }
-:root[data-mode="light"]{--series-gold:#B07E1E;}
+:root[data-mode="light"]{--series-gold:#B5812F;}
 
 :root{
   --tertiary:var(--primary);
@@ -38,10 +47,11 @@
   --primary-bright: color-mix(in srgb, var(--primary) 74%, var(--text) 26%);
   --secondary-bright: color-mix(in srgb, var(--secondary) 78%, var(--text) 22%);
   --energy-bright: color-mix(in srgb, var(--energy) 80%, var(--text) 20%);
-  /* The gold a chart series wears. In light mode the brand gold was deepened
-     for text contrast, which pulled it toward the clay; a series keeps the
-     lighter gold so Hospitalidad and Restaurante stay apart for a deuteranope
-     (OKLab dE 15.5 normal, 12.9 deuteranope against --energy-bright). */
+  /* The gold a chart series wears. In light mode the brand brass is deepened
+     for text contrast, which pulls it toward the clay; a series keeps a
+     lighter brass so Hospitalidad and Restaurante stay apart for a deuteranope
+     (OKLab dE 15.5 normal, 11.3 deuteranope against --energy-bright, measured
+     by scripts/palette-check.mjs). */
   --series-gold: var(--secondary);
   --header-bg: color-mix(in srgb, var(--ground) 85%, transparent);
   --scrim: color-mix(in srgb, var(--ground) 55%, transparent);
