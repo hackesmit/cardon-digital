@@ -43,7 +43,7 @@
 }
 .pg-precios .floor-v{
   font-family:var(--mono);font-variant-numeric:tabular-nums;
-  font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--primary-bright);font-weight:600;
+  font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--primary-text);font-weight:600;
 }
 .pg-precios .floor-alone{
   font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);
@@ -112,7 +112,7 @@
 }
 .pg-precios .mix-row-together th{color:var(--text);font-weight:600;}
 .pg-precios .mix-row-together td{
-  color:var(--primary-bright);font-weight:600;
+  color:var(--primary-text);font-weight:600;
   font-size:clamp(1.02rem,1.5vw,1.2rem);
 }
 .pg-precios .mix-row-saving th{color:var(--secondary-bright);}

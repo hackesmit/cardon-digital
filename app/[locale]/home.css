@@ -812,7 +812,7 @@
     border-color 0.2s ease;
 }
 .pg-showcase .sc-demo-btn:hover {
-  color: var(--primary-bright);
+  color: var(--primary-text);
   border-color: var(--primary-dim);
 }
 .pg-showcase .sc-soon {

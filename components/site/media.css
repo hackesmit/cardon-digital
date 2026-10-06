@@ -71,7 +71,7 @@
   font-size:0.68rem;
   letter-spacing:0.18em;
   text-transform:uppercase;
-  color:var(--primary-bright);
+  color:var(--primary-text);
 }
 .media-pending-file{
   font-size:0.82rem;
