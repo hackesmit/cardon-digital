@@ -59,7 +59,7 @@ function state(W: number, H: number, behind: boolean, dark = false): FieldState 
   return {
     W, H, t: 0, dt: 0, mx: 0.3, my: -0.2, px: W * 0.6, py: H * 0.4, rpx: W * 0.6, rpy: H * 0.4, pin: 1,
     fx: behind && !small ? W * 0.7 : W * 0.5, fy: H * 0.5, small, dens: 1, draw: true, dark,
-    c: { agave: "#23664A", agaveRgb: [35, 102, 74], gold: "#9A6A12", goldRgb: [154, 106, 18], ground: "#F3EEDF" },
+    c: { agave: "#7A1F38", agaveRgb: [122, 31, 56], gold: "#806315", goldRgb: [128, 99, 21], ground: "#F4EDEA" },
   };
 }
 

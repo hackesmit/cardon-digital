@@ -79,6 +79,18 @@ export default function VineField() {
       const n = parseInt(h || "0", 16);
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     };
+    const resolveColor = (name: string): RGB | null => {
+      const probe = root.ownerDocument.createElement("span");
+      probe.style.color = "var(" + name + ")";
+      root.appendChild(probe);
+      const c = getComputedStyle(probe).color;
+      probe.remove();
+      const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(c);
+      if (m) return [Number(m[1]), Number(m[2]), Number(m[3])];
+      /* Chrome serialises a color-mix result as color(srgb r g b). */
+      const s = /color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/.exec(c);
+      return s ? ([1, 2, 3].map((i) => Math.round(Number(s[i]) * 255)) as RGB) : null;
+    };
     const rgba = (c: RGB, a: number) =>
       "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
     const mix = (a: RGB, b: RGB, t: number): RGB => [
@@ -101,8 +113,9 @@ export default function VineField() {
       muted: "",
       line: "",
       lineSoft: "",
-      primaryRgb: [63, 181, 138] as RGB,
+      primaryRgb: [189, 82, 104] as RGB,
       primary: "",
+      primaryText: "",
       primarySoft: "",
       primaryFaint: "",
       primaryDim: "",
@@ -126,12 +139,12 @@ export default function VineField() {
     };
 
     const readPalette = () => {
-      const ground = hexToRgb(cssVar("--ground") || "#0F1410");
-      const panel = hexToRgb(cssVar("--panel") || "#16201A");
-      const text = hexToRgb(cssVar("--text") || "#E4EAD9");
-      const primary = hexToRgb(cssVar("--primary") || "#3FB58A");
-      const secondary = hexToRgb(cssVar("--secondary") || "#D9A83A");
-      const energy = hexToRgb(cssVar("--energy") || "#C3491B");
+      const ground = hexToRgb(cssVar("--ground") || "#120F12");
+      const panel = hexToRgb(cssVar("--panel") || "#1C161B");
+      const text = hexToRgb(cssVar("--text") || "#EFE4E6");
+      const primary = hexToRgb(cssVar("--primary") || "#BD5268");
+      const secondary = hexToRgb(cssVar("--secondary") || "#D1AC55");
+      const energy = hexToRgb(cssVar("--energy") || "#B4561A");
       const dark = root.getAttribute("data-mode") !== "light";
       const toward: RGB = dark ? WHITE : BLACK;
 
@@ -153,6 +166,10 @@ export default function VineField() {
       PAL.primarySoft = rgba(primary, 0.85);
       PAL.primaryFaint = rgba(primary, 0.14);
       PAL.primaryDim = rgba(primary, 0.5);
+      /* The wine as small text (bead hq-x0h3): what CSS resolves for
+         --primary-text, read through a probe so the canvas and the page agree;
+         the fallback repeats the dark mix of globals.css. */
+      PAL.primaryText = rgba(resolveColor("--primary-text") ?? (dark ? mix(primary, text, 0.38) : primary), 1);
       PAL.primaryBright = rgba(mix(primary, toward, 0.3), 1);
       PAL.secondaryRgb = secondary;
       PAL.secondary = rgba(secondary, 1);
@@ -874,7 +891,7 @@ export default function VineField() {
         ctx.font = "600 10px " + MONO;
         ctx.textBaseline = "middle";
         ctx.textAlign = "left";
-        ctx.fillStyle = full ? PAL.primary : PAL.muted;
+        ctx.fillStyle = full ? PAL.primaryText : PAL.muted;
         ctx.fillText(full ? t.current : t.live, g.CN.x + 15, g.CN.y);
         ctx.textBaseline = "alphabetic";
         ctx.textAlign = "center";
@@ -896,7 +913,7 @@ export default function VineField() {
       ctx.fillText(t.header, g.xC + 27, 21);
       ctx.textAlign = "right";
       ctx.font = "600 9px " + MONO;
-      ctx.fillStyle = full ? PAL.primary : PAL.muted;
+      ctx.fillStyle = full ? PAL.primaryText : PAL.muted;
       ctx.fillText(full ? t.current : t.live, W - 10, 21);
       ctx.textAlign = "center";
       ctx.font = "600 10px " + MONO;
@@ -935,7 +952,7 @@ export default function VineField() {
       c.textAlign = "left";
       const entries: Array<{ a: number; pre: string; body: string; preCol: string; bodyCol: string }> = [
         { a: 1 - nowA, pre: t.ledgerWas, body: LEDGER_WAS_TEXT, preCol: PAL.secondary, bodyCol: PAL.muted },
-        { a: nowA, pre: t.ledgerNow, body: nowText, preCol: PAL.primary, bodyCol: PAL.dim },
+        { a: nowA, pre: t.ledgerNow, body: nowText, preCol: PAL.primaryText, bodyCol: PAL.dim },
       ];
       for (const en of entries) {
         if (en.a <= 0.01) continue;

@@ -7,7 +7,7 @@
 .pg-soon .soon-line{color:var(--text-dim);font-size:1.08rem;line-height:1.55;margin:0;}
 .pg-soon .soon-sub{color:var(--muted);font-size:0.92rem;margin:10px 0 0;}
 .pg-soon .soon-cta{
-  font-family:var(--mono);font-size:0.98rem;color:var(--primary);
+  font-family:var(--mono);font-size:0.98rem;color:var(--primary-text);
   border:1px solid var(--line);border-radius:2px;padding:10px 22px;
   transition:border-color .2s ease, box-shadow .2s ease;
 }

@@ -19,5 +19,5 @@
   transition: color 0.4s ease;
 }
 .reach-stage .stage-caption[data-done="1"] {
-  color: var(--primary);
+  color: var(--primary-text);
 }

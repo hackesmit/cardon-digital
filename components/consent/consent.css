@@ -23,7 +23,7 @@
 }
 .consent-body{margin:0 0 8px;color:var(--text-dim);font-size:0.88rem;line-height:1.55;}
 .consent-link{
-  color:var(--primary);font-size:0.82rem;
+  color:var(--primary-text);font-size:0.82rem;
   text-decoration:underline;text-underline-offset:3px;
 }
 .consent-actions{
