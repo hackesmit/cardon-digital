@@ -23,15 +23,20 @@ import { CLIENT_MARKS, CLIENT_ORDER, type ClientId } from "./clientMarks";
  * the caption below the stage. Front of the ellipse is drawn larger than the
  * back for depth.
  *
- * Pointer, keyboard and touch each have their own state: hover, focus and a
- * click-pinned client, and the active one is focus, then hover, then pinned,
- * so leaving with the mouse never cancels a focus and a tap on a medallion
- * with no case page keeps its caption up (aria-pressed says so). A persistent
- * pause control sits in the stage corner, because motion that runs for more
- * than five seconds needs one a visitor can operate (WCAG 2.2.2); it starts
- * paused when the visitor asked for reduced motion. Redraws after any state
- * change come from an effect, not from the event, so a still frame is never
- * one update behind.
+ * Pointer, keyboard and touch each have their own state: hover (mouse and pen
+ * pointers only, so touch compatibility events never leave a ghost hover),
+ * focus (keyboard only: a focus that follows a pointer press is ignored) and
+ * a pinned client toggled by click or tap, and the active one is focus, then
+ * hover, then pinned, so leaving with the mouse never cancels a focus and a
+ * tap on a medallion with no case page keeps its caption up until the next
+ * tap (aria-pressed says so). A persistent pause control sits in the stage
+ * corner, because motion that runs for more than five seconds needs one a
+ * visitor can operate (WCAG 2.2.2); reduced motion only sets its initial
+ * state, so a visitor who presses Resume gets motion and the label is never a
+ * lie. Redraws after any state change come from an effect, not from the
+ * event, so a still frame is never one update behind. Before the loop runs
+ * (server render, no JS) each element sits at its t=0 place on the ellipse
+ * through percentage offsets, so nothing piles up in a corner.
  *
  * Runs only on screen and while the document is visible (clearsThreshold, the
  * repo's on-screen rule), stops when paused or under reduced motion with a
@@ -48,6 +53,17 @@ const routeFor = (id: ClientId): string | undefined => {
   const i = CASE_IDS.indexOf(id);
   return i >= 0 ? CASE_ROUTES[i] : undefined;
 };
+
+/* Where seat i rests at t = 0, as percentages of the stage, for the server
+   render and the moment before the loop's first frame: the same angle the
+   loop uses, on an ellipse of 38% by 33% of the stage. */
+function restingSeat(i: number) {
+  const seats = CLIENT_ORDER.length + 1;
+  const a = i * ((Math.PI * 2) / seats) + Math.PI * 0.62;
+  const x = 50 + 38 * Math.cos(a);
+  const y = 50 + 33 * Math.sin(a);
+  return { left: x.toFixed(2) + "%", top: y.toFixed(2) + "%", nameTop: "calc(" + y.toFixed(2) + "% + 36px)" };
+}
 
 export default function ClientOrbit() {
   const locale = useLocale();
@@ -67,6 +83,9 @@ export default function ClientOrbit() {
   const pausedRef = useRef(false);
   /* The loop's draw and start/stop, exposed to the state effect below. */
   const loopRef = useRef<{ draw: () => void; sync: () => void } | null>(null);
+  /* Set on pointerdown so the focus that follows a mouse click or a tap does
+     not count as keyboard focus; cleared by that focus event. */
+  const pointerFocusRef = useRef(false);
   activeRef.current = active;
   pausedRef.current = paused;
 
@@ -105,6 +124,8 @@ export default function ClientOrbit() {
 
     function place(el: HTMLElement | null | undefined, x: number, y: number, s: number, z: number) {
       if (!el) return;
+      el.style.left = "0px";
+      el.style.top = "0px";
       el.style.transform = "translate(" + x + "px," + y + "px) scale(" + s + ")";
       el.style.zIndex = String(z);
     }
@@ -116,7 +137,7 @@ export default function ClientOrbit() {
       speed += (target - speed) * Math.min(1, dt * 4);
       t += dt * speed;
       const { cx, cy, rx, ry } = geometry();
-      const still = reduced() || pausedRef.current;
+      const still = pausedRef.current;
       ctx.clearRect(0, 0, W, H);
 
       ctx.lineWidth = 1;
@@ -181,6 +202,8 @@ export default function ClientOrbit() {
           place(meds.current[id], x, y, s, z);
           const n = names.current[id];
           if (n) {
+            n.style.left = "0px";
+            n.style.top = "0px";
             n.style.transform = "translate(" + x + "px," + (y + 36 * s) + "px) translateX(-50%)";
             n.style.opacity = String(Math.min(1, 0.35 + 0.65 * s));
           }
@@ -206,7 +229,8 @@ export default function ClientOrbit() {
       if (dt > 0.05) dt = 0.05;
       draw(dt);
     }
-    const canRun = () => !reduced() && !pausedRef.current && docVisible && onscreen;
+    /* Reduced motion decides the initial pause only; an explicit Resume wins. */
+    const canRun = () => !pausedRef.current && docVisible && onscreen;
     function start() {
       if (running || !canRun()) return;
       running = true;
@@ -252,12 +276,7 @@ export default function ClientOrbit() {
       draw(0);
     };
     const onReduceChange = () => {
-      if (reduced()) {
-        stop();
-        draw(0);
-      } else {
-        start();
-      }
+      setPaused(reduced());
     };
 
     const THRESHOLD = 0.08;
@@ -315,12 +334,22 @@ export default function ClientOrbit() {
         {CLIENT_ORDER.map((id) => {
           const c = t.clients[id];
           const route = routeFor(id);
+          const seat = restingSeat(CLIENT_ORDER.indexOf(id));
           const shared = {
             className: "orbit-med" + (active === id ? " lit" : ""),
             "aria-label": c.aria,
-            onMouseEnter: () => setHoverId(id),
-            onMouseLeave: () => setHoverId((h) => (h === id ? null : h)),
-            onFocus: () => setFocusId(id),
+            style: { left: seat.left, top: seat.top },
+            onPointerEnter: (e: React.PointerEvent) => {
+              if (e.pointerType !== "touch") setHoverId(id);
+            },
+            onPointerLeave: () => setHoverId((h) => (h === id ? null : h)),
+            onPointerDown: () => {
+              pointerFocusRef.current = true;
+            },
+            onFocus: () => {
+              if (pointerFocusRef.current) pointerFocusRef.current = false;
+              else setFocusId(id);
+            },
             onBlur: () => setFocusId((f) => (f === id ? null : f)),
           };
           return (
@@ -351,6 +380,7 @@ export default function ClientOrbit() {
               <span
                 className="orbit-name"
                 aria-hidden="true"
+                style={{ left: seat.left, top: seat.nameTop, transform: "translateX(-50%)" }}
                 ref={(el) => {
                   names.current[id] = el;
                 }}
@@ -361,7 +391,12 @@ export default function ClientOrbit() {
             </span>
           );
         })}
-        <div className="orbit-seat" ref={seatRef} aria-hidden="true">
+        <div
+          className="orbit-seat"
+          ref={seatRef}
+          aria-hidden="true"
+          style={{ left: restingSeat(CLIENT_ORDER.length).left, top: restingSeat(CLIENT_ORDER.length).top }}
+        >
           +
         </div>
         <div className="orbit-core">
