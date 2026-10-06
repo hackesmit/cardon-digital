@@ -391,7 +391,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 .dm-badge-check{fill:none;stroke:var(--primary);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
 .dm-lab-pre,.dm-lab-ok{font-family:var(--mono);transition:opacity .6s ease;}
 .dm-lab-pre{fill:var(--muted);}
-.dm-lab-ok{fill:var(--primary);}
+.dm-lab-ok{fill:var(--primary-text);}
 .dm-value{transition:fill .8s ease 1.1s;}
 .dm-fee{fill:var(--muted);}
 /* resolved state is the default (static, JS-free, reduced-motion) */
@@ -399,7 +399,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 .demand-vis .dm-badge{opacity:1;transform:scale(1);}
 .demand-vis .dm-lab-pre{opacity:0;}
 .demand-vis .dm-lab-ok{opacity:1;}
-.demand-vis .dm-value{fill:var(--primary);}
+.demand-vis .dm-value{fill:var(--primary-text);}
 /* before state */
 .demand-vis[data-anim="pre"] .dm-knob{transform:translateX(0);}
 .demand-vis[data-anim="pre"] .dm-badge{opacity:0;transform:scale(0.8);}
@@ -424,11 +424,11 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 .ov-bar-gold{fill:var(--secondary);}
 .ov-track{fill:var(--line-soft);}
 .ov-lab-manual{fill:var(--muted);}
-.ov-lab-auto{fill:var(--primary);}
+.ov-lab-auto{fill:var(--primary-text);}
 .ov-time-long{fill:var(--secondary);}
-.ov-time-short{fill:var(--primary);}
+.ov-time-short{fill:var(--primary-text);}
 .ov-badge-box{fill:none;stroke:var(--primary);stroke-width:1.4;}
-.ov-badge-text{fill:var(--primary);}
+.ov-badge-text{fill:var(--primary-text);}
 .ov-foot{fill:var(--muted);}
 
 /* ---- Tools: parts placed and wired into one board (play once) ---- */

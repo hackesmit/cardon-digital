@@ -405,7 +405,7 @@
   margin-bottom: 8px;
 }
 .combina-item.is-mix h3 {
-  color: var(--primary-bright);
+  color: var(--primary-text);
 }
 /* The row that IS what the map currently has switched on. Both sides carry
    the same module mask (BridgeMap.bridgeMask: Produccion 1, Hospitalidad 2,
@@ -529,7 +529,7 @@
 }
 .ms-chip[data-channel="direct"] {
   border-color: var(--primary);
-  color: var(--primary-bright);
+  color: var(--primary-text);
 }
 .ms-chip[data-channel="ota1"] {
   border-color: var(--series-gold);
@@ -541,7 +541,7 @@
 }
 .ms-chip[data-state="seated"] {
   border-color: var(--primary);
-  color: var(--primary-bright);
+  color: var(--primary-text);
 }
 .ms-chip[data-state="check"] {
   border-color: var(--secondary);

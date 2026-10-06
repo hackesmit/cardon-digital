@@ -49,7 +49,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const strict = process.argv.includes("--strict");
 let css;
 try {
-  css = readFileSync(join(here, "..", "app", "globals.css"), "utf8");
+  css = readFileSync(join(here, "..", "app", "globals.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
 } catch (e) {
   console.error(`palette-check: cannot read app/globals.css (${e.code || e.message})`);
   process.exit(2);
@@ -58,8 +58,13 @@ try {
 const FLOOR = { text: 4.5, large: 3.0, cvdNormal: 14, cvdDeut: 10 };
 
 function tokens(mode) {
-  const block = new RegExp(`:root\\[data-mode="${mode}"\\]\\{([^}]*)\\}`).exec(css);
-  if (!block) fail2(`no ${mode} token block in globals.css`);
+  const blocks = [...css.matchAll(new RegExp(`:root\\[data-mode="${mode}"\\]\\s*\\{([^}]*)\\}`, "g"))].filter((b) => /--(ground|panel|text|primary|secondary|energy):/.test(b[1]));
+  if (blocks.length !== 1) fail2(`expected exactly one ${mode} token block declaring the six tokens, found ${blocks.length}`);
+  const block = blocks[0];
+  for (const k of ["ground", "panel", "text", "primary", "secondary", "energy"]) {
+    const times = (block[1].match(new RegExp(`--${k}:`, "g")) || []).length;
+    if (times !== 1) fail2(`${mode} block declares --${k} ${times} times`);
+  }
   const out = {};
   for (const m of block[1].matchAll(/--([a-z]+):\s*(#[0-9A-Fa-f]{6})/g)) out[m[1]] = m[2];
   for (const k of ["ground", "panel", "text", "primary", "secondary", "energy"]) {
@@ -67,10 +72,13 @@ function tokens(mode) {
   }
   return out;
 }
-function pct(name) {
-  const m = new RegExp(`--${name}:\\s*color-mix\\(in srgb, var\\(--[a-z]+\\) (\\d+)%`).exec(css);
-  if (!m) fail2(`no --${name} color-mix in globals.css`);
-  return Number(m[1]) / 100;
+/* A derived token is only trusted when BOTH operands are the ones this check
+   recomputes with; a change of operand must change this file too. */
+function pct(name, from, toward) {
+  const re = new RegExp(`--${name}:\\s*color-mix\\(in srgb, var\\(--${from}\\) (\\d+)%, var\\(--${toward}\\)(?: \\d+%)?\\)`, "g");
+  const all = [...css.matchAll(re)];
+  if (all.length !== 1) fail2(`expected exactly one --${name}: color-mix(in srgb, var(--${from}) N%, var(--${toward})), found ${all.length}`);
+  return Number(all[0][1]) / 100;
 }
 function single(re, what) {
   const m = re.exec(css);
@@ -114,17 +122,17 @@ function deut([r, g, b]) {
 }
 
 const ctaInk = hex(single(/--cta-ink:\s*(#[0-9A-Fa-f]{6})/, "--cta-ink"));
-const mutedW = pct("muted");
-const energyBrightW = pct("energy-bright");
+const mutedW = pct("muted", "text", "panel");
+const energyBrightW = pct("energy-bright", "energy", "text");
 const lightSeriesGold = single(/:root\[data-mode="light"\]\{--series-gold:(#[0-9A-Fa-f]{6});\}/, "light --series-gold override");
-const cardW = pct("card");
+const cardW = pct("card", "panel", "text");
 /* --primary-text is var(--primary) in :root; the dark block overrides it with a
    color-mix of primary toward text, whose percentage is read here. */
 single(/^\s*--primary-text:\s*var\(--primary\);/m, "--primary-text: var(--primary) in :root");
 const darkBlock = single(/:root\[data-mode="dark"\]\{([^}]*)\}/, "dark block");
 if (!/--primary-text:\s*color-mix/.test(darkBlock)) fail2("dark block does not override --primary-text");
-const darkPrimaryTextW =
-  Number(single(/--primary-text:\s*color-mix\(in srgb, var\(--primary\) (\d+)%, var\(--text\)/, "dark --primary-text color-mix")) / 100;
+const darkPrimaryTextW = pct("primary-text", "primary", "text");
+if ((css.match(/--primary-text:/g) || []).length !== 2) fail2("--primary-text must be declared exactly twice: :root and the dark block");
 
 let blocking = 0;
 let advisory = 0;
@@ -178,12 +186,31 @@ for (const mode of ["light", "dark"]) {
 
 /* Usage: text painted with the deep wine outside the display allowlist. */
 const DISPLAY_PRIMARY = new Set([
+  /* display text, 3:1 */
   "h1 .accent",
   ".pg-showcase .accent",
   ".pg-modulos .accent",
   ".pg-enkanto h2 .accent",
-  ".pg-winery .cap-glyph",
   ".tier-lead .tier-n",
+  /* icons, dots, bars and cores: SVG shapes, not text */
+  ".pg-winery .cap-glyph",
+  ".dm-knob-halo",
+  ".dm-knob-core",
+  ".ov-clean-fill circle",
+  ".ov-bar-primary",
+  ".tl-primary",
+  ".map-hub-core",
+  ".mk-core",
+  ".map-marker:hover .mk-core",
+  ".map-marker:focus-visible .mk-core",
+  ".pg-home .sector-card:hover .mk-core",
+  ".pg-home .sector-card:focus-visible .mk-core",
+  ".pg-showcase .vc-dot[data-series=\"now\"]",
+  ".pg-case .d-primary",
+  ".pg-case .live-dot",
+  ".pg-case .fin-bar",
+  ".pg-enkanto .e-primary",
+  ".pg-enkanto .e-fill",
 ]);
 function cssFiles(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -195,7 +222,10 @@ function cssFiles(dir, out = []) {
   return out;
 }
 const root = join(here, "..");
-const textPrimary = /(^|[^-])color:\s*var\(--(primary|tertiary)\)/;
+/* color: paints HTML text, fill: paints SVG text (and shapes, which is what the
+   allowlist's shape selectors are for). Property names are case-insensitive
+   and may carry whitespace before the colon. */
+const textPrimary = /(^|[^-])(color|fill)\s*:\s*var\(--(primary|tertiary|primary-bright)\)/i;
 console.log("\nusage: text painted with var(--primary) outside the display allowlist");
 let usageHits = 0;
 for (const file of [...cssFiles(join(root, "app")), ...cssFiles(join(root, "components"))]) {
@@ -210,7 +240,7 @@ for (const file of [...cssFiles(join(root, "app")), ...cssFiles(join(root, "comp
     if (selectors.length && !bad.length) continue;
     usageHits++;
     blocking++;
-    console.log(`  FAIL  ${file.slice(root.length + 1)}  ${(bad.join(", ") || list) || "(empty selector)"}  paints text with var(--primary); use var(--primary-text)`);
+    console.log(`  FAIL  ${file.slice(root.length + 1)}  ${(bad.join(", ") || list) || "(empty selector)"}  paints with var(--primary) or var(--primary-bright); text goes through var(--primary-text), a shape goes on the allowlist`);
   }
 }
 if (!usageHits) console.log("  ok    none outside the allowlist");
