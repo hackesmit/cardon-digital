@@ -202,7 +202,7 @@ export default function MonteXanicCaseStudy({ params }: Params) {
                     <text className="d-ink mono" x="256" y="72" fontSize="13" fontWeight="600">{v.view.panel}</text>
                     <rect className="live-pill" x="416" y="58" width="66" height="20" rx="2" />
                     <circle className="live-dot" cx="428" cy="68" r="3.2" />
-                    <text className="d-primary mono" x="438" y="72" fontSize="10" letterSpacing="1">{v.view.live}</text>
+                    <text className="d-primary-text mono" x="438" y="72" fontSize="10" letterSpacing="1">{v.view.live}</text>
                     <line className="d-line" x1="256" y1="84" x2="482" y2="84" strokeWidth="1" />
                     <g fontSize="11">
                       <text className="d-lab mono" x="256" y="112">{v.view.harvest}</text>

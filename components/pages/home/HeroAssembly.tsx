@@ -268,7 +268,7 @@ export default function HeroAssembly() {
     }
 
     function chipCols() {
-      return { bg: PAL.primaryFaint, fg: PAL.primary };
+      return { bg: PAL.primaryFaint, fg: PAL.primaryText };
     }
 
     function drawBody(

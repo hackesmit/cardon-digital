@@ -56,6 +56,8 @@ export interface Palette {
   lineSoft: string;
   primaryRgb: RGB;
   primary: string;
+  /** The wine when it paints small text: what CSS resolves for --primary-text. */
+  primaryText: string;
   primarySoft: string;
   primaryFaint: string;
   primaryDim: string;
@@ -71,6 +73,19 @@ export interface Palette {
   chipInk: string;
 }
 
+export function resolveColor(root: HTMLElement, name: string): RGB | null {
+  const probe = root.ownerDocument.createElement("span");
+  probe.style.color = "var(" + name + ")";
+  root.appendChild(probe);
+  const c = getComputedStyle(probe).color;
+  probe.remove();
+  const rgb = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(c);
+  if (rgb) return [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])];
+  const srgb = /color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/.exec(c);
+  if (srgb) return [1, 2, 3].map((i) => Math.round(Number(srgb[i]) * 255)) as RGB;
+  return null;
+}
+
 export function readPalette(root: HTMLElement): Palette {
   const cssVar = (name: string) =>
     getComputedStyle(root).getPropertyValue(name).trim();
@@ -82,6 +97,12 @@ export function readPalette(root: HTMLElement): Palette {
   const energy = hexToRgb(cssVar("--energy") || "#B4561A");
   const dark = root.getAttribute("data-mode") !== "light";
   const toward = dark ? WHITE : BLACK;
+  /* --primary-text is a color-mix in dark mode, which getPropertyValue hands
+     back unresolved, so it is read through a probe element's computed color.
+     Chrome serialises a color-mix result as color(srgb r g b) and a plain hex
+     as rgb(r, g, b); both are parsed. The fallback repeats the dark mix of
+     globals.css (bead hq-x0h3). */
+  const primaryText = resolveColor(root, "--primary-text") ?? (dark ? mix(primary, text, 0.38) : primary);
   return {
     dark,
     groundRgb: ground,
@@ -98,6 +119,7 @@ export function readPalette(root: HTMLElement): Palette {
     lineSoft: rgba(mix(primary, text, 0.35), 0.12),
     primaryRgb: primary,
     primary: rgba(primary, 1),
+    primaryText: rgba(primaryText, 1),
     primarySoft: rgba(primary, 0.85),
     primaryFaint: rgba(primary, 0.14),
     primaryDim: rgba(primary, 0.5),

@@ -678,7 +678,7 @@ export default function DigitalArc() {
         c.fillStyle = PAL.ink;
         c.fillText(t.siteName, cd.x + 12, cd.y + yOff + 17);
         c.font = F(11, 500);
-        c.fillStyle = PAL.primary;
+        c.fillStyle = PAL.primaryText;
         c.fillText(t.resultTag, cd.x + 12, cd.y + yOff + 32);
         c.globalAlpha = 1;
         const lp = settled ? 1 : ease(tt, CARD_AT + 0.25, 0.4) * sA;
@@ -814,7 +814,7 @@ export default function DigitalArc() {
           c.fillStyle = PAL.muted;
           c.fillText(t.messagesK, cb.x + 9, cb.y + 16);
           c.font = F(13, 700);
-          c.fillStyle = PAL.primary;
+          c.fillStyle = PAL.primaryText;
           c.fillText(String(Math.max(1, count)), cb.x + 9, cb.y + 33);
         } else {
           c.textAlign = "left";
@@ -822,7 +822,7 @@ export default function DigitalArc() {
           c.fillStyle = PAL.muted;
           c.fillText(t.messagesK, cb.x + 10, cb.y + 17);
           c.font = F(13, 700);
-          c.fillStyle = PAL.primary;
+          c.fillStyle = PAL.primaryText;
           c.textAlign = "right";
           c.fillText(String(Math.max(1, count)), cb.x + cb.w - 10, cb.y + 17.5);
         }
@@ -947,7 +947,7 @@ export default function DigitalArc() {
           c.fillText(row.k, lg.x + 14, y + 14);
           c.font = F(12);
           c.textAlign = "right";
-          c.fillStyle = PAL.primary;
+          c.fillStyle = PAL.primaryText;
           c.fillText(row.v, lg.x + lg.w - 14, y + 14);
           c.globalAlpha = 1;
         }

@@ -461,7 +461,7 @@ export default function ReachMap() {
       }
       c.font = font(11, 600);
       c.textBaseline = "middle";
-      c.fillStyle = flash > 0.3 ? PAL.primary : PAL.secondary;
+      c.fillStyle = flash > 0.3 ? PAL.primaryText : PAL.secondary;
       if (gateVertical) {
         c.textAlign = "center";
         c.fillText(t.measuredK, G.x, G.y - half - 9);
@@ -621,7 +621,7 @@ export default function ReachMap() {
           c.fillText("0", bx + bw - 10, ry + 0.5);
           c.globalAlpha = fo;
         }
-        c.fillStyle = v === 0 ? PAL.faint : hot > 0.2 ? PAL.primary : PAL.ink;
+        c.fillStyle = v === 0 ? PAL.faint : hot > 0.2 ? PAL.primaryText : PAL.ink;
         c.fillText(String(v), bx + bw - 10, ry + 0.5);
         c.globalAlpha = 1;
       });

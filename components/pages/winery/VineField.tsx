@@ -83,9 +83,13 @@ export default function VineField() {
       const probe = root.ownerDocument.createElement("span");
       probe.style.color = "var(" + name + ")";
       root.appendChild(probe);
-      const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(getComputedStyle(probe).color);
+      const c = getComputedStyle(probe).color;
       probe.remove();
-      return m ? [Number(m[1]), Number(m[2]), Number(m[3])] : null;
+      const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(c);
+      if (m) return [Number(m[1]), Number(m[2]), Number(m[3])];
+      /* Chrome serialises a color-mix result as color(srgb r g b). */
+      const s = /color\(srgb ([\d.]+) ([\d.]+) ([\d.]+)/.exec(c);
+      return s ? ([1, 2, 3].map((i) => Math.round(Number(s[i]) * 255)) as RGB) : null;
     };
     const rgba = (c: RGB, a: number) =>
       "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
