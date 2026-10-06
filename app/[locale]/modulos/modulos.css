@@ -456,12 +456,14 @@
    --series-gold, Restaurante --energy-bright. The pair that the raw tokens get
    wrong is gold against clay (deuteranope dE 5.7, normal-vision dE 12.2, both
    under the floor), which is why Restaurante takes --energy-bright rather
-   than --energy: light mode then resolves to #23664A / #B07E1E / #A1411B and
-   dark to #3FB58A / #D9A83A / #CA6941, and both pass CVD separation, the
-   normal-vision floor and contrast against their own surface. The one check
-   that still fails is the chroma floor on the brand green, which reads a
-   little gray by design and is not ours to change; every series is also
-   named in text beside its colour, so identity is never colour alone. */
+   than --energy. Under Tinto y Laton (bead hq-x0h3, 2026-10-06) light mode
+   resolves to #7A1F38 / #B5812F / #97491A and passes CVD separation, the
+   normal-vision floor and contrast against its own surface; dark resolves to
+   #D0617B / #D1AC55 / #C07243 and keeps contrast, but the wine sits under the
+   deuteranope floor against both the gold and the clay (dE 5.1 and 4.2), the
+   cost of a wine light enough to read as text on the dark panel. Measured by
+   scripts/palette-check.mjs; the dark fix is bead hq-8dnn. Every series is
+   also named in text beside its colour, so identity is never colour alone. */
 
 .mod-vis {
   margin-top: clamp(26px, 3.5vw, 40px);
