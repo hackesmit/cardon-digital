@@ -19,16 +19,17 @@
    lines, dots, strokes and the canvases, where 3:1 is the floor; --primary-text
    is the wine when it paints small text (kickers, eyebrows, details, prices,
    links), which in dark mode is a lighter mix (62% wine, 38% text) because the
-   deep wine reaches only 3.4:1 on the dark panel and 2.7:1 on the card, and a
-   wine light enough for 4.5:1 everywhere reads pink in a headline (Daniel,
-   2026-10-06). In light mode both tiers are the same hex. The
+   deep wine reaches only 3.9:1 on the dark panel and 3.0:1 on the card (the
+   display floor, which is why it is #BD5268 and not the #B8445C of the
+   canvas), and a wine light enough for 4.5:1 everywhere reads pink in a
+   headline (Daniel, 2026-10-06). In light mode both tiers are the same hex. The
    price of the deep dark wine is chart-series separation for a deuteranope in
    dark mode, tracked in bead hq-8dnn. */
 
 :root[data-mode="dark"]{
   color-scheme:dark;
   --ground:#120F12; --panel:#1C161B; --text:#EFE4E6;
-  --primary:#B8445C; --secondary:#D1AC55; --energy:#B4561A;
+  --primary:#BD5268; --secondary:#D1AC55; --energy:#B4561A;
   --primary-text: color-mix(in srgb, var(--primary) 62%, var(--text) 38%);
 }
 :root[data-mode="light"]{

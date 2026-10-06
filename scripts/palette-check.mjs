@@ -25,9 +25,11 @@
  *   with var(--primary) or var(--tertiary) is only allowed for the display
  *   and non-text selectors listed in DISPLAY_PRIMARY; every other text use
  *   must go through --primary-text, which is what keeps the two tiers honest
- *   when someone adds a rule later. Parsed with a block regex over app/ and
- *   components/ (app/[locale]/estilos has its own per-scene palettes and is
- *   skipped), which is enough for this codebase's flat CSS.
+ *   when someone adds a rule later. Parsed with a block regex over every
+ *   stylesheet under app/ and components/; a selector list is split on
+ *   commas and EVERY selector in it must be allowlisted, so an allowlisted
+ *   selector cannot carry a small-text one past the gate. Enough for this
+ *   codebase's flat CSS; a nested-CSS rewrite would need a real parser.
  *
  *   Separation (OKLab delta E, times 100, between the three chart series as
  *   derived in modulos.css and precios.css: --primary, --series-gold,
@@ -152,6 +154,7 @@ for (const mode of ["light", "dark"]) {
   row(c(primaryText, card) >= FLOOR.text, "block", "primary-text on card (module tags, prices)", c(primaryText, card), FLOOR.text);
   row(c(T.primary, T.panel) >= FLOOR.large, "block", "primary on panel (display, strokes, 3:1)", c(T.primary, T.panel), FLOOR.large);
   row(c(T.primary, T.ground) >= FLOOR.large, "block", "primary on ground (h1 accent, 3:1)", c(T.primary, T.ground), FLOOR.large);
+  row(c(T.primary, card) >= FLOOR.large, "block", "primary on card (strokes, dots, 3:1)", c(T.primary, card), FLOOR.large);
   row(c(T.secondary, T.ground) >= FLOOR.text, "block", "secondary on ground (gold kickers)", c(T.secondary, T.ground), FLOOR.text);
   row(c(T.secondary, card) >= FLOOR.text, "block", "secondary on card (gold kickers)", c(T.secondary, card), FLOOR.text);
   row(c(muted, T.panel) >= FLOOR.large, "block", "muted on panel (mono captions, 3:1)", c(muted, T.panel), FLOOR.large);
@@ -185,7 +188,7 @@ const DISPLAY_PRIMARY = new Set([
 function cssFiles(dir, out = []) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
-    if (name === "node_modules" || name === "estilos") continue;
+    if (name === "node_modules") continue;
     if (statSync(p).isDirectory()) cssFiles(p, out);
     else if (name.endsWith(".css")) out.push(p);
   }
@@ -199,11 +202,15 @@ for (const file of [...cssFiles(join(root, "app")), ...cssFiles(join(root, "comp
   const text = readFileSync(file, "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
   for (const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
     if (!textPrimary.test(m[2])) continue;
-    const selector = m[1].trim().split("\n").pop().trim();
-    if (DISPLAY_PRIMARY.has(selector)) continue;
+    /* The text before this block's brace, after the previous block or at-rule
+       brace, is the selector list; every member must be on the allowlist. */
+    const list = m[1].replace(/^[\s\S]*\}/, "").trim();
+    const selectors = list.split(",").map((s) => s.replace(/\s+/g, " ").trim()).filter(Boolean);
+    const bad = selectors.filter((s) => !DISPLAY_PRIMARY.has(s));
+    if (selectors.length && !bad.length) continue;
     usageHits++;
     blocking++;
-    console.log(`  FAIL  ${file.slice(root.length + 1)}  ${selector}  paints text with var(--primary); use var(--primary-text)`);
+    console.log(`  FAIL  ${file.slice(root.length + 1)}  ${(bad.join(", ") || list) || "(empty selector)"}  paints text with var(--primary); use var(--primary-text)`);
   }
 }
 if (!usageHits) console.log("  ok    none outside the allowlist");
