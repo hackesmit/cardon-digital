@@ -878,6 +878,10 @@ test("node scripts/copy-check.mjs <page> fails on a deleted visual", (t) => {
   mkdirSync(join(dir, "lib", "i18n"), { recursive: true });
   for (const f of ["copy-check.mjs", "visuals-check.mjs"]) copyFileSync(join("scripts", f), join(dir, "scripts", f));
   copyFileSync(join("lib", "i18n", "home.ts"), join(dir, "lib", "i18n", "home.ts"));
+  // This test runs the REAL scripts, with the real RETIRED list, so it deletes
+  // a visual that list does not approve: B (SectorMap.tsx) was retired on the
+  // record on 2026-10-06 (bead hq-1cct) and deleting it now rightly passes.
+  writeFileSync(join(dir, A), visualSource("HeroAssembly"));
   execFileSync("git", ["add", "-A"], { cwd: dir, stdio: "ignore" });
   execFileSync("git", ["commit", "-qm", "scripts and a dictionary"], { cwd: dir, stdio: "ignore" });
 
@@ -887,10 +891,10 @@ test("node scripts/copy-check.mjs <page> fails on a deleted visual", (t) => {
   assert.equal(clean.status, 0, clean.stdout + clean.stderr);
   assert.ok(!clean.stdout.includes(WATCHED), "the guard says nothing when there is nothing to say");
 
-  rmSync(join(dir, B));
+  rmSync(join(dir, A));
   const broken = copyCheck();
   assert.equal(broken.status, 1, broken.stdout + broken.stderr);
-  assert.ok(broken.stdout.includes(B), "the failure names the file");
+  assert.ok(broken.stdout.includes(A), "the failure names the file");
   assert.match(broken.stdout, /REWIRES a visual/);
   assert.ok(!broken.stdout.includes("page(s) clean"), "and it stops before copy-check can say clean");
 });

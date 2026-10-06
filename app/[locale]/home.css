@@ -112,180 +112,210 @@
   color: var(--primary-text);
 }
 
-/* The valley map under the two cards. It is SectorMap's own stage above 900px
-   and the portrait station list below, never both: the media query at the end
-   of this block switches them, so the accessibility tree carries one copy and
-   the hidden canvas never intersects, which is what keeps its rAF loop from
-   ever starting. */
+/* The client orbit under the proof cards (ClientOrbit, bead hq-1cct): the
+   five businesses turning on an ellipse around the one action. The canvas
+   draws rings, trails and routes; the medallions, names and seat are real
+   elements the loop moves by transform. Colour is tokens only: the wine for
+   strokes and marks, the text tier for anything that reads. */
 .pg-home .proof-map {
   margin-top: clamp(16px, 2.4vw, 26px);
 }
-.pg-home .sector-list {
-  display: none;
+.pg-home .orbit-stage {
+  position: relative;
+  min-height: clamp(380px, 44vw, 520px);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background:
+    radial-gradient(60% 55% at 50% 50%, var(--primary-faint), transparent 70%),
+    color-mix(in srgb, var(--panel) 70%, transparent);
+  box-shadow: var(--shadow);
+  overflow: hidden;
 }
-.pg-home .sl-hub {
-  align-self: center;
-  display: inline-flex;
+.pg-home .orbit-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.pg-home .orbit-legend {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  z-index: 4;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-home .orbit-med {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  padding: 0;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-  padding: 7px 15px;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--primary);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+  will-change: transform;
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.pg-home .orbit-med svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+.pg-home .orbit-med:hover,
+.pg-home .orbit-med:focus-visible,
+.pg-home .orbit-med.lit {
+  border-color: var(--primary-dim);
+  color: var(--primary-text);
+  box-shadow: 0 0 0 6px var(--primary-faint);
+}
+.pg-home .orbit-med:focus-visible {
+  outline: 2px solid var(--energy);
+  outline-offset: 3px;
+}
+.pg-home .orbit-name {
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: transform;
+}
+.pg-home .orbit-name b {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.pg-home .orbit-name span {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.pg-home .orbit-seat {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 48px;
+  height: 48px;
+  margin: -24px 0 0 -24px;
+  border-radius: 50%;
+  border: 1px dashed var(--primary-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-text);
+  font-size: 1.25rem;
+  line-height: 1;
+  will-change: transform;
+}
+.pg-home .orbit-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.pg-home .orbit-core .cta {
+  justify-content: center;
+  border-radius: 999px;
+  padding: 11px 20px;
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--energy) 14%, transparent),
+    0 0 0 18px color-mix(in srgb, var(--energy) 6%, transparent);
+}
+.pg-home .orbit-core-note {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-home .orbit-pause {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 4;
+  height: 30px;
+  padding: 0 10px;
   border: 1px solid var(--line);
   border-radius: 2px;
   background: color-mix(in srgb, var(--panel) 82%, transparent);
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.pg-home .orbit-pause:hover,
+.pg-home .orbit-pause:focus-visible {
+  border-color: var(--primary-dim);
   color: var(--text);
 }
-.pg-home .sl-hub svg {
-  width: 16px;
-  height: 16px;
-  display: block;
-  flex-shrink: 0;
+.pg-home .orbit-pause:focus-visible {
+  outline: 2px solid var(--energy);
+  outline-offset: 2px;
 }
-.pg-home .sl-head {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 8px 0 2px;
-}
-.pg-home .sector-card {
+.pg-home .orbit-cap {
+  min-height: 44px;
+  margin: 12px 0 0;
   display: flex;
   align-items: center;
-  gap: 14px;
-  min-height: 64px;
-  padding: 12px 15px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: linear-gradient(180deg, var(--scrim), transparent);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--text-dim);
 }
-.pg-home .sector-card.focus {
-  border-color: var(--primary-dim);
-  background: linear-gradient(
-    180deg,
-    var(--primary-faint),
-    color-mix(in srgb, var(--panel) 62%, transparent)
-  );
-}
-.pg-home .sector-card:hover,
-.pg-home .sector-card:focus-visible {
-  border-color: var(--primary-dim);
-  box-shadow: 0 0 0 1px var(--primary-faint);
-}
-.pg-home .sc-mark {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-}
-/* neutralize the map-absolute positioning so the marker sits inline */
-.pg-home .sector-card .marker-core {
-  position: static;
-  transform: none;
-  width: 40px;
-  height: 40px;
-}
-.pg-home .sector-card:hover .mk-core,
-.pg-home .sector-card:focus-visible .mk-core {
-  fill: var(--primary-bright);
-}
-.pg-home .sc-body {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-}
-.pg-home .sc-badge {
-  align-self: flex-start;
-  font-family: var(--mono);
-  font-size: 0.56rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--energy);
-  border: 1px solid color-mix(in srgb, var(--energy) 45%, transparent);
-  border-radius: 2px;
-  padding: 1px 6px;
-  margin-bottom: 2px;
-}
-.pg-home .sc-name {
-  font-family: var(--mono);
-  font-size: 0.92rem;
-  letter-spacing: 0.01em;
-  color: var(--text);
-  line-height: 1.25;
-}
-.pg-home .sc-detail {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--primary-text);
-  line-height: 1.3;
-}
-.pg-home .sl-cases {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: start;
-  gap: 8px;
-}
-.pg-home .sl-case {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 12px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--panel) 70%, transparent);
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
-  color: var(--text);
-  min-height: 40px;
-  transition: border-color 0.2s ease;
-}
-.pg-home .sl-case:hover,
-.pg-home .sl-case:focus-visible {
-  border-color: var(--primary-dim);
-}
-.pg-home .sl-case .dot {
+.pg-home .orbit-cap::before {
+  content: "";
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--energy);
-  flex-shrink: 0;
+  background: var(--secondary);
+  flex: none;
 }
-.pg-home .sl-case b {
-  color: var(--primary-text);
+.pg-home .orbit-cap b {
+  font-family: var(--display);
   font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text);
 }
-.pg-home .sl-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  align-items: start;
-}
-/* The geographic map only stops colliding once its stage is about 812px wide
-   (measured), which happens at roughly a 860px viewport. Switch to the station
-   list below 900 (the same breakpoint the split reflows at) so no width ever
-   shows overlapping station cards. */
-@media (max-width: 899px) {
-  .pg-home .map-stage {
+@media (max-width: 640px) {
+  .pg-home .orbit-med {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+  }
+  .pg-home .orbit-med svg {
+    width: 26px;
+    height: 26px;
+  }
+  .pg-home .orbit-name {
     display: none;
   }
-  .pg-home .sector-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: clamp(22px, 5vw, 32px);
-  }
-}
-/* Between roughly a phone and the map threshold the single column would
-   stretch, so the cards flow into two even columns. */
-@media (min-width: 560px) and (max-width: 899px) {
-  .pg-home .sl-grid {
-    grid-template-columns: 1fr 1fr;
+  .pg-home .orbit-core .cta {
+    padding: 9px 16px;
+    font-size: 0.9rem;
   }
 }
 
