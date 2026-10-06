@@ -34,9 +34,9 @@
  *   Separation (OKLab delta E, times 100, between the three chart series as
  *   derived in modulos.css and precios.css: --primary, --series-gold,
  *   --energy-bright). Reported for normal vision and for a deuteranope
- *   (Vienot 1999 projection in linear sRGB). Advisory by default because the
- *   dark Tinto wine fails it by an accepted decision (bead hq-8dnn); --strict
- *   is for the bead that closes that gap.
+ *   (Vienot 1999 projection in linear sRGB). Blocking, except for the pairs
+ *   listed in ACCEPTED with the bead that accepted them; --strict ignores
+ *   that list and is for the bead that closes the gap.
  *
  * Derived tokens are recomputed here the way globals.css derives them, in
  * sRGB with the same percentages, so the check moves if those percentages do.
@@ -72,13 +72,25 @@ function tokens(mode) {
   }
   return out;
 }
+/* Every token this check reads is declared a known number of times in
+   globals.css; a later redeclaration would win in the browser and leave this
+   check measuring a stale value, so the count is part of the contract. */
+function declaredTimes(name, times) {
+  const n = (css.match(new RegExp(`(^|[^-\\w])--${name}\\s*:`, "g")) || []).length;
+  if (n !== times) fail2(`--${name} is declared ${n} time(s) in globals.css, expected ${times}`);
+}
 /* A derived token is only trusted when BOTH operands are the ones this check
-   recomputes with; a change of operand must change this file too. */
-function pct(name, from, toward) {
-  const re = new RegExp(`--${name}:\\s*color-mix\\(in srgb, var\\(--${from}\\) (\\d+)%, var\\(--${toward}\\)(?: \\d+%)?\\)`, "g");
+   recomputes with and the second percentage, if written, is the complement of
+   the first (color-mix normalises anything else); a change there must change
+   this file too. */
+function pct(name, from, toward, times = 1) {
+  declaredTimes(name, times);
+  const re = new RegExp(`--${name}:\\s*color-mix\\(in srgb, var\\(--${from}\\) (\\d+)%, var\\(--${toward}\\)(?: (\\d+)%)?\\)`, "g");
   const all = [...css.matchAll(re)];
   if (all.length !== 1) fail2(`expected exactly one --${name}: color-mix(in srgb, var(--${from}) N%, var(--${toward})), found ${all.length}`);
-  return Number(all[0][1]) / 100;
+  const first = Number(all[0][1]);
+  if (all[0][2] !== undefined && Number(all[0][2]) !== 100 - first) fail2(`--${name} mixes ${first}% with ${all[0][2]}%, which color-mix would renormalise; write the complement or omit it`);
+  return first / 100;
 }
 function single(re, what) {
   const m = re.exec(css);
@@ -121,18 +133,31 @@ function deut([r, g, b]) {
   return [gam(0.625 * r + 0.375 * g), gam(0.7 * r + 0.3 * g), gam(0.3 * g + 0.7 * b)];
 }
 
+declaredTimes("cta-ink", 1);
 const ctaInk = hex(single(/--cta-ink:\s*(#[0-9A-Fa-f]{6})/, "--cta-ink"));
 const mutedW = pct("muted", "text", "panel");
 const energyBrightW = pct("energy-bright", "energy", "text");
+declaredTimes("series-gold", 2);
 const lightSeriesGold = single(/:root\[data-mode="light"\]\{--series-gold:(#[0-9A-Fa-f]{6});\}/, "light --series-gold override");
+single(/^\s*--series-gold:\s*var\(--secondary\);/m, "--series-gold: var(--secondary) in :root");
+for (const t of ["ground", "panel", "text", "primary", "secondary", "energy"]) declaredTimes(t, 2);
 const cardW = pct("card", "panel", "text");
 /* --primary-text is var(--primary) in :root; the dark block overrides it with a
    color-mix of primary toward text, whose percentage is read here. */
 single(/^\s*--primary-text:\s*var\(--primary\);/m, "--primary-text: var(--primary) in :root");
 const darkBlock = single(/:root\[data-mode="dark"\]\{([^}]*)\}/, "dark block");
 if (!/--primary-text:\s*color-mix/.test(darkBlock)) fail2("dark block does not override --primary-text");
-const darkPrimaryTextW = pct("primary-text", "primary", "text");
-if ((css.match(/--primary-text:/g) || []).length !== 2) fail2("--primary-text must be declared exactly twice: :root and the dark block");
+const darkPrimaryTextW = pct("primary-text", "primary", "text", 2);
+
+/* Separation failures accepted on the record, as "mode pair vision": the
+   bead names why. Everything else under the floor blocks. */
+const ACCEPTED = new Map([
+  ["light primary/energy-bright normal", "hq-x0h3: 13.0 against a floor of 14, a hair under; the wine and clay keep text labels"],
+  ["light primary/energy-bright deuteranope", "hq-x0h3: 9.9 against a floor of 10"],
+  ["dark primary/energy-bright normal", "hq-8dnn: dark series re-separation"],
+  ["dark primary/energy-bright deuteranope", "hq-8dnn: dark series re-separation"],
+  ["dark gold/energy-bright deuteranope", "hq-8dnn: dark series re-separation"],
+]);
 
 let blocking = 0;
 let advisory = 0;
@@ -172,14 +197,15 @@ for (const mode of ["light", "dark"]) {
 
   const series = { primary: T.primary, gold: seriesGold, "energy-bright": energyBright };
   const keys = Object.keys(series);
-  const kind = strict ? "block" : "advise";
+  const kindFor = (pair, vision) => (!strict && ACCEPTED.has(`${mode} ${pair} ${vision}`) ? "advise" : "block");
   for (let i = 0; i < keys.length; i++) {
     for (let j = i + 1; j < keys.length; j++) {
       const [a, b] = [series[keys[i]], series[keys[j]]];
+      const pair = `${keys[i]}/${keys[j]}`;
       const n = dE(a, b);
       const d = dE(deut(a), deut(b));
-      row(n >= FLOOR.cvdNormal, kind, `series ${keys[i]} vs ${keys[j]}, normal dE`, n, FLOOR.cvdNormal);
-      row(d >= FLOOR.cvdDeut, kind, `series ${keys[i]} vs ${keys[j]}, deuteranope dE`, d, FLOOR.cvdDeut);
+      row(n >= FLOOR.cvdNormal, kindFor(pair, "normal"), `series ${pair}, normal dE`, n, FLOOR.cvdNormal);
+      row(d >= FLOOR.cvdDeut, kindFor(pair, "deuteranope"), `series ${pair}, deuteranope dE`, d, FLOOR.cvdDeut);
     }
   }
 }
@@ -252,6 +278,6 @@ if (blocking) {
 }
 console.log(
   advisory
-    ? `palette-check: contrast clean; ${advisory} separation floor(s) under, advisory (see bead hq-8dnn; --strict to block).`
+    ? `palette-check: contrast clean; ${advisory} separation floor(s) under, each accepted on the record (ACCEPTED in this file; --strict to block).`
     : "palette-check: clean.",
 );
