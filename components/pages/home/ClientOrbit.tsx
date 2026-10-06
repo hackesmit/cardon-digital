@@ -26,7 +26,9 @@ import { CLIENT_MARKS, CLIENT_ORDER, type ClientId } from "./clientMarks";
  * Pointer, keyboard and touch each have their own state: hover (mouse and pen
  * pointers only, and a touch press clears it, so a cursor parked on one
  * client never outranks a tap on another), focus (keyboard only, read from
- * :focus-visible so a focus that follows a click does not count) and a pinned
+ * :focus-visible so a focus that follows a click does not count, and any
+ * pointer press on the stage clears it, since a press can end :focus-visible
+ * without a new focus event) and a pinned
  * client toggled by click or tap, and the active one is focus, then hover,
  * then pinned, so leaving with the mouse never cancels a focus and a tap on a
  * medallion with no case page keeps its caption up until the next tap
@@ -340,7 +342,12 @@ export default function ClientOrbit() {
 
   return (
     <>
-      <div className="orbit-stage" ref={stageRef} aria-label={t.aria}>
+      <div
+        className="orbit-stage"
+        ref={stageRef}
+        aria-label={t.aria}
+        onPointerDownCapture={() => setFocusId(null)}
+      >
         <span className="orbit-legend mono">{t.legend}</span>
         <canvas className="orbit-canvas" ref={canvasRef} aria-hidden="true" />
         {CLIENT_ORDER.map((id) => {
@@ -433,7 +440,7 @@ export default function ClientOrbit() {
         {current ? (
           <>
             <b>{current.name}</b>
-            <span>{current.result}</span>
+            <span>{current.result === current.kind ? current.kind : current.result}</span>
           </>
         ) : (
           <span>{t.hint}</span>
