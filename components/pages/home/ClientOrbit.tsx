@@ -23,11 +23,21 @@ import { CLIENT_MARKS, CLIENT_ORDER, type ClientId } from "./clientMarks";
  * the caption below the stage. Front of the ellipse is drawn larger than the
  * back for depth.
  *
+ * Pointer, keyboard and touch each have their own state: hover, focus and a
+ * click-pinned client, and the active one is focus, then hover, then pinned,
+ * so leaving with the mouse never cancels a focus and a tap on a medallion
+ * with no case page keeps its caption up (aria-pressed says so). A persistent
+ * pause control sits in the stage corner, because motion that runs for more
+ * than five seconds needs one a visitor can operate (WCAG 2.2.2); it starts
+ * paused when the visitor asked for reduced motion. Redraws after any state
+ * change come from an effect, not from the event, so a still frame is never
+ * one update behind.
+ *
  * Runs only on screen and while the document is visible (clearsThreshold, the
- * repo's on-screen rule), stops under reduced motion with a still frame drawn
- * once, re-reads the palette on the cardon-mode event, and refits on resize.
- * Colour comes from readPalette only: the wine for strokes and the icon, the
- * text tier for anything that reads.
+ * repo's on-screen rule), stops when paused or under reduced motion with a
+ * still frame drawn once, re-reads the palette on the cardon-mode event, and
+ * refits on resize. Colour comes from readPalette only: the wine for strokes
+ * and the icon, the text tier for anything that reads.
  */
 
 /* The two clients with a case page, as parallel arrays so app/routes.test.ts
@@ -48,12 +58,17 @@ export default function ClientOrbit() {
   const meds = useRef<Partial<Record<ClientId, HTMLElement | null>>>({});
   const names = useRef<Partial<Record<ClientId, HTMLElement | null>>>({});
   const seatRef = useRef<HTMLDivElement | null>(null);
-  const hoverRef = useRef<ClientId | null>(null);
-  const [hover, setHoverState] = useState<ClientId | null>(null);
-  const setHover = (id: ClientId | null) => {
-    hoverRef.current = id;
-    setHoverState(id);
-  };
+  const [hoverId, setHoverId] = useState<ClientId | null>(null);
+  const [focusId, setFocusId] = useState<ClientId | null>(null);
+  const [pinnedId, setPinnedId] = useState<ClientId | null>(null);
+  const [paused, setPaused] = useState(false);
+  const active: ClientId | null = focusId ?? hoverId ?? pinnedId;
+  const activeRef = useRef<ClientId | null>(null);
+  const pausedRef = useRef(false);
+  /* The loop's draw and start/stop, exposed to the state effect below. */
+  const loopRef = useRef<{ draw: () => void; sync: () => void } | null>(null);
+  activeRef.current = active;
+  pausedRef.current = paused;
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -76,6 +91,7 @@ export default function ClientOrbit() {
     let last = 0;
     let t = 0;
     let speed = 1;
+    if (reduced()) setPaused(true);
     const SEATS = CLIENT_ORDER.length + 1;
     const OMEGA = (Math.PI * 2) / 46;
 
@@ -95,12 +111,12 @@ export default function ClientOrbit() {
 
     function draw(dt: number) {
       if (!ctx) return;
-      const hovered = hoverRef.current;
+      const hovered = activeRef.current;
       const target = hovered ? 0 : 1;
       speed += (target - speed) * Math.min(1, dt * 4);
       t += dt * speed;
       const { cx, cy, rx, ry } = geometry();
-      const still = reduced();
+      const still = reduced() || pausedRef.current;
       ctx.clearRect(0, 0, W, H);
 
       ctx.lineWidth = 1;
@@ -190,7 +206,7 @@ export default function ClientOrbit() {
       if (dt > 0.05) dt = 0.05;
       draw(dt);
     }
-    const canRun = () => !reduced() && docVisible && onscreen;
+    const canRun = () => !reduced() && !pausedRef.current && docVisible && onscreen;
     function start() {
       if (running || !canRun()) return;
       running = true;
@@ -205,15 +221,21 @@ export default function ClientOrbit() {
       }
     }
 
-    /* A hover while the loop is stopped (reduced motion, or the first frame
-       before the observer fires) still lights the route: one redraw. */
-    const onStageOver = () => {
-      if (!running) draw(0);
+    /* The state effect below calls these after React has applied a change, so
+       a still frame (paused, reduced motion, or before the observer fires)
+       shows the new active route, and pause/resume starts or stops the loop. */
+    loopRef.current = {
+      draw: () => {
+        if (!running) draw(0);
+      },
+      sync: () => {
+        if (canRun()) start();
+        else {
+          stop();
+          draw(0);
+        }
+      },
     };
-    stage.addEventListener("mouseover", onStageOver);
-    stage.addEventListener("focusin", onStageOver);
-    stage.addEventListener("mouseout", onStageOver);
-    stage.addEventListener("focusout", onStageOver);
 
     let rt = 0;
     const onResize = () => {
@@ -264,11 +286,8 @@ export default function ClientOrbit() {
 
     return () => {
       stop();
+      loopRef.current = null;
       if (io) io.disconnect();
-      stage.removeEventListener("mouseover", onStageOver);
-      stage.removeEventListener("focusin", onStageOver);
-      stage.removeEventListener("mouseout", onStageOver);
-      stage.removeEventListener("focusout", onStageOver);
       window.clearTimeout(rt);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
@@ -277,7 +296,16 @@ export default function ClientOrbit() {
     };
   }, []);
 
-  const current = hover ? t.clients[hover] : null;
+  /* After every change of the active client or the pause state, one redraw
+     (or a start/stop), with the refs already pointing at the new values. */
+  useEffect(() => {
+    loopRef.current?.draw();
+  }, [active]);
+  useEffect(() => {
+    loopRef.current?.sync();
+  }, [paused]);
+
+  const current = active ? t.clients[active] : null;
 
   return (
     <>
@@ -288,12 +316,12 @@ export default function ClientOrbit() {
           const c = t.clients[id];
           const route = routeFor(id);
           const shared = {
-            className: "orbit-med" + (hover === id ? " lit" : ""),
+            className: "orbit-med" + (active === id ? " lit" : ""),
             "aria-label": c.aria,
-            onMouseEnter: () => setHover(id),
-            onMouseLeave: () => setHover(null),
-            onFocus: () => setHover(id),
-            onBlur: () => setHover(null),
+            onMouseEnter: () => setHoverId(id),
+            onMouseLeave: () => setHoverId((h) => (h === id ? null : h)),
+            onFocus: () => setFocusId(id),
+            onBlur: () => setFocusId((f) => (f === id ? null : f)),
           };
           return (
             <span key={id} style={{ display: "contents" }}>
@@ -310,6 +338,8 @@ export default function ClientOrbit() {
               ) : (
                 <button
                   type="button"
+                  aria-pressed={pinnedId === id}
+                  onClick={() => setPinnedId((p) => (p === id ? null : id))}
                   {...shared}
                   ref={(el) => {
                     meds.current[id] = el;
@@ -335,11 +365,21 @@ export default function ClientOrbit() {
           +
         </div>
         <div className="orbit-core">
-          <Link className="cta" href={href("/contacto")}>
+          <Link className="cta" href={href("/contacto")} aria-describedby="orbit-cta-note">
             {t.cta}
           </Link>
-          <span className="orbit-core-note">{t.ctaNote}</span>
+          <span className="orbit-core-note" id="orbit-cta-note">
+            {t.ctaNote}
+          </span>
         </div>
+        <button
+          type="button"
+          className="orbit-pause mono"
+          aria-pressed={paused}
+          onClick={() => setPaused((p) => !p)}
+        >
+          {paused ? t.resume : t.pause}
+        </button>
       </div>
       <p className="orbit-cap" aria-live="polite">
         {current ? (

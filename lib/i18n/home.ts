@@ -268,6 +268,8 @@ const en = {
       hint: "Five businesses run on what we built. Hover one to read what changed.",
       cta: "Join us",
       ctaNote: "free diagnostic",
+      pause: "Pause the orbit",
+      resume: "Resume the orbit",
       clients: {
         xanic: {
           name: "Monte Xanic",
@@ -565,6 +567,8 @@ const es: typeof en = {
       hint: "Cinco negocios corren con lo que construimos. Pase el cursor por uno para leer qué cambió.",
       cta: "Súmese",
       ctaNote: "diagnóstico sin costo",
+      pause: "Detener el giro",
+      resume: "Reanudar el giro",
       clients: {
         xanic: {
           name: "Monte Xanic",

@@ -252,6 +252,31 @@
   text-transform: uppercase;
   color: var(--muted);
 }
+.pg-home .orbit-pause {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  z-index: 4;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--panel) 82%, transparent);
+  color: var(--text-dim);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.pg-home .orbit-pause:hover,
+.pg-home .orbit-pause:focus-visible {
+  border-color: var(--primary-dim);
+  color: var(--text);
+}
+.pg-home .orbit-pause:focus-visible {
+  outline: 2px solid var(--energy);
+  outline-offset: 2px;
+}
 .pg-home .orbit-cap {
   min-height: 44px;
   margin: 12px 0 0;
