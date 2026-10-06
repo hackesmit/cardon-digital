@@ -60,7 +60,6 @@ const READS_ISINTERSECTING: Record<string, number> = {
   "components/pages/case/VineyardMap.tsx": 1,
   "components/pages/home/HeroAssembly.tsx": 1,
   "components/pages/home/PlayOnceVis.tsx": 1,
-  "components/pages/home/SectorMap.tsx": 1,
   "components/pages/winery/AssistantDemo.tsx": 1,
   "components/pages/winery/VineField.tsx": 1,
   "components/site/Reveal.tsx": 1,

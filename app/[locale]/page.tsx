@@ -3,7 +3,7 @@ import Link from "next/link";
 import DigitalArc from "@/components/pages/home/DigitalArc";
 import HeroAssembly from "@/components/pages/home/HeroAssembly";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
-import SectorMap from "@/components/pages/home/SectorMap";
+import ClientOrbit from "@/components/pages/home/ClientOrbit";
 import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
 import Media, { type MediaPhotoSlot } from "@/components/site/Media";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
@@ -184,8 +184,8 @@ export default function Home({ params }: Params) {
       {/* ============================ 2. PROOF BAR ============================
           Three named clients with what we actually have: Monte Xanic's real
           number, what was built for En'kanto, and what was built for Dharma
-          Ochoa. SectorMap, the valley canvas, draws the home ground under them
-          above 900px and lists the same stations as a portrait list below. */}
+          Ochoa. ClientOrbit, under them, turns the five businesses that run on
+          what we built around the one action (bead hq-1cct). */}
       <section className="proof" aria-label={d.proof.aria}>
         <div className="container proof-grid proof-grid-3">
           {d.proof.items.map((item, i) =>
@@ -209,7 +209,7 @@ export default function Home({ params }: Params) {
         </div>
 
         <div className="container proof-map">
-          <SectorMap />
+          <ClientOrbit />
         </div>
       </section>
 

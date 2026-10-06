@@ -230,6 +230,12 @@ export const CANVAS_OPS = /\.getContext\s*\(/;
  */
 export const RETIRED = [
   // { path: "components/pages/home/Example.tsx", date: "2026-09-15", reason: "..." },
+  {
+    path: "components/pages/home/SectorMap.tsx",
+    date: "2026-10-06",
+    reason:
+      "Daniel: the valley map lost its stations when the site narrowed to three services and read empty; replaced by ClientOrbit (bead hq-1cct), the five client businesses turning around the diagnostic action.",
+  },
 ];
 
 /** Never throws. A malformed entry comes back as a message and main exits 2. */
