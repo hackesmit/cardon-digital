@@ -250,7 +250,9 @@
   font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
+  /* --text-dim, not --muted: this line sits inside the clay halo, where muted
+     drops under 3:1 in light mode (reviewer, bead hq-1cct). */
+  color: var(--text-dim);
 }
 .pg-home .orbit-pause {
   position: absolute;

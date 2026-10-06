@@ -345,6 +345,7 @@ export default function ClientOrbit() {
       <div
         className="orbit-stage"
         ref={stageRef}
+        role="group"
         aria-label={t.aria}
         onPointerDownCapture={() => setFocusId(null)}
       >
