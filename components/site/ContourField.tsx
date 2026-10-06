@@ -43,12 +43,12 @@ export default function ContourField() {
 
     const PAL = {
       dark: true,
-      primaryRgb: [63, 181, 138] as RGB,
-      textRgb: [228, 234, 217] as RGB,
-      secondaryRgb: [217, 168, 58] as RGB,
+      primaryRgb: [184, 68, 92] as RGB,
+      textRgb: [239, 228, 230] as RGB,
+      secondaryRgb: [209, 172, 85] as RGB,
     };
     const readPalette = () => {
-      PAL.primaryRgb = hexToRgb(cssVar("--primary") || "#D0617B");
+      PAL.primaryRgb = hexToRgb(cssVar("--primary") || "#B8445C");
       PAL.textRgb = hexToRgb(cssVar("--text") || "#EFE4E6");
       PAL.secondaryRgb = hexToRgb(cssVar("--secondary") || "#D1AC55");
       PAL.dark = root.getAttribute("data-mode") !== "light";

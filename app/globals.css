@@ -14,15 +14,22 @@
    colorway canvas). Wine primary, brass secondary, clay energy; the clay is the
    same hex in both modes because the CTA ink is one colour. Every hex here is
    measured by scripts/palette-check.mjs, which runs inside npm test: text uses
-   of a token meet 4.5:1 on their surface in both modes. The dark primary is a
-   lighter wine than the brand would pick by eye because 4.5:1 on the dark
-   panel needs it; the price is chart-series separation for a deuteranope in
+   of a token meet 4.5:1 on their surface in both modes. The primary has two
+   tiers: --primary is the wine itself, for display text (h1 accents, prices),
+   lines, dots, strokes and the canvases, where 3:1 is the floor; --primary-text
+   is the wine when it paints small text (kickers, eyebrows, details, prices,
+   links), which in dark mode is a lighter mix (62% wine, 38% text) because the
+   deep wine reaches only 3.4:1 on the dark panel and 2.7:1 on the card, and a
+   wine light enough for 4.5:1 everywhere reads pink in a headline (Daniel,
+   2026-10-06). In light mode both tiers are the same hex. The
+   price of the deep dark wine is chart-series separation for a deuteranope in
    dark mode, tracked in bead hq-8dnn. */
 
 :root[data-mode="dark"]{
   color-scheme:dark;
   --ground:#120F12; --panel:#1C161B; --text:#EFE4E6;
-  --primary:#D0617B; --secondary:#D1AC55; --energy:#B4561A;
+  --primary:#B8445C; --secondary:#D1AC55; --energy:#B4561A;
+  --primary-text: color-mix(in srgb, var(--primary) 62%, var(--text) 38%);
 }
 :root[data-mode="light"]{
   color-scheme:light;
@@ -45,6 +52,8 @@
   --primary-faint: color-mix(in srgb, var(--primary) 14%, transparent);
   --primary-dim: color-mix(in srgb, var(--primary) 52%, transparent);
   --primary-bright: color-mix(in srgb, var(--primary) 74%, var(--text) 26%);
+  /* The primary as small text; the dark block overrides it with a lighter mix. */
+  --primary-text: var(--primary);
   --secondary-bright: color-mix(in srgb, var(--secondary) 78%, var(--text) 22%);
   --energy-bright: color-mix(in srgb, var(--energy) 80%, var(--text) 20%);
   /* The gold a chart series wears. In light mode the brand brass is deepened
@@ -55,7 +64,7 @@
   --series-gold: var(--secondary);
   --header-bg: color-mix(in srgb, var(--ground) 85%, transparent);
   --scrim: color-mix(in srgb, var(--ground) 55%, transparent);
-  --cta-ink:#FFF3EA;
+  --cta-ink:#FFFCFB;
   --shadow:0 30px 80px -50px rgba(0,0,0,0.85);
   --sans: var(--font-text), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --display: var(--font-display), Georgia, "Times New Roman", serif;
@@ -277,7 +286,7 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 .hero-copy{max-width:760px;}
 .eyebrow{
   font-family:var(--mono);font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--primary);margin-bottom:20px;display:inline-flex;align-items:center;gap:10px;
+  color:var(--primary-text);margin-bottom:20px;display:inline-flex;align-items:center;gap:10px;
 }
 .eyebrow::before{content:"";width:26px;height:1px;background:var(--primary);display:inline-block;}
 h1{font-size:clamp(2.2rem,5.8vw,4.1rem);letter-spacing:-0.025em;}
@@ -303,7 +312,7 @@ h1 .accent{color:var(--primary);}
 }
 .stage-tag .before{color:var(--secondary);}
 .stage-tag .midword{color:var(--muted);}
-.stage-tag .after{color:var(--primary);}
+.stage-tag .after{color:var(--primary-text);}
 .stage-caption{
   position:absolute;bottom:12px;right:18px;z-index:3;
   font-family:var(--mono);font-size:0.7rem;letter-spacing:0.06em;color:var(--muted);
@@ -319,7 +328,7 @@ h1 .accent{color:var(--primary);}
 .value-item{display:flex;flex-direction:column;gap:9px;min-width:0;}
 .value-key{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;}
 .value-lead{font-size:clamp(1.15rem,1.9vw,1.5rem);font-weight:600;letter-spacing:-0.02em;color:var(--text);line-height:1.16;}
-.value-lead .cool{color:var(--primary);}
+.value-lead .cool{color:var(--primary-text);}
 .value-body{color:var(--text-dim);font-size:0.96rem;max-width:34ch;}
 
 /* ============================ SECTIONS ============================ */
@@ -331,7 +340,7 @@ h1 .accent{color:var(--primary);}
 .section-head{max-width:64ch;margin-bottom:clamp(30px,4vw,46px);}
 .kicker{
   font-family:var(--mono);font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;
-  color:var(--primary);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+  color:var(--primary-text);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
 }
 .kicker::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--primary);}
 .kicker.gold{color:var(--secondary);}
@@ -347,7 +356,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 .split.reverse .split-vis{order:1;}
 .split-copy,.split-vis{min-width:0;}
 .split-copy .note{margin-top:18px;font-family:var(--mono);font-size:0.76rem;letter-spacing:0.06em;color:var(--muted);border-top:1px solid var(--line-soft);padding-top:16px;}
-.split-copy .note b{color:var(--primary);font-weight:600;}
+.split-copy .note b{color:var(--primary-text);font-weight:600;}
 
 .vis-frame{
   position:relative;border:1px solid var(--line);border-radius:2px;overflow:hidden;
@@ -523,7 +532,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   border-radius:2px;padding:1px 5px;margin-bottom:2px;
 }
 .marker-name{font-family:var(--mono);font-size:0.72rem;letter-spacing:0.03em;color:var(--text);line-height:1.25;overflow-wrap:break-word;}
-.marker-detail{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.02em;color:var(--primary);line-height:1.25;overflow-wrap:break-word;}
+.marker-detail{font-family:var(--mono);font-size:0.64rem;letter-spacing:0.02em;color:var(--primary-text);line-height:1.25;overflow-wrap:break-word;}
 .map-marker:hover .marker-label,.map-marker:focus-visible .marker-label{border-color:var(--primary-dim);box-shadow:0 0 0 1px var(--primary-faint);}
 /* keep plates inside the stage for edge markers */
 .map-marker.m-left .marker-label{left:-6px;transform:none;}
@@ -551,10 +560,10 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 }
 .map-case:hover,.map-case:focus-visible{border-color:var(--primary-dim);box-shadow:0 0 0 1px var(--primary-faint);}
 .map-case .dot{width:6px;height:6px;border-radius:50%;background:var(--energy);flex-shrink:0;}
-.map-case b{color:var(--primary);font-weight:600;}
+.map-case b{color:var(--primary-text);font-weight:600;}
 
 .sectors-foot{margin-top:22px;font-family:var(--mono);font-size:0.76rem;letter-spacing:0.05em;color:var(--muted);}
-.sectors-foot b{color:var(--primary);font-weight:600;}
+.sectors-foot b{color:var(--primary-text);font-weight:600;}
 /* winery-led sectors block: one lead card above the map, the rest demoted to
    a secondary list below it */
 .sector-lead{
@@ -569,13 +578,13 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 }
 .sector-lead-kicker{
   font-family:var(--mono);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--primary);
+  color:var(--primary-text);
 }
 .sector-lead-title{font-size:clamp(1.2rem,2.1vw,1.6rem);font-weight:600;color:var(--text);margin:6px 0 8px;line-height:1.2;}
 .sector-lead-body{color:var(--text-dim);font-size:0.98rem;line-height:1.65;max-width:70ch;}
 .sector-lead-cta{
   display:inline-block;margin-top:12px;
-  font-family:var(--mono);font-size:0.76rem;letter-spacing:0.08em;color:var(--primary);
+  font-family:var(--mono);font-size:0.76rem;letter-spacing:0.08em;color:var(--primary-text);
   border-bottom:1px solid var(--primary-dim);padding-bottom:2px;
 }
 .sector-secondary{
@@ -627,7 +636,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   text-transform:uppercase;color:var(--muted);
 }
 .price-floor-v{font-size:clamp(1.05rem,1.7vw,1.32rem);color:var(--text-dim);}
-.price-floor-v b{color:var(--primary);font-weight:600;}
+.price-floor-v b{color:var(--primary-text);font-weight:600;}
 .tier-list{
   margin:4px 0 0;padding:0;list-style:none;
   display:flex;flex-direction:column;gap:7px;
@@ -691,7 +700,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 .diag-desc{color:var(--text-dim);max-width:48ch;font-size:1.05rem;}
 .diag-actions{margin-top:24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
 .diag-price{margin-top:16px;font-family:var(--mono);font-size:0.86rem;color:var(--muted);letter-spacing:0.03em;}
-.diag-price b{color:var(--primary);font-weight:600;}
+.diag-price b{color:var(--primary-text);font-weight:600;}
 .diag-specs{position:relative;display:flex;flex-direction:column;gap:14px;min-width:0;}
 .spec{display:flex;gap:13px;align-items:flex-start;font-size:0.98rem;}
 .spec-dot{width:8px;height:8px;border-radius:2px;background:var(--secondary);margin-top:9px;flex-shrink:0;}

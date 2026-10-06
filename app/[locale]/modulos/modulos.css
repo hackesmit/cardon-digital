@@ -48,7 +48,7 @@
   font-size: 0.74rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--primary-text);
   font-weight: 500;
   margin-bottom: 16px;
 }
@@ -154,7 +154,7 @@
   margin-bottom: 14px;
 }
 .mod-pack-base .mod-pack-label {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .mod-list {
@@ -457,13 +457,14 @@
    wrong is gold against clay (deuteranope dE 5.7, normal-vision dE 12.2, both
    under the floor), which is why Restaurante takes --energy-bright rather
    than --energy. Under Tinto y Laton (bead hq-x0h3, 2026-10-06) light mode
-   resolves to #7A1F38 / #B5812F / #97491A and passes CVD separation, the
-   normal-vision floor and contrast against its own surface; dark resolves to
-   #D0617B / #D1AC55 / #C07243 and keeps contrast, but the wine sits under the
-   deuteranope floor against both the gold and the clay (dE 5.1 and 4.2), the
-   cost of a wine light enough to read as text on the dark panel. Measured by
-   scripts/palette-check.mjs; the dark fix is bead hq-8dnn. Every series is
-   also named in text beside its colour, so identity is never colour alone. */
+   resolves to #7A1F38 / #B5812F / #97491A and passes contrast and the
+   gold-against-clay separation; wine against clay sits a hair under the floors
+   (dE 13.0 normal, 9.9 deuteranope, floors 14 and 10). Dark resolves to
+   #B8445C / #D1AC55 / #C07243 and keeps contrast, but wine against clay is
+   dE 4.3 for a deuteranope and gold against clay 8.5, both under the floor:
+   two reds and a brass on a dark ground. Measured by scripts/palette-check.mjs;
+   the dark fix is bead hq-8dnn. Every series is also named in text beside its
+   colour, so identity is never colour alone. */
 
 .mod-vis {
   margin-top: clamp(26px, 3.5vw, 40px);

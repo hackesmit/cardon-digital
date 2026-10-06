@@ -15,9 +15,11 @@
  * picker. Two kinds of floor:
  *
  *   Contrast (WCAG 2.1 relative luminance). Blocking. Each row is a token the
- *   site actually sets as text on a surface: body text on ground, primary as
- *   link/detail text on panel and ground, muted on panel, CTA ink on energy,
- *   and the three chart series on the panel they sit in.
+ *   site actually sets as text on a surface (ground, panel, and card, the
+ *   panel lifted 10% toward text): body text, --primary-text as small text
+ *   (kickers, details, links), --primary as display text and strokes (3:1),
+ *   muted captions, CTA ink on energy, and the three chart series on the panel
+ *   they sit in.
  *
  *   Separation (OKLab delta E, times 100, between the three chart series as
  *   derived in modulos.css and precios.css: --primary, --series-gold,
@@ -98,7 +100,15 @@ function deut([r, g, b]) {
 const ctaInk = hex(single(/--cta-ink:\s*(#[0-9A-Fa-f]{6})/, "--cta-ink"));
 const mutedW = pct("muted");
 const energyBrightW = pct("energy-bright");
-const lightSeriesGold = /:root\[data-mode="light"\]\{--series-gold:(#[0-9A-Fa-f]{6});\}/.exec(css)?.[1];
+const lightSeriesGold = single(/:root\[data-mode="light"\]\{--series-gold:(#[0-9A-Fa-f]{6});\}/, "light --series-gold override");
+const cardW = pct("card");
+/* --primary-text is var(--primary) in :root; the dark block overrides it with a
+   color-mix of primary toward text, whose percentage is read here. */
+single(/^\s*--primary-text:\s*var\(--primary\);/m, "--primary-text: var(--primary) in :root");
+const darkBlock = single(/:root\[data-mode="dark"\]\{([^}]*)\}/, "dark block");
+if (!/--primary-text:\s*color-mix/.test(darkBlock)) fail2("dark block does not override --primary-text");
+const darkPrimaryTextW =
+  Number(single(/--primary-text:\s*color-mix\(in srgb, var\(--primary\) (\d+)%, var\(--text\)/, "dark --primary-text color-mix")) / 100;
 
 let blocking = 0;
 let advisory = 0;
@@ -112,20 +122,25 @@ for (const mode of ["light", "dark"]) {
   const t = tokens(mode);
   const T = Object.fromEntries(Object.entries(t).map(([k, v]) => [k, hex(v)]));
   const muted = mix(T.text, T.panel, mutedW);
+  const card = mix(T.panel, T.text, cardW);
   const energyBright = mix(T.energy, T.text, energyBrightW);
-  const seriesGold = mode === "light" && lightSeriesGold ? hex(lightSeriesGold) : T.secondary;
+  const primaryText = mode === "dark" ? mix(T.primary, T.text, darkPrimaryTextW) : T.primary;
+  const seriesGold = mode === "light" ? hex(lightSeriesGold) : T.secondary;
 
   console.log(`\n${mode}: ${Object.entries(t).map(([k, v]) => `${k} ${v}`).join("  ")}`);
-  console.log(`  derived: series-gold ${toHex(seriesGold)}  energy-bright ${toHex(energyBright)}  muted ${toHex(muted)}`);
+  console.log(`  derived: primary-text ${toHex(primaryText)}  series-gold ${toHex(seriesGold)}  energy-bright ${toHex(energyBright)}  muted ${toHex(muted)}  card ${toHex(card)}`);
 
   const c = (a, b) => contrast(a, b);
   row(c(T.text, T.ground) >= 7, "block", "text on ground (body, AAA)", c(T.text, T.ground), 7);
   row(c(T.text, T.panel) >= 7, "block", "text on panel (card body, AAA)", c(T.text, T.panel), 7);
-  row(c(T.primary, T.panel) >= FLOOR.text, "block", "primary on panel (detail lines, links)", c(T.primary, T.panel), FLOOR.text);
-  row(c(T.primary, T.ground) >= FLOOR.text, "block", "primary on ground (accent text)", c(T.primary, T.ground), FLOOR.text);
+  row(c(primaryText, T.panel) >= FLOOR.text, "block", "primary-text on panel (details, links)", c(primaryText, T.panel), FLOOR.text);
+  row(c(primaryText, T.ground) >= FLOOR.text, "block", "primary-text on ground (kickers)", c(primaryText, T.ground), FLOOR.text);
+  row(c(primaryText, card) >= FLOOR.text, "block", "primary-text on card (module tags, prices)", c(primaryText, card), FLOOR.text);
+  row(c(T.primary, T.panel) >= FLOOR.large, "block", "primary on panel (display, strokes, 3:1)", c(T.primary, T.panel), FLOOR.large);
+  row(c(T.primary, T.ground) >= FLOOR.large, "block", "primary on ground (h1 accent, 3:1)", c(T.primary, T.ground), FLOOR.large);
   row(c(T.secondary, T.ground) >= FLOOR.large, "block", "secondary on ground (kickers, large)", c(T.secondary, T.ground), FLOOR.large);
   row(c(muted, T.panel) >= FLOOR.large, "block", "muted on panel (mono captions, 3:1)", c(muted, T.panel), FLOOR.large);
-  row(c(ctaInk, T.energy) >= 4.4, "block", "cta ink on energy (buttons)", c(ctaInk, T.energy), 4.4);
+  row(c(ctaInk, T.energy) >= FLOOR.text, "block", "cta ink on energy (buttons)", c(ctaInk, T.energy), FLOOR.text);
   row(c(energyBright, T.panel) >= FLOOR.text, "block", "energy-bright on panel (series, legend)", c(energyBright, T.panel), FLOOR.text);
   row(c(seriesGold, T.panel) >= FLOOR.large, "block", "series-gold on panel (series, 3:1)", c(seriesGold, T.panel), FLOOR.large);
 

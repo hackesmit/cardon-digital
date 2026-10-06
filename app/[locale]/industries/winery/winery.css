@@ -278,7 +278,7 @@
 }
 .pg-winery .ad-board-title{font-size:1.02rem;letter-spacing:-0.01em;font-weight:600;}
 .pg-winery .ad-live{
-  font-size:0.6rem;letter-spacing:0.18em;color:var(--primary);
+  font-size:0.6rem;letter-spacing:0.18em;color:var(--primary-text);
   display:inline-flex;align-items:center;gap:6px;
 }
 .pg-winery .ad-live::before{
