@@ -265,7 +265,7 @@ const en = {
     orbit: {
       aria: "The businesses that run on what we built, turning around the diagnostic",
       legend: "Built with",
-      hint: "Five businesses run on what we built. Hover one to read what changed.",
+      hint: "Five businesses run on what we built. Hover one to read who they are and, where we can say it, what changed.",
       cta: "Join us",
       ctaNote: "free diagnostic",
       pause: "Pause the orbit",
@@ -564,7 +564,7 @@ const es: typeof en = {
     orbit: {
       aria: "Los negocios que corren con lo que construimos, girando alrededor del diagnóstico",
       legend: "Construido con",
-      hint: "Cinco negocios corren con lo que construimos. Pase el cursor por uno para leer qué cambió.",
+      hint: "Cinco negocios corren con lo que construimos. Pase el cursor por uno para ver quién es y, donde podemos decirlo, qué cambió.",
       cta: "Súmese",
       ctaNote: "diagnóstico sin costo",
       pause: "Detener el giro",
