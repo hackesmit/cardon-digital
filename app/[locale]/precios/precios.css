@@ -189,13 +189,13 @@
    against clay is the one pair the brand gets wrong for this job: as tokens
    they sit a deuteranope delta E of 5.7 and a normal-vision delta E of 12.2
    apart, both under the floor. Under Tinto y Laton (bead hq-x0h3, 2026-10-06)
-   the set resolves to #7A1F38 / #B5812F / #97491A in light, which passes CVD
-   separation, the normal-vision floor and contrast against its own surface,
-   and to #D0617B / #D1AC55 / #C07243 in dark, which keeps contrast but puts
-   the wine under the deuteranope floor against gold and clay (dE 5.1 and
-   4.2): the dark fix is bead hq-8dnn, the numbers come from
-   scripts/palette-check.mjs. Every series is named in text as well, so
-   nothing here is identified by colour alone.
+   the set resolves to #7A1F38 / #B5812F / #97491A in light, which passes
+   contrast and gold against clay, with wine against clay a hair under the
+   floors (dE 13.0 normal, 9.9 deuteranope), and to #B8445C / #D1AC55 /
+   #C07243 in dark, which keeps contrast but puts wine against clay at dE 4.3
+   and gold against clay at 8.5 for a deuteranope: the dark fix is bead
+   hq-8dnn, the numbers come from scripts/palette-check.mjs. Every series is
+   named in text as well, so nothing here is identified by colour alone.
 
    The build bar (data-part="setup") is not a module and was never meant to be
    in the legend's four; drawing it in --primary was a bug, not a choice, since
@@ -447,7 +447,7 @@
   margin-top:auto;padding-top:16px;
   align-self:flex-start;
   font-family:var(--mono);font-size:0.76rem;letter-spacing:0.06em;
-  color:var(--primary);border-bottom:1px solid var(--primary-dim);
+  color:var(--primary-text);border-bottom:1px solid var(--primary-dim);
   transition:color .2s ease,border-color .2s ease;
 }
 .pg-precios .floor-demo:hover{color:var(--text);border-color:var(--text);}
