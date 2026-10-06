@@ -220,6 +220,7 @@ const DISPLAY_PRIMARY = new Set([
   /* icons, dots, bars and cores: SVG shapes, not text. A class here must never
      sit on an SVG <text>; the TSX scan below enforces that. */
   ".pg-winery .cap-glyph",
+  ".pg-home .orbit-med",
   ".dm-knob-halo",
   ".dm-knob-core",
   ".ov-clean-fill circle",
