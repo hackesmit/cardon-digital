@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
-    "mtime": 1791336706.8583624,
-    "ast_hash": "252c6a325e1b1d2866f2c3da04d304fb",
+    "mtime": 1790811894.6348379,
+    "ast_hash": "0e3e5311ac0d8d2183f9e7659527a859",
     "semantic_hash": ""
   },
   "public/media/valle-vineyard.webp": {
@@ -700,8 +700,8 @@
     "semantic_hash": ""
   },
   "docs/media-clearances.md": {
-    "mtime": 1791336706.8583624,
-    "ast_hash": "182db4c7cce555072cc6f863ca23b0e1",
+    "mtime": 1790729810.4535506,
+    "ast_hash": "9833a2dd591bdec48a0505e8411fe6a3",
     "semantic_hash": ""
   },
   "public/media/README.md": {
@@ -1385,28 +1385,8 @@
     "semantic_hash": ""
   },
   "components/pages/home/clientMarks.tsx": {
-    "mtime": 1791336706.8583624,
-    "ast_hash": "109c7fbb08ba475f81ce3170360179e9",
-    "semantic_hash": ""
-  },
-  "public/media/clients/brighterhire-mark.png": {
-    "mtime": 1791336706.8593624,
-    "ast_hash": "0f8fec56695148a62c22279ae7cfce6b",
-    "semantic_hash": ""
-  },
-  "public/media/clients/enkanto-mark.png": {
-    "mtime": 1791336706.8593624,
-    "ast_hash": "e74d6f0f7fe1118d10b8cdda430cf138",
-    "semantic_hash": ""
-  },
-  "public/media/clients/monte-xanic-mark.png": {
-    "mtime": 1791336706.8593624,
-    "ast_hash": "458e87e39d9ec8fcc850aad9f41a2721",
-    "semantic_hash": ""
-  },
-  "public/media/clients/rlogistics-mark.png": {
-    "mtime": 1791336706.8593624,
-    "ast_hash": "8a887ee838ca816ed1a28e69d3cf79f8",
+    "mtime": 1791323030.0265307,
+    "ast_hash": "7934857076362c6a6dc5b67499ab2ba0",
     "semantic_hash": ""
   }
 }
