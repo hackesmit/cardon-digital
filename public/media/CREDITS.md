@@ -110,11 +110,12 @@ inline SVG path data.
 
 ## Client marks (2026-10-07)
 
-The four files under `clients/` are the clients' own marks, supplied by the
-clients and used with their permission on the home page's client orbit. Each
-is the emblem of the supplied file, reduced to a one-colour alpha silhouette so
-it takes the site's colour; the marks themselves remain the property of each
-business.
+The four files under `clients/` are the marks of four businesses Cardon
+Digital has built for, shown on the home page's client orbit with their
+permission. Each is the emblem of the owner's logo, cut from the rest and
+reduced to a one-colour silhouette so it takes the site's colour; the marks
+remain the property of each business, and an owner who prefers the full logo
+or none at all gets that on request.
 
 ### clients/brighterhire-mark.png
 
