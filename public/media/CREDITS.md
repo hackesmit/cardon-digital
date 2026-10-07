@@ -106,3 +106,36 @@ inline SVG path data.
 - Source: https://cdn.jsdelivr.net/npm/lucide-static@1.48.0/icons/
 - Icons: grape (berry), cylinder (tank), barrel (barrel), bottle-wine (bottle)
 - Copyright (c) Lucide Icons and Contributors
+
+
+## Client marks (2026-10-07)
+
+The four files under `clients/` are the clients' own marks, supplied by the
+clients and used with their permission on the home page's client orbit. Each
+is the emblem of the supplied file, reduced to a one-colour alpha silhouette so
+it takes the site's colour; the marks themselves remain the property of each
+business.
+
+### clients/brighterhire-mark.png
+
+- Credit: BrighterHire
+- License: used with permission of the owner
+- Slot: home/orbit
+
+### clients/monte-xanic-mark.png
+
+- Credit: Monte Xanic
+- License: used with permission of the owner
+- Slot: home/orbit
+
+### clients/enkanto-mark.png
+
+- Credit: Vinedo En'kanto
+- License: used with permission of the owner
+- Slot: home/orbit
+
+### clients/rlogistics-mark.png
+
+- Credit: RLogistics
+- License: used with permission of the owner
+- Slot: home/orbit

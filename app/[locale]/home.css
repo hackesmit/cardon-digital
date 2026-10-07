@@ -176,6 +176,23 @@
   height: 30px;
   display: block;
 }
+/* A client's own mark: an alpha mask painted with the medallion's colour, so
+   it wears the token in both modes (clientMarks.tsx, bead hq-3w0v). */
+.pg-home .orbit-mark {
+  width: 34px;
+  height: 34px;
+  display: block;
+  background: currentColor;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+.pg-home .orbit-mark-wide {
+  width: 46px;
+}
 .pg-home .orbit-med:hover,
 .pg-home .orbit-med:focus-visible,
 .pg-home .orbit-med.lit {
@@ -311,6 +328,13 @@
   .pg-home .orbit-med svg {
     width: 26px;
     height: 26px;
+  }
+  .pg-home .orbit-mark {
+    width: 28px;
+    height: 28px;
+  }
+  .pg-home .orbit-mark-wide {
+    width: 38px;
   }
   .pg-home .orbit-name {
     display: none;

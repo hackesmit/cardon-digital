@@ -68,3 +68,26 @@ to 9 and 11.5 seconds, muted, 1080p.
   screens are cleared before the site leaves the COMING_SOON gate.
 - Real numbers on screen: yes, the production dashboard, illegible at the
   sizes served (2400 px wide at most, charts a few hundred pixels tall).
+
+
+## Client marks for the home orbit, 2026-10-06
+
+Four files under the served media folder, `clients/brighterhire-mark.png`,
+`clients/monte-xanic-mark.png`, `clients/enkanto-mark.png` and
+`clients/rlogistics-mark.png`: each client's mark as a one-colour silhouette,
+cut from the logo file supplied.
+
+- Shot by: not a photograph; each mark is the client's own, supplied as an
+  image through the console inbox on 2026-10-06 and reduced to its emblem
+  through Chrome's canvas (the box has no image library)
+- Location: not applicable
+- People in frame: none
+- Release: not needed, no person
+- Client clearance: Daniel supplied the four files on 2026-10-06 with "here
+  are the logos we can use", which is the record of permission to show each
+  mark as a client of Cardon Digital; Monte Xanic's permission to be named is
+  also recorded above. If a client later asks for its mark in its own colours
+  or not at all, the file and its entry here come out and the medallion falls
+  back to a placeholder monogram.
+- Real numbers on screen: no
+- Slot: home/orbit
