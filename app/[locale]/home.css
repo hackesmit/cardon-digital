@@ -176,6 +176,58 @@
   height: 30px;
   display: block;
 }
+/* A client's own mark: an alpha mask painted with the medallion's colour, so
+   it wears the token in both modes (clientMarks.tsx, bead hq-3w0v). The mask
+   files are named here, not in a style attribute, so a strict style-src
+   policy cannot strip them. Without mask support the span is hidden and the
+   monogram beside it shows instead of a solid block. */
+.pg-home .orbit-mark {
+  display: none;
+}
+.pg-home .orbit-mark-fallback {
+  display: block;
+}
+.pg-home .orbit-mark-fallback svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+@supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
+  .pg-home .orbit-mark {
+    width: 34px;
+    height: 34px;
+    display: block;
+    background: currentColor;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  .pg-home .orbit-mark-fallback {
+    display: none;
+  }
+  .pg-home .orbit-mark-wide {
+    width: 46px;
+  }
+  .pg-home .orbit-mark-xanic {
+    -webkit-mask-image: url(/media/clients/monte-xanic-mark.png);
+    mask-image: url(/media/clients/monte-xanic-mark.png);
+  }
+  .pg-home .orbit-mark-enkanto {
+    -webkit-mask-image: url(/media/clients/enkanto-mark.png);
+    mask-image: url(/media/clients/enkanto-mark.png);
+  }
+  .pg-home .orbit-mark-brighter {
+    -webkit-mask-image: url(/media/clients/brighterhire-mark.png);
+    mask-image: url(/media/clients/brighterhire-mark.png);
+  }
+  .pg-home .orbit-mark-rlog {
+    -webkit-mask-image: url(/media/clients/rlogistics-mark.png);
+    mask-image: url(/media/clients/rlogistics-mark.png);
+  }
+}
 .pg-home .orbit-med:hover,
 .pg-home .orbit-med:focus-visible,
 .pg-home .orbit-med.lit {
@@ -311,6 +363,19 @@
   .pg-home .orbit-med svg {
     width: 26px;
     height: 26px;
+  }
+  .pg-home .orbit-mark-fallback svg {
+    width: 26px;
+    height: 26px;
+  }
+  @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
+    .pg-home .orbit-mark {
+      width: 28px;
+      height: 28px;
+    }
+    .pg-home .orbit-mark-wide {
+      width: 38px;
+    }
   }
   .pg-home .orbit-name {
     display: none;
