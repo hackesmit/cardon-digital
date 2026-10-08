@@ -204,25 +204,25 @@ const en = {
     limitsTitle: "The edges, written into the screens.",
     limits: [
       {
-        lead: "It mirrors the channels. It does not write to them.",
+        lead: "It mirrors the channels without writing to them.",
         body: "Airbnb publishes no open interface for a host, so the calendar reads the iCal feeds, which refresh in hours. A date blocked here stays open there, and the screen says so.",
       },
       {
-        lead: "It reads OpenTable. It does not scrape it.",
+        lead: "It reads OpenTable through the partner access only.",
         body: "Table bookings live in OpenTable, open to approved partners and to nobody else. Until that account is connected, the booking is taken by hand and reconciled against the export on guest and time, so one stays one.",
       },
       {
-        lead: "A room bill adds up the restaurant's charges. It never writes one.",
+        lead: "A room bill adds up the restaurant's charges without ever writing one.",
         body: "The front desk only reads them: creating or changing a charge belongs to the restaurant. A charge with no amount shows as pending and stays out of the total, and an example is labelled as one.",
       },
       {
-        lead: "It is built. It is not yet in service at En'kanto.",
+        lead: "It is built and not yet in service at En'kanto.",
         body: "Everything here is merged and running. Putting it into the property's daily work is the next phase, and until then we claim nothing about what it changed.",
       },
     ],
     demo: {
       kicker: "See it",
-      title: "The system is open. Walk it yourself.",
+      title: "The system is open for you to walk yourself.",
       body: "It runs as a public demonstration under a fictional name, assembled from a whitelist that leaves En'kanto's own data files out of the deployment. Open a module, pick any of the ten positions, walk its screens.",
       cta: "Open the demo",
       note: "Illustrative data under a fictional name. Nothing there belongs to a client.",
@@ -426,25 +426,25 @@ const es: typeof en = {
     limitsTitle: "Los límites, escritos en las pantallas.",
     limits: [
       {
-        lead: "Refleja los canales. No escribe en ellos.",
+        lead: "Refleja los canales sin escribir en ellos.",
         body: "Airbnb no ofrece una interfaz abierta para anfitriones, así que el calendario lee los feeds iCal, que tardan horas en actualizarse. Una fecha bloqueada aquí sigue abierta allá, y la pantalla lo dice.",
       },
       {
-        lead: "Lee OpenTable. No saca sus datos por fuera.",
+        lead: "Lee OpenTable solo por el acceso de socio, sin sacar datos por fuera.",
         body: "Las reservaciones de mesa están en OpenTable, que da acceso a socios aprobados y a nadie más. Mientras esa cuenta no esté conectada, la reservación se captura a mano y se concilia con la exportación por comensal y hora, para que no se duplique.",
       },
       {
-        lead: "La cuenta de la habitación suma los cargos del restaurante. Nunca escribe uno.",
+        lead: "La cuenta de la habitación suma los cargos del restaurante sin escribir ninguno.",
         body: "La recepción solo los lee: crear o cambiar un cargo le toca al restaurante. Un cargo sin importe se muestra como pendiente y queda fuera del total, y un ejemplo se marca como ejemplo.",
       },
       {
-        lead: "Está construido. Todavía no está en servicio en En'kanto.",
+        lead: "Está construido y todavía no está en servicio en En'kanto.",
         body: "Todo lo de esta página ya está integrado y funcionando. Llevarlo al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase no afirmamos nada sobre lo que cambió.",
       },
     ],
     demo: {
       kicker: "Véalo",
-      title: "El sistema está abierto. Recórralo usted mismo.",
+      title: "El sistema está abierto para que lo recorra usted mismo.",
       body: "Funciona como demostración pública con un nombre ficticio, armada con una lista de lo que sí se publica, que deja fuera los archivos de datos de En'kanto. Abra un módulo, elija uno de los diez puestos y recorra sus pantallas.",
       cta: "Abrir el demo",
       note: "Datos ilustrativos con un nombre ficticio. Nada de lo que aparece ahí es de un cliente.",

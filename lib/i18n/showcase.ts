@@ -115,7 +115,7 @@ const en = {
 
   modules: {
     kicker: "What we build",
-    title: "Three modules. You buy the ones you run on.",
+    title: "Three modules, and you buy only the ones your business runs on.",
   },
 
   /**
@@ -250,7 +250,7 @@ const es: typeof en = {
 
   modules: {
     kicker: "Qué construimos",
-    title: "Tres módulos. Se compran los que se operan.",
+    title: "Tres módulos, y se compran solo los que su negocio opera.",
   },
 
   chart: {

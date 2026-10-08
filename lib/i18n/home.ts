@@ -64,14 +64,14 @@ const en = {
   },
   services: {
     kicker: "What we do",
-    title: "Three ways to grow. Start with the one that is urgent.",
+    title: "Three ways to grow, starting with the one that is urgent.",
     fromLabel: "from",
     perMonth: "a month, flat fee",
     items: [
       {
         id: "sitios",
         name: "Website",
-        title: "Get found, and get believed.",
+        title: "People find you on Google and believe you.",
         body: "A site that loads fast, reads on a phone and takes the visitor to write to you. Designed for your business, copy included.",
         cta: "See websites",
       },
@@ -190,8 +190,8 @@ const en = {
   },
   pricing: {
     kicker: "What it costs",
-    title: "Prices published.",
-    sub: "Every service has its entry price in the open. Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. The diagnostic sets the final quote.",
+    title: "A site, a campaign or a software module, and what each costs to start.",
+    sub: "Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. The final quote comes out of the diagnostic.",
     siteK: "Website",
     adsK: "Google Ads",
     softK: "Software",
@@ -364,14 +364,14 @@ const es: typeof en = {
   },
   services: {
     kicker: "Lo que hacemos",
-    title: "Tres formas de crecer. Empiece por la que más le urge.",
+    title: "Tres formas de crecer, empezando por la que más le urge.",
     fromLabel: "desde",
     perMonth: "al mes, cuota fija",
     items: [
       {
         id: "sitios",
         name: "Sitio web",
-        title: "Que lo encuentren y que le crean.",
+        title: "La gente lo encuentra en Google y le cree.",
         body: "Un sitio que carga rápido, se lee bien en el teléfono y lleva al visitante a escribirle. Diseñado para su negocio, con los textos incluidos.",
         cta: "Ver sitios web",
       },
@@ -489,8 +489,8 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Precios publicados, en pesos.",
-    sub: "Cada servicio tiene su precio de entrada a la vista, más IVA y con factura. El diagnóstico define la cotización final.",
+    title: "Un sitio, una campaña o un módulo de software, y lo que cuesta cada uno para empezar.",
+    sub: "Más IVA y con factura. La cotización final sale del diagnóstico.",
     siteK: "Sitio web",
     adsK: "Anuncios en Google",
     softK: "Software",
