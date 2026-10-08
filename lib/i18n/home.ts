@@ -27,15 +27,15 @@ type HomePhoto = { cap: string; alt: string };
 
 const en = {
   meta: {
-    title: "Cardon Digital | Get found, get chosen, and let the work run itself",
+    title: "Cardon Digital | Websites, ads and software for more clients and less work",
     description:
       "Websites, Google Ads and custom software for owner-run businesses in Baja California. Prices published, a free diagnostic, and everything we build stays in your name.",
   },
   hero: {
     aria: "Introduction",
-    eyebrow: "Websites, ads and software. Ensenada, Baja California",
-    title: "Get found. Get chosen.",
-    titleAccent: "And let the work run itself.",
+    eyebrow: "Ensenada, Baja California",
+    title: "Websites, ads and software",
+    titleAccent: "for Ensenada businesses that want more clients and less work.",
     sub: "A site people write to, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
     proofLine: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
@@ -327,15 +327,15 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Cardon Digital | Que lo encuentren, que le compren, y que el trabajo se haga solo",
+    title: "Cardon Digital | Sitios web, anuncios y software para más clientes y menos trabajo",
     description:
       "Sitios web, anuncios en Google y software a la medida para negocios en Baja California. Precios publicados en pesos, diagnóstico sin costo, y todo lo que construimos queda a su nombre.",
   },
   hero: {
     aria: "Presentación",
-    eyebrow: "Sitios web, anuncios y software. Ensenada, Baja California",
-    title: "Que lo encuentren, que le compren,",
-    titleAccent: "y que el trabajo se haga solo.",
+    eyebrow: "Ensenada, Baja California",
+    title: "Sitios web, anuncios y software",
+    titleAccent: "para negocios de Ensenada que quieren más clientes y menos trabajo.",
     sub: "Un sitio web para que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
     proofLine: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
