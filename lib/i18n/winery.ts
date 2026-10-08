@@ -80,7 +80,7 @@ const en = {
   },
   leak: {
     kicker: "The gap",
-    title: "Wineries rarely lose on the wine. They lose in the seams.",
+    title: "Where a winery loses money is in the seams between the cellar, the sales and the bookings.",
     items: [
       {
         num: "01",
@@ -132,7 +132,7 @@ const en = {
   },
   assist: {
     kicker: "The assistant",
-    title: "Ask your cellar. Get your own record back.",
+    title: "Ask your cellar and it answers with your own record.",
     body: [
       "Ask what the Cabernet's total acidity did last week and you get the lab record it read, with its date and lot. Where there is no record it says so, because a plausible number is worse than none.",
       "Nothing here decides anything about your wine. The blend, the pick date and the time on skins stay yours.",
@@ -273,7 +273,7 @@ const es: typeof en = {
   },
   leak: {
     kicker: "Dónde se pierde",
-    title: "Una bodega rara vez pierde por el vino. Pierde por los cabos sueltos.",
+    title: "Donde una bodega pierde dinero es en los cabos sueltos entre la cava, la venta y las reservaciones.",
     items: [
       {
         num: "01",
@@ -325,7 +325,7 @@ const es: typeof en = {
   },
   assist: {
     kicker: "El asistente",
-    title: "Pregúntele a su bodega. Le responde con su propio registro.",
+    title: "Pregúntele a su bodega y le responde con su propio registro.",
     body: [
       "Pregunte cómo se movió la acidez total del Cabernet la semana pasada y le muestra el registro de laboratorio que consultó, con fecha y lote. Si no hay registro, lo dice, porque un número que suena creíble es peor que ninguno.",
       "El sistema no decide nada sobre su vino. La mezcla, la fecha de corte y el tiempo de maceración los sigue decidiendo usted.",

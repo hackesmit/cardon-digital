@@ -63,7 +63,7 @@ const en = {
   },
   pricing: {
     kicker: "What it costs",
-    title: "A flat fee. Your budget goes straight to Google.",
+    title: "One flat fee, and your budget goes straight to Google.",
     sub: "Two scopes, by how many campaigns you need. The flat fee stays the same whatever you spend.",
     names: { local: "Local", crecimiento: "Growth" } as Record<string, string>,
     scopes: {
@@ -176,7 +176,7 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Cuota fija. Su presupuesto va directo a Google.",
+    title: "Una cuota fija, y su presupuesto va directo a Google.",
     sub: "Dos alcances, según cuántas campañas necesite. La cuota fija es la misma, invierta lo que invierta.",
     names: { local: "Local", crecimiento: "Crecimiento" } as Record<string, string>,
     scopes: {
