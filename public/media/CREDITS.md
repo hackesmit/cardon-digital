@@ -64,9 +64,14 @@ stock frame is recorded when Daniel names its source.
 
 ### precios/handover.webp
 
-- Credit: stock, supplied by Daniel Hack, 2026-09-28; source and licence to record
+- Photographer: fauxels
+- Source: https://www.pexels.com/photo/3184465/
+- License: Pexels License (free for commercial and personal use, no attribution required)
+- Supplied by Daniel Hack through the console inbox, 2026-10-08; replaces the
+  2026-09-28 stock frame whose source was never recorded
 - Slot: precios/handover
-- Frame: a handshake across a counter, cropped to 3:2 from a portrait original
+- Frame: a handshake across a desk by a bright window, laptop and coffee in
+  the foreground, the full 3:2 frame scaled to 2400 x 1600
 
 ### enkanto/cabana.webp
 

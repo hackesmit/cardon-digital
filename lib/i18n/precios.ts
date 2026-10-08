@@ -60,7 +60,7 @@ const en = {
     handoverCap:
       "Handover day: the accounts are in the winery's name and the team runs it.",
     handoverAlt:
-      "A handshake across the counter on handover day.",
+      "A handshake across the desk on handover day.",
     diagCap:
       "Day one of the Diagnostic: your operation gone through module by module.",
     diagAlt: "A laptop with the system open on a barrel in the cellar.",
@@ -299,7 +299,7 @@ const es: typeof en = {
     handoverCap:
       "Día de entrega: las cuentas quedan a nombre de la bodega y el equipo opera el sistema.",
     handoverAlt:
-      "Un apretón de manos sobre el mostrador el día de la entrega.",
+      "Un apretón de manos sobre el escritorio el día de la entrega.",
     diagCap:
       "Primer día del Diagnóstico: revisamos su operación módulo por módulo.",
     diagAlt: "Una laptop con el sistema abierto sobre una barrica, en la cava.",
