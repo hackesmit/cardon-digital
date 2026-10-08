@@ -342,9 +342,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/coming-soon.ts": {
-    "mtime": 1790881974.3989615,
-    "seen": 1791475652.7766275,
-    "ast_hash": "673a3e5590ac115f58223c9cd3d2a225",
+    "mtime": 1791483722.5615096,
+    "seen": 1791483731.6027699,
+    "ast_hash": "942d5635c17381202f20fd0212d6e37f",
     "semantic_hash": ""
   },
   "lib/i18n/config.ts": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1791323254.3616426,
-    "seen": 1791475652.7766361,
-    "ast_hash": "036d18ffacac1f42e939011545b1d37b",
+    "mtime": 1791483722.5625095,
+    "seen": 1791483731.6027799,
+    "ast_hash": "02fd8d017ff3eef13bc7d0bc59a89da5",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/site.ts": {
-    "mtime": 1790881974.3999615,
-    "seen": 1791475652.7766469,
-    "ast_hash": "9bc800175235be238cafb578acc1e3f1",
+    "mtime": 1791483722.5625095,
+    "seen": 1791483731.6027908,
+    "ast_hash": "b489d50290796a23977931cbd0a778b8",
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
@@ -684,9 +684,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1791475639.558632,
-    "seen": 1791475652.7766423,
-    "ast_hash": "467f525807a9e66d04235d7b7e1d5be5",
+    "mtime": 1791483722.5625095,
+    "seen": 1791483731.6027858,
+    "ast_hash": "1c2a45b30f3867889e266687afba5520",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
