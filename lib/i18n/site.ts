@@ -22,8 +22,8 @@ const en = {
     title: "Cardon Digital | Websites, Google Ads and software for your business",
     titleTemplate: "%s | Cardon Digital",
     description:
-      "Get found, get chosen, and let the work run itself. Websites, Google Ads and custom software for owner-run businesses in Baja California, with prices published and everything in your name.",
-    ogAlt: "Cardon Digital: get found, get chosen, and let the work run itself",
+      "Websites, Google Ads and custom software for owner-run businesses in Baja California that want more clients and less work, with prices published and everything in your name.",
+    ogAlt: "Cardon Digital: websites, ads and software for more clients and less work",
   },
   nav: {
     label: "Primary",
@@ -88,8 +88,8 @@ const es: typeof en = {
     title: "Cardon Digital | Sitios web, anuncios y software para su negocio",
     titleTemplate: "%s | Cardon Digital",
     description:
-      "Que lo encuentren, que le compren, y que el trabajo se haga solo. Sitios web, anuncios en Google y software a la medida para negocios en Baja California, con precios publicados y todo a su nombre.",
-    ogAlt: "Cardon Digital: que lo encuentren, que le compren, y que el trabajo se haga solo",
+      "Sitios web, anuncios en Google y software a la medida para negocios en Baja California que quieren más clientes y menos trabajo, con precios publicados y todo a su nombre.",
+    ogAlt: "Cardon Digital: sitios web, anuncios y software para más clientes y menos trabajo",
   },
   nav: {
     label: "Principal",
