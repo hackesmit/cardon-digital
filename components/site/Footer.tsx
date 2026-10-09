@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/i18n/site";
+import { Logo } from "@/components/site/Mark";
 
 export default function Footer({ locale }: { locale: Locale }) {
   const s = site[locale];
@@ -26,52 +27,7 @@ export default function Footer({ locale }: { locale: Locale }) {
         <div className="footer-grid">
           <div className="foot-brand">
             <Link className="brand" href={href("/")} aria-label={s.brandHome}>
-              <svg
-                className="brand-mark"
-                viewBox="0 0 26 26"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <line
-                  className="bm-line"
-                  x1="13"
-                  y1="20"
-                  x2="6"
-                  y2="8"
-                  strokeWidth="1.2"
-                  opacity="0.7"
-                />
-                <line
-                  className="bm-line"
-                  x1="13"
-                  y1="20"
-                  x2="20"
-                  y2="8"
-                  strokeWidth="1.2"
-                  opacity="0.7"
-                />
-                <line
-                  className="bm-line"
-                  x1="6"
-                  y1="8"
-                  x2="20"
-                  y2="8"
-                  strokeWidth="1.2"
-                  opacity="0.55"
-                />
-                <circle className="bm-ring" cx="6" cy="8" r="3" strokeWidth="1.4" />
-                <circle
-                  className="bm-ring"
-                  cx="20"
-                  cy="8"
-                  r="3"
-                  strokeWidth="1.4"
-                />
-                <circle className="bm-dot" cx="13" cy="20" r="3.4" />
-              </svg>
-              <span className="brand-name">
-                Cardon <span>Digital</span>
-              </span>
+              <Logo variant="horizontal" className="brand-logo" />
             </Link>
             <p className="foot-line">{t.line}</p>
             <p className="foot-tag">{s.brandline}</p>

@@ -1,5 +1,4 @@
 import {
-  Quicksand,
   Source_Code_Pro,
   Source_Sans_3,
   Source_Serif_4,
@@ -39,20 +38,8 @@ export const mono = Source_Code_Pro({
   variable: "--font-mono",
 });
 
-/** Identity, logo (Daniel, 2026-10-09): the wordmark of the line-cactus logo
- *  is a rounded geometric sans, CARDON bold and tracked wide over a light,
- *  wider-tracked DIGITAL. Quicksand is the closest open face to the supplied
- *  artwork; it is used for the lockup only (nav, holding page), never for
- *  titles or text. Variable font, one file. Not preloaded: the lockup is two
- *  short words and the hero fonts take the preload budget. */
-export const brand = Quicksand({
-  subsets: ["latin"],
-  display: "swap",
-  preload: false,
-  variable: "--font-brand",
-});
-
-/** All four variables, for the html element's className. */
-export const fontVariables = [display, text, mono, brand]
+/** All three variables, for the html element's className. The logo loads no
+ *  font: its wordmark ships as paths (components/site/Mark.tsx). */
+export const fontVariables = [display, text, mono]
   .map((f) => f.variable)
   .join(" ");

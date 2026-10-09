@@ -1,12 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-191.29 -484 382.58 757.6" role="img" aria-label="Cardon">
-  <title>Cardon</title>
-  <g fill="none" stroke="#221C14" stroke-width="23.61" stroke-linejoin="round" stroke-linecap="round">
-    <path d="M-130.9 -51.41 V0 H130.9 V-213.22"/>
-    <path d="M0 -375.02 V261.8"/>
-  </g>
-  <g stroke="#221C14" stroke-width="23.61">
-    <circle cx="0" cy="-423.61" r="36.78" fill="#546B0E"/>
-    <circle cx="-130.9" cy="-100" r="36.78" fill="#546B0E"/>
-    <circle cx="130.9" cy="-261.8" r="36.78" fill="#FF2EA7"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="163 88 874 244" role="img" aria-label="Cardon Digital">
+  <title>Cardon Digital</title>
+  <path d="M175 315 C225 315 240 265 300 265 C350 265 370 315 430 315 M770 315 C830 315 850 265 900 265 C960 265 975 315 1025 315 M600 320 L600 140 C600 116 585 100 565 100 C545 100 530 116 530 140 L530 230 M530 205 C530 185 516 172 498 172 C480 172 466 186 466 205 L466 238 C466 279 495 307 536 307 M600 238 C600 218 614 204 632 204 C650 204 664 218 664 238 L664 260 C664 291 642 313 611 313 M430 315 C490 315 520 320 555 320 M645 320 C680 320 710 315 770 315" fill="none" stroke="#161A1B" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="695" cy="152" r="30" fill="#C99A62"/>
 </svg>
