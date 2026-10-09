@@ -86,11 +86,76 @@ const ADS =
 const MANAGES =
   /\bmanag(?:e|es|ed|ing|ement)\b|\b(?<!-)(?:run|runs|running|ran)\b|\boperat(?:e|es|ed|ing)\b|\bhandl(?:e|es|ed|ing)\b|\bmanej|\bgesti[oó]n|\badministr|\bllev(?:amos|ar)\b|\boper(?:a|an|amos|e|en|o|ar)\b/i;
 
-/** The words that state the fee is per contact, owed by every offer while `perContactPolicy` holds. */
+/**
+ * The words that state the fee is per contact, owed by every offer while
+ * `perContactPolicy` holds. Affirmative: a fee, an amount, a placeholder or
+ * "plus" has to sit on the words ("a fee per contact", "{perContact} per
+ * contact", "the per-contact ads fee"), so "a report per contact" beside a
+ * free offer states nothing (cross-vendor review, round 2, 2026-10-09).
+ */
 const PER_CONTACT: Record<Locale, RegExp> = {
-  en: /\bper[ -](?:qualified )?contact\b/i,
-  es: /\bpor[ -](?:cada )?contacto\b/i,
+  en: /\b(?:\{perContact\}|\$?[\d.,]+(?:\s*(?:MXN|USD))?|fees?|plus)\s+per[ -](?:qualified )?contact\b|\bper[ -]contact (?:ads )?fee\b/i,
+  es: /\b(?:\{perContact\}|\$?[\d.,]+(?:\s*(?:MXN|USD))?|pagos?|más)\s+por[ -](?:cada )?contacto\b/i,
 };
+
+/**
+ * A promise about earnings the base contradicts: the base is owed whether or
+ * not a contact comes, so "we earn only when you do" is false (cross-vendor
+ * review, round 2). The site says what is true instead: most of the fee
+ * depends on the contacts that come.
+ */
+const EARNINGS_PROMISE: Record<Locale, RegExp> = {
+  en: /\b(?:only|just) (?:when|if) you (?:do|win|earn|sell|profit)\b|\bwe (?:earn|win|get paid) (?:only )?when you (?:do|win|earn|sell)\b/i,
+  es: /\bs[oó]lo (?:si|cuando) (?:a usted le va bien|usted gana|usted vende|le va bien)\b|\bganar (?:solo )?cuando usted gana\b/i,
+};
+
+/**
+ * The three roles a figure can play, each read from the words around it, so
+ * the right amount in the wrong role fails: "$11,000 per contact" is three
+ * published figures in a sentence and a false price (cross-vendor review,
+ * round 2). Any amount counts, not only those at or above 100: a per-contact
+ * fee of 7 USD is an invented figure too.
+ */
+const ROLE: Record<Locale, { base: RegExp; perContact: RegExp; cap: RegExp }> = {
+  en: {
+    base: /\bbase (?:of|from) \$?([\d.,]+)|\$?([\d.,]+)(?:\s*(?:MXN|USD))? (?:a month|monthly) base\b/gi,
+    perContact: /\$?([\d.,]+)(?:\s*(?:MXN|USD))? per[ -](?:qualified )?contact\b/gi,
+    cap: /\b(?:never more than|capped at|cap of|at most|up to a cap of) \$?([\d.,]+)/gi,
+  },
+  es: {
+    base: /\bbase (?:de|desde) \$?([\d.,]+)|\$?([\d.,]+)(?:\s*(?:MXN|USD))? (?:al mes |mensual(?:es)? )?de base\b/gi,
+    perContact: /\$?([\d.,]+)(?:\s*(?:MXN|USD))? por[ -](?:cada )?contacto\b/gi,
+    cap: /\b(?:nunca más de|tope de|con tope de|como máximo|hasta un tope de) \$?([\d.,]+)/gi,
+  },
+};
+
+/** Every amount a role pattern captures in a block, as numbers. */
+function roleAmounts(block: string, re: RegExp): number[] {
+  const out: number[] = [];
+  const r = new RegExp(re.source, re.flags);
+  let m = r.exec(block);
+  while (m !== null) {
+    const raw = m.slice(1).find((g) => g !== undefined);
+    if (raw && /\d/.test(raw)) out.push(Number(raw.replace(/,/g, "")));
+    m = r.exec(block);
+  }
+  return out;
+}
+
+/** A figure in a role it does not have in lib/pricing.ts, in this locale's currency. */
+function roleProblem(block: string, locale: Locale): string | null {
+  const currency: CurrencyCode = currencyByLocale[locale];
+  const allowed = {
+    base: new Set(adsManagement.map((s) => s.base[currency])),
+    perContact: new Set(adsManagement.map((s) => s.perContact[currency])),
+    cap: new Set(adsManagement.map((s) => s.cap[currency])),
+  };
+  for (const role of ["base", "perContact", "cap"] as const) {
+    const bad = roleAmounts(block, ROLE[locale][role]).filter((n) => !allowed[role].has(n));
+    if (bad.length > 0) return `prints ${bad.join(", ")} as the ${role} while lib/pricing.ts carries ${Array.from(allowed[role]).join(" or ")} ${currency}`;
+  }
+  return null;
+}
 
 /**
  * The words of the flat fee of 2026-09-23. A block that mentions ads and
@@ -550,6 +615,10 @@ function judge(block: string, locale: Locale): Verdict {
     wrong = "calls the ads fee flat, the words of the 2026-09-23 policy, while lib/pricing.ts charges a base plus a fee per contact";
   }
   if (offer && !perContactPolicy) wrong = "offered per contact while lib/pricing.ts has a scope with no fee per contact or priced on spend";
+  if (!wrong && EARNINGS_PROMISE[locale].test(block) && ADS.test(block)) {
+    wrong = "promises Cardon earns only when the client does, which the base contradicts";
+  }
+  wrong = wrong ?? roleProblem(block, locale);
   // An offer prints no figure lib/pricing.ts does not carry in this locale's
   // currency: the words can be right and the number invented (cross-vendor
   // review, 2026-10-09). Small counts (campaigns, groups, days) are not money.
@@ -686,6 +755,20 @@ describe("every served ads claim carries the policy lib/pricing.ts sets", () => 
     expect(judge(`Google Ads: a base of $${base} USD a month plus $${perContact} USD per contact, never more than $${capUsd} USD.`, "en").wrong).toBeNull();
     expect(judge("Google Ads: a base of {base} a month plus {perContact} per contact.", "en").wrong).not.toBeNull();
     expect(judge("Google Ads: a base of {base} a month plus {perContact} per contact, never more than {cap}.", "en").wrong).toBeNull();
+    // Round 2: the right figures in the wrong roles, a small invented figure, a
+    // free offer with reporting words, and an earnings promise all fail.
+    expect(judge("Manejo de Google Ads: base de $2,500 al mes más $11,000 por contacto, con tope de $100 al mes.", "es").wrong).not.toBeNull();
+    expect(judge("Google Ads: a base of $150 USD a month plus $7 USD per contact, never more than $650 USD.", "en").wrong).not.toBeNull();
+    expect(judge("Google Ads: a base of $2,500 MXN a month plus $100 MXN per contact, never more than $11,000 MXN.", "es").wrong).toBeNull();
+    const free = judge("We manage your Google Ads for free, with a report per contact.", "en");
+    expect(free.offer).toBe(true);
+    expect(free.states).toBe(false);
+    const freeEs = judge("Manejamos sus anuncios en Google gratis, con un reporte por contacto.", "es");
+    expect(freeEs.offer).toBe(true);
+    expect(freeEs.states).toBe(false);
+    expect(judge("Google Ads on a base plus a fee per contact, so we do well only when you do.", "en").wrong).not.toBeNull();
+    expect(judge("Anuncios en Google con base más pago por contacto, para que nos vaya bien solo si a usted le va bien.", "es").wrong).not.toBeNull();
+    expect(judge("Google Ads on a base plus a fee per contact, so most of what we earn depends on the contacts that come.", "en").wrong).toBeNull();
     // Descriptive sentences owe nothing (copy doctrine section 10).
     expect(judge("Your ad comes up and takes them to a page that says what the ad said.", "en").offer).toBe(false);
     expect(judge("Anuncios que dicen lo que usted vende.", "es").offer).toBe(false);

@@ -22,14 +22,14 @@ const en = {
   meta: {
     title: "Google Ads",
     description:
-      "New clients who were already searching for what you sell, measured down to the call or the message. A small monthly base plus a fee per contact with a monthly cap, so we earn when you do, and your budget goes straight to Google.",
+      "New clients who were already searching for what you sell, measured down to the call or the message. A small monthly base plus a fee per contact with a monthly cap, so most of what we earn depends on the contacts that come, and your budget goes straight to Google.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Google Ads",
     title: "New clients who were already searching for you,",
     titleAccent: "measured down to the message.",
-    sub: "Campaigns on Google that put your business in front of the people searching for what you sell, in your area. A small monthly base plus a fee per qualified contact, capped each month, so we do well only when you do, and your budget is paid straight to Google, in your own account.",
+    sub: "Campaigns on Google that put your business in front of the people searching for what you sell, in your area. A small monthly base plus a fee per qualified contact, capped each month, so most of what we earn depends on the contacts that come, and your budget is paid straight to Google, in your own account.",
     proof: "Base from {base} a month plus {perContact} per contact, never more than {cap} a month. Minimum budget {minLocal} a month, paid straight to Google.",
   },
   path: {
@@ -138,14 +138,14 @@ const es: typeof en = {
   meta: {
     title: "Anuncios en Google",
     description:
-      "Clientes nuevos que ya estaban buscando lo que usted vende, medidos hasta la llamada o el mensaje. Una base mensual pequeña más un pago por contacto con tope mensual, para ganar cuando usted gana, y su presupuesto va directo a Google.",
+      "Clientes nuevos que ya estaban buscando lo que usted vende, medidos hasta la llamada o el mensaje. Una base mensual pequeña más un pago por contacto con tope mensual, así que la mayor parte de lo que cobramos depende de los contactos que lleguen, y su presupuesto va directo a Google.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Anuncios en Google",
     title: "Clientes nuevos que ya lo estaban buscando,",
     titleAccent: "medidos hasta el mensaje.",
-    sub: "Campañas en Google que muestran su negocio a la gente de su zona que busca lo que usted vende. Una base mensual pequeña más un pago por cada contacto calificado, con un tope al mes, para que nos vaya bien solo si a usted le va bien, y el presupuesto lo paga usted directo a Google, desde su propia cuenta.",
+    sub: "Campañas en Google que muestran su negocio a la gente de su zona que busca lo que usted vende. Una base mensual pequeña más un pago por cada contacto calificado, con un tope al mes, así que la mayor parte de lo que cobramos depende de los contactos que lleguen, y el presupuesto lo paga usted directo a Google, desde su propia cuenta.",
     proof: "Base desde {base} al mes más {perContact} por contacto, nunca más de {cap} al mes. Presupuesto mínimo de {minLocal} al mes, directo a Google.",
   },
   path: {
@@ -200,7 +200,7 @@ const es: typeof en = {
       "Cada mes recibe la lista y tiene {disputeDays} días hábiles para tachar cualquier contacto que no fue real. Lo quitamos sin discutir.",
       "Nunca cobramos un porcentaje de lo que invierte. La cuenta de Google Ads es suya, y el presupuesto lo paga usted directo a Google.",
       "Mes con mes, con 30 días de aviso para cancelar. Una campaña con menos de {pauseUnder} contactos durante {pauseMonths} meses seguidos la pausamos nosotros, y la base se detiene con ella.",
-      "Precios más IVA, con factura.",
+      "Cotizamos y facturamos en pesos mexicanos, más IVA y con factura.",
     ],
   },
   familiar: {
