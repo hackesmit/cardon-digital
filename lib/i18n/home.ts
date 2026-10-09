@@ -9,7 +9,7 @@ type HomePhoto = { cap: string; alt: string };
  * The architecture is the arc of 2026-09-28 (bunker research/2026-09/
  * site-arc-digital-onboarding.md section 4): hero, proof bar, the three
  * services, the objections, the Monte Xanic case, one system, how it works,
- * who builds it, compare, pricing summary, diagnostic. Three results in one
+ * compare, pricing summary, diagnostic. Three results in one
  * order: they find you, they write to you, the work runs itself.
  *
  * Two rules this file is read against: every claim is the result the owner
@@ -167,11 +167,6 @@ const en = {
     ],
     anywhere: "You can start with any of the three: a site, a campaign or a system. The diagnostic says which one first.",
   },
-  who: {
-    kicker: "Who builds it",
-    title: "The person who answers is the person who builds.",
-    body: "Cardon Digital is a small studio in Ensenada, run by Daniel Hack. Four clients at a time, so each one has the same person from the first day to the handover. We work in Spanish and English, on both sides of the border.",
-  },
   compare: {
     kicker: "Compare",
     title: "What you own when it is finished.",
@@ -182,7 +177,7 @@ const en = {
     rows: [
       { dim: "Ownership", cardon: "Yours, keys and all", usual: "Rented forever" },
       { dim: "Fee", cardon: "Flat, agreed up front", usual: "A percentage, or per seat" },
-      { dim: "Measurement", cardon: "Down to the call or the message", usual: "Clicks and likes" },
+      { dim: "Measurement", cardon: "From the click to the call or the message", usual: "Likes and reach" },
       { dim: "Who answers", cardon: "The same person who built it", usual: "A ticket queue" },
       { dim: "Fit", cardon: "Built around how you work", usual: "Your work bent to the tool" },
       { dim: "Answers", cardon: "An assistant that reads your records", usual: "Generic features" },
@@ -466,11 +461,6 @@ const es: typeof en = {
     ],
     anywhere: "Puede empezar por cualquiera de los tres: un sitio, una campaña o un sistema. El diagnóstico dice cuál le conviene primero.",
   },
-  who: {
-    kicker: "Quién lo hace",
-    title: "Le contesta la misma persona que hace el trabajo.",
-    body: "Cardon Digital es un estudio pequeño en Ensenada, dirigido por Daniel Hack. Atendemos a cuatro clientes a la vez, para que cada uno trate con la misma persona desde el primer día hasta la entrega. Trabajamos en español y en inglés, de los dos lados de la frontera.",
-  },
   compare: {
     kicker: "Comparación",
     title: "Con qué se queda cuando terminamos.",
@@ -481,7 +471,7 @@ const es: typeof en = {
     rows: [
       { dim: "Propiedad", cardon: "Suyo, con todos los accesos", usual: "Rentado para siempre" },
       { dim: "Cuota", cardon: "Fija, acordada de antemano", usual: "Un porcentaje, o por usuario" },
-      { dim: "Medición", cardon: "Hasta la llamada o el mensaje", usual: "Clics y likes" },
+      { dim: "Medición", cardon: "Del clic a la llamada o al mensaje", usual: "Likes y alcance" },
       { dim: "Quién contesta", cardon: "La misma persona que lo hizo", usual: "Un ticket de soporte" },
       { dim: "Adaptación", cardon: "Se adapta a su forma de trabajar", usual: "Usted se adapta al programa" },
       { dim: "Respuestas", cardon: "Un asistente que lee sus registros", usual: "Funciones genéricas" },
