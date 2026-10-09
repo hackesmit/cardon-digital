@@ -51,7 +51,7 @@ const en = {
     eyebrow: "Cardon Digital",
     t1: "A growth-systems practice ",
     accent: "for wineries in Valle de Guadalupe and Ensenada.",
-    sub: "We build the system a winery runs on (harvest, lots, tanks, lab results, vintage comparison, weather data, sales and bookings) and keep it running, with an assistant that answers questions from the winery's own records. Around that system we run the marketing that fills the tasting room, the club and direct sales. **One senior team, flat fees, and the client owns what we build.**",
+    sub: "We build the system a winery runs on (harvest, lots, tanks, lab results, vintage comparison, weather data, sales and bookings) and keep it running, with an assistant that answers questions from the winery's own records. Around that system we run the marketing that fills the tasting room, the club and direct sales. **One senior team, clear prices, and the client owns what we build.**",
   },
 
   demos: {
@@ -188,7 +188,7 @@ const es: typeof en = {
     eyebrow: "Cardon Digital",
     t1: "Una práctica de sistemas de crecimiento ",
     accent: "para bodegas del Valle de Guadalupe y Ensenada.",
-    sub: "Construimos el sistema con el que trabaja una bodega (cosecha, lotes, tanques, resultados de laboratorio, comparación de añadas, datos de clima, ventas y reservas) y lo mantenemos funcionando, con un asistente que responde preguntas desde el registro de la propia bodega. Alrededor de ese sistema operamos el marketing que llena la sala de degustación, el club y la venta directa. **Un solo equipo senior, cuotas fijas, y el cliente se queda con lo que construimos.**",
+    sub: "Construimos el sistema con el que trabaja una bodega (cosecha, lotes, tanques, resultados de laboratorio, comparación de añadas, datos de clima, ventas y reservas) y lo mantenemos funcionando, con un asistente que responde preguntas desde el registro de la propia bodega. Alrededor de ese sistema operamos el marketing que llena la sala de degustación, el club y la venta directa. **Un solo equipo senior, precios claros, y el cliente se queda con lo que construimos.**",
   },
 
   demos: {
