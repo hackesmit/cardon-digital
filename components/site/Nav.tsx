@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { site } from "@/lib/i18n/site";
-import Mark from "@/components/site/Mark";
+import { Logo } from "@/components/site/Mark";
 import {
   LOCALE_COOKIE,
   LOCALE_COOKIE_MAX_AGE,
@@ -162,11 +162,7 @@ export default function Nav() {
     <header className="site-header">
       <div className="container bar">
         <Link className="brand" href={href("/")} aria-label={brandHome}>
-          <Mark className="brand-mark brand-mark--nav" />
-          <span className="brand-name">
-            <span className="brand-name-main">Cardon</span>
-            <span className="brand-name-sub">Digital</span>
-          </span>
+          <Logo variant="horizontal" className="brand-logo" />
         </Link>
 
         <nav className="primary-nav" aria-label={t.label}>

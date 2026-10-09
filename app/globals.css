@@ -70,10 +70,6 @@
   --sans: var(--font-text), system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --display: var(--font-display), Georgia, "Times New Roman", serif;
   --mono: var(--font-mono), ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, Menlo, monospace;
-  /* The logo lockup only (nav, holding page): rounded geometric sans, never
-     for titles or text. The sun on the mark is a fixed brand tan in both modes. */
-  --brand: var(--font-brand), var(--sans);
-  --brand-sun:#C9A074;
   --maxw:1180px;
 }
 
@@ -141,14 +137,11 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
   border-bottom:1px solid var(--line);
 }
 .bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;}
-/* Logo lockup (2026-10-09): the line mark in the text ink, then CARDON over
-   DIGITAL in the brand face, the way the supplied artwork stacks them. */
-.brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0;color:var(--text);}
+/* Logo (2026-10-09): the artwork's horizontal lockup in the text ink; the
+   wordmark is paths, so it needs no font and no text rules. */
+.brand{display:inline-flex;align-items:center;flex-shrink:0;color:var(--text);}
 .brand-mark{width:auto;height:26px;display:block;flex-shrink:0;color:var(--text);}
-.brand-mark--nav{height:38px;}
-.brand-name{display:flex;flex-direction:column;align-items:flex-start;line-height:1;font-family:var(--brand);text-transform:uppercase;}
-.brand-name-main{font-weight:700;font-size:1.02rem;letter-spacing:0.2em;}
-.brand-name-sub{font-weight:500;font-size:0.5rem;letter-spacing:0.44em;color:var(--muted);margin-top:5px;padding-left:0.06em;}
+.brand-logo{width:auto;height:34px;display:block;flex-shrink:0;color:var(--text);}
 
 .primary-nav{display:flex;align-items:center;gap:18px;}
 .nav-menu{display:flex;align-items:center;gap:20px;}

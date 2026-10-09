@@ -1,40 +1,88 @@
-// Line-cactus mark (identity 2026-10-09, "05 Rounded Tech"): one continuous
-// line runs in from the left as flat ground, rises into a low dune, drops to
-// the foot of a saguaro, climbs its outline (left arm high, right arm low),
-// comes back down and rises again into a taller dune before running out flat
-// to the right. A small sun sits off the right arm. The line is drawn in
-// currentColor so the nav, the holding page and any future surface set its
-// ink with plain CSS and it follows data-mode in the server HTML with no JS.
-// The sun is a fixed brand tan, unaffected by mode, like the old olive dots.
-// Geometry: stroke 5 on a 200 by 82 box; trunk 12 wide, arms 9 wide, trunk
-// to arm gap 9, every outer corner rounded.
-export const MARK_PATH =
-  "M4 92H20C34 92 44 76 58 76C70 76 80 86 88 90" +
-  "V70H74A4 4 0 0 1 70 66V46.5A4.5 4.5 0 0 1 79 46.5V62H88" +
-  "V28A6 6 0 0 1 100 28" +
-  "V70H109V54.5A4.5 4.5 0 0 1 118 54.5V74A4 4 0 0 1 114 78H100" +
-  "V90C108 86 118 62 140 62C162 62 174 84 182 92H196";
-export const MARK_SUN = { cx: 130, cy: 38, r: 6.5 };
-export const MARK_VIEWBOX = "0 16 200 82";
-export const SUN_TAN = "#C9A074";
+// The Cardon Digital logo, from the outlined artwork Daniel supplied on
+// 2026-10-09 (cardon-digital-logo-outlined.svg, 1200 by 650): a horizon line
+// in two dunes, a cardon cactus between them, a sand-coloured sun, CARDON set
+// in Comfortaa and DIGITAL in Inter Display, both already converted to paths
+// so no font is loaded for the lockup. The line and the letters are drawn in
+// currentColor, so the ink follows data-mode in the server HTML with no JS;
+// the sun is a fixed brand colour, unaffected by mode.
+// Coordinates are the artwork's own. The mark is the stroked horizon and the
+// cactus; its box is the stroke's extent (24 wide, round caps).
 
+/** The seven stroked paths of the horizon and the cactus, in the artwork's coordinates. */
+export const MARK_D = "M175 315 C225 315 240 265 300 265 C350 265 370 315 430 315 M770 315 C830 315 850 265 900 265 C960 265 975 315 1025 315 M600 320 L600 140 C600 116 585 100 565 100 C545 100 530 116 530 140 L530 230 M530 205 C530 185 516 172 498 172 C480 172 466 186 466 205 L466 238 C466 279 495 307 536 307 M600 238 C600 218 614 204 632 204 C650 204 664 218 664 238 L664 260 C664 291 642 313 611 313 M430 315 C490 315 520 320 555 320 M645 320 C680 320 710 315 770 315";
+export const SUN = { cx: 695, cy: 152, r: 30 };
+export const SUN_COLOR = "#C99A62";
+export const INK = "#161A1B";
+const CARDON_D = "m 354.62998,501.3 q -13.78,0 -25.35,-7.02 -11.57,-7.02 -18.46,-18.98 -6.76,-11.96 -6.76,-26.13 0,-14.04 6.76,-26 6.76,-11.96 18.33,-18.98 11.57,-7.02 25.48,-7.02 9.36,0 17.03,2.73 7.67,2.73 14.82,8.71 1.43,1.04 1.43,2.99 0,1.04 -0.52,1.95 -0.52,0.78 -1.43,1.17 -0.26,0.91 -1.17,1.43 -0.91,0.52 -1.95,0.52 -1.95,0 -3.25,-1.17 -5.07,-4.55 -11.05,-6.63 -5.98,-2.08 -13.91,-2.08 -10.92,0 -20.28,5.85 -9.36,5.72 -14.95,15.47 -5.46,9.75 -5.46,21.06 0,11.57 5.46,21.32 5.46,9.75 14.82,15.47 9.36,5.72 20.41,5.72 14.17,0 25.61,-9.1 1.43,-1.04 2.86,-1.04 1.95,0 3.38,1.43 1.43,1.3 1.43,3.51 0,2.08 -1.43,3.64 -12.22,11.18 -31.85,11.18 z m 132.77998,-8.45 q 0.52,0.91 0.52,2.08 0,2.08 -1.56,3.64 -1.43,1.43 -3.51,1.43 -3.38,0 -4.81,-3.12 l -8.71,-21.06 h -50.31 l -8.71,21.06 q -1.04,3.12 -4.68,3.12 -2.21,0 -3.64,-1.43 -1.3,-1.56 -1.3,-3.64 0,-1.3 0.39,-2.21 l 38.22,-90.74 q 1.43,-3.51 4.94,-3.51 3.51,0 4.81,3.51 z m -64.74,-25.74 h 43.16 l -21.58,-52.13 z m 145.38989,25.09 q 1.17,1.95 1.17,3.51 0,1.95 -1.43,3.12 -1.43,1.17 -3.77,1.17 -1.56,0 -2.6,-0.65 -1.04,-0.65 -1.82,-1.95 l -23.4,-37.18 h -2.21 -19.24 v 34.71 q 0,2.21 -1.43,3.64 -1.43,1.43 -3.64,1.43 -2.21,0 -3.64,-1.43 -1.43,-1.43 -1.43,-3.64 v -91.39 q 0,-2.21 1.43,-3.64 1.43,-1.43 3.64,-1.43 h 24.31 q 9.49,0 16.9,4.03 7.41,3.9 11.57,11.05 4.29,7.15 4.29,16.25 0,10.01 -5.46,17.55 -5.33,7.54 -14.56,10.79 z m -34.06,-41.73 q 6.5,0 11.7,-2.6 5.33,-2.73 8.19,-7.41 2.99,-4.68 2.99,-10.66 0,-6.24 -2.99,-11.18 -2.86,-4.94 -8.06,-7.67 -5.2,-2.73 -11.83,-2.73 h -19.24 v 42.25 z M 592.02984,500 q -2.21,0 -3.64,-1.43 -1.43,-1.43 -1.43,-3.64 v -91.39 q 0,-2.21 1.43,-3.64 1.43,-1.43 3.64,-1.43 h 23.4 q 14.69,0 26.26,6.5 11.57,6.5 17.94,18.07 6.5,11.44 6.5,26.13 0,14.69 -6.5,26.26 -6.37,11.57 -17.94,18.07 -11.57,6.5 -26.26,6.5 z m 23.4,-9.1 q 11.83,0 21.06,-5.33 9.23,-5.46 14.43,-14.95 5.2,-9.49 5.2,-21.45 0,-11.96 -5.2,-21.45 -5.2,-9.49 -14.43,-14.82 -9.23,-5.33 -21.06,-5.33 h -18.33 v 83.33 z m 119.52015,10.4 q -14.82,0 -26.65,-6.76 -11.83,-6.76 -18.59,-18.59 -6.63,-11.96 -6.63,-26.78 0,-14.82 6.63,-26.65 6.76,-11.83 18.59,-18.59 11.83,-6.76 26.65,-6.76 14.69,0 26.52,6.76 11.96,6.76 18.59,18.59 6.76,11.83 6.76,26.65 0,14.82 -6.76,26.78 -6.63,11.83 -18.59,18.59 -11.83,6.76 -26.52,6.76 z m 0,-9.62 q 11.83,0 21.32,-5.59 9.62,-5.59 15.08,-15.21 5.46,-9.75 5.46,-21.71 0,-11.83 -5.46,-21.45 -5.46,-9.75 -15.08,-15.34 -9.49,-5.59 -21.32,-5.59 -11.96,0 -21.58,5.59 -9.49,5.59 -14.95,15.34 -5.46,9.62 -5.46,21.45 0,11.96 5.46,21.71 5.46,9.62 14.95,15.21 9.62,5.59 21.58,5.59 z m 79.86992,8.32 q -2.21,0 -3.64,-1.43 -1.43,-1.43 -1.43,-3.64 v -91.39 q 0,-2.21 1.43,-3.64 1.43,-1.43 3.64,-1.43 2.34,0 3.9,1.82 l 62.14,81.64 v -78.39 q 0,-2.21 1.43,-3.64 1.56,-1.43 3.64,-1.43 2.21,0 3.64,1.43 1.43,1.43 1.43,3.64 v 91.39 q 0,2.08 -1.43,3.64 -1.43,1.43 -3.64,1.43 -2.6,0 -3.77,-1.69 l -62.27,-81.64 v 78.26 q 0,2.08 -1.43,3.64 -1.43,1.43 -3.64,1.43 z";
+const DIGITAL_D = "m 430.83789,610 c 12.44141,0 19.71484,-7.76563 19.71484,-20.42578 0,-12.60547 -7.30078,-20.31641 -19.30468,-20.31641 H 417.6582 V 610 Z m -7.10937,-5.27734 v -30.1875 h 7.13671 c 9.07813,0 13.58985,5.60546 13.58985,15.03906 0,9.48828 -4.51172,15.14844 -14,15.14844 z m 66.82812,-35.46485 h -6.07031 V 610 h 6.07031 z m 52.80078,41.39844 c 10.00781,0 17.5,-7.08203 17.5,-16.78906 v -4.67578 H 544.7793 V 594.25 h 10.08984 c -0.0547,6.48047 -5.03125,10.85547 -11.42969,10.85547 -7.73828,0 -12.85156,-6.20703 -12.85156,-15.44922 0,-9.29688 5.08594,-15.50391 12.82422,-15.50391 5.60547,0 9.87109,3.41797 11.01953,8.44922 h 6.15234 c -1.28515,-8.28515 -8.39453,-14 -17.2539,-14 -10.91016,0 -18.83985,8.50391 -18.83985,21.05469 0,12.35937 7.82032,21 18.86719,21 z m 57.72266,-41.39844 h -6.07031 V 610 h 6.07031 z m 33.03125,5.33203 h 12.98828 V 610 h 6.09766 v -35.41016 h 12.93359 v -5.33203 H 634.11133 Z M 690.41211,610 h 6.45312 l 3.71875,-10.58203 h 16.4336 L 720.62695,610 h 6.58985 l -14.6836,-40.74219 h -7.32812 z m 12.00391,-15.75 2.54296,-7.21875 c 1.1211,-3.36328 2.29688,-6.94531 3.9375,-12.22266 1.61329,5.27735 2.76172,8.85938 3.88282,12.22266 l 2.46093,7.21875 z M 759.40039,610 h 25.34766 v -5.33203 H 765.4707 v -35.41016 h -6.07031 z";
+
+/** The mark's box: stroke 24 around x 175 to 1025, y 100 to 320. */
+export const MARK_VIEWBOX = "163 88 874 244";
+/** Mark over the wordmark, as the artwork stacks them. */
+const STACKED_VIEWBOX = "163 88 874 534";
+/** Mark beside the wordmark, the wordmark block centred on the mark's height. */
+const HORIZONTAL_VIEWBOX = "163 88 1549 244";
+/** Moves the wordmark block (x 304 to 897, y 404 to 610) to the mark's right, 70 units clear. */
+const HORIZONTAL_SHIFT = "translate(803 -297)";
+
+function MarkPaths() {
+  return (
+    <>
+      <path
+        d={MARK_D}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="24"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx={SUN.cx} cy={SUN.cy} r={SUN.r} fill={SUN_COLOR} />
+    </>
+  );
+}
+
+function Wordmark() {
+  return (
+    <g fill="currentColor">
+      <path d={CARDON_D} />
+      <path d={DIGITAL_D} />
+    </g>
+  );
+}
+
+/** The mark alone: horizon, cactus and sun. */
 export default function Mark({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox={MARK_VIEWBOX} aria-hidden="true" focusable="false">
+      <MarkPaths />
+    </svg>
+  );
+}
+
+/** The full lockup. Stacked is the artwork; horizontal is the nav's. */
+export function Logo({
+  variant,
+  className,
+}: {
+  variant: "stacked" | "horizontal";
+  className?: string;
+}) {
+  const horizontal = variant === "horizontal";
   return (
     <svg
       className={className}
-      viewBox={MARK_VIEWBOX}
+      viewBox={horizontal ? HORIZONTAL_VIEWBOX : STACKED_VIEWBOX}
       aria-hidden="true"
       focusable="false"
     >
-      <path
-        d={MARK_PATH}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="5"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      <circle cx={MARK_SUN.cx} cy={MARK_SUN.cy} r={MARK_SUN.r} fill={SUN_TAN} />
+      <MarkPaths />
+      {horizontal ? (
+        <g transform={HORIZONTAL_SHIFT}>
+          <Wordmark />
+        </g>
+      ) : (
+        <Wordmark />
+      )}
     </svg>
   );
 }
