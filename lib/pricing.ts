@@ -198,6 +198,16 @@ export function usdFromMxn(mxn: number): number {
   return roundHalfDown(raw, raw >= 100 ? 10 : 5);
 }
 
+/**
+ * USD to the nearest dollar, for a per-unit fee a count multiplies. The
+ * nearest-5 step is fine on a figure printed once; on the fee per contact it
+ * made 100 MXN (5.88 USD) read 5 USD, 15 percent under, and a hundred
+ * contacts later the two currencies disagreed by 85 USD (red-team, 2026-10-09).
+ */
+export function usdFromMxnFine(mxn: number): number {
+  return roundHalfDown(mxn / usdRate, 1);
+}
+
 /** Both currencies for one MXN figure. USD is never priced independently. */
 export function priced(mxn: number): Record<CurrencyCode, number> {
   return { MXN: mxn, USD: usdFromMxn(mxn) };
@@ -1548,6 +1558,8 @@ export function webCareMonthly(): Record<CurrencyCode, number> {
                   contacts.
    The derivation throws if the per-contact fee is not a whole number of
    pesos, if the base does not sit under the reference or the cap above it.
+   The per-contact fee converts to USD to the nearest dollar (6), not the
+   nearest 5 like a figure printed once, because a count multiplies it.
 
    Campaign build (setup). Build hours 4 and 6 (memo 5.3), no scope factor,
    rounded UP to the next 100, the step the memo's own ads setups use:
@@ -1652,7 +1664,7 @@ function adsScopeOf(
     monthlyCost: pesos2(serviceHours * serviceRate),
     reference: priced(reference),
     base: priced(base),
-    perContact: priced(perContact),
+    perContact: { MXN: perContact, USD: usdFromMxnFine(perContact) },
     cap: priced(cap),
     breakEvenContacts,
     capContacts: Math.floor((cap - base) / perContact),

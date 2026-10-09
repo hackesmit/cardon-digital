@@ -94,13 +94,12 @@ export default function Home({ params }: Params) {
   const cur = currencyByLocale[locale];
   const price = (amount: number) => formatPrice(locale, amount);
   const siteFrom = price(webPackageFrom("presencia")[cur]);
-  const adsLine = adsFill(locale, d.services.adsLine);
   const softFrom = price(
     Math.min(...Object.values(moduleFloors).map((f) => f.setup[cur])),
   );
   const serviceLine: Record<string, string> = {
     sitios: d.services.fromLabel + " " + siteFrom,
-    anuncios: adsLine,
+    anuncios: adsFill(locale, "{base} " + d.services.adsLine),
     software: d.services.fromLabel + " " + softFrom,
   };
   const photo = (entry: { slot: MediaPhotoSlot; src: string | null }, className: string) =>
@@ -642,7 +641,7 @@ export default function Home({ params }: Params) {
             <div className="price-line">
               <dt>{d.pricing.adsK}</dt>
               <dd>
-                <span className="price-from mono">{adsFill(locale, d.pricing.adsLine)}</span>
+                <b>{adsFill(locale, "{base}")}</b> <span className="price-from mono">{adsFill(locale, d.pricing.adsLine)}</span>
               </dd>
             </div>
             <div className="price-line">

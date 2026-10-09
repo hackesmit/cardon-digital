@@ -603,8 +603,9 @@ What a copy bead's Definition of Done now carries, for any change that touches a
    for to claim (afirmar).
 3. One word per thing across the site: diagnóstico and its written informe; reportes for what a
    system generates; desarrollo for the build phase (the campaign label "Construcción de la
-   campaña" stays, a test exemption names it); reservaciones for bookings in prose; cuota fija;
-   equipo capacitado; al día or al corriente; vendimia in the wine pages.
+   campaña" stays, a test exemption names it); reservaciones for bookings in prose; for the ads fee, base mensual and
+   pago por contacto (cuota fija is retired since 2026-10-09: the fee is a base plus a fee per
+   qualified contact, contacto calificado, with a tope mensual); equipo capacitado; al día or al corriente; vendimia in the wine pages.
 4. Facts, figures, hedges, placeholders and policy sentences are identical in both locales. A
    native rewrite never strengthens a claim.
 5. The adversarial review of a Spanish copy change includes a native-reader pass over the full

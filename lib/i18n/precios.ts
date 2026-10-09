@@ -231,7 +231,7 @@ const en = {
   annual: {
     kicker: "Paying a year up front",
     title: "A year in one payment costs less.",
-    body: "Twelve months paid at the start cost less than twelve payments: one invoice a year costs us less than twelve. Service fee only: never setup, never ad spend, and never the per-contact ads fee, which is settled month by month. The paid year runs to its end: stop halfway and there is nothing more to invoice and nothing to refund. The system stays on until the anniversary and you can leave there. Your quote carries the figure.",
+    body: "Twelve months paid at the start cost less than twelve payments: one invoice a year costs us less than twelve. Service fee only: never setup, never ad spend, and never the per-contact ads fee, which is settled month by month. The paid year runs to its end: stop halfway and there is nothing more of the service fee to invoice and nothing to refund; contacts the ads already brought are invoiced as usual. The system stays on until the anniversary and you can leave there. Your quote carries the figure.",
   },
 
   monthly: {
@@ -430,7 +430,7 @@ const es: typeof en = {
   annual: {
     kicker: "Pagar el año por adelantado",
     title: "Un año en una sola exhibición cuesta menos.",
-    body: "Doce meses pagados al inicio cuestan menos que doce mensualidades, porque una factura al año nos cuesta menos que doce. Solo la cuota del servicio: nunca la implementación, nunca la inversión en anuncios y nunca el pago por contacto de los anuncios, que se liquida mes con mes. El año pagado corre completo: si lo suspende a la mitad, no hay nada más que facturar ni nada que devolver. El sistema sigue encendido hasta el aniversario, y entonces puede retirarse. La cifra viene en su cotización.",
+    body: "Doce meses pagados al inicio cuestan menos que doce mensualidades, porque una factura al año nos cuesta menos que doce. Solo la cuota del servicio: nunca la implementación, nunca la inversión en anuncios y nunca el pago por contacto de los anuncios, que se liquida mes con mes. El año pagado corre completo: si lo suspende a la mitad, no hay nada más de la cuota del servicio que facturar ni nada que devolver; los contactos que los anuncios ya trajeron se facturan como siempre. El sistema sigue encendido hasta el aniversario, y entonces puede retirarse. La cifra viene en su cotización.",
   },
 
   monthly: {

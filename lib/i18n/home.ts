@@ -66,7 +66,7 @@ const en = {
     kicker: "What we do",
     title: "Three ways to grow, starting with the one that is urgent.",
     fromLabel: "from",
-    adsLine: "{base} a month plus {perContact} per contact",
+    adsLine: "a month plus {perContact} per contact, never more than {cap}",
     items: [
       {
         id: "sitios",
@@ -79,7 +79,7 @@ const en = {
         id: "anuncios",
         name: "Google Ads",
         title: "New clients who were already searching, measured.",
-        body: "Campaigns for the people already searching for what you sell. A small base plus a fee per contact, so we earn when you do, and your budget goes straight to Google.",
+        body: "Campaigns for the people already searching for what you sell. A small base plus a capped fee per contact, so we earn when you do, and your budget goes straight to Google.",
         cta: "See ads",
       },
       {
@@ -196,7 +196,7 @@ const en = {
     adsK: "Google Ads",
     softK: "Software",
     fromLabel: "from",
-    adsLine: "{base} a month plus {perContact} per contact",
+    adsLine: "a month plus {perContact} per contact, never more than {cap}",
     more: "See every price",
     foot: [
       {
@@ -366,7 +366,7 @@ const es: typeof en = {
     kicker: "Lo que hacemos",
     title: "Tres formas de crecer, empezando por la que más le urge.",
     fromLabel: "desde",
-    adsLine: "{base} al mes más {perContact} por contacto",
+    adsLine: "al mes más {perContact} por contacto, nunca más de {cap}",
     items: [
       {
         id: "sitios",
@@ -379,7 +379,7 @@ const es: typeof en = {
         id: "anuncios",
         name: "Anuncios en Google",
         title: "Clientes nuevos que ya lo buscaban, medidos.",
-        body: "Campañas para la gente que ya está buscando lo que usted vende. Una base pequeña más un pago por contacto, para ganar cuando usted gana, y su presupuesto va directo a Google.",
+        body: "Campañas para la gente que ya está buscando lo que usted vende. Una base pequeña más un pago por contacto con tope, para ganar cuando usted gana, y su presupuesto va directo a Google.",
         cta: "Ver anuncios",
       },
       {
@@ -495,7 +495,7 @@ const es: typeof en = {
     adsK: "Anuncios en Google",
     softK: "Software",
     fromLabel: "desde",
-    adsLine: "{base} al mes más {perContact} por contacto",
+    adsLine: "al mes más {perContact} por contacto, nunca más de {cap}",
     more: "Ver todos los precios",
     foot: [
       {
