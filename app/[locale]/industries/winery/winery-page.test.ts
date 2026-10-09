@@ -163,25 +163,29 @@ describe("the emphasis a visitor actually sees", () => {
 
 describe("the ads card carries the policy precios sets", () => {
   /**
-   * Since 2026-09-28 ad management is a standalone service at a flat fee,
-   * bought on its own or with a module (Daniel's direction; bunker
-   * research/2026-09/site-arc-digital-onboarding.md section 8). The card on
-   * this page that mentions ads must say the fee is flat and that the budget
-   * goes straight to Google, and precios' own ads block must say the same.
+   * Since 2026-09-28 ad management is a standalone service, bought on its
+   * own or with a module (Daniel's direction; bunker
+   * research/2026-09/site-arc-digital-onboarding.md section 8), and since
+   * 2026-10-09 it is a base plus a fee per contact (research/2026-10/
+   * ads-performance-fee.md). The card on this page that mentions ads must
+   * say the fee is per contact and that the budget goes straight to Google,
+   * and precios' own ads block must say the same.
    * Read against the SERVED card bodies, because a claim moved into the
    * component would leave the dictionary clean and the visitor still promised
    * the thing. The retired conditions (Hospitalidad and Restaurante only, from
    * the middle size up, never on Produccion) are gone with the policy.
    */
-  const words: Record<Locale, { ads: RegExp; flat: RegExp; direct: RegExp; share: RegExp }> = {
+  const words: Record<Locale, { ads: RegExp; perContact: RegExp; flat: RegExp; direct: RegExp; share: RegExp }> = {
     en: {
       ads: /\bads\b|\bGoogle Ads\b/i,
+      perContact: /\bper[ -](?:qualified )?contact\b/i,
       flat: /\bflat (?:monthly )?fee\b/i,
       direct: /straight to Google/i,
       share: /\b(?:percent|percentage|share) of (?:what you )?spend/i,
     },
     es: {
       ads: /\banuncios\b/i,
+      perContact: /\bpor[ -](?:cada )?contacto\b/i,
       flat: /\bcuota (?:mensual )?fija\b/i,
       direct: /directo a Google/i,
       share: /\bporcentaje de (?:lo que invierte|la inversi[oó]n|su presupuesto)/i,
@@ -189,12 +193,13 @@ describe("the ads card carries the policy precios sets", () => {
   };
 
   for (const locale of locales) {
-    const { ads, flat, direct, share } = words[locale];
+    const { ads, perContact, flat, direct, share } = words[locale];
 
     it(`${locale}: the served page mentions ads on exactly one card, and that card states the policy`, async () => {
       const cards = servedCapBodies(await serve(locale)).filter((b) => ads.test(b));
       expect(cards).toHaveLength(1);
-      expect(cards[0]).toMatch(flat);
+      expect(cards[0]).toMatch(perContact);
+      expect(cards[0]).not.toMatch(flat);
       expect(cards[0]).toMatch(direct);
     });
 
@@ -203,8 +208,9 @@ describe("the ads card carries the policy precios sets", () => {
       expect(bad.map((c) => c.body)).toEqual([]);
     });
 
-    it(`${locale}: precios still states the flat fee this card is held to`, () => {
-      expect(precios[locale].ads.body).toMatch(flat);
+    it(`${locale}: precios still states the per-contact fee this card is held to`, () => {
+      expect(precios[locale].ads.body).toMatch(perContact);
+      expect(precios[locale].ads.body).not.toMatch(flat);
       expect(precios[locale].ads.body).toMatch(direct);
       // The standalone fee and the module add-on are one price by construction.
       expect(addOnMonthly("google-ads-management", "M")).not.toBeNull();

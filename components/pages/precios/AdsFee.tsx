@@ -3,14 +3,17 @@ import Reveal from "@/components/site/Reveal";
 import type { Locale } from "@/lib/i18n/config";
 import { anuncios } from "@/lib/i18n/anuncios";
 import { adsManagement, currencyByLocale, formatPrice } from "@/lib/pricing";
+import { adsFill } from "@/lib/adsCopy";
 
 /**
- * The two ad management scopes: the flat monthly fee, the one-time campaign
- * build, the minimum monthly budget the client pays straight to Google, and
- * the scope each covers. Every figure is read out of lib/pricing.ts
- * (adsManagement), and the policy the rules state (flat, never a share of
- * spend, budget never through us) is the data module's own flags. Rendered on
- * /anuncios and on /precios.
+ * The two ad management scopes (performance fee since 2026-10-09): the
+ * monthly base, the fee per qualified contact, the monthly cap, the one-time
+ * campaign build, the minimum monthly budget the client pays straight to
+ * Google, and the scope each covers. Every figure is read out of
+ * lib/pricing.ts (adsManagement), the rules print the contact rules from the
+ * same module through adsFill, and the policy the rules state (never a share
+ * of spend, budget never through us) is the data module's own flags.
+ * Rendered on /anuncios and on /precios.
  */
 export default function AdsFee({
   locale,
@@ -44,16 +47,27 @@ export default function AdsFee({
               const scope = d.scopes[s.id];
               if (!name || !scope) throw new Error(`anuncios: no ${locale} name for scope ${s.id}`);
               if (s.percentOfSpend) throw new Error(`anuncios: scope ${s.id} is priced on spend`);
+              if (s.perContact[cur] <= 0) throw new Error(`anuncios: scope ${s.id} has no fee per contact`);
               return (
                 <article className={"fee" + (i === 0 ? " fee-lead" : "")} key={s.id}>
                   <h3 className="fee-name">{name}</h3>
                   <p className="fee-scope">{scope}</p>
                   <dl className="fee-facts">
                     <div className="fee-main">
-                      <dt>{d.monthlyLabel}</dt>
+                      <dt>{d.baseLabel}</dt>
                       <dd>
-                        <b>{price(s.monthly[cur])}</b>
+                        <b>{price(s.base[cur])}</b>
                       </dd>
+                    </div>
+                    <div className="fee-main">
+                      <dt>{d.perContactLabel}</dt>
+                      <dd>
+                        <b>{price(s.perContact[cur])}</b>
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>{d.capLabel}</dt>
+                      <dd>{price(s.cap[cur])}</dd>
                     </div>
                     <div>
                       <dt>{d.setupLabel}</dt>
@@ -73,7 +87,7 @@ export default function AdsFee({
         <Reveal delay={60}>
           <ul className="fee-rules">
             {d.rules.map((r) => (
-              <li key={r}>{r}</li>
+              <li key={r}>{adsFill(locale, r)}</li>
             ))}
           </ul>
         </Reveal>
