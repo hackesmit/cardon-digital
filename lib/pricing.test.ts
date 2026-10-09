@@ -2,15 +2,18 @@ import { describe, expect, it } from "vitest";
 
 import {
   type AddOnId,
+  type AdsScope,
   type ModuleId,
   type ModuleSelection,
   type Size,
   absorbedProviderCash,
-  adsManagement,
-  adsMinimumBudget,
-  adsScope,
   addOnAvailable,
   addOnMonthly,
+  adsContactRules,
+  adsManagement,
+  adsMinimumBudget,
+  adsReferenceMonthly,
+  adsScope,
   annualPrepay,
   annualPrepayRate,
   bridgeFeatures,
@@ -297,8 +300,13 @@ describe("the shared service base and the run costs", () => {
 describe("add-ons", () => {
   it("prices the three add-on lines as the memo does", () => {
     expect(addOnMonthly("google-ads-management", "S")).toBeNull();
-    expect(addOnMonthly("google-ads-management", "M")).toBe(5500);
-    expect(addOnMonthly("google-ads-management", "L")).toBe(8800);
+    // Ads: the standalone scope's base since 2026-10-09, not its hours.
+    expect(addOnMonthly("google-ads-management", "M")).toBe(2500);
+    expect(addOnMonthly("google-ads-management", "L")).toBe(4300);
+    // What the flat fee of 2026-09-23 was, kept as the derivation's reference.
+    expect(adsReferenceMonthly("S")).toBeNull();
+    expect(adsReferenceMonthly("M")).toBe(5500);
+    expect(adsReferenceMonthly("L")).toBe(8800);
     expect(addOnMonthly("content", "S")).toBe(1800);
     expect(addOnMonthly("content", "M")).toBe(3300);
     // 5,022.5 rounds to a bare 5,000, so the quote line takes its increment.
@@ -321,12 +329,14 @@ describe("add-ons", () => {
 
   it("adds a chosen add-on into the quoted monthly", () => {
     const q = quote(["restaurante"], "M", ["google-ads-management"]);
-    // 14,800 + 5,700 + 5,500 is a bare 26,000, so the total takes its increment.
+    // 14,800 + 5,700 + 2,500 is a bare 23,000, so the total takes its increment.
+    // The ads line is the base; the per-contact fee is billed in arrears and
+    // never enters a quote total (memo section 5).
     expect(q.addOns).toEqual([
-      { id: "google-ads-management", size: "M", monthly: 5500 },
+      { id: "google-ads-management", size: "M", monthly: 2500 },
     ]);
     expect(q.monthlyBumped).toBe(true);
-    expect(q.monthly.MXN).toBe(26100);
+    expect(q.monthly.MXN).toBe(23100);
   });
 });
 
@@ -1171,7 +1181,7 @@ describe("(3) a size per module, which is what the Diagnostico sets", () => {
       ["google-ads-management"],
     );
     expect(q.addOns).toEqual([
-      { id: "google-ads-management", size: "M", monthly: 5500 },
+      { id: "google-ads-management", size: "M", monthly: 2500 },
     ]);
     // The visit is per client, so it takes the largest module's size instead.
     const visit = quote(
@@ -1495,27 +1505,32 @@ describe("website packages", () => {
 });
 
 describe("standalone Google Ads management", () => {
-  it("is two scopes, local then crecimiento, larger in scope, fee, setup and budget", () => {
+  it("is two scopes, local then crecimiento, larger in scope, base, cap, setup and budget", () => {
     expect(adsManagement.map((s) => s.id)).toEqual(["local", "crecimiento"]);
     const [local, crecimiento] = adsManagement;
     expect(crecimiento.campaigns).toBeGreaterThan(local.campaigns);
     expect(crecimiento.adGroups).toBeGreaterThan(local.adGroups);
-    expect(crecimiento.monthly.MXN).toBeGreaterThan(local.monthly.MXN);
+    expect(crecimiento.base.MXN).toBeGreaterThan(local.base.MXN);
+    expect(crecimiento.cap.MXN).toBeGreaterThan(local.cap.MXN);
     expect(crecimiento.setup.MXN).toBeGreaterThan(local.setup.MXN);
     expect(crecimiento.minimumBudget.MXN).toBeGreaterThan(local.minimumBudget.MXN);
   });
 
   it.each([
-    // id, service h, monthly, USD, monthly margin, build h, setup, USD, setup margin, budget, USD, campaigns, ad groups
-    ["local", 4, 5500, 320, 600, 4, 10900, 640, 100, 10000, 590, 1, 3],
-    ["crecimiento", 7, 8800, 520, 225, 6, 16500, 970, 300, 15000, 880, 3, 10],
+    // id, service h, reference, base, USD, per contact, USD, cap, USD, break-even, cap contacts, build h, setup, USD, setup margin, budget, USD, campaigns, ad groups
+    ["local", 4, 5500, 2500, 150, 100, 5, 11000, 650, 30, 85, 4, 10900, 640, 100, 10000, 590, 1, 3],
+    ["crecimiento", 7, 8800, 4300, 250, 100, 5, 17600, 1040, 45, 133, 6, 16500, 970, 300, 15000, 880, 3, 10],
   ] as const)(
-    "%s: the published figures",
-    (id, sh, monthly, monthlyUsd, monthlyMargin, bh, setup, setupUsd, setupMargin, budget, budgetUsd, campaigns, adGroups) => {
+    "%s: the published figures of research/2026-10/ads-performance-fee.md",
+    (id, sh, reference, base, baseUsd, perContact, perContactUsd, cap, capUsd, breakEven, capContacts, bh, setup, setupUsd, setupMargin, budget, budgetUsd, campaigns, adGroups) => {
       const s = adsScope(id);
       expect(s.serviceHours).toBe(sh);
-      expect(s.monthly).toEqual({ MXN: monthly, USD: monthlyUsd });
-      expect(s.monthly.MXN - sh * serviceRate).toBe(monthlyMargin);
+      expect(s.reference.MXN).toBe(reference);
+      expect(s.base).toEqual({ MXN: base, USD: baseUsd });
+      expect(s.perContact).toEqual({ MXN: perContact, USD: perContactUsd });
+      expect(s.cap).toEqual({ MXN: cap, USD: capUsd });
+      expect(s.breakEvenContacts).toBe(breakEven);
+      expect(s.capContacts).toBe(capContacts);
       expect(s.buildHours).toBe(bh);
       expect(s.setup).toEqual({ MXN: setup, USD: setupUsd });
       expect(s.setup.MXN - bh * setupRate).toBe(setupMargin);
@@ -1526,33 +1541,74 @@ describe("standalone Google Ads management", () => {
   );
 
   it.each(adsManagement.map((s) => [s.id, s] as const))(
-    "%s: every figure clears its hours at the stated rate and converts from the rounded MXN",
+    "%s: every figure is derived as the memo derives it, and converts from the rounded MXN",
     (_, s) => {
+      // The reference is the flat fee of 2026-09-23: the add-on's hours priced as a quote line.
+      expect(s.reference.MXN).toBe(adsReferenceMonthly(s.moduleSize));
       expect(s.monthlyCost).toBe(s.serviceHours * serviceRate);
-      expect(s.monthly.MXN).toBeGreaterThanOrEqual(s.monthlyCost);
+      expect(s.reference.MXN).toBeGreaterThanOrEqual(s.monthlyCost);
+      // Base: half the hours at the rate, up to 100; under the reference on purpose.
+      expect(s.base.MXN).toBe(ceilTo(s.monthlyCost / 2, 100));
+      expect(s.base.MXN).toBeLessThan(s.reference.MXN);
+      // At the break-even count the client pays exactly what the flat fee was.
+      expect(s.base.MXN + s.breakEvenContacts * s.perContact.MXN).toBe(s.reference.MXN);
+      expect(Number.isInteger(s.perContact.MXN)).toBe(true);
+      expect(s.perContact.MXN).toBeGreaterThan(0);
+      // Cap: twice the reference, and it binds where the memo says.
+      expect(s.cap.MXN).toBe(2 * s.reference.MXN);
+      expect(s.base.MXN + s.capContacts * s.perContact.MXN).toBeLessThanOrEqual(s.cap.MXN);
+      expect(s.base.MXN + (s.capContacts + 1) * s.perContact.MXN).toBeGreaterThan(s.cap.MXN);
       expect(s.setupCost).toBe(s.buildHours * setupRate);
       expect(s.setup.MXN).toBeGreaterThanOrEqual(s.setupCost);
       expect(s.setup.MXN).toBe(Math.max(ceilTo(s.setupCost, 100), s.setupMarketFloor));
-      expect(s.monthly.MXN % 1000).not.toBe(0);
       expect(s.setup.MXN % 10000).not.toBe(0);
-      for (const f of [s.monthly, s.setup, s.minimumBudget]) expect(f.USD).toBe(usdFromMxn(f.MXN));
+      for (const f of [s.reference, s.base, s.perContact, s.cap, s.setup, s.minimumBudget]) {
+        expect(f.USD).toBe(usdFromMxn(f.MXN));
+      }
     },
   );
 
+  it("a month of ads, worked: what the client pays at a few contact counts (memo section 2)", () => {
+    const month = (s: AdsScope, contacts: number) =>
+      Math.min(s.cap.MXN, s.base.MXN + contacts * s.perContact.MXN);
+    const local = adsScope("local");
+    expect(month(local, 0)).toBe(2500);
+    expect(month(local, 15)).toBe(4000);
+    expect(month(local, 30)).toBe(5500);
+    expect(month(local, 60)).toBe(8500);
+    expect(month(local, 85)).toBe(11000);
+    expect(month(local, 200)).toBe(11000);
+    const crecimiento = adsScope("crecimiento");
+    expect(month(crecimiento, 0)).toBe(4300);
+    expect(month(crecimiento, 45)).toBe(8800);
+    expect(month(crecimiento, 133)).toBe(17600);
+    expect(month(crecimiento, 134)).toBe(17600);
+  });
+
   it.each(adsManagement.map((s) => [s.id, s] as const))(
-    "%s: the fee is flat and the budget goes straight to Google, never through Cardon",
+    "%s: never a share of spend, and the budget goes straight to Google, never through Cardon",
     (_, s) => {
       expect(s.percentOfSpend).toBe(false);
       expect(s.budgetThroughCardon).toBe(false);
     },
   );
 
-  it("charges what a module quote charges for ads at the matching size, so there is one price", () => {
+  it("the contact rules are the memo's (section 3 and 5)", () => {
+    expect(adsContactRules).toEqual({
+      callSeconds: 30,
+      onceInDays: 30,
+      disputeBusinessDays: 5,
+      pauseUnderContacts: 10,
+      pauseAfterMonths: 3,
+    });
+  });
+
+  it("charges what a module quote charges for the ads base at the matching size, so there is one price", () => {
     for (const s of adsManagement) {
-      expect(s.monthly.MXN).toBe(addOnMonthly("google-ads-management", s.moduleSize));
+      expect(s.base.MXN).toBe(addOnMonthly("google-ads-management", s.moduleSize));
       expect(
         quote(["restaurante"], s.moduleSize, ["google-ads-management"]).addOns[0].monthly,
-      ).toBe(s.monthly.MXN);
+      ).toBe(s.base.MXN);
     }
   });
 
