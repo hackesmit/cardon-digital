@@ -1,9 +1,10 @@
 /* Coming-soon holding page, scoped under .pg-soon */
 .pg-soon{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;}
 .pg-soon .soon-wrap{max-width:640px;padding:40px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;}
-.pg-soon .soon-mark{width:auto;height:52px;display:block;color:var(--text);}
-.pg-soon h1{font-size:clamp(2rem,6vw,3rem);letter-spacing:-0.02em;margin:4px 0 0;}
-.pg-soon h1 span{color:var(--muted);font-weight:600;}
+.pg-soon .soon-mark{width:auto;height:84px;display:block;color:var(--text);}
+/* The lockup as the artwork stacks it: CARDON wide and bold, DIGITAL small and wider still. */
+.pg-soon .soon-wordmark{font-family:var(--brand);text-transform:uppercase;font-weight:700;font-size:clamp(1.7rem,5vw,2.4rem);letter-spacing:0.22em;line-height:1;margin:2px 0 0;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.pg-soon .soon-wordmark span{color:var(--muted);font-weight:500;font-size:0.42em;letter-spacing:0.46em;padding-left:0.46em;}
 .pg-soon .soon-line{color:var(--text-dim);font-size:1.08rem;line-height:1.55;margin:0;}
 .pg-soon .soon-sub{color:var(--muted);font-size:0.92rem;margin:10px 0 0;}
 .pg-soon .soon-cta{

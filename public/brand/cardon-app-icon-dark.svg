@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Cardon Digital">
+  <title>Cardon Digital</title>
+  <defs><clipPath id="tile"><rect width="256" height="256" rx="58"/></clipPath></defs>
+  <rect width="256" height="256" rx="58" fill="#1E1C1A"/>
+  <g clip-path="url(#tile)"><g transform="translate(-50.6 19.7) scale(1.9)">
+    <path d="M4 92H20C34 92 44 76 58 76C70 76 80 86 88 90V70H74A4 4 0 0 1 70 66V46.5A4.5 4.5 0 0 1 79 46.5V62H88V28A6 6 0 0 1 100 28V70H109V54.5A4.5 4.5 0 0 1 118 54.5V74A4 4 0 0 1 114 78H100V90C108 86 118 62 140 62C162 62 174 84 182 92H196" fill="none" stroke="#F4EFE8" stroke-width="5.6" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="130" cy="38" r="6.5" fill="#C9A074"/>
+  </g></g>
+</svg>

@@ -30,8 +30,8 @@ export default function ComingSoonPage({ params }: Params) {
   return (
     <main id="main" className="pg-soon">
       <div className="soon-wrap">
-        <Mark className="soon-mark" variant="mono-bloom" />
-        <h1>
+        <Mark className="soon-mark" />
+        <h1 className="soon-wordmark">
           Cardon <span>Digital</span>
         </h1>
         <p className="soon-line">{d.line}</p>
