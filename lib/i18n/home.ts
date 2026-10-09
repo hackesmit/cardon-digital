@@ -79,7 +79,7 @@ const en = {
         id: "anuncios",
         name: "Google Ads",
         title: "New clients who were already searching, measured.",
-        body: "Campaigns for the people already searching for what you sell. A small base plus a capped fee per contact, so we earn when you do, and your budget goes straight to Google.",
+        body: "Campaigns for the people already searching for what you sell. A small base plus a capped fee per contact, so most of what we earn depends on the contacts that come, and your budget goes straight to Google.",
         cta: "See ads",
       },
       {
@@ -379,7 +379,7 @@ const es: typeof en = {
         id: "anuncios",
         name: "Anuncios en Google",
         title: "Clientes nuevos que ya lo buscaban, medidos.",
-        body: "Campañas para la gente que ya está buscando lo que usted vende. Una base pequeña más un pago por contacto con tope, para ganar cuando usted gana, y su presupuesto va directo a Google.",
+        body: "Campañas para la gente que ya está buscando lo que usted vende. Una base pequeña más un pago por contacto con tope, así que la mayor parte de lo que cobramos depende de los contactos que lleguen, y su presupuesto va directo a Google.",
         cta: "Ver anuncios",
       },
       {
