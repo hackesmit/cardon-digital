@@ -162,12 +162,10 @@ export default function Nav() {
     <header className="site-header">
       <div className="container bar">
         <Link className="brand" href={href("/")} aria-label={brandHome}>
-          <Mark
-            className="brand-mark brand-mark--nav"
-            variant={mode === "dark" ? "mono-bloom" : "color"}
-          />
+          <Mark className="brand-mark brand-mark--nav" />
           <span className="brand-name">
-            Cardon <span>Digital</span>
+            <span className="brand-name-main">Cardon</span>
+            <span className="brand-name-sub">Digital</span>
           </span>
         </Link>
 
