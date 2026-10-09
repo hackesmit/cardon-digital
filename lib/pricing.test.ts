@@ -50,6 +50,8 @@ import {
   sharedServiceBaseHours,
   sizes,
   usdFromMxn,
+  usdFromMxnFine,
+  usdRate,
   webCareHours,
   webCareMonthly,
   webPackageFrom,
@@ -1518,8 +1520,8 @@ describe("standalone Google Ads management", () => {
 
   it.each([
     // id, service h, reference, base, USD, per contact, USD, cap, USD, break-even, cap contacts, build h, setup, USD, setup margin, budget, USD, campaigns, ad groups
-    ["local", 4, 5500, 2500, 150, 100, 5, 11000, 650, 30, 85, 4, 10900, 640, 100, 10000, 590, 1, 3],
-    ["crecimiento", 7, 8800, 4300, 250, 100, 5, 17600, 1040, 45, 133, 6, 16500, 970, 300, 15000, 880, 3, 10],
+    ["local", 4, 5500, 2500, 150, 100, 6, 11000, 650, 30, 85, 4, 10900, 640, 100, 10000, 590, 1, 3],
+    ["crecimiento", 7, 8800, 4300, 250, 100, 6, 17600, 1040, 45, 133, 6, 16500, 970, 300, 15000, 880, 3, 10],
   ] as const)(
     "%s: the published figures of research/2026-10/ads-performance-fee.md",
     (id, sh, reference, base, baseUsd, perContact, perContactUsd, cap, capUsd, breakEven, capContacts, bh, setup, setupUsd, setupMargin, budget, budgetUsd, campaigns, adGroups) => {
@@ -1562,9 +1564,12 @@ describe("standalone Google Ads management", () => {
       expect(s.setup.MXN).toBeGreaterThanOrEqual(s.setupCost);
       expect(s.setup.MXN).toBe(Math.max(ceilTo(s.setupCost, 100), s.setupMarketFloor));
       expect(s.setup.MXN % 10000).not.toBe(0);
-      for (const f of [s.reference, s.base, s.perContact, s.cap, s.setup, s.minimumBudget]) {
+      for (const f of [s.reference, s.base, s.cap, s.setup, s.minimumBudget]) {
         expect(f.USD).toBe(usdFromMxn(f.MXN));
       }
+      // The per-contact fee is multiplied by a count, so it converts to the dollar.
+      expect(s.perContact.USD).toBe(usdFromMxnFine(s.perContact.MXN));
+      expect(Math.abs(s.perContact.USD * usdRate - s.perContact.MXN) / s.perContact.MXN).toBeLessThan(0.08);
     },
   );
 

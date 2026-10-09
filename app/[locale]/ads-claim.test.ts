@@ -98,8 +98,10 @@ const PER_CONTACT: Record<Locale, RegExp> = {
  * wherever ads are mentioned, offer or not.
  */
 const FLAT: Record<Locale, RegExp> = {
-  en: /\bflat (?:monthly )?fees?\b/i,
-  es: /\bcuotas? (?:mensual(?:es)? )?fijas?\b/i,
+  // flat or fixed, up to three words, then fee, rate or price; or "a set fee".
+  en: /\b(?:flat|fixed)\b(?:\s+[\w-]+){0,3}\s+(?:fees?|rates?|prices?)\b|\bset (?:monthly )?(?:fees?|rates?|prices?)\b/i,
+  // cuota, tarifa, precio, pago or mensualidad with fijo/fija in either order, up to three words apart.
+  es: /\b(?:cuotas?|tarifas?|precios?|pagos?|mensualidad(?:es)?)\b(?:\s+[\wáéíóúñ-]+){0,3}\s+fij[ao]s?\b|\bfij[ao]s?\b(?:\s+[\wáéíóúñ-]+){0,3}\s+(?:cuotas?|tarifas?|precios?|pagos?|mensualidad(?:es)?)\b/i,
 };
 
 /**
@@ -110,8 +112,8 @@ const FLAT: Record<Locale, RegExp> = {
  * ad, monthly).
  */
 const SHARE_OF_SPEND: Record<Locale, RegExp> = {
-  en: /\b(?:percent(?:age)? of (?:your |the )?(?:ad |monthly )?(?:spend|budget)|percent(?:age)? of what you spend|share of (?:your |the )?(?:ad )?spend|share of what you spend)\b/gi,
-  es: /\bporcentaje (?:de la inversión|del presupuesto|de lo que (?:usted )?invierte)/gi,
+  en: /\b(?:percent(?:age)? of (?:your |the )?(?:ad |media |monthly )?(?:spend|budget)|percent(?:age)? of what you spend|share of (?:your |the )?(?:ad |media )?spend|share of what you spend|\d+\s*%\s+of\b[^.]{0,30}\b(?:spend|budget)|commissions?\b)/gi,
+  es: /\b(?:porcentaje (?:de (?:la |su )?inversión|del presupuesto|de su presupuesto|de lo que (?:usted )?invierte)|\d+\s*%\s+de\b[^.]{0,30}\b(?:inversión|presupuesto)|comisi[oó]n(?:es)?\b)/gi,
 };
 const DENIED_BEFORE: Record<Locale, RegExp> = {
   en: /\b(?:never|not|no|nor|without)\b(?:\s+[\w,]+){0,4}\s*$/i,
@@ -474,6 +476,19 @@ function budgetProblem(block: string, locale: Locale): string | null {
   // fills from lib/pricing.ts; the served render of that page is then judged
   // on the filled figure. Only the placeholder of the owed scope counts.
   const owedTokens = namesCrecimiento ? ["{minLocal}", "{minCrecimiento}"] : ["{minLocal}"];
+  // A block that prints a scope's base prints its cap too: the base alone
+  // reads as the whole price (cross-vendor review, 2026-10-09). A bare figure
+  // or a bare placeholder (a dl cell, the bold figure the home line opens
+  // with) states nothing by itself; its label and the cells beside it do.
+  const bare = /^(?:\$?[\d.,]+\s*(?:MXN|USD)?|\{\w+\})$/.test(block.trim());
+  for (const [s, suffix] of [
+    [local, ""],
+    [crecimiento, "Crecimiento"],
+  ] as const) {
+    const hasBase = block.includes(`{base${suffix}}`) || figure(s.base[currency], locale).test(block);
+    const hasCap = block.includes(`{cap${suffix}}`) || figure(s.cap[currency], locale).test(block);
+    if (hasBase && !hasCap && !bare) return `prints the ${s.id} base without its cap ${formatAmount(s.cap[currency], locale)} ${currency}`;
+  }
   for (const sentence of sentencesOf(block)) {
     if (!MINIMUM_BUDGET[locale].test(sentence)) continue;
     // A label ("Minimum monthly budget") prints no figure and states none.
@@ -535,6 +550,18 @@ function judge(block: string, locale: Locale): Verdict {
     wrong = "calls the ads fee flat, the words of the 2026-09-23 policy, while lib/pricing.ts charges a base plus a fee per contact";
   }
   if (offer && !perContactPolicy) wrong = "offered per contact while lib/pricing.ts has a scope with no fee per contact or priced on spend";
+  // An offer prints no figure lib/pricing.ts does not carry in this locale's
+  // currency: the words can be right and the number invented (cross-vendor
+  // review, 2026-10-09). Small counts (campaigns, groups, days) are not money.
+  if (offer && !wrong) {
+    const currency = currencyByLocale[locale];
+    const known = new Set<number>();
+    for (const s of adsManagement) {
+      for (const f of [s.base, s.perContact, s.cap, s.setup, s.minimumBudget]) known.add(f[currency]);
+    }
+    const stray = amountsIn(block).filter((n) => n >= 100 && !known.has(n));
+    if (stray.length > 0) wrong = `offers ad management beside amounts lib/pricing.ts does not carry in ${currency}: ${stray.join(", ")}`;
+  }
   wrong = wrong ?? budgetProblem(block, locale);
   const policyWords = perContactPolicy && PER_CONTACT[locale].test(block);
   return { offer, states: policyWords, policyWords, wrong, sentences: all.length };
@@ -620,12 +647,45 @@ describe("every served ads claim carries the policy lib/pricing.ts sets", () => 
     expect(judge("We manage your Google Ads for 5,500 a month.", "en")).toMatchObject({ offer: true, states: false });
     expect(judge("Google Ads from {base} a month.", "en").offer).toBe(true);
     expect(judge("Anuncios en Google por $5,500 al mes.", "es").offer).toBe(true);
-    // The words of the flat fee of 2026-09-23 are a false claim beside ads now.
-    expect(judge("Google Ads management for a flat monthly fee.", "en").wrong).not.toBeNull();
-    expect(judge("Manejo de Google Ads por una cuota mensual fija.", "es").wrong).not.toBeNull();
-    expect(judge("Anuncios en Google con cuota fija al mes.", "es").wrong).not.toBeNull();
+    // The words of the flat fee of 2026-09-23 are a false claim beside ads now,
+    // in every wording the two reviews of 2026-10-09 pushed through, with or
+    // without the per-contact words beside them.
+    for (const flat of [
+      "Google Ads management for a flat monthly fee.",
+      "Google Ads management: a flat monthly management fee plus $100 per contact.",
+      "We manage your Google Ads for a fixed monthly fee of $5,500, and you get a report per contact.",
+      "Google Ads management at a flat rate of $5,500 a month, per contact tracking included.",
+      "Google Ads for a set fee each month, reported per contact.",
+    ]) {
+      expect(judge(flat, "en").wrong, flat).not.toBeNull();
+    }
+    for (const flat of [
+      "Manejo de Google Ads por una cuota mensual fija.",
+      "Anuncios en Google con cuota fija al mes.",
+      "Manejo de Google Ads: cuota fija mensual más $100 por contacto.",
+      "Manejamos sus anuncios en Google por una tarifa fija de $5,500 al mes, con reporte por contacto.",
+      "Manejo de anuncios en Google: precio fijo al mes de $5,500, por contacto incluido.",
+      "Anuncios en Google con un pago fijo al mes, y un pago por contacto.",
+    ]) {
+      expect(judge(flat, "es").wrong, flat).not.toBeNull();
+    }
     // Away from ads the same words are nobody's business here.
     expect(judge("The build is a flat fee, agreed before we start.", "en").wrong).toBeNull();
+    expect(judge("El desarrollo. Precio fijo, acordado antes de empezar.", "es").wrong).toBeNull();
+    // A share of spend in other words, and a commission, are still a share of spend.
+    expect(judge("Google Ads management for 15% of your monthly budget, with a report per contact.", "en").wrong).not.toBeNull();
+    expect(judge("Google Ads: a 10 percent commission on your media spend, reported per contact.", "en").wrong).not.toBeNull();
+    expect(judge("Anuncios en Google por el 15% de su presupuesto, con reporte por contacto.", "es").wrong).not.toBeNull();
+    expect(judge("Anuncios en Google con una comisión sobre la inversión, reportada por contacto.", "es").wrong).not.toBeNull();
+    // The right words beside an invented figure fail, and a base without its cap fails.
+    expect(judge("We manage Google Ads: a $9,999 monthly base plus $999 per contact, capped at $99,999 per month.", "en").wrong).not.toBeNull();
+    const base = formatAmount(scope("local").base.USD, "en");
+    const perContact = formatAmount(scope("local").perContact.USD, "en");
+    const capUsd = formatAmount(scope("local").cap.USD, "en");
+    expect(judge(`Google Ads: a base of $${base} USD a month plus $${perContact} USD per contact.`, "en").wrong).not.toBeNull();
+    expect(judge(`Google Ads: a base of $${base} USD a month plus $${perContact} USD per contact, never more than $${capUsd} USD.`, "en").wrong).toBeNull();
+    expect(judge("Google Ads: a base of {base} a month plus {perContact} per contact.", "en").wrong).not.toBeNull();
+    expect(judge("Google Ads: a base of {base} a month plus {perContact} per contact, never more than {cap}.", "en").wrong).toBeNull();
     // Descriptive sentences owe nothing (copy doctrine section 10).
     expect(judge("Your ad comes up and takes them to a page that says what the ad said.", "en").offer).toBe(false);
     expect(judge("Anuncios que dicen lo que usted vende.", "es").offer).toBe(false);
@@ -667,7 +727,7 @@ describe("every served ads claim carries the policy lib/pricing.ts sets", () => 
       expect(all.filter((o) => o.page === "lib/i18n/home.ts").length).toBeGreaterThan(0);
     });
 
-    it(`${locale}: every ads offer says the fee is flat, and nothing claims a share of spend or another minimum`, async () => {
+    it(`${locale}: every ads offer says the fee is per contact, and nothing calls it flat, invents a figure, claims a share of spend or another minimum`, async () => {
       expect(report((await offers(locale)).filter((o) => o.bad))).toEqual([]);
     });
   }

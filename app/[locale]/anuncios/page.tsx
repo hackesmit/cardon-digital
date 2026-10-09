@@ -26,7 +26,7 @@ export function generateMetadata({ params }: Params): Metadata {
 /**
  * The Google Ads service page: new clients who were already searching,
  * measured to the message; the path from a search to a counted call; what
- * the monthly fee pays for; the two scopes at a flat fee with every figure
+ * the monthly fee pays for; the two scopes on a base plus a fee per contact with every figure
  * read out of lib/pricing.ts; the objections; the diagnostic close. The
  * figures inside prose arrive through adsFill, never typed.
  */
