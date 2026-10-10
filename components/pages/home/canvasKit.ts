@@ -19,19 +19,27 @@ export interface Trace {
 
 /**
  * The face canvas labels are drawn in: the page's own text face, read off the
- * body once in the browser, so the scenes follow the site's type (Daniel,
- * 2026-10-10: the monospace labels were the generated-site tell). Before the
- * webfont has loaded the browser draws its fallback and the next frame
- * repaints in the real face, the same as HTML text under font-display swap.
+ * body in the browser, so the scenes follow the site's type (Daniel,
+ * 2026-10-10: the monospace labels were the generated-site tell). The value
+ * is cached only once it is plainly the site's face (next/font families carry
+ * a "__" marker), so a read made before the stylesheet applied is not kept
+ * (cross-vendor review); until then every call reads the live value, which
+ * is a handful of getComputedStyle calls on the first frames at most. Before
+ * the webfont file has loaded the browser draws its fallback and the next
+ * frame repaints in the real face, the same as HTML text under font-display
+ * swap. On the server it is the system stack, and nothing draws there.
  */
 let face: string | null = null;
+const FALLBACK_FACE = 'system-ui, -apple-system, "Segoe UI", Arial, sans-serif';
 export function textFace(): string {
   if (face) return face;
-  const fallback = 'system-ui, -apple-system, "Segoe UI", Arial, sans-serif';
-  if (typeof document === "undefined" || !document.body) return fallback;
-  face = getComputedStyle(document.body).fontFamily.trim() || fallback;
-  return face;
+  if (typeof document === "undefined" || !document.body) return FALLBACK_FACE;
+  const live = getComputedStyle(document.body).fontFamily.trim();
+  if (!live) return FALLBACK_FACE;
+  if (live.includes("__")) face = live;
+  return live;
 }
+
 export const WHITE: RGB = [255, 255, 255];
 export const BLACK: RGB = [12, 12, 12];
 

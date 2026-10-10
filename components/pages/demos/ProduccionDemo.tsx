@@ -8,7 +8,7 @@ import {
   easeInOut,
   line,
   mix,
-  LABEL_FACE,
+  FACE,
   rgba,
   rr,
   type DemoPalette,
@@ -221,7 +221,7 @@ export function produccionScene(vis: Vis): DemoScene {
     ctx.lineWidth = 1.4;
     ctx.lineCap = "round";
     line(ctx, x0, clockY, x1, clockY);
-    ctx.font = "600 " + (phone ? 10 : 9) + "px " + LABEL_FACE;
+    ctx.font = "600 " + (phone ? 10 : 9) + "px " + FACE.label;
     ctx.textBaseline = "alphabetic";
     /* label every tick when they fit, else every other, so the dates never
        collide at any width; the first and the last are anchored inward so
@@ -250,7 +250,7 @@ export function produccionScene(vis: Vis): DemoScene {
     ctx.strokeStyle = PAL.accentLine;
     ctx.lineWidth = 1;
     line(ctx, px, clockY + 5, px, blockY0 - 6);
-    ctx.font = "600 11px " + LABEL_FACE;
+    ctx.font = "600 11px " + FACE.label;
     ctx.fillStyle = PAL.accentInk;
     const near = px > x1 - 52;
     ctx.textAlign = near ? "right" : "left";
@@ -368,7 +368,7 @@ export function produccionScene(vis: Vis): DemoScene {
          holds at every stage of ripening and in both modes. Picking one of two
          inks by the fill's luminance instead leaves a crossover at 3.7:1,
          which is the same defect with a smaller number. */
-      ctx.font = "600 " + (phone ? 10 : 9) + "px " + LABEL_FACE;
+      ctx.font = "600 " + (phone ? 10 : 9) + "px " + FACE.label;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.lineJoin = "round";
@@ -379,7 +379,7 @@ export function produccionScene(vis: Vis): DemoScene {
       ctx.fillText(L.k, g.cx, g.cy);
     }
 
-    ctx.font = "600 9px " + LABEL_FACE;
+    ctx.font = "600 9px " + FACE.label;
     ctx.fillStyle = PAL.axis;
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
@@ -396,7 +396,7 @@ export function produccionScene(vis: Vis): DemoScene {
     ctx.lineWidth = 1.2;
     ctx.stroke();
 
-    ctx.font = "600 9px " + LABEL_FACE;
+    ctx.font = "600 9px " + FACE.label;
     ctx.textBaseline = "alphabetic";
     ctx.textAlign = "left";
     ctx.fillStyle = PAL.axis;
@@ -405,7 +405,7 @@ export function produccionScene(vis: Vis): DemoScene {
        that changes every few frames belongs on the canvas (docs/demos.md) */
     ctx.textAlign = "right";
     ctx.fillStyle = PAL.accentInk;
-    ctx.font = "600 10px " + LABEL_FACE;
+    ctx.font = "600 10px " + FACE.label;
     ctx.fillText(inCellar(d) + "/" + LOTS.length, cellX1, cellY0 - 7);
 
     for (let i = 0; i < LOTS.length; i++) {
@@ -436,7 +436,7 @@ export function produccionScene(vis: Vis): DemoScene {
         ctx.lineWidth = 1.8;
         ctx.stroke();
       }
-      ctx.font = "600 9px " + LABEL_FACE;
+      ctx.font = "600 9px " + FACE.label;
       ctx.fillStyle = PAL.axis;
       ctx.textAlign = "center";
       ctx.textBaseline = "alphabetic";
@@ -484,7 +484,7 @@ export function produccionScene(vis: Vis): DemoScene {
       ctx.lineWidth = 1.3;
       ctx.stroke();
       ctx.fillStyle = PAL.accentInk;
-      ctx.font = "600 " + (unit * 0.58).toFixed(0) + "px " + LABEL_FACE;
+      ctx.font = "600 " + (unit * 0.58).toFixed(0) + "px " + FACE.label;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText(L.tons + " t", x, y + 0.5);
@@ -506,7 +506,7 @@ export function produccionScene(vis: Vis): DemoScene {
   };
 
   const drawChart = (d: number) => {
-    ctx.font = "600 " + (phone ? 10 : 9) + "px " + LABEL_FACE;
+    ctx.font = "600 " + (phone ? 10 : 9) + "px " + FACE.label;
     ctx.textBaseline = "alphabetic";
     ctx.textAlign = "left";
     ctx.fillStyle = PAL.axis;
@@ -534,7 +534,7 @@ export function produccionScene(vis: Vis): DemoScene {
     ctx.lineWidth = 1;
     line(ctx, x0, bandTop, x1, bandTop);
     line(ctx, x0, bandBase, x1, bandBase);
-    ctx.font = "600 11px " + LABEL_FACE;
+    ctx.font = "600 11px " + FACE.label;
     ctx.fillStyle = PAL.accentInk;
     ctx.textAlign = "right";
     ctx.textBaseline = "alphabetic";
@@ -571,7 +571,7 @@ export function produccionScene(vis: Vis): DemoScene {
       ctx.beginPath();
       ctx.arc(hx, hy, 3, 0, Math.PI * 2);
       ctx.fill();
-      ctx.font = "600 11px " + LABEL_FACE;
+      ctx.font = "600 11px " + FACE.label;
       ctx.textAlign = hx > x1 - 60 ? "right" : "left";
       ctx.textBaseline = "alphabetic";
       const above = hy > loadTop + (loadBase - loadTop) * 0.4;
@@ -617,7 +617,7 @@ export function produccionScene(vis: Vis): DemoScene {
          ./cellar.ts, which places it and is what cellar.test.ts holds against
          every lot's polyline at every width. */
       const text = phone ? vis.flagCompact : vis.flag;
-      ctx.font = "600 " + FLAG_FONT_PX + "px " + LABEL_FACE;
+      ctx.font = "600 " + FLAG_FONT_PX + "px " + FACE.label;
       ctx.fillStyle = PAL.accentInk;
       const label = flagLabel(W, phone, ctx.measureText(text).width);
       ctx.textAlign = label.align;
