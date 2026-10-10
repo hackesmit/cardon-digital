@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { home } from "@/lib/i18n/home";
 import {
-  MONO,
+  textFace,
   clamp01,
   drawFlow,
   easeInOut,
@@ -383,12 +383,12 @@ export default function HeroAssembly() {
       // legible floor (10px in compact, the 8.5px desktop size otherwise); if the
       // name plus chip still cannot both fit, drop the decorative chip (the file
       // name already carries the extension) so the two never collide.
-      c.font = "600 " + tagFont + "px " + MONO;
+      c.font = "600 " + tagFont + "px " + textFace();
       const tagW = c.measureText(d.tag).width + 10;
       const floor = compact ? 10 : 8.5;
       let showChip = true;
       let nameAvail = w - 18 - tagW - 6;
-      c.font = "600 " + nameFont + "px " + MONO;
+      c.font = "600 " + nameFont + "px " + textFace();
       let nameW = c.measureText(d.name).width;
       if (nameW > nameAvail) {
         const scaled = (nameFont * nameAvail) / nameW;
@@ -399,14 +399,14 @@ export default function HeroAssembly() {
         } else {
           nameFont = scaled;
         }
-        c.font = "600 " + nameFont + "px " + MONO;
+        c.font = "600 " + nameFont + "px " + textFace();
       }
       c.textAlign = "left";
       c.fillStyle = PAL.dim;
       c.fillText(d.name, 9, nameY);
       if (showChip) {
         const cc = chipCols();
-        c.font = "600 " + tagFont + "px " + MONO;
+        c.font = "600 " + tagFont + "px " + textFace();
         rr(c, w - 9 - tagW, chipY, tagW, chipH, 3);
         c.fillStyle = cc.bg;
         c.fill();
@@ -484,14 +484,14 @@ export default function HeroAssembly() {
       const labelColW = compact ? 74 : 66;
       const valueColW = compact ? 60 : 56;
       const barLW = compact ? 7 : 6;
-      c.font = "600 " + titleFont + "px " + MONO;
+      c.font = "600 " + titleFont + "px " + textFace();
       c.textBaseline = "alphabetic";
       c.textAlign = "left";
       c.fillStyle = PAL.ink;
       c.fillText(t.panelTitle, g.pX + 32, g.pY + 22);
       c.textAlign = "right";
       c.fillStyle = PAL.muted;
-      c.font = "600 " + cornerFont + "px " + MONO;
+      c.font = "600 " + cornerFont + "px " + textFace();
       c.fillText(t.panelSummary, g.pX + g.pW - 14, g.pY + 22);
       c.textAlign = "left";
       c.strokeStyle = PAL.line;
@@ -506,7 +506,7 @@ export default function HeroAssembly() {
         const ry = rowTop + rowGap * i + rowGap * 0.5;
         const latched = rowLatched[i] || reduced();
         c.globalAlpha = latched ? 1 : 0.3;
-        c.font = "600 " + labelFont + "px " + MONO;
+        c.font = "600 " + labelFont + "px " + textFace();
         c.fillStyle = PAL.dim;
         c.textAlign = "left";
         c.fillText(ROWS[i].k, g.pX + padX, ry + 4);
@@ -531,7 +531,7 @@ export default function HeroAssembly() {
           }
         }
         c.textAlign = "right";
-        c.font = "600 " + labelFont + "px " + MONO;
+        c.font = "600 " + labelFont + "px " + textFace();
         c.fillStyle = latched ? PAL.ink : PAL.faint;
         c.fillText(latched ? ROWS[i].v : "...", g.pX + g.pW - padX, ry + 4);
         c.textAlign = "left";

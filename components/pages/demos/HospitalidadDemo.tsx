@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { demos, type DemosDict } from "@/lib/i18n/demos";
 import { useDict } from "@/lib/i18n/LocaleProvider";
-import { line, MONO, rgba, rr, type DemoPalette } from "./palette";
+import { line, LABEL_FACE, rgba, rr, type DemoPalette } from "./palette";
 import {
   bands,
   board,
@@ -111,13 +111,13 @@ function hospitalidadScene(vis: Vis): DemoScene {
   const drawHead = (daysOut: number) => {
     const small = phone ? 10 : 9;
     ctx.textBaseline = "alphabetic";
-    ctx.font = "600 " + small + "px " + MONO;
+    ctx.font = "600 " + small + "px " + LABEL_FACE;
     ctx.textAlign = "left";
     ctx.fillStyle = PAL.axis;
     ctx.fillText(phone ? vis.datesCompact : vis.dates, bd.gx0, b.hy - 5);
 
     const left = Math.max(0, Math.ceil(daysOut));
-    ctx.font = "600 11px " + MONO;
+    ctx.font = "600 11px " + LABEL_FACE;
     ctx.fillStyle = PAL.accentInk;
     ctx.textAlign = "right";
     ctx.fillText(
@@ -152,9 +152,9 @@ function hospitalidadScene(vis: Vis): DemoScene {
     for (let n = 0; n < NIGHTS; n++) {
       const cx = bd.gx0 + (n + 0.5) * bd.cw;
       ctx.fillStyle = isWeekend(n) ? PAL.ink : PAL.axis;
-      ctx.font = "600 9px " + MONO;
+      ctx.font = "600 9px " + LABEL_FACE;
       ctx.fillText(vis.weekdayLetters.charAt(weekday(n)), cx, b.gy0 - 24);
-      ctx.font = "600 10px " + MONO;
+      ctx.font = "600 10px " + LABEL_FACE;
       ctx.fillText(String(dayNumber(n)), cx, b.gy0 - 10);
     }
   };
@@ -204,7 +204,7 @@ function hospitalidadScene(vis: Vis): DemoScene {
     const word = direct ? vis.channelsUpper.direct : vis.channelsUpper.ota;
     const fs = Math.min(9, r.h * 0.5);
     if (r.h >= 11 && w > word.length * fs * 0.62 + 12) {
-      ctx.font = "600 " + fs.toFixed(0) + "px " + MONO;
+      ctx.font = "600 " + fs.toFixed(0) + "px " + LABEL_FACE;
       ctx.fillStyle = PAL.panel;
       ctx.textAlign = "left";
       ctx.textBaseline = "middle";
@@ -245,7 +245,7 @@ function hospitalidadScene(vis: Vis): DemoScene {
     /* the units, numbered rather than named: a name long enough to read is a
        gutter wide enough to cost the board two of its nights, and the plate
        and the strip underneath both say which unit is which */
-    ctx.font = "600 9px " + MONO;
+    ctx.font = "600 9px " + LABEL_FACE;
     ctx.textAlign = "right";
     ctx.textBaseline = "middle";
     for (let u = 0; u < UNITS.length; u++) {
@@ -284,7 +284,7 @@ function hospitalidadScene(vis: Vis): DemoScene {
     const bh = b.lb - b.lt;
     const small = phone ? 10 : 9;
 
-    ctx.font = "600 " + small + "px " + MONO;
+    ctx.font = "600 " + small + "px " + LABEL_FACE;
     ctx.textBaseline = "alphabetic";
     ctx.textAlign = "left";
     ctx.fillStyle = PAL.axis;
@@ -338,7 +338,7 @@ function hospitalidadScene(vis: Vis): DemoScene {
        which are the emptiest of the board at every point in the story. */
     const share = directShareAt(daysOut);
     if (share > 0) {
-      ctx.font = "600 11px " + MONO;
+      ctx.font = "600 11px " + LABEL_FACE;
       ctx.fillStyle = PAL.accentInk;
       ctx.textAlign = "left";
       ctx.fillText(vis.directShare.replace("{p}", String(share)), bd.gx0 + 2, b.lt + 12);

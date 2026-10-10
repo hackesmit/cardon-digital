@@ -17,7 +17,21 @@ export interface Trace {
   len: number;
 }
 
-export const MONO = 'ui-monospace, "SFMono-Regular", Consolas, monospace';
+/**
+ * The face canvas labels are drawn in: the page's own text face, read off the
+ * body once in the browser, so the scenes follow the site's type (Daniel,
+ * 2026-10-10: the monospace labels were the generated-site tell). Before the
+ * webfont has loaded the browser draws its fallback and the next frame
+ * repaints in the real face, the same as HTML text under font-display swap.
+ */
+let face: string | null = null;
+export function textFace(): string {
+  if (face) return face;
+  const fallback = 'system-ui, -apple-system, "Segoe UI", Arial, sans-serif';
+  if (typeof document === "undefined" || !document.body) return fallback;
+  face = getComputedStyle(document.body).fontFamily.trim() || fallback;
+  return face;
+}
 export const WHITE: RGB = [255, 255, 255];
 export const BLACK: RGB = [12, 12, 12];
 
