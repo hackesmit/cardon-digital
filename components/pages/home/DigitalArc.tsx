@@ -5,7 +5,7 @@ import { clearsThreshold } from "@/lib/onscreen";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { home } from "@/lib/i18n/home";
 import {
-  MONO,
+  textFace,
   clamp01,
   drawFlow,
   easeInOut,
@@ -131,7 +131,7 @@ export default function DigitalArc() {
     let captionText = "";
     let G: Geom | null = null;
 
-    const F = (size: number, weight = 600) => weight + " " + size + "px " + MONO;
+    const F = (size: number, weight = 600) => weight + " " + size + "px " + textFace();
     const measure = (c: CanvasRenderingContext2D, s: string, font: string) => {
       c.font = font;
       return c.measureText(s).width;

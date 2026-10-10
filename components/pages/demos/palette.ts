@@ -59,6 +59,7 @@ import {
   rgba,
   WHITE,
   type RGB,
+  textFace,
 } from "@/components/pages/home/canvasKit";
 
 export {
@@ -68,11 +69,19 @@ export {
   hexToRgb,
   line,
   mix,
-  MONO,
   rgba,
   rr,
   type RGB,
 } from "@/components/pages/home/canvasKit";
+
+/**
+ * The face every demo label is drawn in: the page's own text face, read off
+ * the body once when this module loads in the browser (on the server it is
+ * the system stack, and nothing draws there). It replaced a monospace stack
+ * on 2026-10-10, the generated-site tell Daniel asked to remove. A constant,
+ * not a call inside draw(), so a demo's draw reads nothing from the DOM.
+ */
+export const LABEL_FACE: string = textFace();
 
 /** The three brand hues, one per module demo. */
 export type DemoHue = "primary" | "secondary" | "energy";

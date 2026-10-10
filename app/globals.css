@@ -715,7 +715,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
 /* ============================ FOOTER ============================ */
 .site-footer{border-top:1px solid var(--line);padding:clamp(40px,5vw,64px) 0 40px;position:relative;}
 /* The link column takes its natural width so the eight links sit on one line (Gael, 2026-10-08). */
-.footer-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:start;}
+.footer-grid{display:grid;grid-template-columns:minmax(300px,1fr) auto;gap:32px;align-items:start;}
 .foot-brand{display:flex;flex-direction:column;gap:14px;min-width:0;}
 .foot-line{color:var(--text-dim);max-width:42ch;}
 .foot-tag{font-family:var(--mono);font-size:0.74rem;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;}

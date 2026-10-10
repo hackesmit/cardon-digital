@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { winery } from "@/lib/i18n/winery";
+import { textFace } from "@/components/pages/home/canvasKit";
 
 type RGB = [number, number, number];
 type Pt = { x: number; y: number };
@@ -65,7 +66,7 @@ export default function VineField() {
     const reduced = () => reduceMQ.matches;
     let docVisible = !document.hidden;
 
-    const MONO = 'ui-monospace, "SFMono-Regular", Consolas, monospace';
+    const MONO = textFace();
 
     const WHITE: RGB = [255, 255, 255];
     const BLACK: RGB = [12, 12, 12];
