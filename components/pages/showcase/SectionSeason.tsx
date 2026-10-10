@@ -10,7 +10,7 @@ import {
 import {
   fitCanvas,
   line,
-  LABEL_FACE,
+  FACE,
   readDemoPalette,
   rgba,
   type DemoPalette,
@@ -158,7 +158,7 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
       const heatY = yT(HEAT_LINE);
 
       c.clearRect(0, 0, W, H);
-      c.font = `10px ${LABEL_FACE}`;
+      c.font = `10px ${FACE.label}`;
       c.textBaseline = "middle";
       c.lineJoin = "round";
       c.lineCap = "round";
@@ -342,9 +342,9 @@ export default function SectionSeason({ locale }: { locale: Locale }) {
       c.fill();
       c.fillStyle = fruit.panel;
       c.textAlign = "center";
-      c.font = `600 10px ${LABEL_FACE}`;
+      c.font = `600 10px ${FACE.label}`;
       c.fillText(label, cx, py + 8);
-      c.font = `10px ${LABEL_FACE}`;
+      c.font = `10px ${FACE.label}`;
     };
     redrawRef.current = draw;
 

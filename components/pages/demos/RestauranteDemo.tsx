@@ -8,7 +8,7 @@ import {
   easeInOut,
   line,
   mix,
-  LABEL_FACE,
+  FACE,
   rgba,
   rr,
   type DemoPalette,
@@ -288,7 +288,7 @@ function restauranteScene(vis: Vis): DemoScene {
     ctx.strokeStyle = PAL.accentLine;
     ctx.lineWidth = 2;
     line(ctx, roomX0, doorY - unit * 0.7, roomX0, doorY + unit * 0.7);
-    ctx.font = "600 9px " + LABEL_FACE;
+    ctx.font = "600 9px " + FACE.label;
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
     ctx.fillStyle = PAL.axis;
@@ -304,7 +304,7 @@ function restauranteScene(vis: Vis): DemoScene {
     ctx.lineWidth = 1.4;
     ctx.lineCap = "round";
     line(ctx, x0, clockY, x1, clockY);
-    ctx.font = "600 " + (phone ? 10 : 9) + "px " + LABEL_FACE;
+    ctx.font = "600 " + (phone ? 10 : 9) + "px " + FACE.label;
     ctx.textBaseline = "alphabetic";
     /* label every hour when they fit, else every other, so labels never
        collide at any width */
@@ -330,7 +330,7 @@ function restauranteScene(vis: Vis): DemoScene {
     ctx.strokeStyle = PAL.accentLine;
     ctx.lineWidth = 1;
     line(ctx, px, clockY + 5, px, roomY0 - 4);
-    ctx.font = "600 11px " + LABEL_FACE;
+    ctx.font = "600 11px " + FACE.label;
     ctx.fillStyle = PAL.accentInk;
     const near = px > x1 - 44;
     ctx.textAlign = near ? "right" : "left";
@@ -373,7 +373,7 @@ function restauranteScene(vis: Vis): DemoScene {
         ctx.lineWidth = 1.3;
         ctx.stroke();
         ctx.fillStyle = PAL.accentInk;
-        ctx.font = "600 " + (unit * 0.62).toFixed(0) + "px " + LABEL_FACE;
+        ctx.font = "600 " + (unit * 0.62).toFixed(0) + "px " + FACE.label;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText(String(r.p), x, y + 0.5);
@@ -386,7 +386,7 @@ function restauranteScene(vis: Vis): DemoScene {
     const n = Math.max(0, Math.min(SERVICE, Math.floor(t)));
     const plotTop = covY(PEAK_V);
 
-    ctx.font = "600 " + (phone ? 10 : 9) + "px " + LABEL_FACE;
+    ctx.font = "600 " + (phone ? 10 : 9) + "px " + FACE.label;
     ctx.textBaseline = "alphabetic";
     ctx.textAlign = "left";
     ctx.fillStyle = PAL.axis;
@@ -481,7 +481,7 @@ function restauranteScene(vis: Vis): DemoScene {
       /* The label sits in the headroom above the peak, never on the curve.
          MAX_COV is what buys that headroom; without it this line lands on
          the plateau it is pointing at. */
-      ctx.font = "600 11px " + LABEL_FACE;
+      ctx.font = "600 11px " + FACE.label;
       ctx.fillStyle = PAL.accentInk;
       const leftAnchor = rx < W * 0.5;
       ctx.textAlign = leftAnchor ? "left" : "right";
