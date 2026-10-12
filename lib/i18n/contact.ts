@@ -40,7 +40,7 @@ const enDescription: Record<DoorVariant, string> = {
   bookingForm:
     "Two ways to reach Cardon Digital: a booked call or a short message. Both reach the person who does the work.",
   formOnly:
-    "Write to Cardon Digital with a short message. It reaches the person who does the work.",
+    "Send Cardon Digital a short message. It reaches the person who does the work.",
 };
 
 const en = {
@@ -121,7 +121,7 @@ const en = {
        *  above the form, one for a page that does not. */
       general: {
         withWhatsapp:
-          "The message did not go through. Write to us on WhatsApp and we will pick it up there.",
+          "The message did not go through. Message us on WhatsApp and we will pick it up there.",
         alone: "The message did not go through. Please try again in a moment.",
       },
       rate: {
