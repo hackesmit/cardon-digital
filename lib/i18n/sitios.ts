@@ -75,7 +75,7 @@ const en = {
       tienda: "Online store",
     } as Record<string, string>,
     tags: {
-      presencia: "So they find you and write to you.",
+      presencia: "So they find you and message you.",
       negocio: "To explain what you do and why you.",
       reservas: "So they book without calling you.",
       tienda: "To sell online.",
@@ -145,7 +145,7 @@ const en = {
       tagBefore: "one search",
       tagMid: "one message",
       captionRun: "loading",
-      captionDone: "they wrote to you",
+      captionDone: "they messaged you",
       aria: "A search turns up the business first, its site loads on a phone block by block, three checks pass, and a message arrives.",
       fallback: "A search, your site first, a message from a new client.",
       query: "dentist in ensenada",
