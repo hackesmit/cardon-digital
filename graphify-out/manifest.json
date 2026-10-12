@@ -246,9 +246,9 @@
     "semantic_hash": ""
   },
   "public/og.png": {
-    "mtime": 1787812317.8154154,
-    "seen": 1791475652.7767544,
-    "ast_hash": "4eda01394f695a3a93c9ebf8ce00fc25",
+    "mtime": 1791790071.2151504,
+    "seen": 1791790078.0699277,
+    "ast_hash": "75e10ad17e41a1a3918ba10d7436afb4",
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1791782320.4376245,
-    "seen": 1791782569.8109972,
-    "ast_hash": "eb6d0c3c449debd325b834f7ae53fa0b",
+    "mtime": 1791790071.2141504,
+    "seen": 1791790078.069481,
+    "ast_hash": "b67f4f22890216bd622ce7dac7e37c99",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -582,9 +582,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/contact.ts": {
-    "mtime": 1790881974.3989615,
-    "seen": 1791475652.7766309,
-    "ast_hash": "b709800ca3585a323ee71d53d4836100",
+    "mtime": 1791790071.2141504,
+    "seen": 1791790078.0694606,
+    "ast_hash": "156d28c11e602459aec425f216b7c150",
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
@@ -1683,6 +1683,18 @@
     "mtime": 1791336706.8593624,
     "seen": 1791475652.7767365,
     "ast_hash": "8a887ee838ca816ed1a28e69d3cf79f8",
+    "semantic_hash": ""
+  },
+  "scripts/og/render.mjs": {
+    "mtime": 1791790071.2151504,
+    "seen": 1791790078.069689,
+    "ast_hash": "f0224ef620473290f4fd15070b1f3d65",
+    "semantic_hash": ""
+  },
+  "scripts/og/og.html": {
+    "mtime": 1791790071.2151504,
+    "seen": 1791790078.0698144,
+    "ast_hash": "1b2bea8404b327897ca06bf54d85ea24",
     "semantic_hash": ""
   }
 }
