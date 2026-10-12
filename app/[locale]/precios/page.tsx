@@ -31,7 +31,7 @@ export function generateMetadata({ params }: Params): Metadata {
  * prints is read out of lib/pricing.ts. Since the arc of 2026-09-28 it
  * carries the three services in the order the site sells them: the website
  * packages by feature (WebPackages, shared with /sitios-web), ad management
- * at a flat fee (AdsFee, shared with /anuncios), and the software modules
+ * on a base plus a fee per contact (AdsFee, shared with /anuncios), and the software modules
  * (the floors, the combinations, the monthly, the terms, unchanged). Between
  * the terms and the close, four things that are never on the invoice.
  *

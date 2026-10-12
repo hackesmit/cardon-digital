@@ -39,7 +39,7 @@ const en = {
   meta: {
     title: "Pricing",
     description:
-      "What a website, Google Ads management at a flat fee and each software module cost, in the open, with the terms. Every entry price is published.",
+      "What a website, Google Ads management on a base plus a fee per contact, and each software module cost, in the open, with the terms. Every entry price is published.",
   },
 
   hero: {
@@ -47,7 +47,7 @@ const en = {
     eyebrow: "What it costs",
     t1: "Everything we build ",
     accent: "stays in your name.",
-    sub: "Websites by what they include, ad management at a flat fee, and each software module from its entry price. Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. In your name means the domain, the accounts, the code and the data.",
+    sub: "Websites by what they include, ad management on a base plus a fee per contact, and each software module from its entry price. Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions. In your name means the domain, the accounts, the code and the data.",
     proof: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
     ctaFloors: "See the prices",
     web: { kicker: "Websites", more: "The websites page" },
@@ -231,7 +231,7 @@ const en = {
   annual: {
     kicker: "Paying a year up front",
     title: "A year in one payment costs less.",
-    body: "Twelve months paid at the start cost less than twelve payments: one invoice a year costs us less than twelve. Service fee only, never setup and never ad spend. The paid year runs to its end: stop halfway and there is nothing more to invoice and nothing to refund. The system stays on until the anniversary and you can leave there. Your quote carries the figure.",
+    body: "Twelve months paid at the start cost less than twelve payments: one invoice a year costs us less than twelve. Service fee only: never setup, never ad spend, and never the per-contact ads fee, which is settled month by month. The paid year runs to its end: stop halfway and there is nothing more of the service fee to invoice and nothing to refund; contacts the ads already brought are invoiced as usual. The system stays on until the anniversary and you can leave there. Your quote carries the figure.",
   },
 
   monthly: {
@@ -252,8 +252,8 @@ const en = {
 
   ads: {
     kicker: "Ads with a module",
-    title: "Ad management is its own service, at a flat fee.",
-    body: "Bought on its own or with a module, the flat fee is the same: {local} a month on the Local scope with a minimum budget of {minLocal}, or {crecimiento} a month on Growth with a minimum budget of {minCrecimiento}, always paid straight to Google, and at no point a percentage of what you spend. Content attaches to Hospitalidad and Restaurante and is quoted on top.",
+    title: "Ad management is its own service: a base plus a fee per contact.",
+    body: "Bought on its own or with a module, the price is the same: a base of {base} a month plus {perContact} per qualified contact on the Local scope, never more than {cap} a month, with a minimum budget of {minLocal}; or a base of {baseCrecimiento} plus {perContact} per contact on Growth, never more than {capCrecimiento}, with a minimum budget of {minCrecimiento}. The budget is always paid straight to Google, and at no point a percentage of what you spend. The base goes on the monthly invoice and the contacts on the next one, with the list. Content attaches to Hospitalidad and Restaurante and is quoted on top.",
   },
 
   terms: {
@@ -262,7 +262,7 @@ const en = {
     items: [
       "Setup is half on signature and half on acceptance.",
       "The signature half can go in three monthly payments at no extra cost.",
-      "The service fee runs month to month, paid in advance, 30 days notice either way.",
+      "The service fee runs month to month, paid in advance, 30 days notice either way. The per-contact ads fee is invoiced the month after, with the list of contacts.",
       "At signing you choose how the build is paid. Pay it in full and the service can stop whenever you like, owing nothing for it. Or pay the lower setup, which twelve months of service fund: leave inside those twelve months and we invoice the part of the build the fee had not yet paid for. That part shrinks every month and reaches zero once the twelve are paid. The system stays yours either way, and your quote carries the exact amount for each month.",
       "All prices are plus IVA. Your ad budget goes straight to Google, never through us.",
       "We quote and invoice in Mexican pesos. Dollar figures are rounded conversions, so a dollar column can sit a few dollars off its sum.",
@@ -278,7 +278,7 @@ const es: typeof en = {
   meta: {
     title: "Precios",
     description:
-      "Cuánto cuesta un sitio web, el manejo de anuncios en Google con cuota fija y cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
+      "Cuánto cuesta un sitio web, el manejo de anuncios en Google con una base más un pago por contacto, y cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
   },
 
   hero: {
@@ -286,7 +286,7 @@ const es: typeof en = {
     eyebrow: "Lo que cuesta",
     t1: "Todo lo que construimos ",
     accent: "queda a su nombre.",
-    sub: "Sitios web según lo que incluyen, manejo de anuncios con cuota fija y cada módulo de software desde su precio de entrada. Más IVA, con factura. A su nombre quedan el dominio, las cuentas, el código y los datos.",
+    sub: "Sitios web según lo que incluyen, manejo de anuncios con una base más un pago por contacto, y cada módulo de software desde su precio de entrada. Más IVA, con factura. A su nombre quedan el dominio, las cuentas, el código y los datos.",
     proof: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
     ctaFloors: "Ver los precios",
     web: { kicker: "Sitios web", more: "La página de sitios web" },
@@ -430,7 +430,7 @@ const es: typeof en = {
   annual: {
     kicker: "Pagar el año por adelantado",
     title: "Un año en una sola exhibición cuesta menos.",
-    body: "Doce meses pagados al inicio cuestan menos que doce mensualidades, porque una factura al año nos cuesta menos que doce. Solo la cuota del servicio, nunca la implementación ni la inversión en anuncios. El año pagado corre completo: si lo suspende a la mitad, no hay nada más que facturar ni nada que devolver. El sistema sigue encendido hasta el aniversario, y entonces puede retirarse. La cifra viene en su cotización.",
+    body: "Doce meses pagados al inicio cuestan menos que doce mensualidades, porque una factura al año nos cuesta menos que doce. Solo la cuota del servicio: nunca la implementación, nunca la inversión en anuncios y nunca el pago por contacto de los anuncios, que se liquida mes con mes. El año pagado corre completo: si lo suspende a la mitad, no hay nada más de la cuota del servicio que facturar ni nada que devolver; los contactos que los anuncios ya trajeron se facturan como siempre. El sistema sigue encendido hasta el aniversario, y entonces puede retirarse. La cifra viene en su cotización.",
   },
 
   monthly: {
@@ -452,8 +452,8 @@ const es: typeof en = {
 
   ads: {
     kicker: "Anuncios con un módulo",
-    title: "El manejo de anuncios es un servicio aparte, con cuota fija.",
-    body: "Ya sea solo o junto con un módulo, la cuota fija es la misma: {local} al mes en el alcance Local, con presupuesto mínimo de {minLocal}, o {crecimiento} al mes en Crecimiento, con presupuesto mínimo de {minCrecimiento}. Ese presupuesto siempre se paga directo a Google, y la cuota nunca es un porcentaje de lo que invierte. El contenido se agrega a Hospitalidad y a Restaurante, y se cotiza aparte.",
+    title: "El manejo de anuncios es un servicio aparte: una base más un pago por contacto.",
+    body: "Ya sea solo o junto con un módulo, el precio es el mismo: una base de {base} al mes más {perContact} por cada contacto calificado en el alcance Local, nunca más de {cap} al mes, con presupuesto mínimo de {minLocal}; o una base de {baseCrecimiento} más {perContact} por contacto en Crecimiento, nunca más de {capCrecimiento}, con presupuesto mínimo de {minCrecimiento}. Ese presupuesto siempre se paga directo a Google, y la cuota nunca es un porcentaje de lo que invierte. La base va en la factura mensual y los contactos en la siguiente, con la lista. El contenido se agrega a Hospitalidad y a Restaurante, y se cotiza aparte.",
   },
 
   terms: {
@@ -462,7 +462,7 @@ const es: typeof en = {
     items: [
       "La implementación se paga 50 por ciento a la firma y 50 por ciento a la aceptación.",
       "La mitad de la firma se puede cubrir en tres pagos mensuales, sin recargo.",
-      "La cuota mensual se paga por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes.",
+      "La cuota mensual se paga por adelantado, mes con mes, con 30 días de aviso de cualquiera de las dos partes. El pago por contacto de los anuncios se factura al mes siguiente, con la lista de contactos.",
       "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede suspender el servicio cuando quiera, sin deber nada del desarrollo. O puede pagar la implementación más baja, que se financia con doce mensualidades de servicio: si deja el servicio antes de completarlas, le facturamos la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes y llega a cero al pagar las doce. En cualquier caso el sistema es suyo, y su cotización trae el monto exacto de cada mes.",
       "Todos los precios son más IVA. Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
       "Cotizamos y facturamos en pesos mexicanos. Las cifras en dólares son conversiones redondeadas, así que una columna en dólares puede diferir de su propia suma por unos cuantos dólares.",

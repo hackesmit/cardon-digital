@@ -126,7 +126,7 @@ const en = {
       {
         num: "05",
         h: "Fill the tasting room, the club and DTC.",
-        body: "A bilingual site and Google Ads at a flat monthly fee, bought on their own or with a module, and the ad budget goes straight to Google.",
+        body: "A bilingual site and Google Ads on a base plus a fee per contact with a monthly cap, bought on their own or with a module, and the ad budget goes straight to Google.",
       },
     ],
   },
@@ -319,7 +319,7 @@ const es: typeof en = {
       {
         num: "05",
         h: "Llene la sala, el club y la venta directa.",
-        body: "Un sitio bilingüe y anuncios en Google con cuota fija al mes, por separado o junto con un módulo. El presupuesto de anuncios va directo a Google.",
+        body: "Un sitio bilingüe y anuncios en Google con una base más un pago por contacto y un tope mensual, por separado o junto con un módulo. El presupuesto de anuncios va directo a Google.",
       },
     ],
   },
