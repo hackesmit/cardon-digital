@@ -10,7 +10,7 @@ type HomePhoto = { cap: string; alt: string };
  * site-arc-digital-onboarding.md section 4): hero, proof bar, the three
  * services, the objections, the Monte Xanic case, one system, how it works,
  * who builds it, compare, pricing summary, diagnostic. Three results in one
- * order: they find you, they message you, the work runs itself.
+ * order: you get found, you connect with your clients, the work runs itself.
  *
  * Two rules this file is read against: every claim is the result the owner
  * ends up with rather than the deliverable, and the only figure published in
@@ -72,7 +72,7 @@ const en = {
         id: "sitios",
         name: "Website",
         title: "People find you on Google and believe you.",
-        body: "A site that loads fast, reads on a phone and gets the visitor to message you. Designed for your business, copy included.",
+        body: "A site that loads fast, reads on a phone and connects you with the people looking for you. Designed for your business, copy included.",
         cta: "See websites",
       },
       {
@@ -90,7 +90,7 @@ const en = {
         cta: "See software",
       },
     ],
-    arcLine: "Each one works on its own. Together, your business is in the digital era end to end: they find you, they message you, and the work runs itself.",
+    arcLine: "Each one works on its own. Together, your business is in the digital era end to end: you get found, you connect with your clients, and the work runs itself.",
   },
   /** The six photographs at the top of the page: one per proof card, one per service card. */
   photos: {
@@ -216,10 +216,10 @@ const en = {
       captionRun: "connecting",
       captionDone: "in the digital era",
       aria: "A business goes digital in three acts: its website assembles on a phone and comes up first in a search, the people searching for it arrive as messages, and each message lands as a row in one system that keeps itself current.",
-      fallback: "Your site comes up first, the people searching message you, and every message lands in one system that runs itself.",
+      fallback: "Your site comes up first, the people searching connect with you, and every message lands in one system that runs itself.",
       stages: [
-        { k: "01", label: "They find you" },
-        { k: "02", label: "They message you" },
+        { k: "01", label: "Get found" },
+        { k: "02", label: "Connect with your clients" },
         { k: "03", label: "The work runs itself" },
       ],
       query: "wine in ensenada",
