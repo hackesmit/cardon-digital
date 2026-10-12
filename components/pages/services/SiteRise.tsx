@@ -5,7 +5,7 @@ import { clearsThreshold } from "@/lib/onscreen";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { sitios } from "@/lib/i18n/sitios";
 import {
-  MONO,
+  textFace,
   clamp01,
   drawFlow,
   easeInOut,
@@ -56,9 +56,12 @@ const HOLD_A = 9.6;
 const FADE_A = 11.4;
 const SETTLED = 10.4;
 
-const LABEL = "500 11px " + MONO;
-const BODY = "500 12px " + MONO;
-const STRONG = "600 12px " + MONO;
+// Read per frame, not at import: the face is known only in the browser.
+const FONT = {
+  get LABEL() { return "500 11px " + textFace(); },
+  get BODY() { return "500 12px " + textFace(); },
+  get STRONG() { return "600 12px " + textFace(); },
+};
 const LINE_H = 16;
 const SMALL_LINE_H = 14;
 
@@ -169,8 +172,8 @@ export default function SiteRise() {
       const header = { x: s.x, y: s.y, w: s.w, h: headerH };
       if (!wide) {
         const inner = s.w - pad * 2;
-        const headLines = wrap(c, t.site.headline, STRONG, inner);
-        const ctaLinesP = wrap(c, t.site.cta, LABEL, inner - 16);
+        const headLines = wrap(c, t.site.headline, FONT.STRONG, inner);
+        const ctaLinesP = wrap(c, t.site.cta, FONT.LABEL, inner - 16);
         // The hero takes whatever height the copy leaves, so the screen is
         // full to its foot rather than ending in an empty band.
         const below = 18 + (headLines.length - 1) * LINE_H + 12 + 26 + ctaLinesP.length * SMALL_LINE_H + 14 + 12;
@@ -182,7 +185,7 @@ export default function SiteRise() {
           { x: s.x + pad, y: mY, w: inner * 0.92, h: 3 },
           { x: s.x + pad, y: mY + 9, w: inner * 0.66, h: 3 },
         ];
-        const ctaLines = wrap(c, t.site.cta, LABEL, inner - 16);
+        const ctaLines = wrap(c, t.site.cta, FONT.LABEL, inner - 16);
         const ctaH = ctaLines.length * SMALL_LINE_H + 14;
         const cta = { x: s.x + pad, y: mY + 26, w: inner, h: ctaH };
         return { header, hero, headY, headLines, muted, cta, ctaLines, nav: false };
@@ -191,22 +194,22 @@ export default function SiteRise() {
       const top = s.y + headerH + 14;
       const heroX = s.x + s.w * 0.56;
       const hero = { x: heroX, y: s.y + headerH + 10, w: s.x + s.w - pad - heroX, h: s.h - headerH - 20 };
-      const headLines = wrap(c, t.site.headline, STRONG, colW);
+      const headLines = wrap(c, t.site.headline, FONT.STRONG, colW);
       const headY = top + 10;
       const mY = headY + (headLines.length - 1) * LINE_H + 12;
       const muted = [
         { x: s.x + pad, y: mY, w: colW * 0.94, h: 3 },
         { x: s.x + pad, y: mY + 9, w: colW * 0.7, h: 3 },
       ];
-      const ctaLines = wrap(c, t.site.cta, LABEL, colW - 16);
-      const ctaW = Math.min(colW, widest(c, ctaLines, LABEL) + 18);
+      const ctaLines = wrap(c, t.site.cta, FONT.LABEL, colW - 16);
+      const ctaW = Math.min(colW, widest(c, ctaLines, FONT.LABEL) + 18);
       const ctaH = ctaLines.length * SMALL_LINE_H + 12;
       const cta = { x: s.x + pad, y: mY + 24, w: ctaW, h: ctaH };
       return { header, hero, headY, headLines, muted, cta, ctaLines, nav: true };
     }
 
     function measureChips(c: CanvasRenderingContext2D): number[] {
-      c.font = LABEL;
+      c.font = FONT.LABEL;
       return t.checks.map((s) => 13 + 8 + c.measureText(s).width);
     }
 
@@ -214,9 +217,9 @@ export default function SiteRise() {
     function resultTextW(c: CanvasRenderingContext2D): number {
       let m = 0;
       for (const r of t.results) {
-        c.font = STRONG;
+        c.font = FONT.STRONG;
         m = Math.max(m, c.measureText(r.name).width);
-        c.font = LABEL;
+        c.font = FONT.LABEL;
         m = Math.max(m, c.measureText(r.sub).width);
       }
       return m + 28;
@@ -254,8 +257,8 @@ export default function SiteRise() {
       const laptop = { x: lX, y: y0 + 20 + 11 - 12, w: lW, h: lH };
 
       const bubbleMax = Math.min(260, lW);
-      const bubbleLines = wrap(c, t.message, BODY, bubbleMax - 24);
-      const bW = Math.min(bubbleMax, widest(c, bubbleLines, BODY) + 24);
+      const bubbleLines = wrap(c, t.message, FONT.BODY, bubbleMax - 24);
+      const bW = Math.min(bubbleMax, widest(c, bubbleLines, FONT.BODY) + 24);
       const bH = bubbleLines.length * LINE_H + 18;
       const bubble = { x: lX + lW - bW, y: laptop.y + lH + 40, w: bW, h: bH };
 
@@ -339,7 +342,7 @@ export default function SiteRise() {
       const chipsBottom = chipTop + (lines.length - 1) * 26 + 14;
 
       const bW = W - M * 2;
-      const bubbleLines = wrap(c, t.message, BODY, bW - 24);
+      const bubbleLines = wrap(c, t.message, FONT.BODY, bW - 24);
       const bH = bubbleLines.length * LINE_H + 18;
       const bubble = { x: M, y: chipsBottom + 22, w: bW, h: bH };
 
@@ -401,7 +404,7 @@ export default function SiteRise() {
       const n = Math.floor(t.query.length * clamp01((T - TYPE_A) / (TYPE_B - TYPE_A - 0.2)));
       if (n <= 0 || fo <= 0) return;
       const txt = t.query.slice(0, n);
-      c.font = BODY;
+      c.font = FONT.BODY;
       const tx = f.x + 30;
       const avail = f.w - 30 - 10;
       const tw = c.measureText(txt).width;
@@ -458,11 +461,11 @@ export default function SiteRise() {
           c.stroke();
         }
         c.textAlign = "left";
-        c.font = STRONG;
+        c.font = FONT.STRONG;
         c.fillStyle = i === 0 ? PAL.ink : PAL.muted;
         c.fillText(res.name, r.x + dx + 12, r.y + 19);
         if (res.sub) {
-          c.font = LABEL;
+          c.font = FONT.LABEL;
           c.fillStyle = PAL.muted;
           c.fillText(res.sub, r.x + dx + 12, r.y + 35);
         } else {
@@ -532,7 +535,7 @@ export default function SiteRise() {
         c.globalAlpha = e * fo;
         c.fillStyle = PAL.card;
         c.fillRect(u.header.x, u.header.y + dy, u.header.w, u.header.h);
-        c.font = LABEL;
+        c.font = FONT.LABEL;
         c.fillStyle = PAL.ink;
         c.fillText(t.site.name, u.header.x + pad, u.header.y + dy + u.header.h / 2 + 4);
         if (u.nav) {
@@ -566,7 +569,7 @@ export default function SiteRise() {
       if (e > 0) {
         const dy = 8 * (1 - e);
         c.globalAlpha = e * fo;
-        c.font = STRONG;
+        c.font = FONT.STRONG;
         c.fillStyle = PAL.ink;
         u.headLines.forEach((ln, i) => c.fillText(ln, u.header.x + pad, u.headY + dy + i * LINE_H));
       }
@@ -598,7 +601,7 @@ export default function SiteRise() {
           c.stroke();
           c.fillStyle = PAL.primaryText;
         }
-        c.font = LABEL;
+        c.font = FONT.LABEL;
         c.textAlign = "center";
         const top = b.y + dy + (b.h - u.ctaLines.length * SMALL_LINE_H) / 2 + 10.5;
         u.ctaLines.forEach((ln, i) => c.fillText(ln, b.x + b.w / 2, top + i * SMALL_LINE_H));
@@ -622,7 +625,7 @@ export default function SiteRise() {
     }
 
     function drawChips(c: CanvasRenderingContext2D, g: Geom, fo: number) {
-      c.font = LABEL;
+      c.font = FONT.LABEL;
       c.textAlign = "left";
       for (let i = 0; i < g.chips.length; i++) {
         const ch = g.chips[i];
@@ -678,7 +681,7 @@ export default function SiteRise() {
       // A short agave rule on the left edge marks it as incoming.
       c.fillStyle = PAL.primary;
       c.fillRect(b.x + dx, b.y + dy + 6, 2, b.h - 12);
-      c.font = BODY;
+      c.font = FONT.BODY;
       c.fillStyle = PAL.ink;
       c.textAlign = "left";
       g.bubbleLines.forEach((ln, i) => c.fillText(ln, b.x + dx + 12, b.y + dy + 21 + i * LINE_H));
@@ -686,7 +689,7 @@ export default function SiteRise() {
       const te = ph(TAG_A, 0.4);
       if (te > 0) {
         c.globalAlpha = te * fo;
-        c.font = LABEL;
+        c.font = FONT.LABEL;
         c.textAlign = "right";
         c.fillStyle = PAL.muted;
         const tw = c.measureText(t.received).width;
