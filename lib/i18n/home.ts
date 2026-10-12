@@ -36,7 +36,7 @@ const en = {
     eyebrow: "Ensenada, Baja California",
     title: "Websites, ads and software",
     titleAccent: "for Ensenada businesses that want more clients and less work.",
-    sub: "A site people write to, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
+    sub: "A site that gets you found, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
     proofLine: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
   },
@@ -106,7 +106,7 @@ const en = {
     title: "Sound familiar?",
     items: [
       {
-        q: "I have a website, but nobody writes to me through it.",
+        q: "I have a website, but nobody contacts me through it.",
         a: "A site is built to be written to. Yours gets designed and measured for that.",
       },
       {
@@ -225,7 +225,7 @@ const en = {
       query: "wine in ensenada",
       siteName: "Your business",
       siteLine: "What you sell, for whom",
-      siteCta: "Write to us",
+      siteCta: "Message us",
       resultTag: "1st result",
       messagesK: "MESSAGES",
       ledgerTitle: "One system",
