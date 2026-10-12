@@ -288,8 +288,10 @@
 .ads-fee .fee-facts dd { margin: 0; font-size: 0.95rem; color: var(--text); font-family: var(--mono); }
 .ads-fee .fee-main dd b { font-size: 1.6rem; font-weight: 600; color: var(--primary-text); letter-spacing: -0.01em; }
 .ads-fee .fee-rules { margin: clamp(18px, 2.4vw, 26px) 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 26px; max-width: 860px; }
-.ads-fee .fee-rules li { position: relative; padding-left: 16px; color: var(--text-dim); font-size: 0.94rem; line-height: 1.5; }
-.ads-fee .fee-rules li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 1px; background: var(--primary); }
+/* Numbered, not dotted or dashed (Daniel, 2026-10-12): the rules are a short ordered set. */
+.ads-fee .fee-rules { counter-reset: rule; }
+.ads-fee .fee-rules li { position: relative; padding-left: 28px; color: var(--text-dim); font-size: 0.94rem; line-height: 1.5; counter-increment: rule; }
+.ads-fee .fee-rules li::before { content: counter(rule, decimal-leading-zero); position: absolute; left: 0; top: 0.1em; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; color: var(--primary-text); font-variant-numeric: tabular-nums; }
 
 @media (max-width: 900px) {
   .pg-svc .path { grid-template-columns: repeat(2, 1fr); }

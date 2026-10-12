@@ -44,7 +44,6 @@
 
 /* the wine kicker variant (gold and clay already live in globals) */
 .pg-winery .kicker.wine{color:var(--wine-bright);}
-.pg-winery .kicker.wine::before{background:var(--wine-bright);border-radius:50%;}
 
 /* ---- capability grid ---- */
 .pg-winery .cap-grid{
@@ -115,7 +114,7 @@
   padding:12px 22px;font-size:0.98rem;
   transition:background .2s ease, transform .12s ease, box-shadow .2s ease, border-color .2s ease;
 }
-.pg-winery .btn-proof::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wine-ink);opacity:0.85;}
+.pg-winery .btn-proof::after{content:"";width:7px;height:7px;border-right:1.5px solid var(--wine-ink);border-bottom:1.5px solid var(--wine-ink);transform:rotate(-45deg);opacity:0.85;margin-left:2px;flex-shrink:0;}
 .pg-winery .btn-proof:hover{background:var(--wine-bright);border-color:var(--wine-bright);box-shadow:0 0 0 4px var(--wine-faint);}
 .pg-winery .btn-proof:active{transform:translateY(1px);}
 
