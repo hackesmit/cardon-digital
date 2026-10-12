@@ -11,8 +11,8 @@ import { home } from "@/lib/i18n/home";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
+import { adsFill } from "@/lib/adsCopy";
 import {
-  adsScope,
   formatPrice,
   moduleFloors,
   webPackageFrom,
@@ -94,13 +94,12 @@ export default function Home({ params }: Params) {
   const cur = currencyByLocale[locale];
   const price = (amount: number) => formatPrice(locale, amount);
   const siteFrom = price(webPackageFrom("presencia")[cur]);
-  const adsMonthly = price(adsScope("local").monthly[cur]);
   const softFrom = price(
     Math.min(...Object.values(moduleFloors).map((f) => f.setup[cur])),
   );
   const serviceLine: Record<string, string> = {
     sitios: d.services.fromLabel + " " + siteFrom,
-    anuncios: adsMonthly + " " + d.services.perMonth,
+    anuncios: adsFill(locale, "{base} " + d.services.adsLine),
     software: d.services.fromLabel + " " + softFrom,
   };
   const photo = (entry: { slot: MediaPhotoSlot; src: string | null }, className: string) =>
@@ -621,7 +620,7 @@ export default function Home({ params }: Params) {
 
       {/* ============================ 10. PRICING ============================
           Three entry prices, read out of lib/pricing.ts: the smallest website
-          package, the local ads scope's flat monthly fee, and the Produccion
+          package, the local ads scope's base and fee per contact, and the Produccion
           floor. The full card, with the feature lists that produced each
           figure, is /precios. */}
       <section className="section pricing" id="pricing" aria-labelledby="pricing-title">
@@ -642,7 +641,7 @@ export default function Home({ params }: Params) {
             <div className="price-line">
               <dt>{d.pricing.adsK}</dt>
               <dd>
-                <b>{adsMonthly}</b> <span className="price-from mono">{d.pricing.perMonth}</span>
+                <b>{adsFill(locale, "{base}")}</b> <span className="price-from mono">{adsFill(locale, d.pricing.adsLine)}</span>
               </dd>
             </div>
             <div className="price-line">

@@ -198,6 +198,16 @@ export function usdFromMxn(mxn: number): number {
   return roundHalfDown(raw, raw >= 100 ? 10 : 5);
 }
 
+/**
+ * USD to the nearest dollar, for a per-unit fee a count multiplies. The
+ * nearest-5 step is fine on a figure printed once; on the fee per contact it
+ * made 100 MXN (5.88 USD) read 5 USD, 15 percent under, and a hundred
+ * contacts later the two currencies disagreed by 85 USD (red-team, 2026-10-09).
+ */
+export function usdFromMxnFine(mxn: number): number {
+  return roundHalfDown(mxn / usdRate, 1);
+}
+
 /** Both currencies for one MXN figure. USD is never priced independently. */
 export function priced(mxn: number): Record<CurrencyCode, number> {
   return { MXN: mxn, USD: usdFromMxn(mxn) };
@@ -720,6 +730,29 @@ export function runCostHours(moduleId: ModuleId, size: Size): number {
 
 export type AddOnId = "google-ads-management" | "content" | "on-site-visit";
 
+/**
+ * Google Ads management, the performance fee (Daniel, 2026-10-09, memo
+ * research/2026-10/ads-performance-fee.md). The service hours a month of the
+ * two standalone scopes, by the module size each shares: "local" is M and
+ * "crecimiento" is L, and nothing sells ads at S. Declared here, above the
+ * add-ons, because the ads line inside a module quote is the standalone
+ * scope's BASE at that size (memo section 5), read through `adsBase` below
+ * so the two cannot drift.
+ */
+export const adsServiceHours: BySize<number | null> = { S: null, M: 4, L: 7 };
+
+/**
+ * The base: half the service hours at the service rate, rounded UP to the
+ * next 100. Half on purpose: a month with no contacts loses Cardon money,
+ * which is the alignment the model exists for. 2,450 reads 2,500 at M and
+ * 4,287.50 reads 4,300 at L.
+ */
+export function adsBase(size: Size): number | null {
+  const h = adsServiceHours[size];
+  if (h === null) return null;
+  return ceilTo((h * serviceRate) / 2, 100);
+}
+
 export type AddOn = {
   id: AddOnId;
   hours: BySize<number | null>;
@@ -735,11 +768,14 @@ export const addOns: AddOn[] = [
     // Since Daniel's direction of 2026-09-28 the public surface sells Google
     // Ads management on its own, through `adsManagement` below, to anyone and
     // at any size of anything else they buy. This add-on stays because it is
-    // how ads are carried inside a MODULE quote, and it charges the same fees:
-    // 5,500 at M and 8,800 at L are the "local" and "crecimiento" scopes'
-    // monthly figures, which are read from here so the two cannot drift. The
-    // S null and the attachesTo list below now describe the module quote only,
-    // not who may buy ads.
+    // how ads are carried inside a MODULE quote. Since 2026-10-09 its monthly
+    // line is the standalone scope's base at the same size (`adsBase`), and
+    // the per-contact fee is billed in arrears outside the quote total. The
+    // hours here no longer price the line: they are what the FLAT fee of
+    // 2026-09-23 recovered (3 h at M, 3.5 h at L), and that flat figure is
+    // now the `reference` every performance figure is derived from. The S
+    // null and the attachesTo list describe the module quote only, not who
+    // may buy ads.
     id: "google-ads-management",
     hours: { S: null, M: 3, L: 3.5 },
     attachesTo: ["hospitalidad", "restaurante"],
@@ -763,11 +799,33 @@ function addOnOf(id: AddOnId): AddOn {
 }
 
 /** An add-on is a quote line, so it takes the anti-round bump. */
-export function addOnMonthly(id: AddOnId, size: Size): number | null {
+function addOnLine(id: AddOnId, size: Size): number | null {
   const h = addOnOf(id).hours[size];
   if (h === null) return null;
   const monthly = round100(h * serviceRate * scopeFactor[size]);
   return bumpOffBareMultiple(monthly, 1000, 100, "up");
+}
+
+/**
+ * The add-on's monthly line in a module quote. Ads is the one add-on whose
+ * line is not its hours: it is the standalone scope's base (memo section 5),
+ * so a client buying ads with a module and a client buying ads alone pay one
+ * base, and both pay the same per-contact fee in arrears.
+ */
+export function addOnMonthly(id: AddOnId, size: Size): number | null {
+  if (id === "google-ads-management") return adsBase(size);
+  return addOnLine(id, size);
+}
+
+/**
+ * What the flat fee of 2026-09-23 was at this size: the ads add-on's hours
+ * at the service rate and the scope factor, rounded and bumped like any quote
+ * line (5,500 at M, 8,800 at L). Not a price any more. It is the reference
+ * the performance figures are derived from, so a change to the rates moves
+ * base, per-contact fee and cap together.
+ */
+export function adsReferenceMonthly(size: Size): number | null {
+  return addOnLine("google-ads-management", size);
 }
 
 /** Whether this mix at this size may be quoted this add-on at all. */
@@ -1471,18 +1529,37 @@ export function webCareMonthly(): Record<CurrencyCode, number> {
 
 /* ========================= GOOGLE ADS MANAGEMENT =========================
    A standalone service since 2026-09-28, sold to anyone, with or without a
-   website or a module. Source: web-ads-pricing-mx.md 5.3 and BUSINESS-PLAN
-   5.5: a FLAT monthly fee, never a percentage of spend at any spend, and the
-   ad budget is paid by the client straight to Google on the client's own
-   account, never through Cardon. Both are carried as data below so a page
-   that states the policy is tested against it.
+   website or a module. Since 2026-10-09 it is priced on performance (Daniel,
+   memo research/2026-10/ads-performance-fee.md), which supersedes the flat
+   fee of 2026-09-23 (web-ads-pricing-mx.md 5.3, BUSINESS-PLAN 5.5) on the
+   fee model only. Two things from 2026-09-23 stand and are carried as data
+   below so a page that states them is tested against them: the fee is never
+   a percentage of ad spend at any spend, and the ad budget is paid by the
+   client straight to Google on the client's own account, never through
+   Cardon.
 
-   Monthly fee. Read from the module add-on so the standalone card and a
-   module quote charge one price: addOnMonthly("google-ads-management", M) is
-   round100(3 h x 1,225 x 1.5) = round100(5,512.5) = 5,500, and at L it is
-   round100(3.5 h x 1,225 x 2.05) = round100(8,789.375) = 8,800. The memo's
-   standalone service hours then have to be cleared: local 4 h x 1,225 =
-   4,900, cleared by 600; crecimiento 7 h x 1,225 = 8,575, cleared by 225.
+   A month costs the client three things, on two invoices:
+     base         a reduced flat amount, invoiced in advance with the rest of
+                  the service fee: half the service hours at the service
+                  rate, rounded up to 100 (`adsBase`): 2,500 at local, 4,300
+                  at crecimiento;
+     per contact  a fee for every qualified contact the campaign produced
+                  (a tracked call of 30 seconds or more, a WhatsApp
+                  conversation with a first message, a booking or a form),
+                  invoiced in arrears with the tracking report attached:
+                  (reference - base) / breakEvenContacts, where reference is
+                  the flat fee of 2026-09-23 at the same size (5,500 and
+                  8,800, `adsReferenceMonthly`) and the break-even count is
+                  the one typed judgment of the model (30 and 45, memo
+                  section 4): (5,500 - 2,500) / 30 = 100 and
+                  (8,800 - 4,300) / 45 = 100;
+     cap          twice the reference, 11,000 and 17,600, the most a month
+                  can cost whatever the count; it binds at 85 and 133
+                  contacts.
+   The derivation throws if the per-contact fee is not a whole number of
+   pesos, if the base does not sit under the reference or the cap above it.
+   The per-contact fee converts to USD to the nearest dollar (6), not the
+   nearest 5 like a figure printed once, because a count multiplies it.
 
    Campaign build (setup). Build hours 4 and 6 (memo 5.3), no scope factor,
    rounded UP to the next 100, the step the memo's own ads setups use:
@@ -1495,20 +1572,52 @@ export function webCareMonthly(): Record<CurrencyCode, number> {
    carries the module's own discovery and tracking.
 
    Minimum eligible monthly ad budget. Not a price: a threshold on the money
-   the client pays Google, below which a flat fee outweighs the spend (memo
+   the client pays Google, below which the fee outweighs the spend (memo
    5.3). Typed from the memo, converted like every other figure. */
 
 export type AdsScopeId = "local" | "crecimiento";
 
+/** What a qualified contact is and how a month is settled. Copy prints these. */
+export type AdsContactRules = {
+  /** A tracked call counts from this many seconds. */
+  callSeconds: number;
+  /** One person counts once in this many days, matched by number or account. */
+  onceInDays: number;
+  /** Business days the client has, after the report, to strike a contact. */
+  disputeBusinessDays: number;
+  /** Cardon pauses a campaign under this many contacts for this many months. */
+  pauseUnderContacts: number;
+  pauseAfterMonths: number;
+};
+
+export const adsContactRules: AdsContactRules = {
+  callSeconds: 30,
+  onceInDays: 30,
+  disputeBusinessDays: 5,
+  pauseUnderContacts: 10,
+  pauseAfterMonths: 3,
+};
+
 export type AdsScope = {
   id: AdsScopeId;
-  /** The module-quote size whose ads add-on carries this same monthly fee. */
+  /** The module-quote size whose ads add-on carries this same base. */
   moduleSize: Size;
-  /** Daniel service hours a month the fee has to clear. */
+  /** Daniel service hours a month the reference fee had to clear. */
   serviceHours: number;
-  monthly: Record<CurrencyCode, number>;
   /** serviceHours x serviceRate. */
   monthlyCost: number;
+  /** The flat fee of 2026-09-23 at this size, the derivation's input. */
+  reference: Record<CurrencyCode, number>;
+  /** Invoiced in advance, with the service fee. */
+  base: Record<CurrencyCode, number>;
+  /** Invoiced in arrears, per qualified contact, with the report. */
+  perContact: Record<CurrencyCode, number>;
+  /** The most base plus contacts can come to in a month. */
+  cap: Record<CurrencyCode, number>;
+  /** Contacts at which base plus contacts equals the reference, typed. */
+  breakEvenContacts: number;
+  /** Contacts at which the cap binds. */
+  capContacts: number;
   buildHours: number;
   /** buildHours x setupRate. */
   setupCost: number;
@@ -1519,7 +1628,7 @@ export type AdsScope = {
   /** Scope, bounded by counts a buyer can check. */
   campaigns: number;
   adGroups: number;
-  /** Policy: the fee is flat. A page may never say otherwise while false. */
+  /** Policy: never a share of what the client spends. A page may never say otherwise while false. */
   percentOfSpend: boolean;
   /** Policy: the ad budget never passes through Cardon's hands. */
   budgetThroughCardon: boolean;
@@ -1528,22 +1637,37 @@ export type AdsScope = {
 function adsScopeOf(
   id: AdsScopeId,
   moduleSize: Size,
-  serviceHours: number,
   buildHours: number,
   setupMarketFloor: number,
   minimumBudget: number,
+  breakEvenContacts: number,
   campaigns: number,
   adGroups: number,
 ): AdsScope {
-  const monthly = addOnMonthly("google-ads-management", moduleSize);
-  if (monthly === null) throw new Error(`no ads add-on at ${moduleSize}`);
+  const serviceHours = adsServiceHours[moduleSize];
+  const base = adsBase(moduleSize);
+  const reference = adsReferenceMonthly(moduleSize);
+  if (serviceHours === null || base === null || reference === null) {
+    throw new Error(`no ads scope at ${moduleSize}`);
+  }
+  if (base >= reference) throw new Error(`ads ${id}: base ${base} does not sit under the reference ${reference}`);
+  const perContact = (reference - base) / breakEvenContacts;
+  if (!Number.isInteger(perContact) || perContact <= 0) {
+    throw new Error(`ads ${id}: (${reference} - ${base}) / ${breakEvenContacts} is not a whole fee per contact`);
+  }
+  const cap = reference * 2;
   const setupCost = pesos2(buildHours * setupRate);
   return {
     id,
     moduleSize,
     serviceHours,
-    monthly: priced(monthly),
     monthlyCost: pesos2(serviceHours * serviceRate),
+    reference: priced(reference),
+    base: priced(base),
+    perContact: { MXN: perContact, USD: usdFromMxnFine(perContact) },
+    cap: priced(cap),
+    breakEvenContacts,
+    capContacts: Math.floor((cap - base) / perContact),
     buildHours,
     setupCost,
     setupMarketFloor,
@@ -1558,8 +1682,8 @@ function adsScopeOf(
 
 /** The two scopes, smaller first. Campaigns and ad groups are maxima. */
 export const adsManagement: readonly AdsScope[] = [
-  adsScopeOf("local", "M", 4, 4, 10900, 10000, 1, 3),
-  adsScopeOf("crecimiento", "L", 7, 6, 16500, 15000, 3, 10),
+  adsScopeOf("local", "M", 4, 10900, 10000, 30, 1, 3),
+  adsScopeOf("crecimiento", "L", 6, 16500, 15000, 45, 3, 10),
 ];
 
 export function adsScope(id: AdsScopeId): AdsScope {
