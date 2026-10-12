@@ -59,6 +59,7 @@ import {
   rgba,
   WHITE,
   type RGB,
+  textFace,
 } from "@/components/pages/home/canvasKit";
 
 export {
@@ -68,11 +69,24 @@ export {
   hexToRgb,
   line,
   mix,
-  MONO,
   rgba,
   rr,
   type RGB,
 } from "@/components/pages/home/canvasKit";
+
+/**
+ * The face every demo label is drawn in: the page's own text face, through
+ * canvasKit's textFace(), which settles on the site's family once it has
+ * read it and reads nothing afterwards. It replaced a monospace stack on
+ * 2026-10-10, the generated-site tell Daniel asked to remove. A getter, not
+ * an import-time snapshot, so a module evaluated before the stylesheet
+ * applied cannot keep the wrong family (cross-vendor review).
+ */
+export const FACE = {
+  get label(): string {
+    return textFace();
+  },
+};
 
 /** The three brand hues, one per module demo. */
 export type DemoHue = "primary" | "secondary" | "energy";

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { winery } from "@/lib/i18n/winery";
+import { textFace } from "@/components/pages/home/canvasKit";
 
 type RGB = [number, number, number];
 type Pt = { x: number; y: number };
@@ -65,7 +66,6 @@ export default function VineField() {
     const reduced = () => reduceMQ.matches;
     let docVisible = !document.hidden;
 
-    const MONO = 'ui-monospace, "SFMono-Regular", Consolas, monospace';
 
     const WHITE: RGB = [255, 255, 255];
     const BLACK: RGB = [12, 12, 12];
@@ -888,14 +888,14 @@ export default function VineField() {
         // No top header in portrait (the stage-tag overlay is the title, so
         // there is nothing to collide with). A small status sits by the node
         // and one caption reads under the bottle.
-        ctx.font = "600 10px " + MONO;
+        ctx.font = "600 10px " + textFace();
         ctx.textBaseline = "middle";
         ctx.textAlign = "left";
         ctx.fillStyle = full ? PAL.primaryText : PAL.muted;
         ctx.fillText(full ? t.current : t.live, g.CN.x + 15, g.CN.y);
         ctx.textBaseline = "alphabetic";
         ctx.textAlign = "center";
-        ctx.font = "600 11px " + MONO;
+        ctx.font = "600 11px " + textFace();
         ctx.fillStyle = PAL.dim;
         ctx.fillText(
           full ? t.captionFullCompact : t.captionPre,
@@ -906,17 +906,17 @@ export default function VineField() {
         return;
       }
       drawMark(ctx, g.xC + 8, 12, PAL.primary);
-      ctx.font = "600 11px " + MONO;
+      ctx.font = "600 11px " + textFace();
       ctx.textBaseline = "alphabetic";
       ctx.textAlign = "left";
       ctx.fillStyle = PAL.ink;
       ctx.fillText(t.header, g.xC + 27, 21);
       ctx.textAlign = "right";
-      ctx.font = "600 9px " + MONO;
+      ctx.font = "600 9px " + textFace();
       ctx.fillStyle = full ? PAL.primaryText : PAL.muted;
       ctx.fillText(full ? t.current : t.live, W - 10, 21);
       ctx.textAlign = "center";
-      ctx.font = "600 10px " + MONO;
+      ctx.font = "600 10px " + textFace();
       ctx.fillStyle = PAL.muted;
       ctx.fillText(
         full ? t.captionFull : t.captionPre,
@@ -947,7 +947,7 @@ export default function VineField() {
       const nowText = t.ledgerNowText + (hh.length < 2 ? "0" + hh : hh) + ":" + mm;
       const fs = W < 380 ? 9.5 : 10.5;
       const c = ctx;
-      c.font = "600 " + fs + "px " + MONO;
+      c.font = "600 " + fs + "px " + textFace();
       c.textBaseline = "middle";
       c.textAlign = "left";
       const entries: Array<{ a: number; pre: string; body: string; preCol: string; bodyCol: string }> = [

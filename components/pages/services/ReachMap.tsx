@@ -5,7 +5,7 @@ import { clearsThreshold } from "@/lib/onscreen";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { anuncios } from "@/lib/i18n/anuncios";
 import {
-  MONO,
+  textFace,
   clamp01,
   drawFlow,
   easeInOut,
@@ -124,7 +124,7 @@ export default function ReachMap() {
     let chipFont = 12;
     let lineH = 16;
 
-    const font = (px: number, weight = 500) => weight + " " + px + "px " + MONO;
+    const font = (px: number, weight = 500) => weight + " " + px + "px " + textFace();
 
     /** Greedy word wrap by measureText, at most two lines. A single word wider
      *  than the limit widens the chip instead of being cut. */

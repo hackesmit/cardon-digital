@@ -239,7 +239,9 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.5fr) auto;
   gap: 14px clamp(18px, 3vw, 44px);
   align-items: start;
-  padding: clamp(20px, 2.6vw, 32px) 0;
+  /* Side padding so the hover tint and the lead row's fill do not press the
+     copy to the edge (Daniel, 2026-10-10). */
+  padding: clamp(20px, 2.6vw, 32px) clamp(14px, 2vw, 24px);
   border-bottom: 1px solid var(--line);
   transition: background .25s ease;
 }
