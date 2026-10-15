@@ -251,13 +251,13 @@
   .pg-home .orbit-mark-dharma {
     background: #ffc107;
   }
-  .pg-home .orbit-med:has(.orbit-mark-dharma) {
+  .pg-home .orbit-med-dharma {
     background: #c42f01;
     border-color: transparent;
   }
   /* Brand colours are drawn for a light ground, so in dark mode the client
      medallions keep a paper disc and the wine and charcoal stay legible. */
-  :root:not([data-mode="light"]) .pg-home .orbit-med:has(.orbit-mark):not(:has(.orbit-mark-dharma)) {
+  :root:not([data-mode="light"]) .pg-home :is(.orbit-med-xanic, .orbit-med-enkanto, .orbit-med-brighter, .orbit-med-rlog) {
     background: #f6f1ea;
     border-color: transparent;
   }
