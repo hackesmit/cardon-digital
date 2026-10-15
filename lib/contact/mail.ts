@@ -158,6 +158,8 @@ function esc(value: string): string {
  */
 function htmlFor(s: ContactSubmission): string {
   const wa = s.whatsapp ? whatsappLink(s.whatsapp) : "";
+  // Percent-encoded so a % in the address stays a %, then HTML-escaped below.
+  const mailto = "mailto:" + encodeURIComponent(s.email).replace(/%40/g, "@");
   const ink = "#221418";
   const muted = "#6b5a5e";
   const accent = "#B4531F";
@@ -166,8 +168,8 @@ function htmlFor(s: ContactSubmission): string {
     bg + ';color:#ffffff;text-decoration:none;font-weight:600;font-size:14px">' + label + "</a>";
 
   const contact: string[] = [
-    '<tr><td style="padding:4px 16px 4px 0;color:' + muted + '">Email</td><td style="padding:4px 0"><a href="mailto:' +
-      esc(s.email) + '" style="color:' + ink + '">' + esc(s.email) + "</a></td></tr>",
+    '<tr><td style="padding:4px 16px 4px 0;color:' + muted + '">Email</td><td style="padding:4px 0"><a href="' +
+      esc(mailto) + '" style="color:' + ink + '">' + esc(s.email) + "</a></td></tr>",
   ];
   if (s.whatsapp) {
     contact.push(
@@ -198,7 +200,7 @@ function htmlFor(s: ContactSubmission): string {
     '<div style="margin:20px 0;padding:16px 18px;background:#F7F3EF;border-left:3px solid ' + accent + ';border-radius:4px;font-size:15px;line-height:1.55;white-space:pre-wrap">' +
     esc(s.message) + "</div>" +
     '<table style="font-size:14px;border-collapse:collapse">' + contact.join("") + "</table>" +
-    '<div style="margin-top:20px">' + button("mailto:" + s.email, "Reply by email", ink) + (wa ? button(wa, "Open WhatsApp", "#1f8f4e") : "") + "</div>" +
+    '<div style="margin-top:20px">' + button(mailto, "Reply by email", ink) + (wa ? button(wa, "Open WhatsApp", "#1f8f4e") : "") + "</div>" +
     '<p style="margin:4px 0 0;font-size:13px;color:' + muted + '">Replying to this email also goes straight to ' + esc(s.name) + ".</p>" +
     sourceBlock +
     "</td></tr></table></td></tr></table></body></html>"

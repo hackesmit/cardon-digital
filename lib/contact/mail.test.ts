@@ -115,4 +115,10 @@ describe("the lead email a person reads", () => {
     expect(whatsappLink("12345")).toBe("");
     expect(buildEmail(LEAD).html).toContain('href="https://wa.me/526462278690"');
   });
+
+  it("percent-encodes the reply address inside the mailto link", () => {
+    const html = buildEmail({ ...LEAD, email: "ana%ventas@bodega.mx" }).html ?? "";
+    expect(html).toContain('href="mailto:ana%25ventas@bodega.mx"');
+    expect(html).not.toContain('href="mailto:ana%ventas');
+  });
 });
