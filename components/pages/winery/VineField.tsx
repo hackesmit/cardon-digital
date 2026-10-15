@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { winery } from "@/lib/i18n/winery";
-import { textFace } from "@/components/pages/home/canvasKit";
+import { drawCactusSeal, textFace } from "@/components/pages/home/canvasKit";
 
 type RGB = [number, number, number];
 type Pt = { x: number; y: number };
@@ -325,43 +325,6 @@ export default function VineField() {
       c.arc(hp.x, hp.y, 1.9, 0, Math.PI * 2);
       c.fill();
       c.globalAlpha = 1;
-    };
-    const drawMark = (
-      c: CanvasRenderingContext2D,
-      x: number,
-      y: number,
-      col: string
-    ) => {
-      c.save();
-      c.translate(x, y);
-      c.strokeStyle = col;
-      c.lineWidth = 1.2;
-      c.globalAlpha = 0.85;
-      c.beginPath();
-      c.moveTo(6, 14);
-      c.lineTo(1, 3);
-      c.moveTo(6, 14);
-      c.lineTo(11, 3);
-      c.moveTo(1, 3);
-      c.lineTo(11, 3);
-      c.stroke();
-      c.globalAlpha = 1;
-      c.fillStyle = PAL.secondary;
-      c.beginPath();
-      c.arc(6, 14, 2.3, 0, Math.PI * 2);
-      c.fill();
-      c.fillStyle = PAL.panel;
-      c.strokeStyle = col;
-      c.lineWidth = 1.2;
-      c.beginPath();
-      c.arc(1, 3, 2, 0, Math.PI * 2);
-      c.fill();
-      c.stroke();
-      c.beginPath();
-      c.arc(11, 3, 2, 0, Math.PI * 2);
-      c.fill();
-      c.stroke();
-      c.restore();
     };
 
     let W = 0;
@@ -905,7 +868,7 @@ export default function VineField() {
         ctx.textAlign = "left";
         return;
       }
-      drawMark(ctx, g.xC + 8, 12, PAL.primary);
+      drawCactusSeal(ctx, g.xC + 4, 7, 16, PAL.primary);
       ctx.font = "600 11px " + textFace();
       ctx.textBaseline = "alphabetic";
       ctx.textAlign = "left";

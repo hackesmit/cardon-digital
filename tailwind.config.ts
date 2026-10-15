@@ -17,7 +17,8 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)"],
         body: ["var(--font-body)"],
-        mono: ["var(--font-mono)"],
+        // labels use the text face since 2026-10-10 (globals.css --mono)
+        mono: ["var(--font-text)"],
       },
       maxWidth: {
         site: "1440px",

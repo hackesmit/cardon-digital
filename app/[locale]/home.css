@@ -1511,17 +1511,6 @@
   line-height: 1.6;
 }
 
-/* Who builds it: one measure, no card. */
-.pg-home .who-inner {
-  max-width: 64ch;
-}
-.pg-home .who-body {
-  margin-top: 16px;
-  color: var(--text-dim);
-  font-size: clamp(1rem, 1.3vw, 1.12rem);
-  line-height: 1.62;
-}
-
 /* Three price lines, read off the data module. */
 .pg-home .price-lines {
   display: grid;
