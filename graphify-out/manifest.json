@@ -474,9 +474,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/consent.ts": {
-    "mtime": 1792040945.5920322,
-    "seen": 1792041098.7898924,
-    "ast_hash": "fd6e3c888c4a1d1970ccb81284e6d0b9",
+    "mtime": 1792086255.6529987,
+    "seen": 1792086261.9540968,
+    "ast_hash": "82a53ed59ea883bffacc4159cbd2f5ed",
     "semantic_hash": ""
   },
   "app/[locale]/about/page.tsx": {
