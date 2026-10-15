@@ -356,7 +356,7 @@ export default function ClientOrbit() {
           const route = routeFor(id);
           const seat = restingSeat(CLIENT_ORDER.indexOf(id));
           const shared = {
-            className: "orbit-med" + (active === id ? " lit" : ""),
+            className: "orbit-med orbit-med-" + id + (active === id ? " lit" : ""),
             "aria-label": c.aria,
             style: { left: seat.left, top: seat.top },
             onPointerEnter: (e: React.PointerEvent) => {
