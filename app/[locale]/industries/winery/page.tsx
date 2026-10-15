@@ -13,6 +13,7 @@ import { site } from "@/lib/i18n/site";
 import { winery } from "@/lib/i18n/winery";
 import Field from "@/components/site/field/Field";
 import "./winery.css";
+import Mark from "@/components/site/Mark";
 
 type Params = { params: { locale: string } };
 
@@ -224,38 +225,7 @@ export default function WineryPage({ params }: Params) {
               <div className="proof-art" aria-hidden="true">
                 <div className="seal">
                   <span className="seal-ring" />
-                  <svg className="seal-mark" viewBox="0 0 26 26" focusable="false">
-                    <line
-                      className="bm-line"
-                      x1="13"
-                      y1="20"
-                      x2="6"
-                      y2="8"
-                      strokeWidth="1.2"
-                      opacity="0.8"
-                    />
-                    <line
-                      className="bm-line"
-                      x1="13"
-                      y1="20"
-                      x2="20"
-                      y2="8"
-                      strokeWidth="1.2"
-                      opacity="0.8"
-                    />
-                    <line
-                      className="bm-line"
-                      x1="6"
-                      y1="8"
-                      x2="20"
-                      y2="8"
-                      strokeWidth="1.2"
-                      opacity="0.55"
-                    />
-                    <circle className="bm-ring" cx="6" cy="8" r="3" strokeWidth="1.4" />
-                    <circle className="bm-ring" cx="20" cy="8" r="3" strokeWidth="1.4" />
-                    <circle className="bm-dot" cx="13" cy="20" r="3.4" />
-                  </svg>
+                  <Mark className="seal-mark" />
                   <span className="seal-label">Monte Xanic</span>
                   <span className="seal-sub">{d.proof.sealSub}</span>
                 </div>
