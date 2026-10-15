@@ -87,12 +87,13 @@ function subjectFor(s: ContactSubmission): string {
 /**
  * A wa.me link for the number the visitor gave, or "" when it cannot be one.
  * Ten digits with no country code is a Mexican number written the way people
- * here write it, so it gets 52 in front; anything longer already carries its
- * country code.
+ * here write it, so it gets 52 in front; a number written with + or longer
+ * than ten digits already carries its country code.
  */
 export function whatsappLink(raw: string): string {
   const digits = raw.replace(/\D/g, "");
-  if (digits.length === 10 && !raw.trim().startsWith("+")) return "https://wa.me/52" + digits;
+  if (raw.trim().startsWith("+")) return digits.length >= 8 && digits.length <= 15 ? "https://wa.me/" + digits : "";
+  if (digits.length === 10) return "https://wa.me/52" + digits;
   return digits.length >= 11 && digits.length <= 15 ? "https://wa.me/" + digits : "";
 }
 
