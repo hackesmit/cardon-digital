@@ -315,3 +315,37 @@ export function drawFlow(
   ctx.fill();
   ctx.globalAlpha = 1;
 }
+
+/** The logo's cactus and sun (components/site/Mark.tsx, the artwork's own
+ *  paths) as a small canvas seal: the panel headers that used to draw the old
+ *  node mark. The horizon is left out so the seal stays near square at this
+ *  size; its box is x 454 to 725, y 88 to 332 in artwork units. (x, y) is
+ *  the seal's top left and h its height in pixels. */
+const CACTUS_D =
+  "M600 320 L600 140 C600 116 585 100 565 100 C545 100 530 116 530 140 L530 230 M530 205 C530 185 516 172 498 172 C480 172 466 186 466 205 L466 238 C466 279 495 307 536 307 M600 238 C600 218 614 204 632 204 C650 204 664 218 664 238 L664 260 C664 291 642 313 611 313";
+let cactusPath: Path2D | null = null;
+export function drawCactusSeal(
+  c: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  h: number,
+  ink: string,
+  sun = "#C99A62"
+): void {
+  if (!cactusPath) cactusPath = new Path2D(CACTUS_D);
+  const s = h / 244;
+  c.save();
+  c.translate(x, y);
+  c.scale(s, s);
+  c.translate(-454, -88);
+  c.strokeStyle = ink;
+  c.lineWidth = 24;
+  c.lineCap = "round";
+  c.lineJoin = "round";
+  c.stroke(cactusPath);
+  c.fillStyle = sun;
+  c.beginPath();
+  c.arc(695, 152, 30, 0, Math.PI * 2);
+  c.fill();
+  c.restore();
+}
