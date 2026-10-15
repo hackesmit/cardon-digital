@@ -47,7 +47,9 @@
 }
 
 .contact-form{display:flex;flex-direction:column;gap:16px;}
-.contact-form .field{display:flex;flex-direction:column;gap:6px;margin:0;}
+/* The global .field is the decorative animation layer and switches clicks
+   off; the form's fields share the name, so they switch clicks back on. */
+.contact-form .field{display:flex;flex-direction:column;gap:6px;margin:0;pointer-events:auto;}
 .contact-form label{
   font-family:var(--mono);font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;
   color:var(--muted);display:flex;align-items:baseline;gap:8px;
