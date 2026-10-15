@@ -96,9 +96,9 @@
     "semantic_hash": ""
   },
   "components/pages/home/HeroAssembly.tsx": {
-    "mtime": 1791782409.5366192,
-    "seen": 1791782569.810791,
-    "ast_hash": "ac4594805763fe306342fcba09cc6394",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.244955,
+    "ast_hash": "bf6ba30afbe220e452bb3a41b28acd28",
     "semantic_hash": ""
   },
   "components/pages/home/PlayOnceVis.tsx": {
@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "components/pages/home/canvasKit.ts": {
-    "mtime": 1791782409.5366192,
-    "seen": 1791782569.8108006,
-    "ast_hash": "6c96e9092854187751a48dcd6c470848",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2449586,
+    "ast_hash": "60f46837e2f6ecd8450d5bb13911c703",
     "semantic_hash": ""
   },
   "components/pages/winery/SpotlightFrames.tsx": {
@@ -126,9 +126,9 @@
     "semantic_hash": ""
   },
   "components/pages/winery/VineField.tsx": {
-    "mtime": 1791782409.5386193,
-    "seen": 1791782569.8108988,
-    "ast_hash": "4195a0448c2e00d290d72c8717638f21",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.244998,
+    "ast_hash": "c7fee74d650f724e3d5a24b50f3a1832",
     "semantic_hash": ""
   },
   "components/site/ContourField.tsx": {
@@ -138,15 +138,15 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1791514739.4068403,
-    "seen": 1791779598.179063,
-    "ast_hash": "de710d77073bc60bbccf05315930d28b",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2450004,
+    "ast_hash": "6f5d6f98805691a1b2fe0146bba00403",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1791514739.4068403,
-    "seen": 1791779598.1790679,
-    "ast_hash": "a47062d92800aec7e4caecca10fcf07e",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.245005,
+    "ast_hash": "893e76f0d301c4fd46654755c1ea559a",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -180,9 +180,9 @@
     "semantic_hash": ""
   },
   "tailwind.config.ts": {
-    "mtime": 1787812317.8164155,
-    "seen": 1791475652.776703,
-    "ast_hash": "6e3b3b14b32bbeb2491aaaf8457ef589",
+    "mtime": 1792042741.16075,
+    "seen": 1792042746.2451262,
+    "ast_hash": "6b564ad7cbcea600dfd1091e174f79c5",
     "semantic_hash": ""
   },
   "tsconfig.json": {
@@ -240,15 +240,15 @@
     "semantic_hash": ""
   },
   "app/icon.svg": {
-    "mtime": 1791514739.4068403,
-    "seen": 1791779598.1792107,
-    "ast_hash": "84f83ef920383a813ca148add27f52b2",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2451499,
+    "ast_hash": "56ca63f8328a991709eb29fddb26012e",
     "semantic_hash": ""
   },
   "public/og.png": {
-    "mtime": 1791790071.2151504,
-    "seen": 1791790078.0699277,
-    "ast_hash": "75e10ad17e41a1a3918ba10d7436afb4",
+    "mtime": 1792042741.16075,
+    "seen": 1792042746.2451873,
+    "ast_hash": "a53aae3816eecae374bd3dc134b5859e",
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
@@ -264,15 +264,15 @@
     "semantic_hash": ""
   },
   "app/[locale]/coming-soon/page.tsx": {
-    "mtime": 1791514739.4048402,
-    "seen": 1791779598.1789274,
-    "ast_hash": "1c82a69940b433fb5e471c37fb629cee",
+    "mtime": 1792042741.1547499,
+    "seen": 1792042746.244864,
+    "ast_hash": "f8b2973e377d7097d16ddb40fd511763",
     "semantic_hash": ""
   },
   "app/[locale]/industries/winery/page.tsx": {
-    "mtime": 1791514739.4058404,
-    "seen": 1791779598.1789377,
-    "ast_hash": "9aeb05bdab0c0cc98add8ca1efa99a94",
+    "mtime": 1792042741.1547499,
+    "seen": 1792042746.244874,
+    "ast_hash": "e049cedec3e309c74934967f68559d5b",
     "semantic_hash": ""
   },
   "app/[locale]/layout.tsx": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1791782320.4356246,
-    "seen": 1791782569.8106675,
-    "ast_hash": "db4ef380850e3bb549f2f76f6ba72cbf",
+    "mtime": 1792042741.1547499,
+    "seen": 1792042746.2448783,
+    "ast_hash": "62e8f09e3e90dca3bde0177287147d9a",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -330,9 +330,9 @@
     "semantic_hash": ""
   },
   "lib/fonts.ts": {
-    "mtime": 1791514739.4068403,
-    "seen": 1791779598.179099,
-    "ast_hash": "839deabeb10192c953c27da44e784760",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2450354,
+    "ast_hash": "7cbedbb2270dbb53ed5e77171c2df60f",
     "semantic_hash": ""
   },
   "lib/i18n/LocaleProvider.tsx": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1791790071.2141504,
-    "seen": 1791790078.069481,
-    "ast_hash": "b67f4f22890216bd622ce7dac7e37c99",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2450502,
+    "ast_hash": "c120240c65529fb5803550d50dcdf8c0",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -588,63 +588,15 @@
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
-    "mtime": 1791514739.4068403,
-    "seen": 1791779598.1790643,
-    "ast_hash": "1dcd68cc102b4204778b3d4446a78b0f",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-icon-mono.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.7767227,
-    "ast_hash": "80c312ed2f37d9f50645bae3f533a2d2",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-icon.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.7767236,
-    "ast_hash": "a672fb997831f683c31b14a1c0284443",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-mark-bold-mono-bloom.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.7767248,
-    "ast_hash": "9ac62349192679e0599f8094b16e1b91",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-mark-bold.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.776726,
-    "ast_hash": "abbc730bdfe353ad518ca84f0376fda5",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-mark-desert.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.776727,
-    "ast_hash": "fa2f6fe652a67cb4a1566cbaa769d057",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-mark-display.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.7767282,
-    "ast_hash": "d20ab4ef52ca06305ab55ef495139643",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-mark-mono-bloom.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.776729,
-    "ast_hash": "37e8f8796e275027944a6fe3bf1cabaf",
-    "semantic_hash": ""
-  },
-  "public/brand/cardon-mark-mono.svg": {
-    "mtime": 1790582402.7155879,
-    "seen": 1791475652.77673,
-    "ast_hash": "1e0371cafcf34e2d061c9f9c0528c029",
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2450018,
+    "ast_hash": "26650bb6412f8b801d87be6ffb27500b",
     "semantic_hash": ""
   },
   "public/brand/cardon-mark.svg": {
-    "mtime": 1791514739.4078405,
-    "seen": 1791779598.179222,
-    "ast_hash": "83e2292ffa3287694757354bc9c83a3b",
+    "mtime": 1792042741.15975,
+    "seen": 1792042746.2451596,
+    "ast_hash": "eb54fc268bb3bd293ba9492cee16e96f",
     "semantic_hash": ""
   },
   "lib/pricing.test.ts": {
@@ -1692,15 +1644,75 @@
     "semantic_hash": ""
   },
   "scripts/og/og.html": {
-    "mtime": 1791790071.2151504,
-    "seen": 1791790078.0698144,
-    "ast_hash": "1b2bea8404b327897ca06bf54d85ea24",
+    "mtime": 1792042741.16075,
+    "seen": 1792042746.245146,
+    "ast_hash": "ce2983b7d0de5fdcdfb796517e9db64c",
     "semantic_hash": ""
   },
   "public/media/clients/dharma-mark.png": {
     "mtime": 1792040945.580032,
     "seen": 1792041098.7900164,
     "ast_hash": "0c360361c571d206736b2bc43b737168",
+    "semantic_hash": ""
+  },
+  "app/manifest.ts": {
+    "mtime": 1792042741.15675,
+    "seen": 1792042746.2448952,
+    "ast_hash": "0ffae1e2325a37234b763fcd629f727e",
+    "semantic_hash": ""
+  },
+  "app/apple-icon.png": {
+    "mtime": 1792042741.1547499,
+    "seen": 1792042746.2451487,
+    "ast_hash": "df9bbacbacfe46c693ed029484c3d71f",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-app-icon-dark.svg": {
+    "mtime": 1792042741.15775,
+    "seen": 1792042746.245151,
+    "ast_hash": "56ca63f8328a991709eb29fddb26012e",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-app-icon-light.svg": {
+    "mtime": 1792042741.15775,
+    "seen": 1792042746.2451522,
+    "ast_hash": "dfde2e94b7258e0a1bc20151cd816463",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-icon-192.png": {
+    "mtime": 1792042741.15775,
+    "seen": 1792042746.2451532,
+    "ast_hash": "e336a2fdde38b776913ffa9af799ff47",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-icon-512.png": {
+    "mtime": 1792042741.15775,
+    "seen": 1792042746.2451544,
+    "ast_hash": "e87fcb798adaa03bb65439d05c30f2c3",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-logo-2048.png": {
+    "mtime": 1792042741.15975,
+    "seen": 1792042746.2451553,
+    "ast_hash": "9c107d44e7043d6f6183a3bd3190fd4a",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-logo-horizontal.svg": {
+    "mtime": 1792042741.15975,
+    "seen": 1792042746.2451565,
+    "ast_hash": "6561c8bc516a65d368e3c19751d83ec3",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-logo-source.svg": {
+    "mtime": 1792042741.15975,
+    "seen": 1792042746.2451577,
+    "ast_hash": "a9c8ef1b590a6a4de2e517a9a6e8d981",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-logo.svg": {
+    "mtime": 1792042741.15975,
+    "seen": 1792042746.2451584,
+    "ast_hash": "736d57a504ff6cf79605e4911d15e00e",
     "semantic_hash": ""
   }
 }
