@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { deliver } from "./mail";
+import { buildEmail, deliver, whatsappLink } from "./mail";
+import type { ContactSubmission } from "./validate";
 
 /**
  * What a rejected send leaves behind (bead hq-u8n82, round one).
@@ -73,5 +74,52 @@ describe("what a refused send writes to the log", () => {
 
     expect(result).toMatchObject({ detail: "rejected" });
     expect(logged[0].map(String).join(" ")).not.toContain(EMAIL.replyTo);
+  });
+});
+
+const LEAD: ContactSubmission = {
+  name: "Ana <b>Ruiz</b>",
+  winery: "Bodega \"Ejemplo\"",
+  email: "ana@bodegaejemplo.mx",
+  whatsapp: "646 227 8690",
+  message: "Hola <script>alert(1)</script>\nSegunda linea",
+  locale: "es",
+  attribution: { leadId: "", gclid: "", lane: "", campaign: "", landing: "/es/contacto", firstSeen: "" },
+};
+
+describe("the lead email a person reads", () => {
+  it("names who wrote in the subject", () => {
+    expect(buildEmail(LEAD).subject).toBe('New lead: Ana <b>Ruiz</b> (Bodega "Ejemplo")');
+  });
+
+  it("escapes everything the visitor typed in the HTML body", () => {
+    const html = buildEmail(LEAD).html ?? "";
+    expect(html).not.toContain("<script>");
+    expect(html).not.toContain("<b>Ruiz");
+    expect(html).toContain("&lt;script&gt;alert(1)&lt;/script&gt;");
+    expect(html).toContain("Bodega &quot;Ejemplo&quot;");
+  });
+
+  it("leaves out the source marks that are empty", () => {
+    const { text, html } = buildEmail(LEAD);
+    expect(text).toContain("Landing page: /es/contacto");
+    expect(text).not.toContain("gclid");
+    expect(text).not.toContain("none");
+    expect(html).not.toContain("Google click id");
+  });
+
+  it("links WhatsApp, adding Mexico's code to a ten digit number", () => {
+    expect(whatsappLink("646 227 8690")).toBe("https://wa.me/526462278690");
+    expect(whatsappLink("+1 619 555 0100")).toBe("https://wa.me/16195550100");
+    expect(whatsappLink("52 646 227 8690")).toBe("https://wa.me/526462278690");
+    expect(whatsappLink("+47 912 34 567")).toBe("https://wa.me/4791234567");
+    expect(whatsappLink("12345")).toBe("");
+    expect(buildEmail(LEAD).html).toContain('href="https://wa.me/526462278690"');
+  });
+
+  it("percent-encodes the reply address inside the mailto link", () => {
+    const html = buildEmail({ ...LEAD, email: "ana%ventas@bodega.mx" }).html ?? "";
+    expect(html).toContain('href="mailto:ana%25ventas@bodega.mx"');
+    expect(html).not.toContain('href="mailto:ana%ventas');
   });
 });
