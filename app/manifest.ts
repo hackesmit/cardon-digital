@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-// The installable-app card: the line-cactus tile (app/icon.svg) on its ink.
+// The installable-app card: the saguaro tile (app/icon.svg) on its ink.
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Cardon Digital",
