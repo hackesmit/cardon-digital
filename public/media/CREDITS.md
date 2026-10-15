@@ -115,16 +115,22 @@ inline SVG path data.
 
 ## Client marks (2026-10-07)
 
-The four files under `clients/` are the marks of four businesses Cardon
+The five files under `clients/` are the marks of five businesses Cardon
 Digital has built for, shown on the home page's client orbit with their
 permission. Each is the emblem of the owner's logo, cut from the rest and
-reduced to a one-colour silhouette so it takes the site's colour; the marks
-remain the property of each business, and an owner who prefers the full logo
-or none at all gets that on request.
+painted in that owner's own brand colours; the marks remain the property of
+each business, and an owner who prefers the full logo or none at all gets
+that on request.
 
 ### clients/brighterhire-mark.png
 
 - Credit: BrighterHire
+- License: used with permission of the owner
+- Slot: home/orbit
+
+### clients/dharma-mark.png
+
+- Credit: Dharma Ochoa
 - License: used with permission of the owner
 - Slot: home/orbit
 

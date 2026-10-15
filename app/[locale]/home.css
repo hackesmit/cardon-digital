@@ -227,6 +227,10 @@
     -webkit-mask-image: url(/media/clients/rlogistics-mark.png);
     mask-image: url(/media/clients/rlogistics-mark.png);
   }
+  .pg-home .orbit-mark-dharma {
+    -webkit-mask-image: url(/media/clients/dharma-mark.png);
+    mask-image: url(/media/clients/dharma-mark.png);
+  }
   /* Each client's emblem in its own colours, cut the same way as the
      one-colour mask. RLogistics is two-tone: the chevrons red, the R dark;
      the stop sits where the R starts inside the wide slot. */
@@ -242,9 +246,18 @@
   .pg-home .orbit-mark-rlog {
     background: linear-gradient(90deg, #c83838 0 57%, #383838 57% 100%);
   }
+  /* Dharma's signature is yellow on her red, so her medallion carries the
+     red ground in both modes and the D sits on it as it does in her logo. */
+  .pg-home .orbit-mark-dharma {
+    background: #ffc107;
+  }
+  .pg-home .orbit-med:has(.orbit-mark-dharma) {
+    background: #c42f01;
+    border-color: transparent;
+  }
   /* Brand colours are drawn for a light ground, so in dark mode the client
      medallions keep a paper disc and the wine and charcoal stay legible. */
-  :root:not([data-mode="light"]) .pg-home .orbit-med:has(.orbit-mark) {
+  :root:not([data-mode="light"]) .pg-home .orbit-med:has(.orbit-mark):not(:has(.orbit-mark-dharma)) {
     background: #f6f1ea;
     border-color: transparent;
   }
