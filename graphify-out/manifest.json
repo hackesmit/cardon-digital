@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
-    "mtime": 1791475639.558632,
-    "seen": 1791475652.7767184,
-    "ast_hash": "ec754c056406e6c7954a145c9cfab77a",
+    "mtime": 1792040945.580032,
+    "seen": 1792041098.7899964,
+    "ast_hash": "e440b4ac637c4ae906a85a5cf3cb00fc",
     "semantic_hash": ""
   },
   "public/media/valle-vineyard.webp": {
@@ -414,9 +414,9 @@
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
-    "mtime": 1790582402.6685872,
-    "seen": 1791475652.7764626,
-    "ast_hash": "0ad1aa346672d7cf110c363eae430913",
+    "mtime": 1792040945.5920322,
+    "seen": 1792041098.7896972,
+    "ast_hash": "2a1a486ec1248df3813960daf277add4",
     "semantic_hash": ""
   },
   "components/consent/ConsentGate.tsx": {
@@ -474,9 +474,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/consent.ts": {
-    "mtime": 1790881974.3989615,
-    "seen": 1791475652.7766297,
-    "ast_hash": "7047ea060e73d14c09b7ffd421d41cfd",
+    "mtime": 1792040945.5920322,
+    "seen": 1792041098.7898924,
+    "ast_hash": "fd6e3c888c4a1d1970ccb81284e6d0b9",
     "semantic_hash": ""
   },
   "app/[locale]/about/page.tsx": {
@@ -834,9 +834,9 @@
     "semantic_hash": ""
   },
   "docs/media-clearances.md": {
-    "mtime": 1791336706.8583624,
-    "seen": 1791475652.7767153,
-    "ast_hash": "182db4c7cce555072cc6f863ca23b0e1",
+    "mtime": 1792040945.5790322,
+    "seen": 1792041098.7899928,
+    "ast_hash": "4c7ed57aa28f7b6fad506c5ec46cc094",
     "semantic_hash": ""
   },
   "public/media/README.md": {
@@ -1650,15 +1650,15 @@
     "semantic_hash": ""
   },
   "components/pages/home/ClientOrbit.tsx": {
-    "mtime": 1791323254.3616426,
-    "seen": 1791475652.776508,
-    "ast_hash": "58d5094ca694818838777b5d1664e2d6",
+    "mtime": 1792040945.5790322,
+    "seen": 1792041098.7897818,
+    "ast_hash": "a88084797f93297a8975856c255ee4b0",
     "semantic_hash": ""
   },
   "components/pages/home/clientMarks.tsx": {
-    "mtime": 1791336706.8583624,
-    "seen": 1791475652.7765167,
-    "ast_hash": "109c7fbb08ba475f81ce3170360179e9",
+    "mtime": 1792040945.5790322,
+    "seen": 1792041098.789804,
+    "ast_hash": "0276d6e8891eae182cea4106edc57158",
     "semantic_hash": ""
   },
   "public/media/clients/brighterhire-mark.png": {
@@ -1695,6 +1695,12 @@
     "mtime": 1791790071.2151504,
     "seen": 1791790078.0698144,
     "ast_hash": "1b2bea8404b327897ca06bf54d85ea24",
+    "semantic_hash": ""
+  },
+  "public/media/clients/dharma-mark.png": {
+    "mtime": 1792040945.580032,
+    "seen": 1792041098.7900164,
+    "ast_hash": "0c360361c571d206736b2bc43b737168",
     "semantic_hash": ""
   }
 }
