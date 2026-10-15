@@ -112,6 +112,7 @@ describe("the lead email a person reads", () => {
     expect(whatsappLink("646 227 8690")).toBe("https://wa.me/526462278690");
     expect(whatsappLink("+1 619 555 0100")).toBe("https://wa.me/16195550100");
     expect(whatsappLink("52 646 227 8690")).toBe("https://wa.me/526462278690");
+    expect(whatsappLink("+47 912 34 567")).toBe("https://wa.me/4791234567");
     expect(whatsappLink("12345")).toBe("");
     expect(buildEmail(LEAD).html).toContain('href="https://wa.me/526462278690"');
   });
