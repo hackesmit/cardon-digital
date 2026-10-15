@@ -178,7 +178,7 @@ const en = {
       { dim: "Ownership", cardon: "Yours, keys and all", usual: "Rented forever" },
       { dim: "Fee", cardon: "Agreed up front, and ads paid per contact", usual: "A percentage, or per seat" },
       { dim: "Measurement", cardon: "From the click to the call or the message", usual: "Likes and reach" },
-      { dim: "Who answers", cardon: "The same person who built it", usual: "A ticket queue" },
+      { dim: "Who answers", cardon: "The team that built it", usual: "A ticket queue" },
       { dim: "Fit", cardon: "Built around how you work", usual: "Your work bent to the tool" },
       { dim: "Answers", cardon: "An assistant that reads your records", usual: "Generic features" },
     ],
@@ -316,7 +316,7 @@ const en = {
   },
   diagnostic: {
     desc: "Ten business days on your site, your ads and your operation. A written memo: what is true, what is broken, what to build first.",
-    doors: "Write on WhatsApp, book a call or send the form. All three reach the person who does the work.",
+    doors: "Write on WhatsApp, book a call or send the form. All three reach the team that does the work.",
   },
 };
 
@@ -472,7 +472,7 @@ const es: typeof en = {
       { dim: "Propiedad", cardon: "Suyo, con todos los accesos", usual: "Rentado para siempre" },
       { dim: "Cuota", cardon: "Acordada de antemano, y los anuncios por contacto", usual: "Un porcentaje, o por usuario" },
       { dim: "Medición", cardon: "Del clic a la llamada o al mensaje", usual: "Likes y alcance" },
-      { dim: "Quién contesta", cardon: "La misma persona que lo hizo", usual: "Un ticket de soporte" },
+      { dim: "Quién contesta", cardon: "El equipo que lo hizo", usual: "Un ticket de soporte" },
       { dim: "Adaptación", cardon: "Se adapta a su forma de trabajar", usual: "Usted se adapta al programa" },
       { dim: "Respuestas", cardon: "Un asistente que lee sus registros", usual: "Funciones genéricas" },
     ],
@@ -610,7 +610,7 @@ const es: typeof en = {
   },
   diagnostic: {
     desc: "Diez días hábiles para revisar su sitio, sus anuncios y la operación del negocio. Al final, un informe por escrito: qué funciona, qué falla y por dónde empezar.",
-    doors: "Escríbanos por WhatsApp, agende una llamada o mande el formulario. Los tres le llegan a la persona que hace el trabajo.",
+    doors: "Escríbanos por WhatsApp, agende una llamada o mande el formulario. Los tres le llegan al equipo que hace el trabajo.",
   },
 };
 

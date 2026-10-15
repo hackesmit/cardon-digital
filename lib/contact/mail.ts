@@ -29,6 +29,7 @@ export type Email = {
   replyTo: string;
   subject: string;
   text: string;
+  html?: string;
 };
 
 /**
@@ -77,44 +78,131 @@ export function deliveryConfigured(): boolean {
   return key !== "" && envAddress("CONTACT_FROM") !== "" && envAddress("CONTACT_TO") !== "";
 }
 
-/** The subject a lead notification arrives under. */
+/** The subject a lead notification arrives under: who wrote, and for whom. */
 function subjectFor(s: ContactSubmission): string {
-  const who = s.winery ? s.winery + ", " + s.name : s.name;
-  const label = s.locale === "es" ? "Contacto" : "Contact";
-  return headerSafe(label + ": " + who, 160);
+  const who = s.winery ? s.name + " (" + s.winery + ")" : s.name;
+  return headerSafe("New lead: " + who, 160);
 }
 
 /**
- * Plain text body. Every value here has already been validated, and it is
- * built as text rather than HTML so nothing a visitor types can be markup.
+ * A wa.me link for the number the visitor gave, or "" when it cannot be one.
+ * Ten digits with no country code is a Mexican number written the way people
+ * here write it, so it gets 52 in front; anything longer already carries its
+ * country code.
+ */
+export function whatsappLink(raw: string): string {
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length === 10 && !raw.trim().startsWith("+")) return "https://wa.me/52" + digits;
+  return digits.length >= 11 && digits.length <= 15 ? "https://wa.me/" + digits : "";
+}
+
+/** The campaign marks a lead arrived with, labelled, with the empty ones left out. */
+function sourceRows(s: ContactSubmission): [string, string][] {
+  const a = s.attribution;
+  const rows: [string, string][] = [
+    ["Landing page", a.landing],
+    ["Campaign", a.campaign],
+    ["Lane", a.lane],
+    ["First seen", a.firstSeen],
+    ["Lead id", a.leadId],
+    ["Google click id", a.gclid],
+  ];
+  return rows.filter(([, v]) => v);
+}
+
+function languageOf(s: ContactSubmission): string {
+  return s.locale === "es" ? "Spanish" : "English";
+}
+
+/**
+ * Plain text body, for mail clients that do not show HTML. The message comes
+ * first because it is what gets read first; how to reach them comes next.
  */
 function bodyFor(s: ContactSubmission): string {
+  const wa = s.whatsapp ? whatsappLink(s.whatsapp) : "";
   const lines = [
-    "Name: " + s.name,
-    "Winery: " + (s.winery || "not given"),
-    "Email: " + s.email,
-    "WhatsApp: " + (s.whatsapp || "not given"),
-    "Locale: " + s.locale,
+    s.name + (s.winery ? ", " + s.winery : ""),
+    "Wrote from the " + languageOf(s) + " site.",
     "",
-    "Message:",
     s.message,
+    "",
+    "Email: " + s.email,
   ];
+  if (s.whatsapp) lines.push("WhatsApp: " + s.whatsapp + (wa ? " (" + wa + ")" : ""));
+  lines.push("", "Reply to this email to answer " + s.name + " directly.");
 
-  const a = s.attribution;
-  if (a.leadId || a.gclid || a.lane || a.campaign || a.landing || a.firstSeen) {
-    lines.push(
-      "",
-      "Source:",
-      "  lead id: " + (a.leadId || "none"),
-      "  gclid: " + (a.gclid || "none"),
-      "  lane: " + (a.lane || "none"),
-      "  campaign: " + (a.campaign || "none"),
-      "  landing: " + (a.landing || "none"),
-      "  first seen: " + (a.firstSeen || "none"),
+  const source = sourceRows(s);
+  if (source.length > 0) {
+    lines.push("", "How they found us:");
+    for (const [k, v] of source) lines.push("  " + k + ": " + v);
+  }
+  return lines.join("\n");
+}
+
+/** Every visitor value goes through this before it touches the HTML body. */
+function esc(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
+ * The HTML body: the same content as the text body, laid out to scan. Inline
+ * styles and tables only, because that is what mail clients render; no
+ * images and no remote resources. Visitor input is escaped, and the only
+ * links are a mailto to the address that passed validation and a wa.me link
+ * built from digits.
+ */
+function htmlFor(s: ContactSubmission): string {
+  const wa = s.whatsapp ? whatsappLink(s.whatsapp) : "";
+  const ink = "#221418";
+  const muted = "#6b5a5e";
+  const accent = "#B4531F";
+  const button = (href: string, label: string, bg: string) =>
+    '<a href="' + esc(href) + '" style="display:inline-block;padding:10px 18px;margin:0 8px 8px 0;border-radius:6px;background:' +
+    bg + ';color:#ffffff;text-decoration:none;font-weight:600;font-size:14px">' + label + "</a>";
+
+  const contact: string[] = [
+    '<tr><td style="padding:4px 16px 4px 0;color:' + muted + '">Email</td><td style="padding:4px 0"><a href="mailto:' +
+      esc(s.email) + '" style="color:' + ink + '">' + esc(s.email) + "</a></td></tr>",
+  ];
+  if (s.whatsapp) {
+    contact.push(
+      '<tr><td style="padding:4px 16px 4px 0;color:' + muted + '">WhatsApp</td><td style="padding:4px 0">' +
+        (wa ? '<a href="' + esc(wa) + '" style="color:' + ink + '">' + esc(s.whatsapp) + "</a>" : esc(s.whatsapp)) +
+        "</td></tr>",
     );
   }
 
-  return lines.join("\n");
+  const source = sourceRows(s);
+  const sourceBlock =
+    source.length === 0
+      ? ""
+      : '<p style="margin:24px 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:' + muted +
+        '">How they found us</p><table style="font-size:13px;color:' + muted + ';border-collapse:collapse">' +
+        source
+          .map(([k, v]) => '<tr><td style="padding:2px 16px 2px 0">' + k + '</td><td style="padding:2px 0;color:' + ink + '">' + esc(v) + "</td></tr>")
+          .join("") +
+        "</table>";
+
+  return (
+    '<!doctype html><html><body style="margin:0;padding:0;background:#F4EFE8">' +
+    '<table role="presentation" width="100%" style="background:#F4EFE8;border-collapse:collapse"><tr><td style="padding:24px 12px">' +
+    '<table role="presentation" width="100%" style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:10px;border-collapse:separate;font-family:Arial,Helvetica,sans-serif;color:' + ink + '"><tr><td style="padding:28px">' +
+    '<p style="margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:' + accent + '">New lead, ' + languageOf(s) + " site</p>" +
+    '<h1 style="margin:0;font-size:22px;line-height:1.25">' + esc(s.name) + "</h1>" +
+    (s.winery ? '<p style="margin:2px 0 0;font-size:15px;color:' + muted + '">' + esc(s.winery) + "</p>" : "") +
+    '<div style="margin:20px 0;padding:16px 18px;background:#F7F3EF;border-left:3px solid ' + accent + ';border-radius:4px;font-size:15px;line-height:1.55;white-space:pre-wrap">' +
+    esc(s.message) + "</div>" +
+    '<table style="font-size:14px;border-collapse:collapse">' + contact.join("") + "</table>" +
+    '<div style="margin-top:20px">' + button("mailto:" + s.email, "Reply by email", ink) + (wa ? button(wa, "Open WhatsApp", "#1f8f4e") : "") + "</div>" +
+    '<p style="margin:4px 0 0;font-size:13px;color:' + muted + '">Replying to this email also goes straight to ' + esc(s.name) + ".</p>" +
+    sourceBlock +
+    "</td></tr></table></td></tr></table></body></html>"
+  );
 }
 
 export function buildEmail(s: ContactSubmission): Email {
@@ -127,6 +215,7 @@ export function buildEmail(s: ContactSubmission): Email {
     replyTo: headerSafe(s.email, 254),
     subject: subjectFor(s),
     text: bodyFor(s),
+    html: htmlFor(s),
   };
 }
 
@@ -177,6 +266,7 @@ export async function deliver(email: Email): Promise<DeliveryResult> {
         reply_to: email.replyTo,
         subject: email.subject,
         text: email.text,
+        ...(email.html ? { html: email.html } : {}),
       }),
       cache: "no-store",
     });
