@@ -1,3 +1,4 @@
+import { DRAWING_D } from "@/components/site/Mark";
 /**
  * Shared canvas + palette helpers for the home page client visuals.
  * Ported verbatim from the desert-tech-v2 home concept IIFE utilities so the
@@ -314,4 +315,31 @@ export function drawFlow(
   ctx.arc(hp.x, hp.y, 1.9, 0, Math.PI * 2);
   ctx.fill();
   ctx.globalAlpha = 1;
+}
+
+/** The logo's saguaro (components/site/Mark.tsx, the official artwork's own
+ *  path) as a small canvas seal for the panel headers. The drawing is one
+ *  path, so the cactus is cut out with a clip at x 116 to 352, y 233 to 543
+ *  in artwork units. (x, y) is the seal's top left and h its height in
+ *  pixels. */
+let drawingPath: Path2D | null = null;
+export function drawCactusSeal(
+  c: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  h: number,
+  ink: string
+): void {
+  if (!drawingPath) drawingPath = new Path2D(DRAWING_D);
+  const s = h / 310;
+  c.save();
+  c.translate(x, y);
+  c.scale(s, s);
+  c.translate(-116, -233);
+  c.beginPath();
+  c.rect(116, 233, 236, 310);
+  c.clip();
+  c.fillStyle = ink;
+  c.fill(drawingPath);
+  c.restore();
 }

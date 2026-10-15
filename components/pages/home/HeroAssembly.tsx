@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useDict } from "@/lib/i18n/LocaleProvider";
 import { home } from "@/lib/i18n/home";
 import {
+  drawCactusSeal,
   textFace,
   clamp01,
   drawFlow,
@@ -434,38 +435,6 @@ export default function HeroAssembly() {
       c.restore();
     }
 
-    function drawMark(c: CanvasRenderingContext2D, x: number, y: number) {
-      c.save();
-      c.translate(x, y);
-      c.strokeStyle = PAL.primary;
-      c.lineWidth = 1.2;
-      c.globalAlpha = 0.85;
-      c.beginPath();
-      c.moveTo(6, 14);
-      c.lineTo(1, 3);
-      c.moveTo(6, 14);
-      c.lineTo(11, 3);
-      c.moveTo(1, 3);
-      c.lineTo(11, 3);
-      c.stroke();
-      c.globalAlpha = 1;
-      c.fillStyle = PAL.secondary;
-      c.beginPath();
-      c.arc(6, 14, 2.3, 0, Math.PI * 2);
-      c.fill();
-      c.fillStyle = PAL.panel;
-      c.strokeStyle = PAL.primary;
-      c.lineWidth = 1.2;
-      c.beginPath();
-      c.arc(1, 3, 2, 0, Math.PI * 2);
-      c.fill();
-      c.stroke();
-      c.beginPath();
-      c.arc(11, 3, 2, 0, Math.PI * 2);
-      c.fill();
-      c.stroke();
-      c.restore();
-    }
 
     function drawSystem(c: CanvasRenderingContext2D, live: boolean) {
       const g = geom;
@@ -476,7 +445,7 @@ export default function HeroAssembly() {
       c.lineWidth = 1.4;
       c.strokeStyle = live ? PAL.primaryDim : PAL.line;
       c.stroke();
-      drawMark(c, g.pX + 13, g.pY + 13);
+      drawCactusSeal(c, g.pX + 10, g.pY + 8, 16, PAL.primary);
       const titleFont = compact ? 13.5 : 12;
       const cornerFont = compact ? 10 : 9;
       const labelFont = compact ? 12 : 11;
