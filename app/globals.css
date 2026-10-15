@@ -141,7 +141,7 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
   border-bottom:1px solid var(--line);
 }
 .bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;}
-/* Logo (2026-10-09): the artwork's horizontal lockup in the text ink; the
+/* Logo (official artwork, 2026-10-15): the artwork's horizontal lockup in the text ink; the
    wordmark is paths, so it needs no font and no text rules. */
 .brand{display:inline-flex;align-items:center;flex-shrink:0;color:var(--text);}
 .brand-mark{width:auto;height:26px;display:block;flex-shrink:0;color:var(--text);}

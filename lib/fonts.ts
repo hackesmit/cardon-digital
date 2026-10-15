@@ -6,7 +6,7 @@ import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
  *  One system designed together (Adobe, 2012 to 2014), long established and
  *  far from the faces generated sites default to. It replaces Zilla Slab and
  *  Onest (2026-10-01), which replaced Archivo (2026-08-27); the slab argued
- *  with the rounded line-cactus logo and Onest had drifted into the generated
+ *  with the rounded logo of the time and Onest had drifted into the generated
  *  cluster.
  *  Self-hosted by next/font, so no CDN request and no layout shift. Declared
  *  once here because both the locale layout and the root 404 document mount
