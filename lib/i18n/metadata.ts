@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { locales, localePath, ogLocale, type Locale } from "./config";
+import { site } from "./site";
 
 export const SITE_URL = "https://cardondigital.com";
 
@@ -14,6 +15,11 @@ export function alternatesFor(locale: Locale, path: string): Metadata["alternate
   return { canonical: localePath(locale, path), languages };
 }
 
+/** The share image. Next replaces a parent's openGraph and twitter blocks
+ *  whole when a page sets its own, so every page has to carry it again or
+ *  link previews show no picture. */
+const OG_IMAGE = { url: "/og.png", width: 1200, height: 630 };
+
 /** Per-page metadata: localized title and description plus the alternates. */
 export function pageMetadata(
   locale: Locale,
@@ -27,11 +33,19 @@ export function pageMetadata(
     description: meta.description,
     alternates: alternatesFor(locale, path),
     openGraph: {
+      type: "website",
+      siteName: "Cardon Digital",
       title: meta.title,
       description: meta.description,
       url: SITE_URL + localePath(locale, path),
+      images: [{ ...OG_IMAGE, alt: site[locale].meta.ogAlt }],
       locale: ogLocale[locale],
     },
-    twitter: { title: meta.title, description: meta.description },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: [OG_IMAGE.url],
+    },
   };
 }
