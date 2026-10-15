@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { comingSoon } from "@/lib/i18n/coming-soon";
 import { site } from "@/lib/i18n/site";
-import Mark from "@/components/site/Mark";
+import { Logo } from "@/components/site/Mark";
 import "./soon.css";
 
 type Params = { params: { locale: string } };
@@ -30,10 +30,8 @@ export default function ComingSoonPage({ params }: Params) {
   return (
     <main id="main" className="pg-soon">
       <div className="soon-wrap">
-        <Mark className="soon-mark" variant="mono-bloom" />
-        <h1>
-          Cardon <span>Digital</span>
-        </h1>
+        <Logo variant="stacked" className="soon-logo" />
+        <h1 className="sr-only">Cardon Digital</h1>
         <p className="soon-line">{d.line}</p>
         <p className="soon-sub">{d.sub}</p>
         <a className="soon-cta" href={mailto}>

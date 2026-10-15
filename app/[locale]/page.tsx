@@ -69,7 +69,7 @@ export function generateMetadata({ params }: Params): Metadata {
  * The home page, in the order the arc of 2026-09-28 sets out (bunker
  * research/2026-09/site-arc-digital-onboarding.md section 4): hero, proof
  * bar, the three services, the objections, the Monte Xanic case, one system,
- * how it works, who builds it, compare, pricing summary, diagnostic.
+ * how it works, compare, pricing summary, diagnostic.
  *
  * Three things about it are deliberate and easy to undo by accident.
  *
@@ -566,21 +566,7 @@ export default function Home({ params }: Params) {
         </div>
       </section>
 
-      {/* ============================ 8. WHO BUILDS IT ============================
-          A name, a place and a size. Trust in an owner-run market is personal
-          (the books memo, part 4): the person who answers is the person who
-          builds, and the site says so once, here. */}
-      <section className="section who" aria-labelledby="who-title">
-        <div className="container">
-          <div className="who-inner">
-            <span className="kicker gold">{d.who.kicker}</span>
-            <h2 id="who-title">{d.who.title}</h2>
-            <p className="who-body">{d.who.body}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================ 9. COMPARE ============================ */}
+      {/* ============================ 8. COMPARE ============================ */}
       <section className="section compare" id="compare" aria-labelledby="compare-title">
         <div className="container">
           <div className="section-head">
@@ -618,7 +604,7 @@ export default function Home({ params }: Params) {
         </div>
       </section>
 
-      {/* ============================ 10. PRICING ============================
+      {/* ============================ 9. PRICING ============================
           Three entry prices, read out of lib/pricing.ts: the smallest website
           package, the local ads scope's base and fee per contact, and the Produccion
           floor. The full card, with the feature lists that produced each
@@ -669,7 +655,7 @@ export default function Home({ params }: Params) {
         </div>
       </section>
 
-      {/* ============================ 11. DIAGNOSTIC ============================ */}
+      {/* ============================ 10. DIAGNOSTIC ============================ */}
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
         <div className="container">
           <div className="diag-inner">
