@@ -1,7 +1,7 @@
 # Graph Report - cardon-digital  (2026-10-15)
 
 ## Corpus Check
-- 232 files · ~478,621 words
+- 232 files · ~479,989 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 36 file(s) not represented in the graph (top: .css 22, .log 6, .out 3)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5ede01e8`
+- Built from commit: `42049d8a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
