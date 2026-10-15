@@ -6,6 +6,7 @@ import { consent as copy } from "@/lib/i18n/consent";
 import { localePath } from "@/lib/i18n/config";
 import { writeConsent } from "@/lib/analytics/consent";
 import { loadMeasurement } from "@/lib/analytics/gtag";
+import { ADS_ID } from "@/lib/analytics/config";
 import "./consent.css";
 
 /**
@@ -40,7 +41,7 @@ export default function ConsentBanner() {
       <div className="consent-card">
         <div className="consent-text">
           <p className="consent-title">{t.title}</p>
-          <p className="consent-body">{t.body}</p>
+          <p className="consent-body">{ADS_ID ? t.bodyAds : t.body}</p>
           <a className="consent-link" href={localePath(locale, "/privacy")}>
             {t.privacy}
           </a>

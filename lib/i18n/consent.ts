@@ -1,24 +1,28 @@
 import type { Dict } from "./rich";
 
-/** Consent notice. Shown only when a measurement id is configured, so the
- *  Spanish and English copy can speak plainly about what is being loaded. */
+/** Consent notice. Shown only when a measurement id is configured. It reads
+ *  like the cookie notice a visitor already knows: what loads, that it waits
+ *  for a yes, and where the detail is. The Ads sentence is used only when an
+ *  Ads id is configured, so the notice never names a product that is off. */
 
 const en = {
-  label: "Measurement consent",
-  title: "One question before we measure anything",
-  body: "We would like to load Google Analytics and Google Ads measurement so we can see which pages bring the work in. Nothing from Google loads until you say yes, we never sell what we collect, and you can change your mind by clearing this site's cookies.",
-  accept: "Accept measurement",
-  decline: "No thanks",
-  privacy: "Read the privacy policy",
+  label: "Cookie consent",
+  title: "Measurement cookies",
+  body: "We use Google Analytics cookies to see which pages people visit. They load only if you accept, and we never sell what they collect.",
+  bodyAds: "We use Google Analytics and Google Ads cookies to see which pages and ads bring people here. They load only if you accept, and we never sell what they collect.",
+  accept: "Accept",
+  decline: "Decline",
+  privacy: "Privacy policy",
 };
 
 const es: typeof en = {
-  label: "Consentimiento de medición",
-  title: "Una pregunta antes de medir",
-  body: "Queremos activar la medición de Google Analytics y Google Ads para saber qué páginas nos traen trabajo. Nada de Google se carga hasta que usted acepte, nunca vendemos lo que recabamos y, si cambia de opinión, basta con borrar las cookies de este sitio.",
-  accept: "Aceptar la medición",
-  decline: "No, gracias",
-  privacy: "Leer el aviso de privacidad",
+  label: "Consentimiento de cookies",
+  title: "Cookies de medición",
+  body: "Usamos cookies de Google Analytics para saber qué páginas se visitan. Solo se activan si usted acepta, y nunca vendemos lo que recaban.",
+  bodyAds: "Usamos cookies de Google Analytics y Google Ads para saber qué páginas y anuncios atraen visitas. Solo se activan si usted acepta, y nunca vendemos lo que recaban.",
+  accept: "Aceptar",
+  decline: "Rechazar",
+  privacy: "Aviso de privacidad",
 };
 
 export type ConsentDict = typeof en;
