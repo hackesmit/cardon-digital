@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1792042741.15675,
-    "seen": 1792042746.2450502,
-    "ast_hash": "c120240c65529fb5803550d50dcdf8c0",
+    "mtime": 1792088231.9144235,
+    "seen": 1792088239.3805513,
+    "ast_hash": "7a470288f58ccad29ba8ff8ab474dd0d",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -564,9 +564,9 @@
     "semantic_hash": ""
   },
   "lib/contact/mail.ts": {
-    "mtime": 1790582402.7095878,
-    "seen": 1791475652.7766187,
-    "ast_hash": "cfae5b9707d0952f339957c22b8501d9",
+    "mtime": 1792088231.9134235,
+    "seen": 1792088239.3805306,
+    "ast_hash": "a549f8de671a99471b5531429232d3d2",
     "semantic_hash": ""
   },
   "lib/contact/rateLimit.ts": {
@@ -582,9 +582,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/contact.ts": {
-    "mtime": 1791790071.2141504,
-    "seen": 1791790078.0694606,
-    "ast_hash": "156d28c11e602459aec425f216b7c150",
+    "mtime": 1792088231.9134235,
+    "seen": 1792088239.3805451,
+    "ast_hash": "45510d0f340a31ed0abba398f84e3ad9",
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
@@ -1206,9 +1206,9 @@
     "semantic_hash": ""
   },
   "lib/contact/mail.test.ts": {
-    "mtime": 1790582402.7095878,
-    "seen": 1791475652.7766175,
-    "ast_hash": "9fa022dbd64e5db91d09ed9d9b716a80",
+    "mtime": 1792088231.9134235,
+    "seen": 1792088239.380529,
+    "ast_hash": "8a37c7c78b71052e7a7814bc219285c9",
     "semantic_hash": ""
   },
   "components/pages/demos/ProduccionDemo.tsx": {
