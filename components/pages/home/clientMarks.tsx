@@ -1,17 +1,12 @@
 /**
  * The marks in the client orbit (beads hq-1cct, hq-3w0v).
  *
- * Four are the clients' own marks, reduced to a one-colour silhouette: the
- * emblem cut from the file each client supplied (BrighterHire's sun, Monte
- * Xanic's emblem, En'kanto's E, RLogistics' R and chevrons), stored as an
- * alpha mask under public/media/clients and painted with currentColor, the
- * way a logo wall does, so they wear the token colour in both modes and never
- * fight the palette. Their credit is in public/media/CREDITS.md and their
+ * All five are the clients' own marks: the emblem cut from the file each
+ * client supplied (BrighterHire's sun, Monte Xanic's emblem, En'kanto's E,
+ * Dharma Ochoa's signature D, RLogistics' R and chevrons), stored as an alpha
+ * mask under public/media/clients and painted in that client's own colours
+ * by home.css. Their credit is in public/media/CREDITS.md and their
  * clearance in docs/media-clearances.md.
- *
- * Dharma Ochoa's is still a placeholder monogram, a stroke mark in a 28 by 28
- * viewBox, until her mark arrives; swap the entry for a mask like the others
- * and nothing else in ClientOrbit changes.
  */
 export type ClientId = "xanic" | "enkanto" | "dharma" | "brighter" | "rlog";
 
@@ -19,8 +14,8 @@ export const CLIENT_ORDER: ClientId[] = ["xanic", "enkanto", "dharma", "brighter
 
 const S = { fill: "none", stroke: "currentColor", strokeWidth: 1.9, strokeLinejoin: "round" as const };
 
-/** The stroke monograms: Dharma's mark until hers arrives, and the fallback
-    the other four show in a browser with no CSS mask support. */
+/** The stroke monograms each mark falls back to in a browser with no CSS
+    mask support. */
 const MONOGRAMS: Record<ClientId, JSX.Element> = {
   xanic: (
     <svg viewBox="0 0 28 28" aria-hidden="true" {...S}>
@@ -84,7 +79,7 @@ function Mask({ id, wide }: { id: ClientId; wide?: boolean }) {
 export const CLIENT_MARKS: Record<ClientId, JSX.Element> = {
   xanic: <Mask id="xanic" />,
   enkanto: <Mask id="enkanto" />,
-  dharma: MONOGRAMS.dharma,
+  dharma: <Mask id="dharma" />,
   brighter: <Mask id="brighter" />,
   rlog: <Mask id="rlog" wide />,
 };

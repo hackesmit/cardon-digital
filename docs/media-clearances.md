@@ -96,3 +96,13 @@ cut from the logo file supplied.
   the medallion falls back to the placeholder monogram the same evening.
 - Real numbers on screen: no
 - Slot: home/orbit
+- Update 2026-10-15: Daniel chose "go with the colored versions" after a side
+  by side preview, which settles the FOR-DANIEL item above for the colour
+  treatment. Each emblem keeps the same cut and is now painted in the
+  client's own colours (Monte Xanic #F5B333, En'kanto #330404, BrighterHire
+  #EBBE48, RLogistics #C83838 and #383838). In dark mode those four
+  medallions sit on a paper disc so the dark colours stay legible.
+- Dharma Ochoa, 2026-10-15: `clients/dharma-mark.png` is the signature D cut
+  from her coloured logo, which Daniel supplied through the console inbox on
+  2026-10-15 for this orbit. It shows yellow #FFC107 on her red #C42F01, as
+  in the logo, in both modes. It replaces the placeholder monogram.
