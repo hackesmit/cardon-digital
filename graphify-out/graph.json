@@ -9646,7 +9646,7 @@
       "file_type": "code",
       "norm_label": "logo()",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L53"
+      "source_location": "L57"
     },
     {
       "id": "components_site_mark_mark",
@@ -9658,7 +9658,7 @@
       "file_type": "code",
       "norm_label": "mark()",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L44"
+      "source_location": "L48"
     },
     {
       "id": "components_site_mark_markpaths",
@@ -9670,7 +9670,7 @@
       "file_type": "code",
       "norm_label": "markpaths()",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L26"
+      "source_location": "L30"
     },
     {
       "id": "components_site_mark_wordmark",
@@ -9682,7 +9682,7 @@
       "file_type": "code",
       "norm_label": "wordmark()",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L35"
+      "source_location": "L39"
     },
     {
       "id": "lib_contact_validate_attributionfield",
@@ -19612,7 +19612,7 @@
       "file_type": "code",
       "norm_label": "drawing_d",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L11"
+      "source_location": "L15"
     },
     {
       "id": "components_site_mark_mark_viewbox",
@@ -19623,7 +19623,7 @@
       "file_type": "code",
       "norm_label": "mark_viewbox",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L18"
+      "source_location": "L22"
     },
     {
       "id": "components_site_mark_sun_d",
@@ -19634,7 +19634,7 @@
       "file_type": "code",
       "norm_label": "sun_d",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L13"
+      "source_location": "L17"
     },
     {
       "id": "lib_i18n_coming_soon",
@@ -30823,7 +30823,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L68",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -30835,7 +30835,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L71",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -30847,7 +30847,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L47",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -71899,7 +71899,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L11",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -71910,7 +71910,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L13",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -71921,7 +71921,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L18",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -71932,7 +71932,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L26",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -71943,7 +71943,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L35",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -71954,7 +71954,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L44",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
@@ -71965,7 +71965,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L53",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -81263,5 +81263,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5ede01e86fafede9ce34e18327709e4c4a476e6b"
+  "built_at_commit": "42049d8a29e9d48c0f4beee88158e49fc8bb16fc"
 }
