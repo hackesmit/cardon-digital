@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1792088231.9144235,
-    "seen": 1792088239.3805513,
-    "ast_hash": "7a470288f58ccad29ba8ff8ab474dd0d",
+    "mtime": 1792130277.1131728,
+    "seen": 1792130284.3806672,
+    "ast_hash": "9a9c233d3645eab96780197eaf882342",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
-    "mtime": 1790582402.7115877,
-    "seen": 1791475652.7766433,
-    "ast_hash": "93929bc823d597fefc2bbd76381e2eca",
+    "mtime": 1792130277.1141727,
+    "seen": 1792130284.380675,
+    "ast_hash": "1ba2cc8aad41b13957123573c9c1f2d3",
     "semantic_hash": ""
   },
   "lib/i18n/rich.tsx": {
@@ -396,21 +396,21 @@
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
-    "mtime": 1791782320.4396245,
-    "seen": 1791782569.8110209,
-    "ast_hash": "57e8d4ed31e82f2cae0ed42febef8a62",
+    "mtime": 1792123251.5868878,
+    "seen": 1792130284.3806822,
+    "ast_hash": "44e283b746d420284a6d0a52112d39cc",
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1791782320.4396245,
-    "seen": 1791782569.8110225,
-    "ast_hash": "c7b07ea910f55cf321c61ebbaa27e20b",
+    "mtime": 1792130277.1141727,
+    "seen": 1792130284.3806834,
+    "ast_hash": "13dbd4326cae582a38987caf9fd103d0",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
-    "mtime": 1791782320.4416246,
-    "seen": 1791782569.811031,
-    "ast_hash": "82efb9b8647fc5422fba7070cf0861a0",
+    "mtime": 1792130277.1151729,
+    "seen": 1792130284.3806882,
+    "ast_hash": "5a36a0bb0f73e4e9180bc9405d0f1f0f",
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
@@ -528,9 +528,9 @@
     "semantic_hash": ""
   },
   "components/contact/ContactForm.tsx": {
-    "mtime": 1790582402.6685872,
-    "seen": 1791475652.7764711,
-    "ast_hash": "3d9df4b33c394f3c5eac63f57da1fdd5",
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.3805141,
+    "ast_hash": "f9329837d56815c2469cc097d1efa090",
     "semantic_hash": ""
   },
   "components/contact/ContactMail.tsx": {
@@ -564,9 +564,9 @@
     "semantic_hash": ""
   },
   "lib/contact/mail.ts": {
-    "mtime": 1792088231.9134235,
-    "seen": 1792088239.3805306,
-    "ast_hash": "a549f8de671a99471b5531429232d3d2",
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.3806472,
+    "ast_hash": "7cfbfa4a613dcc3768c057c89ca9eba0",
     "semantic_hash": ""
   },
   "lib/contact/rateLimit.ts": {
@@ -576,9 +576,9 @@
     "semantic_hash": ""
   },
   "lib/contact/validate.ts": {
-    "mtime": 1790582402.7095878,
-    "seen": 1791475652.776621,
-    "ast_hash": "5c40093630d6cc289f083550d7042875",
+    "mtime": 1792130277.1131728,
+    "seen": 1792130284.3806496,
+    "ast_hash": "7bca93d351bf13704a436777383428b7",
     "semantic_hash": ""
   },
   "lib/i18n/contact.ts": {
@@ -618,9 +618,9 @@
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
-    "mtime": 1791782320.4356246,
-    "seen": 1791782569.8106694,
-    "ast_hash": "7cf74a664026b54de09632cd2d713f15",
+    "mtime": 1792130277.1111727,
+    "seen": 1792130284.38048,
+    "ast_hash": "eab777739599e68e95206a39d4bc2c48",
     "semantic_hash": ""
   },
   "components/pages/precios/MixExample.tsx": {
@@ -636,9 +636,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1791782320.4386246,
-    "seen": 1791782569.8110068,
-    "ast_hash": "a746a36cf327b1801cfb247e054f49d0",
+    "mtime": 1792130277.1131728,
+    "seen": 1792130284.380674,
+    "ast_hash": "90fb3ef0bd2269b2bfbe575564a7c897",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
@@ -1200,15 +1200,15 @@
     "semantic_hash": ""
   },
   "components/contact/ContactForm.test.tsx": {
-    "mtime": 1790582402.6685872,
-    "seen": 1791475652.77647,
-    "ast_hash": "e7f35aa31101d3330ec61cd008cb1c53",
+    "mtime": 1792130277.1111727,
+    "seen": 1792130284.3805127,
+    "ast_hash": "45889e74eae5ed31478df7f398e79137",
     "semantic_hash": ""
   },
   "lib/contact/mail.test.ts": {
-    "mtime": 1792088231.9134235,
-    "seen": 1792088239.380529,
-    "ast_hash": "8a37c7c78b71052e7a7814bc219285c9",
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.3806465,
+    "ast_hash": "7e25ba25b9a843bf0a52c10732153108",
     "semantic_hash": ""
   },
   "components/pages/demos/ProduccionDemo.tsx": {
@@ -1422,15 +1422,15 @@
     "semantic_hash": ""
   },
   "lib/i18n/anuncios.ts": {
-    "mtime": 1791782320.4376245,
-    "seen": 1791782569.8109744,
-    "ast_hash": "de670fb7f31c715c52cebd542e103773",
+    "mtime": 1792130277.1131728,
+    "seen": 1792130284.3806555,
+    "ast_hash": "063d0762cff3efab98e5fd27be5395f7",
     "semantic_hash": ""
   },
   "lib/i18n/sitios.ts": {
-    "mtime": 1791782320.4076242,
-    "seen": 1791782569.8110168,
-    "ast_hash": "3cce8dde2076ac2cf84b2c320aad53ad",
+    "mtime": 1792130277.1141727,
+    "seen": 1792130284.3806798,
+    "ast_hash": "09e153ecddb1b75123e296d13655ccf9",
     "semantic_hash": ""
   },
   "lib/i18n/software.ts": {
@@ -1773,6 +1773,42 @@
     "mtime": 1792118434.778913,
     "seen": 1792118441.853655,
     "ast_hash": "86f91ccf9e2c486dc1e624b3c1a9d857",
+    "semantic_hash": ""
+  },
+  "components/contact/PackageBuilder.tsx": {
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.380517,
+    "ast_hash": "f8657004de9086619de5695faa171010",
+    "semantic_hash": ""
+  },
+  "components/contact/StandaloneBuilder.tsx": {
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.3805187,
+    "ast_hash": "b774c5a30907753258c9ccae14118c65",
+    "semantic_hash": ""
+  },
+  "lib/builder.test.ts": {
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.3806388,
+    "ast_hash": "5c20e2a01551495e3754b874f7989607",
+    "semantic_hash": ""
+  },
+  "lib/builder.ts": {
+    "mtime": 1792130277.1121728,
+    "seen": 1792130284.38064,
+    "ast_hash": "2b3cdcda8c5795b1d487a791817b64f3",
+    "semantic_hash": ""
+  },
+  "lib/i18n/builder.ts": {
+    "mtime": 1792130277.1131728,
+    "seen": 1792130284.3806565,
+    "ast_hash": "38a59b9c64cd568aabae19f452d1e979",
+    "semantic_hash": ""
+  },
+  "lib/i18n/no-factura.test.ts": {
+    "mtime": 1792130277.1131728,
+    "seen": 1792130284.3806715,
+    "ast_hash": "ba54d004d1e08ab07f4a90cfc564f61f",
     "semantic_hash": ""
   }
 }
