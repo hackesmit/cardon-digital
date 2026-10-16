@@ -106,3 +106,30 @@ cut from the logo file supplied.
   from her coloured logo, which Daniel supplied through the console inbox on
   2026-10-15 for this orbit. It shows yellow #FFC107 on her red #C42F01, as
   in the logo, in both modes. It replaces the placeholder monogram.
+
+## Style sample material, 2026-10-16
+
+Six files under `public/media/estilos`: two clips with their poster frames
+(`vinedo-aerial`, `spa-ritual`) and two stills (`logistica-almacen`,
+`logistica-contenedores`). They run inside the style samples on /estilos.
+
+- Shot by: nobody here. All four are licensed stock Daniel supplied on
+  2026-10-16 ("Pexels files are free to use"), cut, re-encoded and colour
+  graded on this box. Credits and licence: public/media/CREDITS.md.
+- Location: not applicable, and deliberately so. A style sample is an invented
+  business, so none of this material may be presented as a client's premises
+  or as work this firm did. Every sample says on its face that it is a sample.
+- People in frame: the wellness clip shows a recognisable face, and the
+  warehouse still shows two people at a distance. Both are stock under the
+  Pexels License, which carries the contributor's own model release; this is
+  the same footing as `precios/handover.webp` (fauxels, 2026-10-08) and needs
+  no release of ours. Neither person is named, shown in a bad light, or
+  presented as a customer, an employee or a result.
+- Release: not held and not needed, per the line above.
+- Client clearance: not applicable, no client appears.
+- Real numbers on screen: no. No screen appears in any of the four.
+- Open item for Daniel: the three Pexels VIDEO pages carry a contributor name
+  this box cannot read, because Pexels answers an automated request with a
+  Cloudflare challenge. The credit lines say "to record". If attribution ever
+  matters more than the licence requires (it requires none), the names are one
+  ordinary browser visit away.

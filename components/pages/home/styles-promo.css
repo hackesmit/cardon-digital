@@ -1,0 +1,57 @@
+/* ============================ STYLES PROMO (home) ============================
+   The home page's section for /estilos: four tiles, each in the colours of
+   the sample it opens. The colours arrive as custom properties set on the
+   tile from STYLE_TILES in StylesPromo.tsx, which is pinned to the scene
+   grounds in app/[locale]/estilos/estilos.css by a test, so this file never
+   names one of them.
+
+   The tiles are deliberately flat and square-cornered, like the samples
+   themselves, and they are the only place on the home page where a colour
+   that is not a site token appears. */
+
+.styles-promo .sp-grid{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);
+}
+.styles-promo .sp-tile{
+  display:flex;flex-direction:column;justify-content:space-between;gap:clamp(28px,5vw,64px);
+  min-height:clamp(170px,17vw,230px);padding:clamp(16px,1.7vw,24px);
+  background:var(--sp-ground);color:var(--sp-ink);
+  /* Every tile keeps an edge of its own ink. Without it the near black of the
+     logistics sample has no boundary against the site's dark ground. */
+  border:1px solid color-mix(in srgb,var(--sp-ink) 22%,transparent);
+  border-radius:2px;text-decoration:none;
+  transition:transform .18s ease, border-color .18s ease;
+}
+/* The samples are somebody else's colours, so the ring that says "this one is
+   under the pointer" is the sample's own accent and not the site's. */
+.styles-promo .sp-tile:hover,
+.styles-promo .sp-tile:focus-visible{transform:translateY(-3px);border-color:var(--sp-accent);}
+.styles-promo .sp-tile-style{
+  font-family:var(--mono);font-size:0.74rem;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--sp-accent);
+}
+.styles-promo .sp-tile-for{
+  font-family:var(--display);font-size:clamp(1.15rem,1.7vw,1.5rem);line-height:1.12;letter-spacing:-0.015em;
+}
+.styles-promo .sp-tile-for em{display:block;font-style:normal;opacity:0.72;}
+.styles-promo .sp-note{
+  margin-top:18px;font-family:var(--mono);font-size:0.78rem;letter-spacing:0.04em;color:var(--muted);
+}
+.styles-promo .cta-row{margin-top:clamp(22px,2.6vw,32px);}
+
+@media (max-width:900px){
+  .styles-promo .sp-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (max-width:520px){
+  .styles-promo .sp-tile{min-height:0;gap:20px;}
+  .styles-promo .sp-tile-for{font-size:1.18rem;}
+}
+
+/* A visitor who asked for less motion gets the colour and the border, never
+   the lift. */
+@media (prefers-reduced-motion:reduce){
+  .styles-promo .sp-tile{transition:border-color .18s ease;}
+  .styles-promo .sp-tile:hover,
+  .styles-promo .sp-tile:focus-visible{transform:none;}
+}

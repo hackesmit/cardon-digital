@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { site } from "@/lib/i18n/site";
+import { estilos } from "@/lib/i18n/estilos";
 import { Logo } from "@/components/site/Mark";
 import {
   LOCALE_COOKIE,
@@ -42,6 +43,10 @@ export default function Nav() {
   // on a phone the four links sit indented under the label, always visible.
   const serviceLinks = [
     { href: href("/sitios-web"), label: t.sitios },
+    // The gallery of style samples sits under the websites page it belongs to.
+    // Its label comes from the styles dictionary rather than from the nav
+    // block: the page owns the word that names it (lib/i18n/estilos.ts).
+    { href: href("/estilos"), label: estilos[locale].navLabel },
     { href: href("/anuncios"), label: t.anuncios },
     { href: href("/software"), label: t.software },
     { href: href("/industries/winery"), label: t.wineries },
