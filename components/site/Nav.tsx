@@ -162,7 +162,7 @@ export default function Nav() {
     <header className="site-header">
       <div className="container bar">
         <Link className="brand" href={href("/")} aria-label={brandHome}>
-          <Logo variant="horizontal" className="brand-logo" />
+          <Logo variant="wordmark" className="brand-logo" />
         </Link>
 
         <nav className="primary-nav" aria-label={t.label}>
