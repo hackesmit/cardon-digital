@@ -104,7 +104,7 @@ export function decodeSelection(value: string | null | undefined): BuilderSelect
     if (part === "c") raw.care = true;
     else if (part.startsWith("w:")) raw.web = part.slice(2);
     else if (part.startsWith("a:")) raw.ads = part.slice(2);
-    else if (part.startsWith("m:")) raw.modules = part.slice(2).split("+");
+    else if (part.startsWith("m:")) raw.modules = part.slice(2).split(/[+ ]/); // a typed "+" reads as a space
   }
   return parseSelection(raw);
 }

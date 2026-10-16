@@ -61,6 +61,8 @@ describe("handing a package from /precios to /contacto", () => {
     expect(decodeSelection("w:nope,zz,m:+")).toBeNull();
     expect(decodeSelection(null)).toBeNull();
     expect(decodeSelection("a:crecimiento")?.ads).toBe("crecimiento");
+    // A hand-typed "+" arrives from URLSearchParams as a space.
+    expect(decodeSelection("m:restaurante hospitalidad")?.modules).toEqual(["hospitalidad", "restaurante"]);
   });
 });
 
