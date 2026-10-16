@@ -78,6 +78,7 @@
 .pb-totals dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums;}
 .pb-totals .pb-year dd{color:var(--primary-text);}
 .pb-fine{margin:0;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+.pb-warn{color:var(--text-dim);}
 .pb-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:4px;}
 .pb-clear{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;font-size:0.88rem;}
 .pb-clear:hover{color:var(--text);}

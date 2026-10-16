@@ -157,6 +157,7 @@ function packageRows(s: ContactSubmission): { rows: [string, string][]; totals: 
     ["Each month", money(s, est.monthly)],
     ["First year", money(s, est.yearOne)],
   ];
+  if (s.package?.ads) notes.push("Totals exclude the ad budget paid to Google and the per-contact fee.");
   notes.push("Entry-size prices, plus IVA. Their final quote comes from the diagnostic.");
   return { rows, totals, notes };
 }

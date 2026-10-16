@@ -77,7 +77,7 @@ export function parseSelection(raw: unknown): BuilderSelection | null {
   const web = typeof r.web === "string" && WEB_IDS.has(r.web) ? (r.web as WebPackageId) : null;
   const ads = typeof r.ads === "string" && ADS_IDS.has(r.ads) ? (r.ads as AdsScopeId) : null;
   const modules = Array.isArray(r.modules)
-    ? cleanModules(r.modules.slice(0, 10).filter((m): m is string => typeof m === "string"))
+    ? cleanModules(r.modules.filter((m): m is string => typeof m === "string"))
     : [];
   const sel: BuilderSelection = { web, care: web !== null && r.care === true, ads, modules };
   return isEmptySelection(sel) ? null : sel;

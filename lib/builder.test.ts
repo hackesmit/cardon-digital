@@ -37,6 +37,10 @@ describe("reading a selection from the visitor", () => {
     ]);
   });
 
+  it("keeps a real module however much junk comes before it", () => {
+    expect(parseSelection({ modules: [...Array(50).fill("junk"), "produccion"] })?.modules).toEqual(["produccion"]);
+  });
+
   it("has no care without a website", () => {
     expect(parseSelection({ care: true, ads: "local" })?.care).toBe(false);
   });
