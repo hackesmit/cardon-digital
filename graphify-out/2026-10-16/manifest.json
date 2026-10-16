@@ -240,15 +240,15 @@
     "semantic_hash": ""
   },
   "app/icon.svg": {
-    "mtime": 1792081312.9175584,
-    "seen": 1792081324.6232986,
-    "ast_hash": "d78e052e8c6fed1e27864f163901978f",
+    "mtime": 1792111137.638442,
+    "seen": 1792111147.914388,
+    "ast_hash": "1b36b29d31ce0d40a74db1ea456597e7",
     "semantic_hash": ""
   },
   "public/og.png": {
-    "mtime": 1792081312.9205585,
-    "seen": 1792081324.6233394,
-    "ast_hash": "a990cf1e6edab3d4b8f657307b4fe67b",
+    "mtime": 1792111137.641442,
+    "seen": 1792111147.9144313,
+    "ast_hash": "466fc8fc991264e4fcf76bbf9085b302",
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
@@ -588,9 +588,9 @@
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
-    "mtime": 1792081312.9175584,
-    "seen": 1792081324.6231434,
-    "ast_hash": "f01909c55cc1ac4ec21156a7e7cdaeb2",
+    "mtime": 1792111137.638442,
+    "seen": 1792111147.914241,
+    "ast_hash": "bd9bd91dfb689aad999a7e8064494fc4",
     "semantic_hash": ""
   },
   "public/brand/cardon-mark.svg": {
@@ -1644,9 +1644,9 @@
     "semantic_hash": ""
   },
   "scripts/og/og.html": {
-    "mtime": 1792081312.9205585,
-    "seen": 1792081324.6232948,
-    "ast_hash": "672bc3cfcde4bd4d19e79811e2692308",
+    "mtime": 1792111137.641442,
+    "seen": 1792111147.9143841,
+    "ast_hash": "a0b40f108f1d86f514da654d113fec9e",
     "semantic_hash": ""
   },
   "public/media/clients/dharma-mark.png": {
@@ -1662,9 +1662,9 @@
     "semantic_hash": ""
   },
   "app/apple-icon.png": {
-    "mtime": 1792081312.9175584,
-    "seen": 1792081324.6232972,
-    "ast_hash": "1defe00793def924b6355b21cdcac170",
+    "mtime": 1792111137.637442,
+    "seen": 1792111147.9143865,
+    "ast_hash": "0d7de7c29416768df1e3d39073c0378d",
     "semantic_hash": ""
   },
   "public/brand/cardon-app-icon-dark.svg": {
@@ -1680,15 +1680,15 @@
     "semantic_hash": ""
   },
   "public/brand/cardon-icon-192.png": {
-    "mtime": 1792081312.9185586,
-    "seen": 1792081324.623302,
-    "ast_hash": "cccd030200c425968e2c7592303c60db",
+    "mtime": 1792111137.638442,
+    "seen": 1792111147.9143915,
+    "ast_hash": "9ca11191e9e4380472f067333137b89d",
     "semantic_hash": ""
   },
   "public/brand/cardon-icon-512.png": {
-    "mtime": 1792081312.9185586,
-    "seen": 1792081324.6233032,
-    "ast_hash": "345e44bbadf2519a66a808506120d61f",
+    "mtime": 1792111137.638442,
+    "seen": 1792111147.914393,
+    "ast_hash": "81d9b9f107d26e6620a14d67fd67a494",
     "semantic_hash": ""
   },
   "public/brand/cardon-logo-2048.png": {
@@ -1713,6 +1713,30 @@
     "mtime": 1792081312.9195585,
     "seen": 1792081324.623308,
     "ast_hash": "36feb6cf49fb690d42743141fb7d2e68",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-icon-color.svg": {
+    "mtime": 1792111137.639442,
+    "seen": 1792111147.9143944,
+    "ast_hash": "1b36b29d31ce0d40a74db1ea456597e7",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-logo-color-2048.png": {
+    "mtime": 1792111137.6404421,
+    "seen": 1792111147.914397,
+    "ast_hash": "422f10c78de1417fc46dffdba8291aa5",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-logo-color.svg": {
+    "mtime": 1792111137.6404421,
+    "seen": 1792111147.914398,
+    "ast_hash": "1b901c19a77801b80acd6ea6a47eeb43",
+    "semantic_hash": ""
+  },
+  "public/brand/cardon-mark-color.svg": {
+    "mtime": 1792111137.641442,
+    "seen": 1792111147.9144027,
+    "ast_hash": "f5eb1509b4e4d89b9c4953d2df855810",
     "semantic_hash": ""
   }
 }

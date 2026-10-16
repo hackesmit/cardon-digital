@@ -5878,7 +5878,7 @@
       "file_type": "code",
       "norm_label": "mark()",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L46"
+      "source_location": "L47"
     },
     {
       "id": "components_site_mark_markpaths",
@@ -5890,7 +5890,7 @@
       "file_type": "code",
       "norm_label": "markpaths()",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L36"
+      "source_location": "L37"
     },
     {
       "id": "components_site_nav_nav",
@@ -16209,7 +16209,7 @@
       "file_type": "code",
       "norm_label": "drawing_d",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L23"
+      "source_location": "L24"
     },
     {
       "id": "components_site_mark_mark_viewbox",
@@ -16220,7 +16220,7 @@
       "file_type": "code",
       "norm_label": "mark_viewbox",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L32"
+      "source_location": "L33"
     },
     {
       "id": "components_site_mark_sun_d",
@@ -16231,7 +16231,7 @@
       "file_type": "code",
       "norm_label": "sun_d",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L25"
+      "source_location": "L26"
     },
     {
       "id": "components_site_nav",
@@ -30882,7 +30882,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L49",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -72079,7 +72079,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -72090,7 +72090,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -72101,7 +72101,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -72112,7 +72112,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -72123,7 +72123,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "components/site/Mark.tsx",
-      "source_location": "L46",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -81498,5 +81498,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "423fb66d396ea12989e6cc7dfd371069a7505861"
+  "built_at_commit": "2119f3a3b79a65bcb35a298429987ccb18870ebe"
 }
