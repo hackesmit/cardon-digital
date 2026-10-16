@@ -27,7 +27,7 @@ export default function Footer({ locale }: { locale: Locale }) {
         <div className="footer-grid">
           <div className="foot-brand">
             <Link className="brand" href={href("/")} aria-label={s.brandHome}>
-              <Logo variant="horizontal" className="brand-logo" />
+              <Logo variant="wordmark" className="brand-logo" />
             </Link>
             <p className="foot-line">{t.line}</p>
             <p className="foot-tag">{s.brandline}</p>

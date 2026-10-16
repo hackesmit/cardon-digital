@@ -141,14 +141,11 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
   border-bottom:1px solid var(--line);
 }
 .bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;}
-/* Logo (colour artwork, 2026-10-16): the colour scene as an image beside the lettering, CARDON
-   in the text ink and DIGITAL in the brand rose; the lettering is paths, so it needs no font. */
+/* Logo (2026-10-16): the lettering alone in the text ink, no scene; it is paths, so it needs
+   no font. The colour artwork is for the icons, the share image and print. */
 .brand{display:inline-flex;align-items:center;flex-shrink:0;color:var(--text);}
 .brand-mark{width:auto;height:26px;display:block;flex-shrink:0;color:var(--text);}
-.brand-logo{display:flex;align-items:center;gap:12px;height:34px;flex-shrink:0;color:var(--text);}
-.brand-badge{height:34px;width:auto;display:block;}
-.brand-word{height:15px;width:auto;display:block;}
-.brand-word-accent{fill:var(--primary);}
+.brand-logo{width:auto;height:19px;display:block;flex-shrink:0;color:var(--text);}
 
 .primary-nav{display:flex;align-items:center;gap:18px;}
 .nav-menu{display:flex;align-items:center;gap:20px;}
