@@ -186,7 +186,7 @@ const en = {
   pricing: {
     kicker: "What it costs",
     title: "A site, a campaign or a software module, and what each costs to start.",
-    sub: "Quoted and charged in Mexican pesos plus IVA; the dollar figures are rounded conversions. The final quote comes out of the diagnostic.",
+    sub: "Quoted and charged in Mexican pesos; the dollar figures are rounded conversions. The final quote comes out of the diagnostic.",
     siteK: "Website",
     adsK: "Google Ads",
     softK: "Software",
@@ -200,7 +200,7 @@ const en = {
       },
       {
         k: "Terms",
-        body: "Quoted and charged in pesos, plus IVA. The build is paid half to start and half on delivery.",
+        body: "Quoted and charged in pesos. The build is paid half to start and half on delivery.",
       },
     ],
   },
@@ -480,7 +480,7 @@ const es: typeof en = {
   pricing: {
     kicker: "Lo que cuesta",
     title: "Un sitio, una campaña o un módulo de software, y lo que cuesta cada uno para empezar.",
-    sub: "En pesos, más IVA. La cotización final sale del diagnóstico.",
+    sub: "En pesos. La cotización final sale del diagnóstico.",
     siteK: "Sitio web",
     adsK: "Anuncios en Google",
     softK: "Software",
@@ -494,7 +494,7 @@ const es: typeof en = {
       },
       {
         k: "Condiciones",
-        body: "Cotizamos en pesos, más IVA. El desarrollo se paga la mitad al empezar y la mitad contra entrega.",
+        body: "Cotizamos en pesos. El desarrollo se paga la mitad al empezar y la mitad contra entrega.",
       },
     ],
   },

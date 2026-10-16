@@ -18,6 +18,8 @@ const BANNED = [
   /\bwe invoice\b/i,
   /\binvoiced the month after\b/i,
   /\bfacturado al mes siguiente\b/i,
+  // No IVA either: an unregistered business does not charge it (Daniel, 2026-10-16).
+  /\bIVA\b/,
 ];
 
 describe("no page promises a factura from Cardon", () => {
