@@ -17,6 +17,7 @@ import {
 } from "@/lib/builder";
 import {
   adsManagement,
+  adsScope,
   currencyByLocale,
   formatPercent,
   formatPrice,
@@ -237,7 +238,14 @@ export default function PackageBuilder({
                   <dd>{price(est.yearOne)}</dd>
                 </div>
               </dl>
-              {est.perContactOnTop ? <p className="pb-fine">{d.summary.perContact}</p> : null}
+              {est.perContactOnTop ? <p className="pb-fine pb-warn">{d.summary.perContact}</p> : null}
+              {value.ads ? (
+                <p className="pb-fine pb-warn">
+                  {value.ads === "local"
+                    ? d.adsBudgetLocal.replace("{minLocal}", price(adsScope("local").minimumBudget))
+                    : d.adsBudgetCrecimiento.replace("{minCrecimiento}", price(adsScope("crecimiento").minimumBudget))}
+                </p>
+              ) : null}
             </>
           )}
         </div>
