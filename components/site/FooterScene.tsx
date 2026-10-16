@@ -182,7 +182,7 @@ export default function FooterScene() {
           className="scene-horse"
           src="/brand/footer/horse.webp"
           alt=""
-          width={210}
+          width={211}
           height={150}
           loading="lazy"
           decoding="async"
