@@ -285,7 +285,10 @@ function SummaryLine({
     return (
       <li>
         <span>{d.groups.web.title}: {sitios[locale].packages.names[line.id]}</span>
-        <b>{price(line.setup)}</b>
+        <b>
+          <span className="mono">{d.from} </span>
+          {price(line.setup)}
+        </b>
       </li>
     );
   }
