@@ -13,3 +13,11 @@ export const SCENE_ART_D = "M117 455 c-2 -2 -5 -6 -6 -9 -2 -4 -4 -9 -6 -12 -4 -9
 export const SCENE_LINE_VIEWBOX = "900 30 4155 465";
 export const SCENE_LINE_TRANSFORM = "translate(900 30) translate(0.000000,465.000000) scale(1.000000,-1.000000)";
 export const SCENE_LINE_D = "M0 139 l0 -8 70 0 c39 -1 149 -1 246 -2 97 0 233 -1 303 -2 150 -1 398 -2 398 0 1 1 453 0 596 -2 50 -1 194 -2 320 -2 549 -2 572 -2 573 -1 1 1 399 0 655 -3 185 -1 918 -3 940 -2 7 1 21 2 32 2 l19 1 0 3 0 3 -15 1 c-11 1 -61 1 -159 2 -80 0 -157 1 -171 2 -90 3 -639 7 -1277 7 -138 1 -265 1 -281 2 -23 0 -30 0 -31 -1 -1 -1 -21 -1 -98 0 -219 2 -718 4 -1065 5 -161 0 -675 1 -931 3 l-124 0 0 -8z M0 21 l0 -12 5 0 6 1 -1 9 c0 10 0 11 -6 13 l-4 0 0 -11z";
+
+/** The horizon to the left of the saguaro (Daniel, 2026-10-16: run the line
+    off the screen on the left). A stretch of the drawn line from x 1100 to
+    1900, lifted two rows so it meets the tip of the drawing at x 48, drawn in
+    the same rows as the drawing so it stretches to any width. */
+export const SCENE_LEFT_VIEWBOX = "0 30 800 465";
+export const SCENE_LEFT_TRANSFORM = "translate(0 30) translate(0.000000,465.000000) scale(1.000000,-1.000000)";
+export const SCENE_LEFT_D = "M0 140 l0 -8 86 0 c48 -1 115 -1 151 -1 35 0 118 -1 184 -1 66 -1 179 -2 250 -2 l129 0 0 9 0 8 -31 0 c-17 0 -86 0 -154 1 -68 0 -234 1 -369 1 l-246 1 0 -8z";

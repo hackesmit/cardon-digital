@@ -745,9 +745,14 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   position:relative;height:var(--sh);margin-top:30px;overflow:hidden;
   container-type:inline-size;color:var(--text);
 }
-.scene-art,.scene-line{position:absolute;top:0;height:100%;display:block;}
+/* The horizon runs off the left edge and ends at the right edge of the text
+   column, where the tumbleweed drops off it. The left stretch reaches 20 units
+   into the drawing (x 60) so the two lines meet at full thickness. */
+.scene-art,.scene-line,.scene-left{position:absolute;top:0;height:100%;display:block;}
 .scene-art{left:var(--ax);width:var(--aw);}
-.scene-line{left:calc(var(--ax) + var(--aw) - 0.5px);right:0;width:auto;}
+.scene-left{left:0;width:calc(var(--ax) + var(--aw) * 20 / 860);}
+/* An svg takes its own width from its viewBox unless told, so the width is set. */
+.scene-line{left:calc(var(--ax) + var(--aw) - 0.5px);width:calc(100cqw - 2 * var(--ax) - var(--aw) + 0.5px);}
 .scene-horse{
   position:absolute;right:calc(var(--ax) + 2%);bottom:calc(var(--sh) * 0.285);
   height:calc(var(--sh) * 0.62);width:auto;display:block;
@@ -767,19 +772,26 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   width:var(--tw);height:var(--tw);
   transform:translateX(calc(-1 * var(--tw) - 4px));visibility:hidden;
 }
-.scene-tw-bounce,.scene-tw-spin{display:block;width:100%;height:100%;}
+.scene-tw-fall-x,.scene-tw-fall-y,.scene-tw-bounce,.scene-tw-spin{display:block;width:100%;height:100%;}
 .scene-tw-spin{
   background-color:currentColor;
   -webkit-mask:url(/brand/footer/tumbleweed.svg) center/contain no-repeat;
   mask:url(/brand/footer/tumbleweed.svg) center/contain no-repeat;
 }
-.foot-scene[data-rolling] .scene-tw{visibility:visible;animation:tumbleweed-across 11s linear forwards;}
-.foot-scene[data-rolling] .scene-tw-bounce{animation:tumbleweed-bounce 1.1s infinite;}
+/* FooterScene sets --roll-x and --roll-t (to the end of the line), --bounce-n
+   and --bounce-d (a whole number of bounces in that time) and --fall-dx (how
+   far it drifts while it drops). */
+.foot-scene[data-rolling] .scene-tw{visibility:visible;animation:tumbleweed-across var(--roll-t,9s) linear forwards;}
+.foot-scene[data-rolling] .scene-tw-fall-x{animation:tumbleweed-fall-x .7s linear var(--roll-t,9s) forwards;}
+.foot-scene[data-rolling] .scene-tw-fall-y{animation:tumbleweed-fall-y .7s cubic-bezier(.55,0,1,.45) var(--roll-t,9s) forwards;}
+.foot-scene[data-rolling] .scene-tw-bounce{animation:tumbleweed-bounce var(--bounce-d,1.1s) var(--bounce-n,8) forwards;}
 .foot-scene[data-rolling] .scene-tw-spin{animation:tumbleweed-spin 1.3s linear infinite;}
 @keyframes tumbleweed-across{
   from{transform:translateX(calc(-1 * var(--tw) - 4px));}
-  to{transform:translateX(calc(100cqw + 4px));}
+  to{transform:translateX(var(--roll-x,100cqw));}
 }
+@keyframes tumbleweed-fall-x{to{transform:translateX(var(--fall-dx,40px));}}
+@keyframes tumbleweed-fall-y{to{transform:translateY(calc(var(--sh) * 1.1));}}
 @keyframes tumbleweed-bounce{
   0%{transform:translateY(0);animation-timing-function:cubic-bezier(.2,.6,.4,1);}
   38%{transform:translateY(-45%);animation-timing-function:cubic-bezier(.6,0,.8,.4);}
