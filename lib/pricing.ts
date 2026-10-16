@@ -1415,27 +1415,41 @@ export type WebPackage = {
   features: string[];
 };
 
-/** Presencia, the memo's feature list (memo 5.2). */
+/**
+ * Presencia, the memo's feature list (memo 5.2). The contact feature names the
+ * function and not the channel: Daniel, 2026-10-16, reviewing the live site,
+ * took WhatsApp out of every package feature name, so the id is the function
+ * too and the dictionaries say "contact button and a short form".
+ */
 const presenciaFeatures = [
   "custom-design",
   "copy-written",
-  "whatsapp-button-and-form",
+  "contact-button-and-form",
   "ga4-with-conversion-events",
   "local-seo-basics",
 ];
-/** Negocio: everything in Presencia plus the profile and an editable section. */
+/**
+ * Negocio: Presencia's one page plus the pages a full site carries, its
+ * automatic follow-up and the list every enquiry is captured in. The Google
+ * Business Profile line and the editable section came off on 2026-10-16
+ * (Daniel: they are not what a buyer is choosing between), and what replaced
+ * them is his own description of the full site: services, about, contact with
+ * automatic follow-up, lead capture, work and portfolio.
+ */
 const negocioFeatures = [
   ...presenciaFeatures,
-  "google-business-profile-optimisation",
-  "editable-section",
+  "services-and-about-pages",
+  "work-portfolio",
+  "automatic-follow-up",
+  "lead-capture",
 ];
-/** Reservas: everything in Negocio plus the booking path and its follow-up. */
+/** Reservas: everything in Negocio plus the booking path and its confirmation. */
 const reservasFeatures = [
   ...negocioFeatures,
   "bilingual-pages",
   "booking-path",
   "extra-form",
-  "confirmation-and-follow-up",
+  "booking-confirmation",
   "training",
 ];
 /** Tienda: Negocio's scope plus catalogue, checkout and payments (memo 5.2). */

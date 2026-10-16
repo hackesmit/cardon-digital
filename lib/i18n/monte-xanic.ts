@@ -87,7 +87,7 @@ const en = {
   thread: {
     kicker: "Berry to bottle",
     title: "One thread from vine to finished bottle.",
-    sub: "Every stage sits on the same thread, so an adjustment lands in season, while it still changes the wine.",
+    sub: "Every stage sits on the same thread, so you adjust in season, while it still changes the wine.",
   },
   number: {
     kicker: "The number",
@@ -104,15 +104,15 @@ const en = {
   },
   result: {
     kicker: "For your winery",
-    title: "What this changes if your harvest lives in three places.",
+    title: "Four things your winery gets.",
     items: [
       {
         lead: "You stop assembling the picture.",
         body: "One view, current on its own, all season.",
       },
       {
-        lead: "Every number sits on its section.",
-        body: "It reads like the land it is walked on.",
+        lead: "You see it section by section.",
+        body: "Each section of the vineyard shows its own numbers.",
       },
       {
         lead: "You see readiness coming.",
@@ -225,9 +225,9 @@ const en = {
     { d: "Days 2 to 9", t: "We dig into the numbers behind the numbers." },
     {
       d: "Day 10",
-      t: "The memo lands: what is true, what is broken, what to build first.",
+      t: "You get the memo: what is true, what is broken, what to build first.",
     },
-    { d: "After", t: "We propose the build, or you take the memo and go." },
+    { d: "After", t: "We propose the build." },
   ],
 };
 
@@ -309,15 +309,15 @@ const es: typeof en = {
   },
   result: {
     kicker: "Para su bodega",
-    title: "Lo que cambia si su vendimia está repartida en tres lugares.",
+    title: "Cuatro cosas que gana su bodega.",
     items: [
       {
         lead: "Ya nadie arma el panorama a mano.",
         body: "Una sola vista que se mantiene al corriente sola, toda la temporada.",
       },
       {
-        lead: "Cada número queda en su cuadro.",
-        body: "Se lee igual que se recorre el viñedo.",
+        lead: "Lo ve cuadro por cuadro.",
+        body: "Cada cuadro del viñedo muestra sus propios números.",
       },
       {
         lead: "La madurez se ve venir.",
@@ -419,7 +419,7 @@ const es: typeof en = {
       d: "Día 10",
       t: "Le entregamos el informe: qué funciona, qué falla y por dónde empezar.",
     },
-    { d: "Después", t: "Le presentamos una propuesta, o usted se lleva el informe y ahí termina." },
+    { d: "Después", t: "Le presentamos la propuesta del desarrollo." },
   ],
 };
 

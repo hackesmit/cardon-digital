@@ -231,7 +231,7 @@ const en = {
   diagSpecs: [
     "Day 1. A working session on your vineyard, cellar, ads and books.",
     "Days 2 to 9. We dig: the data, the measurement, the manual routines.",
-    "Day 10. The memo lands: what is true, what is broken, what to build first. It is yours.",
+    "Day 10. You get the memo: what is true, what is broken, what to build first. It is yours.",
   ],
 };
 
