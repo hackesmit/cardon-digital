@@ -483,10 +483,10 @@
   border-color: var(--primary);
 }
 /* The clip is 16 by 9 and the container runs to 1180px, so left alone it
-   becomes a 660px tall banner. Capped and left aligned under the photograph it
-   stays a piece of evidence rather than a billboard. */
+   becomes a 660px tall banner. Capped it stays a piece of evidence rather than
+   a billboard; centred, as every video on the site is (Daniel, 2026-10-16). */
 .pg-home .case-clip {
-  margin-top: clamp(22px, 3vw, 38px);
+  margin: clamp(22px, 3vw, 38px) auto 0;
   max-width: 780px;
 }
 
