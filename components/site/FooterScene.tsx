@@ -72,7 +72,11 @@ export default function FooterScene() {
         if (visible) {
           if (!rolling && timer === undefined) roll();
         } else {
+          // Leaving ends the roll, so coming back rolls in from the left
+          // rather than showing the tail of the old crossing.
           clearTimer();
+          rolling = false;
+          delete el.dataset.rolling;
         }
       },
       { threshold: SCENE_VISIBLE },
