@@ -779,11 +779,12 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   mask:url(/brand/footer/tumbleweed.svg) center/contain no-repeat;
 }
 /* FooterScene sets --roll-x and --roll-t (to the end of the line), --bounce-n
-   (bounces in that time) and --fall-dx (how far it drifts while it drops). */
+   and --bounce-d (a whole number of bounces in that time) and --fall-dx (how
+   far it drifts while it drops). */
 .foot-scene[data-rolling] .scene-tw{visibility:visible;animation:tumbleweed-across var(--roll-t,9s) linear forwards;}
 .foot-scene[data-rolling] .scene-tw-fall-x{animation:tumbleweed-fall-x .7s linear var(--roll-t,9s) forwards;}
 .foot-scene[data-rolling] .scene-tw-fall-y{animation:tumbleweed-fall-y .7s cubic-bezier(.55,0,1,.45) var(--roll-t,9s) forwards;}
-.foot-scene[data-rolling] .scene-tw-bounce{animation:tumbleweed-bounce 1.1s var(--bounce-n,8) forwards;}
+.foot-scene[data-rolling] .scene-tw-bounce{animation:tumbleweed-bounce var(--bounce-d,1.1s) var(--bounce-n,8) forwards;}
 .foot-scene[data-rolling] .scene-tw-spin{animation:tumbleweed-spin 1.3s linear infinite;}
 @keyframes tumbleweed-across{
   from{transform:translateX(calc(-1 * var(--tw) - 4px));}
