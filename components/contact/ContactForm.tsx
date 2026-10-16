@@ -11,6 +11,14 @@ import {
 } from "@/lib/contact/attribution";
 import { CLICK_DOORS } from "@/lib/contact/doors";
 import { trackContactSubmit } from "@/lib/analytics/events";
+import PackageBuilder from "@/components/contact/PackageBuilder";
+import { builder } from "@/lib/i18n/builder";
+import {
+  EMPTY_SELECTION,
+  decodeSelection,
+  isEmptySelection,
+  type BuilderSelection,
+} from "@/lib/builder";
 import {
   HONEYPOT_FIELD,
   LIMITS,
@@ -51,11 +59,19 @@ export default function ContactForm() {
   const [general, setGeneral] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [attribution, setAttribution] = useState<Attribution>(EMPTY_ATTRIBUTION);
+  const [pkg, setPkg] = useState<BuilderSelection>(EMPTY_SELECTION);
+  const [pkgOpen, setPkgOpen] = useState(false);
   const honeypot = useRef<HTMLInputElement | null>(null);
   const sentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setAttribution(readAttribution());
+    // A package handed over from /precios arrives as ?paquete=...
+    const handed = decodeSelection(new URLSearchParams(window.location.search).get("paquete"));
+    if (handed) {
+      setPkg(handed);
+      setPkgOpen(true);
+    }
   }, []);
 
   // Moving focus to the confirmation is the only way a screen reader learns
@@ -82,6 +98,7 @@ export default function ContactForm() {
       locale,
       ...fresh,
       [HONEYPOT_FIELD]: honeypot.current?.value ?? "",
+      package: isEmptySelection(pkg) ? null : pkg,
     };
 
     const checked = validateSubmission(payload);
@@ -123,6 +140,7 @@ export default function ContactForm() {
         trackContactSubmit("form");
         setStatus("sent");
         setValues(EMPTY);
+        setPkg(EMPTY_SELECTION);
         return;
       }
 
@@ -198,6 +216,22 @@ export default function ContactForm() {
 
   return (
     <form className="contact-form" onSubmit={onSubmit} noValidate>
+      {/* The package builder, optional and folded away unless a package was
+          handed over from /precios. It travels with the message as ids; the
+          server rebuilds the figures. */}
+      <details
+        className="pb-wrap"
+        open={pkgOpen}
+        onToggle={(e) => setPkgOpen((e.currentTarget as HTMLDetailsElement).open)}
+      >
+        <summary className="pb-toggle">
+          <span>{builder[locale].open}</span>
+          {!isEmptySelection(pkg) ? <span className="pb-badge">{builder[locale].attached}</span> : null}
+        </summary>
+        <p className="pb-intro">{builder[locale].sub}</p>
+        <PackageBuilder value={pkg} onChange={setPkg} mode="form" />
+      </details>
+
       {field("name", d.nameLabel, d.namePlaceholder, true, "text", "name")}
       {field(
         "winery",
