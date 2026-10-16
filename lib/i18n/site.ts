@@ -36,6 +36,9 @@ const en = {
     anuncios: "Google Ads",
     software: "Software",
     modules: "Modules",
+    /* The demos page, first in the row after Services: a reader who has just
+       seen what we sell is one click from seeing it running (bead hq-lgjo.2). */
+    demos: "Demos",
     pricing: "Pricing",
     wineries: "Wineries",
     work: "Work",
@@ -100,6 +103,7 @@ const es: typeof en = {
     anuncios: "Anuncios",
     software: "Software",
     modules: "Módulos",
+    demos: "Demos",
     pricing: "Precios",
     wineries: "Bodegas",
     work: "Casos",

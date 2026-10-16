@@ -1,0 +1,185 @@
+/* ============================ DEMOS PAGE ============================
+   The index of the live demo: four cards, each one a screen of the running
+   system beside the two lines that say what it replaces.
+
+   Everything here is scoped under .pg-demos. The cards are wide rather than
+   tiled two to a row, because the argument of this page is the screen and a
+   screenshot shrunk to a quarter of the window is a grey rectangle. The
+   screen and the words alternate sides down the page, so the eye has a reason
+   to go on to the next one.
+
+   The depth is three flat layers, not a shadow on a shadow: the card panel, a
+   tinted plate offset behind the screen, and the screen itself with one soft
+   shadow. On hover the screen rises and the plate slides out from under it.
+   That is the only motion on the page and the only thing the reduced-motion
+   block at the end has to undo. */
+
+.pg-demos .dm-sec{padding-top:clamp(34px,5vw,58px);}
+
+.pg-demos .dm-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:clamp(26px,3.4vw,46px);
+}
+
+.pg-demos .dm-cell{display:flex;}
+
+.pg-demos .dm-card{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);
+  gap:clamp(22px,3.2vw,46px);
+  align-items:center;
+  width:100%;
+  background:var(--panel);
+  border:1px solid var(--line-soft);
+  border-radius:3px;
+  padding:clamp(16px,1.8vw,24px);
+}
+
+/* The screen leads on the odd rows and follows on the even ones. */
+.pg-demos .dm-cell:nth-child(even) .dm-shot{order:2;}
+
+/* ---------------------------- the screen ---------------------------- */
+
+.pg-demos .dm-shot{position:relative;}
+
+/* The plate behind the screen: the card's own wine at low strength, so it
+   reads as depth in both modes without introducing a colour. It leans out on
+   the side the card's words are not on. */
+.pg-demos .dm-plate{
+  position:absolute;
+  inset:12px -8px -10px 16px;
+  z-index:0;
+  border-radius:3px;
+  background:color-mix(in srgb, var(--primary) 16%, transparent);
+  border:1px solid var(--line-soft);
+  transition:transform .42s cubic-bezier(.2,.8,.2,1);
+}
+.pg-demos .dm-cell:nth-child(even) .dm-plate{inset:12px 16px -10px -8px;}
+
+.pg-demos .dm-img{
+  position:relative;
+  z-index:1;
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1280 / 800;
+  object-fit:cover;
+  object-position:top center;
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:var(--card);
+  box-shadow:0 18px 40px -28px rgba(0,0,0,0.75);
+  transition:transform .42s cubic-bezier(.2,.8,.2,1), box-shadow .42s ease;
+}
+
+.pg-demos .dm-card:hover .dm-img,
+.pg-demos .dm-card:focus-within .dm-img{
+  transform:translateY(-7px);
+  box-shadow:0 32px 64px -32px rgba(0,0,0,0.8);
+}
+.pg-demos .dm-card:hover .dm-plate,
+.pg-demos .dm-card:focus-within .dm-plate{transform:translate(7px,9px);}
+.pg-demos .dm-cell:nth-child(even) .dm-card:hover .dm-plate,
+.pg-demos .dm-cell:nth-child(even) .dm-card:focus-within .dm-plate{
+  transform:translate(-7px,9px);
+}
+
+/* ---------------------------- the words ---------------------------- */
+
+.pg-demos .dm-body{
+  display:flex;
+  flex-direction:column;
+  padding:clamp(10px,1.4vw,18px) clamp(4px,0.8vw,12px);
+}
+
+.pg-demos .dm-body .kicker{margin-bottom:10px;}
+.pg-demos .dm-title{font-size:clamp(1.3rem,2.1vw,1.72rem);line-height:1.1;}
+
+.pg-demos .dm-story{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns:max-content minmax(0,1fr);
+  gap:10px 16px;
+  align-items:baseline;
+}
+.pg-demos .dm-k{
+  font-size:0.72rem;
+  letter-spacing:0.13em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.pg-demos .dm-v{margin:0;color:var(--text);font-size:1rem;line-height:1.5;}
+/* Today is the state being left behind, so it sits back a tone. */
+.pg-demos .dm-before{color:var(--muted);}
+
+.pg-demos .dm-open{
+  margin-top:clamp(20px,2.2vw,28px);
+  align-self:flex-start;
+}
+
+/* The whole card is the click target. The button keeps the link, the name and
+   the focus ring; this pseudo-element only widens where a pointer may press.
+   It is on ::before because .btn-ghost already draws its chevron on ::after,
+   and the button itself must stay unpositioned or this would box the button
+   rather than the card. */
+.pg-demos .dm-open::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  border-radius:3px;
+}
+
+.pg-demos .dm-card:hover .dm-open{
+  border-color:var(--primary-dim);
+  background:var(--primary-faint);
+}
+
+/* ---------------------------- under the grid ---------------------------- */
+
+.pg-demos .dm-honest{
+  margin-top:clamp(24px,3vw,34px);
+  color:var(--muted);
+  font-size:0.88rem;
+  max-width:68ch;
+}
+
+.pg-demos .dm-after-inner{max-width:62ch;}
+.pg-demos .dm-after-inner h2{margin-top:10px;font-size:clamp(1.6rem,3vw,2.3rem);}
+
+/* ---------------------------- narrow ---------------------------- */
+
+@media (max-width:860px){
+  .pg-demos .dm-card{grid-template-columns:minmax(0,1fr);gap:clamp(18px,3vw,26px);}
+  /* One column, so the screen is always first and the plate always leans the
+     same way; an even row's reversal would only move it off the card. */
+  .pg-demos .dm-cell:nth-child(even) .dm-shot{order:0;}
+  .pg-demos .dm-cell:nth-child(even) .dm-plate{inset:12px -8px -10px 16px;}
+  .pg-demos .dm-cell:nth-child(even) .dm-card:hover .dm-plate,
+  .pg-demos .dm-cell:nth-child(even) .dm-card:focus-within .dm-plate{
+    transform:translate(7px,9px);
+  }
+}
+
+@media (max-width:520px){
+  .pg-demos .dm-story{grid-template-columns:minmax(0,1fr);gap:4px;}
+  .pg-demos .dm-story .dm-v{margin-bottom:8px;}
+  .pg-demos .dm-open{align-self:stretch;justify-content:space-between;}
+  .pg-demos .dm-plate,
+  .pg-demos .dm-cell:nth-child(even) .dm-plate{inset:10px -5px -8px 10px;}
+}
+
+/* A visitor who asks for stillness gets the same three layers, parked. */
+@media (prefers-reduced-motion:reduce){
+  .pg-demos .dm-img,
+  .pg-demos .dm-plate{transition:none;}
+  .pg-demos .dm-card:hover .dm-img,
+  .pg-demos .dm-card:focus-within .dm-img,
+  .pg-demos .dm-card:hover .dm-plate,
+  .pg-demos .dm-card:focus-within .dm-plate,
+  .pg-demos .dm-cell:nth-child(even) .dm-card:hover .dm-plate,
+  .pg-demos .dm-cell:nth-child(even) .dm-card:focus-within .dm-plate{transform:none;}
+}
