@@ -1,7 +1,7 @@
 # Graph Report - cardon-digital  (2026-10-16)
 
 ## Corpus Check
-- 232 files · ~589,333 words
+- 232 files · ~589,314 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 36 file(s) not represented in the graph (top: .css 22, .log 6, .out 3)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `423fb66d`
+- Built from commit: `2119f3a3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -461,7 +461,7 @@ Nodes (45): AboutPage(), generateMetadata(), localeOf(), Params, capGlyphs, gene
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `react` connect `react` to `demos.test.ts`, `Reveal`, `routes.test.ts`, `pages/demos/HospitalidadDemo.tsx`, `package.json`, `Media.test.tsx`, `ContactMail.tsx`, `ModuleScreen.tsx`, `index.ts`, `monte-xanic/page.tsx`, `Media.tsx`, `pages/demos/stage/useDemoStage.ts`, `SiteRise.test.ts`, `showcase.test.ts`, `contract.test.tsx`, `ads-claim.test.ts`, `checks.tsx`, `DigitalArc.tsx`, `pages/demos/ProduccionDemo.tsx`, `ContactForm.test.tsx`, `rich.tsx`, `estilos/page.tsx`, `vitest`, `world.tsx`, `fitCanvas`, `SiteRise.tsx`, `CellarDemo.tsx`, `ContactForm.tsx`, `enkanto/page.tsx`, `case-page.test.ts`, `canvasKit.ts`, `observeOnscreen`, `enkanto-case.test.ts`, `estilos/fonts.ts`, `precios.test.ts`, `rich`, `Locale`, `FlowCompress.tsx`, `[locale]/page.tsx`, `react-dom`, `LocaleProvider`, `i18n/config.ts`?**
-  _High betweenness centrality (0.145) - this node is a cross-community bridge._
+  _High betweenness centrality (0.148) - this node is a cross-community bridge._
 - **What connects `extends`, `next/core-web-vitals`, `Params` to the rest of the system?**
   _530 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `demos.test.ts` be split into smaller, more focused modules?**

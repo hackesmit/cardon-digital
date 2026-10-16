@@ -138,15 +138,15 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1792042741.15675,
-    "seen": 1792042746.2450004,
-    "ast_hash": "6f5d6f98805691a1b2fe0146bba00403",
+    "mtime": 1792112640.7534695,
+    "seen": 1792112647.6758711,
+    "ast_hash": "8d9324be5f474b6e443f22c90d8f1c2b",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1792042741.15675,
-    "seen": 1792042746.245005,
-    "ast_hash": "893e76f0d301c4fd46654755c1ea559a",
+    "mtime": 1792112640.7534695,
+    "seen": 1792112647.6758769,
+    "ast_hash": "4e2555bc74803ee3b970482f7f72b425",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -588,9 +588,9 @@
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
-    "mtime": 1792111137.638442,
-    "seen": 1792111147.914241,
-    "ast_hash": "bd9bd91dfb689aad999a7e8064494fc4",
+    "mtime": 1792112640.7534695,
+    "seen": 1792112647.6758733,
+    "ast_hash": "425be87db7d9501e5a955bf6340ce359",
     "semantic_hash": ""
   },
   "public/brand/cardon-mark.svg": {
