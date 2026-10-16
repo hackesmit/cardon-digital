@@ -1740,9 +1740,9 @@
     "semantic_hash": ""
   },
   "components/site/FooterScene.tsx": {
-    "mtime": 1792119542.7320466,
-    "seen": 1792119549.7790205,
-    "ast_hash": "123d889be4409bb52591c61e56dba64b",
+    "mtime": 1792120339.1870117,
+    "seen": 1792120345.6033537,
+    "ast_hash": "e064c7acb4982b6617fc791fb16ea268",
     "semantic_hash": ""
   },
   "components/site/footer-scene-paths.ts": {
@@ -1752,15 +1752,15 @@
     "semantic_hash": ""
   },
   "public/brand/footer/horse-still.webp": {
-    "mtime": 1792119542.7320466,
-    "seen": 1792119549.77919,
-    "ast_hash": "50adc299e78c1bac4981cf4e0f64b6c6",
+    "mtime": 1792120339.1870117,
+    "seen": 1792120345.6035295,
+    "ast_hash": "5dca51d1787232a56deeec5cd31319ea",
     "semantic_hash": ""
   },
   "public/brand/footer/horse.webp": {
-    "mtime": 1792119542.7340467,
-    "seen": 1792119549.7791913,
-    "ast_hash": "1812bf66f0e74a9a039e70ec5bd05cfd",
+    "mtime": 1792120339.1890118,
+    "seen": 1792120345.6035304,
+    "ast_hash": "809a49eff34be83645d5db34483a27ef",
     "semantic_hash": ""
   },
   "public/brand/footer/scene-hole.svg": {
