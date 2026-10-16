@@ -68,7 +68,35 @@
 .pg-estilos .sc-title em{display:block;}
 .pg-estilos .sc-actions{display:flex;flex-wrap:wrap;align-items:center;}
 .pg-estilos .sc-btn,.pg-estilos .sc-link,.pg-estilos .sc-nav-action{display:inline-block;white-space:nowrap;cursor:default;}
-.pg-estilos .sc-art{position:absolute;z-index:0;pointer-events:none;}
+/* The drawing sits ON the sample's own material, never under it: the
+   photograph or the clip is the business, the drawing is ours. */
+.pg-estilos .sc-art{position:absolute;z-index:1;pointer-events:none;}
+
+/* ---- the real material: a client's own photography and footage ----
+   Each layer is placed by its role (ground, band, panel) and by nothing in
+   the markup. See components/pages/estilos/sceneMedia.ts for the catalogue
+   and for why these are not the site's captioned Media slots. */
+.pg-estilos .sc-shot{position:absolute;z-index:0;overflow:hidden;pointer-events:none;}
+.pg-estilos .sc-shot-asset{display:block;width:100%;height:100%;object-fit:cover;}
+.pg-estilos .sc-shot--ground{inset:0;}
+
+/* The one control inside a sample. It is chrome, so it is small, square and
+   in the sample's own ink rather than in the site's. */
+.pg-estilos .sc-shot-play{
+  pointer-events:auto;position:absolute;right:14px;bottom:14px;z-index:3;
+  width:34px;height:34px;padding:0;border-radius:2px;cursor:pointer;
+  background:rgba(12,10,10,0.42);border:1px solid rgba(255,255,255,0.45);
+  display:flex;align-items:center;justify-content:center;
+}
+.pg-estilos .sc-shot-play:hover{background:rgba(12,10,10,0.62);}
+.pg-estilos .sc-shot-glyph{
+  display:block;width:0;height:0;margin-left:3px;
+  border-left:9px solid rgba(255,255,255,0.92);border-top:6px solid transparent;border-bottom:6px solid transparent;
+}
+.pg-estilos .sc-shot-play[data-playing="true"] .sc-shot-glyph{
+  width:9px;height:11px;margin-left:0;border:0;
+  background:linear-gradient(90deg,rgba(255,255,255,0.92) 0 3px,transparent 3px 6px,rgba(255,255,255,0.92) 6px 9px);
+}
 
 /* =====================================================================
    01 Winery. Burnt earth, cream and a low gold sun. A didone set large and
@@ -104,6 +132,17 @@
 .pg-estilos .sc-vin .sc-link{
   font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;padding-bottom:5px;border-bottom:1px solid rgba(247,234,213,0.6);
 }
+/* The aerial clip runs behind the whole sample, pulled into the burnt earth
+   so the cream type keeps its contrast, and the drawn vineyard still closes
+   the foot over it. */
+.pg-estilos .sc-vin .sc-shot--ground .sc-shot-asset{filter:saturate(0.62) brightness(0.62) contrast(1.04);}
+.pg-estilos .sc-vin .sc-shot--ground::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(79,24,13,0.62) 0%,rgba(111,42,27,0.30) 34%,rgba(111,42,27,0.70) 100%),
+    linear-gradient(0deg,rgba(111,42,27,0.52),rgba(111,42,27,0.52));
+}
+
 /* The vineyard takes what the copy leaves. It is pulled up under the copy by
    less than its own sky, so the hills and the sun always clear the buttons. */
 .pg-estilos .sc-vin .sc-art{
@@ -156,8 +195,41 @@
   -webkit-mask-image:linear-gradient(to right,transparent 0,#000 26%);
   mask-image:linear-gradient(to right,transparent 0,#000 26%);
 }
+/* The warehouse sits far back on the right as depth, dimmed almost to the
+   ground and gone before it reaches the copy. */
+.pg-estilos .sc-tech .sc-shot--ground{
+  -webkit-mask-image:linear-gradient(to left,#000 0,#000 14%,transparent 48%);
+  mask-image:linear-gradient(to left,#000 0,#000 14%,transparent 48%);
+}
+.pg-estilos .sc-tech .sc-shot--ground .sc-shot-asset{
+  filter:grayscale(1) contrast(1.25) brightness(0.30);opacity:0.46;
+}
+
+/* The crates: the stack with its sky cut away, running along the foot. It
+   drifts, and one lime line sweeps it, which is the yard being read. */
+/* It only becomes solid in the last stretch, so the yard reads as a horizon
+   the copy sits above rather than as a picture pasted over the buttons. */
+.pg-estilos .sc-tech .sc-shot--band{
+  left:0;right:0;bottom:0;height:min(38%,250px);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,0.45) 42%,#000 88%);
+  mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,0.45) 42%,#000 88%);
+}
+.pg-estilos .sc-tech .sc-shot--band .sc-shot-asset{
+  width:116%;object-position:50% 100%;
+  filter:saturate(0.24) brightness(0.37) contrast(1.16);
+  animation:sc-crates-drift 58s ease-in-out infinite alternate;
+}
+.pg-estilos .sc-tech .sc-shot--band::after{
+  content:"";position:absolute;top:0;bottom:0;left:-12%;width:12%;
+  background:linear-gradient(90deg,transparent,rgba(200,255,58,0.06) 42%,rgba(200,255,58,0.17) 52%,transparent);
+  mix-blend-mode:screen;
+  animation:sc-crates-scan 13s linear infinite;
+}
+@keyframes sc-crates-drift{from{transform:translate3d(0,0,0);}to{transform:translate3d(-13%,0,0);}}
+@keyframes sc-crates-scan{from{transform:translate3d(0,0,0);}to{transform:translate3d(933%,0,0);}}
+
 .pg-estilos .sc-tech .sc-tags{
-  position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  position:relative;z-index:2;background:#0A0C10;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
   border-top:1px solid var(--rule);
   font-family:var(--f-tech-mono),ui-monospace,monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);
 }
@@ -198,6 +270,23 @@
   font-family:var(--f-spa-display),Georgia,serif;font-style:italic;font-weight:400;font-size:1.32rem;line-height:1.2;
   border-bottom:1px solid rgba(58,52,84,0.4);
 }
+/* The hero clip is a column of its own on the left, so it never covers the
+   words. It fades out to the right, and the drawn currents comb across that
+   edge, which makes the lines read as coming out of the footage. */
+.pg-estilos .sc-spa .sc-shot--panel{left:0;top:0;bottom:0;width:46%;}
+.pg-estilos .sc-spa .sc-shot--panel .sc-shot-play{right:auto;left:14px;}
+.pg-estilos .sc-spa .sc-shot--panel .sc-shot-asset{
+  filter:saturate(0.72) brightness(1.06);
+}
+.pg-estilos .sc-spa .sc-shot--panel::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(239,237,246,0.10) 0%,rgba(239,237,246,0.34) 56%,rgba(239,237,246,0.92) 100%);
+}
+.pg-estilos .sc-spa .sc-shot--panel{
+  -webkit-mask-image:linear-gradient(to right,#000 0,#000 62%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 0,#000 62%,transparent 100%);
+}
+
 /* The canvas starts off the left edge, so what shows is where the strokes
    are already being combed into lanes; they thin out before the words. */
 .pg-estilos .sc-spa .sc-art{
@@ -260,6 +349,22 @@
   .pg-estilos .sc-menu{display:inline-block;}
   .pg-estilos .sc-stage{display:block;}
   .pg-estilos .sc-art{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;min-height:0;margin-top:0;}
+  /* A phone has one column, so a panel beside the copy would be a strip
+     behind the words. The wellness clip becomes the scene's ground instead,
+     veiled far back, and the currents still comb across it. */
+  .pg-estilos .sc-spa .sc-shot--panel{
+    inset:0;width:auto;
+    -webkit-mask-image:none;mask-image:none;
+  }
+  .pg-estilos .sc-spa .sc-shot--panel::after{
+    background:linear-gradient(180deg,rgba(239,237,246,0.72) 0%,rgba(239,237,246,0.86) 62%,rgba(239,237,246,0.80) 100%);
+  }
+  .pg-estilos .sc-tech .sc-shot--band{height:300px;}
+  .pg-estilos .sc-tech .sc-shot--ground{
+    -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 34%,transparent 80%);
+    mask-image:linear-gradient(to bottom,#000 0,#000 34%,transparent 80%);
+  }
+  .pg-estilos .sc-tech .sc-shot--ground .sc-shot-asset{opacity:0.34;}
 
   /* winery */
   .pg-estilos .sc-vin .sc-nav{grid-template-columns:1fr auto 1fr;}
@@ -324,4 +429,12 @@
    column instead of stepping at one breakpoint. */
 @media (max-width:430px){
   .pg-estilos .sc-vin .sc-title{font-size:min(3.1rem,calc((100vw - 40px) / 7.4));}
+}
+
+/* Reduced motion: the material stays, its movement does not. The clip's own
+   policy is in components/site/Media.tsx (poster, with a press that still
+   plays it); these two are the only animations this page adds in CSS. */
+@media (prefers-reduced-motion:reduce){
+  .pg-estilos .sc-tech .sc-shot--band .sc-shot-asset{animation:none;}
+  .pg-estilos .sc-tech .sc-shot--band::after{animation:none;opacity:0;}
 }

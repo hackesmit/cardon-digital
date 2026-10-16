@@ -4,6 +4,7 @@ import DigitalArc from "@/components/pages/home/DigitalArc";
 import HeroAssembly from "@/components/pages/home/HeroAssembly";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
 import ClientOrbit from "@/components/pages/home/ClientOrbit";
+import StylesPromo from "@/components/pages/home/StylesPromo";
 import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
 import Media, { type MediaPhotoSlot } from "@/components/site/Media";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
@@ -326,6 +327,13 @@ export default function Home({ params }: Params) {
           {callToAction}
         </div>
       </section>
+
+      {/* ============================ 3b. THE STYLES ============================
+          The websites card above sells the service; this says what the site
+          can LOOK like, and sends the reader to the gallery that shows it
+          (Daniel, 2026-10-16). It is one component, and all of its copy is in
+          lib/i18n/estilos.ts with the page it opens. */}
+      <StylesPromo locale={locale} />
 
       {/* ============================ 4. SOUND FAMILIAR ============================ */}
       <section className="section familiar" aria-labelledby="fam-title">
