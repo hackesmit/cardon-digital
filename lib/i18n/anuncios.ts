@@ -60,7 +60,7 @@ const en = {
       },
       {
         h: "A report you can read.",
-        body: "One page a month: what was spent, how many calls and messages arrived, what each one cost, and the list of contacts we invoice. And a twenty-minute call.",
+        body: "One page a month: what was spent, how many calls and messages arrived, what each one cost, and the list of contacts we charge for. And a twenty-minute call.",
       },
     ],
   },
@@ -84,7 +84,7 @@ const en = {
       "You get the list every month and have {disputeDays} business days to strike any contact that was not real. We take it off, no questions asked.",
       "We never charge a percentage of what you spend. The Google Ads account is yours, and the budget is paid by you straight to Google.",
       "Month to month, with 30 days notice. A campaign under {pauseUnder} contacts for {pauseMonths} months in a row we pause ourselves, and the base stops with it.",
-      "Quoted and invoiced in Mexican pesos plus IVA; the dollar figures are rounded conversions.",
+      "Quoted and charged in Mexican pesos plus IVA; the dollar figures are rounded conversions.",
     ],
   },
   familiar: {
@@ -176,7 +176,7 @@ const es: typeof en = {
       },
       {
         h: "Un reporte que se entiende.",
-        body: "Una página al mes: cuánto se invirtió, cuántas llamadas y mensajes llegaron, cuánto costó cada uno y la lista de contactos que facturamos. Además, una llamada de veinte minutos.",
+        body: "Una página al mes: cuánto se invirtió, cuántas llamadas y mensajes llegaron, cuánto costó cada uno y la lista de contactos que cobramos. Además, una llamada de veinte minutos.",
       },
     ],
   },
@@ -200,7 +200,7 @@ const es: typeof en = {
       "Cada mes recibe la lista y tiene {disputeDays} días hábiles para tachar cualquier contacto que no fue real. Lo quitamos sin discutir.",
       "Nunca cobramos un porcentaje de lo que invierte. La cuenta de Google Ads es suya, y el presupuesto lo paga usted directo a Google.",
       "Mes con mes, con 30 días de aviso para cancelar. Una campaña con menos de {pauseUnder} contactos durante {pauseMonths} meses seguidos la pausamos nosotros, y la base se detiene con ella.",
-      "Cotizamos y facturamos en pesos mexicanos, más IVA y con factura.",
+      "Cotizamos y cobramos en pesos mexicanos, más IVA.",
     ],
   },
   familiar: {
