@@ -85,6 +85,7 @@ const LEAD: ContactSubmission = {
   message: "Hola <script>alert(1)</script>\nSegunda linea",
   locale: "es",
   attribution: { leadId: "", gclid: "", lane: "", campaign: "", landing: "/es/contacto", firstSeen: "" },
+  package: null,
 };
 
 describe("the lead email a person reads", () => {

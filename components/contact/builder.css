@@ -1,0 +1,89 @@
+/* The package builder (PackageBuilder.tsx). Used inside the contact form and
+   on /precios. Inside the form, the form's own label and input rules would
+   turn every radio into a full-width text box, so the builder resets them
+   under a selector that outranks .contact-form label / input. */
+
+.pb-wrap{border:1px solid var(--line);border-radius:2px;background:color-mix(in srgb, var(--panel) 70%, transparent);}
+.pb-toggle{
+  list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  padding:16px 18px;font-weight:600;font-size:1.02rem;color:var(--text);
+}
+.pb-toggle::-webkit-details-marker{display:none;}
+.pb-toggle::after{content:"+";font-size:1.3rem;line-height:1;color:var(--primary-text);margin-left:auto;}
+.pb-wrap[open] > .pb-toggle::after{content:"\2212";}
+.pb-toggle:focus-visible{outline:2px solid var(--primary);outline-offset:2px;}
+.pb-badge{font-size:0.78rem;font-weight:500;color:var(--primary-text);border:1px solid var(--line);padding:3px 8px;border-radius:999px;}
+.pb-intro{margin:0;padding:0 18px 4px;color:var(--text-dim);font-size:0.95rem;line-height:1.55;max-width:60ch;}
+
+.pb{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding:14px 18px 20px;}
+.pb-wrap-page .pb{padding-top:18px;}
+@media (min-width:980px){
+  .pb[data-mode="standalone"]{grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);align-items:start;}
+  .pb[data-mode="standalone"] .pb-summary{position:sticky;top:92px;}
+}
+
+.pb-groups{display:flex;flex-direction:column;gap:22px;min-width:0;}
+.pb-group{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:8px;}
+.pb-legend{padding:0;margin-bottom:6px;display:flex;flex-direction:column;gap:2px;}
+.pb-gtitle{font-weight:700;font-size:1.05rem;color:var(--text);}
+.pb-ghint{font-size:0.86rem;color:var(--muted);}
+
+.pb .pb-opt{
+  border:1px solid var(--line);border-radius:2px;background:var(--panel);
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.pb .pb-opt.is-on{border-color:var(--primary-text);box-shadow:inset 3px 0 0 var(--primary);}
+.contact-form .pb label,
+.pb label{
+  font-family:var(--sans);font-size:0.97rem;letter-spacing:normal;text-transform:none;color:var(--text);
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:start;gap:4px 12px;
+  padding:12px 14px;cursor:pointer;
+}
+.contact-form .pb label.pb-none,.pb label.pb-none{grid-template-columns:auto 1fr;}
+.contact-form .pb input,
+.pb input{
+  width:18px;height:18px;margin:2px 0 0;padding:0;accent-color:var(--primary-text);flex:none;
+  border:0;background:none;box-shadow:none;
+}
+.pb input:focus-visible{outline:2px solid var(--primary);outline-offset:2px;}
+.pb-what{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.pb-name{font-weight:600;}
+.pb-tag{font-size:0.88rem;color:var(--text-dim);line-height:1.45;}
+.pb-price{text-align:right;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;}
+.pb-from{font-weight:400;font-size:0.8rem;color:var(--muted);}
+.pb-sub{display:block;font-weight:400;font-size:0.84rem;color:var(--text-dim);}
+.pb-sub .mono,.pb-price .mono{font-size:0.8rem;color:var(--muted);font-weight:400;}
+
+.pb-more{padding:0 14px 10px 44px;}
+.pb-more summary{cursor:pointer;font-size:0.86rem;color:var(--primary-text);width:max-content;}
+.pb-more summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px;}
+.pb-more ul{margin:8px 0 2px;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:0.9rem;color:var(--text-dim);line-height:1.45;}
+.pb-meta{margin:8px 0 0;font-size:0.82rem;color:var(--muted);}
+
+.pb-summary{
+  border:1px solid var(--line);border-radius:2px;background:var(--panel);
+  padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0;
+}
+.pb-stitle{margin:0;font-size:1.05rem;}
+.pb-empty{margin:0;color:var(--muted);font-size:0.95rem;}
+.pb-lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:0.92rem;}
+.pb-lines li{display:flex;flex-direction:column;gap:2px;}
+.pb-lines li > span{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.pb-lines b{font-variant-numeric:tabular-nums;font-weight:600;}
+.pb-lines .mono{font-size:0.78rem;color:var(--muted);font-weight:400;}
+.pb-disc{font-size:0.8rem;color:var(--primary-text);}
+.pb-totals{margin:4px 0 0;padding-top:12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;}
+.pb-totals div{display:flex;justify-content:space-between;gap:12px;}
+.pb-totals dt{color:var(--text-dim);}
+.pb-totals dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums;}
+.pb-totals .pb-year dd{color:var(--primary-text);}
+.pb-fine{margin:0;font-size:0.82rem;color:var(--muted);line-height:1.5;}
+.pb-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:4px;}
+.pb-clear{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;font-size:0.88rem;}
+.pb-clear:hover{color:var(--text);}
+
+@media (max-width:520px){
+  .contact-form .pb label,.pb label{grid-template-columns:auto minmax(0,1fr);}
+  .pb-price{grid-column:2;text-align:left;}
+  .pb-more{padding-left:44px;}
+}

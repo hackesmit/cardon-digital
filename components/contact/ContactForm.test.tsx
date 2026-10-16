@@ -279,6 +279,8 @@ describe("the privacy notice against what leaves the browser", () => {
     "cd_landing",
     "cd_first_seen",
     HONEYPOT_FIELD,
+    // The package builder's ids, null when nothing was built (Daniel, 2026-10-16).
+    "package",
   ].sort();
 
   /* Sent on every submission, always empty, and named nowhere in the notice.
@@ -376,7 +378,7 @@ describe("the notice's own promises about itself", () => {
      of every section that describes collection. Change what the notice says
      and this test goes red with the digest it now wants; the only way to
      green is to write today's date into both locales and into DATE below. */
-  const DATE = { en: "2026-09-24", es: "24 de septiembre de 2026" };
+  const DATE = { en: "2026-10-16", es: "16 de octubre de 2026" };
   const DESCRIBES_COLLECTION = [
     "measureBody",
     "measureList",
@@ -386,7 +388,7 @@ describe("the notice's own promises about itself", () => {
     "hostingBody",
     "clientBody",
   ] as const;
-  const DIGEST = "0776e16d";
+  const DIGEST = "f543237f";
 
   function digest(text: string): string {
     /* FNV-1a, 32 bit: a short stable number, not a security hash. */
