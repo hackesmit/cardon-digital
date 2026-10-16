@@ -67,8 +67,8 @@ export default function FooterScene() {
       if (visible) timer = setTimeout(roll, TUMBLEWEED_PAUSE_MS);
     };
     const io = new IntersectionObserver(
-      ([entry]) => {
-        visible = clearsThreshold(entry, SCENE_VISIBLE);
+      (entries) => {
+        visible = clearsThreshold(entries[entries.length - 1], SCENE_VISIBLE);
         if (visible) {
           if (!rolling && timer === undefined) roll();
         } else {
