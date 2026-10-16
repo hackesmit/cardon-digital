@@ -145,7 +145,10 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
    wordmark is paths, so it needs no font and no text rules. */
 .brand{display:inline-flex;align-items:center;flex-shrink:0;color:var(--text);}
 .brand-mark{width:auto;height:26px;display:block;flex-shrink:0;color:var(--text);}
-.brand-logo{width:auto;height:34px;display:block;flex-shrink:0;color:var(--text);}
+.brand-logo{display:flex;align-items:center;gap:12px;height:34px;flex-shrink:0;color:var(--text);}
+.brand-badge{height:34px;width:auto;display:block;}
+.brand-word{height:15px;width:auto;display:block;}
+.brand-word-accent{fill:var(--primary);}
 
 .primary-nav{display:flex;align-items:center;gap:18px;}
 .nav-menu{display:flex;align-items:center;gap:20px;}
