@@ -33,17 +33,32 @@ export default function FooterScene() {
   useEffect(() => {
     const el = root.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let visible = false;
     let rolling = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
 
+    const clearTimer = () => {
+      if (timer !== undefined) clearTimeout(timer);
+      timer = undefined;
+    };
     const roll = () => {
       timer = undefined;
-      if (!visible || rolling) return;
+      if (!visible || rolling || still.matches) return;
       rolling = true;
       el.dataset.rolling = "true";
+    };
+    // Reduced motion hides the track, which cancels the roll without an
+    // animationend, so the state is reset here rather than left waiting.
+    const onStill = () => {
+      clearTimer();
+      if (still.matches) {
+        rolling = false;
+        delete el.dataset.rolling;
+      } else {
+        roll();
+      }
     };
     const onEnd = (e: AnimationEvent) => {
       if (e.animationName !== "tumbleweed-across") return;
@@ -56,19 +71,20 @@ export default function FooterScene() {
         visible = clearsThreshold(entry, SCENE_VISIBLE);
         if (visible) {
           if (!rolling && timer === undefined) roll();
-        } else if (timer !== undefined) {
-          clearTimeout(timer);
-          timer = undefined;
+        } else {
+          clearTimer();
         }
       },
       { threshold: SCENE_VISIBLE },
     );
     el.addEventListener("animationend", onEnd);
+    still.addEventListener("change", onStill);
     io.observe(el);
     return () => {
       io.disconnect();
       el.removeEventListener("animationend", onEnd);
-      if (timer !== undefined) clearTimeout(timer);
+      still.removeEventListener("change", onStill);
+      clearTimer();
     };
   }, []);
 
