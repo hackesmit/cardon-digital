@@ -17,8 +17,8 @@ import { clearsThreshold } from "@/lib/onscreen";
 /** How long the tumbleweed waits before it rolls again while the scene stays
     in view. */
 export const TUMBLEWEED_PAUSE_MS = 25_000;
-/** One bounce, and the drop off the end of the line, in seconds; the CSS
-    animations use the same numbers. */
+/** About one bounce, and the drop off the end of the line, in seconds; the
+    CSS animations use the same numbers. */
 const BOUNCE_S = 1.1;
 const FALL_S = 0.7;
 /** How much of the band must be on screen to count as in view. */
@@ -68,7 +68,11 @@ export default function FooterScene() {
       const seconds = distance / speed;
       el.style.setProperty("--roll-x", `${end - size / 2}px`);
       el.style.setProperty("--roll-t", `${seconds.toFixed(3)}s`);
-      el.style.setProperty("--bounce-n", `${(seconds / BOUNCE_S).toFixed(3)}`);
+      // A whole number of bounces, so the last one lands on the line just as
+      // the tumbleweed reaches its end and the drop starts from the ground.
+      const bounces = Math.max(1, Math.round(seconds / BOUNCE_S));
+      el.style.setProperty("--bounce-n", `${bounces}`);
+      el.style.setProperty("--bounce-d", `${(seconds / bounces).toFixed(3)}s`);
       el.style.setProperty("--fall-dx", `${(speed * FALL_S * 0.6).toFixed(1)}px`);
       rolling = true;
       el.dataset.rolling = "true";
