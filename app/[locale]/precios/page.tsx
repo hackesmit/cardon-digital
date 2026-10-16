@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import StandaloneBuilder from "@/components/contact/StandaloneBuilder";
+import { builder } from "@/lib/i18n/builder";
 import AdsFee from "@/components/pages/precios/AdsFee";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
@@ -44,6 +46,7 @@ export default function PreciosPage({ params }: Params) {
   const locale = localeOf(params);
   const d = precios[locale];
   const s = site[locale];
+  const b = builder[locale];
   const href = (path: string) => localePath(locale, path);
 
   return (
@@ -85,6 +88,19 @@ export default function PreciosPage({ params }: Params) {
             />
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ BUILD YOUR PACKAGE ============================
+          The package builder (Daniel, 2026-10-16), folded away so the price
+          list below still reads first; it sends its package to /contacto. */}
+      <section className="section pr-builder" id="arme" aria-labelledby="pb-title">
+        <div className="container">
+          <div className="section-head">
+            <span className="kicker">{b.kicker}</span>
+            <h2 id="pb-title">{b.title}</h2>
+          </div>
+          <StandaloneBuilder />
         </div>
       </section>
 

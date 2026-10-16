@@ -13,6 +13,11 @@
  * which is worse than showing one door fewer.
  */
 
+import { estimate, type Priced } from "@/lib/builder";
+import { sitios } from "@/lib/i18n/sitios";
+import { anuncios } from "@/lib/i18n/anuncios";
+import { precios } from "@/lib/i18n/precios";
+import { formatPercent } from "@/lib/pricing";
 import { headerSafe, type ContactSubmission } from "./validate";
 
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
@@ -111,6 +116,51 @@ function sourceRows(s: ContactSubmission): [string, string][] {
   return rows.filter(([, v]) => v);
 }
 
+/** Pesos as Daniel quotes them, with the dollar figure when they wrote in English. */
+function money(s: ContactSubmission, p: Priced): string {
+  const mxn = "$" + p.MXN.toLocaleString("en-US") + " MXN";
+  return s.locale === "en" ? mxn + " (US$" + p.USD.toLocaleString("en-US") + ")" : mxn;
+}
+
+/**
+ * The package the visitor built, as rows of [what, price], rebuilt on the
+ * server from the ids alone: the browser's figures are never read. Names are
+ * the English ones, since the email is for Cardon. Empty when no package.
+ */
+function packageRows(s: ContactSubmission): { rows: [string, string][]; totals: [string, string][]; notes: string[] } {
+  const est = s.package ? estimate(s.package) : null;
+  if (!est) return { rows: [], totals: [], notes: [] };
+  const rows: [string, string][] = [];
+  const notes: string[] = [];
+  for (const l of est.lines) {
+    if (l.kind === "web") rows.push(["Website: " + sitios.en.packages.names[l.id], "from " + money(s, l.setup)]);
+    else if (l.kind === "care") rows.push(["Website care", money(s, l.monthly) + " a month"]);
+    else if (l.kind === "ads") {
+      rows.push([
+        "Google Ads: " + anuncios.en.pricing.names[l.id],
+        money(s, l.setup) + " once + " + money(s, l.base) + " a month base",
+      ]);
+      notes.push(
+        "Ads: plus " + money(s, l.perContact) + " per qualified contact, capped at " + money(s, l.cap) +
+          " a month; minimum budget " + money(s, l.minimumBudget) + " a month, paid to Google.",
+      );
+    } else {
+      const names = l.modules.map((m) => precios.en.floors.modules[m].name).join(" + ");
+      rows.push(["Software: " + names, "from " + money(s, l.setup) + " + " + money(s, l.monthly) + " a month"]);
+      for (const x of l.discounts) {
+        if (x.rate > 0) notes.push(precios.en.floors.modules[x.module].name + ": " + formatPercent("en", x.rate) + "% combination discount applied.");
+      }
+    }
+  }
+  const totals: [string, string][] = [
+    ["Paid once", money(s, est.setup)],
+    ["Each month", money(s, est.monthly)],
+    ["First year", money(s, est.yearOne)],
+  ];
+  notes.push("Entry-size prices, plus IVA. Their final quote comes from the diagnostic.");
+  return { rows, totals, notes };
+}
+
 function languageOf(s: ContactSubmission): string {
   return s.locale === "es" ? "Spanish" : "English";
 }
@@ -130,6 +180,13 @@ function bodyFor(s: ContactSubmission): string {
     "Email: " + s.email,
   ];
   if (s.whatsapp) lines.push("WhatsApp: " + s.whatsapp + (wa ? " (" + wa + ")" : ""));
+  const pkg = packageRows(s);
+  if (pkg.rows.length > 0) {
+    lines.push("", "Package they built:");
+    for (const [k, v] of pkg.rows) lines.push("  " + k + ": " + v);
+    for (const [k, v] of pkg.totals) lines.push("  " + k + ": " + v);
+    for (const n of pkg.notes) lines.push("  " + n);
+  }
   lines.push("", "Reply to this email to answer " + s.name + " directly.");
 
   const source = sourceRows(s);
@@ -180,6 +237,21 @@ function htmlFor(s: ContactSubmission): string {
     );
   }
 
+  const pkg = packageRows(s);
+  const pkgBlock =
+    pkg.rows.length === 0
+      ? ""
+      : '<p style="margin:20px 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:' + accent +
+        '">Package they built</p><table style="width:100%;font-size:14px;border-collapse:collapse">' +
+        pkg.rows
+          .map(([k, v]) => '<tr><td style="padding:4px 12px 4px 0;vertical-align:top">' + esc(k) + '</td><td style="padding:4px 0;text-align:right;white-space:nowrap">' + esc(v) + "</td></tr>")
+          .join("") +
+        pkg.totals
+          .map(([k, v], i) => '<tr><td style="padding:' + (i === 0 ? "10px" : "2px") + ' 12px 2px 0;font-weight:600;border-top:' + (i === 0 ? "1px solid #e6dcd6" : "0") + '">' + esc(k) + '</td><td style="padding:' + (i === 0 ? "10px" : "2px") + ' 0 2px;text-align:right;font-weight:600;border-top:' + (i === 0 ? "1px solid #e6dcd6" : "0") + '">' + esc(v) + "</td></tr>")
+          .join("") +
+        "</table>" +
+        pkg.notes.map((n) => '<p style="margin:6px 0 0;font-size:12px;color:' + muted + '">' + esc(n) + "</p>").join("");
+
   const source = sourceRows(s);
   const sourceBlock =
     source.length === 0
@@ -200,7 +272,8 @@ function htmlFor(s: ContactSubmission): string {
     (s.winery ? '<p style="margin:2px 0 0;font-size:15px;color:' + muted + '">' + esc(s.winery) + "</p>" : "") +
     '<div style="margin:20px 0;padding:16px 18px;background:#F7F3EF;border-left:3px solid ' + accent + ';border-radius:4px;font-size:15px;line-height:1.55;white-space:pre-wrap">' +
     esc(s.message) + "</div>" +
-    '<table style="font-size:14px;border-collapse:collapse">' + contact.join("") + "</table>" +
+    pkgBlock +
+    '<table style="margin-top:16px;font-size:14px;border-collapse:collapse">' + contact.join("") + "</table>" +
     '<div style="margin-top:20px">' + button(mailto, "Reply by email", ink) + (wa ? button(wa, "Open WhatsApp", "#1f8f4e") : "") + "</div>" +
     '<p style="margin:4px 0 0;font-size:13px;color:' + muted + '">Replying to this email also goes straight to ' + esc(s.name) + ".</p>" +
     sourceBlock +

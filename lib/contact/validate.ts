@@ -8,6 +8,7 @@
  */
 
 import { isLocale, type Locale } from "@/lib/i18n/config";
+import { parseSelection, type BuilderSelection } from "@/lib/builder";
 
 /** Largest request body the route will read, in bytes. */
 export const MAX_BODY_BYTES = 16 * 1024;
@@ -49,6 +50,8 @@ export type ContactSubmission = {
   message: string;
   locale: Locale;
   attribution: ContactAttribution;
+  /** The package the visitor built, ids only; null when none or unreadable. */
+  package: BuilderSelection | null;
 };
 
 export type ValidationResult =
@@ -175,6 +178,8 @@ export function validateSubmission(body: unknown): ValidationResult {
         landing: attributionField(raw.cd_landing),
         firstSeen: attributionField(raw.cd_first_seen),
       },
+      // Never a reason to refuse a lead: an unreadable package is dropped.
+      package: parseSelection(raw.package),
     },
   };
 }
