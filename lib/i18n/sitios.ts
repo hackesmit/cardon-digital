@@ -58,7 +58,7 @@ const en = {
   packages: {
     kicker: "What it costs",
     title: "Four packages, four prices.",
-    sub: "Quoted and charged in Mexican pesos plus IVA; the dollar figures are rounded conversions.",
+    sub: "Quoted and charged in Mexican pesos; the dollar figures are rounded conversions.",
     fromLabel: "from",
     daysUnit: "business days",
     rangeJoin: " to ",
@@ -209,7 +209,7 @@ const es: typeof en = {
   packages: {
     kicker: "Lo que cuesta",
     title: "Cuatro paquetes, cuatro precios.",
-    sub: "En pesos, más IVA.",
+    sub: "En pesos.",
     fromLabel: "desde",
     daysUnit: "días hábiles",
     rangeJoin: " a ",

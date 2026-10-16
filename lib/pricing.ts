@@ -79,7 +79,7 @@ export function formatPercent(locale: Locale, fraction: number): string {
 
 /* ============================== RATES AND SIZES ==========================
    Carried over untouched from pricing-features.md, per memo "What carries
-   over untouched". All prices exclude IVA. */
+   over untouched". No price carries IVA (Daniel, 2026-10-16). */
 
 /** MXN per Daniel hour of build work. */
 export const setupRate = 2700;
@@ -1389,7 +1389,7 @@ export function growerSetupS(): Record<CurrencyCode, number> {
                           is a floor and never a ceiling: if the hours grow,
                           the derived figure passes it and the price moves.
    Build hours are Daniel's hours only (memo 5.1), estimates to be checked
-   against the first two builds of each package. All prices exclude IVA. */
+   against the first two builds of each package. No price carries IVA (Daniel, 2026-10-16). */
 
 export type WebPackageId = "presencia" | "negocio" | "reservas" | "tienda";
 
