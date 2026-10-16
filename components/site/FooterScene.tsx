@@ -105,11 +105,28 @@ export default function FooterScene() {
       },
       { threshold: SCENE_VISIBLE },
     );
+    // The crossing was measured for one width; if the band changes width
+    // mid-roll, start the roll again from the left with fresh numbers.
+    let width = el.clientWidth;
+    const ro =
+      typeof ResizeObserver === "undefined"
+        ? undefined
+        : new ResizeObserver(() => {
+            if (el.clientWidth === width) return;
+            width = el.clientWidth;
+            if (!rolling) return;
+            rolling = false;
+            delete el.dataset.rolling;
+            void el.offsetWidth; // let the removal land so the animations restart
+            roll();
+          });
+    ro?.observe(el);
     el.addEventListener("animationend", onEnd);
     still.addEventListener("change", onStill);
     io.observe(el);
     return () => {
       io.disconnect();
+      ro?.disconnect();
       el.removeEventListener("animationend", onEnd);
       still.removeEventListener("change", onStill);
       clearTimer();
