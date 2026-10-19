@@ -1,0 +1,363 @@
+
+> cardon-digital@0.1.0 test
+> node scripts/visuals-check.mjs && node scripts/palette-check.mjs && vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' && npm run copy:check:test
+
+components/pages  78 file(s) at 15f8cb41e365, 78 now
+  note  components/pages/home/SectorMap.tsx left before this branch started; the entry is a record now
+
+no visual was removed
+
+light: ground #F4EDEA  panel #FFFCFB  text #221418  primary #7A1F38  secondary #806315  energy #B4561A
+  derived: primary-text #7A1F38  series-gold #B5812F  energy-bright #97491A  muted #8C8385  card #E9E5E4
+  ok    text on ground (body, AAA)                    15.36  floor 7
+  ok    text on panel (card body, AAA)                17.41  floor 7
+  ok    primary-text on panel (details, links)         9.89  floor 4.5
+  ok    primary-text on ground (kickers)               8.72  floor 4.5
+  ok    primary-text on card (module tags, prices)     8.06  floor 4.5
+  ok    primary on panel (display, strokes, 3:1)       9.89  floor 3
+  ok    primary on ground (h1 accent, 3:1)             8.72  floor 3
+  ok    primary on card (strokes, dots, 3:1)           8.06  floor 3
+  ok    secondary on ground (gold kickers)             4.89  floor 4.5
+  ok    secondary on card (gold kickers)               4.52  floor 4.5
+  ok    muted on panel (mono captions, 3:1)            3.60  floor 3
+  ok    cta ink on energy (buttons)                    4.80  floor 4.5
+  ok    energy-bright on panel (series, legend)        6.28  floor 4.5
+  ok    series-gold on panel (series, 3:1)             3.35  floor 3
+  ok    series primary/gold, normal dE                27.93  floor 14
+  ok    series primary/gold, deuteranope dE           20.91  floor 10
+  warn  series primary/energy-bright, normal dE       13.04  floor 14
+  warn  series primary/energy-bright, deuteranope dE   9.94  floor 10
+  ok    series gold/energy-bright, normal dE          15.52  floor 14
+  ok    series gold/energy-bright, deuteranope dE     11.29  floor 10
+
+dark: ground #120F12  panel #1C161B  text #EFE4E6  primary #BD5268  secondary #D1AC55  energy #B4561A
+  derived: primary-text #D08998  series-gold #D1AC55  energy-bright #C07243  muted #8A8185  card #312B2F
+  ok    text on ground (body, AAA)                    15.33  floor 7
+  ok    text on panel (card body, AAA)                14.33  floor 7
+  ok    primary-text on panel (details, links)         6.56  floor 4.5
+  ok    primary-text on ground (kickers)               7.02  floor 4.5
+  ok    primary-text on card (module tags, prices)     5.12  floor 4.5
+  ok    primary on panel (display, strokes, 3:1)       3.87  floor 3
+  ok    primary on ground (h1 accent, 3:1)             4.14  floor 3
+  ok    primary on card (strokes, dots, 3:1)           3.02  floor 3
+  ok    secondary on ground (gold kickers)             8.84  floor 4.5
+  ok    secondary on card (gold kickers)               6.44  floor 4.5
+  ok    muted on panel (mono captions, 3:1)            4.71  floor 3
+  ok    cta ink on energy (buttons)                    4.80  floor 4.5
+  ok    energy-bright on panel (series, legend)        4.87  floor 4.5
+  ok    series-gold on panel (series, 3:1)             8.26  floor 3
+  ok    series primary/gold, normal dE                23.93  floor 14
+  ok    series primary/gold, deuteranope dE           10.57  floor 10
+  warn  series primary/energy-bright, normal dE       10.39  floor 14
+  warn  series primary/energy-bright, deuteranope dE   3.05  floor 10
+  ok    series gold/energy-bright, normal dE          14.92  floor 14
+  warn  series gold/energy-bright, deuteranope dE      8.48  floor 10
+
+usage: text painted with var(--primary) outside the display allowlist
+  ok    none outside the allowlist
+
+tsx: shape classes on <text>, and canvas text filled with PAL.primary
+  ok    none
+
+palette-check: contrast clean; 5 separation floor(s) under, each accepted on the record (ACCEPTED in this file; --strict to block).
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+
+ RUN  v2.1.9 /home/daniel/hq/rigs/cardon-digital-4139
+
+ ✓ lib/pricing.test.ts (179 tests) 128ms
+ ✓ components/pages/demos/cellar.test.ts (40 tests) 222ms
+ ✓ lib/i18n/precios.test.ts (28 tests) 43ms
+ ✓ components/site/Media.test.tsx (135 tests) 83ms
+ ✓ components/pages/showcase/showcase.test.ts (30 tests) 120ms
+ ✓ components/pages/demos/demos.test.ts (72 tests) 205ms
+ ✓ app/[locale]/work/monte-xanic/case-page.test.ts (16 tests) 132ms
+ ✓ components/pages/demos/fortnight.test.ts (34 tests) 662ms
+ ✓ components/pages/estilos/sceneMedia.test.ts (51 tests) 46ms
+ ✓ app/[locale]/work/enkanto/enkanto-case.test.ts (67 tests) 214ms
+ ✓ app/[locale]/demos/page.test.tsx (31 tests) 24ms
+ ✓ components/contact/HalftoneSunset.test.tsx (19 tests) 92ms
+ ✓ app/[locale]/industries/winery/winery-page.test.ts (13 tests) 462ms
+   ✓ the emphasis a visitor actually sees > es: serves at most 3 emphasis spans 412ms
+ ✓ app/routes.test.ts (16 tests) 16ms
+ ✓ lib/i18n/banned-copy.test.ts (53 tests) 403ms
+ ✓ middleware.test.ts (15 tests) 29ms
+ ✓ components/pages/case/SpotlightFrames.test.ts (6 tests) 7ms
+ ✓ lib/contact/mail.test.ts (7 tests) 16ms
+ ✓ lib/builder.test.ts (14 tests) 61ms
+ ✓ components/pages/services/ReachMap.test.tsx (5 tests) 83ms
+ ✓ components/pages/demos/stage/clock.test.ts (10 tests) 61ms
+ ✓ components/pages/demos/source.test.ts (69 tests) 998ms
+ ✓ components/pages/home/DigitalArc.test.tsx (6 tests) 111ms
+ ✓ components/pages/services/SiteRise.test.ts (6 tests) 6ms
+ ✓ components/pages/services/FlowCompress.test.ts (6 tests) 85ms
+ ✓ components/pages/demos/produccion.test.ts (16 tests) 952ms
+ ✓ lib/i18n/no-factura.test.ts (24 tests) 21ms
+ ✓ app/[locale]/demo/page.test.tsx (5 tests) 53ms
+ ✓ components/pages/modulos/BridgeMap.test.ts (2 tests) 5ms
+ ✓ lib/onscreen.test.ts (218 tests) 1819ms
+stdout | components/consent/ConversionListeners.test.tsx > the three actions the privacy notice says are counted > counts a contact link that opens the visitor's email client
+[analytics] contact_submit { sent: true, reason: 'ga4 only', method: 'email' }
+
+stdout | components/consent/ConversionListeners.test.tsx > the three actions the privacy notice says are counted > counts opening WhatsApp and opening the booking link, once each
+[analytics] whatsapp_click { sent: true, reason: 'ga4 only', source: 'href' }
+[analytics] booking_click { sent: true, reason: 'ga4 only', source: 'href' }
+
+stdout | components/consent/ConversionListeners.test.tsx > the three actions the privacy notice says are counted > counts none of them without consent, which is what the notice promises
+[analytics] contact_submit { sent: false, reason: 'consent not granted', method: 'email' }
+[analytics] whatsapp_click { sent: false, reason: 'consent not granted', source: 'href' }
+[analytics] booking_click { sent: false, reason: 'consent not granted', source: 'href' }
+
+ ✓ components/consent/ConversionListeners.test.tsx (4 tests) 49ms
+stdout | components/contact/ContactForm.test.tsx > the contact form as a counted conversion > reports exactly one conversion for a delivered message
+[analytics] contact_submit { sent: true, reason: 'ga4 and ads', method: 'form' }
+
+stdout | components/contact/ContactForm.test.tsx > the contact form as a counted conversion > reports nothing when consent was denied
+[analytics] contact_submit { sent: false, reason: 'consent not granted', method: 'form' }
+
+stdout | components/contact/ContactForm.test.tsx > the contact form as a counted conversion > reports nothing while the question is still unanswered
+[analytics] contact_submit { sent: false, reason: 'consent not granted', method: 'form' }
+
+stdout | components/contact/ContactForm.test.tsx > the contact form as a counted conversion > stays one conversion for a visitor who fixes a field and tries again
+[analytics] contact_submit { sent: true, reason: 'ga4 and ads', method: 'form' }
+
+stdout | components/contact/ContactForm.test.tsx > the privacy notice against what leaves the browser > posts exactly the fields the notice describes, and nothing else
+[analytics] contact_submit { sent: true, reason: 'ga4 and ads', method: 'form' }
+
+stdout | components/contact/ContactForm.test.tsx > the privacy notice against what leaves the browser > sends the two fields the notice does not name as empty
+[analytics] contact_submit { sent: true, reason: 'ga4 and ads', method: 'form' }
+
+ ✓ components/contact/ContactForm.test.tsx (16 tests) 494ms
+ ✓ app/[locale]/ads-claim.test.ts (9 tests) 6331ms
+   ✓ every served ads claim carries the policy lib/pricing.ts sets > finds every dictionary, and every lib/i18n file that is not machinery is one 436ms
+   ✓ every served ads claim carries the policy lib/pricing.ts sets > no component or route source holds an ads sentence of its own that would fail as a served block 2879ms
+   ✓ every served ads claim carries the policy lib/pricing.ts sets > es: the home page still makes the claim this suite was written for 998ms
+   ✓ every served ads claim carries the policy lib/pricing.ts sets > es: every ads offer says the fee is per contact, and nothing calls it flat, invents a figure, claims a share of spend or another minimum 605ms
+   ✓ every served ads claim carries the policy lib/pricing.ts sets > en: the home page still makes the claim this suite was written for 647ms
+   ✓ every served ads claim carries the policy lib/pricing.ts sets > en: every ads offer says the fee is per contact, and nothing calls it flat, invents a figure, claims a share of spend or another minimum 695ms
+ ✓ components/site/field/fieldKit.test.ts (64 tests) 12870ms
+   ✓ the loose animations > rejilla draws on a wide hero, light, with finite numbers and leaves the canvas clean 306ms
+   ✓ the loose animations > corrientes draws on a wide hero, light, with finite numbers and leaves the canvas clean 553ms
+   ✓ the loose animations > corrientes draws on a wide hero, dark, with finite numbers and leaves the canvas clean 599ms
+   ✓ the loose animations > corrientes draws on a wide band, light, with finite numbers and leaves the canvas clean 533ms
+   ✓ the loose animations > corrientes draws on a wide band, dark, with finite numbers and leaves the canvas clean 533ms
+   ✓ the loose animations > corrientes draws on a tall scene, light, with finite numbers and leaves the canvas clean 515ms
+   ✓ the loose animations > corrientes draws on a tall scene, dark, with finite numbers and leaves the canvas clean 582ms
+   ✓ the loose animations > medanos draws on a wide band, light, with finite numbers and leaves the canvas clean 356ms
+   ✓ the loose animations > medanos draws on a wide band, dark, with finite numbers and leaves the canvas clean 410ms
+   ✓ the loose animations > scales what a drawing carries with its density and stays finite 2657ms
+ ✓ components/pages/demos/contract.test.tsx (142 tests) 111247ms
+   ✓ every demo component, mounted > HospitalidadDemo.tsx > tells the story from the top, parks on the standing frame, and resumes from it 5547ms
+   ✓ every demo component, mounted > HospitalidadDemo.tsx > a tap changes the selection and nothing about the time 3132ms
+   ✓ every demo component, mounted > HospitalidadDemo.tsx > tells the same story on a page opened at another time, on another day, with other luck 10481ms
+   ✓ every demo component, mounted > HospitalidadDemo.tsx > a theme change or a window resize changes the picture and nothing about the time 951ms
+   ✓ every demo component, mounted > HospitalidadDemo.tsx > mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser 5605ms
+   ✓ every demo component, mounted > HospitalidadDemo.tsx > rewrites nothing whose box is not held open by ghosts, and the words are the reading's 5213ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > tells the story from the top, parks on the standing frame, and resumes from it 2946ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > a tap changes the selection and nothing about the time 1910ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > tells the same story on a page opened at another time, on another day, with other luck 6203ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > a theme change or a window resize changes the picture and nothing about the time 779ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser 3199ms
+   ✓ every demo component, mounted > ProduccionDemo.tsx > rewrites nothing whose box is not held open by ghosts, and the words are the reading's 2999ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > tells the story from the top, parks on the standing frame, and resumes from it 2222ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > a tap changes the selection and nothing about the time 1087ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > tells the same story on a page opened at another time, on another day, with other luck 3645ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > a theme change or a window resize changes the picture and nothing about the time 438ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > mounts nothing that moves by itself: only elements that stand still, and no animation handed to the browser 2204ms
+   ✓ every demo component, mounted > RestauranteDemo.tsx > rewrites nothing whose box is not held open by ghosts, and the words are the reading's 2021ms
+   ✓ the checks are load bearing > fails the s-5836 cellar on each of the five things it does 510ms
+   ✓ the checks are load bearing > passes the s-2e55 tap demo, because a scene built on every render no longer reaches the clock 529ms
+   ✓ the checks are load bearing > fails the s-2e55 SVG bar, a second loop beside the stage that asks nobody whether it may run 365ms
+   ✓ the checks are load bearing > fails a board that sets styles and paints nothing 411ms
+   ✓ the checks are load bearing > fails a demo that remounts its figure on every tap, the one way left to restart the story 477ms
+   ✓ the checks are load bearing > fails a draw that leaves a transform on the context, and takes a frozen scene 410ms
+   ✓ the checks are load bearing > fails the s-1022 wall clock, a draw() with no memory that reads the page's clock 326ms
+   ✓ the checks are load bearing > fails a clock captured at the top of the file, before any page existed 323ms
+   ✓ the checks are load bearing > fails the s-1022 figure keyed on the theme event, and the one keyed on a tap 658ms
+   ✓ the checks are load bearing > fails the s-1022 scene that reads back the DOM the stage wrote 705ms
+   ✓ the checks are load bearing > fails the s-1022 scene that is pure per reading and counts its layouts 320ms
+   ✓ the checks are load bearing > fails a scene that latches the first reading a tap in mid-story shows it 315ms
+   ✓ the checks are load bearing > fails a caption written by a clock of the demo's own, in values the ghosts do reserve 338ms
+   ✓ the checks are load bearing > fails a remounting figure whose hotspots are divs with role=button 309ms
+   ✓ the checks are load bearing > fails a demo that has only the payoff for every selection but the first 314ms
+   ✓ the checks are load bearing > fails a hint sentence the demo renders itself, with an inline tag beside the words 316ms
+   ✓ the checks are load bearing > fails a demo with one thing to operate, whose tap nothing can be compared against 454ms
+   ✓ the checks are load bearing > fails a draw() that moves by a formatter asked for now, in the sweep only 729ms
+   ✓ the checks are load bearing > fails a draw() that moves by formatToParts asked for now, in the sweep only 745ms
+   ✓ the checks are load bearing > fails a draw() that asks for a formatter and has not used the answer yet 918ms
+   ✓ the checks are load bearing > fails a board that draws a film, which plays whether or not it is on the page 387ms
+   ✓ the checks are load bearing > passes the reference and the tap demo under StrictMode, where every effect runs twice 12656ms
+   ✓ the checks are load bearing > passes the reference demo on every check, so the checks describe what ships 12184ms
+
+ Test Files  35 passed (35)
+      Tests  1428 passed (1428)
+   Start at  19:03:58
+   Duration  115.40s (transform 5.68s, setup 0ms, collect 12.65s, tests 138.15s, environment 1.07s, prepare 3.62s)
+
+
+> cardon-digital@0.1.0 copy:check:test
+> node --test 'scripts/**/*.test.mjs'
+
+✔ extraction: splits the en and es objects (2.999117ms)
+✔ extraction: an apostrophe inside a double quoted string does not open a string (0.283767ms)
+✔ extraction: prose in comments is not counted as copy (2.270973ms)
+✔ extraction: a template literal contributes its text, not its substitution (0.396959ms)
+✔ extraction: every top level en/es declaration feeds its locale (0.264418ms)
+✔ extraction: escapes decode and emphasis markers are not words (0.345192ms)
+✔ extraction: a page with no matching locale object fails loudly (0.353289ms)
+✔ extraction: an object type annotation is not mistaken for the copy (0.188486ms)
+✔ extraction: export const is read like const (0.245535ms)
+✔ extraction: quoted and computed keys are keys, not copy (0.555238ms)
+✔ extraction: a scalar or array locale declaration is read, not skipped (0.205945ms)
+✔ extraction: a regex literal inside a substitution does not end it early (0.252401ms)
+✔ extraction: an initializer copy-check cannot read is a loud error, not a silent zero (0.268208ms)
+✔ words: a page at its locale budget passes (0.432772ms)
+✔ words: a page over its target is reported with both numbers (0.404034ms)
+✔ words: each locale carries its own budget, so the shorter one gets no headroom (0.302968ms)
+✔ bold: three spans pass (0.232964ms)
+✔ bold: four spans fail (0.176614ms)
+✔ bold: the accent marker counts too, so the sed bypass is closed (0.23518ms)
+✔ bold: a stray marker is reported per string, so two of them do not cancel out (0.29965ms)
+✔ bold: an unclosed span inside one string fails as malformed (0.213328ms)
+✔ bold: counting matches what rich.tsx renders (0.157369ms)
+✔ negative contrast: ", not" fails in en (0.208237ms)
+✔ negative contrast: "not just" fails in en (0.126807ms)
+✔ negative contrast: "not another" fails in en (0.130711ms)
+✔ negative contrast: "never a" fails in en (0.172477ms)
+✔ negative contrast: "not X but Y" fails in en (0.116711ms)
+✔ negative contrast: "no es/son + article" fails in es (0.118338ms)
+✔ negative contrast: "no es/son + article" fails in es (0.120448ms)
+✔ negative contrast: "no solo" fails in es (0.241161ms)
+✔ negative contrast: "no solo" fails in es (0.116782ms)
+✔ negative contrast: ", sino" fails in es (0.169552ms)
+✔ negative contrast: "no otra" fails in es (0.104829ms)
+✔ negative contrast: "no otro" fails in es (0.133153ms)
+✔ negative contrast: honest prose passes (0.900644ms)
+✔ negative contrast: word boundaries keep honest Spanish out of it (0.169162ms)
+✔ negative contrast: honest Spanish negation passes: Para deducir un gasto en Mexico ha... (0.153087ms)
+✔ negative contrast: honest Spanish negation passes: Vender del otro lado de la fronter... (0.098127ms)
+✔ negative contrast: honest Spanish negation passes: Vista ilustrativa, no son datos de... (0.088915ms)
+✔ negative contrast: honest Spanish negation passes: Si el total no es correcto, revise... (0.170443ms)
+✔ negative contrast: honest Spanish negation passes: Un grupo que opera varias no es pa... (0.097023ms)
+✔ negative contrast: the narrowed Spanish rule still catches the real tells (0.243443ms)
+✔ negative contrast: the plain negation advisory does not double report an article hit (0.122757ms)
+✔ negative contrast: a hit reports the locale, the shape and the text (0.211221ms)
+✔ allowlist: the exact string is exempt and nothing else is (0.347583ms)
+✔ allowlist: one deliberate line reused across entries counts once, not once per use (0.269142ms)
+✔ allowlist: an entry that no longer carries a contrast is reported as stale (0.138342ms)
+✔ allowlist: one entry per page per locale validates, two do not (0.205854ms)
+✔ allowlist: an unknown page or locale is a config error (0.163403ms)
+✔ allowlist: a malformed allowlist is a reported config error, never a throw (0.159953ms)
+✔ advisory: rather than and instead of are reported and never block (0.173575ms)
+✔ em dash: a hyphen passes and an em dash fails (0.811739ms)
+✔ cli: no arguments is a usage error (0.285832ms)
+✔ cli: an unknown page is a usage error (0.111274ms)
+✔ cli: --all does not take page names (0.090311ms)
+✔ cli: a config error exits 2 and never throws (0.299686ms)
+✔ cli: the shipped allowlist is within the doctrine's cap (0.076687ms)
+✔ budget table: every page has a dictionary with both locales (12.900678ms)
+✔ budget table: every target is below what its page measured when the doctrine landed (0.172165ms)
+✔ words: the budget is advisory, so a page over it reports and never blocks (0.498958ms)
+✔ words: a rewritten page is clean and is never told to edit the budget table (0.210718ms)
+✔ negative contrast: not X but Y blocks in its general form (0.18916ms)
+✔ negative contrast: the widened rule stays inside one clause (0.18969ms)
+✔ allowlist: the cap counts contrast occurrences, not array entries (0.257513ms)
+✔ extraction: a nested value that is not a literal is a loud error (0.263819ms)
+✔ extraction: a spread inside a dictionary is a loud error (0.115596ms)
+✔ extraction: numbers, booleans and null are not copy and read clean (0.171242ms)
+✔ extraction: a dictionary naming another locale declaration is not an error (0.174025ms)
+✔ extraction: an array entry is held to the same rule as a key's value (0.113023ms)
+✔ extraction: a template substitution is code, not a dictionary (0.181544ms)
+✔ allowlist: two shapes matching the same words are one contrast (0.131645ms)
+✔ extraction: a template that is nothing but a substitution is a loud error (0.098883ms)
+✔ extraction: a shorthand property is held to the same rule as a written one (0.138415ms)
+✔ extraction: a locale may only name its own declarations (0.100848ms)
+✔ extraction: decimal numbers are not copy either (0.094699ms)
+✔ a file that stays is not a removal (2.685628ms)
+✔ a file that leaves the tree is a removal (0.216439ms)
+✔ a file added on the branch is not a removal (0.14557ms)
+✔ a RETIRED entry covers exactly its own path (0.235991ms)
+✔ an entry whose file is still here is a note, not a failure (0.280445ms)
+✔ an entry whose file left before this branch is historical, not a failure (0.181469ms)
+✔ removals are reported in a stable order (0.139719ms)
+✔ the shipped RETIRED list is well formed (0.217727ms)
+✔ a malformed RETIRED entry is a config error, never a throw (0.294643ms)
+✔ main exits 2 on a malformed RETIRED list rather than checking anything (3.805851ms)
+✔ main exits 2 when --base is given no ref (0.177907ms)
+✔ a plain unstaged rm fails, which a staged diff filter does not see (49.167277ms)
+✔ a rename out of the tree fails, which git reports as a rename (34.291611ms)
+✔ an untouched repository is clean (29.197515ms)
+✔ lineCount counts source lines, not blank ones (0.110562ms)
+✔ substance is empty for a file whose source is only comments (0.267685ms)
+✔ markupCount counts opening tags, and not a less-than comparison (0.131343ms)
+✔ similarity is git's measure: shared source lines over the larger file (0.116173ms)
+✔ a move inside the tree is a note, not a failure (0.969191ms)
+✔ a move that keeps most of the file is still a move (0.284417ms)
+✔ a deletion dressed as a move fails, because nothing of it survived (0.225748ms)
+✔ emptying a file in place is a deletion with the name left behind (1.449634ms)
+✔ gutting a component down to a shell that still parses is a deletion too (0.286236ms)
+✔ a file that never had markup cannot be gutted (0.183701ms)
+✔ a visual that merely got smaller is a note, never a failure (0.314234ms)
+✔ a RETIRED entry covers its file being emptied as well as removed (0.141303ms)
+✔ a file the caller did not read is never a failure (0.115704ms)
+✔ git mv inside the tree passes, which the path set alone did not (29.600114ms)
+✔ an emptied file fails against real git, naming the file and the line count (25.62532ms)
+✔ the four faculties are read off a real visual (0.260639ms)
+✔ a stub that keeps ONE element does not clear the rule (s-48db case E) (0.560942ms)
+✔ ...and neither does one that keeps THREE (0.322005ms)
+✔ a re-export in place of a component is the same hole (s-48db case F) (0.33565ms)
+✔ a small visual is judged by what it lost, never by a ratio (0.158656ms)
+✔ killing the animation loop is a deletion, with every line kept (s-48db case G) (0.280912ms)
+✔ an animation driver is counted on its own, never pooled into a total (0.264118ms)
+✔ a canvas that stops taking a context has lost its drawing (0.327366ms)
+✔ commenting a component out is deleting it, not keeping it (0.337996ms)
+✔ a body that collapses to a fraction of itself is gutted, markup or not (0.481091ms)
+✔ a faculty that moved to another file under the tree is a note, not a failure (0.575549ms)
+✔ ...and a line the other file always had rescues nothing (0.703601ms)
+✔ lostLines is the unit a faculty moves in, and facultyMoved needs it to be new (0.160958ms)
+✔ a file on this disk and out of the index is gone (s-48db case K) (0.178404ms)
+✔ an unstaged rm is still a removal, which is why the disk is read at all (0.128879ms)
+✔ a rename onto a dead extension is a deletion (s-48db cases H and I) (0.199129ms)
+✔ isLiveSource is about what the build compiles (0.091873ms)
+✔ a recorded deletion needs a recorded arrival, an unstaged one does not (0.270524ms)
+✔ a rescued move is measured at its destination (s-48db case J) (0.694729ms)
+✔ RETIRED still covers every shape, which is the only way out (0.208142ms)
+✔ git rm --cached plus a .gitignore line fails against real git (36.280138ms)
+✔ a git mv onto .tsx.bak fails against real git (34.316344ms)
+✔ an unstaged cp then rm still passes against real git (27.160767ms)
+✔ the animation cut out in place fails against real git (24.949059ms)
+✔ VISUALS_BASE says so, because it is an off switch (36.975442ms)
+✔ the npm scripts a worker runs invoke the guard (0.345277ms)
+✔ node scripts/copy-check.mjs <page> fails on a deleted visual (165.351673ms)
+✔ a copy parked on a dead extension does not rescue a gutting (s-4009 case AC) (0.342302ms)
+✔ an untracked sibling rescues a gutting still in progress on disk (s-4009 case AB, unrecorded) (0.284801ms)
+✔ an untracked sibling does not rescue a gutting HEAD or the index records (s-7729 G1) (0.397368ms)
+✔ rule 6 keeps the counterweight it was added to: a tracked helper still rescues (0.21191ms)
+✔ facultyMoved applies rule 4's two tests itself (0.217989ms)
+✔ the recorded part of a loss is each version's own gutting, or nothing (0.664769ms)
+✔ each version's loss is scored on its own, never pooled with another's (s-5993) (0.174769ms)
+✔ a faculty in the residual band is a note even when the line count does not move (0.328582ms)
+✔ the shrink note leads with the faculties and puts the line count last (0.193948ms)
+✔ a faculty too small for a ratio to mean anything is not a note (0.108578ms)
+✔ a gutting committed with its imported helper left untracked fails, and says git add (G1) (43.635717ms)
+✔ the same with the helper gitignored fails too, which the disk cannot see (G1i) (36.806902ms)
+✔ the gutting staged and its helper not is one tree, and it fails with git add (G1s, H1s) (31.425009ms)
+✔ a committed gutting is not unrecorded by an unrelated unstaged edit on top (38.867805ms)
+✔ an extraction tested before anything is staged passes, in any directory (H2, H3, s-1ae3 F1) (78.918208ms)
+✔ the helper staged and the call site not passes, and so does a committed extraction edited on top (H3s, H4) (76.278064ms)
+✔ a gutting committed into a helper whose committed copy is a stub fails, and says git add (s-01c6 A1) (43.779862ms)
+✔ the same staged instead of committed fails too (s-01c6 A1s) (39.182305ms)
+✔ a helper committed with part of the body does not rescue all of it (s-01c6 A1p) (43.48281ms)
+✔ a stub helper filled and committed with its call site passes, and so does one filled on disk only (81.510801ms)
+✔ a partial gutting committed with a partial helper fails however the disk finishes it (s-5993 X1) (46.170398ms)
+✔ the same staged instead of committed fails too, since git commit ships it (s-5993 X1s) (31.803289ms)
+✔ the partial extraction finished and committed whole passes (s-5993 X1 control) (48.928753ms)
+✔ a small committed edit under an extraction still on disk is not a recorded gutting (s-5993) (35.540451ms)
+ℹ tests 155
+ℹ suites 0
+ℹ pass 155
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1282.792141
+npm test=0

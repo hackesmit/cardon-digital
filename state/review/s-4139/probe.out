@@ -1,0 +1,23 @@
+PASS  motion  the page really is in this mode (matchMedia false)
+PASS  motion  idle builder paints no frames (4 -> 4)
+PASS  motion  a tick changes the drawing
+PASS  motion  the loop stops once settled (125 -> 125)
+PASS  motion  animates: the first frame is not the end state
+PASS  motion  the wave ran (5 paints in 80ms)
+PASS  motion  the mode switch recolours the band live
+PASS  motion  and costs one repaint, not a loop (1)
+PASS  motion  the page moved from light to dark mode
+PASS  reduced the page really is in this mode (matchMedia true)
+PASS  reduced idle builder paints no frames (4 -> 4)
+PASS  reduced a tick changes the drawing
+PASS  reduced the loop stops once settled (5 -> 5)
+PASS  reduced jumps straight to the target: the first frame already is the end state
+PASS  reduced one paint for the change, no animation (1)
+PASS  reduced the mode switch recolours the band live
+PASS  reduced and costs one repaint, not a loop (1)
+PASS  reduced the page moved from light to dark mode
+PASS  dpr 1: backing store 1130 for a 1130px box (expected 1130)
+PASS  dpr 2: backing store 2260 for a 1130px box (expected 2260)
+PASS  dpr 3: backing store 2260 for a 1130px box (expected 2260)
+
+all checks passed
