@@ -1,0 +1,122 @@
+
+> cardon-digital@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.35
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+./app/[locale]/demos/page.tsx
+96:23  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./app/[locale]/work/enkanto/page.tsx
+159:13  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/pages/case/VineyardMap.tsx
+383:6  Warning: React Hook useEffect has missing dependencies: 't.below', 't.heat', 't.meets', 't.quality', 't.sample', 't.sectionWord', 't.vsStandard', and 't.water'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/pages/demos/contract.test.tsx
+691:87  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/pages/estilos/SceneMedia.tsx
+63:9  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/pages/home/HeroAssembly.tsx
+739:6  Warning: React Hook useEffect has missing dependencies: 't.connecting', 't.docs', 't.oneSystem', 't.panelSummary', 't.panelTitle', and 't.rows'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/pages/services/FlowCompress.tsx
+375:6  Warning: React Hook useEffect has missing dependencies: 't.long', 't.short', and 't.unit'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/pages/winery/VineField.tsx
+1118:6  Warning: React Hook useEffect has a missing dependency: 't'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+
+./components/site/Media.tsx
+661:5  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+./components/site/SiteShell.tsx
+36:7  Warning: Do not use `<head>` element. Use `<Head />` from `next/head` instead. See: https://nextjs.org/docs/messages/no-head-element  @next/next/no-head-element
+
+./lib/testing/loopholes/demos/TapWindowDemo.tsx
+40:94  Warning: React Hook useMemo has an unnecessary dependency: 'picked'. Either exclude it or remove the dependency array.  react-hooks/exhaustive-deps
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+   Collecting page data ...
+   Generating static pages (0/41) ...
+   Generating static pages (10/41) 
+   Generating static pages (20/41) 
+   Generating static pages (30/41) 
+ ✓ Generating static pages (41/41)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ○ /_not-found                          333 B          87.8 kB
+├ ● /[locale]                            19.9 kB         136 kB
+├   ├ /es
+├   └ /en
+├ ● /[locale]/about                      217 B           101 kB
+├   ├ /es/about
+├   └ /en/about
+├ ● /[locale]/anuncios                   9.41 kB         121 kB
+├   ├ /es/anuncios
+├   └ /en/anuncios
+├ ● /[locale]/coming-soon                187 B          87.7 kB
+├   ├ /es/coming-soon
+├   └ /en/coming-soon
+├ ● /[locale]/contacto                   8.91 kB         132 kB
+├   ├ /es/contacto
+├   └ /en/contacto
+├ ● /[locale]/demo                       195 B          96.4 kB
+├   ├ /es/demo
+├   └ /en/demo
+├ ● /[locale]/demos                      566 B          96.8 kB
+├   ├ /es/demos
+├   └ /en/demos
+├ ● /[locale]/estilos                    1.42 kB         118 kB
+├   ├ /es/estilos
+├   └ /en/estilos
+├ ● /[locale]/industries/winery          16 kB           132 kB
+├   ├ /es/industries/winery
+├   └ /en/industries/winery
+├ ● /[locale]/precios                    711 B           128 kB
+├   ├ /es/precios
+├   └ /en/precios
+├ ● /[locale]/privacy                    189 B          87.7 kB
+├   ├ /es/privacy
+├   └ /en/privacy
+├ ● /[locale]/sitios-web                 10 kB           114 kB
+├   ├ /es/sitios-web
+├   └ /en/sitios-web
+├ ● /[locale]/software                   6.77 kB         115 kB
+├   ├ /es/software
+├   └ /en/software
+├ ● /[locale]/terms                      189 B          87.7 kB
+├   ├ /es/terms
+├   └ /en/terms
+├ ● /[locale]/work/enkanto               514 B           101 kB
+├   ├ /es/work/enkanto
+├   └ /en/work/enkanto
+├ ● /[locale]/work/monte-xanic           10.6 kB         111 kB
+├   ├ /es/work/monte-xanic
+├   └ /en/work/monte-xanic
+├ ƒ /api/contact                         0 B                0 B
+├ ○ /apple-icon.png                      0 B                0 B
+├ ○ /icon.svg                            0 B                0 B
+├ ○ /manifest.webmanifest                0 B                0 B
+├ ○ /robots.txt                          0 B                0 B
+└ ○ /sitemap.xml                         0 B                0 B
++ First Load JS shared by all            87.5 kB
+  ├ chunks/2117-0636987d3e635f67.js      31.7 kB
+  ├ chunks/fd9d1056-fd575e9b111efec0.js  53.6 kB
+  └ other shared chunks (total)          2.13 kB
+
+
+ƒ Middleware                             27 kB
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses getStaticProps)
+ƒ  (Dynamic)  server-rendered on demand
+
+exit=0

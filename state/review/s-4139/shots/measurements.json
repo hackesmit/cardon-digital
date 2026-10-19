@@ -1,0 +1,954 @@
+[
+  {
+    "id": "1440-light-precios-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      1130,
+      180
+    ],
+    "deviceSize": [
+      1130,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3438,
+    "meanAlpha": 19.53,
+    "inkByRow": [
+      0.361,
+      0.347,
+      0.34,
+      0.342,
+      0.332,
+      0.335,
+      0.35,
+      0.348,
+      0.343,
+      0.34
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-light-precios-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      1130,
+      180
+    ],
+    "deviceSize": [
+      1130,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.4196,
+    "meanAlpha": 28.34,
+    "inkByRow": [
+      0.361,
+      0.347,
+      0.34,
+      0.352,
+      0.337,
+      0.352,
+      0.492,
+      0.488,
+      0.555,
+      0.571
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "1440-light-precios-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      1130,
+      180
+    ],
+    "deviceSize": [
+      1130,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5261,
+    "meanAlpha": 53.63,
+    "inkByRow": [
+      0.543,
+      0.471,
+      0.42,
+      0.414,
+      0.35,
+      0.345,
+      0.572,
+      0.607,
+      0.748,
+      0.791
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-light-contacto-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      596,
+      180
+    ],
+    "deviceSize": [
+      596,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3443,
+    "meanAlpha": 19.54,
+    "inkByRow": [
+      0.361,
+      0.348,
+      0.34,
+      0.343,
+      0.332,
+      0.336,
+      0.35,
+      0.349,
+      0.344,
+      0.34
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-light-contacto-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      596,
+      180
+    ],
+    "deviceSize": [
+      596,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.4295,
+    "meanAlpha": 30.98,
+    "inkByRow": [
+      0.361,
+      0.348,
+      0.341,
+      0.359,
+      0.356,
+      0.383,
+      0.516,
+      0.494,
+      0.56,
+      0.577
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "1440-light-contacto-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      596,
+      180
+    ],
+    "deviceSize": [
+      596,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5399,
+    "meanAlpha": 58.59,
+    "inkByRow": [
+      0.542,
+      0.466,
+      0.415,
+      0.437,
+      0.383,
+      0.387,
+      0.606,
+      0.615,
+      0.752,
+      0.795
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-dark-precios-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      1130,
+      180
+    ],
+    "deviceSize": [
+      1130,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.349,
+    "meanAlpha": 21.66,
+    "inkByRow": [
+      0.365,
+      0.354,
+      0.345,
+      0.347,
+      0.336,
+      0.341,
+      0.356,
+      0.352,
+      0.35,
+      0.344
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-dark-precios-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      1130,
+      180
+    ],
+    "deviceSize": [
+      1130,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.4259,
+    "meanAlpha": 30.7,
+    "inkByRow": [
+      0.365,
+      0.354,
+      0.346,
+      0.359,
+      0.344,
+      0.358,
+      0.497,
+      0.496,
+      0.561,
+      0.579
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "1440-dark-precios-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      1130,
+      180
+    ],
+    "deviceSize": [
+      1130,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5302,
+    "meanAlpha": 53.6,
+    "inkByRow": [
+      0.549,
+      0.478,
+      0.426,
+      0.42,
+      0.355,
+      0.349,
+      0.577,
+      0.61,
+      0.748,
+      0.791
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-dark-contacto-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      596,
+      180
+    ],
+    "deviceSize": [
+      596,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3485,
+    "meanAlpha": 21.68,
+    "inkByRow": [
+      0.364,
+      0.353,
+      0.345,
+      0.347,
+      0.336,
+      0.34,
+      0.355,
+      0.352,
+      0.35,
+      0.343
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "1440-dark-contacto-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      596,
+      180
+    ],
+    "deviceSize": [
+      596,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.4354,
+    "meanAlpha": 33.28,
+    "inkByRow": [
+      0.364,
+      0.353,
+      0.345,
+      0.366,
+      0.363,
+      0.389,
+      0.521,
+      0.501,
+      0.565,
+      0.587
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "1440-dark-contacto-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      596,
+      180
+    ],
+    "deviceSize": [
+      596,
+      178
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5437,
+    "meanAlpha": 58.52,
+    "inkByRow": [
+      0.547,
+      0.473,
+      0.421,
+      0.444,
+      0.388,
+      0.391,
+      0.609,
+      0.618,
+      0.752,
+      0.795
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 1440,
+      "clientWidth": 1440
+    },
+    "messages": []
+  },
+  {
+    "id": "390-light-precios-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3778,
+    "meanAlpha": 20.21,
+    "inkByRow": [
+      0.383,
+      0.391,
+      0.358,
+      0.385,
+      0.372,
+      0.386,
+      0.41,
+      0.345,
+      0.398,
+      0.349
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-light-precios-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.445,
+    "meanAlpha": 29.67,
+    "inkByRow": [
+      0.383,
+      0.391,
+      0.36,
+      0.403,
+      0.403,
+      0.427,
+      0.559,
+      0.45,
+      0.542,
+      0.53
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "390-light-precios-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5488,
+    "meanAlpha": 52.67,
+    "inkByRow": [
+      0.555,
+      0.52,
+      0.44,
+      0.467,
+      0.421,
+      0.436,
+      0.656,
+      0.526,
+      0.701,
+      0.765
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-light-contacto-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3778,
+    "meanAlpha": 20.21,
+    "inkByRow": [
+      0.383,
+      0.391,
+      0.358,
+      0.385,
+      0.372,
+      0.386,
+      0.41,
+      0.345,
+      0.398,
+      0.349
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-light-contacto-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.445,
+    "meanAlpha": 29.67,
+    "inkByRow": [
+      0.383,
+      0.391,
+      0.36,
+      0.403,
+      0.403,
+      0.427,
+      0.559,
+      0.45,
+      0.542,
+      0.53
+    ],
+    "overlappingText": [],
+    "hitTarget": null,
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "390-light-contacto-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5488,
+    "meanAlpha": 52.67,
+    "inkByRow": [
+      0.555,
+      0.52,
+      0.44,
+      0.467,
+      0.421,
+      0.436,
+      0.656,
+      0.526,
+      0.701,
+      0.765
+    ],
+    "overlappingText": [],
+    "hitTarget": null,
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-dark-precios-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3859,
+    "meanAlpha": 22.44,
+    "inkByRow": [
+      0.391,
+      0.4,
+      0.366,
+      0.394,
+      0.378,
+      0.395,
+      0.417,
+      0.354,
+      0.405,
+      0.358
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-dark-precios-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.4542,
+    "meanAlpha": 31.98,
+    "inkByRow": [
+      0.391,
+      0.4,
+      0.368,
+      0.415,
+      0.412,
+      0.437,
+      0.564,
+      0.466,
+      0.55,
+      0.539
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "390-dark-precios-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5548,
+    "meanAlpha": 53.26,
+    "inkByRow": [
+      0.564,
+      0.534,
+      0.445,
+      0.48,
+      0.426,
+      0.44,
+      0.661,
+      0.531,
+      0.702,
+      0.765
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-dark-contacto-0",
+    "fill": 0,
+    "ticked": {
+      "clicked": 0,
+      "lit": 0
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.3859,
+    "meanAlpha": 22.44,
+    "inkByRow": [
+      0.391,
+      0.4,
+      0.366,
+      0.394,
+      0.378,
+      0.395,
+      0.417,
+      0.354,
+      0.405,
+      0.358
+    ],
+    "overlappingText": [],
+    "hitTarget": "pb",
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  },
+  {
+    "id": "390-dark-contacto-3",
+    "fill": 3,
+    "ticked": {
+      "clicked": 3,
+      "lit": 3
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.4542,
+    "meanAlpha": 31.98,
+    "inkByRow": [
+      0.391,
+      0.4,
+      0.368,
+      0.415,
+      0.412,
+      0.437,
+      0.564,
+      0.466,
+      0.55,
+      0.539
+    ],
+    "overlappingText": [],
+    "hitTarget": null,
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": [
+      "warning: Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently"
+    ]
+  },
+  {
+    "id": "390-dark-contacto-6",
+    "fill": 6,
+    "ticked": {
+      "clicked": 6,
+      "lit": 6
+    },
+    "cssSize": [
+      352,
+      118
+    ],
+    "deviceSize": [
+      352,
+      116
+    ],
+    "pointerEvents": "none",
+    "ariaHidden": "true",
+    "inkFraction": 0.5548,
+    "meanAlpha": 53.26,
+    "inkByRow": [
+      0.564,
+      0.534,
+      0.445,
+      0.48,
+      0.426,
+      0.44,
+      0.661,
+      0.531,
+      0.702,
+      0.765
+    ],
+    "overlappingText": [],
+    "hitTarget": null,
+    "overflow": {
+      "scrollWidth": 390,
+      "clientWidth": 390
+    },
+    "messages": []
+  }
+]
