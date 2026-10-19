@@ -111,7 +111,7 @@ const en = {
       {
         num: "02",
         h: "Every number gets a place on the map.",
-        body: "Each reading sits on its block and row, so the team reads the vineyard alike.",
+        body: "Each reading is tied to its block and row, so the whole team sees the same vineyard.",
       },
       {
         num: "03",

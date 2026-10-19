@@ -46,7 +46,7 @@ const en = {
       {
         num: "03",
         h: "Get written to from a phone.",
-        body: "A WhatsApp button, the number to call and a short form, all within reach of a thumb. Every message is counted.",
+        body: "Instant messaging, the number to call and a short form, all within reach of a thumb. Every message is counted.",
       },
       {
         num: "04",
@@ -199,7 +199,7 @@ const es: typeof en = {
       {
         num: "03",
         h: "Que le escriban desde el teléfono.",
-        body: "Un botón de WhatsApp, el número para llamar y un formulario corto, todo al alcance del pulgar. Y cada mensaje se cuenta.",
+        body: "Mensaje directo, el número para llamar y un formulario corto, todo al alcance del pulgar. Y cada mensaje se cuenta.",
       },
       {
         num: "04",

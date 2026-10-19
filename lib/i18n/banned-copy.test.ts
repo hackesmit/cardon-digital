@@ -40,7 +40,8 @@ const EN: Rule[] = [
   { re: /in Mexican pesos/i, why: "a note that prices are quoted in Mexican pesos" },
   { re: /\bwe quote and charge\b/i, why: "a note that prices are quoted in Mexican pesos" },
   { re: /take the memo and go/i, why: "a line that encourages the reader to leave" },
-  { re: /\blands?\b/i, why: 'the word "lands" (Daniel dislikes it)' },
+  { re: /\bland(?:s|ed)\b/i, why: 'the word "lands" (Daniel dislikes it)' },
+  { re: /whatsapp button/i, why: 'name the function, not the app (Daniel: no "WhatsApp button")' },
   { re: /reads on a phone/i, why: 'the old phone line; say "works on any screen" or "optimized for mobile and desktop"' },
   { re: /published by what (?:it|they) include/i, why: 'the old pricing line; say "feature-based pricing"' },
 ];
@@ -52,6 +53,7 @@ const ES: Rule[] = [
   { re: /cotizamos y cobramos/i, why: "a note that prices are quoted in pesos" },
   { re: /se lleva el informe/i, why: "a line that encourages the reader to leave" },
   { re: /del otro lado de la l[ií]nea/i, why: "the old footer line about both sides of the border" },
+  { re: /bot[oó]n de whatsapp/i, why: 'name the function, not the app (Daniel: no "botón de WhatsApp")' },
   { re: /se lee (?:bien )?en el tel[eé]fono/i, why: 'the old phone line; say "se ve bien en cualquier pantalla"' },
   { re: /publicados? seg[uú]n lo que incluye/i, why: 'the old pricing line; say "precios por funciones"' },
   { re: /siguen funcionando cuando nos vamos/i, why: "the old Spanish brandline" },

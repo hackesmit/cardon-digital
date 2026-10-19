@@ -6,7 +6,7 @@ import type { Dict } from "./rich";
  * site's marketing voice, which reads as an invitation to argue rather than a
  * term). The content is the same as the voice it replaced; what changed is the
  * register and the numbering. The Spanish is the authoritative version and
- * addresses the reader as El Usuario, the form a Mexican contract uses.
+ * addresses the reader as el Usuario, the form a Mexican contract uses.
  *
  * Clause 2 states on its own that the ads fee is charged per contact, so
  * app/[locale]/ads-claim.test.ts needs no exemption for this page: a clause
@@ -22,7 +22,7 @@ const en = {
   },
   eyebrow: "Legal",
   title: "Terms of Service",
-  effective: "In force from 2026-07-21. Applicable to cardondigital.com.",
+  effective: "In force from 2026-10-19. Applicable to cardondigital.com.",
   intro:
     "These Terms of Service govern access to and use of the website cardondigital.com, operated by Cardon Digital. By accessing or using the site, the User accepts these terms in their entirety. A User who does not accept them must refrain from using the site.",
   sections: [
@@ -64,17 +64,17 @@ const es: typeof en = {
   },
   eyebrow: "Legal",
   title: "Términos de Servicio",
-  effective: "Vigentes a partir del 21 de julio de 2026. Aplicables a cardondigital.com.",
+  effective: "Vigentes a partir del 19 de octubre de 2026. Aplicables a cardondigital.com.",
   intro:
-    "Los presentes Términos de Servicio rigen el acceso y el uso del sitio cardondigital.com, operado por Cardon Digital. Al acceder al sitio o al usarlo, El Usuario acepta estos términos en su totalidad. El Usuario que no los acepte debe abstenerse de usar el sitio.",
+    "Los presentes Términos de Servicio rigen el acceso y el uso del sitio cardondigital.com, operado por Cardon Digital. Al acceder al sitio o al usarlo, el Usuario acepta estos términos en su totalidad. El Usuario que no los acepte debe abstenerse de usar el sitio.",
   sections: [
     {
       h: "1. Objeto y naturaleza del sitio",
-      body: "El sitio tiene carácter informativo. Sus páginas describen los servicios de Cardon Digital, su forma de trabajo y trabajos realizados con anterioridad. Ningún contenido del sitio constituye una oferta vinculante, una garantía de resultados ni asesoría profesional aplicable a las circunstancias particulares de El Usuario. Las imágenes ilustrativas no reproducen datos de clientes.",
+      body: "El sitio tiene carácter informativo. Sus páginas describen los servicios de Cardon Digital, su forma de trabajo y trabajos realizados con anterioridad. Ningún contenido del sitio constituye una oferta vinculante, una garantía de resultados ni asesoría profesional aplicable a las circunstancias particulares del Usuario. Las imágenes ilustrativas no reproducen datos de clientes.",
     },
     {
       h: "2. El Diagnóstico de Crecimiento y los trabajos contratados",
-      body: "El Diagnóstico de Crecimiento se presta sin costo y en los términos descritos en el sitio: un periodo determinado de revisión que concluye en un informe escrito, sin obligación para ninguna de las partes. Cualquier trabajo posterior, incluidos su alcance, su precio, la confidencialidad y el manejo de datos, se acuerda en una propuesta o un contrato escrito por separado, celebrado antes del inicio de los trabajos. Donde el sitio señala una cuota de implementación y una cuota mensual de servicio, con la base de los anuncios comprendida en la cuota mensual, el pago por contacto de los anuncios cobrado en el mes siguiente y sujeto a un tope mensual, y la inversión en anuncios pagada por El Usuario directamente a Google, el alcance exacto y los montos quedan determinados en ese acuerdo escrito. En caso de contradicción entre los presentes términos y un acuerdo firmado, prevalece el acuerdo firmado.",
+      body: "El Diagnóstico de Crecimiento se presta sin costo y en los términos descritos en el sitio: un periodo determinado de revisión que concluye en un informe escrito, sin obligación para ninguna de las partes. Cualquier trabajo posterior, incluidos su alcance, su precio, la confidencialidad y el manejo de datos, se acuerda en una propuesta o un contrato escrito por separado, celebrado antes del inicio de los trabajos. Donde el sitio señala una cuota de implementación y una cuota mensual de servicio, con la base de los anuncios comprendida en la cuota mensual, el pago por contacto de los anuncios cobrado en el mes siguiente y sujeto a un tope mensual, y la inversión en anuncios pagada por el Usuario directamente a Google, el alcance exacto y los montos quedan determinados en ese acuerdo escrito. En caso de contradicción entre los presentes términos y un acuerdo firmado, prevalece el acuerdo firmado.",
     },
     {
       h: "3. Propiedad intelectual",
