@@ -49,6 +49,12 @@ const FULL: BuilderSelection = {
 };
 
 describe("builderLevel", () => {
+  it("counts a doubled module once", () => {
+    expect(
+      builderLevel({ ...EMPTY_SELECTION, modules: ["produccion", "produccion"] as ModuleId[] })
+    ).toBeCloseTo(1 / LEVEL_SLOTS, 12);
+  });
+
   it("is 0 with nothing picked and 1 with everything", () => {
     expect(builderLevel(EMPTY_SELECTION)).toBe(0);
     expect(builderLevel(FULL)).toBe(1);

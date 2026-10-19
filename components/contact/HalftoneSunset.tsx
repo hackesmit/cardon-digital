@@ -52,7 +52,8 @@ export function builderLevel(s: BuilderSelection): number {
      cannot read above 1. */
   if (s.web !== null && s.care) n += 1;
   if (s.ads !== null) n += 1;
-  n += s.modules.filter((m) => moduleIds.includes(m)).length;
+  /* Unique valid ids only, so a doubled module cannot count twice. */
+  n += new Set(s.modules.filter((m) => moduleIds.includes(m))).size;
   return clamp(n, 0, LEVEL_SLOTS) / LEVEL_SLOTS;
 }
 
@@ -550,8 +551,9 @@ export default function HalftoneSunset({ level }: { level: number }) {
     const io = new IntersectionObserver(
       (entries) => {
         onscreen = clearsThreshold(entries[entries.length - 1], 0.05);
-        if (onscreen) run();
-        else stop();
+        /* Leaving lands on the end state, so a ripple never freezes mid-wave
+           on a sliver of band that is still on screen. */
+        run();
       },
       { threshold: 0.05 }
     );
@@ -559,8 +561,7 @@ export default function HalftoneSunset({ level }: { level: number }) {
 
     const onVisibility = () => {
       docVisible = !document.hidden;
-      if (docVisible) run();
-      else stop();
+      run();
     };
     const onMode = () => {
       readPalette();
@@ -571,6 +572,22 @@ export default function HalftoneSunset({ level }: { level: number }) {
       cache = null;
       run();
     };
+
+    /* ResizeObserver misses a pixel-density-only change (a window dragged to
+       another monitor), so watch the current density and re-arm on change. */
+    let dprMQ: MediaQueryList | null = null;
+    const onDpr = () => {
+      armDpr();
+      fit(Math.round(W), Math.round(H));
+      cache = null;
+      draw();
+    };
+    const armDpr = () => {
+      dprMQ?.removeEventListener("change", onDpr);
+      dprMQ = window.matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
+      dprMQ.addEventListener("change", onDpr);
+    };
+    armDpr();
 
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("cardon-mode", onMode);
@@ -590,6 +607,7 @@ export default function HalftoneSunset({ level }: { level: number }) {
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("cardon-mode", onMode);
       reduceMQ.removeEventListener("change", onReduce);
+      dprMQ?.removeEventListener("change", onDpr);
     };
   }, []);
 
