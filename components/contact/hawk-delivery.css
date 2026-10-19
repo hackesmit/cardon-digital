@@ -1,0 +1,114 @@
+/* The delivery egg: what the contact form does once a message is really sent
+   (components/contact/HawkDelivery.tsx). Its own sheet rather than globals.css,
+   so the other easter egg beads and this one never touch the same file.
+
+   Everything that moves here moves on transform alone. The two moving elements
+   are pinned at the origin of a fixed overlay and placed by a translate in the
+   rAF loop, so no frame reads or writes a layout property. The letter's shadow
+   is a static filter on a layer that only ever transforms, so it is rasterised
+   once and composited after that. */
+
+.hawk-egg {
+  position: fixed;
+  inset: 0;
+  z-index: 45; /* over the page, under the sticky header (50): the bird leaves
+                  behind the band rather than across the navigation. */
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint style;
+  /* The point on the sprite the letter is carried at, shared by the moving
+     scene and the still one so the two never drift apart. */
+  --talon-x: 46%;
+  --talon-y: 56%;
+}
+
+.hawk-egg-bird,
+.hawk-egg-letter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  will-change: transform;
+}
+
+/* The sprite is 240 by 273 and is drawn well under that, so the photograph
+   stays sharp on a dense screen. The origin is the corner on purpose: the pin
+   is applied as the last step of the transform instead, which transformOf in
+   HawkDelivery.tsx explains. */
+.hawk-egg-bird {
+  width: clamp(104px, 12vw, 176px);
+  height: auto;
+  transform-origin: 0 0;
+}
+
+.hawk-egg-letter {
+  width: clamp(38px, 4.4vw, 62px);
+  height: auto;
+  color: var(--text);
+  transform-origin: 0 0;
+  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, 0.2));
+}
+
+.hawk-egg-paper {
+  fill: var(--panel);
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.hawk-egg-fold {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* The wax seal. A shape, not text, and it takes the text tier of the wine on
+   purpose: --primary-text is the one wine that clears the small-text floor in
+   both modes, so a 5px dot stays readable as wine without adding a row to the
+   display allowlist in scripts/palette-check.mjs. */
+.hawk-egg-seal {
+  fill: var(--primary-text);
+  stroke: none;
+}
+
+/* The reduced motion end state: the bird already has the letter, held still
+   for a moment and then gone. Nothing here translates, rotates or scales. The
+   opacity ramp is the one change, which is what a reduced motion request asks
+   for instead of movement, not something it asks to be spared. */
+.hawk-egg-rest {
+  position: absolute;
+  width: clamp(104px, 12vw, 176px);
+  /* The sprite's own ratio. The bird inside is absolutely positioned, so it
+     gives this box no height of its own, and without a ratio the letter's
+     own top percentage resolves against zero and it rides above the bird's
+     head instead of under it (seen in the first recording). */
+  aspect-ratio: 240 / 273;
+  opacity: 0;
+  transition: opacity 0.42s ease;
+}
+
+.hawk-egg[data-rest="in"] .hawk-egg-rest {
+  opacity: 1;
+}
+
+.hawk-egg-rest .hawk-egg-bird,
+.hawk-egg-rest .hawk-egg-letter {
+  position: absolute;
+  will-change: auto;
+}
+
+.hawk-egg-rest .hawk-egg-bird {
+  width: 100%;
+  transform: none;
+}
+
+.hawk-egg-rest .hawk-egg-letter {
+  left: var(--talon-x);
+  top: var(--talon-y);
+  width: 34%;
+  transform-origin: 50% 50%;
+  transform: translate(-50%, -14%) rotate(-7deg);
+}

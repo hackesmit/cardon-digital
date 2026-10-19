@@ -198,3 +198,14 @@ marked to record where it does not. The licence is the same for all six files.
 - Use: the band along the foot of the logistics sample, 1920 px. What ships is
   not the supplied frame: the sky is cut away, so only the stack remains and
   the scene shows through behind it.
+
+### eggs/hawk.webp and eggs/hawk-still.webp
+
+- Credit: Cardon Digital
+- Year: 2026
+- Use: the contact confirmation, where a red tailed hawk takes the letter and
+  carries it away (components/contact/HawkDelivery.tsx). Cardon's own footage,
+  keyed off a greenscreen and cut to one wingbeat loop plus a single held
+  frame for a reduced motion visitor; scripts/eggs/hawk-asset.mjs makes both
+  files from the supplied frames. Decorative, carries no claim, and no caption
+  because there is nothing to caption.

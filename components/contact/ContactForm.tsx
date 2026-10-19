@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { localePath } from "@/lib/i18n/config";
 import { contact } from "@/lib/i18n/contact";
@@ -12,6 +12,7 @@ import {
 import { CLICK_DOORS } from "@/lib/contact/doors";
 import { trackContactSubmit } from "@/lib/analytics/events";
 import PackageBuilder from "@/components/contact/PackageBuilder";
+import HawkDelivery, { type LaunchBox } from "@/components/contact/HawkDelivery";
 import { builder } from "@/lib/i18n/builder";
 import {
   EMPTY_SELECTION,
@@ -63,6 +64,13 @@ export default function ContactForm() {
   const [pkgOpen, setPkgOpen] = useState(false);
   const honeypot = useRef<HTMLInputElement | null>(null);
   const sentRef = useRef<HTMLDivElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  /* The box the letter is shot out of, read once at the moment of the send
+     and then held: the form is gone from the page a tick later. Null when the
+     egg has finished, or when there was no box to read, which is every render
+     that is not a client in a browser. */
+  const [launch, setLaunch] = useState<LaunchBox | null>(null);
+  const landed = useCallback(() => setLaunch(null), []);
 
   useEffect(() => {
     setAttribution(readAttribution());
@@ -138,6 +146,13 @@ export default function ContactForm() {
            this same lead a second time, on the attempt. ContactForm.test.tsx
            holds both halves of that. */
         trackContactSubmit("form");
+        /* The egg's one hook into the form. Measured BEFORE the state change,
+           because the form is replaced by the confirmation in the same commit
+           and its box is gone by the time an effect could run. Measuring is
+           all that happens here: the confirmation below renders and takes
+           focus whether or not anything flies. */
+        const box = formRef.current?.getBoundingClientRect();
+        setLaunch(box ? { x: box.left, y: box.top, width: box.width } : null);
         setStatus("sent");
         setValues(EMPTY);
         setPkg(EMPTY_SELECTION);
@@ -167,10 +182,16 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="form-sent" tabIndex={-1} ref={sentRef} role="status">
-        <h3>{d.sentTitle}</h3>
-        <p>{d.sentBody[tone]}</p>
-      </div>
+      <>
+        <div className="form-sent" tabIndex={-1} ref={sentRef} role="status">
+          <h3>{d.sentTitle}</h3>
+          <p>{d.sentBody[tone]}</p>
+        </div>
+        {/* The letter and the hawk, in a fixed overlay of their own that is
+            hidden from assistive tech and takes no pointer events. It mounts
+            after the confirmation, never before, and removes itself. */}
+        {launch ? <HawkDelivery from={launch} onDone={landed} /> : null}
+      </>
     );
   }
 
@@ -215,7 +236,7 @@ export default function ContactForm() {
   );
 
   return (
-    <form className="contact-form" onSubmit={onSubmit} noValidate>
+    <form className="contact-form" ref={formRef} onSubmit={onSubmit} noValidate>
       {/* The package builder, optional and folded away unless a package was
           handed over from /precios. It travels with the message as ids; the
           server rebuilds the figures. */}
