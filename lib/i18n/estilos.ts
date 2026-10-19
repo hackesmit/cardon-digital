@@ -107,7 +107,7 @@ const en = {
     aria: "Website styles",
     kicker: "Styles",
     title: "Your vision, built in the style you want.",
-    body: "Every style mixes photography and video of your own business with the animation we draw for it. Pick the one you like and we design your site from scratch, starting from your brand.",
+    body: "Real photos and video of your business, with animation made to fit it. Pick one of these styles or bring us your own idea, and we design your site from scratch, starting from your brand.",
     cta: "See the styles",
     /* Under the four tiles, so the invented businesses are named as invented
        before anybody clicks through to them. */
@@ -193,7 +193,7 @@ const es: typeof en = {
     aria: "Estilos de sitio web",
     kicker: "Estilos",
     title: "Su visión, construida en el estilo que quiera.",
-    body: "Cada estilo mezcla fotos y video de su propio negocio con la animación que dibujamos para él. Elija el que le guste y diseñamos su sitio desde cero, a partir de su marca.",
+    body: "Fotos y video reales de su negocio, con animación hecha a su medida. Elija uno de estos estilos o tráiganos su propia idea, y diseñamos su sitio desde cero, a partir de su marca.",
     cta: "Ver los estilos",
     note: "Los cuatro negocios que se muestran son inventados. Sirven para mostrar estilos.",
   },
