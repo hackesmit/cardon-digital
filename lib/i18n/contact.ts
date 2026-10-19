@@ -17,30 +17,27 @@ type Intro = { title: string; sub: string };
 const enIntro: Record<DoorVariant, Intro> = {
   all: {
     title: "Three ways to __start__.",
-    sub: "Pick whichever suits you. All three reach the team that does the work.",
+    sub: "Pick whichever suits you.",
   },
   whatsappForm: {
     title: "Two ways to __start__.",
-    sub: "Pick whichever suits you. Both reach the team that does the work.",
+    sub: "Pick whichever suits you.",
   },
   bookingForm: {
     title: "Two ways to __start__.",
-    sub: "Pick whichever suits you. Both reach the team that does the work.",
+    sub: "Pick whichever suits you.",
   },
   formOnly: {
     title: "Start with a __message__.",
-    sub: "Leave us a few lines. The team that does the work reads them and answers.",
+    sub: "Leave us a few lines about your business.",
   },
 };
 
 const enDescription: Record<DoorVariant, string> = {
-  all: "Three ways to reach Cardon Digital: WhatsApp, a booked call, or a short message. All three reach the team that does the work.",
-  whatsappForm:
-    "Two ways to reach Cardon Digital: WhatsApp or a short message. Both reach the team that does the work.",
-  bookingForm:
-    "Two ways to reach Cardon Digital: a booked call or a short message. Both reach the team that does the work.",
-  formOnly:
-    "Send Cardon Digital a short message. It reaches the team that does the work.",
+  all: "Three ways to reach Cardon Digital: WhatsApp, a booked call, or a short message.",
+  whatsappForm: "Two ways to reach Cardon Digital: WhatsApp or a short message.",
+  bookingForm: "Two ways to reach Cardon Digital: a booked call or a short message.",
+  formOnly: "Send Cardon Digital a short message.",
 };
 
 const en = {
@@ -74,7 +71,7 @@ const en = {
   mail: {
     kicker: "By email",
     title: "Write us an email",
-    sub: "For now the written door is a direct email. The team that does the work reads it and answers.",
+    sub: "For now the written door is a direct email.",
     body: "Tell us what you sell, what is not working, and what you would like to be different. The more concrete the message, the more useful the answer.",
     subject: "Contact from the site",
     note: "The message leaves from your own mail program, so the copy stays with you. It feeds no mailing list and we share it with nobody.",
@@ -83,7 +80,7 @@ const en = {
   form: {
     kicker: "In writing",
     title: "Tell us what you need",
-    sub: "The more concrete the message, the more useful the answer. The team that does the work reads it and replies.",
+    sub: "The more concrete the message, the more useful the answer.",
     nameLabel: "Name",
     namePlaceholder: "Your name",
     wineryLabel: "Business",
@@ -144,30 +141,28 @@ const en = {
    written one, so the Spanish is declared once and both keys point at it. */
 const esDosFormas: Intro = {
   title: "Dos formas de __empezar__.",
-  sub: "Escoja la que más le acomode. Las dos llegan al equipo que hace el trabajo.",
+  sub: "Escoja la que más le acomode.",
 };
 
 const esIntro: Record<DoorVariant, Intro> = {
   all: {
     title: "Tres formas de __empezar__.",
-    sub: "Escoja la que más le acomode. Las tres llegan al equipo que hace el trabajo.",
+    sub: "Escoja la que más le acomode.",
   },
   whatsappForm: esDosFormas,
   bookingForm: esDosFormas,
   formOnly: {
     title: "Empiece con un __mensaje__.",
-    sub: "Déjenos unas líneas. Las lee el equipo que hace el trabajo, y ese mismo equipo le contesta.",
+    sub: "Déjenos unas líneas sobre su negocio.",
   },
 };
 
 const esDescription: Record<DoorVariant, string> = {
-  all: "Tres formas de contactar a Cardon Digital: WhatsApp, una llamada agendada o un mensaje corto. Las tres llegan al equipo que hace el trabajo.",
-  whatsappForm:
-    "Dos formas de contactar a Cardon Digital: WhatsApp o un mensaje corto. Las dos llegan al equipo que hace el trabajo.",
+  all: "Tres formas de contactar a Cardon Digital: WhatsApp, una llamada agendada o un mensaje corto.",
+  whatsappForm: "Dos formas de contactar a Cardon Digital: WhatsApp o un mensaje corto.",
   bookingForm:
-    "Dos formas de contactar a Cardon Digital: una llamada agendada o un mensaje corto. Las dos llegan al equipo que hace el trabajo.",
-  formOnly:
-    "Escriba un mensaje corto a Cardon Digital. Le llega al equipo que hace el trabajo.",
+    "Dos formas de contactar a Cardon Digital: una llamada agendada o un mensaje corto.",
+  formOnly: "Escriba un mensaje corto a Cardon Digital.",
 };
 
 const es: typeof en = {
@@ -198,7 +193,7 @@ const es: typeof en = {
   mail: {
     kicker: "Por correo",
     title: "Escríbanos un correo",
-    sub: "Por ahora, el contacto por escrito es por correo directo. Le llega al equipo que hace el trabajo, y ese mismo equipo le contesta.",
+    sub: "Por ahora, el contacto por escrito es por correo directo.",
     body: "Díganos qué vende, qué no está funcionando y qué le gustaría que fuera distinto. Entre más concreto el mensaje, más útil la respuesta.",
     subject: "Contacto desde el sitio",
     note: "El mensaje sale desde su propio programa de correo, así que la copia se queda con usted. No se agrega a ninguna lista de correos y no lo compartimos con nadie.",
@@ -207,7 +202,7 @@ const es: typeof en = {
   form: {
     kicker: "Por escrito",
     title: "Cuéntenos qué necesita",
-    sub: "Entre más concreto el mensaje, más útil la respuesta. Lo lee y lo contesta el equipo que hace el trabajo.",
+    sub: "Entre más concreto el mensaje, más útil la respuesta.",
     nameLabel: "Nombre",
     namePlaceholder: "Su nombre",
     wineryLabel: "Negocio o empresa",

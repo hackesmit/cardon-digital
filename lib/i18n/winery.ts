@@ -111,7 +111,7 @@ const en = {
       {
         num: "02",
         h: "Every number gets a place on the map.",
-        body: "Each reading sits on its block and row, so the team reads the vineyard alike.",
+        body: "Each reading is tied to its block and row, so the whole team sees the same vineyard.",
       },
       {
         num: "03",
@@ -231,7 +231,7 @@ const en = {
   diagSpecs: [
     "Day 1. A working session on your vineyard, cellar, ads and books.",
     "Days 2 to 9. We dig: the data, the measurement, the manual routines.",
-    "Day 10. The memo lands: what is true, what is broken, what to build first. It is yours.",
+    "Day 10. You get the memo: what is true, what is broken, what to build first. It is yours.",
   ],
 };
 

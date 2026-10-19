@@ -72,7 +72,7 @@ const en = {
         id: "sitios",
         name: "Website",
         title: "People find you on Google and believe you.",
-        body: "A site that loads fast, reads on a phone and connects you with the people looking for you. Designed for your business, copy included.",
+        body: "A site that loads fast, works on phone and desktop, and connects you with the people looking for you. Designed for your business, copy included.",
         cta: "See websites",
       },
       {
@@ -97,7 +97,7 @@ const en = {
     "home/proof-xanic": { cap: "Monte Xanic opens the season in one live view.", alt: "Monte Xanic, the winery in one frame" },
     "home/proof-enkanto": { cap: "En'kanto's cabin: every booking from every channel in one calendar.", alt: "En'kanto's cabin among succulents and vines" },
     "home/proof-dharma": { cap: "Dharma Ochoa's portfolio and store, ready to sell from a phone.", alt: "Dharma Ochoa's site open on a phone" },
-    "home/service-sitios": { cap: "A site that reads on a phone and leads to a message.", alt: "A phone in hand with a website open" },
+    "home/service-sitios": { cap: "A site that works on any screen and leads to a message.", alt: "A phone in hand with a website open" },
     "home/service-anuncios": { cap: "The client who was searching arrives on WhatsApp, and gets counted.", alt: "A message being answered at a counter" },
     "home/service-software": { cap: "The record is written once, where the work happens.", alt: "A tablet with the day's board, at work" },
   } as Record<string, HomePhoto>,
@@ -186,7 +186,7 @@ const en = {
   pricing: {
     kicker: "What it costs",
     title: "A site, a campaign or a software module, and what each costs to start.",
-    sub: "Quoted and charged in Mexican pesos; the dollar figures are rounded conversions. The final quote comes out of the diagnostic.",
+    sub: "The final quote comes out of the diagnostic.",
     siteK: "Website",
     adsK: "Google Ads",
     softK: "Software",
@@ -200,7 +200,7 @@ const en = {
       },
       {
         k: "Terms",
-        body: "Quoted and charged in pesos. The build is paid half to start and half on delivery.",
+        body: "The build is paid half to start and half on delivery.",
       },
     ],
   },
@@ -210,8 +210,8 @@ const en = {
       tagMid: "goes digital",
       captionRun: "connecting",
       captionDone: "in the digital era",
-      aria: "A business goes digital in three acts: its website assembles on a phone and comes up first in a search, the people searching for it arrive as messages, and each message lands as a row in one system that keeps itself current.",
-      fallback: "Your site comes up first, the people searching connect with you, and every message lands in one system that runs itself.",
+      aria: "A business goes digital in three acts: its website assembles on a phone and comes up first in a search, the people searching for it arrive as messages, and each message becomes a row in one system that keeps itself current.",
+      fallback: "Your site comes up first, the people searching connect with you, and every message arrives in one system that runs itself.",
       stages: [
         { k: "01", label: "Get found" },
         { k: "02", label: "Connect with your clients" },
@@ -316,7 +316,7 @@ const en = {
   },
   diagnostic: {
     desc: "Ten business days on your site, your ads and your operation. A written memo: what is true, what is broken, what to build first.",
-    doors: "Write on WhatsApp, book a call or send the form. All three reach the team that does the work.",
+    doors: "Write on WhatsApp, book a call or send the form.",
   },
 };
 
@@ -367,7 +367,7 @@ const es: typeof en = {
         id: "sitios",
         name: "Sitio web",
         title: "La gente lo encuentra en Google y le cree.",
-        body: "Un sitio que carga rápido, se lee bien en el teléfono y lleva al visitante a escribirle. Diseñado para su negocio, con los textos incluidos.",
+        body: "Un sitio que carga rápido, se ve bien en teléfono y en computadora, y lo conecta con la gente que lo está buscando. Diseñado para su negocio, con los textos incluidos.",
         cta: "Ver sitios web",
       },
       {
@@ -391,7 +391,7 @@ const es: typeof en = {
     "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
     "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reservación, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
     "home/proof-dharma": { cap: "El portafolio y la tienda de Dharma Ochoa, listos para vender desde el teléfono.", alt: "El sitio de Dharma Ochoa abierto en un teléfono" },
-    "home/service-sitios": { cap: "Un sitio que se lee bien en el teléfono y termina en un mensaje.", alt: "Un teléfono en la mano con un sitio abierto" },
+    "home/service-sitios": { cap: "Un sitio que se ve bien en cualquier pantalla y termina en un mensaje.", alt: "Un teléfono en la mano con un sitio abierto" },
     "home/service-anuncios": { cap: "El cliente que lo buscaba llega por WhatsApp y queda registrado.", alt: "Un mensaje que se contesta en el mostrador" },
     "home/service-software": { cap: "Cada dato se registra una sola vez, ahí donde se hace el trabajo.", alt: "Una tableta en uso, con el tablero del día" },
   } as Record<string, HomePhoto>,
@@ -480,7 +480,7 @@ const es: typeof en = {
   pricing: {
     kicker: "Lo que cuesta",
     title: "Un sitio, una campaña o un módulo de software, y lo que cuesta cada uno para empezar.",
-    sub: "En pesos. La cotización final sale del diagnóstico.",
+    sub: "La cotización final sale del diagnóstico.",
     siteK: "Sitio web",
     adsK: "Anuncios en Google",
     softK: "Software",
@@ -494,7 +494,7 @@ const es: typeof en = {
       },
       {
         k: "Condiciones",
-        body: "Cotizamos en pesos. El desarrollo se paga la mitad al empezar y la mitad contra entrega.",
+        body: "El desarrollo se paga la mitad al empezar y la mitad contra entrega.",
       },
     ],
   },
@@ -610,7 +610,7 @@ const es: typeof en = {
   },
   diagnostic: {
     desc: "Diez días hábiles para revisar su sitio, sus anuncios y la operación del negocio. Al final, un informe por escrito: qué funciona, qué falla y por dónde empezar.",
-    doors: "Escríbanos por WhatsApp, agende una llamada o mande el formulario. Los tres le llegan al equipo que hace el trabajo.",
+    doors: "Escríbanos por WhatsApp, agende una llamada o mande el formulario.",
   },
 };
 

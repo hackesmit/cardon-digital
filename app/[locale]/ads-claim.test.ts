@@ -231,6 +231,11 @@ function amountsIn(sentence: string): number[] {
  * stripped from a block before the block is judged, so a block is exempt only
  * if NOTHING about ads is left once they are gone: "your ads, managed for a
  * set price" strips to a sentence that still has to carry the words.
+ *
+ * The /terms clause about the ads fee used to be exempt by its own sentence
+ * shape. Since hq-lgjo.1 rewrote lib/i18n/terms.ts in formal legal register
+ * the clause says "the per-contact ads fee" itself, so it passes on the words
+ * rather than on an exemption, and the two entries that named it are gone.
  */
 const NOT_AN_OFFER: Record<Locale, RegExp[]> = {
   en: [
@@ -260,9 +265,6 @@ const NOT_AN_OFFER: Record<Locale, RegExp[]> = {
     /\bAds, website, and operations\b/g,
     // /modulos L scale line: what a business that size already runs.
     /\bdirect booking and ads\b/g,
-    // Terms: points at the site's description and defers to the signed
-    // agreement for scope and amounts. Flagged on the bead, not an offer.
-    /Where the site describes[^.]*ad budget going from you straight to Google/g,
     // The one-time campaign build is a setup line, not the monthly
     // management the flat-fee words are about.
     /\b(?:Google )?Ads build\b/gi,
@@ -300,7 +302,6 @@ const NOT_AN_OFFER: Record<Locale, RegExp[]> = {
     /\bGoogle Ads, sitios web\b/g,
     /\bCardon Digital hace sitios web, maneja anuncios en Google y construye el software con el que opera un negocio\b/g,
     /\breserva directa y anuncios\b/g,
-    /Donde el sitio describe[^.]*inversión en anuncios pagada por usted directo a Google/g,
     // Terms again: data handling, which is not ads and shares the verb.
     /\bmanejo de datos\b/g,
     /\bconstrucción de (?:Google Ads|anuncios|la campaña)\b/gi,

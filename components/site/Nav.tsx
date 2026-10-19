@@ -52,6 +52,11 @@ export default function Nav() {
     { href: href("/industries/winery"), label: t.wineries },
   ];
   const linksAfter = [
+    /* Demos leads the row after the dropdown (bead hq-lgjo.2, Daniel
+       2026-10-16): the demo was reachable only from a small link inside three
+       pages, so it was missed. It is the first thing a reader can check for
+       themselves, and it goes before the price. */
+    { href: href("/demos"), label: t.demos },
     { href: href("/precios"), label: t.pricing },
     { href: href("/work/monte-xanic"), label: t.work },
     { href: href("/about"), label: t.about },

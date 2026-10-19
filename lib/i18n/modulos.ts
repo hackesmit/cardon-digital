@@ -209,7 +209,7 @@ const en = {
       tag: "Every booking in one calendar, and the day the property works from",
       problem: {
         h: "Four channels, four calendars, and one room.",
-        body: "The bookings land in as many places as there are channels, the arrivals for tomorrow are counted by hand, housekeeping is told by phone, the guest who came last season is a name somebody half remembers, and the revenue by channel is a spreadsheet rebuilt at the end of every month.",
+        body: "The bookings arrive in as many places as there are channels, the arrivals for tomorrow are counted by hand, housekeeping is told by phone, the guest who came last season is a name somebody half remembers, and the revenue by channel is a spreadsheet rebuilt at the end of every month.",
         answer:
           "Hospitalidad puts every booking from every channel into one calendar, with the day view the property actually works from, the state of each unit, the guest kept between stays, and occupancy and revenue that reconcile. **One calendar, and a day that is already counted when it starts.**",
       },
