@@ -33,6 +33,10 @@ const DYNAMIC_HREFS: Record<string, { file: string; constant: string }> = {
   "CASE_ROUTES[i]": { file: "app/[locale]/page.tsx", constant: "CASE_ROUTES" },
   "SERVICE_ROUTES[i]": { file: "app/[locale]/page.tsx", constant: "SERVICE_ROUTES" },
   route: { file: "components/pages/home/ClientOrbit.tsx", constant: "CASE_ROUTES" },
+  "STYLE_ROUTES[i]": {
+    file: "components/pages/home/StylesPromo.tsx",
+    constant: "STYLE_ROUTES",
+  },
 };
 
 function walk(dir: string, files: string[] = []): string[] {

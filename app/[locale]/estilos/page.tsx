@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import Field, { type FieldPalette } from "@/components/site/field/Field";
+import SceneMedia from "@/components/pages/estilos/SceneMedia";
+import { SCENE_KEYS, sceneLayers } from "@/components/pages/estilos/sceneMedia";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -21,7 +23,7 @@ export function generateMetadata({ params }: Params): Metadata {
   return pageMetadata(locale, "/estilos", estilos[locale].meta);
 }
 
-const KEYS = ["vinedo", "tech", "spa", "hotel"] as const;
+const KEYS = SCENE_KEYS;
 
 /** The site header and the caption that sticks under it cover this much of
  *  the window's top; a canvas showing only there is hidden, so it stops. */
@@ -53,10 +55,19 @@ const PALETTE: Record<Key, FieldPalette> = {
  * under the header while its scene passes, which is the gallery's index. That
  * is plain CSS, so it works without JavaScript.
  *
- * Everything inside a scene is inert. The one action on the page is
- * site.diag.cta, in the hero and in the close. A scene's copy arrives with
- * the same reveal the rest of the site uses, which shows it at once without
- * JavaScript or under reduced motion.
+ * Every scene is a hybrid since 2026-10-16 (bead hq-lgjo.5): the business's
+ * own photography or footage, with our drawing over it, because that is what
+ * a real client gets. The material and its placement are in
+ * components/pages/estilos/sceneMedia.ts; the coastal hotel is still drawing
+ * alone and says why there.
+ *
+ * Everything inside a scene is inert, with one exception the material brought
+ * with it: a clip carries a labelled play and pause control, which is chrome
+ * rather than the mock site's own action and is the visitor's way to stop a
+ * moving picture. The one action of the PAGE is still site.diag.cta, in the
+ * hero and in the close, and no sample has an action of its own. A scene's
+ * copy arrives with the same reveal the rest of the site uses, which shows it
+ * at once without JavaScript or under reduced motion.
  */
 export default function EstilosPage({ params }: Params) {
   const locale = localeOf(params);
@@ -64,6 +75,17 @@ export default function EstilosPage({ params }: Params) {
   const s = site[locale];
   const g = d.gallery;
   const href = (path: string) => localePath(locale, path);
+
+  /**
+   * The real material a sample carries, under everything else in its scene.
+   * The catalogue decides which files and where each one sits; the scene only
+   * asks for its own. A sample with none renders nothing here and says why in
+   * AWAITING_MEDIA.
+   */
+  const shots = (key: Key) =>
+    sceneLayers(key).map((layer) => (
+      <SceneMedia key={layer.file} layer={layer} labels={{ play: g.play, pause: g.pause }} />
+    ));
 
   const plate = (key: Key, scene: ReactNode) => {
     const n = KEYS.indexOf(key) + 1;
@@ -130,6 +152,7 @@ export default function EstilosPage({ params }: Params) {
         {plate(
           "vinedo",
           <div className="est-scene sc-vin">
+            {shots("vinedo")}
             <p className="sc-flag">{g.sample}</p>
             <div className="sc-nav">
               <span className="sc-links" aria-hidden="true">
@@ -169,6 +192,7 @@ export default function EstilosPage({ params }: Params) {
         {plate(
           "tech",
           <div className="est-scene sc-tech">
+            {shots("tech")}
             <p className="sc-flag">{g.sample}</p>
             <div className="sc-nav">
               <span className="sc-brand">{d.tech.brand}</span>
@@ -211,6 +235,7 @@ export default function EstilosPage({ params }: Params) {
         {plate(
           "spa",
           <div className="est-scene sc-spa">
+            {shots("spa")}
             <p className="sc-flag">{g.sample}</p>
             <div className="sc-nav">
               <span className="sc-brand">{d.spa.brand}</span>
@@ -248,6 +273,7 @@ export default function EstilosPage({ params }: Params) {
         {plate(
           "hotel",
           <div className="est-scene sc-hotel">
+            {shots("hotel")}
             <p className="sc-flag">{g.sample}</p>
             <div className="sc-nav">
               <span className="sc-brand">{d.hotel.brand}</span>
