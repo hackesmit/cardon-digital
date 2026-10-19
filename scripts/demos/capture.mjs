@@ -168,4 +168,8 @@ async function main() {
   }
 }
 
-await main();
+// Only run when executed directly, so tests can import TARGETS without
+// launching a browser.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  await main();
+}
