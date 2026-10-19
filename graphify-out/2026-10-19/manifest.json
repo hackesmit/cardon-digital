@@ -138,15 +138,15 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1792118434.775913,
-    "seen": 1792118441.8532293,
-    "ast_hash": "6e120e56131d804f6c39efd7494e4a78",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538871,
+    "ast_hash": "804d325a556c579c489ed9b37692d53d",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1792383242.549487,
-    "seen": 1792383250.2065263,
-    "ast_hash": "3b76559c3afb6a136e24ed7c32936f6a",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538884,
+    "ast_hash": "a72104dfe3daeba65133f2903a1c25f7",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
-    "mtime": 1792040945.580032,
-    "seen": 1792041098.7899964,
-    "ast_hash": "e440b4ac637c4ae906a85a5cf3cb00fc",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5391867,
+    "ast_hash": "6e7f2fc449fbecc89a98dafd369b8e6c",
     "semantic_hash": ""
   },
   "public/media/valle-vineyard.webp": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1792042741.1547499,
-    "seen": 1792042746.2448783,
-    "ast_hash": "62e8f09e3e90dca3bde0177287147d9a",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5386012,
+    "ast_hash": "0c6f75a7cc09596bc407d6076fbfb61a",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -786,15 +786,15 @@
     "semantic_hash": ""
   },
   "docs/media-clearances.md": {
-    "mtime": 1792040945.5790322,
-    "seen": 1792041098.7899928,
-    "ast_hash": "4c7ed57aa28f7b6fad506c5ec46cc094",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5391796,
+    "ast_hash": "0261ffc7edb53b812b5a6524d66494eb",
     "semantic_hash": ""
   },
   "public/media/README.md": {
-    "mtime": 1790811894.6348379,
-    "seen": 1791475652.7767193,
-    "ast_hash": "b856fa3691403f97dc7dbe6add7a1860",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.539189,
+    "ast_hash": "333ca951cedcc436671b8078c2653280",
     "semantic_hash": ""
   },
   "components/pages/demos/RestauranteDemo.tsx": {
@@ -912,9 +912,9 @@
     "semantic_hash": ""
   },
   "app/routes.test.ts": {
-    "mtime": 1791323030.0265307,
-    "seen": 1791475652.77646,
-    "ast_hash": "14c26139ba5964171fc30b55760db0b9",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5386434,
+    "ast_hash": "2d1f62086619e75a03a09f8b6766e574",
     "semantic_hash": ""
   },
   "lib/routes.ts": {
@@ -1584,15 +1584,15 @@
     "semantic_hash": ""
   },
   "app/[locale]/estilos/page.tsx": {
-    "mtime": 1790922409.536837,
-    "seen": 1791475652.776437,
-    "ast_hash": "2c2f0bc69e396377413335535492295d",
+    "mtime": 1792383588.3129241,
+    "seen": 1792383594.5385897,
+    "ast_hash": "2fd3b81daaab0515d918549bbecf9ffa",
     "semantic_hash": ""
   },
   "lib/i18n/estilos.ts": {
-    "mtime": 1790922409.536837,
-    "seen": 1791475652.7766352,
-    "ast_hash": "daf2d7dc8f725d6f1ea51ddd3cce3871",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5389857,
+    "ast_hash": "255366e4eda31c9c8116842c1145475e",
     "semantic_hash": ""
   },
   "scripts/palette-check.mjs": {
@@ -1869,6 +1869,78 @@
     "mtime": 1792383242.5514872,
     "seen": 1792383250.2069101,
     "ast_hash": "4ec3878b15e1ad8fea5bda216437f834",
+    "semantic_hash": ""
+  },
+  "components/pages/estilos/SceneMedia.tsx": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538757,
+    "ast_hash": "be4273b9f1595f298e709b6549259759",
+    "semantic_hash": ""
+  },
+  "components/pages/estilos/sceneMedia.test.ts": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5387597,
+    "ast_hash": "01a48ed3850cb10716c8fa48d25455be",
+    "semantic_hash": ""
+  },
+  "components/pages/estilos/sceneMedia.ts": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538762,
+    "ast_hash": "dec7282ca800e11615fbd05573052a0b",
+    "semantic_hash": ""
+  },
+  "components/pages/home/StylesPromo.tsx": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5387797,
+    "ast_hash": "726d3bb48da9d592e9063847cd2f456c",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/logistica-almacen.webp": {
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5392761,
+    "ast_hash": "dd1afce78033383192872ad54e9b6195",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/logistica-contenedores.webp": {
+    "mtime": 1792383588.3159242,
+    "seen": 1792383594.5392783,
+    "ast_hash": "bbeb54155e6739233ca780abc2e073b6",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/spa-ritual-poster.webp": {
+    "mtime": 1792383588.3159242,
+    "seen": 1792383594.5392807,
+    "ast_hash": "bffab83dce8d355539f626f10bd2af61",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/vinedo-aerial-poster.webp": {
+    "mtime": 1792383588.319924,
+    "seen": 1792383594.5392828,
+    "ast_hash": "b1ddb65a7de2332dee596aa46c721a23",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/spa-ritual.mp4": {
+    "mtime": 1792383588.317924,
+    "seen": 1792383594.539358,
+    "ast_hash": "58f52a269657b53b299f09d0abd868e6",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/spa-ritual.webm": {
+    "mtime": 1792383588.319924,
+    "seen": 1792383594.5393603,
+    "ast_hash": "4967fdf755b7ab860e04edeb6683d8c3",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/vinedo-aerial.mp4": {
+    "mtime": 1792383588.3239243,
+    "seen": 1792383594.5393627,
+    "ast_hash": "a11da7531c6285642f39ffdd7a5eb839",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/vinedo-aerial.webm": {
+    "mtime": 1792383588.3269243,
+    "seen": 1792383594.5393648,
+    "ast_hash": "5cf72f668107aca6e71df7d10f27ad5b",
     "semantic_hash": ""
   }
 }
