@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import "./builder.css";
+import HalftoneSunset, { builderLevel } from "@/components/contact/HalftoneSunset";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { builder } from "@/lib/i18n/builder";
@@ -81,6 +82,9 @@ export default function PackageBuilder({
 
   return (
     <div className="pb" data-mode={mode}>
+      {/* Decoration: the sunset fills in as boxes are ticked. The level is a
+          plain number so hq-lgjo.6 can drive it from per-feature ticks later. */}
+      <HalftoneSunset level={builderLevel(value)} />
       <div className="pb-groups">
         {/* ============================ WEBSITE ============================ */}
         <fieldset className="pb-group">
