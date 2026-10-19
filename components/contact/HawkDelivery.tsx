@@ -417,21 +417,26 @@ export default function HawkDelivery({
       };
     }
     const img = new window.Image();
-    const cap = window.setTimeout(() => finish("off"), READY_CAP_MS);
-    const ready = () => {
+    /* The first outcome is final: a late decode rejection must never end a
+       flight that has already started. */
+    let settled = false;
+    const settle = (next: "fly" | "rest" | "off") => {
+      if (settled) return;
+      settled = true;
       window.clearTimeout(cap);
-      finish(still ? "rest" : "fly");
+      finish(next);
     };
-    const failed = () => {
-      window.clearTimeout(cap);
-      finish("off");
-    };
-    img.onload = ready;
-    img.onerror = failed;
+    const cap = window.setTimeout(() => settle("off"), READY_CAP_MS);
+    const ready = () => settle(still ? "rest" : "fly");
+    const failed = () => settle("off");
     img.src = wanted;
-    /* decode() is the one that promises the next paint will not block. Where
-       it does not exist the load event above is the answer. */
+    /* decode() is the one that promises the next paint will not block, so it
+       is the only gate where it exists. Elsewhere the load event answers. */
     if (typeof img.decode === "function") img.decode().then(ready, failed);
+    else {
+      img.onload = ready;
+      img.onerror = failed;
+    }
     return () => {
       live = false;
       window.clearTimeout(cap);
@@ -536,7 +541,7 @@ export default function HawkDelivery({
     /* Held where the letter would have been taken, up and to the left of the
        box, and clamped onto the screen on a narrow one. */
     const left = clamp(from.x + from.width * 0.5 - 150, 12, Math.max(12, window.innerWidth - 200));
-    const top = clamp(from.y - 40, 12, Math.max(12, window.innerHeight - 220));
+    const top = clamp(from.y - 40, HEAD_GAP, Math.max(HEAD_GAP, window.innerHeight - 220));
     return createPortal(
       <div className="hawk-egg" ref={root} aria-hidden="true">
         <div className="hawk-egg-rest" style={{ left: left + "px", top: top + "px" }}>
