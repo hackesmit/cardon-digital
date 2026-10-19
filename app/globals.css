@@ -215,8 +215,9 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
 .lang-switch .lang-short{display:none;}
 /* Above the mobile menu the switch is a two-letter chip: the full word only
    fits once the row has room for it again. The band ends where the tightened
-   nav row below ends, at 1139px, because the two share the same budget. */
-@media (max-width:1139px) and (min-width:821px){
+   nav row below ends, at 1139px, because the two share the same budget. It
+   starts at 900px with the mobile menu (bead hq-lgjo.2). */
+@media (max-width:1139px) and (min-width:900px){
   .lang-switch .lang-full{display:none;}
   .lang-switch .lang-short{display:inline;}
 }
@@ -823,8 +824,18 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
    ends at 1139px now that Modulos and Precios are on it (2026-09-08, bead
    hq-wrig5.3): at full size the Spanish row wrapped from 1024 to 1139px, and
    1140px is the first width where it fits with the gaps and the language word
-   at full size. Measured across es and en at 17 widths, not estimated. */
-@media (max-width:1139px) and (min-width:821px){
+   at full size. Measured across es and en at 17 widths, not estimated.
+
+   Its FLOOR moved from 821 to 900px when Demos joined the row (2026-10-16,
+   bead hq-lgjo.2). A sixth item costs about 60px, and the Spanish row ran
+   into the language chip below 940px on the 12px gaps and below 900px on the
+   8px gaps: measured at 821, 860, 880, 900, 920, 940, 960, 1000, 1040, 1100,
+   1139 and 1200px in both languages, where the overlap is the last item's own
+   right edge against the tools, not the list box, which shrinks under them and
+   reports a gap that is not there. So the mobile menu now takes over at 899px
+   instead of 820px, which is the honest consequence of the item: a row that
+   overlaps its own language switch is worse on a tablet than a menu button. */
+@media (max-width:1139px) and (min-width:900px){
   .bar{gap:12px;}
   .primary-nav{gap:12px;}
   .nav-menu{gap:12px;}
@@ -836,9 +847,9 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   .lang-switch{padding:0 8px;}
   .nav-cta{padding:8px 12px;font-size:0.86rem;}
 }
-/* The tightest 60 px of that band, where the longer Spanish labels need the
+/* The tightest 40 px of that band, where the longer Spanish labels need the
    last two dozen pixels back. Gaps only, so the labels stay as written. */
-@media (max-width:880px) and (min-width:821px){
+@media (max-width:939px) and (min-width:900px){
   .bar{gap:8px;}
   .primary-nav{gap:8px;}
   .nav-menu{gap:8px;}
@@ -850,7 +861,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   .nav-cta{padding:8px 10px;}
 }
 
-@media (max-width:820px){
+@media (max-width:899px){
   .menu-toggle{display:inline-flex;}
   .nav-scrim{
     display:block;position:fixed;inset:0;z-index:40;

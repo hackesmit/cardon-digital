@@ -9,7 +9,7 @@ import type { Dict } from "./rich";
 const en = {
   skipToContent: "Skip to content",
   brandHome: "Cardon Digital home",
-  brandline: "Built to hold water",
+  brandline: "Websites, Google Ads and software",
   /** The 404 page. Shown for any address that does not resolve to a route. */
   notFound: {
     metaTitle: "Page not found",
@@ -36,6 +36,9 @@ const en = {
     anuncios: "Google Ads",
     software: "Software",
     modules: "Modules",
+    /* The demos page, first in the row after Services: a reader who has just
+       seen what we sell is one click from seeing it running (bead hq-lgjo.2). */
+    demos: "Demos",
     pricing: "Pricing",
     wineries: "Wineries",
     work: "Work",
@@ -66,7 +69,7 @@ const en = {
     work: "Work",
     about: "About",
     contact: "Contact",
-    line: "Built in Ensenada, Baja California. Working both sides of the border, in both languages.",
+    line: "Built in Ensenada, Baja California.",
     privacy: "Privacy",
     terms: "Terms",
   },
@@ -75,7 +78,7 @@ const en = {
 const es: typeof en = {
   skipToContent: "Saltar al contenido",
   brandHome: "Cardon Digital, inicio",
-  brandline: "Sistemas que siguen funcionando cuando nos vamos",
+  brandline: "Sitios web, anuncios y software",
   /** The 404 page. Shown for any address that does not resolve to a route. */
   notFound: {
     metaTitle: "Página no encontrada",
@@ -100,6 +103,7 @@ const es: typeof en = {
     anuncios: "Anuncios",
     software: "Software",
     modules: "Módulos",
+    demos: "Demos",
     pricing: "Precios",
     wineries: "Bodegas",
     work: "Casos",
@@ -130,7 +134,7 @@ const es: typeof en = {
     work: "Casos",
     about: "Quiénes somos",
     contact: "Contacto",
-    line: "Hecho en Ensenada, Baja California. Trabajamos en el Valle y del otro lado de la línea, en los dos idiomas.",
+    line: "Hecho en Ensenada, Baja California.",
     privacy: "Privacidad",
     terms: "Términos",
   },
