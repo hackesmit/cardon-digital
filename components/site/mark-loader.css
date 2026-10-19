@@ -37,8 +37,10 @@
 
 /* One clock, three animations: the cycle below is a single pass of the loop,
    and the percentages are its beats. The line draws over the first 54 per cent,
-   the sun closes by 65, the mark holds to 83, then it fades and the pen starts
-   again on clean paper. */
+   the pen lifts, the sun closes by 67, the mark holds to 83, then it fades and
+   the pen starts again on clean paper. The sun never starts before the line
+   finishes: the gap between 54 and 55 is the lift, and the loader test holds
+   the two keyframe blocks to that order. */
 .ml-ink{animation:ml-ink var(--ml-cycle,3.6s) linear infinite;}
 .ml-line{animation:ml-line var(--ml-cycle,3.6s) linear infinite;}
 .ml-sun{animation:ml-sun var(--ml-cycle,3.6s) linear infinite;}
@@ -55,9 +57,19 @@
   0%{stroke-dashoffset:1;animation-timing-function:cubic-bezier(.45,.03,.3,1);}
   54%,100%{stroke-dashoffset:0;}
 }
+/* The sun waits with its opacity at zero, not only with its dash wound back.
+   A dash of zero length still gets its round cap, and Chrome paints that cap:
+   with the offset alone the sun sat on the screen as a solid wine dot at the
+   seam of the ring, from the first frame until the ring drew over it (measured
+   at 4x on the route fallback: 11299 pixels of ink where the sun had not been
+   drawn yet). The step is held flat to 54.9 and lands on 55, the beat the
+   draw starts on, so the ring arrives with the pen rather than fading up
+   under it: opacity between two stops interpolates, and a plain 0 at the top
+   of the cycle had the sun at half strength by the middle of the line. */
 @keyframes ml-sun{
-  0%,52%{stroke-dashoffset:1;animation-timing-function:cubic-bezier(.4,.05,.25,1);}
-  65%,100%{stroke-dashoffset:0;}
+  0%,54.9%{stroke-dashoffset:1;opacity:0;}
+  55%{stroke-dashoffset:1;opacity:1;animation-timing-function:cubic-bezier(.4,.05,.25,1);}
+  67%,100%{stroke-dashoffset:0;opacity:1;}
 }
 
 /* In the contact button the wait is one request long, so the pen moves faster

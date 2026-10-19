@@ -36,6 +36,36 @@ import { contact } from "../../lib/i18n/contact";
 
 const CSS = readFileSync(join(process.cwd(), "components/site/mark-loader.css"), "utf8");
 
+type Stop = { at: number[]; declarations: string };
+
+/** The stops of one @keyframes block, each with every percentage it is written
+    at, so a stop declared as "0%,54.9%" counts as both. */
+function stops(name: string): Stop[] {
+  return Array.from(keyframeBody(name).matchAll(/([^{}]+)\{([^}]*)\}/g)).map((m) => ({
+    at: Array.from(m[1].matchAll(/([\d.]+)%/g)).map((p) => Number(p[1])),
+    declarations: m[2],
+  }));
+}
+
+function at(name: string, declaration: RegExp, pick: "first" | "last"): number {
+  const marks = stops(name)
+    .filter((stop) => declaration.test(stop.declarations))
+    .flatMap((stop) => stop.at);
+  expect(marks.length).toBeGreaterThan(0);
+  return pick === "first" ? Math.min(...marks) : Math.max(...marks);
+}
+
+/** The percentage of the cycle at which a stroke reaches its drawn state. */
+const drawnBy = (name: string) => at(name, /stroke-dashoffset:0/, "first");
+/** The last percentage at which a stroke is still held undrawn. */
+const heldUntil = (name: string) => at(name, /stroke-dashoffset:1/, "last");
+
+function keyframeBody(name: string): string {
+  const where = CSS.indexOf("@keyframes " + name + "{");
+  expect(where).toBeGreaterThan(-1);
+  return keyframeBodies(CSS.slice(where))[0];
+}
+
 /** Every @keyframes body in a stylesheet, read by counting braces rather than
     by a regex, because each body holds its own braced stops. */
 function keyframeBodies(css: string): string[] {
@@ -119,6 +149,28 @@ describe("what moves", () => {
     expect(Array.from(properties).sort()).toEqual(
       ["animation-timing-function", "opacity", "stroke-dashoffset"],
     );
+  });
+
+  it("lifts the pen before the sun, so the sun is drawn after the line", () => {
+    // The first round overlapped them by two per cent of the cycle. It read as
+    // smoothing; it is the one ordering the bead asks for by name, and a frame
+    // of the sun opening while the ground line is still running is the shape
+    // the loader was built to avoid.
+    const lineEnd = drawnBy("ml-line");
+    const sunStart = heldUntil("ml-sun");
+    expect(sunStart).toBeGreaterThanOrEqual(lineEnd);
+  });
+
+  it("keeps the sun off the screen until its turn, cap and all", () => {
+    // stroke-dashoffset alone does not hide a stroke: a zero length dash keeps
+    // its round cap and Chrome paints it, which put a wine dot on the sun's
+    // seam for the first half of every cycle. Opacity is what hides it, and it
+    // has to be held flat rather than left to interpolate from the top of the
+    // cycle, or the sun is half lit by the middle of the line.
+    const dark = at("ml-sun", /opacity:0/, "last");
+    const lit = at("ml-sun", /opacity:1/, "first");
+    expect(lit).toBe(heldUntil("ml-sun"));
+    expect(dark).toBeGreaterThan(lit - 1);
   });
 
   it("parks the mark finished and still under prefers-reduced-motion", () => {
