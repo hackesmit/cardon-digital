@@ -193,3 +193,23 @@ writing a second time.
 
 The budgets and the poster rule above apply there too, and the credit and
 clearance rules apply to everything served, wherever it lives.
+
+## And what is NOT on this list either: public/media/eggs
+
+The folder `eggs/` holds the art for the small jokes hidden around the site:
+the lizard that peeks over the founding-winery card on /precios is the first
+of them. No row above describes one, no page asks for one by slot id, and
+`<Media>` never renders one.
+
+Same reason as `estilos/`, from the other side. A slot carries a caption
+because the picture is evidence for a claim; an easter egg makes no claim, is
+hidden from assistive technology and takes no pointer, and a figcaption under
+it would be a caption on a punchline. So an egg is not a slot and is not shot
+to this brief.
+
+What does still apply is everything about weight and provenance. An egg is
+decoration on a page people read on phone data in the Valle, so it is held
+well under the photograph budget, it is credited in CREDITS.md like anything
+else served, and its geometry is pinned by a test beside the component that
+draws it: `components/site/LizardPeek.test.tsx` reads the WebP header and the
+stylesheet and fails if a re-export moves the crop out from under the mask.

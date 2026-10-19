@@ -198,3 +198,19 @@ marked to record where it does not. The licence is the same for all six files.
 - Use: the band along the foot of the logistics sample, 1920 px. What ships is
   not the supplied frame: the sky is cut away, so only the stack remains and
   the scene shows through behind it.
+
+## Easter eggs (2026-10-19)
+
+The art for the small hidden animations, under `eggs/`. These are not slots:
+see the last section of README.md for why.
+
+### eggs/lizard-peek.webp
+
+- Credit: stock, supplied by Daniel Hack with the easter-eggs round two asset
+  drop, 2026-10-19; source and licence to record
+- Original: a bearded dragon on a transparent ground, three-quarter view,
+  facing right, 360 x 360
+- Use: the lizard that peeks over the founding-winery card on /precios
+  (components/site/LizardPeek.tsx). What ships is not the supplied frame: the
+  tail is erased, the frame is cropped to the head, throat and front legs, and
+  the whole thing is exported at 2x the size it draws at
