@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1790840309.5442476,
-    "seen": 1791475652.7764614,
-    "ast_hash": "ddcba89936fdbda7dab7d7f84439a762",
+    "mtime": 1792383242.549487,
+    "seen": 1792383250.2063096,
+    "ast_hash": "6ba697f7598bf168c38dae3032eaacc2",
     "semantic_hash": ""
   },
   "components/pages/case/BerryToBottle.tsx": {
@@ -138,15 +138,15 @@
     "semantic_hash": ""
   },
   "components/site/Footer.tsx": {
-    "mtime": 1792118434.775913,
-    "seen": 1792118441.8532293,
-    "ast_hash": "6e120e56131d804f6c39efd7494e4a78",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538871,
+    "ast_hash": "804d325a556c579c489ed9b37692d53d",
     "semantic_hash": ""
   },
   "components/site/Nav.tsx": {
-    "mtime": 1792112640.7534695,
-    "seen": 1792112647.6758769,
-    "ast_hash": "4e2555bc74803ee3b970482f7f72b425",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538884,
+    "ast_hash": "a72104dfe3daeba65133f2903a1c25f7",
     "semantic_hash": ""
   },
   "components/site/Reveal.tsx": {
@@ -252,9 +252,9 @@
     "semantic_hash": ""
   },
   "public/media/CREDITS.md": {
-    "mtime": 1792040945.580032,
-    "seen": 1792041098.7899964,
-    "ast_hash": "e440b4ac637c4ae906a85a5cf3cb00fc",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5391867,
+    "ast_hash": "6e7f2fc449fbecc89a98dafd369b8e6c",
     "semantic_hash": ""
   },
   "public/media/valle-vineyard.webp": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "app/[locale]/page.tsx": {
-    "mtime": 1792042741.1547499,
-    "seen": 1792042746.2448783,
-    "ast_hash": "62e8f09e3e90dca3bde0177287147d9a",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5386012,
+    "ast_hash": "0c6f75a7cc09596bc407d6076fbfb61a",
     "semantic_hash": ""
   },
   "app/[locale]/privacy/page.tsx": {
@@ -354,15 +354,15 @@
     "semantic_hash": ""
   },
   "lib/i18n/enkanto.ts": {
-    "mtime": 1791487672.2256558,
-    "seen": 1791487681.3928366,
-    "ast_hash": "dad27d0ac905c12fea11f984895a4850",
+    "mtime": 1792383222.6839807,
+    "seen": 1792383229.1119833,
+    "ast_hash": "c1f1e65b7981b6f5b3ad20fc85f14ee3",
     "semantic_hash": ""
   },
   "lib/i18n/home.ts": {
-    "mtime": 1792130277.1131728,
-    "seen": 1792130284.3806672,
-    "ast_hash": "9a9c233d3645eab96780197eaf882342",
+    "mtime": 1792383222.6839807,
+    "seen": 1792383229.1119893,
+    "ast_hash": "609e72964b97b9f1c349053aec3c4695",
     "semantic_hash": ""
   },
   "lib/i18n/metadata.ts": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/monte-xanic.ts": {
-    "mtime": 1790881974.3999615,
-    "seen": 1791475652.7766397,
-    "ast_hash": "93f5ab09c19fe94e1944578857d43b7e",
+    "mtime": 1792383222.6849806,
+    "seen": 1792383229.1119971,
+    "ast_hash": "32485367b704eaae05635a42630f987b",
     "semantic_hash": ""
   },
   "lib/i18n/privacy.ts": {
@@ -390,27 +390,27 @@
     "semantic_hash": ""
   },
   "lib/i18n/site.ts": {
-    "mtime": 1791483722.5625095,
-    "seen": 1791483731.6027908,
-    "ast_hash": "b489d50290796a23977931cbd0a778b8",
+    "mtime": 1792383242.549487,
+    "seen": 1792383250.2066562,
+    "ast_hash": "05d2338273161afcaf1dcd680f854f27",
     "semantic_hash": ""
   },
   "lib/i18n/terms.ts": {
-    "mtime": 1792123251.5868878,
-    "seen": 1792130284.3806822,
-    "ast_hash": "44e283b746d420284a6d0a52112d39cc",
+    "mtime": 1792383222.6859808,
+    "seen": 1792383229.1120265,
+    "ast_hash": "877c6ecc51fdeda7bc4d1f10e3f5be31",
     "semantic_hash": ""
   },
   "lib/i18n/winery.ts": {
-    "mtime": 1792130277.1141727,
-    "seen": 1792130284.3806834,
-    "ast_hash": "13dbd4326cae582a38987caf9fd103d0",
+    "mtime": 1792383222.6859808,
+    "seen": 1792383229.1120288,
+    "ast_hash": "f5cf26b14ddd1577c64bf9b2c0b88179",
     "semantic_hash": ""
   },
   "lib/pricing.ts": {
-    "mtime": 1792130277.1151729,
-    "seen": 1792130284.3806882,
-    "ast_hash": "5a36a0bb0f73e4e9180bc9405d0f1f0f",
+    "mtime": 1792383222.6869807,
+    "seen": 1792383229.1120408,
+    "ast_hash": "1ee0e794944371b076c317afc2981931",
     "semantic_hash": ""
   },
   "components/consent/ConsentBanner.tsx": {
@@ -504,9 +504,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/about.ts": {
-    "mtime": 1790881974.3979616,
-    "seen": 1791475652.7766254,
-    "ast_hash": "772e1584acdb07f5a4035886ccb1ee35",
+    "mtime": 1792383222.6829805,
+    "seen": 1792383229.1119542,
+    "ast_hash": "5c3b30d01cf481918a4002ba8f78b84d",
     "semantic_hash": ""
   },
   "app/[locale]/contacto/page.tsx": {
@@ -582,9 +582,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/contact.ts": {
-    "mtime": 1792088231.9134235,
-    "seen": 1792088239.3805451,
-    "ast_hash": "45510d0f340a31ed0abba398f84e3ad9",
+    "mtime": 1792383222.6829805,
+    "seen": 1792383229.1119745,
+    "ast_hash": "7a9df7538653cda59b56adf54c008e8b",
     "semantic_hash": ""
   },
   "components/site/Mark.tsx": {
@@ -612,9 +612,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/modulos.ts": {
-    "mtime": 1790582402.7105877,
-    "seen": 1791475652.7766383,
-    "ast_hash": "727e6aa5a18cffecd25231f744e6cdef",
+    "mtime": 1792383222.6839807,
+    "seen": 1792383229.111995,
+    "ast_hash": "ec0f3bac5d0bd0aff8035e51ba33abf5",
     "semantic_hash": ""
   },
   "app/[locale]/precios/page.tsx": {
@@ -636,9 +636,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/precios.ts": {
-    "mtime": 1792130277.1131728,
-    "seen": 1792130284.380674,
-    "ast_hash": "90fb3ef0bd2269b2bfbe575564a7c897",
+    "mtime": 1792383222.6849806,
+    "seen": 1792383229.1120064,
+    "ast_hash": "31eb700f7924b3d09930f1772c0c86b2",
     "semantic_hash": ""
   },
   "lib/i18n/precios.test.ts": {
@@ -666,9 +666,9 @@
     "semantic_hash": ""
   },
   "lib/i18n/showcase.ts": {
-    "mtime": 1791782320.4386246,
-    "seen": 1791782569.8110125,
-    "ast_hash": "8e028dc1ff2ed4dca2b072ad323684e7",
+    "mtime": 1792383222.6849806,
+    "seen": 1792383229.1120152,
+    "ast_hash": "2f70c00a7b4e98f6aad882331c728956",
     "semantic_hash": ""
   },
   "components/pages/modulos/Combinations.tsx": {
@@ -786,15 +786,15 @@
     "semantic_hash": ""
   },
   "docs/media-clearances.md": {
-    "mtime": 1792040945.5790322,
-    "seen": 1792041098.7899928,
-    "ast_hash": "4c7ed57aa28f7b6fad506c5ec46cc094",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5391796,
+    "ast_hash": "0261ffc7edb53b812b5a6524d66494eb",
     "semantic_hash": ""
   },
   "public/media/README.md": {
-    "mtime": 1790811894.6348379,
-    "seen": 1791475652.7767193,
-    "ast_hash": "b856fa3691403f97dc7dbe6add7a1860",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.539189,
+    "ast_hash": "333ca951cedcc436671b8078c2653280",
     "semantic_hash": ""
   },
   "components/pages/demos/RestauranteDemo.tsx": {
@@ -906,15 +906,15 @@
     "semantic_hash": ""
   },
   "app/[locale]/ads-claim.test.ts": {
-    "mtime": 1791782320.4346244,
-    "seen": 1791782569.8106477,
-    "ast_hash": "e175e12a46d185517ad76761cd387b4f",
+    "mtime": 1792383222.6819806,
+    "seen": 1792383229.111465,
+    "ast_hash": "bf03a39c15832d518190087a7a302c4f",
     "semantic_hash": ""
   },
   "app/routes.test.ts": {
-    "mtime": 1791323030.0265307,
-    "seen": 1791475652.77646,
-    "ast_hash": "14c26139ba5964171fc30b55760db0b9",
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5386434,
+    "ast_hash": "2d1f62086619e75a03a09f8b6766e574",
     "semantic_hash": ""
   },
   "lib/routes.ts": {
@@ -1422,15 +1422,15 @@
     "semantic_hash": ""
   },
   "lib/i18n/anuncios.ts": {
-    "mtime": 1792130277.1131728,
-    "seen": 1792130284.3806555,
-    "ast_hash": "063d0762cff3efab98e5fd27be5395f7",
+    "mtime": 1792383222.6829805,
+    "seen": 1792383229.111957,
+    "ast_hash": "9521dfd505fc63e53dbd8b3b2db37102",
     "semantic_hash": ""
   },
   "lib/i18n/sitios.ts": {
-    "mtime": 1792130277.1141727,
-    "seen": 1792130284.3806798,
-    "ast_hash": "09e153ecddb1b75123e296d13655ccf9",
+    "mtime": 1792383222.6859808,
+    "seen": 1792383229.1120205,
+    "ast_hash": "e779559d5e37c0c1f0e4b765390bc971",
     "semantic_hash": ""
   },
   "lib/i18n/software.ts": {
@@ -1584,15 +1584,15 @@
     "semantic_hash": ""
   },
   "app/[locale]/estilos/page.tsx": {
-    "mtime": 1790922409.536837,
-    "seen": 1791475652.776437,
-    "ast_hash": "2c2f0bc69e396377413335535492295d",
+    "mtime": 1792383588.3129241,
+    "seen": 1792383594.5385897,
+    "ast_hash": "2fd3b81daaab0515d918549bbecf9ffa",
     "semantic_hash": ""
   },
   "lib/i18n/estilos.ts": {
-    "mtime": 1790922409.536837,
-    "seen": 1791475652.7766352,
-    "ast_hash": "daf2d7dc8f725d6f1ea51ddd3cce3871",
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5389857,
+    "ast_hash": "255366e4eda31c9c8116842c1145475e",
     "semantic_hash": ""
   },
   "scripts/palette-check.mjs": {
@@ -1800,15 +1800,147 @@
     "semantic_hash": ""
   },
   "lib/i18n/builder.ts": {
-    "mtime": 1792130277.1131728,
-    "seen": 1792130284.3806565,
-    "ast_hash": "38a59b9c64cd568aabae19f452d1e979",
+    "mtime": 1792383222.6829805,
+    "seen": 1792383229.1119623,
+    "ast_hash": "eec3d903ef8b9ce82f2f5459808a66e6",
     "semantic_hash": ""
   },
   "lib/i18n/no-factura.test.ts": {
     "mtime": 1792130277.1131728,
     "seen": 1792130284.3806715,
     "ast_hash": "ba54d004d1e08ab07f4a90cfc564f61f",
+    "semantic_hash": ""
+  },
+  "lib/i18n/banned-copy.test.ts": {
+    "mtime": 1792383222.6829805,
+    "seen": 1792383229.1119595,
+    "ast_hash": "d4a0106c3b015c8e1773ac3158e2cd03",
+    "semantic_hash": ""
+  },
+  "app/[locale]/demos/page.test.tsx": {
+    "mtime": 1792383242.5484872,
+    "seen": 1792383250.206243,
+    "ast_hash": "c389aadc21f345555ef5c9f4c1263a03",
+    "semantic_hash": ""
+  },
+  "app/[locale]/demos/page.tsx": {
+    "mtime": 1792383242.5484872,
+    "seen": 1792383250.2062466,
+    "ast_hash": "98f18d994212595a726a75f9888e799c",
+    "semantic_hash": ""
+  },
+  "lib/i18n/demos-index.ts": {
+    "mtime": 1792383242.549487,
+    "seen": 1792383250.2066214,
+    "ast_hash": "d32a3a9a3c43106203d135623efbb2e8",
+    "semantic_hash": ""
+  },
+  "scripts/demos/capture.mjs": {
+    "mtime": 1792383242.5514872,
+    "seen": 1792383250.206764,
+    "ast_hash": "766fb0886d9ec4736461fa767ac86af0",
+    "semantic_hash": ""
+  },
+  "public/media/demos/README.md": {
+    "mtime": 1792383242.5504873,
+    "seen": 1792383250.2068336,
+    "ast_hash": "03adf76be45da2609bce8c2000a9b1c4",
+    "semantic_hash": ""
+  },
+  "public/media/demos/hospitalidad.webp": {
+    "mtime": 1792383242.5504873,
+    "seen": 1792383250.2069037,
+    "ast_hash": "cd47ff9490799d7eff7c5cb984e7958f",
+    "semantic_hash": ""
+  },
+  "public/media/demos/produccion.webp": {
+    "mtime": 1792383242.5504873,
+    "seen": 1792383250.206906,
+    "ast_hash": "155d729c4d640b9ae7b156f41f62684c",
+    "semantic_hash": ""
+  },
+  "public/media/demos/restaurante.webp": {
+    "mtime": 1792383242.5514872,
+    "seen": 1792383250.2069085,
+    "ast_hash": "c8848de4ec576ce542e521a617cd67a1",
+    "semantic_hash": ""
+  },
+  "public/media/demos/todo.webp": {
+    "mtime": 1792383242.5514872,
+    "seen": 1792383250.2069101,
+    "ast_hash": "4ec3878b15e1ad8fea5bda216437f834",
+    "semantic_hash": ""
+  },
+  "components/pages/estilos/SceneMedia.tsx": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538757,
+    "ast_hash": "be4273b9f1595f298e709b6549259759",
+    "semantic_hash": ""
+  },
+  "components/pages/estilos/sceneMedia.test.ts": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5387597,
+    "ast_hash": "01a48ed3850cb10716c8fa48d25455be",
+    "semantic_hash": ""
+  },
+  "components/pages/estilos/sceneMedia.ts": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.538762,
+    "ast_hash": "dec7282ca800e11615fbd05573052a0b",
+    "semantic_hash": ""
+  },
+  "components/pages/home/StylesPromo.tsx": {
+    "mtime": 1792383588.313924,
+    "seen": 1792383594.5387797,
+    "ast_hash": "726d3bb48da9d592e9063847cd2f456c",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/logistica-almacen.webp": {
+    "mtime": 1792383588.314924,
+    "seen": 1792383594.5392761,
+    "ast_hash": "dd1afce78033383192872ad54e9b6195",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/logistica-contenedores.webp": {
+    "mtime": 1792383588.3159242,
+    "seen": 1792383594.5392783,
+    "ast_hash": "bbeb54155e6739233ca780abc2e073b6",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/spa-ritual-poster.webp": {
+    "mtime": 1792383588.3159242,
+    "seen": 1792383594.5392807,
+    "ast_hash": "bffab83dce8d355539f626f10bd2af61",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/vinedo-aerial-poster.webp": {
+    "mtime": 1792383588.319924,
+    "seen": 1792383594.5392828,
+    "ast_hash": "b1ddb65a7de2332dee596aa46c721a23",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/spa-ritual.mp4": {
+    "mtime": 1792383588.317924,
+    "seen": 1792383594.539358,
+    "ast_hash": "58f52a269657b53b299f09d0abd868e6",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/spa-ritual.webm": {
+    "mtime": 1792383588.319924,
+    "seen": 1792383594.5393603,
+    "ast_hash": "4967fdf755b7ab860e04edeb6683d8c3",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/vinedo-aerial.mp4": {
+    "mtime": 1792383588.3239243,
+    "seen": 1792383594.5393627,
+    "ast_hash": "a11da7531c6285642f39ffdd7a5eb839",
+    "semantic_hash": ""
+  },
+  "public/media/estilos/vinedo-aerial.webm": {
+    "mtime": 1792383588.3269243,
+    "seen": 1792383594.5393648,
+    "ast_hash": "5cf72f668107aca6e71df7d10f27ad5b",
     "semantic_hash": ""
   }
 }
