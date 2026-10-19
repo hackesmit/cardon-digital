@@ -169,7 +169,7 @@ const en = {
     },
     band: {
       alt: "En'kanto's cabin among succulents and vines, San Antonio de las Minas",
-      caption: "En'kanto's cabin: every booking from every channel lands in one calendar.",
+      caption: "En'kanto's cabin: every booking from every channel in one calendar.",
     },
   },
   system: {
@@ -259,9 +259,9 @@ const en = {
     { d: "Days 2 to 9", t: "We dig into the numbers behind the numbers." },
     {
       d: "Day 10",
-      t: "The memo lands: what is true, what is broken, what to build first.",
+      t: "You get the memo: what is true, what is broken, what to build first.",
     },
-    { d: "After", t: "We propose the build, or you take the memo and go." },
+    { d: "After", t: "We propose the build." },
   ],
 };
 
@@ -482,7 +482,7 @@ const es: typeof en = {
       d: "Día 10",
       t: "Le entregamos el informe: qué funciona, qué falla y por dónde empezar.",
     },
-    { d: "Después", t: "Le presentamos una propuesta, o usted se lleva el informe y ahí termina." },
+    { d: "Después", t: "Le presentamos la propuesta del desarrollo." },
   ],
 };
 

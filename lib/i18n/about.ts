@@ -41,7 +41,7 @@ const en = {
     title: "A person makes the wine, and we do not change that.",
     body: [
       "Winemaking is human, natural, and different every year. Nobody automates that and we do not try. The goal is the highest quality the fruit allows, and that means every process done well, including the ones nobody sees.",
-      "Keeping the data in order is one of the most important parts of that, because seeing what was done and how it landed in each vintage is the only way to repeat what worked.",
+      "Keeping the data in order is one of the most important parts of that, because seeing what was done and how it turned out in each vintage is the only way to repeat what worked.",
     ],
   },
   how: {
