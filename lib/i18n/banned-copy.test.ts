@@ -55,8 +55,8 @@ const ES: Rule[] = [
   { re: /se lee (?:bien )?en el tel[eé]fono/i, why: 'the old phone line; say "se ve bien en cualquier pantalla"' },
   { re: /publicados? seg[uú]n lo que incluye/i, why: 'the old pricing line; say "precios por funciones"' },
   { re: /siguen funcionando cuando nos vamos/i, why: "the old Spanish brandline" },
-  { re: /repartida en tres lugares/i, why: "a Monte Xanic case-study metaphor (Daniel: remove)" },
-  { re: /cada n[uú]mero queda en su cuadro/i, why: "a Monte Xanic case-study metaphor (Daniel: remove)" },
+  { re: /lo que cambia si su vendimia/i, why: "a Monte Xanic case-study metaphor (Daniel: remove)" },
+  { re: /^cada n[uú]mero queda en su cuadro/i, why: "a Monte Xanic case-study metaphor (Daniel: remove)" },
   { re: /se lee igual que se recorre/i, why: "a Monte Xanic case-study metaphor (Daniel: remove)" },
 ];
 
