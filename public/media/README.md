@@ -169,3 +169,27 @@ larger than the picture.
 
 Then drop the file at its path and point the slot at it on the page. The panel
 becomes the picture, in the same box, and the caption does not change.
+
+## What is NOT on this list: public/media/estilos
+
+The folder `estilos/` holds the material inside the style samples on /estilos,
+and nothing in it is a slot. No row above describes it, no page asks for it by
+slot id, and `<Media>` never renders it.
+
+That is deliberate. A slot exists to carry a caption, because the picture is
+evidence for a claim the caption states. A style sample is the top of an
+INVENTED business's home page: the footage carries no claim of ours, the page
+already says on every sample that it is a sample, and a figcaption in the
+house voice inside a mock hero would caption nothing and break the illusion at
+the same time.
+
+So those files have a catalogue of their own, in
+`components/pages/estilos/sceneMedia.ts`, which plays the same part this list
+plays here: a scene names a key, the catalogue names the file and where it
+sits, and a test checks every declared file is on disk and credited. The one
+thing the two share is the playback policy, which
+`components/pages/estilos/SceneMedia.tsx` imports from `Media.tsx` rather than
+writing a second time.
+
+The budgets and the poster rule above apply there too, and the credit and
+clearance rules apply to everything served, wherever it lives.

@@ -151,3 +151,50 @@ that on request.
 - Credit: RLogistics
 - License: used with permission of the owner
 - Slot: home/orbit
+
+## Style samples (2026-10-16)
+
+The material under `estilos/` runs inside the style samples on /estilos. Each
+sample is an invented business shown in a style of its own, so none of these
+files is a photograph of a client or of work this firm did. They are licensed
+stock Daniel supplied on 2026-10-16, cut, re-encoded and colour graded here
+for the scene each one sits in.
+
+Pexels pages are behind a bot check this machine cannot pass, so the
+contributor name is recorded where the supplied file name carries it and is
+marked to record where it does not. The licence is the same for all six files.
+
+### estilos/vinedo-aerial.mp4, .webm and -poster.webp
+
+- Photographer: to record (Pexels video 12148541)
+- Source: https://www.pexels.com/video/12148541/
+- License: Pexels License (free for commercial and personal use, no attribution required)
+- Original: drone over vine rows, olive groves and a hill town at low sun
+- Use: the ground of the winery sample, 11 s, muted, no audio track, 1920 px
+
+### estilos/spa-ritual.mp4, .webm and -poster.webp
+
+- Photographer: to record (Pexels video 6629856)
+- Source: https://www.pexels.com/video/6629856/
+- License: Pexels License (free for commercial and personal use, no attribution required)
+- Original: a head massage at the table in low warm light
+- Use: the hero of the wellness sample, 11 s, muted, no audio track, cropped
+  to 4:5 and 1080 px wide
+
+### estilos/logistica-almacen.webp
+
+- Photographer: Tiger Lily
+- Source: https://www.pexels.com/photo/4487383/
+- License: Pexels License (free for commercial and personal use, no attribution required)
+- Original: racking in a working warehouse, two people walking the aisle
+- Use: depth behind the logistics sample, 1920 px
+
+### estilos/logistica-contenedores.webp
+
+- Photographer: Jan van der Wolf
+- Source: https://www.pexels.com/photo/33537946/
+- License: Pexels License (free for commercial and personal use, no attribution required)
+- Original: stacked shipping containers against an open sky
+- Use: the band along the foot of the logistics sample, 1920 px. What ships is
+  not the supplied frame: the sky is cut away, so only the stack remains and
+  the scene shows through behind it.

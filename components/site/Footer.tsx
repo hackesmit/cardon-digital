@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/i18n/site";
+import { estilos } from "@/lib/i18n/estilos";
 import { Logo } from "@/components/site/Mark";
 import FooterScene from "@/components/site/FooterScene";
 
@@ -13,6 +14,8 @@ export default function Footer({ locale }: { locale: Locale }) {
   // about and contact.
   const links = [
     { href: href("/sitios-web"), label: s.nav.sitios },
+    // The gallery of style samples, named by its own dictionary (see Nav.tsx).
+    { href: href("/estilos"), label: estilos[locale].navLabel },
     { href: href("/anuncios"), label: s.nav.anuncios },
     { href: href("/software"), label: s.nav.software },
     { href: href("/industries/winery"), label: s.nav.wineries },
