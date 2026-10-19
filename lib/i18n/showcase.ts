@@ -103,7 +103,7 @@ const en = {
         body: "Bookings, the club, the shop and distributors: four subscriptions, no single view, and follow-up that arrives late or not at all.",
       },
       {
-        h: "The reporting lands too late to act on.",
+        h: "The reporting comes too late to act on.",
         body: "Hours of manual work over the numbers, and by the time the report exists the month it describes is already closed.",
       },
       {
@@ -168,8 +168,8 @@ const en = {
     specs: [
       "**Day 1.** A working session over the operation you actually run, module by module.",
       "**Days 2 to 9.** We dig: the sources, the channels, the floor, the measurement and the numbers behind the numbers.",
-      "**Day 10.** The memo lands: what is true, what is broken, and which module earns its place first.",
-      "**Free and unattached.** Use it with us or without us. If we build, the price is agreed at the start and you own the result.",
+      "**Day 10.** You get the memo: what is true, what is broken, and which module earns its place first.",
+      "**Free and unattached.** If we build, the price is agreed at the start and you own the result.",
     ],
     ctaContact: "Other ways to reach us",
   },
@@ -288,7 +288,7 @@ const es: typeof en = {
       "**Día 1.** Una sesión de trabajo sobre la operación que de verdad corre, módulo por módulo.",
       "**Días 2 a 9.** Nos metemos: las fuentes, los canales, el piso, la medición y los números detrás de los números.",
       "**Día 10.** Llega el informe: qué es cierto, qué está roto y qué módulo se gana el primer lugar.",
-      "**Sin costo y sin amarres.** Úselo con nosotros o sin nosotros. Si construimos, el precio se acuerda al inicio y el resultado queda suyo.",
+      "**Sin costo y sin amarres.** Si construimos, el precio se acuerda al inicio y el resultado queda suyo.",
     ],
     ctaContact: "Otras formas de escribirnos",
   },

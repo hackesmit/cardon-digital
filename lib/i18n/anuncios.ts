@@ -56,7 +56,7 @@ const en = {
       },
       {
         h: "A page that convinces.",
-        body: "The page the click lands on repeats the ad's promise and has one button.",
+        body: "The page the click opens repeats the ad's promise and has one button.",
       },
       {
         h: "A report you can read.",
@@ -84,7 +84,6 @@ const en = {
       "You get the list every month and have {disputeDays} business days to strike any contact that was not real. We take it off, no questions asked.",
       "We never charge a percentage of what you spend. The Google Ads account is yours, and the budget is paid by you straight to Google.",
       "Month to month, with 30 days notice. A campaign under {pauseUnder} contacts for {pauseMonths} months in a row we pause ourselves, and the base stops with it.",
-      "Quoted and charged in Mexican pesos; the dollar figures are rounded conversions.",
     ],
   },
   familiar: {
@@ -200,7 +199,6 @@ const es: typeof en = {
       "Cada mes recibe la lista y tiene {disputeDays} días hábiles para tachar cualquier contacto que no fue real. Lo quitamos sin discutir.",
       "Nunca cobramos un porcentaje de lo que invierte. La cuenta de Google Ads es suya, y el presupuesto lo paga usted directo a Google.",
       "Mes con mes, con 30 días de aviso para cancelar. Una campaña con menos de {pauseUnder} contactos durante {pauseMonths} meses seguidos la pausamos nosotros, y la base se detiene con ella.",
-      "Cotizamos y cobramos en pesos mexicanos.",
     ],
   },
   familiar: {
