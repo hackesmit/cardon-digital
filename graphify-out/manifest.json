@@ -1776,9 +1776,9 @@
     "semantic_hash": ""
   },
   "components/contact/PackageBuilder.tsx": {
-    "mtime": 1792130277.1121728,
-    "seen": 1792130284.380517,
-    "ast_hash": "f8657004de9086619de5695faa171010",
+    "mtime": 1792443271.9259882,
+    "seen": 1792443278.9439769,
+    "ast_hash": "17a78d5056decd31e8a3e9ed7d96e6e0",
     "semantic_hash": ""
   },
   "components/contact/StandaloneBuilder.tsx": {
@@ -1971,6 +1971,204 @@
     "mtime": 1792442668.1269193,
     "seen": 1792442675.2572527,
     "ast_hash": "c3914077aaaca9a358067e9333d7f7ad",
+    "semantic_hash": ""
+  },
+  "components/contact/HalftoneSunset.test.tsx": {
+    "mtime": 1792443271.9249883,
+    "seen": 1792443278.943965,
+    "ast_hash": "5df74fe29e63228c08004cf4e439c397",
+    "semantic_hash": ""
+  },
+  "components/contact/HalftoneSunset.tsx": {
+    "mtime": 1792443271.9259882,
+    "seen": 1792443278.943968,
+    "ast_hash": "bc03837a3c3dcbcfe3e0e607bc44f5da",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/console.mjs": {
+    "mtime": 1792443271.9259882,
+    "seen": 1792443278.9444458,
+    "ast_hash": "d7931403a4fac2fef678c55c50572ced",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/probe.mjs": {
+    "mtime": 1792443271.9259882,
+    "seen": 1792443278.9444485,
+    "ast_hash": "625cff2c87a9efb8219f24e19b4828df",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots.mjs": {
+    "mtime": 1792443271.9269884,
+    "seen": 1792443278.9444509,
+    "ast_hash": "0852e7806ed8524b3a0d0fe5e1f55531",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/measurements.json": {
+    "mtime": 1792443271.9429884,
+    "seen": 1792443278.9444525,
+    "ast_hash": "e3864c47fbd1bb131db0ad710936d639",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-dark-contacto-0.png": {
+    "mtime": 1792443271.9269884,
+    "seen": 1792443278.944663,
+    "ast_hash": "b1db924914787a3a644087d5ed445b78",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-dark-contacto-3.png": {
+    "mtime": 1792443271.9279883,
+    "seen": 1792443278.9446654,
+    "ast_hash": "14f523ec25ba820e8ddf234e143ed939",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-dark-contacto-6.png": {
+    "mtime": 1792443271.9279883,
+    "seen": 1792443278.9446673,
+    "ast_hash": "32854cbb1fef29e117a5561af46c0acb",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-dark-precios-0.png": {
+    "mtime": 1792443271.9289882,
+    "seen": 1792443278.9446695,
+    "ast_hash": "c2efe89a039455ff2418da041f4f1675",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-dark-precios-3.png": {
+    "mtime": 1792443271.9299884,
+    "seen": 1792443278.9446712,
+    "ast_hash": "2d1cd7dde925da3a613be436b9b734a9",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-dark-precios-6.png": {
+    "mtime": 1792443271.9309883,
+    "seen": 1792443278.9446733,
+    "ast_hash": "393fc55e304f56686b696804b6dae6b2",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-light-contacto-0.png": {
+    "mtime": 1792443271.9309883,
+    "seen": 1792443278.9446754,
+    "ast_hash": "3ed765fb216bd8248f696bd6cc620a55",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-light-contacto-3.png": {
+    "mtime": 1792443271.9319882,
+    "seen": 1792443278.9446838,
+    "ast_hash": "ea03cad137202c3492e8ceca1c5261b4",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-light-contacto-6.png": {
+    "mtime": 1792443271.9319882,
+    "seen": 1792443278.944686,
+    "ast_hash": "02fa91a00339e4639a35e249ac167f95",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-light-precios-0.png": {
+    "mtime": 1792443271.9329884,
+    "seen": 1792443278.9446876,
+    "ast_hash": "4292d130b882f64615ebb6ad97dfb001",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-light-precios-3.png": {
+    "mtime": 1792443271.9339883,
+    "seen": 1792443278.9446898,
+    "ast_hash": "3e3b815c3b50958fc9dde610eb9003ae",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/1440-light-precios-6.png": {
+    "mtime": 1792443271.9349883,
+    "seen": 1792443278.9446914,
+    "ast_hash": "5789fedfc718b2242b4c25e6fb6d0f82",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-dark-contacto-0.png": {
+    "mtime": 1792443271.9349883,
+    "seen": 1792443278.9446936,
+    "ast_hash": "00f4bede6e6d030db5cc3da3036a2f6d",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-dark-contacto-3.png": {
+    "mtime": 1792443271.9359884,
+    "seen": 1792443278.9446952,
+    "ast_hash": "2e9bfa3406c7c8ed458e3976b4159a55",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-dark-contacto-6.png": {
+    "mtime": 1792443271.9359884,
+    "seen": 1792443278.9446971,
+    "ast_hash": "cbafc938e82a84107e521a3e25d32214",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-dark-precios-0.png": {
+    "mtime": 1792443271.9359884,
+    "seen": 1792443278.944699,
+    "ast_hash": "72d35a4d48e362566c64165584366256",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-dark-precios-3.png": {
+    "mtime": 1792443271.9359884,
+    "seen": 1792443278.9447012,
+    "ast_hash": "49e9b1f8d8dbdbf7702ecedf6504fcfd",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-dark-precios-6.png": {
+    "mtime": 1792443271.9359884,
+    "seen": 1792443278.9447029,
+    "ast_hash": "1eb47dcf906f8d7d26b26b34109de9f5",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-light-contacto-0.png": {
+    "mtime": 1792443271.9359884,
+    "seen": 1792443278.9447048,
+    "ast_hash": "79224f2f742994aeaddb7d6c2e145743",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-light-contacto-3.png": {
+    "mtime": 1792443271.9369884,
+    "seen": 1792443278.944707,
+    "ast_hash": "da799d22eaca40a6f01e9fbc31570b5a",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-light-contacto-6.png": {
+    "mtime": 1792443271.9369884,
+    "seen": 1792443278.944709,
+    "ast_hash": "1f93c9ed85076cb2deba92893d2431e0",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-light-precios-0.png": {
+    "mtime": 1792443271.9369884,
+    "seen": 1792443278.9447112,
+    "ast_hash": "d2c4d3797138ab1405ad05ff554378c5",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-light-precios-3.png": {
+    "mtime": 1792443271.9369884,
+    "seen": 1792443278.944713,
+    "ast_hash": "668fa9de2f880ad5f654b10632616b05",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/390-light-precios-6.png": {
+    "mtime": 1792443271.9369884,
+    "seen": 1792443278.9447153,
+    "ast_hash": "4adc3c49360cc9ddcc174a3f107079c1",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/context-narrow-light.png": {
+    "mtime": 1792443271.9389884,
+    "seen": 1792443278.9447172,
+    "ast_hash": "1c3daa5d8576548ab8f1bd32b07f6838",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/context-wide-dark.png": {
+    "mtime": 1792443271.9409885,
+    "seen": 1792443278.944719,
+    "ast_hash": "6ee2f6fb54b56205c1bc99a5b2e6aedd",
+    "semantic_hash": ""
+  },
+  "state/review/s-4139/shots/context-wide-light.png": {
+    "mtime": 1792443271.9429884,
+    "seen": 1792443278.944721,
+    "ast_hash": "a06e98b077435cbb657c47ec2499e72c",
     "semantic_hash": ""
   }
 }
