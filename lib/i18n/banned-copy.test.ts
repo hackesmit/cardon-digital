@@ -40,7 +40,7 @@ const EN: Rule[] = [
   { re: /in Mexican pesos/i, why: "a note that prices are quoted in Mexican pesos" },
   { re: /\bwe quote and charge\b/i, why: "a note that prices are quoted in Mexican pesos" },
   { re: /take the memo and go/i, why: "a line that encourages the reader to leave" },
-  { re: /\bland(?:s|ed)\b/i, why: 'the word "lands" (Daniel dislikes it)' },
+  { re: /\bland(?:s|ed)?\b/i, why: 'the word "lands" (Daniel dislikes it)' },
   { re: /whatsapp button/i, why: 'name the function, not the app (Daniel: no "WhatsApp button")' },
   { re: /reads on a phone/i, why: 'the old phone line; say "works on any screen" or "optimized for mobile and desktop"' },
   { re: /published by what (?:it|they) include/i, why: 'the old pricing line; say "feature-based pricing"' },
