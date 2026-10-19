@@ -1,0 +1,92 @@
+/* MarkLoader: the Cardon mark drawing itself while the site makes somebody
+   wait. Everything the browser animates here is stroke-dashoffset and opacity,
+   so a loader on screen costs a composite and never a layout.
+
+   The two custom properties are the whole API. --ml-height sizes the mark; the
+   width follows the artwork's 796 by 310 box. --ml-cycle sets the pace, and a
+   call site shortens it when the wait it covers is short, because a visitor who
+   waits 400 milliseconds should see a pen moving, not a line creeping. */
+
+.ml{
+  display:inline-flex;
+  line-height:0;
+}
+.ml-svg{
+  display:block;
+  height:var(--ml-height,1em);
+  width:calc(var(--ml-height,1em) * 2.568);
+}
+
+/* The finished mark under the pen, faint enough to read as paper rather than
+   as a second drawing. */
+.ml-ghost{opacity:.12;}
+
+.ml-brush{
+  fill:none;
+  stroke:currentColor;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+/* Both paths carry pathLength="1", so one dash covers the whole stroke and the
+   offset runs from 1 (nothing drawn) to 0 (drawn) whatever the path measures. */
+.ml-line,.ml-sun{
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+}
+
+/* One clock, three animations: the cycle below is a single pass of the loop,
+   and the percentages are its beats. The line draws over the first 54 per cent,
+   the sun closes by 65, the mark holds to 83, then it fades and the pen starts
+   again on clean paper. */
+.ml-ink{animation:ml-ink var(--ml-cycle,3.6s) linear infinite;}
+.ml-line{animation:ml-line var(--ml-cycle,3.6s) linear infinite;}
+.ml-sun{animation:ml-sun var(--ml-cycle,3.6s) linear infinite;}
+
+@keyframes ml-ink{
+  0%{opacity:0;animation-timing-function:ease-out;}
+  6%{opacity:1;}
+  83%{opacity:1;animation-timing-function:ease-in;}
+  95%,100%{opacity:0;}
+}
+/* The pen leaves the foot of the cactus gently, runs, and settles at the end of
+   the ground line. One curve over the whole stroke, so the speed never steps. */
+@keyframes ml-line{
+  0%{stroke-dashoffset:1;animation-timing-function:cubic-bezier(.45,.03,.3,1);}
+  54%,100%{stroke-dashoffset:0;}
+}
+@keyframes ml-sun{
+  0%,52%{stroke-dashoffset:1;animation-timing-function:cubic-bezier(.4,.05,.25,1);}
+  65%,100%{stroke-dashoffset:0;}
+}
+
+/* In the contact button the wait is one request long, so the pen moves faster
+   and the mark sits at the start of the label, inside the button's own gap. */
+.ml-cta{--ml-height:1.15em;--ml-cycle:2.4s;}
+
+/* The route fallback. It is held off the screen for the first part of a
+   second: a navigation that resolves quickly never shows it, and one that does
+   not fades the mark in rather than flashing it. */
+.ml-route{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52vh;
+  padding:48px 24px;
+}
+.ml-route-mark{
+  --ml-height:clamp(52px,9vw,96px);
+  color:var(--primary-text);
+  opacity:0;
+  animation:ml-arrive .4s ease .45s both;
+}
+@keyframes ml-arrive{from{opacity:0;}to{opacity:1;}}
+
+/* Reduced motion: the pen is already home. The mark is whole and nothing on
+   the screen moves, which is the calm end of the same drawing. */
+@media (prefers-reduced-motion:reduce){
+  .ml-ink,.ml-line,.ml-sun{animation:none;}
+  .ml-ink{opacity:1;}
+  .ml-line,.ml-sun{stroke-dashoffset:0;}
+  .ml-route-mark{animation-duration:.01s;}
+}
