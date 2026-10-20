@@ -12,16 +12,16 @@ import type { Dict } from "./rich";
 
 const en = {
   meta: {
-    title: "Websites",
+    title: "Business websites, built in Ensenada",
     description:
-      "A website that gets found on Google and gets written to from a phone. Designed for your business, copy included, optimized for mobile and desktop, feature-based pricing, and the domain and the site in your name.",
+      "Cardon Digital builds websites for businesses in Ensenada and Baja California: fast on a phone, built to be found on Google and read by ChatGPT and Gemini, with the domain in your name.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Websites",
     title: "Get found on Google,",
     titleAccent: "and get written to from a phone.",
-    sub: "We design and build your business's website: fast, optimized for mobile and desktop, and one tap away from a call or a message. Feature-based pricing, and the domain and the site stay in your name.",
+    sub: "Cardon Digital designs and builds websites for businesses in Ensenada and Baja California. Every site loads fast on a phone, is built to be found on Google and to be read and cited by ChatGPT and Gemini, and puts a call or a message one tap away. The domain and the site stay in your name.",
     proof: "Sites built for Vinedo En'kanto and Dharma Ochoa, delivered in their names.",
   },
   /** The one link to the style samples page (/estilos). */
@@ -30,8 +30,8 @@ const en = {
     cta: "See the styles",
   },
   gets: {
-    kicker: "What your site has to do",
-    title: "Four things, in this order.",
+    kicker: "Four things, in this order",
+    title: "What does a business website have to do?",
     items: [
       {
         num: "01",
@@ -107,11 +107,79 @@ const en = {
       "payment-provider-connector": "Card payments in your own account",
       "shipping-and-pickup-rules": "Shipping and pickup rules",
       "order-notifications": "Order notices to your phone",
+      "aeo-ready": "Ready for ChatGPT, Gemini and Google answers",
     } as Record<string, string>,
+  },
+  /** Showing up in AI answers: the one place the page names AEO. */
+  ai: {
+    kicker: "AI answers",
+    title: "How does your business show up in ChatGPT, Gemini and Google answers?",
+    lead: "Every Cardon Digital website ships ready for ChatGPT, Gemini and Google's AI answers to read it, understand it and cite it. That work is called AEO, answer engine optimization: making sure an AI can find your business and say what it does, where, and for whom.",
+    listTitle: "What a site ready for AI answers carries",
+    items: [
+      {
+        h: "Structured data",
+        body: "A machine-readable profile of your business, your services and your common questions, matching what the page says word for word.",
+      },
+      {
+        h: "The answer first",
+        body: "Every page opens with a short, direct answer to the question that brings people to it, with the detail after.",
+      },
+      {
+        h: "Common questions, answered",
+        body: "The questions your customers ask an AI, each answered on its own on your site.",
+      },
+      {
+        h: "Open to AI crawlers",
+        body: "The site lets in the crawlers that ChatGPT, Gemini and the search engines send, and hands them an accurate map of its pages.",
+      },
+      {
+        h: "Fast pages, built on the server",
+        body: "Every page arrives complete from the server and loads fast, so an AI reads it without waiting on code in a browser.",
+      },
+    ],
+    honest:
+      "Which business an answer mentions is up to each engine, and nobody can promise it. What we can show you is where you stand: the free diagnostic runs your customers' questions through ChatGPT, Perplexity, Gemini and Google and shows whether your business comes up and how it is described.",
+  },
+  faq: {
+    title: "Questions about getting a business website",
+    items: [
+      {
+        question: "How much does a website for my business cost?",
+        answer:
+          "It depends on what the site has to do. Cardon Digital publishes four packages, from a single page to an online store, each with its own price, plus optional monthly care. Every price is on the pricing page.",
+      },
+      {
+        question: "How long does it take to build a business website?",
+        answer:
+          "Between {min} and {max} business days, depending on the package: a single page is the fastest and an online store takes the longest. Each package lists its time next to its price.",
+      },
+      {
+        question: "What does a website need to show up in ChatGPT or Gemini answers?",
+        answer:
+          "An AI has to be able to read it and understand it: structured data describing the business, pages that open with a direct answer, common questions answered, open access for AI crawlers, and fast pages that arrive complete from the server. Every Cardon Digital site comes with all of it.",
+      },
+      {
+        question: "Can you guarantee my business will show up in ChatGPT or on Google?",
+        answer:
+          "No. Each engine decides which businesses its answers mention, and nobody can honestly promise that. Cardon Digital delivers the work that makes it possible and the measurement: the free diagnostic checks whether your business comes up today when your customers ask.",
+      },
+      {
+        question: "Can I make changes to my site after it is handed over?",
+        answer:
+          "Yes. The domain, the hosting and the access are in your name, so you can make changes yourself. If you would rather not touch it, optional monthly care covers hosting, the domain, updates and two changes a month, and you can stop it whenever you like.",
+      },
+      {
+        question: "How do customers get in touch from the site?",
+        answer:
+          "Through a contact button and a short form, one tap away on a phone. Every message and every call that comes from the site is counted, so you know how many customers it brought you.",
+      },
+    ],
+    more: "See the price of every package",
   },
   how: {
     kicker: "How it works",
-    title: "From the call to the handover.",
+    title: "How does a site get built, from the call to the handover?",
     steps: [
       { k: "01", body: "A 30-minute call. What you sell, to whom, and what the site has to achieve." },
       { k: "02", body: "Design and copy. You review them, with two rounds of changes." },
@@ -166,16 +234,16 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Sitios web",
+    title: "Sitios web para negocios en Ensenada",
     description:
-      "Un sitio web para que lo encuentren en Google y le escriban desde el teléfono. Diseñado para su negocio, con textos incluidos, optimizado para teléfono y computadora, con precios por funciones, y el dominio y el sitio a su nombre.",
+      "Cardon Digital hace sitios web para negocios en Ensenada y Baja California: rápidos en el teléfono, hechos para Google y para que ChatGPT y Gemini los lean, con el dominio a su nombre.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Sitios web",
     title: "Que lo encuentren en Google",
     titleAccent: "y le escriban desde el teléfono.",
-    sub: "Diseñamos y desarrollamos el sitio de su negocio: rápido, optimizado para teléfono y computadora, y a un toque de una llamada o un mensaje. Precios por funciones, y el dominio y el sitio quedan a su nombre.",
+    sub: "Cardon Digital diseña y desarrolla sitios web para negocios en Ensenada y Baja California. Cada sitio carga rápido en el teléfono, está hecho para que lo encuentren en Google y para que ChatGPT y Gemini lo puedan leer y citar, y deja a un toque la llamada o el mensaje. El dominio y el sitio quedan a su nombre.",
     proof: "Hicimos los sitios de Viñedo En'kanto y Dharma Ochoa, cada uno a nombre de su dueño.",
   },
   styles: {
@@ -183,8 +251,8 @@ const es: typeof en = {
     cta: "Ver los estilos",
   },
   gets: {
-    kicker: "Lo que su sitio tiene que lograr",
-    title: "Cuatro cosas, en este orden.",
+    kicker: "Cuatro cosas, en este orden",
+    title: "¿Qué tiene que lograr el sitio de su negocio?",
     items: [
       {
         num: "01",
@@ -253,11 +321,78 @@ const es: typeof en = {
       "payment-provider-connector": "Cobro con tarjeta en su propia cuenta",
       "shipping-and-pickup-rules": "Reglas de envío y recolección en tienda",
       "order-notifications": "Avisos de cada pedido en su teléfono",
+      "aeo-ready": "Listo para las respuestas de ChatGPT, Gemini y Google",
     } as Record<string, string>,
+  },
+  ai: {
+    kicker: "Respuestas de IA",
+    title: "¿Cómo aparece su negocio en las respuestas de ChatGPT, Gemini y Google?",
+    lead: "Cada sitio web de Cardon Digital sale listo para que ChatGPT, Gemini y las respuestas de Google lo puedan leer, entender y citar. Ese trabajo se llama AEO, optimización para motores de respuesta: lograr que una inteligencia artificial encuentre su negocio y sepa decir qué hace, dónde y para quién.",
+    listTitle: "Lo que lleva un sitio listo para las respuestas de IA",
+    items: [
+      {
+        h: "Datos estructurados",
+        body: "Una ficha que las máquinas pueden leer, con su negocio, sus servicios y sus preguntas frecuentes, igual a lo que dice la página.",
+      },
+      {
+        h: "La respuesta primero",
+        body: "Cada página abre con una respuesta corta y directa a la pregunta que trae a la gente, y el detalle va después.",
+      },
+      {
+        h: "Preguntas frecuentes respondidas",
+        body: "Las preguntas que sus clientes le hacen a una IA, respondidas una por una en su sitio.",
+      },
+      {
+        h: "Abierto a los rastreadores de IA",
+        body: "El sitio deja entrar a los rastreadores que mandan ChatGPT, Gemini y los buscadores, y les entrega un mapa fiel de sus páginas.",
+      },
+      {
+        h: "Páginas rápidas, armadas en el servidor",
+        body: "Cada página llega completa desde el servidor y carga rápido, así que una IA la lee sin esperar a que corra código en el navegador.",
+      },
+    ],
+    honest:
+      "Qué negocio menciona una respuesta lo decide cada motor, y nadie lo puede prometer. Lo que sí le podemos mostrar es dónde está hoy: en el diagnóstico sin costo hacemos las preguntas de sus clientes en ChatGPT, Perplexity, Gemini y Google y le enseñamos si su negocio aparece y cómo lo describen.",
+  },
+  faq: {
+    title: "Preguntas frecuentes sobre sitios web",
+    items: [
+      {
+        question: "¿Cuánto cuesta un sitio web para mi negocio?",
+        answer:
+          "Depende de lo que tenga que hacer el sitio. Cardon Digital publica cuatro paquetes, de una página a una tienda en línea, cada uno con su precio, y un mantenimiento mensual opcional. Todos los precios están en la página de precios.",
+      },
+      {
+        question: "¿Cuánto tarda en estar listo un sitio web?",
+        answer:
+          "Entre {min} y {max} días hábiles, según el paquete: una página es lo más rápido y una tienda en línea lo que más tarda. Cada paquete tiene su plazo publicado junto a su precio.",
+      },
+      {
+        question: "¿Qué necesita un sitio para aparecer en las respuestas de ChatGPT o Gemini?",
+        answer:
+          "Que una inteligencia artificial lo pueda leer y entender: datos estructurados que describen el negocio, páginas que abren con una respuesta directa, preguntas frecuentes respondidas, acceso libre para los rastreadores de IA y páginas rápidas que llegan completas desde el servidor. Todos los sitios de Cardon Digital lo traen.",
+      },
+      {
+        question: "¿Pueden garantizar que mi negocio aparezca en ChatGPT o en Google?",
+        answer:
+          "No. Cada motor decide qué negocios mencionan sus respuestas, y nadie lo puede prometer con honestidad. Cardon Digital entrega el trabajo que lo hace posible y la medición: el diagnóstico sin costo revisa si su negocio aparece hoy cuando sus clientes preguntan.",
+      },
+      {
+        question: "¿Puedo hacer cambios en mi sitio después de la entrega?",
+        answer:
+          "Sí. El dominio, el hosting y los accesos quedan a su nombre, así que los cambios los puede hacer usted. Si prefiere no tocarlo, el mantenimiento mensual opcional incluye hosting, dominio, actualizaciones y dos cambios al mes, y lo cancela cuando quiera.",
+      },
+      {
+        question: "¿Cómo me contactan los clientes desde el sitio?",
+        answer:
+          "Con un botón de contacto y un formulario corto, a un toque desde el teléfono. Cada mensaje y cada llamada que llega desde el sitio se cuenta, así usted sabe cuántos clientes le trajo.",
+      },
+    ],
+    more: "Ver el precio de cada paquete",
   },
   how: {
     kicker: "Cómo funciona",
-    title: "De la llamada a la entrega.",
+    title: "¿Cómo se hace su sitio, de la llamada a la entrega?",
     steps: [
       { k: "01", body: "Una llamada de 30 minutos. Qué vende, a quién y qué tiene que lograr el sitio." },
       { k: "02", body: "Diseño y textos. Los revisa usted, con dos rondas de cambios." },
