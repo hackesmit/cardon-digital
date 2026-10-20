@@ -660,6 +660,12 @@ export default function HalftoneSunset({ level }: { level: number }) {
 
     window.addEventListener("scroll", checkStuck, { passive: true });
     window.addEventListener("resize", checkStuck);
+    /* The contact form's builder sits in a reveal wrapper that slides the
+       last 14px into place after the scroll that revealed it, with no scroll
+       event of its own; without this the band stays tall until the next one
+       (seen live, 2026-10-20). */
+    const reveal = host.closest(".reveal");
+    reveal?.addEventListener("transitionend", checkStuck);
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("cardon-mode", onMode);
     reduceMQ.addEventListener("change", onReduce);
@@ -677,6 +683,7 @@ export default function HalftoneSunset({ level }: { level: number }) {
       ro.disconnect();
       io.disconnect();
       window.removeEventListener("scroll", checkStuck);
+      reveal?.removeEventListener("transitionend", checkStuck);
       window.removeEventListener("resize", checkStuck);
       host.removeAttribute("data-stuck");
       box?.style.removeProperty("--pb-stick-top");
