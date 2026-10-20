@@ -338,6 +338,7 @@ export default function ContactForm() {
         value={attribution.cd_first_seen}
         readOnly
       />
+      <input type="hidden" name="cd_source" value={attribution.cd_source} readOnly />
 
       <div className="form-foot">
         <button className="cta" type="submit" disabled={status === "sending"}>
