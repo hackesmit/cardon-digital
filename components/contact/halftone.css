@@ -3,32 +3,81 @@
    It is the top band of the builder box in both modes: inside the contact
    form's folded panel and on /precios. It bleeds to the box edge, so the
    negative margins repeat .pb's own padding (builder.css), and it spans both
-   columns of the standalone grid.
+   columns of the standalone layout.
 
    NO TEXT SITS OVER IT. The band is its own strip above the groups, which is
    what keeps the sunset off every contrast ratio on the page: at a full level
    the water is near-solid wine, and body copy over that could not hold AA in
-   either mode. */
+   either mode.
+
+   IT STAYS IN VIEW WHILE THE CLIENT BUILDS (bead hq-lgjo.11, Daniel
+   2026-10-19: the band scrolled away before most of the boxes, so nobody saw
+   it grow). It is sticky inside .pb: it pins under the site header while the
+   groups scroll beneath it and leaves with the builder when the builder ends.
+   That only works because .pb is a flex box (builder.css); a grid item sticks
+   inside its own grid area, which for the band was just its own row.
+
+   While stuck the component sets data-stuck and the band drops to a short
+   strip, so it does not eat the screen. The margin under it grows by exactly
+   what the height loses, so the groups below never move and the stuck state
+   cannot flip itself back (a sticky box's start is its place in the flow,
+   which its own height does not change). The canvas re-composes the sunset
+   for the strip's aspect rather than cropping it. */
+
+.pb{
+  --pb-band-full:clamp(118px, 12.5vw, 184px);
+  --pb-band-short:clamp(56px, 5.5vw, 84px);
+  /* The site header's measured height, written by the component from the
+     .site-header element itself; 0 until it has been read. */
+  --pb-stick-top:0px;
+}
 
 .pb-sunset{
-  grid-column:1/-1;
-  position:relative;
+  position:sticky;
+  top:var(--pb-stick-top);
+  /* Above the groups and the summary, which scroll under it; under the site
+     header (z-index 50). */
+  z-index:2;
+  flex:none;
   /* .pb is padded 14px 18px 20px; the band fills that box edge to edge. */
   margin:-14px -18px 2px;
-  height:clamp(118px, 12.5vw, 184px);
+  /* Set, not stretched: in the standalone row layout a flex item with no
+     width would shrink to its (absolutely placed) canvas, which is nothing. */
+  width:calc(100% + 36px);
+  height:var(--pb-band-full);
   overflow:hidden;
-  pointer-events:none;
+  /* It takes the pointer, on purpose: stuck, it sits over options that have
+     scrolled under it, and a click on the band must not tick a box the
+     visitor cannot see. The canvas inside still ignores the pointer. */
+  pointer-events:auto;
   /* Hairlines top and bottom, so the screen reads as a printed band rather
-     than as the page's background having gone strange. */
+     than as the page's background having gone strange. The bottom one is the
+     edge the groups slide under while the band is stuck. */
   border-top:1px solid var(--line-soft);
   border-bottom:1px solid var(--line-soft);
   /* The dot field is drawn over the ground, not the panel, so an empty screen
-     reads as texture on the page rather than a grey wash on a white card. */
+     reads as texture on the page rather than a grey wash on a white card. The
+     ground is opaque, so nothing under the band shows through it. */
   background:var(--ground);
 }
 .pb-wrap-page .pb-sunset{margin-top:-18px;}
+/* What the band loses in height goes onto the top of what follows it, not
+   onto the band's own bottom margin: a sticky box keeps its whole margin box
+   inside the builder, so a margin of its own would push it out about 100px
+   before the last options, which are the ones the visitor ticks last. */
+.pb-sunset[data-stuck]{height:var(--pb-band-short);}
+.pb-sunset[data-stuck] + .pb-groups{margin-top:calc(var(--pb-band-full) - var(--pb-band-short));}
+@media (min-width:980px){
+  .pb[data-mode="standalone"] .pb-sunset[data-stuck] ~ .pb-summary{margin-top:calc(var(--pb-band-full) - var(--pb-band-short));}
+}
+/* Keyboard focus never lands under the stuck band: a focused control is
+   scrolled into view below the header and the strip, not just below the
+   header (WCAG 2.4.11). */
+.pb-groups *,
+.pb-summary *{scroll-margin-top:calc(var(--pb-stick-top) + var(--pb-band-short) + 24px);}
 
 .pb-sunset canvas{
+  pointer-events:none;
   position:absolute;
   inset:0;
   width:100%;
