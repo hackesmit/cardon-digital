@@ -1,15 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import "./hawk-delivery.css";
 
 /**
  * What happens when a message really leaves (Daniel, 2026-10-19).
  *
- * The form shoots a letter out of its own box, the letter falls through the
- * air swaying like a leaf, and a red tailed hawk swoops in from the upper
- * right, takes it, and climbs away off the left of the screen with it. The
+ * The form folds itself up like a letter: a sheet laid exactly over the box
+ * it was, the bottom third folded up over the middle, the top third down over
+ * both, and the packet shrinks into the sealed letter. The letter falls
+ * through the air swaying like a leaf, and a red tailed hawk swoops in from
+ * the upper right, takes it in its talons, and climbs away off the left of
+ * the screen with it, drawn over the paper so the body overlaps what it
+ * carries (Daniel, after the first version went live). The
  * hawk is Cardon's own footage, keyed off a greenscreen and cut down to one
  * wingbeat (scripts/eggs/hawk-asset.mjs made the two files from it).
  *
@@ -41,18 +45,43 @@ import "./hawk-delivery.css";
  *
  * The geometry below is exported and pure so the shape of the flight can be
  * asserted without a browser (HawkDelivery.test.tsx); the component only
- * reads the clock and writes two transforms.
+ * reads the clock and writes transforms and opacities.
  */
 
-/** Where the letter leaves from: the form's box, in viewport pixels. */
-export type LaunchBox = { x: number; y: number; width: number };
+/** Where the letter leaves from: the form's box, in viewport pixels. The
+    height is optional because the form measured only the first three for the
+    first version of this egg; without it the sheet runs from the top of the
+    box to the bottom of the window, which is where the send button the
+    visitor just pressed sits (sheetBox). scrollY is the page scroll at the
+    moment of measuring: swapping the tall form for the short confirmation
+    pulls the page up before the flight starts, and the flight has to be
+    drawn against the scroll it was measured at, not the one it finds. */
+export type LaunchBox = { x: number; y: number; width: number; height?: number; scrollY?: number };
 
 /** One element at one instant. x and y are viewport pixels. */
 export type Pose = { x: number; y: number; rot: number; scale: number };
 
+/** The folding sheet at one instant: its centre, its two scales, and how far
+    each flap has turned over, in degrees. Zero is flat and open; 180 is
+    folded flat over the middle third. */
+export type SheetPose = {
+  x: number;
+  y: number;
+  rot: number;
+  sx: number;
+  sy: number;
+  bottom: number;
+  top: number;
+  alpha: number;
+};
+
 /** The whole scene at one instant. */
 export type Frame = {
+  sheet: SheetPose;
+  /** False once the sheet has handed over to the letter for good. */
+  sheetOn: boolean;
   letter: Pose;
+  letterAlpha: number;
   hawk: Pose;
   /** False before the bird has entered, so it is not drawn parked off screen. */
   hawkOn: boolean;
@@ -61,21 +90,32 @@ export type Frame = {
 };
 
 /* ============================ the clock ============================
-   Daniel's budget for the whole effect is 2.5 to 3.5 seconds. These five
-   numbers are it, in seconds, and the test holds the total inside that band. */
+   Daniel's budget for the whole effect is about 3.5 seconds. These numbers
+   are it, in seconds, and the test holds the total inside that band. */
 
-/** The letter leaving the box and reaching the top of its arc. */
-export const LAUNCH_S = 0.34;
+/** The sheet folding in thirds where the form was. */
+export const FOLD_S = 0.66;
+/** The sheet fading in over the box before the first flap moves. It is
+    short: the form left the page a moment ago and the sheet stands in its
+    place. */
+export const SHEET_IN_S = 0.08;
+/** The bottom flap turning up over the middle: start and length. */
+export const BOTTOM_FOLD = { at: 0.08, len: 0.3 };
+/** The top flap turning down over both: start and length. It starts while
+    the bottom one is landing, which is how hands fold a letter. */
+export const TOP_FOLD = { at: 0.32, len: 0.32 };
+/** The folded packet shrinking into the letter and rising to its arc. */
+export const LAUNCH_S = 0.4;
 /** The fall, swaying, from that arc down to where the bird takes it. */
-export const FALL_S = 1.34;
+export const FALL_S = 1.2;
 /** The bird enters, already on its way down. */
-export const HAWK_IN_S = 0.52;
+export const HAWK_IN_S = 1.12;
 /** The instant of the catch. */
-export const CATCH_S = LAUNCH_S + FALL_S;
+export const CATCH_S = FOLD_S + LAUNCH_S + FALL_S;
 /** The letter closing onto the talons, the last moment of the fall. */
 export const SNAP_S = 0.13;
 /** Carrying it out, climbing, to beyond the left edge. */
-export const CARRY_S = 1.16;
+export const CARRY_S = 1.1;
 /** The end of the effect. */
 export const END_S = CATCH_S + CARRY_S;
 
@@ -123,6 +163,31 @@ const bezD = (a: number, b: number, c: number, d: number, u: number) => {
 };
 const mix = (a: number, b: number, p: number) => a + (b - a) * p;
 
+/** Smooth in and out, for the flaps: a hand starts a fold gently and lays
+    the paper down gently. */
+const easeInOut3 = (p: number) => (p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
+/** 0 below a, 1 above b, smooth between. */
+const ramp = (v: number, a: number, b: number) => {
+  const p = clamp((v - a) / (b - a), 0, 1);
+  return p * p * (3 - 2 * p);
+};
+
+/** The paper inside the letter's 44 by 31 viewBox, as fractions of the drawn
+    width: what the folded packet has to shrink to so the hand over is one
+    shape becoming another rather than a swap. */
+const PAPER_W = 39.2 / 44;
+const PAPER_H = 22.8 / 44;
+
+/** The sheet's own box: the form's box, or, when the form did not say how
+    tall it was, from its top to the bottom of the window. */
+export function sheetBox(box: LaunchBox, vh: number): { x: number; y: number; w: number; h: number } {
+  const h =
+    box.height && box.height > 0
+      ? box.height
+      : clamp(vh - box.y - 16, 120, Math.max(120, box.width * 2.6));
+  return { x: box.x, y: box.y, w: box.width, h };
+}
+
 /**
  * The fixed points of one flight, measured once from the box the letter left
  * and the viewport it left into. Everything downstream is a function of this
@@ -131,7 +196,12 @@ const mix = (a: number, b: number, p: number) => a + (b - a) * p;
 export type Scene = {
   vw: number;
   vh: number;
-  /** The mouth of the box. */
+  /** The sheet, which is the form's box. */
+  sheetX: number;
+  sheetY: number;
+  sheetW: number;
+  sheetH: number;
+  /** The centre of the folded packet, which is the centre of the box. */
   outX: number;
   outY: number;
   /** The top of the letter's arc. */
@@ -143,11 +213,20 @@ export type Scene = {
   sway: number;
   /** How wide the bird is drawn, in CSS pixels. */
   hawkW: number;
+  /** How wide the letter is drawn, in CSS pixels. */
+  letterW: number;
 };
 
-export function sceneFor(box: LaunchBox, vw: number, vh: number, hawkW: number): Scene {
-  const outX = clamp(box.x + box.width * 0.5, 48, vw - 48);
-  const outY = clamp(box.y + 14, HEAD_GAP, Math.max(HEAD_GAP, vh - 70));
+export function sceneFor(
+  box: LaunchBox,
+  vw: number,
+  vh: number,
+  hawkW: number,
+  letterW = 50,
+): Scene {
+  const sheet = sheetBox(box, vh);
+  const outX = sheet.x + sheet.w * 0.5;
+  const outY = sheet.y + sheet.h * 0.5;
   const sway = clamp(vw * 0.06, 28, 58);
   /* The arc leans to the right, towards the side the bird comes from. apexX is
      the middle of the swing, so the clamp has to keep half a swing of clear
@@ -155,10 +234,25 @@ export function sceneFor(box: LaunchBox, vw: number, vh: number, hawkW: number):
      ceiling here is what stops a form low in the window from asking for a fall
      that ends below the fold. */
   const apexX = clamp(outX + 20, sway + 30, Math.max(sway + 30, vw - sway - 30));
-  const apexY = clamp(outY - 94, HEAD_GAP, Math.max(HEAD_GAP, vh - FLOOR_GAP - MIN_FALL));
+  const apexY = clamp(outY - 120, HEAD_GAP, Math.max(HEAD_GAP, vh - FLOOR_GAP - MIN_FALL));
   const drop = clamp(vh * 0.3, 170, 310);
   const fallTo = clamp(apexY + drop, apexY + MIN_FALL, Math.max(apexY + MIN_FALL, vh - FLOOR_GAP));
-  return { vw, vh, outX, outY, apexX, apexY, fallTo, sway, hawkW };
+  return {
+    vw,
+    vh,
+    sheetX: sheet.x,
+    sheetY: sheet.y,
+    sheetW: sheet.w,
+    sheetH: sheet.h,
+    outX,
+    outY,
+    apexX,
+    apexY,
+    fallTo,
+    sway,
+    hawkW,
+    letterW,
+  };
 }
 
 /** The letter at a point p of its fall, 0 at the top of the arc, 1 at the catch. */
@@ -181,20 +275,55 @@ export function catchPoint(s: Scene): Pose {
   return fallPose(1, s);
 }
 
-/** The letter being shot out, 0 at the box, 1 at the top of the arc.
-    It is aimed at the first frame of the fall rather than at the middle of the
-    swing, so the throw and the sway are one move: aiming at the middle left a
-    sway wide jump at the join, which the test at 120fps caught. */
-function launchPose(p: number, s: Scene): Pose {
+/** The sheet folding where the form was, t seconds in. It does not move:
+    it is the box, and only its flaps turn. */
+function foldPose(t: number, s: Scene): SheetPose {
+  const turn = (f: { at: number; len: number }) => easeInOut3(clamp((t - f.at) / f.len, 0, 1));
+  return {
+    x: s.outX,
+    y: s.outY,
+    rot: 0,
+    sx: 1,
+    sy: 1,
+    bottom: 180 * turn(BOTTOM_FOLD),
+    top: 180 * turn(TOP_FOLD),
+    alpha: ramp(t, 0, SHEET_IN_S),
+  };
+}
+
+/** The packet leaving, 0 folded on the box, 1 at the top of the arc: it rises
+    and shrinks into the letter, and the letter fades up over it on the way.
+    It is aimed at the first frame of the fall, so the throw and the sway are
+    one move. Both the sheet and the letter take this pose, at their own sizes,
+    so the two are always the same shape in the same place. */
+function launchPoses(
+  p: number,
+  s: Scene,
+): { sheet: SheetPose; letter: Pose; letterAlpha: number } {
   const e = easeOut2(p);
   const to = fallPose(0, s);
+  const x = mix(s.outX, to.x, e);
+  const y = mix(s.outY, to.y, e);
+  /* A small turn on the way up, gone by the top, so it is tossed rather than
+     slid. */
+  const rot = mix(0, to.rot, e) - 11 * Math.sin(Math.PI * p);
+  const paperW = s.letterW * PAPER_W;
+  const paperH = s.letterW * PAPER_H;
+  const w = mix(s.sheetW, paperW, e);
+  const h = mix(s.sheetH / 3, paperH, e);
   return {
-    x: mix(s.outX, to.x, e),
-    y: mix(s.outY, to.y, e),
-    /* It leaves the slot turned over and rights itself into the fall, so the
-       first frame of the sway continues the last frame of the throw. */
-    rot: mix(-44, to.rot, e),
-    scale: (0.34 + 0.66 * e) * (1 + 0.08 * Math.sin(Math.PI * p)),
+    sheet: {
+      x,
+      y,
+      rot,
+      sx: w / s.sheetW,
+      sy: h / (s.sheetH / 3),
+      bottom: 180,
+      top: 180,
+      alpha: 1 - ramp(p, 0.62, 0.96),
+    },
+    letter: { x, y, rot, scale: w / paperW },
+    letterAlpha: ramp(p, 0.5, 0.86),
   };
 }
 
@@ -259,13 +388,18 @@ function hawkPose(t: number, s: Scene): Pose {
   };
 }
 
-/** Where the letter rides once the bird has it, in the bird's own frame. */
-const CARRY_OFFSET = { x: 5, y: 13 };
+/** How far below the talons the letter's centre rides, as a share of the
+    letter's drawn width. The bird is drawn over the paper, so this is what
+    decides how much of the letter shows: about a fifth of it tucks up under
+    the body and the rest hangs clear, which reads as held rather than
+    swallowed. */
+const CARRY_DROP = 0.3;
 
-function carried(hawk: Pose, t: number): Pose {
+function carried(hawk: Pose, t: number, s: Scene): Pose {
   const r = (hawk.rot * Math.PI) / 180;
-  const ox = CARRY_OFFSET.x * Math.cos(r) - CARRY_OFFSET.y * Math.sin(r);
-  const oy = CARRY_OFFSET.x * Math.sin(r) + CARRY_OFFSET.y * Math.cos(r);
+  const drop = s.letterW * CARRY_DROP;
+  const ox = -drop * Math.sin(r);
+  const oy = drop * Math.cos(r);
   /* One swing left in it from the grab, damped out inside half a second. */
   const since = Math.max(0, t - CATCH_S);
   const swing = 9 * Math.cos(10 * since) * Math.exp(-3.4 * since);
@@ -277,34 +411,88 @@ function carried(hawk: Pose, t: number): Pose {
   };
 }
 
-/** The whole scene at t seconds after the letter left the box. */
+/** The whole scene at t seconds after the sheet appeared over the box. */
 export function flightAt(t: number, s: Scene): Frame {
   const hawk = hawkPose(t, s);
+  const launchAt = FOLD_S;
+  const fallAt = FOLD_S + LAUNCH_S;
+  let sheet: SheetPose;
   let letter: Pose;
-  if (t < LAUNCH_S) {
-    letter = launchPose(clamp(t / LAUNCH_S, 0, 1), s);
-  } else if (t < CATCH_S) {
-    const free = fallPose(clamp((t - LAUNCH_S) / FALL_S, 0, 1), s);
-    const closing = clamp((t - (CATCH_S - SNAP_S)) / SNAP_S, 0, 1);
-    if (closing <= 0) {
-      letter = free;
-    } else {
-      /* The snap. Over the last breath of the fall the paper is pulled the
-         short distance onto the talons, so the grab lands on the letter
-         instead of near it. */
-      const to = carried(hawk, t);
-      const e = closing * closing * (3 - 2 * closing);
-      letter = {
-        x: mix(free.x, to.x, e),
-        y: mix(free.y, to.y, e),
-        rot: mix(free.rot, to.rot, e),
-        scale: mix(free.scale, to.scale, e),
-      };
-    }
+  let letterAlpha = 1;
+  if (t < launchAt) {
+    sheet = foldPose(t, s);
+    const l = launchPoses(0, s);
+    letter = l.letter;
+    letterAlpha = 0;
+  } else if (t < fallAt) {
+    const l = launchPoses(clamp((t - launchAt) / LAUNCH_S, 0, 1), s);
+    sheet = l.sheet;
+    letter = l.letter;
+    letterAlpha = l.letterAlpha;
   } else {
-    letter = carried(hawk, t);
+    sheet = { ...launchPoses(1, s).sheet, alpha: 0 };
+    if (t < CATCH_S) {
+      const free = fallPose(clamp((t - fallAt) / FALL_S, 0, 1), s);
+      const closing = clamp((t - (CATCH_S - SNAP_S)) / SNAP_S, 0, 1);
+      if (closing <= 0) {
+        letter = free;
+      } else {
+        /* The snap. Over the last breath of the fall the paper is pulled the
+           short distance onto the talons, so the grab lands on the letter
+           instead of near it. */
+        const to = carried(hawk, t, s);
+        const e = closing * closing * (3 - 2 * closing);
+        letter = {
+          x: mix(free.x, to.x, e),
+          y: mix(free.y, to.y, e),
+          rot: mix(free.rot, to.rot, e),
+          scale: mix(free.scale, to.scale, e),
+        };
+      }
+    } else {
+      letter = carried(hawk, t, s);
+    }
   }
-  return { letter, hawk, hawkOn: t >= HAWK_IN_S, done: t >= END_S };
+  return {
+    sheet,
+    sheetOn: t < fallAt,
+    letter,
+    letterAlpha,
+    hawk,
+    hawkOn: t >= HAWK_IN_S,
+    done: t >= END_S,
+  };
+}
+
+/** One sheet pose as a transform, pinned at the sheet's centre like the
+    others are pinned at theirs. Scale is two numbers here because the folded
+    packet is a long strip and the letter is not. */
+export function sheetTransformOf(p: SheetPose): string {
+  return (
+    "translate3d(" +
+    p.x.toFixed(2) +
+    "px," +
+    p.y.toFixed(2) +
+    "px,0) rotate(" +
+    p.rot.toFixed(2) +
+    "deg) scale(" +
+    p.sx.toFixed(4) +
+    "," +
+    p.sy.toFixed(4) +
+    ") translate(-50%,-50%)"
+  );
+}
+
+/** A flap turned by deg about its hinge, seen in depth. The hinge is the
+    flap's transform-origin, set in the sheet, so only the angle moves. */
+export function flapTransformOf(deg: number): string {
+  return "perspective(1400px) rotateX(" + deg.toFixed(2) + "deg)";
+}
+
+/** How dark a flap is at an angle: none flat, most when it stands on edge to
+    the light, a little left once it lies folded. */
+export function flapShade(deg: number): number {
+  return 0.22 * Math.abs(Math.sin((deg * Math.PI) / 180));
 }
 
 /**
@@ -340,8 +528,11 @@ export function transformOf(p: Pose, pinX: number, pinY: number): string {
   );
 }
 
-/** Where each element is pinned, as a percentage of its own box. */
-export const TALON_PIN = { x: 46, y: 56 };
+/** Where each element is pinned, as a percentage of its own box. The talons
+    are tucked in the footage, so the pin is the clear space under the body
+    between the downstroke wing and the tail: further forward, and the wing
+    covers the letter on every downstroke. */
+export const TALON_PIN = { x: 60, y: 58 };
 const LETTER_PIN = { x: 50, y: 50 };
 
 /* ============================ the component ============================ */
@@ -378,6 +569,72 @@ function Letter({
   );
 }
 
+/** How far apart the faint field rows on the sheet sit, in pixels: about
+    the rhythm of the form's own label and input pairs. */
+const FIELD_ROW = 86;
+
+/** The form as paper: the panel, its line, and a few faint fields where the
+    real ones were. One page drawn three times, each third showing its own
+    slice of it, so the rows run on across the creases. */
+function Page({ rows }: { rows: number }) {
+  return (
+    <span className="hawk-egg-page">
+      {Array.from({ length: rows }, (_, i) => (
+        <span key={i} className="hawk-egg-row" style={{ top: 28 + i * FIELD_ROW + "px" }}>
+          <span className="hawk-egg-label" />
+          <span className="hawk-egg-field" />
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/** The sheet the form folds into. Each flap has a front, where the fields
+    are, and a plain back, which is what lies on top once it has turned. */
+function Sheet({
+  box,
+  innerRef,
+}: {
+  box: { w: number; h: number };
+  innerRef: (el: HTMLDivElement | null) => void;
+}) {
+  const rows = Math.max(1, Math.floor((box.h - 40) / FIELD_ROW));
+  const third = (row: 0 | 1 | 2, flap: string | null) => (
+    <span
+      className={"hawk-egg-third hawk-egg-third-" + row + (flap ? " hawk-egg-flap" : "")}
+      data-flap={flap ?? undefined}
+    >
+      <span className="hawk-egg-face">
+        <Page rows={rows} />
+        {flap ? <span className="hawk-egg-shade" /> : null}
+      </span>
+      {flap ? (
+        <span className="hawk-egg-back">
+          <span className="hawk-egg-shade" />
+        </span>
+      ) : null}
+    </span>
+  );
+  return (
+    <div
+      className="hawk-egg-sheet"
+      ref={innerRef}
+      style={
+        {
+          width: box.w + "px",
+          height: box.h + "px",
+          visibility: "hidden",
+          "--sheet-h": box.h + "px",
+        } as CSSProperties
+      }
+    >
+      {third(1, null)}
+      {third(2, "bottom")}
+      {third(0, "top")}
+    </div>
+  );
+}
+
 export default function HawkDelivery({
   from,
   onDone,
@@ -392,6 +649,10 @@ export default function HawkDelivery({
   const paper = useRef<SVGSVGElement | null>(null);
   const holdPaper = (el: SVGSVGElement | null) => {
     paper.current = el;
+  };
+  const sheet = useRef<HTMLDivElement | null>(null);
+  const holdSheet = (el: HTMLDivElement | null) => {
+    sheet.current = el;
   };
   /* "waiting" until the sprite is in the cache. "fly" and "rest" are the two
      ways it ends up on the screen; "off" is every reason not to draw at all. */
@@ -445,27 +706,39 @@ export default function HawkDelivery({
     };
   }, []);
 
-  /* The flight. One loop, two transforms, no layout read or write inside it.
-     The scene is measured once; a scroll during the three seconds moves the
-     whole scene with the page, because the box the letter left is on the page
-     and the overlay is not. */
+  /* The flight. One loop, transforms and opacities only, no layout read or
+     write inside it. The scene is measured once; a scroll during the three
+     seconds moves the whole scene with the page, because the box the letter
+     left is on the page and the overlay is not. */
   useEffect(() => {
     if (mode !== "fly") return;
     const el = root.current;
     const b = bird.current;
     const p = paper.current;
-    if (!el || !b || !p) return;
+    const sh = sheet.current;
+    if (!el || !b || !p || !sh) return;
+    const flap = (name: string) => sh.querySelector<HTMLElement>('[data-flap="' + name + '"]');
+    const bottomFlap = flap("bottom");
+    const topFlap = flap("top");
+    const shades = (f: HTMLElement | null) =>
+      f ? Array.from(f.querySelectorAll<HTMLElement>(".hawk-egg-shade")) : [];
+    const bottomShades = shades(bottomFlap);
+    const topShades = shades(topFlap);
 
     const drawn = b.getBoundingClientRect().width || 140;
-    const scene = sceneFor(from, window.innerWidth, window.innerHeight, drawn);
-    const scroll0 = window.scrollY;
-    let scrolled = 0;
+    const letterW = p.getBoundingClientRect().width || 50;
+    const scene = sceneFor(from, window.innerWidth, window.innerHeight, drawn, letterW);
+    const scroll0 = from.scrollY ?? window.scrollY;
+    /* Not 0: the page has usually moved already, between the send and this
+       effect, and no scroll event is coming to say so. */
+    let scrolled = window.scrollY - scroll0;
     const onScroll = () => {
       scrolled = window.scrollY - scroll0;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
     let raf = 0;
+    let sheetGone = false;
     /* null, not 0: a browser is allowed to hand the first frame a timestamp of
        zero, and a falsy check would then reset the clock on every frame and
        hold the whole flight on its first instant. */
@@ -474,19 +747,37 @@ export default function HawkDelivery({
       if (t0 === null) t0 = now;
       const t = (now - t0) / 1000;
       const f = flightAt(t, scene);
+      if (f.sheetOn) {
+        sh.style.transform = sheetTransformOf({ ...f.sheet, y: f.sheet.y - scrolled });
+        sh.style.opacity = f.sheet.alpha.toFixed(3);
+        sh.style.visibility = "visible";
+        /* The bottom flap hinges on its top edge and turns towards the
+           viewer with a positive angle; the top one hinges on its bottom edge
+           and needs the opposite sign to come towards the viewer too. */
+        if (bottomFlap) bottomFlap.style.transform = flapTransformOf(f.sheet.bottom);
+        if (topFlap) topFlap.style.transform = flapTransformOf(-f.sheet.top);
+        const lo = flapShade(f.sheet.bottom).toFixed(3);
+        const hi = flapShade(f.sheet.top).toFixed(3);
+        for (const s of bottomShades) s.style.opacity = lo;
+        for (const s of topShades) s.style.opacity = hi;
+      } else if (!sheetGone) {
+        sheetGone = true;
+        sh.style.visibility = "hidden";
+      }
       p.style.transform = transformOf(
         { ...f.letter, y: f.letter.y - scrolled },
         LETTER_PIN.x,
         LETTER_PIN.y,
       );
+      p.style.opacity = f.letterAlpha.toFixed(3);
       b.style.transform = transformOf(
         { ...f.hawk, y: f.hawk.y - scrolled },
         TALON_PIN.x,
         TALON_PIN.y,
       );
-      /* Both start hidden and are shown by the frame that first places them,
-         because an element with no transform yet sits in the corner of the
-         screen and one painted frame there is a flash. */
+      /* Everything starts hidden and is shown by the frame that first places
+         it, because an element with no transform yet sits in the corner of
+         the screen and one painted frame there is a flash. */
       p.style.visibility = "visible";
       b.style.visibility = f.hawkOn ? "visible" : "hidden";
       if (f.done) {
@@ -541,10 +832,14 @@ export default function HawkDelivery({
     /* Held where the letter would have been taken, up and to the left of the
        box, and clamped onto the screen on a narrow one. */
     const left = clamp(from.x + from.width * 0.5 - 150, 12, Math.max(12, window.innerWidth - 200));
-    const top = clamp(from.y - 40, HEAD_GAP, Math.max(HEAD_GAP, window.innerHeight - 220));
+    const y = from.y - (window.scrollY - (from.scrollY ?? window.scrollY));
+    const top = clamp(y - 40, HEAD_GAP, Math.max(HEAD_GAP, window.innerHeight - 220));
     return createPortal(
       <div className="hawk-egg" ref={root} aria-hidden="true">
         <div className="hawk-egg-rest" style={{ left: left + "px", top: top + "px" }}>
+          {/* The letter first and the bird after it, here as in the flight:
+              the talons close over the paper and the body overlaps it. */}
+          <Letter className="hawk-egg-letter" />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="hawk-egg-bird"
@@ -554,7 +849,6 @@ export default function HawkDelivery({
             height={HAWK_H}
             decoding="async"
           />
-          <Letter className="hawk-egg-letter" />
         </div>
       </div>,
       document.body,
@@ -563,6 +857,10 @@ export default function HawkDelivery({
 
   return createPortal(
     <div className="hawk-egg" ref={root} aria-hidden="true">
+      {/* Paint order is document order, back to front: the sheet, the letter
+          it becomes, and the bird, which is never behind what it carries. */}
+      <Sheet box={sheetBox(from, window.innerHeight)} innerRef={holdSheet} />
+      <Letter className="hawk-egg-letter" innerRef={holdPaper} hidden />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="hawk-egg-bird"
@@ -574,7 +872,6 @@ export default function HawkDelivery({
         decoding="async"
         style={{ visibility: "hidden" }}
       />
-      <Letter className="hawk-egg-letter" innerRef={holdPaper} hidden />
     </div>,
     document.body,
   );
