@@ -7,12 +7,14 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * The delivery egg, held against what it promises (bead hq-0xca.3).
+ * The delivery egg, held against what it promises (beads hq-0xca.3 and
+ * hq-0xca.6).
  *
  * The flight itself is geometry, so most of this is arithmetic rather than a
- * browser: the shape of the path, the budget it fits in, and the one join that
- * can go wrong without looking wrong in a screenshot, which is the letter
- * leaving its fall and arriving on the talons. The frames themselves are a
+ * browser: the fold that starts from the form's own box, the shape of the
+ * path, the budget it fits in, and the two joins that can go wrong without
+ * looking wrong in a screenshot, which are the folded sheet becoming the
+ * letter and the letter leaving its fall and arriving on the talons. The frames themselves are a
  * browser job and are recorded on the bead.
  *
  * The rest is the three rules in the component's own comment, each as a case
@@ -23,40 +25,56 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 (globalThis as unknown as { React: typeof React }).React = React;
 
 import HawkDelivery, {
+  BOTTOM_FOLD,
   CARRY_S,
   CATCH_S,
   END_S,
   FALL_S,
+  FOLD_S,
   HAWK_IN_S,
   LAUNCH_S,
+  SNAP_S,
   TALON_PIN,
+  TOP_FOLD,
   catchPoint,
+  flapTransformOf,
   flightAt,
   sceneFor,
+  sheetBox,
+  sheetTransformOf,
   transformOf,
   type LaunchBox,
 } from "./HawkDelivery";
 
 const repoRoot = () => join(__dirname, "..", "..");
-const BOX: LaunchBox = { x: 120, y: 420, width: 620 };
+/* The form as measured at 1440 by 900 on /es/contacto, height included. */
+const BOX: LaunchBox = { x: 688, y: 82, width: 598, height: 818 };
 const VW = 1440;
 const VH = 900;
-const scene = sceneFor(BOX, VW, VH, 160);
+const LETTER_W = 50;
+const scene = sceneFor(BOX, VW, VH, 160, LETTER_W);
+/** The moment the letter is on its own, falling. */
+const FALL_AT = FOLD_S + LAUNCH_S;
+/** The paper inside the letter's viewBox, as fractions of its drawn width. */
+const PAPER_W = 39.2 / 44;
+const PAPER_H = 22.8 / 44;
 /** Every frame of one flight at 120fps, which is denser than any display. */
 const flight = Array.from({ length: Math.ceil(END_S * 120) + 1 }, (_, i) =>
   flightAt(i / 120, scene),
 );
 
 describe("the flight fits the budget Daniel set", () => {
-  it("runs between 2.5 and 3.5 seconds end to end", () => {
+  it("runs inside about 3.5 seconds end to end, fold included", () => {
     expect(END_S).toBeGreaterThanOrEqual(2.5);
     expect(END_S).toBeLessThanOrEqual(3.5);
   });
 
-  it("orders its moments: launch, then the bird, then the catch, then the carry", () => {
-    expect(HAWK_IN_S).toBeGreaterThan(LAUNCH_S);
+  it("orders its moments: fold, launch, then the bird, then the catch, then the carry", () => {
+    expect(BOTTOM_FOLD.at + BOTTOM_FOLD.len).toBeLessThanOrEqual(FOLD_S);
+    expect(TOP_FOLD.at + TOP_FOLD.len).toBeLessThanOrEqual(FOLD_S);
+    expect(HAWK_IN_S).toBeGreaterThan(FOLD_S + LAUNCH_S);
     expect(HAWK_IN_S).toBeLessThan(CATCH_S);
-    expect(CATCH_S).toBe(LAUNCH_S + FALL_S);
+    expect(CATCH_S).toBeCloseTo(FOLD_S + LAUNCH_S + FALL_S, 9);
     expect(END_S).toBe(CATCH_S + CARRY_S);
   });
 
@@ -65,22 +83,110 @@ describe("the flight fits the budget Daniel set", () => {
   });
 });
 
-describe("the letter", () => {
-  it("leaves the box it was sent from", () => {
-    const first = flightAt(0, scene).letter;
-    expect(first.x).toBeCloseTo(BOX.x + BOX.width / 2, 0);
-    expect(first.y).toBeCloseTo(BOX.y + 14, 0);
-    expect(first.scale).toBeLessThan(0.45);
+describe("the form folds into the letter", () => {
+  const at = (t: number) => flightAt(t, scene);
+  const folding = flight.filter((_, i) => i / 120 < FOLD_S);
+
+  it("starts as the form's own box: same centre, same size, nothing turned", () => {
+    const first = at(0).sheet;
+    expect(first.x).toBeCloseTo(BOX.x + BOX.width / 2, 6);
+    expect(first.y).toBeCloseTo(BOX.y + BOX.height! / 2, 6);
+    expect(first.sx).toBe(1);
+    expect(first.sy).toBe(1);
+    expect(first.rot).toBe(0);
+    expect(first.bottom).toBe(0);
+    expect(first.top).toBe(0);
+    expect(scene.sheetW).toBe(BOX.width);
+    expect(scene.sheetH).toBe(BOX.height);
+    expect(at(0).sheetOn).toBe(true);
   });
 
+  it("stays put where the form was while it folds", () => {
+    for (const f of folding) {
+      expect(f.sheet.x).toBe(folding[0].sheet.x);
+      expect(f.sheet.y).toBe(folding[0].sheet.y);
+      expect(f.sheet.sx).toBe(1);
+      expect(f.letterAlpha).toBe(0);
+    }
+  });
+
+  it("folds in thirds: the bottom flap up first, then the top flap down over it", () => {
+    const bottoms = folding.map((f) => f.sheet.bottom);
+    const tops = folding.map((f) => f.sheet.top);
+    for (let i = 1; i < folding.length; i++) {
+      expect(bottoms[i]).toBeGreaterThanOrEqual(bottoms[i - 1]);
+      expect(tops[i]).toBeGreaterThanOrEqual(tops[i - 1]);
+    }
+    /* The top flap does not lift until the bottom one is most of the way
+       over, and lands after it, so it ends up on top. */
+    const topLifts = folding.findIndex((f) => f.sheet.top > 0);
+    expect(folding[topLifts].sheet.bottom).toBeGreaterThan(150);
+    const bottomLands = folding.findIndex((f) => f.sheet.bottom >= 180);
+    const topLands = folding.findIndex((f) => f.sheet.top >= 180);
+    expect(bottomLands).toBeGreaterThan(-1);
+    expect(topLands).toBeGreaterThan(bottomLands);
+    expect(at(FOLD_S).sheet.bottom).toBe(180);
+    expect(at(FOLD_S).sheet.top).toBe(180);
+  });
+
+  it("turns each flap towards the viewer, over the middle rather than behind it", () => {
+    /* Bottom flap hinged on its top edge: positive rotateX brings it out.
+       Top flap hinged on its bottom edge: negative does. The component
+       writes the top angle negated, which this pins. */
+    expect(flapTransformOf(90)).toBe("perspective(1400px) rotateX(90.00deg)");
+    const source = readFileSync(join(__dirname, "HawkDelivery.tsx"), "utf8");
+    expect(source).toContain("flapTransformOf(f.sheet.bottom)");
+    expect(source).toContain("flapTransformOf(-f.sheet.top)");
+  });
+
+  it("shrinks the folded packet into the letter, the same shape in the same place", () => {
+    for (let t = FOLD_S; t < FALL_AT; t += 1 / 120) {
+      const f = at(t);
+      expect(f.sheet.x).toBeCloseTo(f.letter.x, 6);
+      expect(f.sheet.y).toBeCloseTo(f.letter.y, 6);
+      expect(f.sheet.rot).toBeCloseTo(f.letter.rot, 6);
+      /* The packet is the middle third of the sheet; the letter's paper is
+         its own fraction of the letter. Equal widths and heights at every
+         frame is what makes the hand over a shrink and not a swap. */
+      const packetW = f.sheet.sx * scene.sheetW;
+      const packetH = (f.sheet.sy * scene.sheetH) / 3;
+      expect(packetW).toBeCloseTo(f.letter.scale * LETTER_W * PAPER_W, 4);
+      expect(packetH / packetW).toBeGreaterThan(0);
+    }
+    const last = at(FALL_AT - 1e-6).sheet;
+    expect(last.sx * scene.sheetW).toBeCloseTo(LETTER_W * PAPER_W, 1);
+    expect((last.sy * scene.sheetH) / 3).toBeCloseTo(LETTER_W * PAPER_H, 1);
+  });
+
+  it("hands over to the letter on the way: one fades up as the other goes", () => {
+    expect(at(FOLD_S).letterAlpha).toBe(0);
+    expect(at(FOLD_S).sheet.alpha).toBe(1);
+    expect(at(FOLD_S + LAUNCH_S * 0.75).letterAlpha).toBeGreaterThan(0.3);
+    expect(at(FOLD_S + LAUNCH_S * 0.75).sheet.alpha).toBeGreaterThan(0.3);
+    expect(at(FALL_AT).letterAlpha).toBe(1);
+    expect(at(FALL_AT).sheetOn).toBe(false);
+    expect(at(FALL_AT - 1e-6).sheet.alpha).toBeLessThan(0.05);
+  });
+
+  it("sizes the sheet from the box, or to the foot of the window without a height", () => {
+    expect(sheetBox(BOX, VH)).toEqual({ x: 688, y: 82, w: 598, h: 818 });
+    const noHeight = sheetBox({ x: 18, y: 5, width: 354 }, 844);
+    expect(noHeight.h).toBe(844 - 5 - 16);
+    /* Never a sliver, and never an endless strip. */
+    expect(sheetBox({ x: 0, y: 880, width: 300 }, 900).h).toBe(120);
+    expect(sheetBox({ x: 0, y: -2000, width: 300 }, 900).h).toBe(780);
+  });
+});
+
+describe("the letter", () => {
   it("rises to the top of its arc before it falls", () => {
-    const apex = flightAt(LAUNCH_S, scene).letter;
-    expect(apex.y).toBeLessThan(flightAt(0, scene).letter.y - 60);
+    const apex = flightAt(FALL_AT, scene).letter;
+    expect(apex.y).toBeLessThan(scene.outY - 60);
     expect(apex.scale).toBeCloseTo(1, 1);
   });
 
   it("falls, and only falls, from the arc to the catch", () => {
-    const falling = flight.filter((f, i) => i / 120 >= LAUNCH_S && i / 120 <= CATCH_S);
+    const falling = flight.filter((f, i) => i / 120 >= FALL_AT && i / 120 <= CATCH_S);
     for (let i = 1; i < falling.length; i++) {
       expect(falling[i].letter.y).toBeGreaterThanOrEqual(falling[i - 1].letter.y - 0.01);
     }
@@ -91,8 +197,8 @@ describe("the letter", () => {
        what makes it a leaf and not a stone. */
     const mid = scene.apexX;
     let crossings = 0;
-    let side = Math.sign(flightAt(LAUNCH_S, scene).letter.x - mid);
-    for (let t = LAUNCH_S; t <= CATCH_S - 0.2; t += 1 / 120) {
+    let side = Math.sign(flightAt(FALL_AT, scene).letter.x - mid);
+    for (let t = FALL_AT; t <= CATCH_S - 0.2; t += 1 / 120) {
       const next = Math.sign(flightAt(t, scene).letter.x - mid);
       if (next !== 0 && next !== side) {
         crossings++;
@@ -104,7 +210,7 @@ describe("the letter", () => {
 
   it("tips as it sways, and never spins past a tilt", () => {
     const tilts = flight
-      .filter((_, i) => i / 120 >= LAUNCH_S && i / 120 <= CATCH_S - SNAP_WINDOW)
+      .filter((_, i) => i / 120 >= FALL_AT && i / 120 <= CATCH_S - SNAP_S)
       .map((f) => f.letter.rot);
     expect(Math.max(...tilts)).toBeGreaterThan(8);
     expect(Math.min(...tilts)).toBeLessThan(-8);
@@ -119,11 +225,29 @@ describe("the letter", () => {
     }
   });
 
+  it("hangs below the talons once taken, so the body over it leaves most of it showing", () => {
+    for (let t = CATCH_S; t <= END_S; t += 1 / 60) {
+      const f = flightAt(t, scene);
+      /* Below the pin in the bird's own frame, by about a third of the
+         letter's width. */
+      const r = (f.hawk.rot * Math.PI) / 180;
+      const dx = f.letter.x - f.hawk.x;
+      const dy = f.letter.y - f.hawk.y;
+      const down = -dx * Math.sin(r) + dy * Math.cos(r);
+      expect(down / f.hawk.scale, "at t=" + t.toFixed(2)).toBeGreaterThan(LETTER_W * 0.25);
+    }
+  });
+
   it("closes onto the talons without a jump", () => {
     /* The one join a screenshot cannot catch. Sampled at 120fps, which is
        denser than any display, no step may be a teleport. */
     let worst = 0;
     for (let i = 1; i < flight.length; i++) {
+      /* From the moment the letter can be seen to just past the grab. After
+         that it rides the talons, and its speed is the bird's own climb out,
+         which with the form on the right of a wide window covers most of the
+         screen in a second. */
+      if (flight[i].letterAlpha === 0 || i / 120 > CATCH_S + 0.25) continue;
       worst = Math.max(
         worst,
         Math.hypot(
@@ -135,9 +259,6 @@ describe("the letter", () => {
     expect(worst).toBeLessThan(14);
   });
 });
-
-/** The length of the snap, read off the component's own numbers. */
-const SNAP_WINDOW = 0.13;
 
 describe("the hawk", () => {
   it("is not drawn before it has entered", () => {
@@ -206,16 +327,16 @@ describe("the scene is measured, not assumed", () => {
   it("keeps the arc clear of the sticky header when the form sits at the top", () => {
     /* The header is over this overlay, so an arc that reached the top of the
        window would throw the letter behind the navigation. */
-    const high = sceneFor({ x: 0, y: 0, width: 400 }, VW, VH, 160);
+    const high = sceneFor({ x: 0, y: 0, width: 400, height: 260 }, VW, VH, 160);
     expect(high.apexY).toBeGreaterThanOrEqual(96);
-    for (let t = 0; t <= CATCH_S; t += 1 / 60) {
+    for (let t = FALL_AT; t <= CATCH_S; t += 1 / 60) {
       expect(flightAt(t, high).letter.y).toBeGreaterThanOrEqual(96);
     }
   });
 
   it("narrows the sway on a phone instead of throwing the letter off the edge", () => {
-    const phone = sceneFor({ x: 16, y: 500, width: 358 }, 390, 844, 104);
-    for (let t = LAUNCH_S; t <= CATCH_S; t += 1 / 60) {
+    const phone = sceneFor({ x: 18, y: 5, width: 354, height: 839 }, 390, 844, 104, 38);
+    for (let t = FOLD_S; t <= CATCH_S; t += 1 / 60) {
       const x = flightAt(t, phone).letter.x;
       expect(x).toBeGreaterThan(0);
       expect(x).toBeLessThan(390);
@@ -225,9 +346,9 @@ describe("the scene is measured, not assumed", () => {
 
 describe("the transform it writes", () => {
   it("is translate, rotate and scale and nothing that costs a layout", () => {
-    const css = transformOf({ x: 12.3456, y: -7.1, rot: 4.5, scale: 0.9 }, 46, 56);
+    const css = transformOf({ x: 12.3456, y: -7.1, rot: 4.5, scale: 0.9 }, 60, 58);
     expect(css).toBe(
-      "translate3d(12.35px,-7.10px,0) rotate(4.50deg) scale(0.900) translate(-46%,-56%)",
+      "translate3d(12.35px,-7.10px,0) rotate(4.50deg) scale(0.900) translate(-60%,-58%)",
     );
   });
 
@@ -246,14 +367,23 @@ describe("the transform it writes", () => {
       Array.from(sheet.matchAll(/([^{}]+)\{([^{}]*)\}/g)).find(
         (m) => m[1].trim() === selector,
       );
-    for (const selector of [".hawk-egg-bird", ".hawk-egg-letter"]) {
+    for (const selector of [".hawk-egg-bird", ".hawk-egg-letter", ".hawk-egg-sheet"]) {
       const rule = ruleFor(selector);
       expect(rule, selector).toBeDefined();
       expect(rule![2], selector).toContain("transform-origin: 0 0");
     }
+    /* The still scene hangs its letter from the same point as the flight. */
+    expect(sheet).toContain("--talon-x: " + TALON_PIN.x + "%");
+    expect(sheet).toContain("--talon-y: " + TALON_PIN.y + "%");
     expect(transformOf({ x: 0, y: 0, rot: 0, scale: 1 }, TALON_PIN.x, TALON_PIN.y)).toMatch(
-      /translate\(-46%,-56%\)$/,
+      /translate\(-60%,-58%\)$/,
     );
+  });
+
+  it("writes the sheet as one translate, rotate and two way scale, pinned at its centre", () => {
+    expect(
+      sheetTransformOf({ x: 10, y: 20, rot: -3, sx: 0.5, sy: 0.25, bottom: 180, top: 180, alpha: 1 }),
+    ).toBe("translate3d(10.00px,20.00px,0) rotate(-3.00deg) scale(0.5000,0.2500) translate(-50%,-50%)");
   });
 
   it("animates nothing else: the sheet moves transform and opacity only", () => {
@@ -347,6 +477,10 @@ class Egg {
     return document.body.querySelector(".hawk-egg-letter");
   }
 
+  get sheet(): HTMLElement | null {
+    return document.body.querySelector(".hawk-egg-sheet");
+  }
+
   stop(): void {
     act(() => this.root.unmount());
     this.container.remove();
@@ -408,12 +542,17 @@ describe("the egg in a document", () => {
     await egg.settle();
     expect(egg.bird?.style.visibility).toBe("hidden");
     expect(egg.letter?.style.visibility).toBe("hidden");
+    expect(egg.sheet?.style.visibility).toBe("hidden");
     egg.tick([0]);
+    expect(egg.sheet?.style.visibility).toBe("visible");
+    /* The letter is placed but not yet seen: it fades up out of the packet. */
     expect(egg.letter?.style.visibility).toBe("visible");
+    expect(Number(egg.letter?.style.opacity)).toBe(0);
     /* The bird is still off stage at t=0 and may not be shown yet. */
     expect(egg.bird?.style.visibility).toBe("hidden");
     egg.tick([HAWK_IN_S]);
     expect(egg.bird?.style.visibility).toBe("visible");
+    expect(egg.sheet?.style.visibility).toBe("hidden");
     egg.stop();
   });
 
@@ -425,14 +564,59 @@ describe("the egg in a document", () => {
     egg.stop();
   });
 
-  it("writes a transform and nothing else on either element", async () => {
+  it("writes transforms and opacities and nothing that costs a layout", async () => {
     const egg = new Egg();
     await egg.settle();
-    egg.tick([0, 1.0]);
-    for (const el of [egg.bird, egg.letter] as Array<HTMLElement | SVGSVGElement>) {
-      const written = Array.from(el.style).filter((p) => p !== "visibility");
-      expect(written).toEqual(["transform"]);
+    /* The sheet's size is written once, by the render, before any frame. */
+    const sized = new Set(Array.from(egg.sheet!.style));
+    egg.tick([0, 0.3, 1.0]);
+    const loop = (el: Element) =>
+      Array.from((el as HTMLElement).style).filter((p) => p !== "visibility").sort();
+    expect(loop(egg.bird!)).toEqual(["transform"]);
+    expect(loop(egg.letter!)).toEqual(["opacity", "transform"]);
+    expect(
+      Array.from(egg.sheet!.style).filter((p) => !sized.has(p)).sort(),
+    ).toEqual(["opacity", "transform"]);
+    for (const flap of Array.from(document.body.querySelectorAll(".hawk-egg-flap"))) {
+      expect(loop(flap)).toEqual(["transform"]);
     }
+    for (const shade of Array.from(document.body.querySelectorAll(".hawk-egg-shade"))) {
+      expect(loop(shade)).toEqual(["opacity"]);
+    }
+    egg.stop();
+  });
+
+  it("lays the sheet exactly over the form's box", async () => {
+    const egg = new Egg();
+    await egg.settle();
+    expect(egg.sheet?.style.width).toBe(BOX.width + "px");
+    expect(egg.sheet?.style.height).toBe(BOX.height + "px");
+    expect(egg.sheet?.querySelectorAll(".hawk-egg-third")).toHaveLength(3);
+    expect(egg.sheet?.querySelectorAll(".hawk-egg-flap")).toHaveLength(2);
+    expect(egg.sheet?.querySelectorAll(".hawk-egg-field").length).toBeGreaterThan(0);
+    egg.stop();
+  });
+
+  it("paints the bird over the letter and the letter over the sheet", async () => {
+    /* From the catch on the talons hold the paper and the body overlaps it,
+       so the bird can never pass behind what it carries. Document order and
+       z-index both say so. */
+    const egg = new Egg();
+    await egg.settle();
+    const kids = Array.from(egg.overlay!.children).map((el) => el.getAttribute("class"));
+    expect(kids).toEqual(["hawk-egg-sheet", "hawk-egg-letter", "hawk-egg-bird"]);
+    const sheet = readFileSync(join(__dirname, "hawk-delivery.css"), "utf8").replace(
+      /\/\*[\s\S]*?\*\//g,
+      "",
+    );
+    const z = (selector: string) => {
+      const rule = Array.from(sheet.matchAll(/([^{}]+)\{([^{}]*)\}/g)).find(
+        (m) => m[1].trim() === selector,
+      );
+      return Number(rule?.[2].match(/z-index:\s*(\d+)/)?.[1]);
+    };
+    expect(z(".hawk-egg-bird")).toBeGreaterThan(z(".hawk-egg-letter"));
+    expect(z(".hawk-egg-letter")).toBeGreaterThan(z(".hawk-egg-sheet"));
     egg.stop();
   });
 });
@@ -454,8 +638,15 @@ describe("a reduced motion visitor", () => {
   it("gets the end state: the bird already holding the letter", async () => {
     const egg = new Egg({ reduced: true });
     await egg.settle();
-    expect(document.body.querySelector(".hawk-egg-rest")).not.toBeNull();
+    const rest = document.body.querySelector(".hawk-egg-rest");
+    expect(rest).not.toBeNull();
     expect(egg.letter).not.toBeNull();
+    /* The same order as the flight: the bird drawn over the letter. */
+    expect(Array.from(rest!.children).map((el) => el.getAttribute("class"))).toEqual([
+      "hawk-egg-letter",
+      "hawk-egg-bird",
+    ]);
+    expect(document.body.querySelector(".hawk-egg-sheet")).toBeNull();
     egg.stop();
   });
 
