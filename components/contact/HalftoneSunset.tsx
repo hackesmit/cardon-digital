@@ -126,6 +126,44 @@ export function dotLayer(tone: number, reach: number, bump: number, sunMask: boo
   return m > 0.6 ? 2 : m > 0.3 ? 1 : 0;
 }
 
+/* The composition, re-fitted to the band's aspect (bead hq-lgjo.11). While the
+   band is stuck it is a short strip, 18 times as wide as it is tall on a
+   desktop; laid out by the full band's fractions the headlands would stretch
+   into flat ridges and five rows of fat dots could not draw a sun. So the
+   scene keeps its own proportions and the strip gets more water between the
+   headlands, a slightly larger sun, and a finer screen. On the full band
+   every one of these is the reference's figure. */
+
+/** The widest the scene is laid out, in band heights: the full desktop band is about 8. */
+export const SCENE_ASPECT = 9.5;
+
+/** The width the headlands are spread over: the band's, until the band is wider than the scene. */
+export function sceneWidth(W: number, H: number): number {
+  return Math.min(W, H * SCENE_ASPECT);
+}
+
+/** The sun's radius: the reference's 0.22 of the height, growing to 0.26 on a strip. */
+export function sunRadius(W: number, H: number): number {
+  return H * (0.22 + 0.04 * smooth((W / H - SCENE_ASPECT) / 6));
+}
+
+/** The fewest dot rows a band is drawn with, so a short strip still reads as a picture. */
+export const MIN_ROWS = 17;
+
+/** The screen's pitch: the reference's 5.4 (4.6 on a phone), finer when the band is too short for it. */
+export function screenPitch(W: number, H: number): number {
+  return Math.min(W < 560 ? 4.6 : 5.4, Math.max(3.2, H / MIN_ROWS));
+}
+
+/**
+ * Whether the band is stuck under the header: its top has reached the line it
+ * sticks to. A hidden band (the contact form's panel folded) has no box, so it
+ * is never stuck, or it would open as a strip.
+ */
+export function isStuck(top: number, height: number, stickTop: number): boolean {
+  return height > 0 && top <= stickTop + 1;
+}
+
 /** Presence easing, the reference's rate 3.6, with its snap so a loop can stop. */
 export function easeLevel(cur: number, target: number, dt: number): number {
   const d = target - cur;
@@ -217,7 +255,8 @@ export default function HalftoneSunset({ level }: { level: number }) {
       const hz = H * 0.68;
       const sx = W * 0.5;
       const sy = H * 0.5;
-      const sr = H * 0.22;
+      const sr = sunRadius(W, H);
+      const sw = sceneWidth(W, H);
       /* Lay a shape down at a flat alpha: punch what is already there out
          first, so overlapping headlands do not compound. */
       const put = (path: Path2D, a: number) => {
@@ -274,10 +313,12 @@ export default function HalftoneSunset({ level }: { level: number }) {
         p.closePath();
         return p;
       };
-      put(hill(0, W * 0.42, H * 0.55, hz, -1), 0.5);
-      put(hill(0, W * 0.27, H * 0.615, hz, -1), 0.78);
-      put(hill(W * 0.66, W, H * 0.575, hz, 1), 0.46);
-      put(hill(W * 0.8, W, H * 0.63, hz, 1), 0.74);
+      /* Spread over the scene's width from each edge, so on a strip they keep
+         their shape and the open water between them widens. */
+      put(hill(0, sw * 0.42, H * 0.55, hz, -1), 0.5);
+      put(hill(0, sw * 0.27, H * 0.615, hz, -1), 0.78);
+      put(hill(W - sw * 0.34, W, H * 0.575, hz, 1), 0.46);
+      put(hill(W - sw * 0.2, W, H * 0.63, hz, 1), 0.74);
       /* water: darker toward the viewer, cut by pale swell lines that widen with distance */
       const wp = new Path2D();
       wp.rect(0, hz, W, H - hz);
@@ -338,7 +379,7 @@ export default function HalftoneSunset({ level }: { level: number }) {
         X = null;
         return;
       }
-      pitch = W < 560 ? 4.6 : 5.4;
+      pitch = screenPitch(W, H);
       const hw = Math.max(2, Math.ceil(W / 2));
       const hh = Math.max(2, Math.ceil(H / 2));
       /* Both offscreen canvases exist to be read back once and thrown away,
@@ -536,16 +577,44 @@ export default function HalftoneSunset({ level }: { level: number }) {
       ctx = c;
     };
 
+    /* ------------------------------ sticking ------------------------------
+       The band sticks under the site header, so it needs the header's height:
+       read from the .site-header element itself and kept current, never a
+       guessed constant. It is written on .pb, where the summary's own sticky
+       top reads it too (builder.css). */
+    const box = host.parentElement;
+    const header = document.querySelector<HTMLElement>(".site-header");
+    let stickTop = 0;
+    const readHeader = () => {
+      stickTop = header ? header.getBoundingClientRect().height : 0;
+      box?.style.setProperty("--pb-stick-top", stickTop + "px");
+    };
+    /* Stuck or not is a scroll question, so a passive scroll listener answers
+       it: no frames, and nothing at all happens while nobody scrolls. */
+    const checkStuck = () => {
+      const r = host.getBoundingClientRect();
+      const stuck = isStuck(r.top, r.height, stickTop);
+      if (stuck !== host.hasAttribute("data-stuck")) host.toggleAttribute("data-stuck", stuck);
+    };
+
     const ro = new ResizeObserver((entries) => {
-      const r = entries[entries.length - 1].contentRect;
-      const w = Math.round(r.width);
-      const h = Math.round(r.height);
+      for (const e of entries) if (e.target === header) readHeader();
+      checkStuck();
+      /* The canvas fills the band's padding box, which is its client size. */
+      const w = host.clientWidth;
+      const h = host.clientHeight;
       if (w === Math.round(W) && h === Math.round(H)) return;
       fit(w, h);
       build();
+      /* Resizing a canvas clears it, and this callback runs before the frame
+         is painted, so draw here: when a loop is already running, run() leaves
+         the drawing to the loop's next frame, which would be one blank band
+         every time the band sticks or unsticks. */
+      draw();
       run();
     });
     ro.observe(host);
+    if (header) ro.observe(header);
 
     /* Threshold through clearsThreshold, never entry.isIntersecting: see @/lib/onscreen. */
     const io = new IntersectionObserver(
@@ -589,13 +658,16 @@ export default function HalftoneSunset({ level }: { level: number }) {
     };
     armDpr();
 
+    window.addEventListener("scroll", checkStuck, { passive: true });
+    window.addEventListener("resize", checkStuck);
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("cardon-mode", onMode);
     reduceMQ.addEventListener("change", onReduce);
     runRef.current = run;
 
-    const first = host.getBoundingClientRect();
-    fit(Math.round(first.width), Math.round(first.height));
+    readHeader();
+    checkStuck();
+    fit(host.clientWidth, host.clientHeight);
     build();
     run();
 
@@ -604,6 +676,10 @@ export default function HalftoneSunset({ level }: { level: number }) {
       stop();
       ro.disconnect();
       io.disconnect();
+      window.removeEventListener("scroll", checkStuck);
+      window.removeEventListener("resize", checkStuck);
+      host.removeAttribute("data-stuck");
+      box?.style.removeProperty("--pb-stick-top");
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("cardon-mode", onMode);
       reduceMQ.removeEventListener("change", onReduce);

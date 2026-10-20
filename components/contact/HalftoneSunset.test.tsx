@@ -19,6 +19,12 @@ import HalftoneSunset, {
   dotReach,
   dotValue,
   easeLevel,
+  isStuck,
+  MIN_ROWS,
+  SCENE_ASPECT,
+  sceneWidth,
+  screenPitch,
+  sunRadius,
   toneGain,
   waveFront,
 } from "./HalftoneSunset";
@@ -39,7 +45,21 @@ import { moduleIds, type ModuleId } from "../../lib/pricing";
  *   "with everything picked it is the full sunset"
  *   the loop can stop, so an idle builder costs no frames
  *   it is decoration: aria-hidden, no text of its own, no pointer events
+ *
+ * And from bead hq-lgjo.11, the band stays in view while the client builds:
+ * it sticks under the header, shrinks to a strip without moving the groups,
+ * and the strip is a re-composed sunset rather than a crop of the tall one.
  */
+
+const css = (name: string) =>
+  readFileSync(fileURLToPath(new URL(name, import.meta.url)), "utf8").replace(/\s/g, "");
+/** One rule's body, whitespace stripped, so a declaration can be looked up in it. */
+const rule = (sheet: string, selector: string) => {
+  const at = sheet.indexOf(selector.replace(/\s/g, "") + "{");
+  expect(at, selector).toBeGreaterThanOrEqual(0);
+  const open = at + selector.replace(/\s/g, "").length + 1;
+  return sheet.slice(open, sheet.indexOf("}", open));
+};
 
 const FULL: BuilderSelection = {
   web: "presencia",
@@ -210,10 +230,10 @@ describe("the band is decoration and nothing else", () => {
   });
 
   it("takes no pointer events and leaves no text over itself", () => {
-    const css = readFileSync(fileURLToPath(new URL("./halftone.css", import.meta.url)), "utf8");
-    expect(css.replace(/\s/g, "")).toContain("pointer-events:none");
+    const raw = readFileSync(fileURLToPath(new URL("./halftone.css", import.meta.url)), "utf8");
+    expect(raw.replace(/\s/g, "")).toContain("pointer-events:none");
     /* The band is its own strip, so nothing is positioned on top of it. */
-    expect(css).not.toMatch(/position:\s*absolute[^}]*;\s*z-index/);
+    expect(raw).not.toMatch(/position:\s*absolute[^}]*;\s*z-index/);
   });
 
   it("is mounted by the builder in both of its modes", () => {
@@ -233,6 +253,92 @@ describe("the band is decoration and nothing else", () => {
       expect(html).toContain('<div class="pb-sunset" aria-hidden="true">');
       /* First child of .pb, so the groups and the estimate sit below it. */
       expect(html).toMatch(/<div class="pb" data-mode="[a-z]+"><div class="pb-sunset"/);
+    }
+  });
+});
+
+describe("the band stays in view while the client builds", () => {
+  it("sticks under the measured header, above the groups, opaque", () => {
+    const band = rule(css("./halftone.css"), ".pb-sunset");
+    expect(band).toContain("position:sticky");
+    /* The header's height is measured by the component, never a guessed px. */
+    expect(band).toContain("top:var(--pb-stick-top)");
+    expect(band).toMatch(/z-index:[1-9]/);
+    expect(band).toContain("background:var(--ground)");
+    expect(band).toContain("border-bottom:1pxsolid");
+  });
+
+  it("shrinks to a strip without moving anything below it", () => {
+    const sheet = css("./halftone.css");
+    const band = rule(sheet, ".pb-sunset");
+    const stuck = rule(sheet, ".pb-sunset[data-stuck]");
+    expect(band).toContain("height:var(--pb-band-full)");
+    expect(band).toContain("2px;"); // the margin under the full band
+    expect(stuck).toContain("height:var(--pb-band-short)");
+    /* What the height loses, the margin gains: height + margin is constant. */
+    expect(stuck).toContain("margin-bottom:calc(2px+var(--pb-band-full)-var(--pb-band-short))");
+    /* 64 to 90px on a desktop and 56 to 64px on a phone, sized in vw, never %. */
+    expect(rule(sheet, ".pb")).toContain("--pb-band-short:clamp(56px,5.5vw,84px)");
+  });
+
+  it("sits in a flex box, because a grid item sticks only inside its own row", () => {
+    const sheet = css("./builder.css");
+    const pb = rule(sheet, ".pb");
+    expect(pb).toContain("display:flex");
+    expect(pb).not.toContain("display:grid");
+    /* The standalone summary sticks below the stuck band, not behind it. */
+    expect(sheet).toContain("top:calc(var(--pb-stick-top)+var(--pb-band-short)+20px)");
+  });
+
+  it("is stuck once its top reaches the header, and never while hidden", () => {
+    expect(isStuck(65, 160, 65)).toBe(true);
+    expect(isStuck(65.6, 160, 65)).toBe(true); // a sub-pixel stick still counts
+    expect(isStuck(-40, 79, 65)).toBe(true); // the builder's end is pushing it out
+    expect(isStuck(300, 160, 65)).toBe(false);
+    expect(isStuck(0, 0, 65)).toBe(false); // the form's panel is folded
+  });
+});
+
+describe("the strip is re-composed, not cropped", () => {
+  it("leaves the full band exactly as the reference drew it", () => {
+    for (const [W, H] of [
+      [1440, 180],
+      [1200, 150],
+      [390, 118],
+    ]) {
+      expect(sceneWidth(W, H)).toBe(W);
+      expect(sunRadius(W, H)).toBeCloseTo(H * 0.22, 9);
+      expect(screenPitch(W, H)).toBe(W < 560 ? 4.6 : 5.4);
+    }
+  });
+
+  it("keeps the headlands' proportions on a strip", () => {
+    expect(sceneWidth(1440, 79)).toBeCloseTo(79 * SCENE_ASPECT, 9);
+    expect(sceneWidth(1440, 79)).toBeLessThan(1440);
+  });
+
+  it("gives the strip a sun that reads and stays inside the band", () => {
+    for (const [W, H] of [
+      [1440, 79],
+      [1920, 84],
+      [390, 56],
+    ]) {
+      const sr = sunRadius(W, H);
+      expect(sr).toBeGreaterThanOrEqual(H * 0.22);
+      expect(sr).toBeLessThanOrEqual(H * 0.26);
+      expect(H * 0.5 - sr).toBeGreaterThan(0); // its top is under the band's top
+    }
+    /* A 1440 strip is far wider than the scene, so its sun is the larger one. */
+    expect(sunRadius(1440, 79)).toBeCloseTo(79 * 0.26, 2);
+  });
+
+  it("draws the strip with enough rows of dots to be a picture", () => {
+    for (const [W, H] of [
+      [1440, 79],
+      [390, 56],
+      [1024, 56],
+    ]) {
+      expect(H / screenPitch(W, H)).toBeGreaterThanOrEqual(MIN_ROWS - 1e-9);
     }
   });
 });

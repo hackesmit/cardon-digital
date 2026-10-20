@@ -15,11 +15,21 @@
 .pb-badge{font-size:0.78rem;font-weight:500;color:var(--primary-text);border:1px solid var(--line);padding:3px 8px;border-radius:999px;}
 .pb-intro{margin:0;padding:0 18px 4px;color:var(--text-dim);font-size:0.95rem;line-height:1.55;max-width:60ch;}
 
-.pb{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;padding:14px 18px 20px;}
+/* A flex box, not a grid, so the sunset band can stick (halftone.css): a grid
+   item sticks only inside its own grid area, and the band's area was its own
+   row. A flex item sticks inside the whole box, so the band rides down over
+   the groups and leaves when the builder does. The standalone two columns are
+   the old minmax(0,1.7fr) minmax(280px,1fr) as grow ratios on a zero basis. */
+.pb{display:flex;flex-direction:column;gap:20px;padding:14px 18px 20px;}
 .pb-wrap-page .pb{padding-top:18px;}
 @media (min-width:980px){
-  .pb[data-mode="standalone"]{grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);align-items:start;}
-  .pb[data-mode="standalone"] .pb-summary{position:sticky;top:92px;}
+  .pb[data-mode="standalone"]{flex-flow:row wrap;align-items:flex-start;}
+  .pb[data-mode="standalone"] .pb-groups{flex:1.7 1 0;}
+  .pb[data-mode="standalone"] .pb-summary{
+    flex:1 1 0;min-width:280px;
+    /* Under the header and the stuck band, never behind them. */
+    position:sticky;top:calc(var(--pb-stick-top) + var(--pb-band-short) + 20px);
+  }
 }
 
 .pb-groups{display:flex;flex-direction:column;gap:22px;min-width:0;}
