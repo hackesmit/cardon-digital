@@ -80,6 +80,26 @@ export function aiSource(referrer: string, utmSource: string): string {
   return engineOf(utmSource) || engineOf(hostOf(referrer));
 }
 
+/**
+ * The AI label of the page the visitor landed on, held in module memory for
+ * the life of the document. ChatGPT marks its links with utm_source, and that
+ * mark sits only on the landing URL: a visitor who lands on the home page and
+ * clicks through to the form has lost it from the address bar by then. The
+ * site shell calls rememberLanding once on its first mount; nothing is stored
+ * in a cookie or in localStorage, and a full reload starts over.
+ */
+let landingSource = "";
+
+export function rememberLanding(search: string, referrer: string): void {
+  if (landingSource) return;
+  landingSource = aiSource(referrer, clean(new URLSearchParams(search).get("utm_source")));
+}
+
+/** Tests only: forget the landing label between cases. */
+export function forgetLanding(): void {
+  landingSource = "";
+}
+
 type StoredSource = {
   lead_id?: unknown;
   gclid?: unknown;
@@ -151,7 +171,8 @@ export function readAttribution(): Attribution {
     cd_first_seen: clean(stored.first_seen),
     // document.referrer survives client-side navigation, so a visitor who
     // landed from an answer and clicked through to the form still carries it.
-    cd_source: aiSource(document.referrer, clean(stored.utm_source) || fromUrl("utm_source")),
+    cd_source:
+      aiSource(document.referrer, clean(stored.utm_source) || fromUrl("utm_source")) || landingSource,
   };
 }
 

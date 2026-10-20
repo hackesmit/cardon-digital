@@ -8,6 +8,7 @@ import { site } from "@/lib/i18n/site";
 import { htmlLang, type Locale } from "@/lib/i18n/config";
 import { fontVariables } from "@/lib/fonts";
 import TitlePaint from "@/components/site/TitlePaint";
+import LandingSource from "@/components/site/LandingSource";
 
 // Pre-paint script: apply the stored mode before first paint so there is no
 // flash, and flag the document as JS-enabled so reveal-on-scroll can hide.
@@ -47,6 +48,7 @@ export default function SiteShell({
           <TitlePaint />
           {children}
           <Footer locale={locale} />
+          <LandingSource />
           <ConsentGate />
         </LocaleProvider>
       </body>

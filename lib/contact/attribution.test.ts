@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from "vitest";
 
-import { AI_SOURCES, aiSource, readAttribution } from "./attribution";
+import { AI_SOURCES, aiSource, forgetLanding, readAttribution, rememberLanding } from "./attribution";
 import { validateSubmission } from "./validate";
 
 /**
@@ -87,6 +87,24 @@ describe("readAttribution carries the label", () => {
     if (referrer) Object.defineProperty(Document.prototype, "referrer", referrer);
     window.history.replaceState(null, "", "/");
     window.localStorage.clear();
+    forgetLanding();
+  });
+
+  it("keeps ChatGPT's utm_source after a client-side move to the form", () => {
+    // Land on the home page from a noreferrer answer link, then navigate.
+    Object.defineProperty(document, "referrer", { configurable: true, get: () => "" });
+    window.history.replaceState(null, "", "/es?utm_source=chatgpt.com");
+    rememberLanding(window.location.search, document.referrer);
+    window.history.pushState(null, "", "/es/contacto");
+    expect(readAttribution().cd_source).toBe("ai:chatgpt");
+    expect(window.localStorage.length).toBe(0);
+  });
+
+  it("remembers only the first landing of the document", () => {
+    rememberLanding("?utm_source=perplexity.ai", "");
+    rememberLanding("?utm_source=chatgpt.com", "");
+    landFrom("");
+    expect(readAttribution().cd_source).toBe("ai:perplexity");
   });
 
   it("labels a visit referred by an assistant", () => {

@@ -400,7 +400,7 @@ describe("the notice's own promises about itself", () => {
     "hostingBody",
     "clientBody",
   ] as const;
-  const DIGEST = "bc3546c5";
+  const DIGEST = "6878d7ce";
 
   function digest(text: string): string {
     /* FNV-1a, 32 bit: a short stable number, not a security hash. */
