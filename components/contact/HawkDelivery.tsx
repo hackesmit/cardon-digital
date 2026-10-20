@@ -52,8 +52,11 @@ import "./hawk-delivery.css";
     height is optional because the form measured only the first three for the
     first version of this egg; without it the sheet runs from the top of the
     box to the bottom of the window, which is where the send button the
-    visitor just pressed sits (sheetBox). */
-export type LaunchBox = { x: number; y: number; width: number; height?: number };
+    visitor just pressed sits (sheetBox). scrollY is the page scroll at the
+    moment of measuring: swapping the tall form for the short confirmation
+    pulls the page up before the flight starts, and the flight has to be
+    drawn against the scroll it was measured at, not the one it finds. */
+export type LaunchBox = { x: number; y: number; width: number; height?: number; scrollY?: number };
 
 /** One element at one instant. x and y are viewport pixels. */
 export type Pose = { x: number; y: number; rot: number; scale: number };
@@ -725,8 +728,10 @@ export default function HawkDelivery({
     const drawn = b.getBoundingClientRect().width || 140;
     const letterW = p.getBoundingClientRect().width || 50;
     const scene = sceneFor(from, window.innerWidth, window.innerHeight, drawn, letterW);
-    const scroll0 = window.scrollY;
-    let scrolled = 0;
+    const scroll0 = from.scrollY ?? window.scrollY;
+    /* Not 0: the page has usually moved already, between the send and this
+       effect, and no scroll event is coming to say so. */
+    let scrolled = window.scrollY - scroll0;
     const onScroll = () => {
       scrolled = window.scrollY - scroll0;
     };
@@ -827,7 +832,8 @@ export default function HawkDelivery({
     /* Held where the letter would have been taken, up and to the left of the
        box, and clamped onto the screen on a narrow one. */
     const left = clamp(from.x + from.width * 0.5 - 150, 12, Math.max(12, window.innerWidth - 200));
-    const top = clamp(from.y - 40, HEAD_GAP, Math.max(HEAD_GAP, window.innerHeight - 220));
+    const y = from.y - (window.scrollY - (from.scrollY ?? window.scrollY));
+    const top = clamp(y - 40, HEAD_GAP, Math.max(HEAD_GAP, window.innerHeight - 220));
     return createPortal(
       <div className="hawk-egg" ref={root} aria-hidden="true">
         <div className="hawk-egg-rest" style={{ left: left + "px", top: top + "px" }}>

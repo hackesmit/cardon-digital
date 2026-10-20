@@ -152,7 +152,11 @@ export default function ContactForm() {
            all that happens here: the confirmation below renders and takes
            focus whether or not anything flies. */
         const box = formRef.current?.getBoundingClientRect();
-        setLaunch(box ? { x: box.left, y: box.top, width: box.width } : null);
+        setLaunch(
+          box
+            ? { x: box.left, y: box.top, width: box.width, height: box.height, scrollY: window.scrollY }
+            : null,
+        );
         setStatus("sent");
         setValues(EMPTY);
         setPkg(EMPTY_SELECTION);
