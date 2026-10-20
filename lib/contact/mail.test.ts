@@ -84,7 +84,7 @@ const LEAD: ContactSubmission = {
   whatsapp: "646 227 8690",
   message: "Hola <script>alert(1)</script>\nSegunda linea",
   locale: "es",
-  attribution: { leadId: "", gclid: "", lane: "", campaign: "", landing: "/es/contacto", firstSeen: "" },
+  attribution: { leadId: "", gclid: "", lane: "", campaign: "", landing: "/es/contacto", firstSeen: "", source: "" },
   package: null,
 };
 
@@ -107,6 +107,13 @@ describe("the lead email a person reads", () => {
     expect(text).not.toContain("gclid");
     expect(text).not.toContain("none");
     expect(html).not.toContain("Google click id");
+    expect(text).not.toContain("Source:");
+  });
+
+  it("says when the lead came from an AI answer", () => {
+    const { text, html } = buildEmail({ ...LEAD, attribution: { ...LEAD.attribution, source: "ai:chatgpt" } });
+    expect(text).toContain("Source: ai:chatgpt");
+    expect(html).toContain("ai:chatgpt");
   });
 
   it("links WhatsApp, adding Mexico's code to a ten digit number", () => {
