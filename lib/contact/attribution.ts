@@ -171,8 +171,12 @@ export function readAttribution(): Attribution {
     cd_first_seen: clean(stored.first_seen),
     // document.referrer survives client-side navigation, so a visitor who
     // landed from an answer and clicked through to the form still carries it.
+    // Stored first touch, then the label this document landed with, then the
+    // current page: one visit keeps one engine however it moves around.
     cd_source:
-      aiSource(document.referrer, clean(stored.utm_source) || fromUrl("utm_source")) || landingSource,
+      aiSource("", clean(stored.utm_source)) ||
+      landingSource ||
+      aiSource(document.referrer, fromUrl("utm_source")),
   };
 }
 

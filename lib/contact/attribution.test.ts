@@ -100,6 +100,15 @@ describe("readAttribution carries the label", () => {
     expect(window.localStorage.length).toBe(0);
   });
 
+  it("keeps the landing engine when the referrer names another one", () => {
+    Object.defineProperty(document, "referrer", { configurable: true, get: () => "https://claude.ai/" });
+    window.history.replaceState(null, "", "/es?utm_source=chatgpt.com");
+    expect(readAttribution().cd_source).toBe("ai:chatgpt");
+    rememberLanding(window.location.search, document.referrer);
+    window.history.pushState(null, "", "/es/contacto");
+    expect(readAttribution().cd_source).toBe("ai:chatgpt");
+  });
+
   it("remembers only the first landing of the document", () => {
     rememberLanding("?utm_source=perplexity.ai", "");
     rememberLanding("?utm_source=chatgpt.com", "");
