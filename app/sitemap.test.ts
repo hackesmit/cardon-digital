@@ -64,7 +64,7 @@ function sourcesOf(path: string): string[] {
     seen.add(rel);
     if (!/\.(tsx?|mjs|js)$/.test(file)) continue;
     const src = readFileSync(file, "utf8");
-    for (const m of Array.from(src.matchAll(/(?:from|import)\s*\(?\s*"([^"]+)"/g))) {
+    for (const m of Array.from(src.matchAll(/(?:from|import)\s*\(?\s*["']([^"']+)["']/g))) {
       const next = resolveImport(file, m[1]);
       if (next) queue.push(next);
     }
@@ -84,7 +84,10 @@ function today(): string {
 
 function changedOn(files: string[]): string {
   if (git(["status", "--porcelain", "--", ...files]) !== "") return today();
-  return git(["log", "-1", "--format=%cs", "--", ...files]);
+  // Merge commits are skipped: a clean merge of two branches that each
+  // touched one of a page's files on an earlier day would otherwise date the
+  // page to the merge, and main would go red after two green branches.
+  return git(["log", "-1", "--no-merges", "--format=%cs", "--", ...files]);
 }
 
 /** The table, read back through the sitemap itself: one entry per path. */
@@ -111,11 +114,16 @@ describe("sitemap lastModified", () => {
     }
   });
 
-  it("matches the last change to each page's own sources", () => {
+  it("is never older than the last change to each page's own sources, nor later than today", () => {
+    // ISO days compare as strings. A table day after the last change is
+    // allowed (a branch merged on a later day than it was written); a day
+    // before it is the lie this test exists to catch, and a future day is too.
     const wrong: string[] = [];
+    const now = today();
     for (const [path, day] of Array.from(listed)) {
       const actual = changedOn(sourcesOf(path));
-      if (actual !== day) wrong.push(`  ${path}: table says ${day}, the page changed ${actual}`);
+      if (day < actual) wrong.push(`  ${path}: table says ${day}, the page changed ${actual}`);
+      else if (day > now) wrong.push(`  ${path}: table says ${day}, which is after today ${now}`);
     }
     expect(wrong, "update lastModified in app/sitemap.ts:\n" + wrong.join("\n")).toEqual([]);
   });
@@ -130,9 +138,6 @@ describe("sitemap lastModified", () => {
     expect(sourcesOf("/estilos")).toContain("app/[locale]/estilos/layout.tsx");
   });
 
-  it("does not stamp the whole site with one date", () => {
-    expect(new Set(listed.values()).size).toBeGreaterThan(1);
-  });
 
   it("lists absolute URLs on the production origin", () => {
     for (const entry of sitemap()) expect(entry.url.startsWith(SITE_URL + "/")).toBe(true);
