@@ -229,9 +229,12 @@ describe("the band is decoration and nothing else", () => {
     expect(html).toBe('<div class="pb-sunset" aria-hidden="true"><canvas aria-hidden="true"></canvas></div>');
   });
 
-  it("takes no pointer events and leaves no text over itself", () => {
+  it("swallows clicks over hidden options and leaves no text over itself", () => {
     const raw = readFileSync(fileURLToPath(new URL("./halftone.css", import.meta.url)), "utf8");
-    expect(raw.replace(/\s/g, "")).toContain("pointer-events:none");
+    /* Stuck, the band covers options that scrolled under it: a click there
+       must land on the band, never on a box the visitor cannot see. */
+    expect(rule(css("./halftone.css"), ".pb-sunset")).toContain("pointer-events:auto");
+    expect(rule(css("./halftone.css"), ".pb-sunset canvas")).toContain("pointer-events:none");
     /* The band is its own strip, so nothing is positioned on top of it. */
     expect(raw).not.toMatch(/position:\s*absolute[^}]*;\s*z-index/);
   });
@@ -275,8 +278,12 @@ describe("the band stays in view while the client builds", () => {
     expect(band).toContain("height:var(--pb-band-full)");
     expect(band).toContain("2px;"); // the margin under the full band
     expect(stuck).toContain("height:var(--pb-band-short)");
-    /* What the height loses, the margin gains: height + margin is constant. */
-    expect(stuck).toContain("margin-bottom:calc(2px+var(--pb-band-full)-var(--pb-band-short))");
+    /* What the height loses goes onto what follows, not the band's own
+       margin, which would push a sticky band out before the builder ends. */
+    expect(stuck).not.toContain("margin-bottom");
+    expect(sheet).toContain(".pb-sunset[data-stuck]+.pb-groups{margin-top:calc(var(--pb-band-full)-var(--pb-band-short));}");
+    /* Focus scrolls clear of the stuck strip, not just of the header. */
+    expect(sheet).toContain("scroll-margin-top:calc(var(--pb-stick-top)+var(--pb-band-short)+24px)");
     /* 64 to 90px on a desktop and 56 to 64px on a phone, sized in vw, never %. */
     expect(rule(sheet, ".pb")).toContain("--pb-band-short:clamp(56px,5.5vw,84px)");
   });
