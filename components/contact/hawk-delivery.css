@@ -2,11 +2,15 @@
    (components/contact/HawkDelivery.tsx). Its own sheet rather than globals.css,
    so the other easter egg beads and this one never touch the same file.
 
-   Everything that moves here moves on transform alone. The two moving elements
-   are pinned at the origin of a fixed overlay and placed by a translate in the
-   rAF loop, so no frame reads or writes a layout property. The letter's shadow
-   is a static filter on a layer that only ever transforms, so it is rasterised
-   once and composited after that. */
+   Everything that moves here moves on transform and opacity alone. The moving
+   elements are pinned at the origin of a fixed overlay and placed by a
+   translate in the rAF loop, so no frame reads or writes a layout property.
+   The letter's shadow is a static filter on a layer that only ever
+   transforms, so it is rasterised once and composited after that.
+
+   Paint order, back to front: the sheet, the letter, the bird. It is the
+   document order as well, and the z-index below says it a second time so a
+   later rule cannot quietly put the bird behind the letter it carries. */
 
 .hawk-egg {
   position: fixed;
@@ -18,10 +22,11 @@
   contain: layout paint style;
   /* The point on the sprite the letter is carried at, shared by the moving
      scene and the still one so the two never drift apart. */
-  --talon-x: 46%;
-  --talon-y: 56%;
+  --talon-x: 60%;
+  --talon-y: 58%;
 }
 
+.hawk-egg-sheet,
 .hawk-egg-bird,
 .hawk-egg-letter {
   position: absolute;
@@ -36,12 +41,14 @@
    is applied as the last step of the transform instead, which transformOf in
    HawkDelivery.tsx explains. */
 .hawk-egg-bird {
+  z-index: 3;
   width: clamp(104px, 12vw, 176px);
   height: auto;
   transform-origin: 0 0;
 }
 
 .hawk-egg-letter {
+  z-index: 2;
   width: clamp(38px, 4.4vw, 62px);
   height: auto;
   color: var(--text);
@@ -72,6 +79,149 @@
 .hawk-egg-seal {
   fill: var(--primary-text);
   stroke: none;
+}
+
+/* The form as a sheet of paper (hawk-delivery's Sheet). Laid over the box the
+   form was, the same width and height, in the card's own panel and line, so
+   the first frame reads as the form itself rather than something new. Its
+   width and height are written once when it mounts, never in the loop. */
+.hawk-egg-sheet {
+  z-index: 1;
+  transform-origin: 0 0;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.12));
+}
+
+/* Three thirds. The middle one never moves; the bottom flap hinges on its top
+   edge and the top flap on its bottom edge, which are the two creases. The
+   flaps are not in a shared 3D context with the middle, so each is projected
+   on its own and stacked by document order: the bottom flap over the middle,
+   the top flap over both, which is the order the paper ends up in. */
+.hawk-egg-third {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: calc(100% / 3 + 0.5px);
+  display: block;
+}
+
+.hawk-egg-third-0 {
+  top: 0;
+  transform-origin: 50% 100%;
+}
+
+.hawk-egg-third-1 {
+  top: calc(100% / 3);
+}
+
+.hawk-egg-third-2 {
+  top: calc(200% / 3);
+  transform-origin: 50% 0;
+}
+
+.hawk-egg-flap {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hawk-egg-face,
+.hawk-egg-back {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  backface-visibility: hidden;
+}
+
+/* Flat and open, the three fronts are one box: where two thirds meet, the
+   line drops to the soft tier, a crease scored but not yet folded. */
+.hawk-egg-third-0 .hawk-egg-face {
+  border-bottom-color: var(--line-soft);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.hawk-egg-third-1 .hawk-egg-face {
+  border-top-color: var(--line-soft);
+  border-bottom-color: var(--line-soft);
+  border-radius: 0;
+}
+
+.hawk-egg-third-2 .hawk-egg-face {
+  border-top-color: var(--line-soft);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* The back of a flap is what lies on top once it has turned: plain paper, a
+   touch darker towards the hinge, the way a fold catches the light. */
+.hawk-egg-back {
+  transform: rotateX(180deg);
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--text) 7%, transparent), transparent 55%),
+    var(--panel);
+}
+
+/* The top flap's hinge is its bottom edge, so once turned the dark side of
+   its back is at the top of the packet only if the gradient is flipped. */
+.hawk-egg-third-0 .hawk-egg-back {
+  background:
+    linear-gradient(to top, color-mix(in srgb, var(--text) 7%, transparent), transparent 55%),
+    var(--panel);
+}
+
+/* The shadow on a flap as it stands up to the light. Its opacity is the one
+   thing the loop writes on it. */
+.hawk-egg-shade {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: var(--text);
+  opacity: 0;
+}
+
+/* The faint fields: one page the full height of the sheet, drawn in each
+   third and pulled up by that third's offset so the rows run on across the
+   creases. */
+.hawk-egg-page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--sheet-h);
+  display: block;
+}
+
+.hawk-egg-third-1 .hawk-egg-page {
+  top: calc(var(--sheet-h) / -3);
+}
+
+.hawk-egg-third-2 .hawk-egg-page {
+  top: calc(var(--sheet-h) * -2 / 3);
+}
+
+.hawk-egg-row {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  display: block;
+}
+
+.hawk-egg-label {
+  display: block;
+  width: 22%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.hawk-egg-field {
+  display: block;
+  margin-top: 12px;
+  height: 38px;
+  border: 1px solid var(--line-soft);
+  border-radius: 2px;
 }
 
 /* The reduced motion end state: the bird already has the letter, held still
@@ -110,5 +260,7 @@
   top: var(--talon-y);
   width: 34%;
   transform-origin: 50% 50%;
-  transform: translate(-50%, -14%) rotate(-7deg);
+  /* Hung from the talons the way the flight hangs it: the top fifth of the
+     paper under the body, the rest clear below. */
+  transform: translate(-50%, -20%) rotate(-7deg);
 }
