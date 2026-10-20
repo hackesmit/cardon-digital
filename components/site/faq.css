@@ -1,0 +1,34 @@
+/* The FAQ block (components/site/Faq.tsx). Every question and answer stays
+   open: the block is read, not operated. Theme tokens only, so light and dark
+   follow from the same rules. */
+
+.faq{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+.faq-title{
+  font-family:var(--display);
+  font-size:clamp(28px,3.4vw,40px);
+  line-height:1.12;
+  margin:0 0 28px;
+  color:var(--text);
+}
+
+.faq-list{margin:0;border-top:1px solid var(--line);}
+
+.faq-item{padding:22px 0;border-bottom:1px solid var(--line);}
+
+.faq-q{
+  font-family:var(--sans);
+  font-size:clamp(18px,1.6vw,21px);
+  font-weight:600;
+  line-height:1.3;
+  margin:0 0 10px;
+  color:var(--text);
+}
+
+.faq-a{
+  margin:0;
+  max-width:68ch;
+  font-size:16px;
+  line-height:1.6;
+  color:var(--text-dim);
+}

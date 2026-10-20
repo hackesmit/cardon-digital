@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/site/JsonLd";
 import SiteShell from "@/components/site/SiteShell";
 import { alternatesFor, SITE_URL } from "@/lib/i18n/metadata";
 import { site } from "@/lib/i18n/site";
 import { isLocale, locales, ogLocale, type Locale } from "@/lib/i18n/config";
+import { siteGraph } from "@/lib/seo/jsonld";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -57,5 +59,12 @@ export default function LocaleLayout({
 }: Readonly<{ children: React.ReactNode; params: { locale: string } }>) {
   if (!isLocale(params.locale)) notFound();
 
-  return <SiteShell locale={params.locale}>{children}</SiteShell>;
+  // The organization, site and founder graph, once per page (lib/seo/jsonld.ts).
+  // A script in the body renders nothing visible.
+  return (
+    <SiteShell locale={params.locale}>
+      <JsonLd data={siteGraph(params.locale)} />
+      {children}
+    </SiteShell>
+  );
 }
