@@ -20,6 +20,8 @@ import {
   currencyByLocale,
 } from "@/lib/pricing";
 import Field from "@/components/site/field/Field";
+import CredentialFloat from "@/components/site/CredentialFloat";
+import { CREDENTIALS } from "@/lib/credentials";
 import "./home.css";
 
 type Params = { params: { locale: string } };
@@ -141,6 +143,10 @@ export default function Home({ params }: Params) {
           <div className="container">
           <div className="hero-copy">
             <p className="eyebrow">{d.hero.eyebrow}</p>
+            {/* The certificate hangs above the title's right end, in the band
+                the short eyebrow leaves empty (bead hq-i4b5.5). Zero height,
+                so the title does not move. One today; the first is shown. */}
+            {CREDENTIALS[0] && <CredentialFloat credential={CREDENTIALS[0]} locale={locale} />}
             <h1>
               {d.hero.title}
               <br />
