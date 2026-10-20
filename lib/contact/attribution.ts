@@ -20,6 +20,8 @@ export type Attribution = {
   cd_campaign: string;
   cd_landing: string;
   cd_first_seen: string;
+  /** ai:<engine> when the visit came from an AI answer, empty otherwise. */
+  cd_source: string;
 };
 
 /** The cookie and localStorage key the first touch record lives under. */
@@ -32,13 +34,78 @@ export const EMPTY_ATTRIBUTION: Attribution = {
   cd_campaign: "",
   cd_landing: "",
   cd_first_seen: "",
+  cd_source: "",
 };
+
+/**
+ * The AI answer engines the AEO plan measures (SPEC.md, Measurement), by the
+ * host that links out from an answer. ChatGPT also tags its links with
+ * utm_source=chatgpt.com, so the same hosts are read from that mark.
+ */
+const AI_HOSTS: [string, string][] = [
+  ["chatgpt.com", "ai:chatgpt"],
+  ["chat.openai.com", "ai:chatgpt"],
+  ["perplexity.ai", "ai:perplexity"],
+  ["gemini.google.com", "ai:gemini"],
+  ["copilot.microsoft.com", "ai:copilot"],
+  ["claude.ai", "ai:claude"],
+];
+
+/** Every label cd_source can carry; the server keeps nothing else. */
+export const AI_SOURCES: readonly string[] = Array.from(new Set(AI_HOSTS.map(([, label]) => label)));
+
+function engineOf(host: string): string {
+  const h = host.trim().toLowerCase();
+  // The host itself or one of its own subdomains (www.perplexity.ai), never a
+  // name that merely starts with it: chatgpt.com.evil.example is evil.example.
+  const hit = AI_HOSTS.find(([known]) => h === known || h.endsWith("." + known));
+  return hit ? hit[1] : "";
+}
+
+function hostOf(url: string): string {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.hostname : "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * The AI engine a visit came from, as ai:<engine>, or empty. Read from the
+ * utm_source mark first and the referring page second; only the label is ever
+ * returned, never the referring address.
+ */
+export function aiSource(referrer: string, utmSource: string): string {
+  return engineOf(utmSource) || engineOf(hostOf(referrer));
+}
+
+/**
+ * The AI label of the page the visitor landed on, held in module memory for
+ * the life of the document. ChatGPT marks its links with utm_source, and that
+ * mark sits only on the landing URL: a visitor who lands on the home page and
+ * clicks through to the form has lost it from the address bar by then. The
+ * site shell calls rememberLanding once on its first mount; nothing is stored
+ * in a cookie or in localStorage, and a full reload starts over.
+ */
+let landingSource = "";
+
+export function rememberLanding(search: string, referrer: string): void {
+  if (landingSource) return;
+  landingSource = aiSource(referrer, clean(new URLSearchParams(search).get("utm_source")));
+}
+
+/** Tests only: forget the landing label between cases. */
+export function forgetLanding(): void {
+  landingSource = "";
+}
 
 type StoredSource = {
   lead_id?: unknown;
   gclid?: unknown;
   cd_lane?: unknown;
   utm_campaign?: unknown;
+  utm_source?: unknown;
   landing?: unknown;
   first_seen?: unknown;
 };
@@ -84,7 +151,7 @@ function readStored(): StoredSource {
 }
 
 /**
- * The six hidden fields, from the stored first touch where there is one and
+ * The seven hidden fields, from the stored first touch where there is one and
  * from the current URL where there is not. The stored record wins on every
  * field it holds, because first touch is what the ads plan reports on.
  */
@@ -102,6 +169,14 @@ export function readAttribution(): Attribution {
     cd_campaign: clean(stored.utm_campaign) || fromUrl("utm_campaign"),
     cd_landing: clean(stored.landing) || window.location.pathname,
     cd_first_seen: clean(stored.first_seen),
+    // document.referrer survives client-side navigation, so a visitor who
+    // landed from an answer and clicked through to the form still carries it.
+    // Stored first touch, then the label this document landed with, then the
+    // current page: one visit keeps one engine however it moves around.
+    cd_source:
+      aiSource("", clean(stored.utm_source)) ||
+      landingSource ||
+      aiSource(document.referrer, fromUrl("utm_source")),
   };
 }
 
