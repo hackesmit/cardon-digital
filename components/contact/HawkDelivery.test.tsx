@@ -408,7 +408,9 @@ class Egg {
   asked: string[] = [];
   frames: Array<(now: number) => void> = [];
 
-  constructor(opts: { reduced?: boolean; raf?: boolean; fail?: boolean } = {}) {
+  constructor(
+    opts: { reduced?: boolean; raf?: boolean; fail?: boolean; from?: LaunchBox } = {},
+  ) {
     (globalThis as unknown as { IS_REACT_ACT_ENVIRONMENT: boolean }).IS_REACT_ACT_ENVIRONMENT =
       true;
     document.body.appendChild(this.container);
@@ -442,7 +444,7 @@ class Egg {
     this.root = createRoot(this.container);
     act(() => {
       this.root.render(
-        <HawkDelivery from={BOX} onDone={() => (this.done += 1)} />,
+        <HawkDelivery from={opts.from ?? BOX} onDone={() => (this.done += 1)} />,
       );
     });
   }
@@ -505,6 +507,22 @@ describe("the egg in a document", () => {
     await egg.settle();
     expect(egg.overlay).not.toBeNull();
     egg.stop();
+  });
+
+  it("draws the sheet where the form was, after the page has moved under it", async () => {
+    /* Swapping the tall form for the short confirmation pulls the page up
+       before the flight starts, and no scroll event follows. Measured on a
+       phone: sent at scroll 791, flying at scroll 303. */
+    const sheetY = async (sentAt: number): Promise<number> => {
+      vi.stubGlobal("scrollY", 303);
+      const egg = new Egg({ from: { ...BOX, scrollY: sentAt } });
+      await egg.settle();
+      egg.tick([0]);
+      const m = /translate3d\([-\d.]+px,([-\d.]+)px/.exec(egg.sheet!.style.transform);
+      egg.stop();
+      return Number(m![1]);
+    };
+    expect((await sheetY(791)) - (await sheetY(303))).toBeCloseTo(791 - 303, 0);
   });
 
   it("gives up silently when the sprite never arrives", async () => {
