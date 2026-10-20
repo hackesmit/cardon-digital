@@ -6,33 +6,40 @@ import { SITE_URL } from "@/lib/i18n/metadata";
  * Every page the site advertises, once per locale. A retired path (lib/routes.ts)
  * is never here: the sitemap lists pages, redirects are not pages, and
  * app/routes.test.ts checks both ways.
+ *
+ * lastModified is the day the page's own content last changed: its page.tsx,
+ * its dictionary and the components only it uses, never the shared chrome.
+ * It is a table rather than a build-time git lookup because Vercel builds from
+ * a shallow clone, where git dates every quiet file to the clone boundary and
+ * nothing notices. app/sitemap.test.ts recomputes each date from full history
+ * and fails with the line to write, so editing a page means updating its date
+ * here in the same commit.
  */
 const routes = [
-  { path: "/", priority: 1.0, changeFrequency: "weekly" as const },
-  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const },
-  { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const },
-  { path: "/software", priority: 0.9, changeFrequency: "monthly" as const },
-  { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const },
-  { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const },
-  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const },
-  { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const },
-  { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const },
-  { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const },
-  { path: "/about", priority: 0.5, changeFrequency: "monthly" as const },
-  { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const },
-  { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const },
-  { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const },
+  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-10-19" },
+  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
+  { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
+  { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
+  { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
+  { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
+  { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/about", priority: 0.5, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
+  { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-10-16" },
+  { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-10-19" },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Pre-launch the whole site serves the holding page under a noindex header,
   // so there is nothing to list. Removing COMING_SOON restores the full map.
   if (process.env.COMING_SOON === "1") return [];
-  const lastModified = new Date();
   return locales.flatMap((locale) =>
     routes.map((r) => ({
       url: SITE_URL + localePath(locale, r.path),
-      lastModified,
+      lastModified: r.lastModified,
       changeFrequency: r.changeFrequency,
       priority: r.priority,
       alternates: {
