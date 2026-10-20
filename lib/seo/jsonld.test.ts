@@ -210,7 +210,16 @@ describe("escaping", () => {
     expect(html.match(/<script/g)).toHaveLength(1);
     expect(html.match(/<\/script>/g)).toHaveLength(1);
     expect(html.startsWith('<script type="application/ld+json">')).toBe(true);
-    expect(scripts(html)).toEqual([{ "@type": "Thing", name: hostile }]);
+    expect(scripts(html)).toEqual([
+      { "@context": "https://schema.org", "@graph": [{ "@type": "Thing", name: hostile }] },
+    ]);
+  });
+
+  it("JsonLd gives a bare node the schema.org context, and leaves a graph as it is", () => {
+    const bare = renderToStaticMarkup(h(JsonLd, { data: { "@type": "Service", name: "Sitios" } }));
+    expect((scripts(bare)[0] as Record<string, unknown>)["@context"]).toBe("https://schema.org");
+    const graph = { "@context": "https://schema.org" as const, "@graph": [{ "@type": "Thing" }] };
+    expect(scripts(renderToStaticMarkup(h(JsonLd, { data: graph })))).toEqual([graph]);
   });
 });
 

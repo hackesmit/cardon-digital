@@ -26,8 +26,8 @@ export default function Faq({
         {plain(title)}
       </h2>
       <div className="faq-list">
-        {items.map((it) => (
-          <div className="faq-item" key={it.question}>
+        {items.map((it, i) => (
+          <div className="faq-item" key={`${i}:${it.question}`}>
             <h3 className="faq-q">{plain(it.question)}</h3>
             <p className="faq-a">{rich(it.answer)}</p>
           </div>
