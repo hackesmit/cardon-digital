@@ -46,7 +46,10 @@
   width:calc(100% + 36px);
   height:var(--pb-band-full);
   overflow:hidden;
-  pointer-events:none;
+  /* It takes the pointer, on purpose: stuck, it sits over options that have
+     scrolled under it, and a click on the band must not tick a box the
+     visitor cannot see. The canvas inside still ignores the pointer. */
+  pointer-events:auto;
   /* Hairlines top and bottom, so the screen reads as a printed band rather
      than as the page's background having gone strange. The bottom one is the
      edge the groups slide under while the band is stuck. */
@@ -58,12 +61,23 @@
   background:var(--ground);
 }
 .pb-wrap-page .pb-sunset{margin-top:-18px;}
-.pb-sunset[data-stuck]{
-  height:var(--pb-band-short);
-  margin-bottom:calc(2px + var(--pb-band-full) - var(--pb-band-short));
+/* What the band loses in height goes onto the top of what follows it, not
+   onto the band's own bottom margin: a sticky box keeps its whole margin box
+   inside the builder, so a margin of its own would push it out about 100px
+   before the last options, which are the ones the visitor ticks last. */
+.pb-sunset[data-stuck]{height:var(--pb-band-short);}
+.pb-sunset[data-stuck] + .pb-groups{margin-top:calc(var(--pb-band-full) - var(--pb-band-short));}
+@media (min-width:980px){
+  .pb[data-mode="standalone"] .pb-sunset[data-stuck] ~ .pb-summary{margin-top:calc(var(--pb-band-full) - var(--pb-band-short));}
 }
+/* Keyboard focus never lands under the stuck band: a focused control is
+   scrolled into view below the header and the strip, not just below the
+   header (WCAG 2.4.11). */
+.pb-groups *,
+.pb-summary *{scroll-margin-top:calc(var(--pb-stick-top) + var(--pb-band-short) + 24px);}
 
 .pb-sunset canvas{
+  pointer-events:none;
   position:absolute;
   inset:0;
   width:100%;
