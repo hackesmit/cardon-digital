@@ -278,6 +278,8 @@ describe("the privacy notice against what leaves the browser", () => {
     "cd_campaign",
     "cd_landing",
     "cd_first_seen",
+    // ai:<engine> when the visit came from an AI answer (hq-i4b5.3).
+    "cd_source",
     HONEYPOT_FIELD,
     // The package builder's ids, null when nothing was built (Daniel, 2026-10-16).
     "package",
@@ -304,6 +306,16 @@ describe("the privacy notice against what leaves the browser", () => {
 
     for (const key of EMPTY_TODAY) {
       expect(page.posted[0][key]).toBe("");
+    }
+  });
+
+  it("names the AI assistant label cd_source carries, in both locales", () => {
+    for (const locale of locales) {
+      const body = privacy[locale].contactBody;
+      for (const engine of ["ChatGPT", "Perplexity", "Gemini", "Copilot", "Claude"]) {
+        expect(body).toContain(engine);
+      }
+      expect(body).toMatch(locale === "en" ? /AI assistant/ : /asistente de inteligencia artificial/);
     }
   });
 
@@ -378,7 +390,7 @@ describe("the notice's own promises about itself", () => {
      of every section that describes collection. Change what the notice says
      and this test goes red with the digest it now wants; the only way to
      green is to write today's date into both locales and into DATE below. */
-  const DATE = { en: "2026-10-16", es: "16 de octubre de 2026" };
+  const DATE = { en: "2026-10-21", es: "21 de octubre de 2026" };
   const DESCRIBES_COLLECTION = [
     "measureBody",
     "measureList",
@@ -388,7 +400,7 @@ describe("the notice's own promises about itself", () => {
     "hostingBody",
     "clientBody",
   ] as const;
-  const DIGEST = "f543237f";
+  const DIGEST = "e52f5a30";
 
   function digest(text: string): string {
     /* FNV-1a, 32 bit: a short stable number, not a security hash. */
