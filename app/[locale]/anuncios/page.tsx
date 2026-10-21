@@ -10,6 +10,9 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import Field from "@/components/site/field/Field";
+import Faq from "@/components/site/Faq";
+import JsonLd from "@/components/site/JsonLd";
+import { serviceLd } from "@/lib/seo/jsonld";
 import "../services.css";
 
 type Params = { params: { locale: string } };
@@ -27,8 +30,11 @@ export function generateMetadata({ params }: Params): Metadata {
  * The Google Ads service page: new clients who were already searching,
  * measured to the message; the path from a search to a counted call; what
  * the monthly fee pays for; the two scopes on a base plus a fee per contact with every figure
- * read out of lib/pricing.ts; the objections; the diagnostic close. The
- * figures inside prose arrive through adsFill, never typed.
+ * read out of lib/pricing.ts; the objections; the questions an owner asks an
+ * answer engine (FAQ, with its FAQPage markup); the diagnostic close. The
+ * figures inside prose arrive through adsFill, never typed. The opening
+ * paragraph is the page's self-contained answer, and the Service markup
+ * carries it word for word, filled the same way.
  */
 export default function AnunciosPage({ params }: Params) {
   const locale = localeOf(params);
@@ -36,6 +42,7 @@ export default function AnunciosPage({ params }: Params) {
   const s = site[locale];
   const href = (path: string) => localePath(locale, path);
   const fill = (text: string) => adsFill(locale, text);
+  const opening = fill(d.hero.sub);
   const cta = (
     <div className="cta-row">
       <Link className="cta" href={href("/contacto")}>
@@ -47,6 +54,7 @@ export default function AnunciosPage({ params }: Params) {
   return (
     <main id="main" className="pg-svc pg-anuncios">
       <span id="top" />
+      <JsonLd data={serviceLd(d.hero.eyebrow, opening, localePath(locale, "/anuncios"))} />
 
       <section className="hero" aria-label={d.hero.aria}>
         <div className="container">
@@ -58,7 +66,7 @@ export default function AnunciosPage({ params }: Params) {
                 <br />
                 <span className="accent">{d.hero.titleAccent}</span>
               </h1>
-              <p className="hero-sub">{d.hero.sub}</p>
+              <p className="hero-sub">{opening}</p>
               <div className="hero-actions">
                 <Link className="cta" href={href("/contacto")}>
                   {s.diag.cta}
@@ -149,6 +157,13 @@ export default function AnunciosPage({ params }: Params) {
               same button, and a viewport never holds two clay elements. */}
         </div>
       </section>
+
+      <div className="section">
+        <Faq
+          title={d.faq.title}
+          items={d.faq.items.map((it) => ({ question: it.question, answer: fill(it.answer) }))}
+        />
+      </div>
 
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
         <div className="container">

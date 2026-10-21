@@ -1420,6 +1420,11 @@ export type WebPackage = {
  * function and not the channel: Daniel, 2026-10-16, reviewing the live site,
  * took WhatsApp out of every package feature name, so the id is the function
  * too and the dictionaries say "contact button and a short form".
+ *
+ * aeo-ready (Daniel, 2026-10-20, AEO spec): every site ships ready for answer
+ * engines, so it sits in the base list and every package inherits it. It
+ * means structured data, answer-first copy, an FAQ, AI crawlers allowed and
+ * fast server-rendered pages; the price does not move.
  */
 const presenciaFeatures = [
   "custom-design",
@@ -1427,6 +1432,7 @@ const presenciaFeatures = [
   "contact-button-and-form",
   "ga4-with-conversion-events",
   "local-seo-basics",
+  "aeo-ready",
 ];
 /**
  * Negocio: Presencia's one page plus the pages a full site carries, its
