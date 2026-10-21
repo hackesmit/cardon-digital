@@ -4,6 +4,8 @@ import { site } from "@/lib/i18n/site";
 import { estilos } from "@/lib/i18n/estilos";
 import { Logo } from "@/components/site/Mark";
 import FooterScene from "@/components/site/FooterScene";
+import { CredentialRow } from "@/components/site/CredentialList";
+import { CREDENTIALS } from "@/lib/credentials";
 
 export default function Footer({ locale }: { locale: Locale }) {
   const s = site[locale];
@@ -51,6 +53,9 @@ export default function Footer({ locale }: { locale: Locale }) {
             <Link href={href("/privacy")}>{t.privacy}</Link>
             <Link href={href("/terms")}>{t.terms}</Link>
           </nav>
+          {/* The certificates, each badge linked to the issuer's own check
+              (lib/credentials.ts, bead hq-i4b5.8). */}
+          <CredentialRow credentials={CREDENTIALS} locale={locale} />
         </div>
       </div>
       <FooterScene />
