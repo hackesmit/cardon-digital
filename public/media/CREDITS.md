@@ -209,3 +209,14 @@ marked to record where it does not. The licence is the same for all six files.
   frame for a reduced motion visitor; scripts/eggs/hawk-asset.mjs makes both
   files from the supplied frames. Decorative, carries no claim, and no caption
   because there is nothing to caption.
+
+## Certificate badges (2026-10-20)
+
+### badges/aeo-fundamentals.png
+
+- Credit: HubSpot Academy
+- License: the issuer's badge for the certificate holder to display, linked to
+  HubSpot's own verification page
+- Original: the AEO Fundamentals badge HubSpot Academy issued to Daniel Hack
+- Use: the emblem only, cut from the issued image (144 px, white keyed to
+  transparent) and shown by the home hero title (components/site/CredentialFloat.tsx)
