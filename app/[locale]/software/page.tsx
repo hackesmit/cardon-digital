@@ -3,6 +3,9 @@ import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
 import FlowCompress from "@/components/pages/services/FlowCompress";
 import Media from "@/components/site/Media";
+import Faq from "@/components/site/Faq";
+import JsonLd from "@/components/site/JsonLd";
+import { serviceLd } from "@/lib/seo/jsonld";
 import { demoHref } from "@/lib/demo";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -27,8 +30,11 @@ export function generateMetadata({ params }: Params): Metadata {
  * The software and automation service page: the repetitive work runs itself
  * and the system is yours. The operations visual (FlowCompress, Monte Xanic's
  * hour to two minutes) opens it; then what the owner ends up with, the three
- * modules with their demos, the proof, how it works, the objections and the
- * diagnostic close. No figure is typed here: module prices live on /precios.
+ * modules with their demos, the proof, how it works, the objections, the
+ * questions an owner asks an answer engine (FAQ, with its FAQPage markup) and
+ * the diagnostic close. No figure is typed here: module prices live on
+ * /precios. The opening paragraph is the page's self-contained answer, and the
+ * Service markup carries it word for word.
  */
 export default function SoftwarePage({ params }: Params) {
   const locale = localeOf(params);
@@ -46,6 +52,7 @@ export default function SoftwarePage({ params }: Params) {
   return (
     <main id="main" className="pg-svc pg-software">
       <span id="top" />
+      <JsonLd data={serviceLd(d.hero.eyebrow, d.hero.sub, localePath(locale, "/software"))} />
 
       <section className="hero" aria-label={d.hero.aria}>
         <div className="container">
@@ -210,6 +217,10 @@ export default function SoftwarePage({ params }: Params) {
               same button, and a viewport never holds two clay elements. */}
         </div>
       </section>
+
+      <div className="section">
+        <Faq title={d.faq.title} items={d.faq.items} />
+      </div>
 
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
         <div className="container">

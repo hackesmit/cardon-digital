@@ -6,7 +6,7 @@ import type { Locale } from "./i18n/config";
  * carry placeholders rather than numbers, so a figure that moves in
  * lib/pricing.ts moves on every page that states it:
  *   {base} {baseCrecimiento}         the monthly base of each scope, in advance
- *   {perContact}                     the fee per qualified contact, in arrears
+ *   {perContact} {perContactCrecimiento}  the fee per qualified contact, in arrears
  *   {cap} {capCrecimiento}           the most a month can come to
  *   {minLocal} {minCrecimiento}      the minimum monthly ad budget
  *   {setupLocal} {setupCrecimiento}  the one-time campaign build
@@ -23,6 +23,7 @@ export function adsFill(locale: Locale, text: string): string {
     .replace(/\{base\}/g, p(local.base[cur]))
     .replace(/\{baseCrecimiento\}/g, p(crec.base[cur]))
     .replace(/\{perContact\}/g, p(local.perContact[cur]))
+    .replace(/\{perContactCrecimiento\}/g, p(crec.perContact[cur]))
     .replace(/\{cap\}/g, p(local.cap[cur]))
     .replace(/\{capCrecimiento\}/g, p(crec.cap[cur]))
     .replace(/\{minLocal\}/g, p(local.minimumBudget[cur]))
