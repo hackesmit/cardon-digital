@@ -7,8 +7,11 @@ import type { Dict } from "./rich";
  * vintages that cannot be compared or replicated, the industry outpaced), the
  * beliefs, how we work, and the credentials line. Nothing is added to it.
  *
- * Voice is "we" on every sentence. The founder is named once, in the mission,
- * and there is no personal history and no photo, per the brief.
+ * Voice is "we" on every sentence. The founder is named once in the copy, in
+ * the mission, and there is no personal history and no photo, per the brief.
+ * The credentials block right after the mission names him once more as the
+ * holder of each certificate; that name, like every fact in the block, is read
+ * from lib/credentials.ts (bead hq-i4b5.8), so this file carries only its labels.
  */
 
 const en = {
@@ -53,6 +56,16 @@ const en = {
     ],
     credK: "What we work in",
     cred: "Google Ads, websites, program development, process automation, and AI systems. In wine, WSET Level 2.",
+  },
+  credentials: {
+    kicker: "Certificates",
+    title: "Every certificate can be checked on the issuer's own page.",
+    holder: "Holder",
+    issuer: "Issued by",
+    valid: "Valid",
+    validRange: "{from} to {until}",
+    code: "Code",
+    newTab: "(opens in a new tab)",
   },
   diagDesc:
     "Ten business days looking at your records, your ads and your operations as one system. You get a written memo: what is true, what is broken, and what to build first.",
@@ -100,6 +113,16 @@ const es: typeof en = {
     ],
     credK: "En qué trabajamos",
     cred: "Google Ads, sitios web, desarrollo de software, automatización de procesos y sistemas de inteligencia artificial. En vino, WSET Nivel 2.",
+  },
+  credentials: {
+    kicker: "Certificaciones",
+    title: "Cada certificación se puede comprobar en la página de quien la emite.",
+    holder: "Titular",
+    issuer: "Emitida por",
+    valid: "Vigencia",
+    validRange: "del {from} al {until}",
+    code: "Código",
+    newTab: "(se abre en una pestaña nueva)",
   },
   diagDesc:
     "Diez días hábiles en los que revisamos sus registros, sus anuncios y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
