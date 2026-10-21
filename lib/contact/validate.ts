@@ -9,6 +9,7 @@
 
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { parseSelection, type BuilderSelection } from "@/lib/builder";
+import { AI_SOURCES } from "@/lib/contact/attribution";
 
 /** Largest request body the route will read, in bytes. */
 export const MAX_BODY_BYTES = 16 * 1024;
@@ -40,6 +41,8 @@ export type ContactAttribution = {
   campaign: string;
   landing: string;
   firstSeen: string;
+  /** ai:<engine> for a lead that came from an AI answer, empty otherwise. */
+  source: string;
 };
 
 export type ContactSubmission = {
@@ -177,6 +180,8 @@ export function validateSubmission(body: unknown): ValidationResult {
         campaign: attributionField(raw.cd_campaign),
         landing: attributionField(raw.cd_landing),
         firstSeen: attributionField(raw.cd_first_seen),
+        // A closed set: whatever else a caller writes here is dropped.
+        source: AI_SOURCES.includes(str(raw.cd_source)) ? str(raw.cd_source) : "",
       },
       // Never a reason to refuse a lead: an unreadable package is dropped.
       package: parseSelection(raw.package),
