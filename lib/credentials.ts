@@ -15,6 +15,9 @@ export type Credential = {
   /** Stable key, also the JSON-LD @id fragment. */
   id: string;
   name: Record<Locale, string>;
+  /** What the certificate attests, in one plain sentence, restated from the
+      certificate's own wording. Shown on /about beside the dates. */
+  attests: Record<Locale, string>;
   /** Alt text for the badge image: what the image shows, in words. */
   alt: Record<Locale, string>;
   issuer: { name: string; url: string };
@@ -35,6 +38,10 @@ export const AEO_FUNDAMENTALS: Credential = {
   name: {
     es: "Certificación AEO Fundamentals de HubSpot Academy",
     en: "HubSpot Academy AEO Fundamentals Certification",
+  },
+  attests: {
+    es: "Acredita que su titular sabe revisar cómo los motores de respuesta encuentran y muestran el contenido, medir cuánto aparece una marca en ellos y ordenar el contenido para que las respuestas de IA lo citen.",
+    en: "It certifies that the holder can check how answer engines find and show content, measure how often a brand appears in them, and structure content so AI answers cite it.",
   },
   alt: {
     es: "Insignia de la certificación AEO Fundamentals de HubSpot Academy",
