@@ -105,6 +105,7 @@ export async function POST(req: Request) {
           leadId: submission.attribution.leadId || null,
           gclid: submission.attribution.gclid || null,
           lane: submission.attribution.lane || null,
+          source: submission.attribution.source || null,
           ...redactLead(submission),
         }),
     );
@@ -127,6 +128,7 @@ export async function POST(req: Request) {
           leadId: submission.attribution.leadId || null,
           gclid: submission.attribution.gclid || null,
           lane: submission.attribution.lane || null,
+          source: submission.attribution.source || null,
           ...redactLead(submission),
         }),
     );
@@ -146,6 +148,7 @@ export async function POST(req: Request) {
         leadId: submission.attribution.leadId || null,
         gclid: submission.attribution.gclid || null,
         lane: submission.attribution.lane || null,
+        source: submission.attribution.source || null,
       }),
   );
 
