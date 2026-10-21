@@ -49,7 +49,7 @@ const es: GuideCopy = {
       blocks: [
         {
           kind: "p",
-          text: "Para que un motor de IA resuma o cite las páginas de su sitio, su rastreador tiene que poder leerlas. Lo que otros sitios dicen de usted cuenta aparte. El archivo robots.txt de su sitio dice qué rastreadores pueden entrar, y muchos sitios bloquean a los de IA sin que el dueño lo sepa, por una plantilla o un plugin de seguridad.",
+          text: "Para que un motor de IA resuma o cite las páginas de su sitio, su rastreador tiene que poder leerlas. Lo que otros sitios dicen de usted cuenta aparte. El archivo robots.txt de su sitio dice qué rastreadores pueden entrar, y un sitio puede bloquear a los de IA sin que el dueño lo sepa, por una plantilla o un plugin de seguridad.",
         },
         {
           kind: "list",
@@ -296,7 +296,7 @@ const en: GuideCopy = {
       blocks: [
         {
           kind: "p",
-          text: "For an AI engine to summarize or cite your own pages, its crawler has to be able to read them. What other sites say about you counts separately. Your site's robots.txt file says which crawlers may come in, and plenty of sites block the AI ones without the owner knowing, through a theme setting or a security plugin.",
+          text: "For an AI engine to summarize or cite your own pages, its crawler has to be able to read them. What other sites say about you counts separately. Your site's robots.txt file says which crawlers may come in, and a site can block the AI ones without the owner knowing, through a theme setting or a security plugin.",
         },
         {
           kind: "list",
