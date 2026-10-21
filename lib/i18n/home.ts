@@ -93,7 +93,7 @@ const en = {
     arcLine: "Each one works on its own. Together, your business is in the digital era end to end: you get found, you connect with your clients, and the work runs itself.",
     /** A line under the cards, since each card is already a link to its page. */
     aiLead: "Already have a site?",
-    aiLink: "See how the free diagnostic checks whether ChatGPT, Gemini and Google mention your business.",
+    aiLink: "See how the free diagnostic checks whether ChatGPT, Perplexity, Gemini and Google mention your business.",
   },
   /** The six photographs at the top of the page: one per proof card, one per service card. */
   photos: {
@@ -390,7 +390,7 @@ const es: typeof en = {
     ],
     arcLine: "Cada uno funciona por sí solo. Con los tres, su negocio entra a la era digital de principio a fin: lo encuentran, le escriben y el trabajo se hace solo.",
     aiLead: "¿Ya tiene sitio?",
-    aiLink: "Vea cómo el diagnóstico sin costo revisa si ChatGPT, Gemini y Google mencionan su negocio.",
+    aiLink: "Vea cómo el diagnóstico sin costo revisa si ChatGPT, Perplexity, Gemini y Google mencionan su negocio.",
   },
   photos: {
     "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
