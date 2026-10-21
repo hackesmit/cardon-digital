@@ -12,7 +12,7 @@ import type { Dict } from "./rich";
  * direct to Google in the client's own account; a minimum eligible budget
  * applies. Every figure is read out of lib/pricing.ts (adsManagement); where
  * a sentence needs one, it carries a placeholder the page fills (lib/adsCopy.ts):
- * {base}, {baseCrecimiento}, {perContact}, {cap}, {capCrecimiento}, {minLocal},
+ * {base}, {baseCrecimiento}, {perContact}, {perContactCrecimiento}, {cap}, {capCrecimiento}, {minLocal},
  * {minCrecimiento}, {setupLocal}, {setupCrecimiento}, and the contact rules
  * {callSeconds}, {onceInDays}, {disputeDays}, {pauseUnder}, {pauseMonths}.
  * The visual strings live under `vis` (docs/copy-doctrine.md section 8).
@@ -20,21 +20,21 @@ import type { Dict } from "./rich";
 
 const en = {
   meta: {
-    title: "Google Ads",
+    title: "Google Ads for local businesses",
     description:
-      "New clients who were already searching for what you sell, measured down to the call or the message. A small monthly base plus a fee per contact with a monthly cap, so most of what we earn depends on the contacts that come, and your budget goes straight to Google.",
+      "Cardon Digital runs Google Ads for local businesses and counts every call and WhatsApp message they bring. A monthly base plus a fee per qualified contact, with a monthly cap, and your budget goes straight to Google.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Google Ads",
-    title: "New clients who were already searching for you,",
+    title: "New clients from Google who were already searching for you,",
     titleAccent: "measured down to the message.",
-    sub: "Campaigns on Google that put your business in front of the people searching for what you sell, in your area. A small monthly base plus a fee per qualified contact, capped each month, so most of what we earn depends on the contacts that come, and your budget is paid straight to Google, in your own account.",
-    proof: "Base from {base} a month plus {perContact} per contact, never more than {cap} a month. Minimum budget {minLocal} a month, paid straight to Google.",
+    sub: "Cardon Digital runs Google Ads for local businesses: your ad reaches people nearby who are already searching for what you sell, and every call or WhatsApp message it brings is counted. You pay a base from {base} a month plus a per-contact fee of {perContact}, capped at {cap}. Your budget goes straight to Google.",
+    proof: "Minimum budget {minLocal} a month. The Google Ads account is yours.",
   },
   path: {
     kicker: "How a client arrives",
-    title: "From the search to the message, every step counted.",
+    title: "How does someone go from a Google search to calling you?",
     steps: [
       "Someone near you searches for what you sell.",
       "Your ad comes up and takes them to a page that says what the ad said.",
@@ -44,7 +44,7 @@ const en = {
   },
   month: {
     kicker: "What we do every month",
-    title: "What the fee pays for.",
+    title: "What does the fee pay for each month?",
     items: [
       {
         h: "The words they search with, and the ones they do not.",
@@ -104,6 +104,41 @@ const en = {
       },
     ],
   },
+  faq: {
+    title: "Google Ads questions, answered",
+    items: [
+      {
+        question: "How much does Google Ads management cost?",
+        answer:
+          "Each scope is a monthly base in advance plus a fee per qualified contact in arrears. Local: a base of {base} plus {perContact} per qualified contact, never more than {cap} a month. Growth: a base of {baseCrecimiento} plus {perContactCrecimiento} per qualified contact, never more than {capCrecimiento} a month. Building the campaign costs {setupLocal} once for Local and {setupCrecimiento} for Growth.",
+      },
+      {
+        question: "What is the difference between Local and Growth?",
+        answer:
+          "Local covers one search campaign in one area, with up to three ad groups, and needs a budget of at least {minLocal} a month. Growth covers up to three campaigns and ten ad groups, or a second area, and needs a budget of at least {minCrecimiento} a month.",
+      },
+      {
+        question: "What counts as a qualified contact?",
+        answer:
+          "A call of {callSeconds} seconds or more, a WhatsApp conversation with a first message, or a booking or a form sent from the page, each traced to the campaign that brought it. The same person counts once in {onceInDays} days.",
+      },
+      {
+        question: "Who pays the budget, and who owns the account?",
+        answer:
+          "You do. The budget is paid by you straight to Google, and the Google Ads account is in your name. We never charge a percentage of what you spend.",
+      },
+      {
+        question: "What if a contact on the list was not real?",
+        answer:
+          "Every month you get the list of contacts we charge for, and you have {disputeDays} business days to strike any that was not real. We take it off, no questions asked.",
+      },
+      {
+        question: "Is there a contract, and how do I cancel?",
+        answer:
+          "It runs month to month, with 30 days notice to cancel. If a campaign brings fewer than {pauseUnder} contacts for {pauseMonths} months in a row, we pause it ourselves and the base stops with it.",
+      },
+    ],
+  },
   diagDesc:
     "Ten business days on your ads, your site and your operation, and a written memo that is yours: what is true, what is broken, what to build first.",
   vis: {
@@ -135,21 +170,21 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Anuncios en Google",
+    title: "Anuncios en Google para negocios locales",
     description:
-      "Clientes nuevos que ya estaban buscando lo que usted vende, medidos hasta la llamada o el mensaje. Una base mensual pequeña más un pago por contacto con tope mensual, así que la mayor parte de lo que cobramos depende de los contactos que lleguen, y su presupuesto va directo a Google.",
+      "Cardon Digital maneja anuncios en Google para negocios locales y registra cada llamada y mensaje de WhatsApp que traen. Una base mensual más un pago por cada contacto calificado, con tope al mes, y su presupuesto va directo a Google.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Anuncios en Google",
-    title: "Clientes nuevos que ya lo estaban buscando,",
+    title: "Clientes nuevos desde Google, que ya lo estaban buscando,",
     titleAccent: "medidos hasta el mensaje.",
-    sub: "Campañas en Google que muestran su negocio a la gente de su zona que busca lo que usted vende. Una base mensual pequeña más un pago por cada contacto calificado, con un tope al mes, así que la mayor parte de lo que cobramos depende de los contactos que lleguen, y el presupuesto lo paga usted directo a Google, desde su propia cuenta.",
-    proof: "Base desde {base} al mes más {perContact} por contacto, nunca más de {cap} al mes. Presupuesto mínimo de {minLocal} al mes, directo a Google.",
+    sub: "Cardon Digital maneja anuncios en Google para negocios locales: su anuncio aparece ante quien ya busca en su zona lo que usted vende, y cada llamada o WhatsApp que trae queda registrado. Paga una base desde {base} al mes más un pago por contacto calificado de {perContact}, con tope de {cap}. El presupuesto va directo a Google.",
+    proof: "Presupuesto mínimo de {minLocal} al mes. La cuenta de Google Ads es suya.",
   },
   path: {
     kicker: "Cómo llega un cliente",
-    title: "De la búsqueda al mensaje, contando cada paso.",
+    title: "¿Cómo pasa alguien de buscar en Google a llamarle?",
     steps: [
       "Alguien cerca de su negocio busca lo que usted vende.",
       "Su anuncio aparece y lo lleva a una página que dice lo mismo que el anuncio.",
@@ -159,7 +194,7 @@ const es: typeof en = {
   },
   month: {
     kicker: "Lo que hacemos cada mes",
-    title: "Lo que incluye la cuota.",
+    title: "¿Qué incluye la cuota de cada mes?",
     items: [
       {
         h: "Las palabras con las que lo buscan, y las que no.",
@@ -216,6 +251,41 @@ const es: typeof en = {
       {
         q: "¿Y Facebook o Instagram?",
         a: "Empezamos por Google, donde la gente ya está buscando. Las redes sociales por sí solas son un trabajo que no tomamos.",
+      },
+    ],
+  },
+  faq: {
+    title: "Preguntas frecuentes sobre anuncios en Google",
+    items: [
+      {
+        question: "¿Cuánto cuesta el manejo de anuncios en Google?",
+        answer:
+          "Cada alcance tiene una base mensual, por adelantado, más un pago por cada contacto calificado, mes vencido. Local: base de {base} más {perContact} por contacto calificado, nunca más de {cap} al mes. Crecimiento: base de {baseCrecimiento} más {perContactCrecimiento} por contacto calificado, nunca más de {capCrecimiento} al mes. La construcción de la campaña cuesta {setupLocal} una sola vez en Local y {setupCrecimiento} en Crecimiento.",
+      },
+      {
+        question: "¿Qué diferencia hay entre Local y Crecimiento?",
+        answer:
+          "Local cubre una campaña de búsqueda en una zona, con hasta tres grupos de anuncios, y pide un presupuesto mínimo de {minLocal} al mes. Crecimiento cubre hasta tres campañas y diez grupos de anuncios, o una segunda zona, y pide un presupuesto mínimo de {minCrecimiento} al mes.",
+      },
+      {
+        question: "¿Qué cuenta como contacto calificado?",
+        answer:
+          "Una llamada de {callSeconds} segundos o más, una conversación de WhatsApp con un primer mensaje, o una reservación o un formulario enviado desde la página, cada uno rastreado hasta la campaña que lo trajo. Una misma persona cuenta una sola vez en {onceInDays} días.",
+      },
+      {
+        question: "¿Quién paga el presupuesto y de quién es la cuenta?",
+        answer:
+          "Usted. El presupuesto lo paga directo a Google, y la cuenta de Google Ads está a su nombre. Nunca cobramos un porcentaje de lo que invierte.",
+      },
+      {
+        question: "¿Y si un contacto de la lista no fue real?",
+        answer:
+          "Cada mes recibe la lista de contactos que cobramos y tiene {disputeDays} días hábiles para tachar cualquiera que no haya sido real. Lo quitamos sin discutir.",
+      },
+      {
+        question: "¿Hay contrato forzoso y cómo cancelo?",
+        answer:
+          "Es mes con mes, con 30 días de aviso para cancelar. Si una campaña trae menos de {pauseUnder} contactos durante {pauseMonths} meses seguidos, la pausamos nosotros y la base se detiene con ella.",
       },
     ],
   },

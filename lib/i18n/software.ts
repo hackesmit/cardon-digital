@@ -13,21 +13,21 @@ import type { Dict } from "./rich";
 
 const en = {
   meta: {
-    title: "Software and automation",
+    title: "Custom software and automation",
     description:
-      "The repetitive work runs itself: one record, reports that build themselves, the books current every morning. Built around how you already work, and you own it.",
+      "Cardon Digital builds custom software and automation for owner-run businesses: one record, reports that build themselves, the books current every morning. Built around how your team works, and the code, data and accounts are yours.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Software and automation",
-    title: "The repetitive work, done by itself.",
+    title: "Software that does the repetitive work by itself.",
     titleAccent: "And the system is yours.",
-    sub: "We build the system your business runs on: the record is written once, where the work happens, the reports build themselves and the books are current every morning. Proven in Valle wineries, built around how your team works.",
+    sub: "Cardon Digital builds the custom software your business runs on: each record is written once, where the work happens, the reports build themselves and the books are current every morning. It is built around how your team works, and it already runs in wineries in the Valle de Guadalupe.",
     proof: "Monte Xanic: about an hour of finance work, now about two minutes.",
   },
   gets: {
     kicker: "What you end up with",
-    title: "Less typing, one record, and the keys in your hand.",
+    title: "What changes with a system of your own?",
     items: [
       {
         h: "The hours come back.",
@@ -93,7 +93,7 @@ const en = {
   },
   how: {
     kicker: "How it works",
-    title: "From the first session to a system your team runs.",
+    title: "How does it go, from the diagnostic to the handover?",
     steps: [
       { k: "01", body: "The diagnostic, at no cost. Ten business days and a written memo that is yours." },
       { k: "02", body: "The build. A fixed price per module, agreed before anyone starts." },
@@ -118,6 +118,41 @@ const en = {
       },
     ],
   },
+  faq: {
+    title: "Software and automation questions, answered",
+    items: [
+      {
+        question: "How much does custom software cost?",
+        answer:
+          "Each module has a fixed price, agreed before the build starts, and its entry price is published on the pricing page. The diagnostic that says which module to start with costs nothing.",
+      },
+      {
+        question: "What does the free diagnostic include?",
+        answer:
+          "Ten business days on your operation, your site and your ads, and a written memo that is yours: what is true, what is broken, what to build first.",
+      },
+      {
+        question: "Does it only work for wineries?",
+        answer:
+          "The three modules, Produccion, Hospitalidad and Restaurante, were proven in Valle de Guadalupe wineries. For any other line of business, the diagnostic says which part of your operation can run itself, and what it costs.",
+      },
+      {
+        question: "Can I ask the system questions about my own numbers?",
+        answer:
+          "Yes. An assistant answers in plain words from your record and shows where each figure came from. When there is no record, it says so.",
+      },
+      {
+        question: "What support is there after the handover?",
+        answer:
+          "Your team is trained at the handover, the accounts are in your name, and there is a call every week while the service runs.",
+      },
+      {
+        question: "Has it worked for a real business?",
+        answer:
+          "At Monte Xanic, about an hour of finance work now takes about two minutes. For Vinedo En'kanto, one system runs production, the restaurant and the bookings, with an online store that already takes orders.",
+      },
+    ],
+  },
   diagDesc:
     "Ten business days on your operation, your site and your ads, and a written memo that is yours: what is true, what is broken, what to build first.",
   vis: {
@@ -137,21 +172,21 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Software y automatización",
+    title: "Software a la medida y automatización",
     description:
-      "El trabajo repetitivo se hace solo: un registro único, reportes automáticos y las cuentas al corriente cada mañana. A la medida de cómo trabaja su equipo, y el sistema es suyo.",
+      "Cardon Digital desarrolla software a la medida y automatización para negocios: un solo registro, reportes que se arman solos y las cuentas al corriente cada mañana. Hecho según cómo trabaja su equipo, y el código, los datos y las cuentas son suyos.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Software y automatización",
-    title: "El trabajo repetitivo se hace solo.",
+    title: "Software que hace solo el trabajo repetitivo.",
     titleAccent: "Y el sistema es suyo.",
-    sub: "Desarrollamos el sistema con el que opera su negocio: todo se registra una sola vez, ahí donde se hace el trabajo, los reportes se arman solos y las cuentas amanecen al corriente. Probado en bodegas del Valle y hecho a la medida de cómo trabaja su equipo.",
+    sub: "Cardon Digital desarrolla el software con el que opera su negocio: todo se registra una sola vez, ahí donde se hace el trabajo, los reportes se arman solos y las cuentas amanecen al corriente. Está hecho a la medida de cómo trabaja su equipo y ya funciona en bodegas del Valle de Guadalupe.",
     proof: "Monte Xanic: una hora de trabajo financiero, hoy unos dos minutos.",
   },
   gets: {
     kicker: "Lo que obtiene",
-    title: "Menos captura, un solo registro y los accesos en sus manos.",
+    title: "¿Qué cambia con un sistema propio?",
     items: [
       {
         h: "Su equipo recupera horas.",
@@ -216,7 +251,7 @@ const es: typeof en = {
   },
   how: {
     kicker: "Cómo funciona",
-    title: "De la primera sesión al sistema con el que trabaja su equipo.",
+    title: "¿Cómo es el proceso, del diagnóstico a la entrega?",
     steps: [
       { k: "01", body: "El diagnóstico, sin costo. Diez días hábiles y un informe por escrito que es suyo." },
       { k: "02", body: "El desarrollo. Precio fijo por módulo, acordado antes de empezar." },
@@ -238,6 +273,41 @@ const es: typeof en = {
       {
         q: "¿Qué pasa si dejo el servicio?",
         a: "El sistema sigue funcionando en sus cuentas, con sus datos. Se lo entregamos documentado y con su equipo capacitado.",
+      },
+    ],
+  },
+  faq: {
+    title: "Preguntas frecuentes sobre software y automatización",
+    items: [
+      {
+        question: "¿Cuánto cuesta un sistema a la medida?",
+        answer:
+          "Cada módulo tiene un precio fijo, acordado antes de empezar el desarrollo, y su precio de entrada está publicado en la página de precios. El diagnóstico que le dice por cuál módulo empezar no tiene costo.",
+      },
+      {
+        question: "¿Qué incluye el diagnóstico sin costo?",
+        answer:
+          "Diez días hábiles para revisar la operación, el sitio y los anuncios de su negocio, y un informe por escrito que es suyo: qué funciona, qué falla y por dónde empezar.",
+      },
+      {
+        question: "¿Sirve solo para bodegas de vino?",
+        answer:
+          "Los tres módulos, Producción, Hospitalidad y Restaurante, se probaron en bodegas del Valle de Guadalupe. Para cualquier otro giro, el diagnóstico le dice qué parte de su operación se puede automatizar y cuánto cuesta.",
+      },
+      {
+        question: "¿Puedo preguntarle al sistema por mis propios números?",
+        answer:
+          "Sí. Un asistente contesta en palabras sencillas a partir de su registro y le muestra de dónde salió cada cifra. Cuando no hay dato, lo dice.",
+      },
+      {
+        question: "¿Qué apoyo hay después de la entrega?",
+        answer:
+          "Su equipo queda capacitado en la entrega, las cuentas están a su nombre y hay una llamada cada semana mientras dure el servicio.",
+      },
+      {
+        question: "¿Ya funciona en un negocio real?",
+        answer:
+          "En Monte Xanic, una hora de trabajo financiero hoy toma unos dos minutos. Para Viñedo En'kanto construimos un solo sistema para la producción, el restaurante y las reservaciones, con una tienda en línea que ya toma pedidos.",
       },
     ],
   },
