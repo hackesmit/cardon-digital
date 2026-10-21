@@ -20,19 +20,20 @@ import "./credential-float.css";
  * live in the accessible name and in a short caption that hover or keyboard
  * focus reveals beside it.
  *
- * Every fact comes from lib/credentials.ts. The two strings here are the verb
- * of the link, which is the same for any certificate, so a new certificate is
+ * Every fact comes from lib/credentials.ts. The strings here are the verb of
+ * the link, which is the same for any certificate, so a new certificate is
  * still one entry in that file. No client JS: the drift and the hover are CSS.
  */
 
-/** The link's verb, said after the certificate's name. */
-export const VERIFY: Record<Locale, { caption: string; label: string }> = {
+/** The link's verb, said after the certificate's name. The caption names
+    the issuer from the credential, so another issuer needs no edit here. */
+export const VERIFY: Record<Locale, { caption: (issuer: string) => string; label: string }> = {
   es: {
-    caption: "Verificar en HubSpot Academy",
+    caption: (issuer) => `Verificar en ${issuer}`,
     label: "verificar en una pestaña nueva",
   },
   en: {
-    caption: "Verify on HubSpot Academy",
+    caption: (issuer) => `Verify on ${issuer}`,
     label: "verify in a new tab",
   },
 };
@@ -82,7 +83,7 @@ export default function CredentialFloat({
           />
         </span>
         <span className="cred-float-caption mono" aria-hidden="true">
-          {VERIFY[locale].caption}
+          {VERIFY[locale].caption(credential.issuer.name)}
         </span>
       </a>
     </div>
