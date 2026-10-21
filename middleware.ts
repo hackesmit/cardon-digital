@@ -20,13 +20,12 @@ import { retiredRoute } from "@/lib/routes";
       site, gated behind Vercel Authentication. Launch = remove the env var and
       redeploy.
 
-   The matcher keeps /api, Next internals, Vercel's own /_vercel paths (the
-   Web Analytics beacon has no file extension) and anything with a file
-   extension (og.png, icon.svg, sitemap.xml, robots.txt, /media/*) out of the
-   locale tree. */
+   The matcher keeps /api, Next internals and anything with a file extension
+   (og.png, icon.svg, sitemap.xml, robots.txt, /media/*) out of the locale
+   tree. */
 
 export const config = {
-  matcher: ["/((?!api/|_next/|_vercel/|.*\\..*).*)"],
+  matcher: ["/((?!api/|_next/|.*\\..*).*)"],
 };
 
 const NOINDEX = "noindex, nofollow";
