@@ -20,6 +20,7 @@ const routes = [
   { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
+  { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
