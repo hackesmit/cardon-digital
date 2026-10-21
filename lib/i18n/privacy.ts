@@ -11,18 +11,18 @@ const en = {
   },
   eyebrow: "Legal",
   title: "Privacy Policy",
-  effective: "Effective 2026-10-20. Applies to cardondigital.com.",
+  effective: "Effective 2026-10-21. Applies to cardondigital.com.",
   intro:
     "Cardon Digital is a growth-systems practice based in Baja California, Mexico, working with clients in Mexico and the United States. This policy explains what information this website handles, what we deliberately do not collect, and the rights you have. It is written to be read, not skimmed past.",
   notH: "What this site does not do",
   notList: [
     "No data resale of any kind, and no sharing of your details for marketing.",
     "No accounts, and no form on this site feeds a marketing database.",
-    "No third-party script loads before you have said yes to it, and if you say no, none loads at all.",
+    "No Google script loads before you have said yes to it, and if you say no, none loads at all.",
   ],
   measureH: "Measurement, and the question we ask first",
   measureBody:
-    "When measurement is switched on, this site can load two Google products: Google Analytics 4, which tells us which pages people read, and Google Ads conversion measurement, which tells us which ads brought them here. Neither one loads until you accept. Before you answer, the pages you receive carry no Google script at all, not even one that would decide for itself not to run. While measurement is switched off entirely, you are asked nothing and nothing is loaded.",
+    "When measurement is switched on, this site can load two Google products: Google Analytics 4, which tells us which pages people read, and Google Ads conversion measurement, which tells us which ads brought them here. Neither one loads until you accept. Before you answer, the pages you receive carry no Google script at all, not even one that would decide for itself not to run. While measurement is switched off entirely, you are asked nothing and nothing from Google is loaded. Separately, our host Vercel counts visits without cookies, seeing only the page, the source mark on the link you followed, the site that sent you, your country, your device type, browser and operating system, and nothing that identifies you, so it needs no consent.",
   measureList: [
     "The pages you open on this site, and how you arrived at them.",
     "Your approximate location from your IP address, and your device and browser type.",
@@ -45,7 +45,7 @@ const en = {
     "In client engagements we routinely work inside business systems that contain personal data (for example customer or applicant records). That data is processed under the client's instructions and our written agreement with them: access is limited to the people doing the work, it is used only to deliver the engagement, and it is never extracted for any other purpose. Where an engagement runs a system for a client, our written agreement keeps that system's data, and every backup of it, in accounts in the client's own name: a backup each day where the system runs, kept for the period that provider's plan gives, and a copy each week with a second storage provider, also in the client's name, kept thirty days, so no single provider's failure can lose the record. We hold no rolling copy of a client's data ourselves, and none of it is data this website collects or touches: everything above about forms, logs and cookies is about this site alone. Questions about a specific company's data should go to that company; we support our clients in answering them.",
   rightsH: "Your rights",
   rightsBody:
-    "Under Mexico's Federal Law on Protection of Personal Data (LFPDPPP) you have the rights of access, rectification, cancellation, and objection (ARCO). If you are in the European Economic Area or the United Kingdom, the GDPR gives you similar rights of access, correction, deletion, restriction, portability, and objection; where we process correspondence, we do so on the basis of legitimate interest in responding to you, and where we measure, we do so on the basis of the consent you give. California residents: we do not sell or share personal information as those terms are defined in the CCPA. To exercise any right, email us and we will respond within the legal timeframe.",
+    "Under Mexico's Federal Law on Protection of Personal Data (LFPDPPP) you have the rights of access, rectification, cancellation, and objection (ARCO). If you are in the European Economic Area or the United Kingdom, the GDPR gives you similar rights of access, correction, deletion, restriction, portability, and objection; where we process correspondence, we do so on the basis of legitimate interest in responding to you, where we measure with Google, we do so on the basis of the consent you give, and the cookieless visit count rests on our legitimate interest in knowing how many people reach the site and from where. California residents: we do not sell or share personal information as those terms are defined in the CCPA. To exercise any right, email us and we will respond within the legal timeframe.",
   contactHeading: "Contact",
   note: "If we change what this site collects, this policy is updated first and the change is visible here, with a new effective date.",
 };
@@ -59,18 +59,18 @@ const es: typeof en = {
   eyebrow: "Legal",
   title: "Aviso de Privacidad",
   effective:
-    "Vigente desde el 20 de octubre de 2026. Aplica a cardondigital.com.",
+    "Vigente desde el 21 de octubre de 2026. Aplica a cardondigital.com.",
   intro:
     "Cardon Digital es una práctica de sistemas de crecimiento con base en Baja California, México, que trabaja con clientes en México y en Estados Unidos. Este aviso explica qué información maneja este sitio, qué decidimos no recabar y los derechos que usted tiene. Está escrito para leerse, no para pasarse de largo.",
   notH: "Lo que este sitio no hace",
   notList: [
     "Sin reventa de datos de ningún tipo, y sin compartir sus datos con fines de mercadotecnia.",
     "Sin cuentas, y ningún formulario de este sitio alimenta una base de datos de mercadotecnia.",
-    "Ningún script de terceros se carga antes de que usted lo acepte, y si usted dice que no, no se carga ninguno.",
+    "Ningún script de Google se carga antes de que usted lo acepte, y si usted dice que no, no se carga ninguno.",
   ],
   measureH: "La medición y la pregunta que le hacemos antes",
   measureBody:
-    "Cuando la medición está activa, este sitio puede cargar dos productos de Google: Google Analytics 4, que nos dice qué páginas se leen, y la medición de conversiones de Google Ads, que nos dice qué anuncios trajeron a quien las leyó. Ninguno se carga hasta que usted acepte. Antes de que usted responda, las páginas que recibe no traen ningún script de Google, ni siquiera uno que decidiera por su cuenta no ejecutarse. Mientras la medición está apagada por completo, no se le pregunta nada y no se carga nada.",
+    "Cuando la medición está activa, este sitio puede cargar dos productos de Google: Google Analytics 4, que nos dice qué páginas se leen, y la medición de conversiones de Google Ads, que nos dice qué anuncios trajeron a quien las leyó. Ninguno se carga hasta que usted acepte. Antes de que usted responda, las páginas que recibe no traen ningún script de Google, ni siquiera uno que decidiera por su cuenta no ejecutarse. Mientras la medición está apagada por completo, no se le pregunta nada y no se carga nada de Google. Aparte, Vercel, que aloja este sitio, cuenta las visitas sin cookies, y solo registra la página, la marca de origen del enlace que siguió, el sitio desde el que llegó, su país, su tipo de dispositivo, su navegador y su sistema operativo, nada que lo identifique, por lo que no necesita su consentimiento.",
   measureList: [
     "Las páginas que abre en este sitio y cómo llegó a ellas.",
     "Su ubicación aproximada a partir de su dirección IP, y el tipo de dispositivo y de navegador.",
@@ -93,7 +93,7 @@ const es: typeof en = {
     "En los trabajos con clientes entramos de forma habitual a sistemas del negocio que contienen datos personales (por ejemplo registros de clientes o de candidatos). Esos datos se tratan bajo las instrucciones del cliente y nuestro acuerdo escrito con él: el acceso se limita a quien hace el trabajo, se usa solo para entregar el proyecto y nunca se extrae para otro fin. Cuando un trabajo opera un sistema para un cliente, nuestro acuerdo escrito mantiene los datos de ese sistema, y cada respaldo de ellos, en cuentas a nombre del propio cliente: un respaldo diario donde corre el sistema, guardado por el periodo que dé el plan de ese proveedor, y una copia semanal con un segundo proveedor de almacenamiento, también a nombre del cliente, guardada treinta días, para que la falla de un solo proveedor no pueda perder el registro. Nosotros no guardamos ninguna copia continua de los datos de un cliente, y nada de eso son datos que este sitio recabe ni toque: todo lo anterior sobre formularios, registros y cookies es de este sitio solamente. Las preguntas sobre los datos de una empresa en particular van dirigidas a esa empresa; nosotros la apoyamos para responderlas.",
   rightsH: "Sus derechos",
   rightsBody:
-    "Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), usted tiene los derechos de acceso, rectificación, cancelación y oposición (derechos ARCO). Si usted se encuentra en el Espacio Económico Europeo o en el Reino Unido, el RGPD le da derechos parecidos de acceso, corrección, supresión, limitación, portabilidad y oposición; cuando tratamos correspondencia, lo hacemos con base en el interés legítimo de responderle, y cuando medimos, lo hacemos con base en el consentimiento que usted otorga. Residentes de California: no vendemos ni compartimos datos personales en el sentido que la CCPA da a esos términos. Para ejercer cualquier derecho, escríbanos y responderemos dentro del plazo legal.",
+    "Conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP), usted tiene los derechos de acceso, rectificación, cancelación y oposición (derechos ARCO). Si usted se encuentra en el Espacio Económico Europeo o en el Reino Unido, el RGPD le da derechos parecidos de acceso, corrección, supresión, limitación, portabilidad y oposición; cuando tratamos correspondencia, lo hacemos con base en el interés legítimo de responderle, cuando medimos con Google, lo hacemos con base en el consentimiento que usted otorga, y el conteo de visitas sin cookies se basa en nuestro interés legítimo en saber cuántas personas llegan al sitio y desde dónde. Residentes de California: no vendemos ni compartimos datos personales en el sentido que la CCPA da a esos términos. Para ejercer cualquier derecho, escríbanos y responderemos dentro del plazo legal.",
   contactHeading: "Contacto",
   note: "Si cambiamos lo que este sitio recaba, primero se actualiza este aviso y el cambio se ve aquí, con una nueva fecha de vigencia.",
 };

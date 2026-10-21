@@ -390,7 +390,7 @@ describe("the notice's own promises about itself", () => {
      of every section that describes collection. Change what the notice says
      and this test goes red with the digest it now wants; the only way to
      green is to write today's date into both locales and into DATE below. */
-  const DATE = { en: "2026-10-20", es: "20 de octubre de 2026" };
+  const DATE = { en: "2026-10-21", es: "21 de octubre de 2026" };
   const DESCRIBES_COLLECTION = [
     "measureBody",
     "measureList",
@@ -400,7 +400,7 @@ describe("the notice's own promises about itself", () => {
     "hostingBody",
     "clientBody",
   ] as const;
-  const DIGEST = "6878d7ce";
+  const DIGEST = "e52f5a30";
 
   function digest(text: string): string {
     /* FNV-1a, 32 bit: a short stable number, not a security hash. */
