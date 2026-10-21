@@ -135,10 +135,9 @@ describe("the guide registry", () => {
       const src = readFileSync(join(process.cwd(), "lib/guides", g.slug + ".ts"), "utf8")
         .replace(/\/\*[\s\S]*?\*\//g, "")
         .replace(/^\s*\/\/.*$/gm, "");
-      const literals = src.match(/"(?:[^"\\\n]|\\.)*"|`(?:[^`\\]|\\.)*`/g) ?? [];
-      for (const lit of literals) {
-        expect(lit, g.slug).not.toMatch(/\$\s?\d|\d[\d,.]*\s?(?:MXN|USD|pesos|d[oó]lares|dollars)\b/i);
-      }
+      // The whole source, not only its string literals: a price in single
+      // quotes, a template part or a number beside its currency all count.
+      expect(src, g.slug).not.toMatch(/\$\s?\d|\d[\d,.]*\s?(?:MXN|USD|pesos|d[oó]lares|dollars)\b/i);
     }
   });
 

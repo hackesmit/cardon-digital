@@ -588,10 +588,16 @@ function budgetProblem(block: string, locale: Locale): string | null {
   // with) states nothing by itself; its label and the cells beside it do.
   const bare = /^(?:\$?[\d.,]+\s*(?:MXN|USD)?|\{\w+\})$/.test(block.trim());
   // The local base and the website care fee are the same 2,500 MXN, so the
-  // figure alone does not make a block about ads: a care sentence that names
-  // no ads, no base and no contact fee owes no cap (bead hq-i4b5.12, the
-  // cost guide prints the care fee in prose).
-  const aboutAds = ADS.test(block) || /\bbase\b|\bper.contact\b|\bpor contacto\b|\{base\w*\}/i.test(block);
+  // figure alone does not make a block about ads. Only a block that names
+  // website care and nothing of ads (no ads word, no Google or Meta, no base,
+  // no contact fee) is let off the cap (bead hq-i4b5.12, the cost guide
+  // prints the care fee in prose). Any other block with the figure is an ads
+  // base, whatever words it uses.
+  const careOnly =
+    /\bmantenimiento\b|\bcuidado del sitio\b|\bwebsite care\b|\bcare plan\b|\bmaintenance\b|\bcare\b/i.test(block) &&
+    !ADS.test(block) &&
+    !/\bgoogle\b|\bmeta\b|\bfacebook\b|\binstagram\b|\bbase\b|\bper.contact\b|\bpor contacto\b|\{base\w*\}/i.test(block);
+  const aboutAds = !careOnly;
   for (const [s, suffix] of [
     [local, ""],
     [crecimiento, "Crecimiento"],
@@ -808,6 +814,14 @@ describe("every served ads claim carries the policy lib/pricing.ts sets", () => 
     expect(judge(`El mantenimiento mensual es opcional y cuesta ${care} al mes.`, "es").wrong).toBeNull();
     expect(judge(`Una base de ${care} al mes más un pago por contacto calificado.`, "es").wrong).not.toBeNull();
     expect(judge(`Anuncios en Google desde ${care} al mes.`, "es").wrong).not.toBeNull();
+    // An ads offer in words the ads vocabulary does not list still owes its cap.
+    expect(judge(`Google desde ${care} al mes.`, "es").wrong).not.toBeNull();
+    expect(judge(`Su negocio en Google y Meta por ${care} al mes.`, "es").wrong).not.toBeNull();
+    expect(judge(`Lo ponemos frente a más clientes desde ${care} al mes.`, "es").wrong).not.toBeNull();
+    const usdBase = formatAmount(scope("local").base.USD, "en");
+    expect(judge(`Google from $${usdBase} USD a month.`, "en").wrong).not.toBeNull();
+    expect(judge(`We put you in front of more customers from $${usdBase} USD a month.`, "en").wrong).not.toBeNull();
+    expect(judge(`Website care is optional and costs $${usdBase} USD a month.`, "en").wrong).toBeNull();
     // Round 2: the right figures in the wrong roles, a small invented figure, a
     // free offer with reporting words, and an earnings promise all fail.
     expect(judge("Manejo de Google Ads: base de $2,500 al mes más $11,000 por contacto, con tope de $100 al mes.", "es").wrong).not.toBeNull();
