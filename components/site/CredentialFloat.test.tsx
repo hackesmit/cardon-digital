@@ -36,8 +36,15 @@ describe("CredentialFloat: the link to the issuer's verification", () => {
     // The name is the certificate's own, read from lib/credentials.ts.
     expect(label.startsWith(AEO_FUNDAMENTALS.name[locale])).toBe(true);
     expect(label).toContain(VERIFY[locale].label);
-    expect(html).toContain(VERIFY[locale].caption);
+    expect(html).toContain(VERIFY[locale].caption(AEO_FUNDAMENTALS.issuer.name));
     expect(html).toContain(`alt="${AEO_FUNDAMENTALS.alt[locale]}"`);
+  });
+
+  it.each(["es", "en"] as const)("%s caption names the credential's own issuer", (locale) => {
+    const other = { ...AEO_FUNDAMENTALS, issuer: { name: "Google Skillshop", url: "https://skillshop.withgoogle.com" } };
+    const html = renderToStaticMarkup(<CredentialFloat credential={other} locale={locale} />);
+    expect(html).toContain("Google Skillshop");
+    expect(html).not.toContain("HubSpot Academy</span>");
   });
 
   it("Spanish reads as the bead asked: the certificate, then verificar", () => {
