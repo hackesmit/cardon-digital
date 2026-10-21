@@ -56,10 +56,12 @@ import {
  * page that says "per contact".
  */
 
-type Params = { params: { locale: Locale } };
+type Params = { params: { locale: Locale; [segment: string]: string } };
 type PageModule = {
   default: (props: Params) => React.ReactElement | Promise<React.ReactElement>;
   generateMetadata?: (props: Params) => unknown;
+  /** A dynamic route (a guide under /guias/[slug]) lists the pages it builds. */
+  generateStaticParams?: () => Params["params"][];
 };
 
 /** True while every scope lib/pricing.ts sells is a base plus a fee per contact, never a share of spend. */
@@ -455,7 +457,17 @@ function blocksOf(html: string, out: string[] = []): string[] {
  */
 async function served(page: string, locale: Locale): Promise<string[]> {
   const mod = (await import(/* @vite-ignore */ page)) as PageModule;
-  const props: Params = { params: { locale } };
+  // A dynamic route is every page it builds in this locale, served one by one.
+  if (mod.generateStaticParams) {
+    const out: string[] = [];
+    for (const params of mod.generateStaticParams().filter((p) => p.locale === locale))
+      out.push(...(await servedWith(mod, { params })));
+    return out;
+  }
+  return servedWith(mod, { params: { locale } });
+}
+
+async function servedWith(mod: PageModule, props: Params): Promise<string[]> {
   let html = "";
   try {
     const Page = mod.default;
@@ -466,7 +478,7 @@ async function served(page: string, locale: Locale): Promise<string[]> {
     html = renderToStaticMarkup(
       // LocaleProvider declares children as required, see winery-page.test.ts.
       // eslint-disable-next-line react/no-children-prop
-      React.createElement(LocaleProvider, { locale, children: el }),
+      React.createElement(LocaleProvider, { locale: props.params.locale, children: el }),
     );
   } catch (e) {
     // /demo redirects off-site when the demo host is set. Nothing is served.

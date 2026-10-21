@@ -15,6 +15,7 @@ import { dirname, join, resolve } from "node:path";
 
 import {
   PAGES,
+  pageFile,
   MAX_BOLD,
   CONTRAST_ALLOWLIST,
   ALLOWLIST_PER_LOCALE,
@@ -543,7 +544,7 @@ test("cli: the shipped allowlist is within the doctrine's cap", () => {
 
 test("budget table: every page has a dictionary with both locales", () => {
   for (const [page, limits] of Object.entries(PAGES)) {
-    const source = readFileSync(resolve(ROOT, join("lib", "i18n", `${page}.ts`)), "utf8");
+    const source = readFileSync(resolve(ROOT, pageFile(page)), "utf8");
     const x = extractLocaleStrings(source);
     assert.deepEqual(x.errors, [], `${page}: the extractor could not read a declaration`);
     for (const locale of ["en", "es"]) {
