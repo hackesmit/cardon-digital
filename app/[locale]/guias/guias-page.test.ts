@@ -138,8 +138,12 @@ describe("the guide registry", () => {
       // The whole source, not only its string literals: a price in single
       // quotes, a template part or a number beside its currency all count.
       expect(src, g.slug).not.toMatch(/\$\s?\d|\d[\d,.]*\s?(?:MXN|USD|pesos|d[oó]lares|dollars)\b/i);
-      // Nor a number handed to the formatter: formatPrice(locale, 7500).
-      expect(src, g.slug).not.toMatch(/format(?:Price|Amount)\(\s*[^,()]+,\s*\d/);
+      // Nor any number big enough to be a price, written as code anywhere in
+      // the file (formatPrice(l, 7500), l === "es" ? 2500 : ...): every
+      // amount reaches a guide through a lib/pricing.ts helper. ISO dates and
+      // source URLs are the only long digit runs a guide file holds.
+      const code = src.replace(/"\d{4}-\d{2}-\d{2}"/g, '""').replace(/"https?:\/\/[^"\s]*"/g, '""');
+      expect(code.match(/(?<![\w.])\d[\d_]{2,}(?![\w])/g) ?? [], g.slug).toEqual([]);
     }
   });
 
