@@ -102,6 +102,11 @@ export const PAGES = {
     en: { budget: 808, measured: 1615 },
     es: { budget: 855, measured: 1710 },
   },
+  "guia-cuanto-cuesta-pagina-web": {
+    file: "lib/guides/cuanto-cuesta-pagina-web.ts",
+    en: { budget: 605, measured: 1210 },
+    es: { budget: 634, measured: 1267 },
+  },
 };
 
 /** The dictionary a page line reads: lib/i18n/<page>.ts unless it names a file. */
