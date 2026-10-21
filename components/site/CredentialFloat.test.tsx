@@ -82,7 +82,10 @@ describe("credential-float.css: it can never cover the title", () => {
     expect(link).toMatch(/position:\s*absolute;/);
     expect(link).toMatch(/bottom:\s*var\(--cf-gap\);/);
     expect(link).not.toMatch(/\btop:/);
-    expect(rule(".cred-float")).toMatch(/--cf-gap:\s*12px;/);
+    // Every gap covers the -6deg tilt of its box (about 4.5px at 88px).
+    const gaps = Array.from(CSS.matchAll(/--cf-gap:\s*(\d+)px;/g)).map((m) => Number(m[1]));
+    expect(gaps.length).toBeGreaterThan(0);
+    for (const g of gaps) expect(g).toBeGreaterThanOrEqual(8);
   });
 
   it("the drift only ever moves up", () => {
