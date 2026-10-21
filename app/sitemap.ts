@@ -16,10 +16,10 @@ import { SITE_URL } from "@/lib/i18n/metadata";
  * here in the same commit.
  */
 const routes = [
-  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-10-19" },
+  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-10-20" },
   { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
-  { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
-  { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
+  { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
+  { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
