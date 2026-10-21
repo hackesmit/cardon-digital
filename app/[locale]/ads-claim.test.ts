@@ -61,7 +61,9 @@ type PageModule = {
   default: (props: Params) => React.ReactElement | Promise<React.ReactElement>;
   generateMetadata?: (props: Params) => unknown;
   /** A dynamic route (a guide under /guias/[slug]) lists the pages it builds. */
-  generateStaticParams?: () => Params["params"][];
+  generateStaticParams?: (props: {
+    params: { locale: Locale };
+  }) => Partial<Params["params"]>[] | Promise<Partial<Params["params"]>[]>;
 };
 
 /** True while every scope lib/pricing.ts sells is a base plus a fee per contact, never a share of spend. */
@@ -458,14 +460,38 @@ function blocksOf(html: string, out: string[] = []): string[] {
 async function served(page: string, locale: Locale): Promise<string[]> {
   const mod = (await import(/* @vite-ignore */ page)) as PageModule;
   // A dynamic route is every page it builds in this locale, served one by one.
+  // A set without a locale inherits it from the parent segment, as Next does,
+  // and a route that builds nothing in this locale fails rather than passing empty.
   if (mod.generateStaticParams) {
+    const sets = await paramSets(mod, locale);
+    if (sets.length === 0) throw new Error(`${page} builds no ${locale} page for the ads guard`);
     const out: string[] = [];
-    for (const params of mod.generateStaticParams().filter((p) => p.locale === locale))
-      out.push(...(await servedWith(mod, { params })));
+    for (const params of sets) out.push(...(await servedWith(mod, { params })));
     return out;
   }
   return servedWith(mod, { params: { locale } });
 }
+
+async function paramSets(mod: PageModule, locale: Locale): Promise<Params["params"][]> {
+  return (await mod.generateStaticParams!({ params: { locale } }))
+    .map((p) => ({ ...p, locale: p.locale ?? locale }) as Params["params"])
+    .filter((p) => p.locale === locale);
+}
+
+describe("the ads guard serves every page a dynamic route builds", () => {
+  const page = () => React.createElement("p", null, "x");
+  it("a slug-only set inherits the locale, as Next does, so it is served, not skipped", async () => {
+    const mod: PageModule = { default: page, generateStaticParams: () => [{ slug: "a" }] };
+    expect(await paramSets(mod, "es")).toEqual([{ slug: "a", locale: "es" }]);
+  });
+  it("an async generator is awaited, and sets for the other locale are left out", async () => {
+    const mod: PageModule = {
+      default: page,
+      generateStaticParams: async () => [{ locale: "en", slug: "a" }, { locale: "es", slug: "b" }],
+    };
+    expect(await paramSets(mod, "es")).toEqual([{ locale: "es", slug: "b" }]);
+  });
+});
 
 async function servedWith(mod: PageModule, props: Params): Promise<string[]> {
   let html = "";

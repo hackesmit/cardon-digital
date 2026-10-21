@@ -49,14 +49,14 @@ const es: GuideCopy = {
       blocks: [
         {
           kind: "p",
-          text: "Un motor de IA solo puede citar una página que su rastreador pudo leer. El archivo robots.txt de su sitio dice qué rastreadores pueden entrar, y muchos sitios bloquean a los de IA sin que el dueño lo sepa, por una plantilla o un plugin de seguridad.",
+          text: "Para que un motor de IA resuma o cite las páginas de su sitio, su rastreador tiene que poder leerlas. Lo que otros sitios dicen de usted cuenta aparte. El archivo robots.txt de su sitio dice qué rastreadores pueden entrar, y muchos sitios bloquean a los de IA sin que el dueño lo sepa, por una plantilla o un plugin de seguridad.",
         },
         {
           kind: "list",
           ordered: false,
           title: "Lo que dicen los propios motores sobre sus rastreadores",
           items: [
-            "OpenAI: un sitio que bloquea a OAI-SearchBot no aparece en las respuestas de búsqueda de ChatGPT. GPTBot es otro rastreador, el que junta textos para entrenar modelos, y se puede bloquear por separado.",
+            "OpenAI: un sitio que bloquea a OAI-SearchBot no se resume ni se cita en las respuestas de búsqueda de ChatGPT, aunque todavía puede salir como un simple enlace. GPTBot es otro rastreador, el que junta textos para entrenar modelos, y se puede bloquear por separado.",
             "Perplexity: PerplexityBot es el rastreador que muestra y enlaza sitios en sus resultados, y la empresa recomienda dejarlo entrar para aparecer en ellos.",
             "Google: no pide ningún requisito adicional para las respuestas con IA. La página tiene que estar indexada y poder mostrarse en la búsqueda con un fragmento de texto.",
           ],
@@ -296,14 +296,14 @@ const en: GuideCopy = {
       blocks: [
         {
           kind: "p",
-          text: "An AI engine can only cite a page its crawler was able to read. Your site's robots.txt file says which crawlers may come in, and plenty of sites block the AI ones without the owner knowing, through a theme setting or a security plugin.",
+          text: "For an AI engine to summarize or cite your own pages, its crawler has to be able to read them. What other sites say about you counts separately. Your site's robots.txt file says which crawlers may come in, and plenty of sites block the AI ones without the owner knowing, through a theme setting or a security plugin.",
         },
         {
           kind: "list",
           ordered: false,
           title: "What the engines themselves say about their crawlers",
           items: [
-            "OpenAI: a site that blocks OAI-SearchBot is not shown in ChatGPT search answers. GPTBot is a separate crawler, the one that gathers text to train models, and it can be blocked on its own.",
+            "OpenAI: a site that blocks OAI-SearchBot is not summarized or cited in ChatGPT search answers, though it can still appear as a plain navigational link. GPTBot is a separate crawler, the one that gathers text to train models, and it can be blocked on its own.",
             "Perplexity: PerplexityBot is the crawler that surfaces and links sites in its results, and the company recommends allowing it to appear there.",
             "Google: there are no extra requirements for its AI answers. The page has to be indexed and eligible to show in Search with a snippet.",
           ],
