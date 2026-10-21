@@ -247,6 +247,14 @@ export default function Home({ params }: Params) {
 
           <p className="svc-arc">{d.services.arcLine}</p>
 
+          {/* Each card is already a link to its service page, so the link to
+              /visibilidad-ia sits under the row rather than inside a card.
+              pricing-more lends it the site's underlined inline link. */}
+          <p className="svc-arc pricing-more">
+            {d.services.aiLead}{" "}
+            <Link href={href("/visibilidad-ia")}>{d.services.aiLink}</Link>
+          </p>
+
           <PlayOnceVis className="tools-vis" tag={d.vis.board.tag}>
             <svg
               className="tools-svg"

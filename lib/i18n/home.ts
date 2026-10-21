@@ -27,15 +27,15 @@ type HomePhoto = { cap: string; alt: string };
 
 const en = {
   meta: {
-    title: "Cardon Digital | Websites, ads and software for more clients and less work",
+    title: "Websites, ads and software in Ensenada | Cardon Digital",
     description:
-      "Websites, Google Ads and custom software for owner-run businesses in Baja California. Prices published, a free diagnostic, and everything we build stays in your name.",
+      "Cardon Digital builds websites, Google Ads and custom software for owner-run businesses in Ensenada and Baja California. Prices published, a free diagnostic that checks what ChatGPT and Google say about you, and everything we build stays in your name.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Ensenada, Baja California",
     title: "Websites, ads and software",
-    titleAccent: "for Ensenada businesses that want more clients and less work.",
+    titleAccent: "for businesses that want more clients and less work.",
     sub: "A site that gets you found, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
     proofLine: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
@@ -72,7 +72,7 @@ const en = {
         id: "sitios",
         name: "Website",
         title: "People find you on Google and believe you.",
-        body: "A site that loads fast, works on phone and desktop, and connects you with the people looking for you. Designed for your business, copy included.",
+        body: "A site that loads fast, works on phone and desktop, and connects you with the people looking for you. Built so Google and ChatGPT can read it and cite it in their answers. Designed for your business, copy included.",
         cta: "See websites",
       },
       {
@@ -91,6 +91,9 @@ const en = {
       },
     ],
     arcLine: "Each one works on its own. Together, your business is in the digital era end to end: you get found, you connect with your clients, and the work runs itself.",
+    /** A line under the cards, since each card is already a link to its page. */
+    aiLead: "Already have a site?",
+    aiLink: "See how the free diagnostic checks whether ChatGPT, Perplexity, Gemini and Google mention your business.",
   },
   /** The six photographs at the top of the page: one per proof card, one per service card. */
   photos: {
@@ -322,15 +325,15 @@ const en = {
 
 const es: typeof en = {
   meta: {
-    title: "Cardon Digital | Sitios web, anuncios y software para más clientes y menos trabajo",
+    title: "Sitios web, anuncios y software en Ensenada | Cardon",
     description:
-      "Sitios web, anuncios en Google y software a la medida para negocios en Baja California. Precios publicados en pesos, diagnóstico sin costo, y todo lo que construimos queda a su nombre.",
+      "Cardon Digital hace sitios web, anuncios en Google y software a la medida para negocios en Ensenada y Baja California. Precios publicados en pesos, un diagnóstico sin costo que revisa qué dicen ChatGPT y Google de su negocio, y todo lo que construimos queda a su nombre.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Ensenada, Baja California",
     title: "Sitios web, anuncios y software",
-    titleAccent: "para negocios de Ensenada que quieren más clientes y menos trabajo.",
+    titleAccent: "para negocios que quieren más clientes y menos trabajo.",
     sub: "Un sitio web para que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
     proofLine: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
@@ -367,7 +370,7 @@ const es: typeof en = {
         id: "sitios",
         name: "Sitio web",
         title: "La gente lo encuentra en Google y le cree.",
-        body: "Un sitio que carga rápido, se ve bien en teléfono y en computadora, y lo conecta con la gente que lo está buscando. Diseñado para su negocio, con los textos incluidos.",
+        body: "Un sitio que carga rápido, se ve bien en teléfono y en computadora, y lo conecta con la gente que lo está buscando. Hecho para que Google y ChatGPT lo puedan leer y citar en sus respuestas. Diseñado para su negocio, con los textos incluidos.",
         cta: "Ver sitios web",
       },
       {
@@ -386,6 +389,8 @@ const es: typeof en = {
       },
     ],
     arcLine: "Cada uno funciona por sí solo. Con los tres, su negocio entra a la era digital de principio a fin: lo encuentran, le escriben y el trabajo se hace solo.",
+    aiLead: "¿Ya tiene sitio?",
+    aiLink: "Vea cómo el diagnóstico sin costo revisa si ChatGPT, Perplexity, Gemini y Google mencionan su negocio.",
   },
   photos: {
     "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
