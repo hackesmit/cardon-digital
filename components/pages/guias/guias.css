@@ -1,0 +1,169 @@
+/* /guias and every guide (bead hq-i4b5.11): one reading column, the trail,
+   the byline and dates, labelled lists and tables, the bio, the sources and
+   the FAQ. Theme tokens only, so light and dark follow from the same rules. */
+
+.pg-guide .guide { padding-top: clamp(30px, 5vw, 64px); padding-bottom: clamp(48px, 7vw, 96px); }
+.pg-guide .guide > * { max-width: 760px; }
+
+.pg-guide .crumbs { margin: 0 0 clamp(18px, 2.4vw, 28px); font-size: 0.86rem; }
+.pg-guide .crumbs ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  color: var(--muted);
+}
+.pg-guide .crumbs li + li::before { content: "/"; padding: 0 10px; color: var(--muted); }
+.pg-guide .crumbs a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+.pg-guide .crumbs a:hover { color: var(--text); }
+.pg-guide .crumbs [aria-current="page"] { color: var(--text-dim); }
+
+.pg-guide h1 { font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.08; margin-top: 10px; }
+.pg-guide .guide-lede {
+  margin-top: 22px;
+  font-size: clamp(1.08rem, 1.5vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* ---- byline and dates ---- */
+.pg-guide .guide-byline {
+  margin-top: 26px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  align-items: baseline;
+  font-size: 0.95rem;
+}
+.pg-guide .guide-author { margin: 0; color: var(--text-dim); }
+.pg-guide .guide-author a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.pg-guide .guide-role { display: block; font-size: 0.86rem; color: var(--muted); }
+.pg-guide .guide-dates { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 20px; color: var(--text-dim); }
+.pg-guide .guide-dates time { color: var(--text); }
+
+/* ---- contents ---- */
+.pg-guide .guide-toc { margin-top: clamp(28px, 4vw, 40px); }
+.pg-guide .guide-toc-title {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--primary-text);
+  margin-bottom: 12px;
+}
+.pg-guide .guide-toc ol { margin: 0; padding-left: 1.3em; color: var(--muted); }
+.pg-guide .guide-toc li { margin: 6px 0; }
+.pg-guide .guide-toc a { color: var(--text-dim); text-decoration: underline; text-underline-offset: 3px; }
+.pg-guide .guide-toc a:hover { color: var(--text); }
+
+/* ---- sections ---- */
+.pg-guide .guide-section { margin-top: clamp(40px, 6vw, 64px); scroll-margin-top: 90px; }
+.pg-guide .guide-section h2,
+.pg-guide .guide-sources h2 { font-size: clamp(1.5rem, 2.8vw, 2rem); line-height: 1.15; margin-bottom: 18px; }
+.pg-guide .guide-section p { margin: 0 0 16px; font-size: 1.04rem; line-height: 1.7; color: var(--text-dim); }
+.pg-guide .guide-list { margin: 22px 0; }
+.pg-guide .guide-list h3 { font-family: var(--sans); font-size: 1.04rem; font-weight: 600; letter-spacing: 0; line-height: 1.4; color: var(--text); margin-bottom: 10px; }
+.pg-guide .guide-list ol,
+.pg-guide .guide-list ul { margin: 0; padding-left: 1.3em; color: var(--text-dim); line-height: 1.65; }
+.pg-guide .guide-list li { margin: 8px 0; padding-left: 4px; }
+.pg-guide .guide-list li::marker { color: var(--primary-text); }
+
+.pg-guide .guide-service {
+  margin-top: 24px !important;
+  padding: 16px 18px;
+  border-left: 3px solid var(--primary);
+  background: var(--primary-faint);
+  color: var(--text) !important;
+}
+.pg-guide .guide-service a { color: var(--primary-text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- tables ---- */
+.pg-guide .guide-table-wrap { margin: 26px 0; overflow-x: auto; }
+.pg-guide .guide-table { width: 100%; border-collapse: collapse; border-top: 2px solid var(--text); }
+.pg-guide .guide-table caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+  padding: 0 0 12px;
+  line-height: 1.4;
+}
+.pg-guide .guide-table th,
+.pg-guide .guide-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 16px 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.pg-guide .guide-table thead th { font-family: var(--sans); font-weight: 600; letter-spacing: 0; color: var(--text); }
+.pg-guide .guide-table tbody th { font-family: var(--sans); font-weight: 600; letter-spacing: 0; line-height: 1.5; color: var(--text); width: 34%; }
+.pg-guide .guide-table td { color: var(--text-dim); }
+/* On a phone each row stacks under its name, each cell headed by its column. */
+@media (max-width: 640px) {
+  .pg-guide .guide-table,
+  .pg-guide .guide-table tbody,
+  .pg-guide .guide-table tr,
+  .pg-guide .guide-table th,
+  .pg-guide .guide-table td { display: block; width: auto; }
+  .pg-guide .guide-table caption { display: block; }
+  .pg-guide .guide-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .pg-guide .guide-table tbody th { width: auto; }
+  .pg-guide .guide-table tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .pg-guide .guide-table th,
+  .pg-guide .guide-table td { border-bottom: 0; padding: 3px 0; }
+  .pg-guide .guide-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 6px;
+  }
+}
+
+/* ---- bio ---- */
+.pg-guide .guide-bio {
+  margin-top: clamp(44px, 6vw, 64px);
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.pg-guide .guide-bio-badge { flex: none; width: 72px; height: 72px; }
+.pg-guide .guide-bio p { margin: 0; color: var(--text-dim); line-height: 1.6; font-size: 0.98rem; }
+.pg-guide .guide-bio-links { margin-top: 10px !important; display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 0.92rem !important; }
+.pg-guide .guide-bio-links a { color: var(--primary-text); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- sources ---- */
+.pg-guide .guide-sources { margin-top: clamp(40px, 6vw, 60px); }
+.pg-guide .guide-sources > p { margin: 0 0 16px; color: var(--text-dim); line-height: 1.6; }
+.pg-guide .guide-sources ol { margin: 0; padding-left: 1.3em; }
+.pg-guide .guide-sources li { margin: 0 0 14px; line-height: 1.5; }
+.pg-guide .guide-sources a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.pg-guide .guide-source-pub,
+.pg-guide .guide-source-note { display: block; font-size: 0.9rem; color: var(--muted); }
+.pg-guide .guide-source-note { color: var(--text-dim); }
+
+/* ---- FAQ: the shared block, kept to the reading column ---- */
+.pg-guide .guide-faq { margin-top: clamp(44px, 6vw, 64px); }
+.pg-guide .guide-faq .faq { padding: 0; margin: 0; }
+
+/* ---- index ---- */
+.pg-guias .guias-list-title { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin-top: clamp(36px, 5vw, 56px); margin-bottom: 18px; }
+.pg-guias .guias-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--text); }
+.pg-guias .guias-card { padding: 22px 0; border-bottom: 1px solid var(--line); }
+.pg-guias .guias-card h3 { font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.2; }
+.pg-guias .guias-card h3 a { color: var(--text); text-decoration: underline; text-decoration-color: var(--primary-dim); text-underline-offset: 4px; }
+.pg-guias .guias-card h3 a:hover { text-decoration-color: var(--primary); }
+.pg-guias .guias-card p { margin: 10px 0 0; color: var(--text-dim); line-height: 1.6; }
+.pg-guias .guias-meta { font-size: 0.9rem; color: var(--muted) !important; }
