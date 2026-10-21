@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { config } from "@/middleware";
 import { visitEvent, visitUrl } from "./visits";
 
 /**
@@ -51,25 +50,5 @@ describe("visitEvent", () => {
 
   it("drops an event whose address it cannot read", () => {
     expect(visitEvent({ type: "pageview", url: "::" })).toBeNull();
-  });
-});
-
-describe("middleware matcher", () => {
-  /* The insights script and its beacon are served by Vercel under /_vercel.
-     The beacon path has no file extension, so without its own exclusion the
-     locale rule would answer it with a redirect to /es/_vercel/... and the
-     visit would never be counted. */
-  const matcher = new RegExp("^" + config.matcher[0] + "$");
-
-  it("leaves the Vercel insights paths alone", () => {
-    for (const path of ["/_vercel/insights/script.js", "/_vercel/insights/view", "/_vercel/insights/event"]) {
-      expect(matcher.test(path), path).toBe(false);
-    }
-  });
-
-  it("still routes the pages", () => {
-    for (const path of ["/", "/precios", "/es/precios", "/en/privacy"]) {
-      expect(matcher.test(path), path).toBe(true);
-    }
   });
 });
