@@ -107,6 +107,7 @@ function sourceRows(s: ContactSubmission): [string, string][] {
   const a = s.attribution;
   const rows: [string, string][] = [
     ["Landing page", a.landing],
+    ["Source", a.source],
     ["Campaign", a.campaign],
     ["Lane", a.lane],
     ["First seen", a.firstSeen],
