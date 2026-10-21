@@ -170,7 +170,14 @@ export function articleLd(a: {
     inLanguage: htmlLang[a.locale],
     datePublished: a.datePublished,
     dateModified: a.dateModified ?? a.datePublished,
-    author: ref(FOUNDER_ID),
+    // The founder's node, named here too: the byline prints the name, and a
+    // reader of this node alone should not need the site graph to find it.
+    author: {
+      "@type": "Person",
+      "@id": FOUNDER_ID,
+      name: "Daniel Hack",
+      url: SITE_URL + localePath(a.locale, "/about"),
+    },
     publisher: ref(ORGANIZATION_ID),
     isPartOf: ref(websiteId(a.locale)),
     ...(a.image ? { image: absoluteUrl(a.image) } : {}),
