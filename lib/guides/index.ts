@@ -1,4 +1,5 @@
 import { aparecerEnChatgpt } from "./aparecer-en-chatgpt";
+import { cuantoCuestaPaginaWeb } from "./cuanto-cuesta-pagina-web";
 import type { Guide } from "./types";
 
 /**
@@ -7,7 +8,7 @@ import type { Guide } from "./types";
  * read this list, so a new guide is one file in lib/guides, one entry here and
  * its line in app/sitemap.ts.
  */
-export const GUIDES: readonly Guide[] = [aparecerEnChatgpt];
+export const GUIDES: readonly Guide[] = [cuantoCuestaPaginaWeb, aparecerEnChatgpt];
 
 /** The site path of a guide, without the locale. */
 export const guidePath = (slug: string) => "/guias/" + slug;

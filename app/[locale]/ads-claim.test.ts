@@ -16,6 +16,8 @@ import {
   adsManagement,
   currencyByLocale,
   formatAmount,
+  formatPrice,
+  webCareMonthly,
   type AdsScope,
   type CurrencyCode,
 } from "../../lib/pricing";
@@ -585,13 +587,18 @@ function budgetProblem(block: string, locale: Locale): string | null {
   // or a bare placeholder (a dl cell, the bold figure the home line opens
   // with) states nothing by itself; its label and the cells beside it do.
   const bare = /^(?:\$?[\d.,]+\s*(?:MXN|USD)?|\{\w+\})$/.test(block.trim());
+  // The local base and the website care fee are the same 2,500 MXN, so the
+  // figure alone does not make a block about ads: a care sentence that names
+  // no ads, no base and no contact fee owes no cap (bead hq-i4b5.12, the
+  // cost guide prints the care fee in prose).
+  const aboutAds = ADS.test(block) || /\bbase\b|\bper.contact\b|\bpor contacto\b|\{base\w*\}/i.test(block);
   for (const [s, suffix] of [
     [local, ""],
     [crecimiento, "Crecimiento"],
   ] as const) {
     const hasBase = block.includes(`{base${suffix}}`) || figure(s.base[currency], locale).test(block);
     const hasCap = block.includes(`{cap${suffix}}`) || figure(s.cap[currency], locale).test(block);
-    if (hasBase && !hasCap && !bare) return `prints the ${s.id} base without its cap ${formatAmount(s.cap[currency], locale)} ${currency}`;
+    if (hasBase && !hasCap && !bare && aboutAds) return `prints the ${s.id} base without its cap ${formatAmount(s.cap[currency], locale)} ${currency}`;
   }
   for (const sentence of sentencesOf(block)) {
     if (!MINIMUM_BUDGET[locale].test(sentence)) continue;
@@ -794,6 +801,13 @@ describe("every served ads claim carries the policy lib/pricing.ts sets", () => 
     expect(judge(`Google Ads: a base of $${base} USD a month plus $${perContact} USD per contact, never more than $${capUsd} USD.`, "en").wrong).toBeNull();
     expect(judge("Google Ads: a base of {base} a month plus {perContact} per contact.", "en").wrong).not.toBeNull();
     expect(judge("Google Ads: a base of {base} a month plus {perContact} per contact, never more than {cap}.", "en").wrong).toBeNull();
+    // The same figure as website care, with no ads, base or contact words, is
+    // not an ads base; with them, or as a base under any heading, it still is.
+    const care = formatPrice("es", webCareMonthly().MXN);
+    expect(formatPrice("es", scope("local").base.MXN)).toBe(care);
+    expect(judge(`El mantenimiento mensual es opcional y cuesta ${care} al mes.`, "es").wrong).toBeNull();
+    expect(judge(`Una base de ${care} al mes más un pago por contacto calificado.`, "es").wrong).not.toBeNull();
+    expect(judge(`Anuncios en Google desde ${care} al mes.`, "es").wrong).not.toBeNull();
     // Round 2: the right figures in the wrong roles, a small invented figure, a
     // free offer with reporting words, and an earnings promise all fail.
     expect(judge("Manejo de Google Ads: base de $2,500 al mes más $11,000 por contacto, con tope de $100 al mes.", "es").wrong).not.toBeNull();
