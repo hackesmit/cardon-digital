@@ -11,18 +11,18 @@ const en = {
   },
   eyebrow: "Legal",
   title: "Privacy Policy",
-  effective: "Effective 2026-10-20. Applies to cardondigital.com.",
+  effective: "Effective 2026-10-21. Applies to cardondigital.com.",
   intro:
     "Cardon Digital is a growth-systems practice based in Baja California, Mexico, working with clients in Mexico and the United States. This policy explains what information this website handles, what we deliberately do not collect, and the rights you have. It is written to be read, not skimmed past.",
   notH: "What this site does not do",
   notList: [
     "No data resale of any kind, and no sharing of your details for marketing.",
     "No accounts, and no form on this site feeds a marketing database.",
-    "No third-party script loads before you have said yes to it, and if you say no, none loads at all.",
+    "No Google script loads before you have said yes to it, and if you say no, none loads at all.",
   ],
   measureH: "Measurement, and the question we ask first",
   measureBody:
-    "When measurement is switched on, this site can load two Google products: Google Analytics 4, which tells us which pages people read, and Google Ads conversion measurement, which tells us which ads brought them here. Neither one loads until you accept. Before you answer, the pages you receive carry no Google script at all, not even one that would decide for itself not to run. While measurement is switched off entirely, you are asked nothing and nothing is loaded.",
+    "When measurement is switched on, this site can load two Google products: Google Analytics 4, which tells us which pages people read, and Google Ads conversion measurement, which tells us which ads brought them here. Neither one loads until you accept. Before you answer, the pages you receive carry no Google script at all, not even one that would decide for itself not to run. While measurement is switched off entirely, you are asked nothing and nothing from Google is loaded. Separately, our host Vercel counts visits without cookies, seeing only the page, the site that sent you, your country and your device type and nothing that identifies you, so it needs no consent.",
   measureList: [
     "The pages you open on this site, and how you arrived at them.",
     "Your approximate location from your IP address, and your device and browser type.",
@@ -59,18 +59,18 @@ const es: typeof en = {
   eyebrow: "Legal",
   title: "Aviso de Privacidad",
   effective:
-    "Vigente desde el 20 de octubre de 2026. Aplica a cardondigital.com.",
+    "Vigente desde el 21 de octubre de 2026. Aplica a cardondigital.com.",
   intro:
     "Cardon Digital es una práctica de sistemas de crecimiento con base en Baja California, México, que trabaja con clientes en México y en Estados Unidos. Este aviso explica qué información maneja este sitio, qué decidimos no recabar y los derechos que usted tiene. Está escrito para leerse, no para pasarse de largo.",
   notH: "Lo que este sitio no hace",
   notList: [
     "Sin reventa de datos de ningún tipo, y sin compartir sus datos con fines de mercadotecnia.",
     "Sin cuentas, y ningún formulario de este sitio alimenta una base de datos de mercadotecnia.",
-    "Ningún script de terceros se carga antes de que usted lo acepte, y si usted dice que no, no se carga ninguno.",
+    "Ningún script de Google se carga antes de que usted lo acepte, y si usted dice que no, no se carga ninguno.",
   ],
   measureH: "La medición y la pregunta que le hacemos antes",
   measureBody:
-    "Cuando la medición está activa, este sitio puede cargar dos productos de Google: Google Analytics 4, que nos dice qué páginas se leen, y la medición de conversiones de Google Ads, que nos dice qué anuncios trajeron a quien las leyó. Ninguno se carga hasta que usted acepte. Antes de que usted responda, las páginas que recibe no traen ningún script de Google, ni siquiera uno que decidiera por su cuenta no ejecutarse. Mientras la medición está apagada por completo, no se le pregunta nada y no se carga nada.",
+    "Cuando la medición está activa, este sitio puede cargar dos productos de Google: Google Analytics 4, que nos dice qué páginas se leen, y la medición de conversiones de Google Ads, que nos dice qué anuncios trajeron a quien las leyó. Ninguno se carga hasta que usted acepte. Antes de que usted responda, las páginas que recibe no traen ningún script de Google, ni siquiera uno que decidiera por su cuenta no ejecutarse. Mientras la medición está apagada por completo, no se le pregunta nada y no se carga nada de Google. Aparte, Vercel, que aloja este sitio, cuenta las visitas sin cookies, y solo registra la página, el sitio desde el que llegó, su país y su tipo de dispositivo, nada que lo identifique, por lo que no necesita su consentimiento.",
   measureList: [
     "Las páginas que abre en este sitio y cómo llegó a ellas.",
     "Su ubicación aproximada a partir de su dirección IP, y el tipo de dispositivo y de navegador.",

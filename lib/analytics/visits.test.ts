@@ -1,0 +1,75 @@
+import { describe, expect, it } from "vitest";
+import { config } from "@/middleware";
+import { visitEvent, visitUrl } from "./visits";
+
+/**
+ * Cookieless visit counting (bead hq-i4b5.18).
+ *
+ * Vercel Web Analytics counts every visit, consent or not, because it sets no
+ * cookie and keeps nothing that identifies the visitor. What it does receive
+ * is the address of the page, so the address is cut down before it leaves the
+ * browser: the path stays, the utm_ marks stay (ChatGPT tags its links with
+ * utm_source=chatgpt.com, which is the AEO measurement), and anything else a
+ * link could carry, an email in a query string or a fragment, never goes.
+ */
+
+describe("visitUrl", () => {
+  it("keeps the path and the utm marks", () => {
+    expect(visitUrl("https://cardondigital.com/es/precios?utm_source=chatgpt.com")).toBe(
+      "https://cardondigital.com/es/precios?utm_source=chatgpt.com",
+    );
+    expect(
+      visitUrl("https://cardondigital.com/en?utm_source=g&utm_medium=cpc&utm_campaign=web"),
+    ).toBe("https://cardondigital.com/en?utm_source=g&utm_medium=cpc&utm_campaign=web");
+  });
+
+  it("drops every other parameter and the fragment", () => {
+    expect(
+      visitUrl("https://cardondigital.com/es/contacto?email=ana%40x.mx&utm_source=chatgpt.com&gclid=abc#form"),
+    ).toBe("https://cardondigital.com/es/contacto?utm_source=chatgpt.com");
+    expect(visitUrl("https://cardondigital.com/es?name=Ana#top")).toBe("https://cardondigital.com/es");
+  });
+
+  it("reads the utm prefix exactly, never a look-alike", () => {
+    expect(visitUrl("https://cardondigital.com/es?UTM_SOURCE=x&utmx=1&xutm_source=2")).toBe(
+      "https://cardondigital.com/es",
+    );
+  });
+
+  it("sends nothing it cannot parse", () => {
+    expect(visitUrl("not a url")).toBeNull();
+  });
+});
+
+describe("visitEvent", () => {
+  it("passes the event on with the cut address", () => {
+    expect(visitEvent({ type: "pageview", url: "https://cardondigital.com/es?q=1&utm_source=chatgpt.com" })).toEqual({
+      type: "pageview",
+      url: "https://cardondigital.com/es?utm_source=chatgpt.com",
+    });
+  });
+
+  it("drops an event whose address it cannot read", () => {
+    expect(visitEvent({ type: "pageview", url: "::" })).toBeNull();
+  });
+});
+
+describe("middleware matcher", () => {
+  /* The insights script and its beacon are served by Vercel under /_vercel.
+     The beacon path has no file extension, so without its own exclusion the
+     locale rule would answer it with a redirect to /es/_vercel/... and the
+     visit would never be counted. */
+  const matcher = new RegExp("^" + config.matcher[0] + "$");
+
+  it("leaves the Vercel insights paths alone", () => {
+    for (const path of ["/_vercel/insights/script.js", "/_vercel/insights/view", "/_vercel/insights/event"]) {
+      expect(matcher.test(path), path).toBe(false);
+    }
+  });
+
+  it("still routes the pages", () => {
+    for (const path of ["/", "/precios", "/es/precios", "/en/privacy"]) {
+      expect(matcher.test(path), path).toBe(true);
+    }
+  });
+});
