@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import sitemap from "./sitemap";
 import { SITE_URL } from "@/lib/i18n/metadata";
 import { stripLocale } from "@/lib/i18n/config";
+import { GUIDES } from "@/lib/guides";
 
 /**
  * The sitemap's lastModified is a date table in app/sitemap.ts, and this test
@@ -50,9 +51,27 @@ function resolveImport(from: string, spec: string): string | null {
   throw new Error(`cannot resolve ${spec} from ${relative(ROOT, from)}`);
 }
 
+/**
+ * A guide is a page behind a dynamic segment: the [slug] template plus its
+ * own file in lib/guides. The template reaches every guide through the
+ * registry, so the other guides' files are cut from its walk, or one guide's
+ * edit would move every guide's date.
+ */
+const GUIDE_FILE = (slug: string) => `lib/guides/${slug}.ts`;
+
+function guideSlug(path: string): string | null {
+  const m = /^\/guias\/([^/]+)$/.exec(path);
+  return m && GUIDES.some((g) => g.slug === m[1]) ? m[1] : null;
+}
+
 /** Every repo file a route's page is built from, as repo-relative paths. */
 function sourcesOf(path: string): string[] {
-  const dir = path === "/" ? ROUTE_ROOT : join(ROUTE_ROOT, ...path.slice(1).split("/"));
+  const slug = guideSlug(path);
+  const routeDir = slug ? "/guias/[slug]" : path;
+  const dir = routeDir === "/" ? ROUTE_ROOT : join(ROUTE_ROOT, ...routeDir.slice(1).split("/"));
+  const others = new Set(
+    slug ? GUIDES.filter((g) => g.slug !== slug).map((g) => GUIDE_FILE(g.slug)) : [],
+  );
   const start = [join(dir, "page.tsx")];
   if (path !== "/" && existsSync(join(dir, "layout.tsx"))) start.push(join(dir, "layout.tsx"));
   const seen = new Set<string>();
@@ -60,7 +79,7 @@ function sourcesOf(path: string): string[] {
   while (queue.length) {
     const file = queue.pop()!;
     const rel = relative(ROOT, file);
-    if (seen.has(rel) || CHROME.some((re) => re.test(rel))) continue;
+    if (seen.has(rel) || others.has(rel) || CHROME.some((re) => re.test(rel))) continue;
     seen.add(rel);
     if (!/\.(tsx?|mjs|js)$/.test(file)) continue;
     const src = readFileSync(file, "utf8");
@@ -136,6 +155,17 @@ describe("sitemap lastModified", () => {
     expect(precios.some((f) => f.startsWith("components/pages/precios/"))).toBe(true);
     expect(precios.some((f) => CHROME.some((re) => re.test(f)))).toBe(false);
     expect(sourcesOf("/estilos")).toContain("app/[locale]/estilos/layout.tsx");
+  });
+
+  it("walks a guide into its template and its own file, not the other guides", () => {
+    const guide = sourcesOf("/guias/aparecer-en-chatgpt");
+    expect(guide).toContain("app/[locale]/guias/[slug]/page.tsx");
+    expect(guide).toContain("lib/guides/aparecer-en-chatgpt.ts");
+    expect(guide).toContain("lib/i18n/guias.ts");
+    for (const g of GUIDES) {
+      expect(sourcesOf("/guias"), g.slug).toContain(GUIDE_FILE(g.slug));
+      expect(listed.has("/guias/" + g.slug), `${g.slug} is not in app/sitemap.ts`).toBe(true);
+    }
   });
 
 

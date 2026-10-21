@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import sitemap from "./sitemap";
 import { locales, stripLocale } from "@/lib/i18n/config";
 import { RETIRED_ROUTES, retiredPaths, retiredRoute } from "@/lib/routes";
+import { GUIDES, guidePath } from "@/lib/guides";
 
 /**
  * Nothing on this site links to a page it no longer has (bead hq-4pu0q.8).
@@ -27,8 +28,15 @@ import { RETIRED_ROUTES, retiredPaths, retiredRoute } from "@/lib/routes";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROUTE_ROOT = join(ROOT, "app", "[locale]");
 
+/** A link target read from a registry module rather than a source array. */
+type FromRegistry = { paths: () => string[] };
+
+/** Every guide's path, from the registry the guide pages render. */
+const guidePaths = () => GUIDES.map((g) => guidePath(g.slug));
+
 /** Every href() argument that is not a string literal, and where it reads from. */
-const DYNAMIC_HREFS: Record<string, { file: string; constant: string }> = {
+const DYNAMIC_HREFS: Record<string, { file: string; constant: string } | FromRegistry> = {
+  "guidePath(guide.slug)": { paths: guidePaths },
   "CASE_ROUTES[0]": { file: "app/[locale]/page.tsx", constant: "CASE_ROUTES" },
   "CASE_ROUTES[i]": { file: "app/[locale]/page.tsx", constant: "CASE_ROUTES" },
   "SERVICE_ROUTES[i]": { file: "app/[locale]/page.tsx", constant: "SERVICE_ROUTES" },
@@ -48,14 +56,22 @@ function walk(dir: string, files: string[] = []): string[] {
   return files;
 }
 
-/** The locale-free path of every page.tsx under app/[locale]. */
+/** The pages behind each dynamic segment, read from the registry its page
+    builds from. A dynamic route missing here fails the scan below. */
+const DYNAMIC_ROUTES: Record<string, () => string[]> = {
+  "/guias/[slug]": guidePaths,
+};
+
+/** The locale-free path of every page.tsx under app/[locale], with each
+    dynamic route expanded into the pages it renders. */
+const pageDirs = walk(ROUTE_ROOT)
+  .filter((f) => basename(f) === "page.tsx")
+  .map((f) => {
+    const rel = dirname(f).slice(ROUTE_ROOT.length).split(/[\\/]/).join("/");
+    return rel === "" ? "/" : rel;
+  });
 const existingRoutes = new Set(
-  walk(ROUTE_ROOT)
-    .filter((f) => basename(f) === "page.tsx")
-    .map((f) => {
-      const rel = dirname(f).slice(ROUTE_ROOT.length).split(/[\\/]/).join("/");
-      return rel === "" ? "/" : rel;
-    }),
+  pageDirs.flatMap((r) => (r.includes("[") ? (DYNAMIC_ROUTES[r]?.() ?? [r]) : [r])),
 );
 
 /** Source files that can carry a link. Tests are not a surface a visitor sees. */
@@ -77,13 +93,20 @@ function linksIn(file: string): Link[] {
       found.push({ file: rel, path: literal[1], raw: arg });
       continue;
     }
-    const declared = DYNAMIC_HREFS[arg];
+    // The regex stops at the first ")", so a call inside the argument loses
+    // its own closing paren; put it back before looking the argument up.
+    const key = arg.split("(").length > arg.split(")").length ? arg + ")" : arg;
+    const declared = DYNAMIC_HREFS[key];
     expect(
       declared,
-      `${rel}: href(${arg}) is not a string literal. Add it to DYNAMIC_HREFS ` +
+      `${rel}: href(${key}) is not a string literal. Add it to DYNAMIC_HREFS ` +
         `in app/routes.test.ts with the constant it reads, or this audit is ` +
         `blind to it.`,
     ).toBeDefined();
+    if ("paths" in declared!) {
+      for (const path of declared.paths()) found.push({ file: rel, path, raw: `${key} -> registry` });
+      continue;
+    }
     const source = readFileSync(join(ROOT, declared.file), "utf8");
     const array = new RegExp(
       `const ${declared.constant}\\s*(?::[^=]*)?=\\s*\\[([^\\]]*)\\]`,
@@ -103,7 +126,19 @@ function linksIn(file: string): Link[] {
   return found;
 }
 
-const links = sourceFiles.flatMap(linksIn);
+/** Links a guide's own data carries (its service block), which the page
+    builds with localePath() out of the scan's sight. */
+const guideLinks: Link[] = GUIDES.flatMap((g) =>
+  Object.values(g.copy).flatMap((c) =>
+    c.sections.flatMap((s) =>
+      s.blocks.flatMap((b) =>
+        b.kind === "service" ? [{ file: `lib/guides/${g.slug}.ts`, path: b.path, raw: b.path }] : [],
+      ),
+    ),
+  ),
+);
+
+const links = [...sourceFiles.flatMap(linksIn), ...guideLinks];
 
 /** A link target, with any fragment taken off, as a locale-free route. */
 function routeOf(path: string): string {
@@ -123,6 +158,21 @@ describe("retired routes", () => {
 
   it.each(retiredPaths)("%s lands on a page that exists", (path) => {
     expect(existingRoutes.has(RETIRED_ROUTES[path].to)).toBe(true);
+  });
+});
+
+describe("dynamic routes", () => {
+  it("expands every dynamic segment into the pages it renders", () => {
+    for (const r of pageDirs.filter((d) => d.includes("["))) {
+      expect(DYNAMIC_ROUTES[r], `${r}: add it to DYNAMIC_ROUTES`).toBeDefined();
+      expect(DYNAMIC_ROUTES[r]().length, r).toBeGreaterThan(0);
+    }
+    expect(existingRoutes.has("/guias/aparecer-en-chatgpt")).toBe(true);
+  });
+
+  it("lists every guide in the sitemap", () => {
+    const listed = new Set(sitemap().map((e) => stripLocale(new URL(e.url).pathname)));
+    for (const path of guidePaths()) expect(listed.has(path), path).toBe(true);
   });
 });
 

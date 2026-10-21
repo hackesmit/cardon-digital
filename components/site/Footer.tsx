@@ -2,6 +2,7 @@ import Link from "next/link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/i18n/site";
 import { estilos } from "@/lib/i18n/estilos";
+import { guias } from "@/lib/i18n/guias";
 import { Logo } from "@/components/site/Mark";
 import FooterScene from "@/components/site/FooterScene";
 import { CredentialRow } from "@/components/site/CredentialList";
@@ -23,6 +24,8 @@ export default function Footer({ locale }: { locale: Locale }) {
     { href: href("/industries/winery"), label: s.nav.wineries },
     { href: href("/precios"), label: s.nav.pricing },
     { href: href("/work/monte-xanic"), label: t.work },
+    // The guides (bead hq-i4b5.11), named by their own dictionary.
+    { href: href("/guias"), label: guias[locale].navLabel },
     { href: href("/about"), label: t.about },
     { href: href("/contacto"), label: t.contact },
   ];

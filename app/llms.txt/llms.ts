@@ -1,4 +1,5 @@
 import type { DoorVariant } from "@/lib/contact/doors";
+import { GUIDES, guidePath } from "@/lib/guides";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/i18n/metadata";
 import { about } from "@/lib/i18n/about";
@@ -7,6 +8,7 @@ import { contact } from "@/lib/i18n/contact";
 import { demosIndex } from "@/lib/i18n/demos-index";
 import { enkanto } from "@/lib/i18n/enkanto";
 import { estilos } from "@/lib/i18n/estilos";
+import { guias } from "@/lib/i18n/guias";
 import { home } from "@/lib/i18n/home";
 import { monteXanic } from "@/lib/i18n/monte-xanic";
 import { precios } from "@/lib/i18n/precios";
@@ -38,6 +40,11 @@ const SERVICES = [
   page("/visibilidad-ia", (l) => visibilidad[l].meta),
 ];
 const PRICES = [page("/precios", (l) => precios[l].meta)];
+/** The guides index, then every guide in lib/guides, newest first. */
+const GUIDE_PAGES = [
+  page("/guias", (l) => guias[l].meta),
+  ...GUIDES.map((g) => page(guidePath(g.slug), (l) => g.copy[l].meta)),
+];
 const LEGAL = [page("/privacy", (l) => privacy[l].meta), page("/terms", (l) => terms[l].meta)];
 
 function keyPages(doors: DoorVariant): Page[] {
@@ -57,9 +64,14 @@ function keyPages(doors: DoorVariant): Page[] {
   ];
 }
 
-const HEADINGS: Record<Locale, { services: string; prices: string; key: string }> = {
-  es: { services: "Servicios", prices: "Precios", key: "Casos y páginas clave" },
-  en: { services: "Services (English)", prices: "Pricing (English)", key: "Work and key pages (English)" },
+const HEADINGS: Record<Locale, { services: string; prices: string; guides: string; key: string }> = {
+  es: { services: "Servicios", prices: "Precios", guides: "Guías", key: "Casos y páginas clave" },
+  en: {
+    services: "Services (English)",
+    prices: "Pricing (English)",
+    guides: "Guides (English)",
+    key: "Work and key pages (English)",
+  },
 };
 
 function list(locale: Locale, pages: Page[]): string[] {
@@ -76,6 +88,7 @@ export function llmsTxt(doors: DoorVariant): string {
     const h = HEADINGS[l];
     lines.push("", "## " + h.services, "", ...list(l, SERVICES));
     lines.push("", "## " + h.prices, "", ...list(l, PRICES));
+    lines.push("", "## " + h.guides, "", ...list(l, GUIDE_PAGES));
     lines.push("", "## " + h.key, "", ...list(l, key));
   }
   lines.push("", "## Optional", "", ...list("es", LEGAL), ...list("en", LEGAL));

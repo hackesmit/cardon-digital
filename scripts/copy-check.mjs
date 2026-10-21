@@ -91,7 +91,23 @@ export const PAGES = {
    * written. Most of its words are the mock sites' own menus and titles.
    */
   estilos: { en: { budget: 134, measured: 268 }, es: { budget: 141, measured: 281 } },
+  /**
+   * The guides (2026-10-21, bead hq-i4b5.11): the index and template chrome
+   * in lib/i18n/guias.ts, and each guide in its own file under lib/guides,
+   * named by `file`. New pages, measured when they were written.
+   */
+  guias: { en: { budget: 84, measured: 168 }, es: { budget: 94, measured: 188 } },
+  "guia-aparecer-en-chatgpt": {
+    file: "lib/guides/aparecer-en-chatgpt.ts",
+    en: { budget: 808, measured: 1615 },
+    es: { budget: 855, measured: 1710 },
+  },
 };
+
+/** The dictionary a page line reads: lib/i18n/<page>.ts unless it names a file. */
+export function pageFile(page) {
+  return PAGES[page]?.file ?? join("lib", "i18n", `${page}.ts`);
+}
 
 /**
  * At most three emphasis spans per locale. Both of rich.tsx's markers count:
@@ -751,7 +767,7 @@ const USAGE = `usage: node scripts/copy-check.mjs <page>... | --all
 
 pages: ${Object.keys(PAGES).join(", ")}
 
-Checks lib/i18n/<page>.ts against docs/copy-doctrine.md.
+Checks lib/i18n/<page>.ts (or the file a page line names) against docs/copy-doctrine.md.
 Exit 0 clean, 1 on a violation, 2 on a usage or config error.`;
 
 function run(argv, out, err, overrides) {
@@ -785,7 +801,7 @@ function run(argv, out, err, overrides) {
 
   let failed = 0;
   for (const page of pages) {
-    const file = join("lib", "i18n", `${page}.ts`);
+    const file = pageFile(page);
     let source;
     try {
       source = readFileSync(resolve(ROOT, file), "utf8");
