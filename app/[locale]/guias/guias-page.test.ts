@@ -138,6 +138,8 @@ describe("the guide registry", () => {
       // The whole source, not only its string literals: a price in single
       // quotes, a template part or a number beside its currency all count.
       expect(src, g.slug).not.toMatch(/\$\s?\d|\d[\d,.]*\s?(?:MXN|USD|pesos|d[oó]lares|dollars)\b/i);
+      // Nor a number handed to the formatter: formatPrice(locale, 7500).
+      expect(src, g.slug).not.toMatch(/format(?:Price|Amount)\(\s*[^,()]+,\s*\d/);
     }
   });
 
@@ -326,6 +328,23 @@ describe.each(cases)("guide served in %s: %s", (locale, slug) => {
     for (const m of page.match(MONEY) ?? []) expect(allowed.has(m.trim()), `${m} is not a lib/pricing.ts figure`).toBe(true);
     expect(page).not.toContain("—");
     expect(page).not.toMatch(/factura|\bIVA\b|\bVAT\b/i);
+  });
+});
+
+/** The first guide keeps the checks it was written against before the
+    generic rules learned to read each guide's own declarations. */
+describe.each(locales)("the AI answers guide in %s keeps its pinned checks", (locale) => {
+  const g = GUIDES.find((x) => x.slug === "aparecer-en-chatgpt")!.copy[locale];
+  it("links its one service to /visibilidad-ia", () => {
+    const declared = g.sections.flatMap((s) => s.blocks).filter((b) => b.kind === "service");
+    expect(declared.map((b) => (b as { path: string }).path)).toEqual(["/visibilidad-ia"]);
+  });
+  it("names AEO in como-responde, and only there", () => {
+    const naming = g.sections.filter((s) => JSON.stringify(s.blocks).match(/\bAEO\b/)).map((s) => s.id);
+    expect(naming).toEqual(["como-responde"]);
+  });
+  it("states our own baseline, so its baseline test always runs", () => {
+    expect(JSON.stringify(g)).toContain("{mentioned}");
   });
 });
 

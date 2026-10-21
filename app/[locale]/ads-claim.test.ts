@@ -822,6 +822,13 @@ describe("every served ads claim carries the policy lib/pricing.ts sets", () => 
     expect(judge(`Google from $${usdBase} USD a month.`, "en").wrong).not.toBeNull();
     expect(judge(`We put you in front of more customers from $${usdBase} USD a month.`, "en").wrong).not.toBeNull();
     expect(judge(`Website care is optional and costs $${usdBase} USD a month.`, "en").wrong).toBeNull();
+    // The review's plants (bead hq-i4b5.12): each failed on main and must still fail.
+    expect(judge(`Ponemos su negocio en Google desde ${care} al mes.`, "es").wrong).not.toBeNull();
+    expect(judge(`Google y Meta desde ${care} al mes, más el presupuesto que usted paga directo.`, "es").wrong).not.toBeNull();
+    expect(judge(`We put your business on Google for $${usdBase} USD a month.`, "en").wrong).not.toBeNull();
+    expect(judge(`Google and Meta from $${usdBase} USD a month, plus the budget you pay Google directly.`, "en").wrong).not.toBeNull();
+    // Care named beside Google is not care only: it still owes the cap.
+    expect(judge(`Mantenimiento y Google desde ${care} al mes.`, "es").wrong).not.toBeNull();
     // Round 2: the right figures in the wrong roles, a small invented figure, a
     // free offer with reporting words, and an earnings promise all fail.
     expect(judge("Manejo de Google Ads: base de $2,500 al mes más $11,000 por contacto, con tope de $100 al mes.", "es").wrong).not.toBeNull();
