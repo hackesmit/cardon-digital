@@ -18,8 +18,8 @@ describe("visitUrl", () => {
       "https://cardondigital.com/es/precios?utm_source=chatgpt.com",
     );
     expect(
-      visitUrl("https://cardondigital.com/en?utm_source=g&utm_medium=cpc&utm_campaign=web"),
-    ).toBe("https://cardondigital.com/en?utm_source=g&utm_medium=cpc&utm_campaign=web");
+      visitUrl("https://cardondigital.com/en?utm_source=Google&utm_medium=cpc&utm_campaign=web"),
+    ).toBe("https://cardondigital.com/en?utm_source=google&utm_medium=cpc");
   });
 
   it("drops every other parameter and the fragment", () => {
@@ -27,6 +27,12 @@ describe("visitUrl", () => {
       visitUrl("https://cardondigital.com/es/contacto?email=ana%40x.mx&utm_source=chatgpt.com&gclid=abc#form"),
     ).toBe("https://cardondigital.com/es/contacto?utm_source=chatgpt.com");
     expect(visitUrl("https://cardondigital.com/es?name=Ana#top")).toBe("https://cardondigital.com/es");
+  });
+
+  it("drops any value outside the closed lists, however plain it looks", () => {
+    expect(
+      visitUrl("https://cardondigital.com/es?utm_campaign=Ana-Lopez&utm_source=ana.example.com&utm_medium=customer-123456"),
+    ).toBe("https://cardondigital.com/es");
   });
 
   it("drops personal data under any utm key, standard or not", () => {

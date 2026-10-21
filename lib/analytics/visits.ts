@@ -5,23 +5,28 @@ import type { BeforeSendEvent } from "@vercel/analytics/next";
  *
  * It counts without cookies and without consent, so the one thing it receives
  * from this site, the page address, is cut to what the count needs: the path
- * and the three utm marks that say which campaign or answer engine sent the visit,
- * each kept only when it is a plain token.
+ * and the utm source and medium that say which answer engine or channel sent
+ * the visit, each kept only when it is a word from the lists below.
  * Any other parameter and the fragment are dropped in the browser, because a
  * link can carry anything (an email, a name) and none of it is ours to send.
  */
-const KEPT_MARKS = ["utm_source", "utm_medium", "utm_campaign"] as const;
-
 /**
- * A campaign mark is a short token such as chatgpt.com, cpc or web-ensenada.
- * Anything else is dropped whole rather than cleaned: an address with an @ in
- * it, a value with spaces, or one carrying a run of digits long enough to be a
- * phone number is somebody's data, whatever key it arrived under.
+ * The marks the count keeps, each from a closed vocabulary: a value outside the
+ * list is dropped whole. A link can put anything under a utm key (a name, a
+ * customer number), so shape checks are not enough; only words we chose can
+ * leave the browser. utm_campaign is never kept, because campaign names are
+ * free text and the ads report already has its own record of them.
  */
-function isPlainMark(value: string): boolean {
-  if (!/^[a-z0-9][a-z0-9._-]{0,59}$/i.test(value)) return false;
-  return (value.match(/[0-9]/g) ?? []).length < 7;
-}
+const SOURCES = new Set([
+  "chatgpt.com", "chat.openai.com", "openai", "perplexity", "perplexity.ai", "gemini",
+  "gemini.google.com", "copilot", "copilot.microsoft.com", "claude", "claude.ai",
+  "google", "bing", "facebook", "instagram", "whatsapp", "linkedin", "newsletter",
+]);
+const MEDIUMS = new Set(["cpc", "organic", "social", "email", "referral", "paid", "display"]);
+const KEPT_MARKS: [string, Set<string>][] = [
+  ["utm_source", SOURCES],
+  ["utm_medium", MEDIUMS],
+];
 
 export function visitUrl(raw: string): string | null {
   let url: URL;
@@ -31,9 +36,9 @@ export function visitUrl(raw: string): string | null {
     return null;
   }
   const kept = new URLSearchParams();
-  for (const key of KEPT_MARKS) {
-    const value = url.searchParams.get(key);
-    if (value !== null && isPlainMark(value)) kept.set(key, value);
+  for (const [key, allowed] of KEPT_MARKS) {
+    const value = url.searchParams.get(key)?.trim().toLowerCase();
+    if (value && allowed.has(value)) kept.set(key, value);
   }
   const query = kept.toString();
   return url.origin + url.pathname + (query ? "?" + query : "");
