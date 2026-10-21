@@ -28,6 +28,7 @@ const routes = [
   { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/guias", priority: 0.6, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
+  { path: "/guias/cuanto-cuesta-pagina-web", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/guias/aparecer-en-chatgpt", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },

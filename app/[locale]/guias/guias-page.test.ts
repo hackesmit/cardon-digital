@@ -16,6 +16,9 @@ import { BASELINE } from "../../../lib/i18n/visibilidad-ia";
 import { CREDENTIALS } from "../../../lib/credentials";
 import { GUIDES, guidePath } from "../../../lib/guides";
 import { FOUNDER_ID } from "../../../lib/seo/jsonld";
+import { currencyByLocale, formatPrice, webCareMonthly, webPackages } from "../../../lib/pricing";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 /**
  * Guards for /guias and every guide (bead hq-i4b5.11, AEO spec in
@@ -28,9 +31,23 @@ import { FOUNDER_ID } from "../../../lib/seo/jsonld";
  *    Article's dates, his bio linking /about and the certificate;
  *  - sources linked, an FAQ marked up exactly as shown, a BreadcrumbList that
  *    is the trail on screen;
- *  - one link to a service, AEO named once, no promise, no typed price.
+ *  - one link to a service, AEO named once if at all, no promise;
+ *  - no typed price: a figure that reads as money is one lib/pricing.ts
+ *    computes, and the guide's own file holds no price literal (bead
+ *    hq-i4b5.12, the first guide that prints our prices).
  * Every guide in lib/guides runs through the same checks.
  */
+
+/** Every money figure a guide may print in a locale: the published website
+    prices, formatted by lib/pricing.ts the way every page prints them. */
+function publishedPrices(locale: Locale): Set<string> {
+  const c = currencyByLocale[locale];
+  return new Set(
+    [...webPackages.map((p) => p.from[c]), webCareMonthly()[c]].map((n) => formatPrice(locale, n)),
+  );
+}
+
+const MONEY = /\$\s?\d[\d,.]*(?:\s?(?:MXN|USD))?|\d[\d,.]*\s?(?:MXN|USD|pesos|d[oó]lares|dollars)/gi;
 
 async function serveGuide(locale: Locale, slug: string): Promise<string> {
   const Page = (await import("./[slug]/page")).default;
@@ -111,6 +128,18 @@ describe("the guide registry", () => {
     expect(slugs).toContain("aparecer-en-chatgpt");
     expect(new Set(slugs).size).toBe(slugs.length);
     for (const s of slugs) expect(s).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+  });
+
+  it("types no price in any guide file: every figure is read from lib/pricing.ts", () => {
+    for (const g of GUIDES) {
+      const src = readFileSync(join(process.cwd(), "lib/guides", g.slug + ".ts"), "utf8")
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/^\s*\/\/.*$/gm, "");
+      const literals = src.match(/"(?:[^"\\\n]|\\.)*"|`(?:[^`\\]|\\.)*`/g) ?? [];
+      for (const lit of literals) {
+        expect(lit, g.slug).not.toMatch(/\$\s?\d|\d[\d,.]*\s?(?:MXN|USD|pesos|d[oó]lares|dollars)\b/i);
+      }
+    }
   });
 
   it("dates every guide honestly and schedules its next review within a quarter", () => {
@@ -247,16 +276,27 @@ describe.each(cases)("guide served in %s: %s", (locale, slug) => {
     }
   });
 
-  it("links once, naturally, to the AI visibility service", async () => {
+  it("links once, naturally, to a Cardon service", async () => {
     const html = await serveGuide(locale, slug);
+    const declared = g.sections.flatMap((s) => s.blocks).filter((b) => b.kind === "service");
+    expect(declared).toHaveLength(1);
     const service = all(/(<p class="guide-service">[\s\S]*?<\/p>)/g, html);
     expect(service).toHaveLength(1);
-    expect(service[0]).toContain(`href="${localePath(locale, "/visibilidad-ia")}"`);
+    const path = (declared[0] as { path: string }).path;
+    expect(path.startsWith("/")).toBe(true);
+    expect(service[0]).toContain(`href="${localePath(locale, path)}"`);
   });
 
   it("names AEO in one section only, with its definition there", async () => {
     const html = await serveGuide(locale, slug);
-    const defined = block(html, /<section class="guide-section" id="como-responde"/, "section");
+    const naming = g.sections.filter((s) => JSON.stringify(s.blocks).match(/\bAEO\b/));
+    expect(naming.length, "sections naming AEO").toBeLessThanOrEqual(1);
+    if (naming.length === 0) {
+      const bio = block(html, /<aside class="guide-bio"/, "aside");
+      expect(visible(html.replace(bio, "")).match(/\bAEO\b/g) ?? []).toEqual([]);
+      return;
+    }
+    const defined = block(html, new RegExp(`<section class="guide-section" id="${naming[0].id}"`), "section");
     expect(defined).not.toBe("");
     // The bio carries the certificate's own name; it is a name, not a use.
     const bio = block(html, /<aside class="guide-bio"/, "aside");
@@ -266,23 +306,44 @@ describe.each(cases)("guide served in %s: %s", (locale, slug) => {
     expect(sentence).toMatch(/optimizaci[oó]n para motores de respuesta|answer engine optimization/i);
   });
 
-  it("states our own baseline, filled from the one place it lives", async () => {
+  it("leaves no placeholder unfilled", async () => {
+    expect(await serveGuide(locale, slug)).not.toMatch(/\{\w+\}/);
+  });
+
+  it.skipIf(!JSON.stringify(g).includes("{mentioned}"))("states our own baseline, filled from the one place it lives", async () => {
     const html = await serveGuide(locale, slug);
-    expect(html).not.toMatch(/\{\w+\}/);
     const page = visible(html);
     const of = locale === "es" ? "de" : "of";
     expect(page).toContain(`${BASELINE.mentioned} ${of} ${BASELINE.answers}`);
     expect(page).toContain(`${BASELINE.unbrandedMentioned} ${of} ${BASELINE.unbranded}`);
   });
 
-  it("promises no appearance, types no price, and has no em dash or factura language", async () => {
+  it("promises no appearance, prints only computed prices, and has no em dash or factura language", async () => {
     const page = visible(await serveGuide(locale, slug));
     expect(page).not.toMatch(
       /garantizamos|le garantiza|garantizado|we guarantee|guaranteed|primer lugar en|rank (first|#1|number one)|top of google|vas a aparecer|va a aparecer|aparecer[áa] en|will (show up|appear)|you'll (show up|appear)/i,
     );
-    expect(page).not.toMatch(/\$\s?\d|\d[\d,.]*\s?(MXN|USD|pesos|d[oó]lares|dollars)/i);
+    const allowed = publishedPrices(locale);
+    for (const m of page.match(MONEY) ?? []) expect(allowed.has(m.trim()), `${m} is not a lib/pricing.ts figure`).toBe(true);
     expect(page).not.toContain("—");
     expect(page).not.toMatch(/factura|\bIVA\b|\bVAT\b/i);
+  });
+});
+
+describe.each(locales)("the website cost guide in %s (bead hq-i4b5.12)", (locale) => {
+  it("prints every package's published price and the care fee, as lib/pricing.ts computes them", async () => {
+    const page = visible(await serveGuide(locale, "cuanto-cuesta-pagina-web"));
+    const c = currencyByLocale[locale];
+    for (const p of webPackages) {
+      expect(page, p.id).toContain(formatPrice(locale, p.from[c]));
+      expect(page, p.id).toContain(`${p.deliveryDays.min}`);
+    }
+    expect(page).toContain(formatPrice(locale, webCareMonthly()[c]));
+  });
+
+  it("links the price list's package builder", async () => {
+    const html = await serveGuide(locale, "cuanto-cuesta-pagina-web");
+    expect(html).toContain(`href="${localePath(locale, "/precios#arme")}"`);
   });
 });
 
