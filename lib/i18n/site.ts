@@ -61,7 +61,7 @@ const en = {
     cta: "Get the free diagnostic",
     mailSubject: "Growth Diagnostic",
     price:
-      "**Free.** No retainer, no obligation. If the memo shows work worth doing, we propose the build and you decide.",
+      "**Free.** No retainer, no obligation. It includes a check of whether ChatGPT, Perplexity, Gemini and Google mention your business when your customers ask them. If the memo shows work worth doing, we propose the build and you decide.",
   },
   footer: {
     label: "Footer",
@@ -126,7 +126,7 @@ const es: typeof en = {
     cta: "Pedir el diagnóstico sin costo",
     mailSubject: "Diagnóstico de Crecimiento",
     price:
-      "**Sin costo.** Sin anticipo y sin compromiso. Si el informe muestra trabajo que vale la pena hacer, le presentamos una propuesta y usted decide.",
+      "**Sin costo.** Sin anticipo y sin compromiso. Incluye una revisión de si ChatGPT, Perplexity, Gemini y Google mencionan su negocio cuando sus clientes les preguntan. Si el informe muestra trabajo que vale la pena hacer, le presentamos una propuesta y usted decide.",
   },
   footer: {
     label: "Pie de página",
