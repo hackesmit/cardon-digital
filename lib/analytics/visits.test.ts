@@ -29,6 +29,18 @@ describe("visitUrl", () => {
     expect(visitUrl("https://cardondigital.com/es?name=Ana#top")).toBe("https://cardondigital.com/es");
   });
 
+  it("drops personal data under any utm key, standard or not", () => {
+    expect(
+      visitUrl("https://cardondigital.com/es?utm_email=ana%40example.com&utm_source=ana%40example.com"),
+    ).toBe("https://cardondigital.com/es");
+    expect(visitUrl("https://cardondigital.com/es?utm_campaign=Ana%20Lopez&utm_medium=6461234567")).toBe(
+      "https://cardondigital.com/es",
+    );
+    expect(visitUrl("https://cardondigital.com/es?utm_content=x&utm_term=y&utm_source=chatgpt.com")).toBe(
+      "https://cardondigital.com/es?utm_source=chatgpt.com",
+    );
+  });
+
   it("reads the utm prefix exactly, never a look-alike", () => {
     expect(visitUrl("https://cardondigital.com/es?UTM_SOURCE=x&utmx=1&xutm_source=2")).toBe(
       "https://cardondigital.com/es",
