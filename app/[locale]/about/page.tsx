@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
+import CredentialList from "@/components/site/CredentialList";
 import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
+import { CREDENTIALS } from "@/lib/credentials";
 import { about } from "@/lib/i18n/about";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -69,33 +72,53 @@ export default function AboutPage({ params }: Params) {
 
       {/* ============================ CHAPTERS ============================ */}
       {chapters.map((chapter, i) => (
-        <section
-          className={"section about-chapter" + (i === 0 ? " rule-top" : "")}
-          key={chapter.kicker}
-          aria-labelledby={"about-ch-" + i}
-        >
-          <div className="container">
-            <Reveal>
-              <div className="about-split">
-                <div className="about-head">
-                  <span className="kicker">{chapter.kicker}</span>
-                  <h2 id={"about-ch-" + i}>{chapter.title}</h2>
+        <Fragment key={chapter.kicker}>
+          <section
+            className={"section about-chapter" + (i === 0 ? " rule-top" : "")}
+            aria-labelledby={"about-ch-" + i}
+          >
+            <div className="container">
+              <Reveal>
+                <div className="about-split">
+                  <div className="about-head">
+                    <span className="kicker">{chapter.kicker}</span>
+                    <h2 id={"about-ch-" + i}>{chapter.title}</h2>
+                  </div>
+                  <div className="about-prose">
+                    {chapter.body.map((para) => (
+                      <p key={para}>{para}</p>
+                    ))}
+                    {chapter.cred ? (
+                      <p className="about-cred">
+                        <span className="about-cred-k mono">{chapter.credK}</span>
+                        <span className="about-cred-v">{chapter.cred}</span>
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
-                <div className="about-prose">
-                  {chapter.body.map((para) => (
-                    <p key={para}>{para}</p>
-                  ))}
-                  {chapter.cred ? (
-                    <p className="about-cred">
-                      <span className="about-cred-k mono">{chapter.credK}</span>
-                      <span className="about-cred-v">{chapter.cred}</span>
-                    </p>
-                  ) : null}
-                </div>
+              </Reveal>
+            </div>
+          </section>
+          {/* The certificates right after the mission, the chapter that names
+              the founder who holds them. */}
+          {i === 0 ? (
+            <section className="section about-chapter about-creds" aria-labelledby="about-creds-title">
+              <div className="container">
+                <Reveal>
+                  <div className="about-split">
+                    <div className="about-head">
+                      <span className="kicker">{d.credentials.kicker}</span>
+                      <h2 id="about-creds-title">{d.credentials.title}</h2>
+                    </div>
+                    <div className="about-prose">
+                      <CredentialList credentials={CREDENTIALS} locale={locale} copy={d.credentials} />
+                    </div>
+                  </div>
+                </Reveal>
               </div>
-            </Reveal>
-          </div>
-        </section>
+            </section>
+          ) : null}
+        </Fragment>
       ))}
 
       {/* ============================ DIAGNOSTIC ============================ */}
