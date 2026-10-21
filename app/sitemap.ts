@@ -17,14 +17,14 @@ import { SITE_URL } from "@/lib/i18n/metadata";
  */
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-10-20" },
-  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
-  { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
+  { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
-  { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
+  { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },

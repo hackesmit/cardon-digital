@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Faq from "@/components/site/Faq";
+import JsonLd from "@/components/site/JsonLd";
 import Reveal from "@/components/site/Reveal";
 import SiteRise from "@/components/pages/services/SiteRise";
 import WebPackages from "@/components/pages/precios/WebPackages";
@@ -8,7 +10,10 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import { sitios } from "@/lib/i18n/sitios";
+import { webPackages } from "@/lib/pricing";
+import { ldGraph, serviceLd } from "@/lib/seo/jsonld";
 import "../services.css";
+import "./sitios.css";
 
 type Params = { params: { locale: string } };
 
@@ -22,16 +27,28 @@ export function generateMetadata({ params }: Params): Metadata {
 }
 
 /**
- * The websites service page: the result (found on Google, written to the same
- * day), the four things a site has to do, the packages by feature with every
- * figure read out of lib/pricing.ts, how it works, the objections, and the
- * diagnostic close. One action, site.diag.cta, repeated verbatim.
+ * The websites service page, answer first (AEO spec, bead hq-i4b5.6): the
+ * hero's sub is a 40 to 60 word answer that names the business, and the
+ * Service markup describes the page in those same words. Then the four things
+ * a site has to do, showing up in AI answers (the one place AEO is named), the
+ * packages by feature with every figure read out of lib/pricing.ts, how it
+ * works, the objections, the FAQ with its FAQPage markup, and the diagnostic
+ * close. One action, site.diag.cta, repeated verbatim.
  */
 export default function SitiosPage({ params }: Params) {
   const locale = localeOf(params);
   const d = sitios[locale];
   const s = site[locale];
   const href = (path: string) => localePath(locale, path);
+  // The delivery answer reads its range out of the packages, like the table.
+  const days = {
+    min: String(Math.min(...webPackages.map((p) => p.deliveryDays.min))),
+    max: String(Math.max(...webPackages.map((p) => p.deliveryDays.max))),
+  };
+  const faqItems = d.faq.items.map((it) => ({
+    question: it.question,
+    answer: it.answer.replace("{min}", days.min).replace("{max}", days.max),
+  }));
   const cta = (
     <div className="cta-row">
       <Link className="cta" href={href("/contacto")}>
@@ -43,6 +60,7 @@ export default function SitiosPage({ params }: Params) {
   return (
     <main id="main" className="pg-svc pg-sitios">
       <span id="top" />
+      <JsonLd data={ldGraph([serviceLd(d.hero.eyebrow, d.hero.sub, href("/sitios-web"))])} />
 
       <section className="hero" aria-label={d.hero.aria}>
         <div className="container">
@@ -103,6 +121,30 @@ export default function SitiosPage({ params }: Params) {
         </div>
       </section>
 
+      <section className="section ai-answers" id="respuestas-ia" aria-labelledby="ai-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker">{d.ai.kicker}</span>
+              <h2 id="ai-title">{d.ai.title}</h2>
+              <p className="section-sub">{d.ai.lead}</p>
+            </div>
+          </Reveal>
+          <Reveal>
+            <h3 className="ai-list-title">{d.ai.listTitle}</h3>
+            <ul className="ai-list">
+              {d.ai.items.map((item) => (
+                <li className="ai-item" key={item.h}>
+                  <h4>{item.h}</h4>
+                  <p>{item.body}</p>
+                </li>
+              ))}
+            </ul>
+            <p className="ai-honest">{d.ai.honest}</p>
+          </Reveal>
+        </div>
+      </section>
+
       <WebPackages locale={locale} />
 
       <section className="section" aria-labelledby="how-title">
@@ -150,6 +192,13 @@ export default function SitiosPage({ params }: Params) {
               same button, and a viewport never holds two clay elements. */}
         </div>
       </section>
+
+      <div className="section sitios-faq">
+        <Faq title={d.faq.title} items={faqItems} />
+        <p className="faq-more">
+          <Link href={href("/precios")}>{d.faq.more}</Link>
+        </p>
+      </div>
 
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
         <div className="container">
