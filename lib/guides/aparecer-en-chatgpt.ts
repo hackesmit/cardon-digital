@@ -19,11 +19,11 @@ const es: GuideCopy = {
   meta: {
     title: "Cómo aparecer en ChatGPT, Gemini y Google",
     description:
-      "Para que ChatGPT, Gemini y Google mencionen su negocio, su sitio debe dejar entrar a sus rastreadores, contestar primero lo que preguntan sus clientes y estar respaldado por su ficha de Google.",
+      "Su negocio tiene más oportunidad de salir en ChatGPT, Gemini y Google si su sitio deja entrar a sus rastreadores, contesta primero a sus clientes y tiene su ficha de Google completa.",
   },
   eyebrow: "Guía para dueños de negocio en Baja California",
   title: "¿Cómo hago que mi negocio aparezca en las respuestas de ChatGPT, Gemini y Google?",
-  lede: "Para que ChatGPT, Gemini y Google mencionen su negocio, su sitio tiene que dejar entrar a sus rastreadores, cada página tiene que contestar primero lo que preguntan sus clientes, su ficha de Google tiene que estar completa y otros sitios tienen que nombrarlo. Ninguna agencia puede garantizar la mención, pero todo lo demás se puede preparar y medir.",
+  lede: "Su negocio tiene más oportunidad de salir en las respuestas de ChatGPT, Gemini y Google cuando su sitio deja entrar a sus rastreadores, cada página contesta primero lo que preguntan sus clientes, su ficha de Google está completa y otros sitios lo nombran. Ninguna agencia puede garantizar la mención, pero todo lo demás se puede preparar y medir.",
   sections: [
     {
       id: "como-responde",
@@ -31,11 +31,11 @@ const es: GuideCopy = {
       blocks: [
         {
           kind: "p",
-          text: "Cuando alguien le pregunta algo a ChatGPT, Gemini, Perplexity o a las respuestas con IA de Google, el motor parte la pregunta en preguntas más chicas, busca en la web pasajes cortos que contesten cada una y escribe una sola respuesta con los que considera más confiables. A veces cita y enlaza esas fuentes.",
+          text: "Cuando ChatGPT, Gemini, Perplexity o las respuestas con IA de Google buscan en la web para contestar una pregunta, pueden partirla en preguntas más chicas, buscar pasajes cortos que contesten cada una y escribir una sola respuesta con los que consideran más confiables. A veces citan y enlazan esas fuentes.",
         },
         {
           kind: "p",
-          text: "Por eso el motor rara vez lee su página completa. Toma un párrafo suelto que conteste algo concreto, como «¿quién hace pasteles para boda en Ensenada?» o «¿cuánto cuesta?». Si ese párrafo existe en su sitio y se entiende solo, tiene oportunidad de entrar en la respuesta.",
+          text: "Por eso al motor no le hace falta su página completa: puede tomar un párrafo suelto que conteste algo concreto, como «¿quién hace pasteles para boda en Ensenada?» o «¿cuánto cuesta?». Si ese párrafo existe en su sitio y se entiende solo, tiene oportunidad de entrar en la respuesta.",
         },
         {
           kind: "p",
@@ -266,11 +266,11 @@ const en: GuideCopy = {
   meta: {
     title: "How to get into ChatGPT and Google answers",
     description:
-      "For ChatGPT, Gemini and Google to name your business, your site has to let their crawlers in, answer your customers' questions first, and be backed by your Google Business Profile.",
+      "Your business has a better chance of being named by ChatGPT, Gemini and Google when your site lets their crawlers in, answers customers' questions first, and has a complete Google Business Profile.",
   },
   eyebrow: "A guide for small business owners",
   title: "How do I get my business into ChatGPT, Gemini and Google's AI answers?",
-  lede: "For ChatGPT, Gemini and Google to name your business, your site has to let their crawlers in, each page has to answer your customers' questions first, your Google Business Profile has to be complete, and other sites have to mention you. No agency can guarantee the mention, but everything else can be prepared and measured.",
+  lede: "Your business has a better chance of being named in ChatGPT, Gemini and Google's AI answers when your site lets their crawlers in, each page answers your customers' questions first, your Google Business Profile is complete, and other sites mention you. No agency can guarantee the mention, but everything else can be prepared and measured.",
   sections: [
     {
       id: "como-responde",
@@ -278,11 +278,11 @@ const en: GuideCopy = {
       blocks: [
         {
           kind: "p",
-          text: "When someone asks ChatGPT, Gemini, Perplexity or Google's AI answers a question, the engine splits it into smaller questions, searches the web for short passages that answer each one, and writes a single answer from the passages it trusts most. Sometimes it cites and links those sources.",
+          text: "When ChatGPT, Gemini, Perplexity or Google's AI answers search the web to answer a question, they can split it into smaller questions, look for short passages that answer each one, and write a single answer from the passages they trust most. Sometimes they cite and link those sources.",
         },
         {
           kind: "p",
-          text: "So the engine rarely reads your whole page. It lifts one paragraph that answers something specific, like “who does wedding cakes near me?” or “how much does it cost?”. If that paragraph is on your site and makes sense on its own, it has a chance of making it into the answer.",
+          text: "So the engine does not need your whole page: it can lift one paragraph that answers something specific, like “who does wedding cakes near me?” or “how much does it cost?”. If that paragraph is on your site and makes sense on its own, it has a chance of making it into the answer.",
         },
         {
           kind: "p",
