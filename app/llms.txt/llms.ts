@@ -14,6 +14,7 @@ import { privacy } from "@/lib/i18n/privacy";
 import { sitios } from "@/lib/i18n/sitios";
 import { software } from "@/lib/i18n/software";
 import { terms } from "@/lib/i18n/terms";
+import { visibilidad } from "@/lib/i18n/visibilidad-ia";
 import { winery } from "@/lib/i18n/winery";
 
 /**
@@ -34,6 +35,7 @@ const SERVICES = [
   page("/sitios-web", (l) => sitios[l].meta),
   page("/anuncios", (l) => anuncios[l].meta),
   page("/software", (l) => software[l].meta),
+  page("/visibilidad-ia", (l) => visibilidad[l].meta),
 ];
 const PRICES = [page("/precios", (l) => precios[l].meta)];
 const LEGAL = [page("/privacy", (l) => privacy[l].meta), page("/terms", (l) => terms[l].meta)];

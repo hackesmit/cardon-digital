@@ -82,6 +82,11 @@ export const PAGES = {
   anuncios: { en: { budget: 340, measured: 680 }, es: { budget: 365, measured: 730 } },
   software: { en: { budget: 330, measured: 660 }, es: { budget: 350, measured: 700 } },
   /**
+   * The AI visibility page (2026-10-21, bead hq-i4b5.9), a new page measured
+   * when it was written, like the service pages above.
+   */
+  "visibilidad-ia": { en: { budget: 612, measured: 1223 }, es: { budget: 632, measured: 1264 } },
+  /**
    * The style samples page (2026-10-01), a new page measured when it was
    * written. Most of its words are the mock sites' own menus and titles.
    */
