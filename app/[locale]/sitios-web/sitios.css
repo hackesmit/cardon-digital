@@ -58,3 +58,25 @@
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* The recent-site example: the desktop screenshot wide, the phone beside it. */
+.pg-sitios .ex-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr);
+  gap: clamp(18px, 2.6vw, 30px);
+  align-items: start;
+}
+.pg-sitios .ex-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+@media (max-width: 720px) {
+  .pg-sitios .ex-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pg-sitios .ex-phone {
+    max-width: 320px;
+  }
+}

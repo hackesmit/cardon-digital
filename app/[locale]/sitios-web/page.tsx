@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Faq from "@/components/site/Faq";
+import Media from "@/components/site/Media";
 import JsonLd from "@/components/site/JsonLd";
 import Reveal from "@/components/site/Reveal";
 import SiteRise from "@/components/pages/services/SiteRise";
@@ -97,6 +98,41 @@ export default function SitiosPage({ params }: Params) {
           </Link>
         </div>
       </div>
+
+      {/* A recent client site, as screenshots of the live page: what a site
+          from this service looks like, before the packages. */}
+      <section className="section" id="ejemplo" aria-labelledby="ex-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker">{d.example.kicker}</span>
+              <h2 id="ex-title">{d.example.title}</h2>
+              <p className="section-sub">{d.example.body}</p>
+            </div>
+          </Reveal>
+          <Reveal>
+            <div className="ex-grid">
+              <Media
+                className="ex-desktop"
+                slot="sitios/aperta-desktop"
+                src="/media/sitios/aperta-desktop.webp"
+                caption={d.example.desktopCap}
+                alt={d.example.desktopAlt}
+              />
+              <Media
+                className="ex-phone"
+                slot="sitios/aperta-phone"
+                src="/media/sitios/aperta-phone.webp"
+                caption={d.example.phoneCap}
+                alt={d.example.phoneAlt}
+              />
+            </div>
+            <a className="ex-link" href="https://aperta-media.vercel.app/" target="_blank" rel="noopener">
+              {d.example.link}
+            </a>
+          </Reveal>
+        </div>
+      </section>
 
       <section className="section" id="resultado" aria-labelledby="res-title">
         <div className="container">

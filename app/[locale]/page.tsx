@@ -49,7 +49,7 @@ const CASE_ROUTES = ["/work/monte-xanic", "/work/enkanto"];
 const PROOF_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
   { slot: "home/proof-xanic", src: "/media/home/proof-xanic.webp" },
   { slot: "home/proof-enkanto", src: "/media/enkanto/cabana.webp" },
-  { slot: "home/proof-dharma", src: null },
+  { slot: "home/proof-aperta", src: "/media/home/proof-aperta.webp" },
 ];
 const SERVICE_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
   { slot: "home/service-sitios", src: null },
@@ -189,8 +189,8 @@ export default function Home({ params }: Params) {
 
       {/* ============================ 2. PROOF BAR ============================
           Three named clients with what we actually have: Monte Xanic's real
-          number, what was built for En'kanto, and what was built for Dharma
-          Ochoa. ClientOrbit, under them, turns the five businesses that run on
+          number, what was built for En'kanto, and Aperta Media Co.'s site
+          (a screenshot of the live page). ClientOrbit, under them, turns the five businesses that run on
           what we built around the one action (bead hq-1cct). */}
       <section className="proof" aria-label={d.proof.aria}>
         <div className="container proof-grid proof-grid-3">

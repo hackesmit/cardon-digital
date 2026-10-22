@@ -123,11 +123,23 @@ export const MEDIA_SLOTS = {
     frame:
       "En'kanto, the property in one frame: the cabin, the restaurant terrace or the vines. For the proof card on the home page.",
   },
-  "home/proof-dharma": {
+  "home/proof-aperta": {
     kind: "photo",
     ratio: "3 / 2",
     frame:
-      "Dharma Ochoa's site on a real screen: a phone or laptop showing the portfolio or the store, in a lit room, not a flat screenshot. For the proof card on the home page.",
+      "Aperta Media Co.'s live site, a screenshot of the home page at 1440 x 960. For the proof card on the home page.",
+  },
+  "sitios/aperta-desktop": {
+    kind: "photo",
+    ratio: "3 / 2",
+    frame:
+      "Aperta Media Co.'s live site, a screenshot of the home page on a computer at 1440 x 960. For the recent-site example on /sitios-web.",
+  },
+  "sitios/aperta-phone": {
+    kind: "photo",
+    ratio: "4 / 5",
+    frame:
+      "Aperta Media Co.'s live site, a screenshot of the home page on a 390 px phone, cropped to 4 / 5. For the recent-site example on /sitios-web.",
   },
   "home/service-sitios": {
     kind: "photo",
