@@ -224,5 +224,5 @@ marked to record where it does not. The licence is the same for all six files.
 ### home/proof-aperta.webp, sitios/aperta-desktop.webp, sitios/aperta-phone.webp
 
 - Credit: Aperta Media Co. (site by Cardon Digital)
-- License: pending owner confirmation
+- License: used with permission of the owner
 - Slot: home/proof-aperta, sitios/aperta-desktop, sitios/aperta-phone

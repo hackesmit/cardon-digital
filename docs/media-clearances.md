@@ -149,9 +149,8 @@ Captured with headless Chrome from https://aperta-media.vercel.app/ on
   them to any visitor
 - Release: held by Aperta for its own published material; not re-shot here
 - Client clearance: Daniel asked on 2026-10-22 to show Aperta Media Co. as a
-  client with screenshots of its site. Open item for Daniel: confirm with
-  Aperta (Andre Rivera and Alexia Gonzalez) that its site and the people in
-  its hero may appear on cardondigital.com. If they decline, the three files
-  and this entry come out.
+  client with screenshots of its site, and confirmed the same day that
+  Aperta agrees to appear on cardondigital.com with these screenshots. If
+  Aperta later withdraws, the three files and this entry come out.
 - Real numbers on screen: no (the packages section with prices is not in frame)
 - Slot: home/proof-aperta, sitios/aperta-desktop, sitios/aperta-phone
