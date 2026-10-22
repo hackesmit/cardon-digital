@@ -38,11 +38,11 @@ const en = {
     titleAccent: "for businesses that want more clients and less work.",
     sub: "A site that gets you found, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
-    proofLine: "Built for Monte Xanic, Vinedo En'kanto and Dharma Ochoa.",
+    proofLine: "Latest builds: Monte Xanic, Viñedo En'kanto and Dharma Ochoa.",
   },
   clientsAria: "Businesses we have worked with",
   proof: {
-    aria: "Businesses already built for",
+    aria: "Some of the businesses we have built for",
     read: "Read the case",
     items: [
       {
@@ -336,11 +336,11 @@ const es: typeof en = {
     titleAccent: "para negocios que quieren más clientes y menos trabajo.",
     sub: "Un sitio web para que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
-    proofLine: "Hemos trabajado con Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
+    proofLine: "Proyectos recientes: Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
   },
   clientsAria: "Empresas con las que hemos trabajado",
   proof: {
-    aria: "Negocios para los que ya trabajamos",
+    aria: "Algunos de los negocios para los que trabajamos",
     read: "Ver el caso",
     items: [
       {

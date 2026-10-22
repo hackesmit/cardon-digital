@@ -16,14 +16,14 @@ import { SITE_URL } from "@/lib/i18n/metadata";
  * here in the same commit.
  */
 const routes = [
-  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-10-21" },
+  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-10-22" },
   { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-21" },
   { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
-  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
+  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-22" },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
   { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
   { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
