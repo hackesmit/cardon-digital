@@ -1,5 +1,4 @@
-import type { Locale } from "@/lib/i18n/config";
-import { localePath } from "@/lib/i18n/config";
+import { localePath, type Locale } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/i18n/metadata";
 import { monteXanic } from "@/lib/i18n/monte-xanic";
 import type { Guide, GuideCopy } from "./types";
