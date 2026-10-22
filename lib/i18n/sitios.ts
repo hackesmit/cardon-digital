@@ -22,12 +22,23 @@ const en = {
     title: "Get found on Google,",
     titleAccent: "and get written to from a phone.",
     sub: "Cardon Digital designs and builds websites for businesses in Ensenada and Baja California. Every site loads fast on a phone, is built to be found on Google and to be read and cited by ChatGPT and Gemini, and puts a call or a message one tap away. The domain and the site stay in your name.",
-    proof: "Sites built for Vinedo En'kanto and Dharma Ochoa, delivered in their names.",
+    proof: "Latest sites: Viñedo En'kanto and Aperta Media Co.",
   },
   /** The one link to the style samples page (/estilos). */
   styles: {
     line: "Four invented businesses, each in a style of its own: a winery, a logistics company, a spa and a coastal hotel.",
     cta: "See the styles",
+  },
+  /** A recent client site, shown as screenshots of the live page. */
+  example: {
+    kicker: "A recent site",
+    title: "Aperta Media Co., a photo and video studio",
+    body: "Their packages with prices, a calculator that quotes a custom package by number of videos, their work on video, and an editor where they change the text and the photos themselves, without calling us.",
+    link: "See the live site",
+    desktopCap: "The home page on a computer: who they are and what they sell, on the first screen.",
+    desktopAlt: "Screenshot of the Aperta Media Co. home page on a computer",
+    phoneCap: "The same page on a phone, with the packages one tap away.",
+    phoneAlt: "Screenshot of the Aperta Media Co. home page on a phone",
   },
   gets: {
     kicker: "Four things, in this order",
@@ -244,11 +255,21 @@ const es: typeof en = {
     title: "Que lo encuentren en Google",
     titleAccent: "y le escriban desde el teléfono.",
     sub: "Cardon Digital diseña y desarrolla sitios web para negocios en Ensenada y Baja California. Cada sitio carga rápido en el teléfono, está hecho para que lo encuentren en Google y para que ChatGPT y Gemini lo puedan leer y citar, y deja a un toque la llamada o el mensaje. El dominio y el sitio quedan a su nombre.",
-    proof: "Hicimos los sitios de Viñedo En'kanto y Dharma Ochoa, cada uno a nombre de su dueño.",
+    proof: "Sitios recientes: Viñedo En'kanto y Aperta Media Co.",
   },
   styles: {
     line: "Cuatro negocios inventados, cada uno con su propio estilo: una vinícola, una empresa de logística, un spa y un hotel de playa.",
     cta: "Ver los estilos",
+  },
+  example: {
+    kicker: "Un sitio reciente",
+    title: "Aperta Media Co., estudio de foto y video",
+    body: "Sus paquetes con precio, una calculadora que cotiza un paquete a la medida por número de videos, su trabajo en video y un editor donde ellos mismos cambian textos y fotos, sin llamarnos.",
+    link: "Ver el sitio en vivo",
+    desktopCap: "La página de inicio en computadora: quiénes son y qué venden, en la primera pantalla.",
+    desktopAlt: "Captura de la página de inicio de Aperta Media Co. en computadora",
+    phoneCap: "La misma página en el teléfono, con los paquetes a un toque.",
+    phoneAlt: "Captura de la página de inicio de Aperta Media Co. en un teléfono",
   },
   gets: {
     kicker: "Cuatro cosas, en este orden",

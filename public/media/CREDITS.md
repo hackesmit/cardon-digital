@@ -220,3 +220,9 @@ marked to record where it does not. The licence is the same for all six files.
 - Original: the AEO Fundamentals badge HubSpot Academy issued to Daniel Hack
 - Use: the emblem only, cut from the issued image (144 px, white keyed to
   transparent) and shown by the home hero title (components/site/CredentialFloat.tsx)
+
+### home/proof-aperta.webp, sitios/aperta-desktop.webp, sitios/aperta-phone.webp
+
+- Credit: Aperta Media Co. (site by Cardon Digital)
+- License: used with permission of the owner
+- Slot: home/proof-aperta, sitios/aperta-desktop, sitios/aperta-phone

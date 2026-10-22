@@ -38,7 +38,7 @@ const en = {
     titleAccent: "for businesses that want more clients and less work.",
     sub: "A site that gets you found, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
-    proofLine: "Latest builds: Monte Xanic, Viñedo En'kanto and Dharma Ochoa.",
+    proofLine: "Latest builds: Monte Xanic, Viñedo En'kanto and Aperta Media Co.",
   },
   clientsAria: "Businesses we have worked with",
   proof: {
@@ -56,9 +56,9 @@ const en = {
         result: "Production, restaurant and bookings on one system, and a store in front of it",
       },
       {
-        name: "Dharma Ochoa",
-        place: "Artist",
-        result: "Portfolio and online store, designed and delivered in her name",
+        name: "Aperta Media Co.",
+        place: "Photo and video studio",
+        result: "A website with their packages, a quote calculator and an editor they update themselves",
       },
     ],
   },
@@ -99,7 +99,7 @@ const en = {
   photos: {
     "home/proof-xanic": { cap: "Monte Xanic opens the season in one live view.", alt: "Monte Xanic, the winery in one frame" },
     "home/proof-enkanto": { cap: "En'kanto's cabin: every booking from every channel in one calendar.", alt: "En'kanto's cabin among succulents and vines" },
-    "home/proof-dharma": { cap: "Dharma Ochoa's portfolio and store, ready to sell from a phone.", alt: "Dharma Ochoa's site open on a phone" },
+    "home/proof-aperta": { cap: "Aperta Media Co.'s site: their packages and their work, and they edit it themselves.", alt: "Screenshot of the Aperta Media Co. home page" },
     "home/service-sitios": { cap: "A site that works on any screen and leads to a message.", alt: "A phone in hand with a website open" },
     "home/service-anuncios": { cap: "The client who was searching arrives on WhatsApp, and gets counted.", alt: "A message being answered at a counter" },
     "home/service-software": { cap: "The record is written once, where the work happens.", alt: "A tablet with the day's board, at work" },
@@ -336,7 +336,7 @@ const es: typeof en = {
     titleAccent: "para negocios que quieren más clientes y menos trabajo.",
     sub: "Un sitio web para que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
-    proofLine: "Proyectos recientes: Monte Xanic, Viñedo En'kanto y Dharma Ochoa.",
+    proofLine: "Proyectos recientes: Monte Xanic, Viñedo En'kanto y Aperta Media Co.",
   },
   clientsAria: "Empresas con las que hemos trabajado",
   proof: {
@@ -354,9 +354,9 @@ const es: typeof en = {
         result: "Producción, restaurante y reservaciones en un solo sistema, con su tienda en línea",
       },
       {
-        name: "Dharma Ochoa",
-        place: "Artista",
-        result: "Portafolio y tienda en línea, diseñados y entregados a su nombre",
+        name: "Aperta Media Co.",
+        place: "Estudio de foto y video",
+        result: "Sitio con sus paquetes, un cotizador y un editor para que ellos mismos lo actualicen",
       },
     ],
   },
@@ -395,7 +395,7 @@ const es: typeof en = {
   photos: {
     "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
     "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reservación, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
-    "home/proof-dharma": { cap: "El portafolio y la tienda de Dharma Ochoa, listos para vender desde el teléfono.", alt: "El sitio de Dharma Ochoa abierto en un teléfono" },
+    "home/proof-aperta": { cap: "El sitio de Aperta Media Co.: sus paquetes y su trabajo, y ellos mismos lo editan.", alt: "Captura de la página de inicio de Aperta Media Co." },
     "home/service-sitios": { cap: "Un sitio que se ve bien en cualquier pantalla y termina en un mensaje.", alt: "Un teléfono en la mano con un sitio abierto" },
     "home/service-anuncios": { cap: "El cliente que lo buscaba llega por WhatsApp y queda registrado.", alt: "Un mensaje que se contesta en el mostrador" },
     "home/service-software": { cap: "Cada dato se registra una sola vez, ahí donde se hace el trabajo.", alt: "Una tableta en uso, con el tablero del día" },

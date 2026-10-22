@@ -58,7 +58,9 @@ and upsizing is not.
 | `home/xanic-tank-log` | video | `16 / 9` | 3840 x 2160 px | The same record being written at the tank: hand, tablet, tank in frame. Steady, tripod or a rested elbow, 8 to 12 seconds. |
 | `home/proof-xanic` | photo | `3 / 2` | 3000 x 2000 px | Monte Xanic, one frame that says winery: the barrel room, the tank hall or the vineyard rows, with the system on a screen if it is in shot. For the proof card on the home page. |
 | `home/proof-enkanto` | photo | `3 / 2` | 3000 x 2000 px | En'kanto, the property in one frame: the cabin, the restaurant terrace or the vines. For the proof card on the home page. |
-| `home/proof-dharma` | photo | `3 / 2` | 3000 x 2000 px | Dharma Ochoa's site on a real screen: a phone or laptop showing the portfolio or the store, in a lit room, not a flat screenshot. For the proof card on the home page. |
+| `home/proof-aperta` | photo | `3 / 2` | 3000 x 2000 px | Aperta Media Co.'s live site, a screenshot of the home page at 1440 x 960. For the proof card on the home page. |
+| `sitios/aperta-desktop` | photo | `3 / 2` | 3000 x 2000 px | Aperta Media Co.'s live site, a screenshot of the home page on a computer at 1440 x 960. For the recent-site example on /sitios-web. |
+| `sitios/aperta-phone` | photo | `4 / 5` | 2000 x 2500 px | Aperta Media Co.'s live site, a screenshot of the home page on a 390 px phone, cropped to 4 / 5. For the recent-site example on /sitios-web. |
 | `home/service-sitios` | photo | `3 / 2` | 3000 x 2000 px | A website in use: a phone in someone's hand with a site open, outdoors or in a shop, screen legible. For the websites card on the home page. |
 | `home/service-anuncios` | photo | `3 / 2` | 3000 x 2000 px | A client arriving: a phone ringing or a WhatsApp message being answered at a counter, the business readable around it. For the ads card on the home page. |
 | `home/service-software` | photo | `3 / 2` | 3000 x 2000 px | The system at work: a tablet or screen with the day's board, in a cellar, a kitchen or a front desk, a person doing the job. For the software card on the home page. |

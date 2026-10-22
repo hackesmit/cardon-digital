@@ -133,3 +133,25 @@ Six files under `public/media/estilos`: two clips with their poster frames
   Cloudflare challenge. The credit lines say "to record". If attribution ever
   matters more than the licence requires (it requires none), the names are one
   ordinary browser visit away.
+
+## Aperta Media Co. site screenshots, 2026-10-22
+
+Three files under the served media folder: `home/proof-aperta.webp` and
+`sitios/aperta-desktop.webp` (the same 1440 x 960 capture of the home page) and
+`sitios/aperta-phone.webp` (the home page on a 390 px phone, cropped to 4 / 5).
+Captured with headless Chrome from https://aperta-media.vercel.app/ on
+2026-10-22.
+
+- Shot by: Cardon Digital, a screenshot of the live site Cardon built
+- Location: not applicable
+- People in frame: the people in Aperta's own published hero video and
+  thumbnails (a beach scene and two portrait circles), as the live site shows
+  them to any visitor
+- Release: held by Aperta for its own published material; not re-shot here
+- Client clearance: Daniel asked on 2026-10-22 to show Aperta Media Co. as a
+  client with screenshots of its site. Open item for Daniel: confirm with
+  Aperta (Andre Rivera and Alexia Gonzalez) that its site and the people in
+  its hero may appear on cardondigital.com. If they decline, the three files
+  and this entry come out.
+- Real numbers on screen: no (the packages section with prices is not in frame)
+- Slot: home/proof-aperta, sitios/aperta-desktop, sitios/aperta-phone
