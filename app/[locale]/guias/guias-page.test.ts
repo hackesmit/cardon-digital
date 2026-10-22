@@ -12,6 +12,7 @@ import { locales, localePath, type Locale } from "../../../lib/i18n/config";
 import { SITE_URL } from "../../../lib/i18n/metadata";
 import { site } from "../../../lib/i18n/site";
 import { guias } from "../../../lib/i18n/guias";
+import { monteXanic } from "../../../lib/i18n/monte-xanic";
 import { BASELINE } from "../../../lib/i18n/visibilidad-ia";
 import { CREDENTIALS } from "../../../lib/credentials";
 import { GUIDES, guidePath } from "../../../lib/guides";
@@ -366,6 +367,47 @@ describe.each(locales)("the website cost guide in %s (bead hq-i4b5.12)", (locale
   it("links the price list's package builder", async () => {
     const html = await serveGuide(locale, "cuanto-cuesta-pagina-web");
     expect(html).toContain(`href="${localePath(locale, "/precios#arme")}"`);
+  });
+});
+
+describe.each(locales)("the winery reports guide in %s (bead hq-i4b5.13)", (locale) => {
+  const slug = "automatizar-reportes-bodega";
+  const mx = monteXanic[locale];
+
+  it("prints the Monte Xanic result with its basis, word for word from the case page", async () => {
+    const page = visible(await serveGuide(locale, slug));
+    expect(page).toContain(mx.meta.description);
+    expect(page).toContain(mx.facts.basis);
+  });
+
+  it("states no figure the case page does not already publish", () => {
+    // With the result and its basis cut out, the guide's copy holds no digit
+    // at all: the steps are an ordered list, so they number themselves.
+    const g = GUIDES.find((x) => x.slug === slug)!.copy[locale];
+    const copy = JSON.stringify([g.meta, g.title, g.lede, g.sections, g.faq])
+      .replace(mx.meta.description, "")
+      .replace(mx.facts.basis, "");
+    expect(copy.match(/\d/g) ?? [], "digits in the guide copy").toEqual([]);
+  });
+
+  it("steps through the work as a numbered list", () => {
+    const g = GUIDES.find((x) => x.slug === slug)!.copy[locale];
+    const ordered = g.sections.flatMap((s) => s.blocks).filter((b) => b.kind === "list" && b.ordered);
+    expect(ordered.length).toBeGreaterThanOrEqual(1);
+    expect((ordered[0] as { items: string[] }).items.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it("links its one service to /software and cites the Monte Xanic case", async () => {
+    const html = await serveGuide(locale, slug);
+    const g = GUIDES.find((x) => x.slug === slug)!.copy[locale];
+    const declared = g.sections.flatMap((s) => s.blocks).filter((b) => b.kind === "service");
+    expect(declared.map((b) => (b as { path: string }).path)).toEqual(["/software"]);
+    const sources = block(html, /<section class="guide-sources"/, "section");
+    expect(sources).toContain(`href="${url(locale, "/work/monte-xanic")}"`);
+  });
+
+  it("says nothing about En'kanto, whose system is not in service yet", async () => {
+    expect(visible(await serveGuide(locale, slug))).not.toMatch(/en.?kanto/i);
   });
 });
 

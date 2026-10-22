@@ -102,6 +102,11 @@ export const PAGES = {
     en: { budget: 808, measured: 1615 },
     es: { budget: 855, measured: 1710 },
   },
+  "guia-automatizar-reportes-bodega": {
+    file: "lib/guides/automatizar-reportes-bodega.ts",
+    en: { budget: 527, measured: 1053 },
+    es: { budget: 569, measured: 1137 },
+  },
   "guia-cuanto-cuesta-pagina-web": {
     file: "lib/guides/cuanto-cuesta-pagina-web.ts",
     en: { budget: 605, measured: 1210 },
