@@ -115,6 +115,7 @@ export default function SitiosPage({ params }: Params) {
               <Media
                 className="ex-desktop"
                 slot="sitios/aperta-desktop"
+                tone="full"
                 src="/media/sitios/aperta-desktop.webp"
                 caption={d.example.desktopCap}
                 alt={d.example.desktopAlt}
@@ -122,12 +123,13 @@ export default function SitiosPage({ params }: Params) {
               <Media
                 className="ex-phone"
                 slot="sitios/aperta-phone"
+                tone="full"
                 src="/media/sitios/aperta-phone.webp"
                 caption={d.example.phoneCap}
                 alt={d.example.phoneAlt}
               />
             </div>
-            <a className="ex-link" href="https://aperta-media.vercel.app/" target="_blank" rel="noopener">
+            <a className="ex-link" href="https://aperta-media.vercel.app/" target="_blank" rel="noopener noreferrer">
               {d.example.link}
             </a>
           </Reveal>
