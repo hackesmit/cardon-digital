@@ -115,12 +115,18 @@ inline SVG path data.
 
 ## Client marks (2026-10-07)
 
-The five files under `clients/` are the marks of five businesses Cardon
-Digital has built for, shown on the home page's client orbit with their
+The six files under `clients/` are the marks of six businesses Cardon
+Digital has built for, shown in the home page's client logo row with their
 permission. Each is the emblem of the owner's logo, cut from the rest and
 painted in that owner's own brand colours; the marks remain the property of
 each business, and an owner who prefers the full logo or none at all gets
 that on request.
+
+### clients/aperta-mark.png
+
+- Credit: Aperta Media Co. (mark redrawn from its logo by Cardon Digital)
+- License: used with permission of the owner
+- Slot: home/orbit
 
 ### clients/brighterhire-mark.png
 

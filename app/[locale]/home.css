@@ -112,52 +112,80 @@
   color: var(--primary-text);
 }
 
-/* The client orbit under the proof cards (ClientOrbit, bead hq-1cct): the
-   five businesses turning on an ellipse around the one action. The canvas
-   draws rings, trails and routes; the medallions, names and seat are real
-   elements the loop moves by transform. Colour is tokens only: the wine for
-   strokes and marks, the text tier for anything that reads. */
+/* The client logo row under the proof cards (ClientLogos, Daniel 2026-10-23):
+   each client's own mark in its own colours on a round medallion, with its
+   name and trade under it, in a plain row with no motion. Six across on a
+   wide screen, three on a tablet, two on a phone. */
 .pg-home .proof-map {
   margin-top: clamp(16px, 2.4vw, 26px);
 }
-.pg-home .orbit-stage {
-  position: relative;
-  min-height: clamp(380px, 44vw, 520px);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background:
-    radial-gradient(60% 55% at 50% 50%, var(--primary-faint), transparent 70%),
-    color-mix(in srgb, var(--panel) 70%, transparent);
-  box-shadow: var(--shadow);
-  overflow: hidden;
+.pg-home .logos {
+  border-top: 1px solid var(--line);
+  padding-top: clamp(18px, 2.6vw, 28px);
 }
-.pg-home .orbit-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+.pg-home .logos-legend {
   display: block;
-  pointer-events: none;
-}
-.pg-home .orbit-legend {
-  position: absolute;
-  top: 14px;
-  left: 16px;
-  z-index: 4;
   font-family: var(--mono);
   font-size: 0.66rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
+  text-align: center;
+  margin-bottom: clamp(16px, 2.2vw, 24px);
+}
+.pg-home .logos-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px) clamp(10px, 1.6vw, 20px);
+}
+.pg-home .logos-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  color: inherit;
+  text-decoration: none;
+}
+.pg-home .logos-item b {
+  margin-top: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.pg-home .logos-item .mono {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+a.logos-item:hover b,
+a.logos-item:focus-visible b {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.pg-home a.logos-item:focus-visible {
+  outline: 2px solid var(--energy);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+@media (max-width: 900px) {
+  .pg-home .logos-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .pg-home .logos-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .pg-home .orbit-med {
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 64px;
   height: 64px;
-  margin: -32px 0 0 -32px;
-  padding: 0;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -165,11 +193,12 @@
   background: var(--panel);
   border: 1px solid var(--line);
   color: var(--primary);
-  cursor: pointer;
-  font: inherit;
-  text-decoration: none;
-  will-change: transform;
-  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.pg-home a.logos-item:hover .orbit-med,
+.pg-home a.logos-item:focus-visible .orbit-med {
+  border-color: var(--primary-dim);
+  box-shadow: 0 0 0 6px var(--primary-faint);
 }
 .pg-home .orbit-med svg {
   width: 30px;
@@ -227,6 +256,10 @@
     -webkit-mask-image: url(/media/clients/rlogistics-mark.png);
     mask-image: url(/media/clients/rlogistics-mark.png);
   }
+  .pg-home .orbit-mark-aperta {
+    -webkit-mask-image: url(/media/clients/aperta-mark.png);
+    mask-image: url(/media/clients/aperta-mark.png);
+  }
   .pg-home .orbit-mark-dharma {
     -webkit-mask-image: url(/media/clients/dharma-mark.png);
     mask-image: url(/media/clients/dharma-mark.png);
@@ -239,6 +272,9 @@
   }
   .pg-home .orbit-mark-enkanto {
     background: #330404;
+  }
+  .pg-home .orbit-mark-aperta {
+    background: #b91c1c;
   }
   .pg-home .orbit-mark-brighter {
     background: #ebbe48;
@@ -257,166 +293,9 @@
   }
   /* Brand colours are drawn for a light ground, so in dark mode the client
      medallions keep a paper disc and the wine and charcoal stay legible. */
-  :root:not([data-mode="light"]) .pg-home :is(.orbit-med-xanic, .orbit-med-enkanto, .orbit-med-brighter, .orbit-med-rlog) {
+  :root:not([data-mode="light"]) .pg-home :is(.orbit-med-xanic, .orbit-med-enkanto, .orbit-med-aperta, .orbit-med-brighter, .orbit-med-rlog) {
     background: #f6f1ea;
     border-color: transparent;
-  }
-}
-.pg-home .orbit-med:hover,
-.pg-home .orbit-med:focus-visible,
-.pg-home .orbit-med.lit {
-  border-color: var(--primary-dim);
-  color: var(--primary-text);
-  box-shadow: 0 0 0 6px var(--primary-faint);
-}
-.pg-home .orbit-med:focus-visible {
-  outline: 2px solid var(--energy);
-  outline-offset: 3px;
-}
-.pg-home .orbit-name {
-  position: absolute;
-  left: 0;
-  top: 0;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-  will-change: transform;
-}
-.pg-home .orbit-name b {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-.pg-home .orbit-name span {
-  display: block;
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-top: 2px;
-}
-.pg-home .orbit-seat {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 48px;
-  height: 48px;
-  margin: -24px 0 0 -24px;
-  border-radius: 50%;
-  border: 1px dashed var(--primary-dim);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-text);
-  font-size: 1.25rem;
-  line-height: 1;
-  will-change: transform;
-}
-.pg-home .orbit-core {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 30;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-.pg-home .orbit-core .cta {
-  justify-content: center;
-  border-radius: 999px;
-  padding: 11px 20px;
-  box-shadow: 0 0 0 8px color-mix(in srgb, var(--energy) 14%, transparent),
-    0 0 0 18px color-mix(in srgb, var(--energy) 6%, transparent);
-}
-.pg-home .orbit-core-note {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  /* --text-dim, not --muted: this line sits inside the clay halo, where muted
-     drops under 3:1 in light mode (reviewer, bead hq-1cct). */
-  color: var(--text-dim);
-}
-.pg-home .orbit-pause {
-  position: absolute;
-  right: 12px;
-  bottom: 10px;
-  z-index: 4;
-  height: 30px;
-  padding: 0 10px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--panel) 82%, transparent);
-  color: var(--text-dim);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.pg-home .orbit-pause:hover,
-.pg-home .orbit-pause:focus-visible {
-  border-color: var(--primary-dim);
-  color: var(--text);
-}
-.pg-home .orbit-pause:focus-visible {
-  outline: 2px solid var(--energy);
-  outline-offset: 2px;
-}
-.pg-home .orbit-cap {
-  min-height: 44px;
-  margin: 12px 0 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 0.9rem;
-  color: var(--text-dim);
-}
-.pg-home .orbit-cap::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--secondary);
-  flex: none;
-}
-.pg-home .orbit-cap b {
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: var(--text);
-}
-@media (max-width: 640px) {
-  .pg-home .orbit-med {
-    width: 52px;
-    height: 52px;
-    margin: -26px 0 0 -26px;
-  }
-  .pg-home .orbit-med svg {
-    width: 26px;
-    height: 26px;
-  }
-  .pg-home .orbit-mark-fallback svg {
-    width: 26px;
-    height: 26px;
-  }
-  @supports (mask-image: url("")) or (-webkit-mask-image: url("")) {
-    .pg-home .orbit-mark {
-      width: 28px;
-      height: 28px;
-    }
-    .pg-home .orbit-mark-wide {
-      width: 38px;
-    }
-  }
-  .pg-home .orbit-name {
-    display: none;
-  }
-  .pg-home .orbit-core .cta {
-    padding: 9px 16px;
-    font-size: 0.9rem;
   }
 }
 

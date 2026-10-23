@@ -236,6 +236,12 @@ export const RETIRED = [
     reason:
       "Daniel: the valley map lost its stations when the site narrowed to three services and read empty; replaced by ClientOrbit (bead hq-1cct), the five client businesses turning around the diagnostic action.",
   },
+  {
+    path: "components/pages/home/ClientOrbit.tsx",
+    date: "2026-10-23",
+    reason:
+      "Daniel: the client orbit felt like too much; replaced by ClientLogos, a plain row of the clients' own marks the way other sites show them, with Aperta Media Co. added.",
+  },
 ];
 
 /** Never throws. A malformed entry comes back as a message and main exits 2. */
