@@ -106,6 +106,16 @@ cut from the logo file supplied.
   from her coloured logo, which Daniel supplied through the console inbox on
   2026-10-15 for this orbit. It shows yellow #FFC107 on her red #C42F01, as
   in the logo, in both modes. It replaces the placeholder monogram.
+- 2026-10-23: the orbit is retired for a plain row of the same marks
+  (ClientLogos), at Daniel's request ("maybe just display all of the logos
+  like other sites"). The slot name home/orbit stays as the record key.
+- Aperta Media Co., 2026-10-23: `clients/aperta-mark.png` is the play,
+  bar and square of Aperta's own logo, redrawn on this box from the favicon
+  of the site Cardon built for them (rigs/aperta-media/favicon.svg), shown
+  in their red #B91C1C, on a paper disc in dark mode. Daniel asked for
+  Aperta in the client row on 2026-10-23, after confirming on 2026-10-22
+  that Aperta agrees to be shown as a client (see the screenshots entry
+  below).
 
 ## Style sample material, 2026-10-16
 

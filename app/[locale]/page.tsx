@@ -3,7 +3,7 @@ import Link from "next/link";
 import DigitalArc from "@/components/pages/home/DigitalArc";
 import HeroAssembly from "@/components/pages/home/HeroAssembly";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
-import ClientOrbit from "@/components/pages/home/ClientOrbit";
+import ClientLogos from "@/components/pages/home/ClientLogos";
 import StylesPromo from "@/components/pages/home/StylesPromo";
 import SpotlightFrames from "@/components/pages/home/SpotlightFrames";
 import Media, { type MediaPhotoSlot } from "@/components/site/Media";
@@ -190,8 +190,8 @@ export default function Home({ params }: Params) {
       {/* ============================ 2. PROOF BAR ============================
           Three named clients with what we actually have: Monte Xanic's real
           number, what was built for En'kanto, and Aperta Media Co.'s site
-          (a screenshot of the live page). ClientOrbit, under them, turns the five businesses that run on
-          what we built around the one action (bead hq-1cct). */}
+          (a screenshot of the live page). ClientLogos, under them, shows every
+          client's own mark in a plain row (Daniel, 2026-10-23). */}
       <section className="proof" aria-label={d.proof.aria}>
         <div className="container proof-grid proof-grid-3">
           {d.proof.items.map((item, i) =>
@@ -215,7 +215,7 @@ export default function Home({ params }: Params) {
         </div>
 
         <div className="container proof-map">
-          <ClientOrbit />
+          <ClientLogos locale={locale} />
         </div>
       </section>
 
