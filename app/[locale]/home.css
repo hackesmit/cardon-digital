@@ -163,8 +163,8 @@
   text-transform: uppercase;
   color: var(--muted);
 }
-a.logos-item:hover b,
-a.logos-item:focus-visible b {
+.pg-home a.logos-item:hover b,
+.pg-home a.logos-item:focus-visible b {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
