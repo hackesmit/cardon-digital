@@ -463,11 +463,30 @@ describe("what the page is not allowed to say", () => {
       expect(all.filter((s) => causal.test(s))).toEqual([]);
     });
 
-    it(`${locale}: says plainly that the system is not yet in service`, () => {
-      const leads = enkanto[locale].system.limits.map((l) => l.lead);
-      expect(leads.some((l) => /not yet in service|no está en servicio/i.test(l))).toBe(
-        true,
-      );
+    // Daniel, 2026-10-27 (hq-9l5i): the system is built and in daily use at
+    // En'kanto. The page says so in its status edge, its outcome row and the
+    // caption note, and no string keeps the old "not yet in service" line.
+    const inUse = /in daily use|se usa a diario/i;
+
+    it(`${locale}: says plainly that the system is in daily use`, () => {
+      const d = enkanto[locale];
+      const leads = d.system.limits.map((l) => l.lead);
+      expect(leads.some((l) => inUse.test(l))).toBe(true);
+      expect(d.facts.rows.at(-1)!.v).toMatch(inUse);
+      expect(d.media.honest).toMatch(inUse);
+    });
+
+    it(`${locale}: no string still says the system is not in service`, () => {
+      const stale =
+        /not (yet )?in service|in service there yet|no está en servicio|todavía no está en servicio|siguiente etapa|next phase/i;
+      expect(all.filter((s) => stale.test(s))).toEqual([]);
+    });
+
+    it(`${locale}: daily use is stated without a figure from it`, () => {
+      const d = enkanto[locale];
+      const edge = d.system.limits.find((l) => inUse.test(l.lead))!;
+      expect(`${edge.lead} ${edge.body}`).not.toMatch(/\d/);
+      expect(d.facts.basis).toMatch(/No En'kanto revenue figure|no publicamos ninguna cifra de ingresos/);
     });
 
     it(`${locale}: publishes no percentage and no client money figure`, () => {
