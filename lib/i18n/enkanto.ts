@@ -440,8 +440,8 @@ const es: typeof en = {
         body: "La recepción solo los lee: crear o cambiar un cargo le toca al restaurante. Un cargo sin importe se muestra como pendiente y queda fuera del total, y un ejemplo se marca como ejemplo.",
       },
       {
-        lead: "En En'kanto ya se usa a diario, y no publicamos ninguna cifra de ese uso.",
-        body: "Todo lo de esta página está construido y forma parte del trabajo diario de la propiedad. Lo que cambió tendrá un número aquí solo cuando tengamos las cifras de antes y después de En'kanto, y mientras tanto no afirmamos ninguna.",
+        lead: "El sistema ya se usa a diario en En'kanto, y no publicamos ninguna cifra de ese uso.",
+        body: "Todo lo de esta página está construido y forma parte del trabajo diario de la propiedad. Lo que cambió tendrá un número aquí solo cuando tengamos las cifras de antes y después de En'kanto, y mientras tanto no publicamos ninguna cifra.",
       },
     ],
     demo: {
