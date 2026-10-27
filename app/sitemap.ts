@@ -25,7 +25,7 @@ const routes = [
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-22" },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-16" },
-  { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-20" },
+  { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-27" },
   { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-19" },
   { path: "/guias", priority: 0.6, changeFrequency: "monthly" as const, lastModified: "2026-10-22" },
   { path: "/guias/cuanto-cuesta-pagina-web", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-22" },
