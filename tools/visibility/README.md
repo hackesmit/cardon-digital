@@ -67,7 +67,7 @@ Detection is a string match, so the counts can be recomputed from the stored tex
 ## Engines
 
 - **openai**: Responses API, `web_search` tool, approximate user location from the prompt's country, region and city.
-- **gemini**: `generateContent` with Google Search grounding, on a free AI Studio key. Grounding on the free tier is limited to Gemini 2.5 models (500 grounded requests a day at 2026-10); Gemini 3 grounding needs a paid project. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request to record the real domain.
+- **gemini**: `generateContent` with Google Search grounding. A free AI Studio key refuses grounding (every grounded call returns a quota error, and Gemini 2.5 is closed to new keys since 2026-10), so the project needs billing on before Gemini can run. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request to record the real domain.
 - **Perplexity Sonar** is not wired in: its API needs prepaid credits and none are funded.
 
 API answers are not consumer-app answers (published brand overlap between the two is 6 to 24%, and the ChatGPT app cites far more sources), so every report says "API panel, directional".
@@ -83,4 +83,4 @@ There is no API for either, so they stay manual, monthly, the way the 2026-10-20
 
 ## Cadence
 
-Run weekly, report monthly. A full Cardon run (10 prompts x 2 engines x 5 runs) costs about $3.50 on OpenAI and nothing on the free Gemini key.
+Run weekly, report monthly. The first full Cardon OpenAI run (2026-10-27, 10 prompts x 5 runs on gpt-5.5, with the judge) cost $4.97: about $0.10 per answer, most of it web search content billed as input tokens. Gemini on gemini-3.8-flash adds roughly $0.25 per run once billing is on (grounded requests are free up to 5,000 a month).
