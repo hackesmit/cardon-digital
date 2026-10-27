@@ -7,7 +7,8 @@ import type { Dict } from "./rich";
  *  number above it, and the same closing offer. Monte Xanic carries the one
  *  measured figure this company owns. This page carries none, and that is the
  *  whole editorial problem it solves: it sells the result without borrowing a
- *  number, because the system is built and is not yet in service at En'kanto.
+ *  number. The system is built and in daily use at En'kanto (Daniel,
+ *  2026-10-27), but no before and after figure from that use is in hand.
  *
  *  Four things here are deliberate and load bearing:
  *
@@ -20,7 +21,8 @@ import type { Dict } from "./rich";
  *  3. The honest edges keep their exact scope. Every limit that was gated
  *     before this rewrite is still gated, in the same words where the words
  *     were the policy: mirrors the channels, reads OpenTable, reads a room
- *     charge and never writes one, built and not yet in service.
+ *     charge and never writes one. The status edge now says built and in
+ *     daily use, and still claims no figure from that use.
  *  4. Spanish is written for a Valle winemaker and English for a US owner.
  *     Neither is a translation of the other.
  *  5. The drawn visuals keep their own strings under `vis`, apart from the
@@ -34,7 +36,7 @@ const en = {
   meta: {
     title: "En'kanto case history",
     description:
-      "A bottle can now leave En'kanto's own store paid and shipped, in both languages. Behind the three lines, one system is built and open to walk through.",
+      "A bottle can now leave En'kanto's own store paid and shipped, in both languages. Behind the three lines, one system is built and in daily use, and a demo of it is open to walk through.",
   },
   hero: {
     aria: "Introduction",
@@ -42,7 +44,7 @@ const en = {
     t1: "A bottle can now leave En'kanto's own store, ",
     accent: "paid and shipped",
     t2: ".",
-    sub: "The checkout completes now, and the wine reaches a door inside Mexico. Behind the winery, the rooms and the dining room, one system is built and open to walk through.",
+    sub: "The checkout completes now, and the wine reaches a door inside Mexico. Behind the winery, the rooms and the dining room, one system is built and in daily use, and a demo of it is open to walk through.",
   },
   /** Captions are read by about twice as many people as this body copy, so each
    *  one carries the result its picture is evidence for. The video caption says
@@ -58,7 +60,7 @@ const en = {
       "A restaurant charge posted to a room, in the system we built. The desk reads that total and never writes one.",
     videoAlt: "A tablet at the table, then the guest folio at the desk.",
     honest:
-      "Photographs of En'kanto. The system described in these captions is built and not yet in service there.",
+      "Photographs of En'kanto. The system described in these captions is built and in daily use there.",
     play: "Play",
     pause: "Pause",
   },
@@ -75,12 +77,12 @@ const en = {
       },
       {
         k: "Outcome",
-        v: "The store takes a real order in both languages; the system for the three lines is built and open to walk through",
+        v: "The store takes a real order in both languages; the system for the three lines is built and in daily use there",
       },
     ],
     basisK: "Basis",
     basis:
-      "No En'kanto revenue figure is published here, and no result from the system's use, because it is not in service there yet. The counts of the build on 9 September 2026 are: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions its own route table defines, and the four homepages we unpublished.",
+      "No En'kanto revenue figure is published here, and no measured result from the system's daily use, because those figures are not in hand yet. The counts of the build on 9 September 2026 are: three modules, the nineteen screens named here in lists of five, five and nine, ten staff positions its own route table defines, and the four homepages we unpublished.",
   },
   before: {
     kicker: "Before",
@@ -216,8 +218,8 @@ const en = {
         body: "The front desk only reads them: creating or changing a charge belongs to the restaurant. A charge with no amount shows as pending and stays out of the total, and an example is labelled as one.",
       },
       {
-        lead: "It is built and not yet in service at En'kanto.",
-        body: "Everything here is merged and running. Putting it into the property's daily work is the next phase, and until then we claim nothing about what it changed.",
+        lead: "It is in daily use at En'kanto, and we publish no figure from it.",
+        body: "Everything here is built and part of the property's daily work. What it changed gets a number here only once En'kanto's own before and after figures are in hand, and until then we claim none.",
       },
     ],
     demo: {
@@ -269,7 +271,7 @@ const es: typeof en = {
   meta: {
     title: "Caso Viñedo En'kanto",
     description:
-      "Hoy una botella puede salir de la tienda de En'kanto pagada y enviada, en los dos idiomas. Detrás de los tres giros hay un sistema construido y abierto para recorrerlo.",
+      "Hoy una botella puede salir de la tienda de En'kanto pagada y enviada, en los dos idiomas. Detrás de los tres giros hay un sistema construido que ya se usa a diario, y un demo abierto para recorrerlo.",
   },
   hero: {
     aria: "Presentación",
@@ -277,7 +279,7 @@ const es: typeof en = {
     t1: "Hoy una botella puede salir de la tienda en línea de En'kanto, ",
     accent: "pagada y enviada",
     t2: ".",
-    sub: "El pago ya se completa y el vino llega a domicilio dentro de México. Detrás de la vinícola, los cuartos y el comedor hay un sistema construido y abierto para recorrerlo.",
+    sub: "El pago ya se completa y el vino llega a domicilio dentro de México. Detrás de la vinícola, los cuartos y el comedor hay un sistema construido que ya se usa a diario, y un demo abierto para recorrerlo.",
   },
   media: {
     deskCap:
@@ -290,7 +292,7 @@ const es: typeof en = {
       "Un cargo del restaurante que pasa a la cuenta de una habitación, en el sistema que construimos. La recepción lee ese total y nunca escribe uno.",
     videoAlt: "Una tableta en la mesa y luego la cuenta del huésped en recepción.",
     honest:
-      "Fotos de En'kanto. El sistema que describen estos pies de foto está construido y todavía no está en servicio ahí.",
+      "Fotos de En'kanto. El sistema que describen estos pies de foto está construido y ya se usa a diario ahí.",
     play: "Reproducir",
     pause: "Pausar",
   },
@@ -307,12 +309,12 @@ const es: typeof en = {
       },
       {
         k: "Resultado",
-        v: "La tienda toma un pedido real en los dos idiomas; el sistema de los tres giros está construido y abierto para recorrerlo",
+        v: "La tienda toma un pedido real en los dos idiomas; el sistema de los tres giros está construido y ya se usa a diario ahí",
       },
     ],
     basisK: "Sustento",
     basis:
-      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado del uso del sistema, porque todavía no está en servicio ahí. Los conteos de la construcción al 9 de septiembre de 2026 son: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal que define su propia tabla de rutas, y las cuatro páginas de inicio que despublicamos.",
+      "Aquí no publicamos ninguna cifra de ingresos de En'kanto ni ningún resultado medido del uso diario del sistema, porque todavía no tenemos esas cifras. Los conteos de la construcción al 9 de septiembre de 2026 son: tres módulos, las diecinueve pantallas nombradas aquí en listas de cinco, cinco y nueve, diez puestos de personal que define su propia tabla de rutas, y las cuatro páginas de inicio que despublicamos.",
   },
   before: {
     kicker: "Antes",
@@ -438,8 +440,8 @@ const es: typeof en = {
         body: "La recepción solo los lee: crear o cambiar un cargo le toca al restaurante. Un cargo sin importe se muestra como pendiente y queda fuera del total, y un ejemplo se marca como ejemplo.",
       },
       {
-        lead: "Está construido y todavía no está en servicio en En'kanto.",
-        body: "Todo lo de esta página ya está integrado y funcionando. Llevarlo al trabajo diario de la propiedad es la siguiente etapa, y mientras eso no pase no afirmamos nada sobre lo que cambió.",
+        lead: "El sistema ya se usa a diario en En'kanto, y no publicamos ninguna cifra de ese uso.",
+        body: "Todo lo de esta página está construido y forma parte del trabajo diario de la propiedad. Lo que cambió tendrá un número aquí solo cuando tengamos las cifras de antes y después de En'kanto, y mientras tanto no publicamos ninguna cifra.",
       },
     ],
     demo: {
