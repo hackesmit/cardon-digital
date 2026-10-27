@@ -10,7 +10,7 @@ import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, existsSync, readdi
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { parseOpenAI, parseGemini, cleanUrl, redact } from "../lib/engines.mjs";
+import { parseOpenAI, parseGemini, cleanUrl, redact, postJson } from "../lib/engines.mjs";
 import { judgePrompt } from "../lib/judge.mjs";
 import { priceCall, SpendLedger } from "../lib/cost.mjs";
 import { validateConfig, analyse, judgeCandidates, parseArgs, main } from "../run.mjs";
@@ -232,4 +232,38 @@ test("--dry-run prints the plan and makes no call", async () => {
   }
   assert.match(log[0], /3 prompts x openai\+gemini x 5 runs = 30 answers/);
   assert.ok(!existsSync(join(home, "runs")));
+});
+
+test("an exhausted balance fails at once and is marked as quota, not retried", async () => {
+  let n = 0;
+  const f = async () => {
+    n += 1;
+    return { ok: false, status: 429, headers: new Headers(), text: async () => '{"error":{"code":"credit_balance_exhausted"}}' };
+  };
+  await assert.rejects(postJson("https://x.test", {}, {}, { fetchImpl: f }), (e) => e.quota === true);
+  assert.equal(n, 1);
+});
+
+test("main stops the whole run when an engine is out of credit", async () => {
+  const home = mkdtempSync(join(tmpdir(), "vis-quota-"));
+  mkdirSync(join(home, "clients"));
+  writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
+  const realFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls += 1;
+    return { ok: false, status: 429, headers: new Headers(), text: async () => '{"error":{"code":"insufficient_quota"}}' };
+  };
+  process.env.OPENAI_API_KEY = "test-openai-key-123456";
+  process.env.GEMINI_API_KEY = "test-gemini-key-123456";
+  try {
+    const code = await main(["--client", "fixture", "--home", home, "--runs", "5", "--engines", "openai"], () => {});
+    assert.equal(code, 3);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+  // Concurrency 2: the two calls in flight fail, nothing after them starts.
+  assert.ok(calls <= 2, `${calls} calls`);
+  const dir = join(home, "runs", "fixture", readdirSync(join(home, "runs", "fixture"))[0]);
+  assert.match(JSON.parse(readFileSync(join(dir, "summary.json"), "utf8")).partialReason, /out of credit/);
 });
