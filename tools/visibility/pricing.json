@@ -4,11 +4,40 @@
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
   ],
-  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). perGroundedPrompt is per grounded request (Gemini 2.5: $35 per 1k after the free daily allowance). estimatePerCall is the worst case the daily cap reserves before a call starts.",
+  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). perGroundedPrompt is per grounded request (Gemini 2.5: $35 per 1k after the free daily allowance). estimatePerCall is the worst case the daily cap reserves before a call starts. Gemini 3+ grounding bills per search query ($14 per 1k) after 5,000 free requests a month per project; the estimate here ignores that allowance. Gemini 2.5 is closed to new keys since 2026-10.",
   "models": {
-    "gpt-5.5": { "input": 5.0, "cachedInput": 0.5, "output": 30.0, "perSearch": 0.01, "estimatePerCall": 0.25 },
-    "gpt-5.4-mini": { "input": 0.75, "cachedInput": 0.075, "output": 4.5, "perSearch": 0.01, "estimatePerCall": 0.05 },
-    "gpt-5.4-nano": { "input": 0.2, "cachedInput": 0.02, "output": 1.25, "estimatePerCall": 0.005 },
-    "gemini-2.5-flash": { "input": 0.3, "output": 2.5, "perGroundedPrompt": 0.035, "free": true, "estimatePerCall": 0.06 }
+    "gpt-5.5": {
+      "input": 5.0,
+      "cachedInput": 0.5,
+      "output": 30.0,
+      "perSearch": 0.01,
+      "estimatePerCall": 0.25
+    },
+    "gpt-5.4-mini": {
+      "input": 0.75,
+      "cachedInput": 0.075,
+      "output": 4.5,
+      "perSearch": 0.01,
+      "estimatePerCall": 0.05
+    },
+    "gpt-5.4-nano": {
+      "input": 0.2,
+      "cachedInput": 0.02,
+      "output": 1.25,
+      "estimatePerCall": 0.005
+    },
+    "gemini-2.5-flash": {
+      "input": 0.3,
+      "output": 2.5,
+      "perGroundedPrompt": 0.035,
+      "free": true,
+      "estimatePerCall": 0.06
+    },
+    "gemini-3.8-flash": {
+      "input": 0.75,
+      "output": 3.75,
+      "perSearch": 0.014,
+      "estimatePerCall": 0.08
+    }
   }
 }

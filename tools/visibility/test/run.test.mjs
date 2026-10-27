@@ -68,7 +68,8 @@ test("cleanUrl drops only utm parameters", () => {
 });
 
 test("redact removes known keys and key-shaped strings", () => {
-  const out = redact("bad key sk-proj-abcdefghijklmnop and AIzaSyA1234567890abcdef and secret123456789", ["secret123456789"]);
+  const out = redact("bad key sk-proj-abcdefghijklmnop and AIzaSyA1234567890abcdef and AQ.Ab8RN6Kq_zzzzyyyyxxxx and secret123456789", ["secret123456789"]);
+  assert.ok(!out.includes("Ab8RN6Kq_zzzzyyyyxxxx"), "new-style Google keys start with AQ.");
   assert.ok(!out.includes("abcdefghijklmnop"));
   assert.ok(!out.includes("1234567890abcdef"));
   assert.ok(!out.includes("secret123456789"));
