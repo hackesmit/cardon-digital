@@ -138,7 +138,7 @@ export function renderReport(summary, config, previous) {
     "",
     "## Gap list",
     "",
-    "Third-party domains the engines cite in answers that name a competitor, and never in an answer that names us. Getting listed or covered there is the off-site work most likely to move the numbers.",
+    "Third-party domains the engines cite in answers that name a competitor, and never in an answer that names us. Getting listed or covered there is the off-site work most likely to move the numbers. Class `other` also holds the own sites of businesses the config does not track yet; add the ones that matter as competitors so the list keeps only directories, press and guides.",
     "",
     gaps(summary, 20),
     "",
