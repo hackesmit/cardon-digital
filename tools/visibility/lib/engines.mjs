@@ -22,7 +22,7 @@ const GEMINI_URL = (model) => `https://generativelanguage.googleapis.com/v1beta/
 export function redact(s, keys = []) {
   let out = String(s);
   for (const k of keys) if (k && k.length > 8) out = out.split(k).join("[redacted]");
-  return out.replace(/\b(sk-[A-Za-z0-9_-]{6})[A-Za-z0-9_*-]+/g, "$1[redacted]").replace(/\bAIza[0-9A-Za-z_-]{10,}/g, "AIza[redacted]");
+  return out.replace(/\b(sk-[A-Za-z0-9_-]{6})[A-Za-z0-9_*-]+/g, "$1[redacted]").replace(/\bAIza[0-9A-Za-z_-]{10,}/g, "AIza[redacted]").replace(/\bAQ\.[0-9A-Za-z_.-]{10,}/g, "AQ.[redacted]");
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
