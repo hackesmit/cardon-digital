@@ -351,6 +351,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       writeJson(job.file, record);
       log(`  ${job.engine} ${job.promptId} r${job.run}: ${candidates.filter((c) => c.id === config.brand.id).length ? "names us" : "-"}`);
     } catch (e) {
+      if (e.quota) stopReason ||= `${job.engine} is out of credit or quota (${redact(e.message, allKeys).slice(0, 120)})`;
       errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, message: redact(e.message, allKeys) });
       log(`  ${job.engine} ${job.promptId} r${job.run}: failed: ${redact(e.message, allKeys)}`);
     }

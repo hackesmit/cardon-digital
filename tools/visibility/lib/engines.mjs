@@ -25,6 +25,9 @@ export function redact(s, keys = []) {
   return out.replace(/\b(sk-[A-Za-z0-9_-]{6})[A-Za-z0-9_*-]+/g, "$1[redacted]").replace(/\bAIza[0-9A-Za-z_-]{10,}/g, "AIza[redacted]").replace(/\bAQ\.[0-9A-Za-z_.-]{10,}/g, "AQ.[redacted]");
 }
 
+/** Error codes that mean money or quota ran out, not a rate limit. */
+export const QUOTA = /credit_balance_exhausted|insufficient_quota|exceeded your current quota|RESOURCE_EXHAUSTED.*(billing|plan)/i;
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
@@ -45,6 +48,12 @@ export async function postJson(url, headers, body, { retries = 5, keys = [], fet
     const txt = await res.text();
     if (res.ok) return JSON.parse(txt);
     last = new Error(redact(`HTTP ${res.status}: ${txt.slice(0, 400)}`, keys));
+    // An empty balance or a spent quota is a 429 that no wait will fix: fail
+    // at once and mark it, so the run stops instead of burning retries.
+    if (QUOTA.test(txt)) {
+      last.quota = true;
+      throw last;
+    }
     if (res.status !== 429 && res.status < 500) throw last;
     const ra = Number(res.headers.get("retry-after"));
     await sleep(Number.isFinite(ra) && ra > 0 ? ra * 1000 : Math.min(60000, 2000 * 2 ** attempt));
