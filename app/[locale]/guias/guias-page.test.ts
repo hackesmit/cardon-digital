@@ -55,7 +55,7 @@ async function serveGuide(locale: Locale, slug: string): Promise<string> {
     // eslint-disable-next-line react/no-children-prop
     React.createElement(LocaleProvider, {
       locale,
-      children: React.createElement(Page, { params: { locale, slug } }),
+      children: await Page({ params: Promise.resolve({ locale, slug }) }),
     }),
   );
 }
@@ -66,7 +66,7 @@ async function serveIndex(locale: Locale): Promise<string> {
     // eslint-disable-next-line react/no-children-prop
     React.createElement(LocaleProvider, {
       locale,
-      children: React.createElement(Page, { params: { locale } }),
+      children: await Page({ params: Promise.resolve({ locale }) }),
     }),
   );
 }

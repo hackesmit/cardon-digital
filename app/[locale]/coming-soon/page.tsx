@@ -5,13 +5,14 @@ import { site } from "@/lib/i18n/site";
 import { Logo } from "@/components/site/Mark";
 import "./soon.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const d = comingSoon[localeOf(params)];
   return {
     title: { absolute: d.meta.title },
@@ -20,7 +21,8 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function ComingSoonPage({ params }: Params) {
+export default async function ComingSoonPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = comingSoon[locale];
   const mailto =

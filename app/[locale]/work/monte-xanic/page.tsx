@@ -14,13 +14,14 @@ import { site } from "@/lib/i18n/site";
 import { monteXanic } from "@/lib/i18n/monte-xanic";
 import "./case.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/work/monte-xanic", monteXanic[locale].meta);
 }
@@ -68,7 +69,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * The call to action is `site.diag.cta`, the same words the home page uses,
  * repeated verbatim after the hero, after the number and in the closing block.
  */
-export default function MonteXanicCaseStudy({ params }: Params) {
+export default async function MonteXanicCaseStudy(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = monteXanic[locale];
   /** The visuals' working parts. They live apart from the prose because they

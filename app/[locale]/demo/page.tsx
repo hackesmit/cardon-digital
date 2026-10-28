@@ -13,13 +13,14 @@ import "./demo.css";
 // on a statically prerendered redirect to an off-site URL).
 export const dynamic = "force-dynamic";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   // A holding page, so it carries noindex on top of the shared page metadata:
   // the demo buttons should reach it, a search result should not.
@@ -29,7 +30,8 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function DemoPage({ params }: Params) {
+export default async function DemoPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
 
   // Host live: send the visitor straight to the external demo of all three

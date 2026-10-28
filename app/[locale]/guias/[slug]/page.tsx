@@ -15,7 +15,7 @@ import { BASELINE } from "@/lib/i18n/visibilidad-ia";
 import { articleLd, breadcrumbLd, ldGraph } from "@/lib/seo/jsonld";
 import "@/components/pages/guias/guias.css";
 
-type Params = { params: { locale: string; slug: string } };
+type Params = { params: Promise<{ locale: string; slug: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
@@ -27,7 +27,8 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const guide = guideBySlug(params.slug);
   if (!guide) return {};
   const locale = localeOf(params);
@@ -62,7 +63,8 @@ function fillBaseline(template: string, locale: Locale): string {
  * the question sections, the author's bio, the sources, the FAQ with its
  * FAQPage markup. The trail on screen is the BreadcrumbList.
  */
-export default function GuidePage({ params }: Params) {
+export default async function GuidePage(props: Params) {
+  const params = await props.params;
   const guide = guideBySlug(params.slug);
   if (!guide) notFound();
   const locale = localeOf(params);

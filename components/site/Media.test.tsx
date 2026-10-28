@@ -394,7 +394,9 @@ describe("the video markup", () => {
   it("is muted, looping and inline", () => {
     expect(html).toContain("muted=");
     expect(html).toContain("loop=");
-    expect(html).toContain("playsinline=");
+    // React 19 serializes the prop name as written (playsInline); HTML
+    // attribute names are case-insensitive, so the browser reads either.
+    expect(html).toMatch(/playsinline=/i);
   });
 
   it("carries no autoplay attribute: playback is decided in JS, not by the tag", () => {

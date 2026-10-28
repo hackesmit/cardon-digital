@@ -15,13 +15,14 @@ import JsonLd from "@/components/site/JsonLd";
 import { serviceLd } from "@/lib/seo/jsonld";
 import "../services.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/anuncios", anuncios[locale].meta);
 }
@@ -36,7 +37,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * paragraph is the page's self-contained answer, and the Service markup
  * carries it word for word, filled the same way.
  */
-export default function AnunciosPage({ params }: Params) {
+export default async function AnunciosPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = anuncios[locale];
   const s = site[locale];
