@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Reveal from "@/components/site/Reveal";
@@ -13,7 +14,7 @@ import { allModules, demoHref, demoIsLive } from "@/lib/demo";
 import { showsPending } from "./pending";
 import "./enkanto-case.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
@@ -22,7 +23,8 @@ function localeOf(params: { locale: string }): Locale {
 /** Fail-closed gate for the marked results placeholder. See ./pending.ts. */
 const showPending = showsPending(process.env);
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/work/enkanto", enkanto[locale].meta);
 }
@@ -70,7 +72,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * and is deliberately worded as what it is, so it reads as a way to check the
  * claim rather than as a second offer.
  */
-export default function EnkantoCaseStudy({ params }: Params) {
+export default async function EnkantoCaseStudy(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = enkanto[locale];
   const v = d.vis;

@@ -108,7 +108,7 @@ async function serve(locale: Locale): Promise<string> {
     // eslint-disable-next-line react/no-children-prop
     React.createElement(LocaleProvider, {
       locale,
-      children: React.createElement(WineryPage, { params: { locale } }),
+      children: await WineryPage({ params: Promise.resolve({ locale }) }),
     }),
   );
 }

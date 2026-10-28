@@ -4,18 +4,20 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { privacy } from "@/lib/i18n/privacy";
 import "../legal.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/privacy", privacy[locale].meta);
 }
 
-export default function PrivacyPage({ params }: Params) {
+export default async function PrivacyPage(props: Params) {
+  const params = await props.params;
   const d = privacy[localeOf(params)];
 
   return (

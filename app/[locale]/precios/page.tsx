@@ -17,13 +17,14 @@ import { site } from "@/lib/i18n/site";
 import "../services.css";
 import "./precios.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/precios", precios[locale].meta);
 }
@@ -42,7 +43,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * entry size, the combination and annual rules as policy, the terms, and the
  * line that says the Diagnostico sets the quote. Never the per-size table.
  */
-export default function PreciosPage({ params }: Params) {
+export default async function PreciosPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = precios[locale];
   const s = site[locale];

@@ -12,13 +12,14 @@ import { site } from "@/lib/i18n/site";
 import { estilos } from "@/lib/i18n/estilos";
 import "./estilos.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/estilos", estilos[locale].meta);
 }
@@ -69,7 +70,8 @@ const PALETTE: Record<Key, FieldPalette> = {
  * copy arrives with the same reveal the rest of the site uses, which shows it
  * at once without JavaScript or under reduced motion.
  */
-export default function EstilosPage({ params }: Params) {
+export default async function EstilosPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = estilos[locale];
   const s = site[locale];

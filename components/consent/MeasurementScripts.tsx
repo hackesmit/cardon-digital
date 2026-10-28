@@ -13,11 +13,11 @@ import { bootstrapScript, loaderSrc } from "@/lib/analytics/gtag";
  * time, which is the right trade for a small content site behind middleware
  * that already runs on every request.
  */
-export default function MeasurementScripts() {
+export default async function MeasurementScripts() {
   const src = loaderSrc();
   if (!src) return null;
 
-  const decision = decisionFrom(cookies().get(CONSENT_COOKIE)?.value);
+  const decision = decisionFrom((await cookies()).get(CONSENT_COOKIE)?.value);
   if (decision !== "granted") return null;
 
   return (

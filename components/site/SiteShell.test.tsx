@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import { prerender } from "react-dom/static";
 
 // The classic JSX runtime vitest uses resolves a global React (see Media.test.tsx).
 (globalThis as unknown as { React: typeof React }).React = React;
@@ -38,7 +38,10 @@ process.env.NEXT_PUBLIC_MEASUREMENT = "1";
 
 async function shell() {
   const { default: SiteShell } = await import("./SiteShell");
-  return renderToStaticMarkup(<SiteShell locale="es">{null}</SiteShell>);
+  // The consent parts are async (they await cookies()), so the static
+  // renderer, which waits for them, stands in for renderToStaticMarkup.
+  const { prelude } = await prerender(<SiteShell locale="es">{null}</SiteShell>);
+  return new Response(prelude).text();
 }
 
 describe("SiteShell measurement", () => {

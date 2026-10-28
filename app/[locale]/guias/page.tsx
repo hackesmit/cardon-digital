@@ -9,13 +9,14 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { breadcrumbLd, ldGraph } from "@/lib/seo/jsonld";
 import "@/components/pages/guias/guias.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/guias", guias[locale].meta);
 }
@@ -26,7 +27,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * question, its opening answer, its author and its update date. Not in the
  * nav (out of scope for the bead); the footer links here.
  */
-export default function GuiasPage({ params }: Params) {
+export default async function GuiasPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const t = guias[locale];
   const href = (path: string) => localePath(locale, path);

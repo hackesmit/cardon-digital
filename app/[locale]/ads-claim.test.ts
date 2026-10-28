@@ -59,9 +59,11 @@ import {
  */
 
 type Params = { params: { locale: Locale; [segment: string]: string } };
+/** What Next 15 hands a page: the same params, behind a promise. */
+type PageProps = { params: Promise<Params["params"]> };
 type PageModule = {
-  default: (props: Params) => React.ReactElement | Promise<React.ReactElement>;
-  generateMetadata?: (props: Params) => unknown;
+  default: (props: PageProps) => React.ReactElement | Promise<React.ReactElement>;
+  generateMetadata?: (props: PageProps) => unknown;
   /** A dynamic route (a guide under /guias/[slug]) lists the pages it builds. */
   generateStaticParams?: (props: {
     params: { locale: Locale };
@@ -495,25 +497,27 @@ describe("the ads guard serves every page a dynamic route builds", () => {
   });
 });
 
-async function servedWith(mod: PageModule, props: Params): Promise<string[]> {
+async function servedWith(mod: PageModule, { params }: Params): Promise<string[]> {
+  const props: PageProps = { params: Promise.resolve(params) };
   let html = "";
   try {
     const Page = mod.default;
     const el =
       Page.constructor.name === "AsyncFunction"
         ? await Page(props)
-        : React.createElement(Page as React.FunctionComponent<Params>, props);
+        : React.createElement(Page as React.FunctionComponent<PageProps>, props);
     html = renderToStaticMarkup(
       // LocaleProvider declares children as required, see winery-page.test.ts.
       // eslint-disable-next-line react/no-children-prop
-      React.createElement(LocaleProvider, { locale: props.params.locale, children: el }),
+      React.createElement(LocaleProvider, { locale: params.locale, children: el }),
     );
   } catch (e) {
     // /demo redirects off-site when the demo host is set. Nothing is served.
     if (!/NEXT_REDIRECT/.test(String((e as { digest?: string }).digest ?? e))) throw e;
   }
   const out: string[] = [];
-  if (mod.generateMetadata) strings(mod.generateMetadata(props), out);
+  // Awaited: generateMetadata is async now, and a pending promise walks as no strings at all.
+  if (mod.generateMetadata) strings(await mod.generateMetadata(props), out);
   return blocksOf(html, out);
 }
 
