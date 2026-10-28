@@ -14,13 +14,14 @@ import { breadcrumbLd, ldGraph, serviceLd } from "@/lib/seo/jsonld";
 import "../services.css";
 import "./visibilidad.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/visibilidad-ia", visibilidad[locale].meta);
 }
@@ -46,7 +47,8 @@ function fillBaseline(template: string, locale: Locale): string {
  * site.diag.cta, repeated verbatim. Not in the nav: the home and /sitios-web
  * link here.
  */
-export default function VisibilidadPage({ params }: Params) {
+export default async function VisibilidadPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = visibilidad[locale];
   const s = site[locale];

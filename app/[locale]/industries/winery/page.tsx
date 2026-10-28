@@ -15,13 +15,14 @@ import Field from "@/components/site/field/Field";
 import "./winery.css";
 import Mark from "@/components/site/Mark";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/industries/winery", winery[locale].meta);
 }
@@ -133,7 +134,8 @@ const capGlyphs = [
   ),
 ];
 
-export default function WineryPage({ params }: Params) {
+export default async function WineryPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = winery[locale];
   const s = site[locale];

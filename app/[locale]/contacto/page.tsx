@@ -15,7 +15,7 @@ import "./contacto.css";
    an English reader recognises, and keeping it identical means a language
    switch on this page never has to translate the URL. */
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
@@ -27,7 +27,8 @@ function localeOf(params: { locale: string }): Locale {
    server, where RESEND_API_KEY is readable and stays. */
 const DOORS = readDoors(deliveryConfigured());
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   const meta = contact[locale].meta;
   // The description names the doors this build has, never the ones it does not.
@@ -37,7 +38,8 @@ export function generateMetadata({ params }: Params): Metadata {
   });
 }
 
-export default function ContactPage({ params }: Params) {
+export default async function ContactPage(props: Params) {
+  const params = await props.params;
   const d = contact[localeOf(params)];
   /* The written door's own heading, which names what it actually is. */
   const written = DOORS.form ? d.form : d.mail;

@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 /**
  * The marks in the client logo row (ClientLogos; beads hq-1cct, hq-3w0v).
  *

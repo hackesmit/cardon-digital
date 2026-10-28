@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -51,10 +51,21 @@ const FRAMES = ["viewVis", "placeVis", "aheadVis"] as const;
 /** The dictionary subtree each frame draws its words from. */
 const KEYS = ["view", "place", "ahead"] as const;
 
+/** The page, served once per locale before any case runs (it is async since Next 15). */
+const served = new Map<Locale, string>();
+beforeAll(async () => {
+  for (const locale of locales) {
+    served.set(
+      locale,
+      renderToStaticMarkup(await MonteXanicCaseStudy({ params: Promise.resolve({ locale }) })),
+    );
+  }
+});
+
 function serve(locale: Locale): string {
-  return renderToStaticMarkup(
-    React.createElement(MonteXanicCaseStudy, { params: { locale } }),
-  );
+  const markup = served.get(locale);
+  if (markup === undefined) throw new Error(`no ${locale} page was served`);
+  return markup;
 }
 
 /** HTML entities back to the characters the dictionary actually holds. */

@@ -27,7 +27,9 @@ import { ORGANIZATION_ID } from "../../lib/seo/jsonld";
  * markup string the page never renders fails here.
  */
 
-type PageModule = { default: (props: { params: { locale: string } }) => React.ReactElement };
+type PageModule = {
+  default: (props: { params: Promise<{ locale: string }> }) => Promise<React.ReactElement>;
+};
 
 const PAGES = [
   { path: "/anuncios", load: () => import("./anuncios/page"), dict: anuncios, fill: adsFill },
@@ -40,7 +42,7 @@ async function serve(load: () => Promise<unknown>, locale: Locale): Promise<stri
     // eslint-disable-next-line react/no-children-prop
     React.createElement(LocaleProvider, {
       locale,
-      children: React.createElement(Page, { params: { locale } }),
+      children: await Page({ params: Promise.resolve({ locale }) }),
     }),
   );
 }

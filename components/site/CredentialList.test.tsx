@@ -120,8 +120,8 @@ describe("CredentialRow: the small row in the footer", () => {
 });
 
 describe("/about", () => {
-  it.each(locales)("%s: the certificates sit right after the mission that names the founder", (locale) => {
-    const html = renderToStaticMarkup(<AboutPage params={{ locale }} />);
+  it.each(locales)("%s: the certificates sit right after the mission that names the founder", async (locale) => {
+    const html = renderToStaticMarkup(await AboutPage({ params: Promise.resolve({ locale }) }));
     const d = about[locale];
     const mission = html.indexOf(d.mission.title);
     const creds = html.indexOf(d.credentials.title.replace(/'/g, "&#x27;"));
