@@ -13,10 +13,10 @@ import { measurementConfigured } from "@/lib/analytics/config";
  * which is exactly what the privacy policy describes today. The listeners mount
  * either way; they no-op on their own until both conditions are met.
  */
-export default function ConsentGate() {
+export default async function ConsentGate() {
   if (!measurementConfigured()) return null;
 
-  const decision = decisionFrom(cookies().get(CONSENT_COOKIE)?.value);
+  const decision = decisionFrom((await cookies()).get(CONSENT_COOKIE)?.value);
 
   return (
     <>

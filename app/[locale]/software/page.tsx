@@ -15,13 +15,14 @@ import { software } from "@/lib/i18n/software";
 import type { ModuleId } from "@/lib/pricing";
 import "../services.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/software", software[locale].meta);
 }
@@ -36,7 +37,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * /precios. The opening paragraph is the page's self-contained answer, and the
  * Service markup carries it word for word.
  */
-export default function SoftwarePage({ params }: Params) {
+export default async function SoftwarePage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = software[locale];
   const s = site[locale];

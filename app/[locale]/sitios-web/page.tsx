@@ -16,13 +16,14 @@ import { ldGraph, serviceLd } from "@/lib/seo/jsonld";
 import "../services.css";
 import "./sitios.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/sitios-web", sitios[locale].meta);
 }
@@ -36,7 +37,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * works, the objections, the FAQ with its FAQPage markup, and the diagnostic
  * close. One action, site.diag.cta, repeated verbatim.
  */
-export default function SitiosPage({ params }: Params) {
+export default async function SitiosPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = sitios[locale];
   const s = site[locale];

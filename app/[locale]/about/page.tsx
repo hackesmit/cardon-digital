@@ -12,18 +12,20 @@ import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import "./about.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/about", about[locale].meta);
 }
 
-export default function AboutPage({ params }: Params) {
+export default async function AboutPage(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = about[locale];
   const s = site[locale];

@@ -1,7 +1,7 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -46,10 +46,8 @@ function esc(text: string): string {
     .replace(/'/g, "&#x27;");
 }
 
-function render(locale: string): string {
-  return renderToStaticMarkup(
-    DemosPage({ params: { locale } }) as React.ReactElement,
-  );
+async function render(locale: string): Promise<string> {
+  return renderToStaticMarkup(await DemosPage({ params: Promise.resolve({ locale }) }));
 }
 
 describe("the cards and the captured previews agree", () => {
@@ -85,7 +83,10 @@ describe("the cards and the captured previews agree", () => {
 });
 
 describe.each(locales)("the %s page", (locale: Locale) => {
-  const html = render(locale);
+  let html = "";
+  beforeAll(async () => {
+    html = await render(locale);
+  });
   const d = demosIndex[locale];
 
   it("renders a card for every demo, with its two lines", () => {
@@ -153,8 +154,8 @@ describe.each(locales)("the %s page", (locale: Locale) => {
     expect(html).toContain(site[locale].diag.cta);
   });
 
-  it("carries the page metadata and the hreflang pair", () => {
-    const meta = generateMetadata({ params: { locale } }) as {
+  it("carries the page metadata and the hreflang pair", async () => {
+    const meta = (await generateMetadata({ params: Promise.resolve({ locale }) })) as {
       title: string;
       alternates: { canonical: string; languages: Record<string, string> };
     };

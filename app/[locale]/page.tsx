@@ -24,7 +24,7 @@ import CredentialFloat from "@/components/site/CredentialFloat";
 import { CREDENTIALS } from "@/lib/credentials";
 import "./home.css";
 
-type Params = { params: { locale: string } };
+type Params = { params: Promise<{ locale: string }> };
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
@@ -63,7 +63,8 @@ const SERVICE_ROUTES = ["/sitios-web", "/anuncios", "/software"];
 /** The businesses we have worked with (Daniel, 2026-10-01). Names, so not copy. */
 const CLIENTS = ["Monte Xanic", "Viñedo En'kanto", "BrighterHire", "RLogistics", "Aperta Media"];
 
-export function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/", home[locale].meta, true);
 }
@@ -89,7 +90,8 @@ export function generateMetadata({ params }: Params): Metadata {
  * There is one call to action, `site.diag.cta`, and every button on the page
  * is that same string. Repeating one action verbatim is the rule.
  */
-export default function Home({ params }: Params) {
+export default async function Home(props: Params) {
+  const params = await props.params;
   const locale = localeOf(params);
   const d = home[locale];
   const s = site[locale];

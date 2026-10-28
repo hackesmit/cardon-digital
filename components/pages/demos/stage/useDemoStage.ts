@@ -73,9 +73,9 @@ export interface DemoScene {
 }
 
 export interface StageRefs {
-  figure: RefObject<HTMLElement>;
-  stage: RefObject<HTMLDivElement>;
-  canvas: RefObject<HTMLCanvasElement>;
+  figure: RefObject<HTMLElement | null>;
+  stage: RefObject<HTMLDivElement | null>;
+  canvas: RefObject<HTMLCanvasElement | null>;
   /** The live child of each ghost box, by LiveText name. */
   live: RefObject<Map<string, HTMLElement>>;
 }

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 import React from "react";
 import ts from "typescript";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -19,6 +19,26 @@ import {
   BLOCKING_SHAPES,
   EM_DASH,
 } from "../../../../scripts/copy-check.mjs";
+
+/**
+ * The page, served once per locale before any case runs. The page is async
+ * (Next 15 hands it its params as a promise), and the helpers below stay
+ * synchronous by reading this map rather than rendering again.
+ */
+const servedPages = new Map<Locale, string>();
+beforeAll(async () => {
+  for (const locale of locales) {
+    servedPages.set(
+      locale,
+      renderToStaticMarkup(await EnkantoCaseStudy({ params: Promise.resolve({ locale }) })),
+    );
+  }
+});
+function served(locale: Locale): string {
+  const markup = servedPages.get(locale);
+  if (markup === undefined) throw new Error(`no ${locale} page was served`);
+  return markup;
+}
 
 /**
  * Guards for the En'kanto case page (beads hq-cczm.25 and hq-4pu0q.5).
@@ -170,9 +190,7 @@ describe("the counts the basis paragraph is accountable for", () => {
   }
 
   function basisMarkup(locale: Locale): string {
-    return renderToStaticMarkup(
-      React.createElement(EnkantoCaseStudy, { params: { locale } }),
-    );
+    return served(locale);
   }
 
   /**
@@ -532,9 +550,7 @@ describe("the copy doctrine, on the rendered page", () => {
   }
 
   function html(locale: Locale): string {
-    return renderToStaticMarkup(
-      React.createElement(EnkantoCaseStudy, { params: { locale } }),
-    );
+    return served(locale);
   }
 
   /**
@@ -564,7 +580,10 @@ describe("the copy doctrine, on the rendered page", () => {
   }
 
   for (const locale of locales) {
-    const text = renderedText(locale);
+    let text = "";
+    beforeAll(() => {
+      text = renderedText(locale);
+    });
 
     it(`${locale}: the rendered page trips none of the blocking shapes`, () => {
       // Twice over. Per block, which is how the text reads, and then over the
@@ -730,9 +749,7 @@ describe("the visuals this page may not lose", () => {
   const read = (path: string) => readFileSync(join(process.cwd(), path), "utf8");
 
   function html(locale: Locale): string {
-    return renderToStaticMarkup(
-      React.createElement(EnkantoCaseStudy, { params: { locale } }),
-    );
+    return served(locale);
   }
 
   /**

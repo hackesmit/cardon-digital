@@ -18,11 +18,10 @@ export function generateStaticParams() {
    prerendered root not-found, which carries the chrome and the lang attribute. */
 export const dynamicParams = false;
 
-export function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
-}): Metadata {
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const locale: Locale = isLocale(params.locale) ? params.locale : "es";
   const s = site[locale].meta;
   return {
@@ -53,10 +52,11 @@ export function generateMetadata({
   };
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
-  params,
-}: Readonly<{ children: React.ReactNode; params: { locale: string } }>) {
+  params: paramsPromise,
+}: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
+  const params = await paramsPromise;
   if (!isLocale(params.locale)) notFound();
 
   // The organization, site and founder graph, once per page (lib/seo/jsonld.ts).

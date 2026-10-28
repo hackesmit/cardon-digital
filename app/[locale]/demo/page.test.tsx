@@ -23,8 +23,8 @@ describe("app/[locale]/demo", () => {
 
     it.each(locales)(
       "redirects %s straight to the live demo with all three modules",
-      (locale) => {
-        DemoPage({ params: { locale } });
+      async (locale) => {
+        await DemoPage({ params: Promise.resolve({ locale }) });
         const target = redirect.mock.calls[0][0];
         expect(target).toBe(
           `${DEMO_HOST}/?modulos=produccion,hospitalidad,restaurante`,
@@ -34,8 +34,8 @@ describe("app/[locale]/demo", () => {
       },
     );
 
-    it("falls back to the es locale for an unknown segment", () => {
-      DemoPage({ params: { locale: "fr" } });
+    it("falls back to the es locale for an unknown segment", async () => {
+      await DemoPage({ params: Promise.resolve({ locale: "fr" }) });
       expect(redirect).toHaveBeenCalledWith(
         `${DEMO_HOST}/?modulos=produccion,hospitalidad,restaurante`,
       );
@@ -65,7 +65,7 @@ describe("app/[locale]/demo", () => {
       "renders the holding page for %s and does not redirect to itself",
       async (locale) => {
         const Page = await clearedPage();
-        const out = Page({ params: { locale } });
+        const out = await Page({ params: Promise.resolve({ locale }) });
         // A rendered element, not the undefined a redirect() call returns.
         expect(out).toBeTruthy();
         expect(redirect).not.toHaveBeenCalled();
