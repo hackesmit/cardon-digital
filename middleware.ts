@@ -9,8 +9,9 @@ import {
   stripLocale,
 } from "@/lib/i18n/config";
 import { retiredRoute } from "@/lib/routes";
+import { buildCsp, cspHeaderName, inlineHashes, newNonce } from "@/lib/security/csp";
 
-/* Two jobs in one pass.
+/* Three jobs in one pass.
    1. Locale routing. Every page lives under /es or /en. A cardon-locale cookie
       wins because it is a choice the visitor made; otherwise the Vercel geo
       header decides, with Mexico and any unresolved country reading Spanish.
@@ -19,6 +20,11 @@ import { retiredRoute } from "@/lib/routes";
       both locales. Preview deployments have no such env var and serve the full
       site, gated behind Vercel Authentication. Launch = remove the env var and
       redeploy.
+   3. Content-Security-Policy. Every page response (never a redirect) carries
+      a policy with a fresh nonce, and the same policy goes onto the request so
+      Next can read the nonce and stamp it on its own inline scripts
+      (lib/security/csp.ts has the policy and why it is shaped this way). The
+      static security headers live in next.config.mjs.
 
    The matcher keeps /api, Next internals, Vercel's own /_vercel endpoints (the
    visit count posts to /_vercel/insights/view, which has no extension and would
@@ -32,7 +38,25 @@ export const config = {
 
 const NOINDEX = "noindex, nofollow";
 
-export function middleware(req: NextRequest) {
+/** NextResponse.next or .rewrite, with the CSP on the request and response. */
+async function page(req: NextRequest, rewrite?: URL) {
+  const nonce = newNonce();
+  const name = cspHeaderName();
+  const csp = buildCsp({
+    nonce,
+    hashes: await inlineHashes(),
+    dev: process.env.NODE_ENV === "development",
+    enforce: name === "Content-Security-Policy",
+  });
+  const headers = new Headers(req.headers);
+  headers.set(name, csp);
+  const init = { request: { headers } };
+  const res = rewrite ? NextResponse.rewrite(rewrite, init) : NextResponse.next(init);
+  res.headers.set(name, csp);
+  return res;
+}
+
+export async function middleware(req: NextRequest) {
   const gated = process.env.COMING_SOON === "1";
   const { pathname } = req.nextUrl;
   const pathLocale = localeFromPath(pathname);
@@ -72,17 +96,17 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
-  if (!gated) return NextResponse.next();
+  if (!gated) return page(req);
 
   const soon = "/" + pathLocale + "/coming-soon";
   if (pathname === soon) {
-    const res = NextResponse.next();
+    const res = await page(req);
     res.headers.set("X-Robots-Tag", NOINDEX);
     return res;
   }
   const url = req.nextUrl.clone();
   url.pathname = soon;
-  const res = NextResponse.rewrite(url);
+  const res = await page(req, url);
   res.headers.set("X-Robots-Tag", NOINDEX);
   return res;
 }

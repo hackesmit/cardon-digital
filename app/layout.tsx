@@ -1,5 +1,12 @@
 import "./globals.css";
 
+/* Every page renders per request so Next can stamp the CSP nonce the middleware
+   sends (lib/security/csp.ts) on its inline scripts; a prerendered page would
+   carry none. Production already rendered per request once the Google tag was
+   configured (MeasurementScripts reads the consent cookie), and the root
+   not-found renders here too, so no page is left without the nonce. */
+export const dynamic = "force-dynamic";
+
 /**
  * Pass-through root layout. The document itself (html, head, body and the site
  * chrome) is mounted one level down by SiteShell, so the lang attribute can
