@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/site/JsonLd";
 import SiteShell from "@/components/site/SiteShell";
@@ -17,6 +17,10 @@ export function generateStaticParams() {
    404 page. Closing the segment sends every other first segment straight to the
    prerendered root not-found, which carries the chrome and the lang attribute. */
 export const dynamicParams = false;
+
+/* viewport-fit=cover lets the page reach the screen edges so the consent bar
+   can pad itself clear of the home indicator with env(safe-area-inset-bottom). */
+export const viewport: Viewport = { viewportFit: "cover" };
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
