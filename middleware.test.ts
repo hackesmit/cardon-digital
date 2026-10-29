@@ -194,6 +194,23 @@ describe("middleware: content security policy", () => {
     }
   });
 
+  it("lets the Vercel Toolbar load on a preview, and only there", async () => {
+    const previous = process.env.VERCEL_ENV;
+    try {
+      process.env.VERCEL_ENV = "production";
+      const prod = (await middleware(request(localePath("es", "/")))).headers.get(REPORT_ONLY)!;
+      expect(prod).not.toContain("vercel.live");
+      process.env.VERCEL_ENV = "preview";
+      const preview = (await middleware(request(localePath("es", "/")))).headers.get(REPORT_ONLY)!;
+      expect(preview).toMatch(/script-src [^;]*https:\/\/vercel\.live/);
+      expect(preview).toMatch(/frame-src [^;]*https:\/\/vercel\.live/);
+      expect(preview).toMatch(/connect-src [^;]*wss:\/\/ws-us3\.pusher\.com/);
+    } finally {
+      if (previous === undefined) delete process.env.VERCEL_ENV;
+      else process.env.VERCEL_ENV = previous;
+    }
+  });
+
   it("leaves redirects without a policy", async () => {
     const res = await middleware(request("/precios", { country: "MX" }));
     expect(res.status).toBe(307);

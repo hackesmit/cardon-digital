@@ -46,6 +46,7 @@ async function page(req: NextRequest, rewrite?: URL) {
     nonce,
     hashes: await inlineHashes(),
     dev: process.env.NODE_ENV === "development",
+    preview: process.env.VERCEL_ENV === "preview",
     enforce: name === "Content-Security-Policy",
   });
   const headers = new Headers(req.headers);
