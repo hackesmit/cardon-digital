@@ -3,7 +3,7 @@
    covers the footer links on a small screen. */
 .consent{
   position:fixed;left:0;right:0;bottom:0;z-index:60;
-  padding:14px clamp(12px,3vw,22px);
+  padding:14px max(clamp(12px,3vw,22px),env(safe-area-inset-right)) 14px max(clamp(12px,3vw,22px),env(safe-area-inset-left));
   padding-bottom:max(14px,env(safe-area-inset-bottom));
   pointer-events:none;
 }
