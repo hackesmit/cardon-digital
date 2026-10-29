@@ -23,6 +23,12 @@ import { modeScript } from "@/lib/site/modeScript";
  * developers.google.com/tag-platform/security/guides/csp, with google.com.mx
  * spelled out because CSP has no wildcard for a top-level domain.
  *
+ * On a Vercel preview the Vercel Toolbar loads from vercel.live (comments and
+ * the share button), so the preview policy adds the hosts Vercel lists for it
+ * at vercel.com/docs/vercel-toolbar/managing-toolbar ("Using a Content
+ * Security Policy").
+ * Production never gets them.
+ *
  * The policy ships as Report-Only (violations are logged, nothing is blocked)
  * until CSP_ENFORCE=1 is set on the Vercel environment.
  */
@@ -73,28 +79,49 @@ export function newNonce(): string {
   return btoa(binary);
 }
 
+const TOOLBAR = "https://vercel.live";
+
 export type CspOptions = {
   nonce: string;
   hashes: string[];
   /** next dev needs eval for React Refresh; never set in a build. */
   dev?: boolean;
+  /** A Vercel preview deployment, which carries the Vercel Toolbar. */
+  preview?: boolean;
   enforce?: boolean;
 };
 
-export function buildCsp({ nonce, hashes, dev = false, enforce = false }: CspOptions): string {
+export function buildCsp({
+  nonce,
+  hashes,
+  dev = false,
+  preview = false,
+  enforce = false,
+}: CspOptions): string {
+  const toolbar = (...extra: string[]) => (preview ? [TOOLBAR, ...extra] : []);
   const directives: [string, string[]][] = [
     ["default-src", ["'self'"]],
     [
       "script-src",
-      ["'self'", "'nonce-" + nonce + "'", ...hashes, ...GOOGLE_SCRIPT, ...(dev ? ["'unsafe-eval'"] : [])],
+      [
+        "'self'",
+        "'nonce-" + nonce + "'",
+        ...hashes,
+        ...GOOGLE_SCRIPT,
+        ...toolbar(),
+        ...(dev ? ["'unsafe-eval'"] : []),
+      ],
     ],
     // Next, next/font and the motion code write inline styles.
-    ["style-src", ["'self'", "'unsafe-inline'"]],
+    ["style-src", ["'self'", "'unsafe-inline'", ...toolbar()]],
     ["img-src", ["'self'", "data:", "blob:", "https:"]],
-    ["font-src", ["'self'", "data:"]],
+    ["font-src", ["'self'", "data:", ...toolbar("https://assets.vercel.com")]],
     ["media-src", ["'self'"]],
-    ["connect-src", ["'self'", ...GOOGLE_CONNECT, ...(dev ? ["ws:"] : [])]],
-    ["frame-src", ["'self'", "https://www.googletagmanager.com"]],
+    [
+      "connect-src",
+      ["'self'", ...GOOGLE_CONNECT, ...toolbar("wss://ws-us3.pusher.com"), ...(dev ? ["ws:"] : [])],
+    ],
+    ["frame-src", ["'self'", "https://www.googletagmanager.com", ...toolbar()]],
     ["frame-ancestors", ["'none'"]],
     ["object-src", ["'none'"]],
     ["base-uri", ["'self'"]],
