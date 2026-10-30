@@ -83,4 +83,4 @@ There is no API for either, so they stay manual, monthly, the way the 2026-10-20
 
 ## Cadence
 
-Run weekly, report monthly. The first full Cardon OpenAI run (2026-10-27, 10 prompts x 5 runs on gpt-5.5, with the judge) cost $4.97: about $0.10 per answer, most of it web search content billed as input tokens. Gemini on gemini-3.8-flash adds roughly $0.25 per run once billing is on (grounded requests are free up to 5,000 a month).
+Run weekly, report monthly. The first full Cardon OpenAI run (2026-10-27, 10 prompts x 5 runs on gpt-5.5, with the judge) cost $4.97: about $0.10 per answer, most of it web search content billed as input tokens. Gemini on gemini-3.8-flash adds roughly $0.25 per run once billing is on. Google waives grounding on the first 5,000 requests a month, but the tracker does not model that: every call is charged list price in the ledger and the cap, so the reported cost is an upper estimate, never zero.

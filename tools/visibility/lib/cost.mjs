@@ -2,10 +2,11 @@
  * cost: prices a call from its usage, and enforces the daily cost cap.
  *
  * Prices live in pricing.json with the date and page they were read from; they
- * are list prices, so the report states an estimate, not an invoice. A model
- * marked "free": true (Gemini on a free AI Studio key) costs 0 but its
- * list-price equivalent is still computed, so a later move to a paid key has
- * a number to compare against.
+ * are list prices, so the report states an estimate, not an invoice. Every
+ * model is charged its list price: no free tier is modelled (Gemini runs on
+ * a billed project), and a "free" flag in pricing.json is ignored, so the cap
+ * never treats a paid call as costing nothing. `usd` and `listUsd` are equal;
+ * both stay so older summaries keep their shape.
  *
  * The cap is per UTC day across every run and client: spend/<day>.json in the
  * tracker home holds what was spent today, and a call starts only if today's
@@ -23,7 +24,7 @@ export function priceCall(usage, model, pricing) {
   const tokens = (uncached * p.input + (usage.cachedInput || 0) * (p.cachedInput ?? p.input) + usage.output * p.output) / 1e6;
   const search = (usage.searches || 0) * (p.perSearch || 0) + (usage.searches ? p.perGroundedPrompt || 0 : 0);
   const listUsd = tokens + search;
-  return { usd: p.free ? 0 : listUsd, listUsd };
+  return { usd: listUsd, listUsd };
 }
 
 export function today() {

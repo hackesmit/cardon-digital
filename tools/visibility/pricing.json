@@ -4,7 +4,7 @@
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
   ],
-  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). perGroundedPrompt is per grounded request (Gemini 2.5: $35 per 1k after the free daily allowance). estimatePerCall is the worst case the daily cap reserves before a call starts. Gemini 3+ grounding bills per search query ($14 per 1k) after 5,000 free requests a month per project; the estimate here ignores that allowance. Gemini 2.5 is closed to new keys since 2026-10.",
+  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). perGroundedPrompt is per grounded request (Gemini 2.5: $35 per 1k after the free daily allowance). estimatePerCall is the worst case the daily cap reserves before a call starts. Gemini 3+ grounding bills per search query ($14 per 1k) after 5,000 free requests a month per project; the tracker models no free allowance and charges every call list price. Gemini 2.5 is closed to new keys since 2026-10.",
   "models": {
     "gpt-5.5": {
       "input": 5.0,
@@ -30,7 +30,6 @@
       "input": 0.3,
       "output": 2.5,
       "perGroundedPrompt": 0.035,
-      "free": true,
       "estimatePerCall": 0.06
     },
     "gemini-3.8-flash": {
