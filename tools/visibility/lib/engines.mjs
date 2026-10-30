@@ -139,10 +139,29 @@ export async function callOpenAI(prompt, opts, key) {
   return res;
 }
 
-/** Follows one grounding redirect to learn the cited url, without fetching the page body. */
-async function resolveRedirect(uri, fetchImpl = fetch) {
+/** The only hosts whose grounding redirects are followed. */
+export const REDIRECT_HOSTS = new Set(["vertexaisearch.cloud.google.com"]);
+
+/** True for a plain https url on a grounding-redirect host: no credentials, default port. */
+export function isGroundingRedirect(uri) {
+  let u;
   try {
-    const r = await fetchImpl(uri, { method: "HEAD", redirect: "manual" });
+    u = new URL(uri);
+  } catch {
+    return false;
+  }
+  return u.protocol === "https:" && REDIRECT_HOSTS.has(u.hostname) && !u.username && !u.password && u.port === "";
+}
+
+/**
+ * Follows one grounding redirect to learn the cited url, without fetching the
+ * page body. Anything that is not a Google grounding redirect is left alone,
+ * with no request, and the request gives up after `timeoutMs`.
+ */
+export async function resolveRedirect(uri, fetchImpl = fetch, timeoutMs = 5000) {
+  if (!isGroundingRedirect(uri)) return null;
+  try {
+    const r = await fetchImpl(uri, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(timeoutMs) });
     return r.headers.get("location") || null;
   } catch {
     return null;

@@ -10,7 +10,7 @@ import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, existsSync, readdi
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { parseOpenAI, parseGemini, cleanUrl, redact, postJson } from "../lib/engines.mjs";
+import { parseOpenAI, parseGemini, cleanUrl, redact, postJson, resolveRedirect } from "../lib/engines.mjs";
 import { judgePrompt } from "../lib/judge.mjs";
 import { priceCall, estimatePerCall, SpendLedger } from "../lib/cost.mjs";
 import { validateConfig, analyse, judgeCandidates, parseArgs, main } from "../run.mjs";
@@ -333,4 +333,30 @@ test("every call carries its output and search limits, and the estimate is the p
   assert.equal(gem.body.generationConfig?.maxOutputTokens, lim(c.engines.gemini.model).maxOutputTokens);
   const judgeCall = bodies.find((b) => b.body.text?.format);
   assert.equal(judgeCall.body.max_output_tokens, lim(c.judge.model).maxOutputTokens);
+});
+
+test("resolveRedirect follows only https grounding redirects on Google's host, with a timeout", async () => {
+  const seen = [];
+  const f = async (url, init) => {
+    seen.push({ url, init });
+    return { headers: new Headers({ location: "https://target.test/" }) };
+  };
+  const ok = "https://vertexaisearch.cloud.google.com/grounding-api-redirect/abc";
+  assert.equal(await resolveRedirect(ok, f), "https://target.test/");
+  assert.equal(seen.length, 1);
+  assert.equal(seen[0].init.method, "HEAD");
+  assert.ok(seen[0].init.signal instanceof AbortSignal, "the request has a timeout");
+  for (const bad of [
+    "http://vertexaisearch.cloud.google.com/grounding-api-redirect/abc",
+    "https://evil.test/grounding-api-redirect/abc",
+    "https://vertexaisearch.cloud.google.com.evil.test/x",
+    "https://user:pw@vertexaisearch.cloud.google.com/x",
+    "https://vertexaisearch.cloud.google.com:8443/x",
+    "http://169.254.169.254/latest/meta-data/",
+    "file:///etc/passwd",
+    "not a url",
+  ]) assert.equal(await resolveRedirect(bad, f), null, bad);
+  assert.equal(seen.length, 1, "no request for anything but a grounding redirect");
+  const hang = (url, init) => new Promise((_, rej) => init.signal.addEventListener("abort", () => rej(new Error("aborted"))));
+  assert.equal(await resolveRedirect(ok, hang, 20), null, "a stalled redirect gives up");
 });
