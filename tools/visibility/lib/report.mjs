@@ -111,6 +111,7 @@ export function renderReport(summary, config, previous) {
     `- Engines: ${engines}. Judge: ${summary.judge.model}.`,
     `- Prompts: ${summary.promptIds.length} x ${summary.runs} runs per engine = ${summary.metrics.overall.answers} answers analysed.${summary.partial ? ` **Partial run:** ${summary.partialReason}.` : ""}`,
     `- Errors: ${summary.errors.length ? summary.errors.length + " calls failed (listed at the end)" : "none"}.`,
+    `- Judge: ${summary.judgePending ? `**${summary.judgePending} stored answers await a judge verdict** and are not counted until \`--resume\` judges them` : "every answer that names a tracked business has a verdict"}.`,
     `- Cost: ${usd(summary.cost.usd)} billed estimate, ${usd(summary.cost.listUsd)} at list price (table below).`,
     "",
     "## Headline",

@@ -436,3 +436,45 @@ test("main records a blocked Gemini answer as an error, leaves it out of the met
     globalThis.fetch = realFetch;
   }
 });
+
+test("a failed judge call is surfaced and makes the run partial; --resume re-runs only the judge", async () => {
+  const home = mkdtempSync(join(tmpdir(), "vis-judge-"));
+  mkdirSync(join(home, "clients"));
+  writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
+  const good = stubFetch([]);
+  let judgeDown = true;
+  const seen = { engine: 0, judge: 0 };
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    if (init.method !== "HEAD") {
+      const isJudge = !!JSON.parse(init.body).text?.format;
+      seen[isJudge ? "judge" : "engine"] += 1;
+      if (isJudge && judgeDown) return { ok: false, status: 400, headers: new Headers(), text: async () => '{"error":"bad request"}' };
+    }
+    return good(url, init);
+  };
+  process.env.OPENAI_API_KEY = "test-openai-key-123456";
+  process.env.GEMINI_API_KEY = "test-gemini-key-123456";
+  try {
+    assert.equal(await main(["--client", "fixture", "--home", home, "--runs", "1", "--max-usd", "5"], () => {}), 3);
+    const dir = join(home, "runs", "fixture", readdirSync(join(home, "runs", "fixture"))[0]);
+    const s = JSON.parse(readFileSync(join(dir, "summary.json"), "utf8"));
+    assert.equal(s.partial, true);
+    assert.equal(s.judgePending, 6, "every answer naming someone awaits the judge");
+    assert.equal(s.metrics.overall.answers, 0, "an unjudged answer is not counted as a non-mention");
+    assert.match(s.partialReason, /6 stored answers await the judge/);
+    assert.ok(s.errors.filter((e) => e.judge).length === 6);
+    assert.match(readFileSync(join(dir, "report.md"), "utf8"), /6 stored answers await a judge verdict/);
+    judgeDown = false;
+    seen.engine = 0;
+    seen.judge = 0;
+    assert.equal(await main(["--resume", dir, "--home", home, "--max-usd", "5"], () => {}), 0);
+    assert.deepEqual(seen, { engine: 0, judge: 6 }, "resume repeats no engine call");
+    const after = JSON.parse(readFileSync(join(dir, "summary.json"), "utf8"));
+    assert.equal(after.judgePending, 0);
+    assert.equal(after.metrics.overall.answers, 6);
+    assert.equal(after.metrics.engines.gemini.mentioned, 3, "the judge's verdict now counts the unclear hit");
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+});

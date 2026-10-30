@@ -134,6 +134,11 @@ export function judgeCandidates(text, config) {
   ];
 }
 
+/** True when a stored answer names someone tracked but has no judge verdict yet. */
+export function needsJudge(record, config) {
+  return !record.judge && judgeCandidates(ENGINES[record.engine].parse(record.response).text, config).length > 0;
+}
+
 /** A key from the environment, then the env file, then Proton Pass. Never printed. */
 function getKey(name, config) {
   if (process.env[name]) return process.env[name];
@@ -234,7 +239,10 @@ function writeOutputs(runDir, plan, config, home, extra) {
   // A stored body that is not a usable answer (written before these checks
   // existed) stays out of the denominator, like a missing answer.
   const inPlan = records.filter((r) => plan.promptIds.includes(r.promptId) && r.run <= plan.runs && !ENGINES[r.engine].failure(r.response));
-  const answers = inPlan.map((r) => analyse(r, config));
+  // An answer still waiting for its judge verdict is not counted: its
+  // unclear hits and sentiment are unknown, so it would read as a non-mention.
+  const awaiting = inPlan.filter((r) => needsJudge(r, config));
+  const answers = inPlan.filter((r) => !needsJudge(r, config)).map((r) => analyse(r, config));
   const parts = {};
   for (const r of inPlan) {
     const model = r.model;
@@ -256,7 +264,11 @@ function writeOutputs(runDir, plan, config, home, extra) {
     judge: { model: config.judge.model },
     expectedAnswers: expected,
     partial: answers.length < expected,
-    partialReason: answers.length < expected ? `${answers.length} of ${expected} answers stored${extra.stopReason ? `; ${extra.stopReason}` : ""}` : null,
+    partialReason: answers.length < expected
+      ? `${answers.length} of ${expected} answers counted${awaiting.length ? `; ${awaiting.length} stored answers await the judge (--resume re-runs only the judge)` : ""}${extra.stopReason ? `; ${extra.stopReason}` : ""}`
+      : null,
+    judgePending: awaiting.length,
+    judgePendingAnswers: awaiting.map((r) => ({ engine: r.engine, promptId: r.promptId, run: r.run, error: r.judgeError || null })),
     metrics: summarise(answers, config),
     cost: {
       parts: Object.fromEntries(Object.entries(parts).map(([k, p]) => [k, { ...p, usd: Math.round(p.usd * 1e4) / 1e4, listUsd: Math.round(p.listUsd * 1e4) / 1e4 }])),
@@ -343,17 +355,45 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     for (let run = 1; run <= plan.runs; run++) {
       for (const promptId of plan.promptIds) {
         const file = join(runDir, "raw", engine, `${promptId}-r${run}.json`);
-        if (existsSync(file) && !ENGINES[engine].failure(readJson(file).response)) continue;
+        if (existsSync(file)) {
+          const rec = readJson(file);
+          if (ENGINES[engine].failure(rec.response)) work[engine].push({ engine, run, promptId, file });
+          // A stored answer whose judge call failed gets the judge again,
+          // never a second (paid) engine call.
+          else if (needsJudge(rec, config)) work[engine].push({ engine, run, promptId, file, judgeOnly: true });
+          continue;
+        }
         work[engine].push({ engine, run, promptId, file });
       }
     }
   }
 
+  const judgeMax = estimatePerCall(config.judge.model, PRICING);
+  const label = (job) => `${job.engine} ${job.promptId} r${job.run}`;
+
+  /** Judges a stored or fresh record in place. False when the judge failed. */
+  const runJudge = async (record, text, candidates) => {
+    try {
+      const j = await judge(text, candidates, { model: config.judge.model, key: keys.judge, limits: PRICING.models[config.judge.model].limits });
+      ledger.add(priceCall(j.usage, config.judge.model, PRICING).usd);
+      record.judge = { model: config.judge.model, verdicts: j.verdicts, usage: j.usage };
+      delete record.judgeError;
+      return true;
+    } catch (e) {
+      const msg = redact(e.message, allKeys);
+      if (e.quota) stopReason ||= `the judge is out of credit or quota (${msg.slice(0, 120)})`;
+      // The paid-for answer is kept, but it is not counted until a verdict
+      // exists: summary.json lists it as awaiting the judge and --resume
+      // re-runs only the judge for it.
+      record.judgeError = msg;
+      return false;
+    }
+  };
+
   const doOne = async (job) => {
     if (stopReason) return;
     const model = config.engines[job.engine].model;
-    const engineMax = estimatePerCall(model, PRICING);
-    const judgeMax = estimatePerCall(config.judge.model, PRICING);
+    const engineMax = job.judgeOnly ? 0 : estimatePerCall(model, PRICING);
     const estimate = engineMax + judgeMax;
     if (!ledger.reserve(estimate)) {
       stopReason ||= `daily cap of $${opts.maxUsd} reached ($${ledger.spent.toFixed(2)} spent today)`;
@@ -361,34 +401,34 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     }
     const prompt = config.prompts.find((p) => p.id === job.promptId);
     try {
-      const response = await ENGINES[job.engine].call(prompt, { model, limits: PRICING.models[model].limits }, keys[job.engine]);
-      const parsed = ENGINES[job.engine].parse(response);
-      const paid = priceCall(parsed.usage, model, PRICING).usd;
-      ledger.add(paid);
-      // A blocked, truncated or empty generation is paid for but is not an
-      // answer: record it as an error (not stored, so --resume retries it).
-      const why = ENGINES[job.engine].failure(response);
-      if (why) throw new Error(`no usable answer: ${why}`);
-      if (paid > engineMax) log(`  ${job.engine} ${job.promptId} r${job.run}: overrun: $${paid.toFixed(4)} passed the $${engineMax.toFixed(4)} estimate; raise limits.maxInputTokens in pricing.json`);
-      const record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: new Date().toISOString(), prompt: prompt.text, response };
-      const candidates = judgeCandidates(parsed.text, config);
-      if (candidates.length) {
-        // A judge failure keeps the paid-for answer: definite mentions still
-        // count, sentiment reads "unknown" and unclear hits stay out.
-        try {
-          const j = await judge(parsed.text, candidates, { model: config.judge.model, key: keys.judge, limits: PRICING.models[config.judge.model].limits });
-          ledger.add(priceCall(j.usage, config.judge.model, PRICING).usd);
-          record.judge = { model: config.judge.model, verdicts: j.verdicts, usage: j.usage };
-        } catch (e) {
-          record.judgeError = redact(e.message, allKeys);
-        }
+      let record;
+      if (job.judgeOnly) {
+        record = readJson(job.file);
+      } else {
+        const response = await ENGINES[job.engine].call(prompt, { model, limits: PRICING.models[model].limits }, keys[job.engine]);
+        const paid = priceCall(ENGINES[job.engine].parse(response).usage, model, PRICING).usd;
+        ledger.add(paid);
+        // A blocked, truncated or empty generation is paid for but is not an
+        // answer: record it as an error (not stored, so --resume retries it).
+        const why = ENGINES[job.engine].failure(response);
+        if (why) throw new Error(`no usable answer: ${why}`);
+        if (paid > engineMax) log(`  ${label(job)}: overrun: $${paid.toFixed(4)} passed the $${engineMax.toFixed(4)} estimate; raise limits.maxInputTokens in pricing.json`);
+        record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: new Date().toISOString(), prompt: prompt.text, response };
       }
+      const text = ENGINES[job.engine].parse(record.response).text;
+      const candidates = judgeCandidates(text, config);
+      const judged = candidates.length ? await runJudge(record, text, candidates) : true;
       writeJson(job.file, record);
-      log(`  ${job.engine} ${job.promptId} r${job.run}: ${candidates.filter((c) => c.id === config.brand.id).length ? "names us" : "-"}`);
+      if (!judged) {
+        errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, judge: true, message: `judge failed: ${record.judgeError}` });
+        log(`  ${label(job)}: answer stored, judge failed: ${record.judgeError}`);
+      } else {
+        log(`  ${label(job)}: ${job.judgeOnly ? "judged; " : ""}${candidates.some((c) => c.id === config.brand.id) ? "names us" : "-"}`);
+      }
     } catch (e) {
       if (e.quota) stopReason ||= `${job.engine} is out of credit or quota (${redact(e.message, allKeys).slice(0, 120)})`;
       errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, message: redact(e.message, allKeys) });
-      log(`  ${job.engine} ${job.promptId} r${job.run}: failed: ${redact(e.message, allKeys)}`);
+      log(`  ${label(job)}: failed: ${redact(e.message, allKeys)}`);
     } finally {
       ledger.release(estimate);
     }
