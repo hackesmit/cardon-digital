@@ -11,6 +11,8 @@ npm run visibility -- --analyse <run dir>            # rebuild report and summar
 npm run visibility:test                              # unit tests (also part of npm test)
 ```
 
+A generation that is not a usable answer (OpenAI status other than `completed`, no output message, a Gemini prompt blocked or with no candidates or a non-STOP finish, or empty text) is charged to the ledger but recorded as an error, kept out of the metrics, and retried by `--resume`.
+
 Exit codes: 0 complete, 1 config or key error, 3 partial (the cap stopped it, or calls failed); the partial report is still written.
 
 ## Where things live

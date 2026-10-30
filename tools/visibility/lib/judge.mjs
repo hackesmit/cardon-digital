@@ -69,8 +69,10 @@ export async function judge(text, candidates, { model, key, fetchImpl, limits })
     store: false,
   };
   const res = await postJson("https://api.openai.com/v1/responses", { Authorization: `Bearer ${key}` }, body, { keys: [key], fetchImpl });
+  if (res.status !== "completed") throw new Error(`judge status ${res.status ?? "missing"}${res.incomplete_details?.reason ? ` (${res.incomplete_details.reason})` : ""}`);
   const out = (res.output || []).filter((o) => o.type === "message").flatMap((m) => m.content || []).find((c) => c.type === "output_text");
-  const parsed = JSON.parse(out?.text || '{"brands":[]}');
+  if (!out?.text) throw new Error("judge returned no text");
+  const parsed = JSON.parse(out.text);
   const verdicts = {};
   for (const b of parsed.brands || []) verdicts[b.id] = { refers: b.refers, sentiment: b.sentiment };
   const u = res.usage || {};
