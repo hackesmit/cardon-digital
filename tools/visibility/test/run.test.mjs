@@ -13,7 +13,7 @@ import { join } from "node:path";
 import { parseOpenAI, parseGemini, cleanUrl, redact, postJson, resolveRedirect } from "../lib/engines.mjs";
 import { judgePrompt } from "../lib/judge.mjs";
 import { priceCall, estimatePerCall, SpendLedger } from "../lib/cost.mjs";
-import { validateConfig, analyse, judgeCandidates, parseArgs, main } from "../run.mjs";
+import { validateConfig, analyse, judgeCandidates, parseArgs, main, allocateRunDir } from "../run.mjs";
 
 const fixtureText = readFileSync(new URL("./fixtures/client.json", import.meta.url), "utf8");
 const config = () => JSON.parse(fixtureText);
@@ -359,4 +359,33 @@ test("resolveRedirect follows only https grounding redirects on Google's host, w
   assert.equal(seen.length, 1, "no request for anything but a grounding redirect");
   const hang = (url, init) => new Promise((_, rej) => init.signal.addEventListener("abort", () => rej(new Error("aborted"))));
   assert.equal(await resolveRedirect(ok, hang, 20), null, "a stalled redirect gives up");
+});
+
+test("two runs in the same second get their own directories; a taken name fails instead of being reused", async () => {
+  const parent = join(mkdtempSync(join(tmpdir(), "vis-dirs-")), "runs", "x");
+  const now = new Date("2026-10-30T12:34:56.789Z");
+  const a = allocateRunDir(parent, now);
+  const b = allocateRunDir(parent, now);
+  assert.notEqual(a, b);
+  assert.match(a, /2026-10-30T123456Z-[0-9a-f]{8}$/);
+  allocateRunDir(parent, now, "fixed");
+  assert.throws(() => allocateRunDir(parent, now, "fixed"), /EEXIST/);
+
+  const home = mkdtempSync(join(tmpdir(), "vis-twice-"));
+  mkdirSync(join(home, "clients"));
+  writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = stubFetch([]);
+  process.env.OPENAI_API_KEY = "test-openai-key-123456";
+  process.env.GEMINI_API_KEY = "test-gemini-key-123456";
+  try {
+    for (let i = 0; i < 2; i++) assert.equal(await main(["--client", "fixture", "--home", home, "--runs", "1", "--prompts", "P0", "--engines", "openai"], () => {}), 0);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+  const runs = readdirSync(join(home, "runs", "fixture"));
+  assert.equal(runs.length, 2, "back-to-back runs do not share a directory");
+  for (const r of runs) assert.equal(readdirSync(join(home, "runs", "fixture", r, "raw", "openai")).length, 1);
+  const reports = runs.map((r) => readFileSync(join(home, "runs", "fixture", r, "report.md"), "utf8"));
+  assert.equal(reports.filter((t) => /Against the run of/.test(t)).length, 1, "the later run diffs against the earlier one");
 });

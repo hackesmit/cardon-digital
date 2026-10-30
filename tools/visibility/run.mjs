@@ -32,6 +32,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { join, dirname, resolve, basename, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
+import { randomBytes } from "node:crypto";
 
 import { detect, domainOf } from "./lib/detect.mjs";
 import { summarise } from "./lib/metrics.mjs";
@@ -169,7 +170,20 @@ async function pool(jobs, n) {
   return results;
 }
 
-const stamp = () => new Date().toISOString().slice(0, 16).replace(/:/g, "") + "Z";
+/** A run directory name: UTC time to the second plus a random suffix. */
+export const stamp = (now = new Date(), suffix = randomBytes(4).toString("hex")) => `${now.toISOString().slice(0, 19).replace(/:/g, "")}Z-${suffix}`;
+
+/**
+ * Creates a fresh run directory under `parent` and returns its path. The
+ * final mkdir is not recursive, so it fails if the directory exists: two runs
+ * never share one. Only --resume reuses a directory, and it never comes here.
+ */
+export function allocateRunDir(parent, now = new Date(), suffix) {
+  mkdirSync(parent, { recursive: true });
+  const dir = join(parent, stamp(now, suffix));
+  mkdirSync(dir);
+  return dir;
+}
 const readJson = (f) => JSON.parse(readFileSync(f, "utf8"));
 const writeJson = (f, o) => {
   mkdirSync(dirname(f), { recursive: true });
@@ -182,12 +196,16 @@ function loadConfig(opts, home) {
   return { config: validateConfig(readJson(file)), file };
 }
 
-/** The newest earlier summary of the same client, or null. */
-function previousSummary(home, client, runDir) {
+/** The newest earlier summary of the same client (by start time), or null. */
+function previousSummary(home, client, runDir, startedAt) {
   const dir = join(home, "runs", client);
   if (!existsSync(dir)) return null;
-  const earlier = readdirSync(dir).filter((d) => join(dir, d) !== runDir && d < basename(runDir) && existsSync(join(dir, d, "summary.json"))).sort();
-  return earlier.length ? readJson(join(dir, earlier.at(-1), "summary.json")) : null;
+  const earlier = readdirSync(dir)
+    .filter((d) => join(dir, d) !== runDir && existsSync(join(dir, d, "summary.json")))
+    .map((d) => readJson(join(dir, d, "summary.json")))
+    .filter((s) => s.startedAt && s.startedAt < startedAt)
+    .sort((a, b) => (a.startedAt < b.startedAt ? -1 : 1));
+  return earlier.at(-1) || null;
 }
 
 function emptyPart(model) {
@@ -246,7 +264,7 @@ function writeOutputs(runDir, plan, config, home, extra) {
     errors: extra.errors || [],
   };
   writeJson(join(runDir, "summary.json"), summary);
-  writeFileSync(join(runDir, "report.md"), renderReport(summary, config, previousSummary(home, config.client, runDir)));
+  writeFileSync(join(runDir, "report.md"), renderReport(summary, config, previousSummary(home, config.client, runDir, plan.startedAt)));
   return summary;
 }
 
@@ -276,7 +294,6 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       const promptIds = opts.prompts || config.prompts.map((p) => p.id);
       for (const p of promptIds) if (!config.prompts.some((q) => q.id === p)) throw new Error(`unknown prompt ${p}`);
       plan = { startedAt: new Date().toISOString(), runs: opts.runs, engines, promptIds };
-      runDir = join(home, "runs", config.client, stamp());
     }
   } catch (e) {
     log(`visibility: ${e.message}`);
@@ -295,6 +312,12 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   }
 
   if (!existing) {
+    try {
+      runDir = allocateRunDir(join(home, "runs", config.client));
+    } catch (e) {
+      log(`visibility: cannot create the run directory: ${e.message}`);
+      return 1;
+    }
     writeJson(join(runDir, "plan.json"), plan);
     writeJson(join(runDir, "config.json"), config);
   }
