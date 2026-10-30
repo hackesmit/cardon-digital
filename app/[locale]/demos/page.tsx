@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import { demoHref, demoIsLive } from "@/lib/demo";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";

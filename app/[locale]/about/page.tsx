@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { Fragment } from "react";
 import CredentialList from "@/components/site/CredentialList";
 import Media from "@/components/site/Media";

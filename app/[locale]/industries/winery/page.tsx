@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
 import VineField from "@/components/pages/winery/VineField";

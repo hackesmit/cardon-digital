@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { formatDate } from "@/components/site/CredentialList";
 import JsonLd from "@/components/site/JsonLd";
 import { GUIDES, guidePath } from "@/lib/guides";

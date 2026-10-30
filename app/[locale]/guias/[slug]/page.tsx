@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/components/site/CredentialList";
 import Faq from "@/components/site/Faq";

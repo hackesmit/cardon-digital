@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import StandaloneBuilder from "@/components/contact/StandaloneBuilder";
 import { builder } from "@/lib/i18n/builder";
 import AdsFee from "@/components/pages/precios/AdsFee";
