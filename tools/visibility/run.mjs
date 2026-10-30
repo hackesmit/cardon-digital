@@ -380,6 +380,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       delete record.judgeError;
       return true;
     } catch (e) {
+      if (e.usage) ledger.add(priceCall(e.usage, config.judge.model, PRICING).usd);
       const msg = redact(e.message, allKeys);
       if (e.quota) stopReason ||= `the judge is out of credit or quota (${msg.slice(0, 120)})`;
       // The paid-for answer is kept, but it is not counted until a verdict

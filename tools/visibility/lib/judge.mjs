@@ -69,12 +69,26 @@ export async function judge(text, candidates, { model, key, fetchImpl, limits })
     store: false,
   };
   const res = await postJson("https://api.openai.com/v1/responses", { Authorization: `Bearer ${key}` }, body, { keys: [key], fetchImpl });
-  if (res.status !== "completed") throw new Error(`judge status ${res.status ?? "missing"}${res.incomplete_details?.reason ? ` (${res.incomplete_details.reason})` : ""}`);
-  const out = (res.output || []).filter((o) => o.type === "message").flatMap((m) => m.content || []).find((c) => c.type === "output_text");
-  if (!out?.text) throw new Error("judge returned no text");
-  const parsed = JSON.parse(out.text);
-  const verdicts = {};
-  for (const b of parsed.brands || []) verdicts[b.id] = { refers: b.refers, sentiment: b.sentiment };
   const u = res.usage || {};
-  return { verdicts, usage: { input: u.input_tokens || 0, cachedInput: u.input_tokens_details?.cached_tokens || 0, output: u.output_tokens || 0, searches: 0 }, model: res.model };
+  const usage = { input: u.input_tokens || 0, cachedInput: u.input_tokens_details?.cached_tokens || 0, output: u.output_tokens || 0, searches: 0 };
+  // Every failure below carries the usage of the paid response, so the caller
+  // charges it to the ledger even when the verdict is unusable.
+  const fail = (msg) => Object.assign(new Error(msg), { usage });
+  if (res.status !== "completed") throw fail(`judge status ${res.status ?? "missing"}${res.incomplete_details?.reason ? ` (${res.incomplete_details.reason})` : ""}`);
+  const out = (res.output || []).filter((o) => o.type === "message").flatMap((m) => m.content || []).find((c) => c.type === "output_text");
+  if (!out?.text) throw fail("judge returned no text");
+  let parsed;
+  try { parsed = JSON.parse(out.text); } catch { throw fail("judge returned invalid JSON"); }
+  const verdicts = {};
+  for (const b of parsed.brands || []) {
+    if (verdicts[b.id]) throw fail(`judge returned ${b.id} twice`);
+    verdicts[b.id] = { refers: b.refers, sentiment: b.sentiment };
+  }
+  // A verdict set that does not match the asked candidates one for one would
+  // turn an unjudged mention into a silent non-mention.
+  const asked = [...new Set(candidates.map((c) => c.id))];
+  const missing = asked.filter((id) => !verdicts[id] || typeof verdicts[id].refers !== "boolean");
+  const extra = Object.keys(verdicts).filter((id) => !asked.includes(id));
+  if (missing.length || extra.length) throw fail(`judge verdicts do not match the candidates (missing ${missing.join(",") || "none"}, extra ${extra.join(",") || "none"})`);
+  return { verdicts, usage, model: res.model };
 }

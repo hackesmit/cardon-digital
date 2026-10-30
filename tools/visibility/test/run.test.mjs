@@ -478,3 +478,24 @@ test("a failed judge call is surfaced and makes the run partial; --resume re-run
     globalThis.fetch = realFetch;
   }
 });
+
+test("judge rejects a verdict set that does not match the candidates, and the failure carries usage", async () => {
+  const { judge } = await import("../lib/judge.mjs");
+  const reply = (brands) => async () => ({ ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify({
+    status: "completed", usage: { input_tokens: 100, output_tokens: 20 },
+    output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ brands }) }] }] }) });
+  const cands = [{ id: "cardon", name: "Cardon Digital", unclear: true }];
+  await assert.rejects(judge("x", cands, { model: "gpt-5.4-nano", key: "k".repeat(20), fetchImpl: reply([]) }),
+    (e) => /do not match/.test(e.message) && e.usage.input === 100);
+  await assert.rejects(judge("x", cands, { model: "gpt-5.4-nano", key: "k".repeat(20),
+    fetchImpl: reply([{ id: "cardon", refers: true, sentiment: "neutral" }, { id: "cardon", refers: false, sentiment: "neutral" }]) }), /twice/);
+  const ok = await judge("x", cands, { model: "gpt-5.4-nano", key: "k".repeat(20), fetchImpl: reply([{ id: "cardon", refers: true, sentiment: "positive" }]) });
+  assert.equal(ok.verdicts.cardon.refers, true);
+});
+
+test("postJson gives up on a response that never finishes", async () => {
+  const stall = (url, opts) => new Promise((_, reject) => opts.signal.addEventListener("abort", () => reject(opts.signal.reason)));
+  const t0 = Date.now();
+  await assert.rejects(postJson("https://example.invalid", {}, {}, { retries: 0, fetchImpl: stall, timeoutMs: 50 }), /network/);
+  assert.ok(Date.now() - t0 < 5000);
+});
