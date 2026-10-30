@@ -46,16 +46,30 @@ export function today() {
 }
 
 export class SpendLedger {
-  constructor(home, capUsd, day = today()) {
+  constructor(home, capUsd, day = today(), clock = today) {
     this.dir = join(home, "spend");
-    this.file = join(this.dir, `${day}.json`);
     this.cap = capUsd;
+    this.clock = clock;
+    this.load(day);
+  }
+
+  load(day) {
+    this.day = day;
+    this.file = join(this.dir, `${day}.json`);
     this.spent = existsSync(this.file) ? JSON.parse(readFileSync(this.file, "utf8")).usd : 0;
+  }
+
+  /** A run that crosses UTC midnight starts charging the new day's file,
+   * so the next run that day sees what this one spent after midnight. */
+  roll() {
+    const d = this.clock();
+    if (d !== this.day) this.load(d);
   }
 
   /** True when a call estimated at `estimate` USD still fits under the cap,
    * counting what calls already in flight have reserved. */
   allows(estimate) {
+    this.roll();
     return this.spent + (this.reserved || 0) + estimate <= this.cap;
   }
 
@@ -74,6 +88,7 @@ export class SpendLedger {
   }
 
   add(usd) {
+    this.roll();
     this.spent += usd;
     mkdirSync(this.dir, { recursive: true });
     writeFileSync(this.file, JSON.stringify({ usd: Math.round(this.spent * 1e6) / 1e6 }) + "\n");
