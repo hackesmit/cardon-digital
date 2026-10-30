@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import ReachMap from "@/components/pages/services/ReachMap";
 import AdsFee from "@/components/pages/precios/AdsFee";

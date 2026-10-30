@@ -1,5 +1,6 @@
 import ContourField from "@/components/site/ContourField";
 import ConsentGate from "@/components/consent/ConsentGate";
+import { SiteTransitions } from "@/components/site/Link";
 import MeasurementScripts from "@/components/consent/MeasurementScripts";
 import Nav from "@/components/site/Nav";
 import Footer from "@/components/site/Footer";
@@ -36,19 +37,22 @@ export default function SiteShell({
         <MeasurementScripts />
       </head>
       <body>
-        <LocaleProvider locale={locale}>
-          <a className="sr-only" href="#main">
-            {s.skipToContent}
-          </a>
-          <ContourField />
-          <Nav />
-          <TitlePaint />
-          {children}
-          <Footer locale={locale} />
-          <LandingSource />
-          <VisitCount />
-          <ConsentGate />
-        </LocaleProvider>
+        {/* Cross-fades in-site navigation (components/site/Link.tsx). */}
+        <SiteTransitions>
+          <LocaleProvider locale={locale}>
+            <a className="sr-only" href="#main">
+              {s.skipToContent}
+            </a>
+            <ContourField />
+            <Nav />
+            <TitlePaint />
+            {children}
+            <Footer locale={locale} />
+            <LandingSource />
+            <VisitCount />
+            <ConsentGate />
+          </LocaleProvider>
+        </SiteTransitions>
       </body>
     </html>
   );

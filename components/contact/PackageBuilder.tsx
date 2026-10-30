@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import "./builder.css";
 import HalftoneSunset, { builderLevel } from "@/components/contact/HalftoneSunset";
 import { useLocale } from "@/lib/i18n/LocaleProvider";

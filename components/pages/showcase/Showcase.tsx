@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import ModuleBlock from "@/components/pages/modulos/ModuleBlock";
 import Combinations from "@/components/pages/modulos/Combinations";
 import ModuleFloors from "@/components/pages/precios/ModuleFloors";

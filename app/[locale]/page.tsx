@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import DigitalArc from "@/components/pages/home/DigitalArc";
 import HeroAssembly from "@/components/pages/home/HeroAssembly";
 import PlayOnceVis from "@/components/pages/home/PlayOnceVis";
@@ -663,7 +663,9 @@ export default async function Home(props: Params) {
           </dl>
 
           <p className="pricing-more">
-            <Link href={href("/precios")}>{d.pricing.more}</Link>
+            <Link className="hit" href={href("/precios")}>
+              {d.pricing.more}
+            </Link>
           </p>
 
           <div className="pricing-foot pricing-foot-2">

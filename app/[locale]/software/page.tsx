@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import FlowCompress from "@/components/pages/services/FlowCompress";
 import Media from "@/components/site/Media";

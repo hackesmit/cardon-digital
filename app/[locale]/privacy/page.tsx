@@ -62,7 +62,9 @@ export default async function PrivacyPage(props: Params) {
 
         <h2>{d.contactHeading}</h2>
         <p>
-          <a href="mailto:daniel@cardondigital.com">daniel@cardondigital.com</a>
+          <a className="hit" href="mailto:daniel@cardondigital.com">
+            daniel@cardondigital.com
+          </a>
         </p>
 
         <div className="legal-note">

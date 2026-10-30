@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -89,6 +89,16 @@ export default function Nav() {
         : "dark";
     setMode(cur);
   }, []);
+
+  // The browser bar takes the page ground: the theme-color meta from the
+  // layout's viewport states the light one, so it follows the mode here.
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    const ground = getComputedStyle(document.documentElement)
+      .getPropertyValue("--ground")
+      .trim();
+    if (meta && ground) meta.setAttribute("content", ground);
+  }, [mode]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {

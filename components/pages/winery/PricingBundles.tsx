@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { winery } from "@/lib/i18n/winery";
 
