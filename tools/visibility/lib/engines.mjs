@@ -94,6 +94,32 @@ export function parseOpenAI(body) {
   };
 }
 
+/**
+ * Why an OpenAI body is not a usable answer, or null when it is. Anything
+ * not "completed" (incomplete at the output cap, failed, cancelled), no
+ * output message, or empty text is an error the run retries, never an answer.
+ */
+export function failureOpenAI(body) {
+  if (body?.status !== "completed") return `status ${body?.status ?? "missing"}${body?.incomplete_details?.reason ? ` (${body.incomplete_details.reason})` : ""}`;
+  if (!(body.output || []).some((o) => o.type === "message")) return "no output message";
+  if (!parseOpenAI(body).text.trim()) return "empty text";
+  return null;
+}
+
+/**
+ * Why a Gemini body is not a usable answer, or null. An HTTP 200 can still
+ * carry a blocked prompt (promptFeedback.blockReason), no candidates, a
+ * candidate stopped for safety, recitation or the token cap, or no text.
+ */
+export function failureGemini(body) {
+  if (body?.promptFeedback?.blockReason) return `prompt blocked: ${body.promptFeedback.blockReason}`;
+  const cand = (body?.candidates || [])[0];
+  if (!cand) return "no candidates";
+  if (cand.finishReason && cand.finishReason !== "STOP") return `finishReason ${cand.finishReason}`;
+  if (!parseGemini(body).text.trim()) return "empty text";
+  return null;
+}
+
 export function parseGemini(body) {
   const cand = (body.candidates || [])[0] || {};
   const text = (cand.content?.parts || []).map((p) => p.text || "").join("");
@@ -183,6 +209,6 @@ export async function callGemini(prompt, opts, key) {
 }
 
 export const ENGINES = {
-  openai: { call: callOpenAI, parse: parseOpenAI, keyName: "OPENAI_API_KEY" },
-  gemini: { call: callGemini, parse: parseGemini, keyName: "GEMINI_API_KEY" },
+  openai: { call: callOpenAI, parse: parseOpenAI, failure: failureOpenAI, keyName: "OPENAI_API_KEY" },
+  gemini: { call: callGemini, parse: parseGemini, failure: failureGemini, keyName: "GEMINI_API_KEY" },
 };

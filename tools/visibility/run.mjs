@@ -231,7 +231,9 @@ function writeOutputs(runDir, plan, config, home, extra) {
     if (!existsSync(d)) continue;
     for (const f of readdirSync(d).filter((x) => x.endsWith(".json")).sort()) records.push(readJson(join(d, f)));
   }
-  const inPlan = records.filter((r) => plan.promptIds.includes(r.promptId) && r.run <= plan.runs);
+  // A stored body that is not a usable answer (written before these checks
+  // existed) stays out of the denominator, like a missing answer.
+  const inPlan = records.filter((r) => plan.promptIds.includes(r.promptId) && r.run <= plan.runs && !ENGINES[r.engine].failure(r.response));
   const answers = inPlan.map((r) => analyse(r, config));
   const parts = {};
   for (const r of inPlan) {
@@ -341,7 +343,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     for (let run = 1; run <= plan.runs; run++) {
       for (const promptId of plan.promptIds) {
         const file = join(runDir, "raw", engine, `${promptId}-r${run}.json`);
-        if (existsSync(file)) continue;
+        if (existsSync(file) && !ENGINES[engine].failure(readJson(file).response)) continue;
         work[engine].push({ engine, run, promptId, file });
       }
     }
@@ -363,6 +365,10 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       const parsed = ENGINES[job.engine].parse(response);
       const paid = priceCall(parsed.usage, model, PRICING).usd;
       ledger.add(paid);
+      // A blocked, truncated or empty generation is paid for but is not an
+      // answer: record it as an error (not stored, so --resume retries it).
+      const why = ENGINES[job.engine].failure(response);
+      if (why) throw new Error(`no usable answer: ${why}`);
       if (paid > engineMax) log(`  ${job.engine} ${job.promptId} r${job.run}: overrun: $${paid.toFixed(4)} passed the $${engineMax.toFixed(4)} estimate; raise limits.maxInputTokens in pricing.json`);
       const record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: new Date().toISOString(), prompt: prompt.text, response };
       const candidates = judgeCandidates(parsed.text, config);

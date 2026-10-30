@@ -10,7 +10,7 @@ import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, existsSync, readdi
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { parseOpenAI, parseGemini, cleanUrl, redact, postJson, resolveRedirect } from "../lib/engines.mjs";
+import { parseOpenAI, parseGemini, cleanUrl, redact, postJson, resolveRedirect, failureOpenAI, failureGemini } from "../lib/engines.mjs";
 import { judgePrompt } from "../lib/judge.mjs";
 import { priceCall, estimatePerCall, SpendLedger } from "../lib/cost.mjs";
 import { validateConfig, analyse, judgeCandidates, parseArgs, main, allocateRunDir } from "../run.mjs";
@@ -23,6 +23,7 @@ const ANSWER = "Opciones:\n\n1. **Ola Studio** ([olastudio.test](https://olastud
 
 const openaiBody = (text = ANSWER) => ({
   model: "gpt-5.4-mini-2026-03-17",
+  status: "completed",
   output: [
     { type: "web_search_call", action: { type: "search", query: "q" } },
     { type: "web_search_call", action: { type: "search", query: "q2" } },
@@ -149,7 +150,7 @@ function stubFetch(calls) {
     if (url.includes("generativelanguage")) return json(geminiBody());
     const body = JSON.parse(init.body);
     if (body.text?.format) {
-      return json({ model: "gpt-5.4-nano", output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ brands: [
+      return json({ model: "gpt-5.4-nano", status: "completed", output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ brands: [
         { id: "us", refers: true, sentiment: "positive" }, { id: "ola", refers: true, sentiment: "neutral" },
       ] }) }] }], usage: { input_tokens: 500, output_tokens: 40 } });
     }
@@ -388,4 +389,50 @@ test("two runs in the same second get their own directories; a taken name fails 
   for (const r of runs) assert.equal(readdirSync(join(home, "runs", "fixture", r, "raw", "openai")).length, 1);
   const reports = runs.map((r) => readFileSync(join(home, "runs", "fixture", r, "report.md"), "utf8"));
   assert.equal(reports.filter((t) => /Against the run of/.test(t)).length, 1, "the later run diffs against the earlier one");
+});
+
+test("blocked, incomplete or empty generations are failures, not answers", () => {
+  assert.equal(failureOpenAI(openaiBody()), null);
+  assert.match(failureOpenAI({ ...openaiBody(), status: "incomplete", incomplete_details: { reason: "max_output_tokens" } }), /incomplete \(max_output_tokens\)/);
+  assert.match(failureOpenAI({ ...openaiBody(), status: "failed" }), /failed/);
+  assert.match(failureOpenAI({ status: "completed", output: [{ type: "web_search_call" }] }), /no output message/);
+  assert.match(failureOpenAI(openaiBody("  ")), /empty text/);
+  assert.equal(failureGemini(geminiBody()), null);
+  assert.match(failureGemini({ promptFeedback: { blockReason: "SAFETY" } }), /blocked: SAFETY/);
+  assert.match(failureGemini({ candidates: [] }), /no candidates/);
+  assert.match(failureGemini({ candidates: [{ finishReason: "SAFETY", content: { parts: [] } }] }), /SAFETY/);
+  assert.match(failureGemini(geminiBody("")), /empty text/);
+});
+
+test("main records a blocked Gemini answer as an error, leaves it out of the metrics, and --resume retries it", async () => {
+  const home = mkdtempSync(join(tmpdir(), "vis-blocked-"));
+  mkdirSync(join(home, "clients"));
+  writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
+  const good = stubFetch([]);
+  let blocked = true;
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    const ok = (o) => ({ ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify(o) });
+    if (blocked && url.includes("generativelanguage")) return ok({ promptFeedback: { blockReason: "OTHER" }, usageMetadata: { promptTokenCount: 10 } });
+    if (blocked && url.includes("openai") && !JSON.parse(init.body).text?.format) return ok({ ...openaiBody(), status: "incomplete", incomplete_details: { reason: "max_output_tokens" } });
+    return good(url, init);
+  };
+  process.env.OPENAI_API_KEY = "test-openai-key-123456";
+  process.env.GEMINI_API_KEY = "test-gemini-key-123456";
+  try {
+    assert.equal(await main(["--client", "fixture", "--home", home, "--runs", "1", "--prompts", "P0", "--max-usd", "5"], () => {}), 3);
+    const dir = join(home, "runs", "fixture", readdirSync(join(home, "runs", "fixture"))[0]);
+    const s = JSON.parse(readFileSync(join(dir, "summary.json"), "utf8"));
+    assert.equal(s.partial, true);
+    assert.equal(s.metrics.overall.answers, 0, "no failed generation enters the denominator");
+    assert.equal(s.errors.length, 2);
+    assert.ok(s.errors.some((e) => /prompt blocked: OTHER/.test(e.message)));
+    assert.ok(s.errors.some((e) => /incomplete/.test(e.message)));
+    assert.ok(!existsSync(join(dir, "raw", "gemini")) || readdirSync(join(dir, "raw", "gemini")).length === 0);
+    blocked = false;
+    assert.equal(await main(["--resume", dir, "--home", home, "--max-usd", "5"], () => {}), 0);
+    assert.equal(JSON.parse(readFileSync(join(dir, "summary.json"), "utf8")).metrics.overall.answers, 2);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
 });
