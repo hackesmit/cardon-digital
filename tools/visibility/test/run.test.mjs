@@ -75,13 +75,16 @@ test("redact removes known keys and key-shaped strings", () => {
   assert.ok(!out.includes("secret123456789"));
 });
 
-test("priceCall prices tokens and searches, and a free model bills 0", () => {
+test("priceCall prices tokens and searches, and charges list price even for a model flagged free", () => {
   const p = priceCall({ input: 9000, cachedInput: 1000, output: 300, searches: 2 }, "gpt-5.4-mini", pricing);
   // 8000 * 0.75 + 1000 * 0.075 + 300 * 4.5 per 1M, plus 2 * $0.01
   assert.ok(Math.abs(p.usd - (0.006 + 0.000075 + 0.00135 + 0.02)) < 1e-9);
   const g = priceCall({ input: 12, output: 250, searches: 1 }, "gemini-2.5-flash", pricing);
-  assert.equal(g.usd, 0);
-  assert.ok(g.listUsd > 0.035);
+  assert.ok(g.usd > 0.035, "Gemini is billed: list price by default");
+  assert.equal(g.usd, g.listUsd);
+  for (const [m, p] of Object.entries(pricing.models)) assert.ok(!p.free, `${m} must not be marked free`);
+  const flagged = { models: { x: { input: 1, output: 1, free: true } } };
+  assert.ok(priceCall({ input: 1e6, output: 0 }, "x", flagged).usd === 1, "a free flag never zeroes the charge");
   assert.throws(() => priceCall({ input: 1, output: 1 }, "nope", pricing), /no price/);
 });
 
@@ -181,7 +184,7 @@ test("main runs a small panel end to end and writes raw answers, summary and rep
   assert.equal(summary.metrics.engines.openai.mentioned, 6);
   assert.equal(summary.metrics.engines.openai.avgPosition, 2);
   assert.equal(summary.metrics.engines.gemini.mentioned, 6, "judge accepted the bare Nopal");
-  assert.ok(summary.cost.usd > 0 && summary.cost.parts.gemini.usd === 0);
+  assert.ok(summary.cost.usd > 0 && summary.cost.parts.gemini.usd > 0, "Gemini spend counts");
   const report = readFileSync(join(dir, "report.md"), "utf8");
   assert.match(report, /API panel, directional/);
   assert.match(report, /\| guia\.test \| other \|/);
