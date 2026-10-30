@@ -34,18 +34,21 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * POSTs JSON with retries on 429 and 5xx (exponential backoff, honouring
  * Retry-After). Throws a redacted error on the last failure.
  */
-export async function postJson(url, headers, body, { retries = 5, keys = [], fetchImpl = fetch } = {}) {
+export async function postJson(url, headers, body, { retries = 5, keys = [], fetchImpl = fetch, timeoutMs = 180000 } = {}) {
   let last;
   for (let attempt = 0; attempt <= retries; attempt++) {
-    let res;
+    let res, txt;
+    // The deadline covers the headers and the body, so a stalled response
+    // cannot hold a worker (and its cap reservation) forever.
+    const signal = AbortSignal.timeout(timeoutMs);
     try {
-      res = await fetchImpl(url, { method: "POST", headers: { "Content-Type": "application/json", ...headers }, body: JSON.stringify(body) });
+      res = await fetchImpl(url, { method: "POST", headers: { "Content-Type": "application/json", ...headers }, body: JSON.stringify(body), signal });
+      txt = await res.text();
     } catch (e) {
       last = new Error(redact(`network: ${e.message}`, keys));
       await sleep(1000 * 2 ** attempt);
       continue;
     }
-    const txt = await res.text();
     if (res.ok) return JSON.parse(txt);
     last = new Error(redact(`HTTP ${res.status}: ${txt.slice(0, 400)}`, keys));
     // An empty balance or a spent quota is a 429 that no wait will fix: fail
