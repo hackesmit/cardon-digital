@@ -18,7 +18,7 @@ Exit codes: 0 complete, 1 config or key error, 3 partial (the cap stopped it, or
 This repository is public, so client configs and outputs never go in it. The tracker home defaults to `~/hq/bunkers/cardon-digital/research/2026-10/aeo/tracker` (override with `--home` or `$VISIBILITY_HOME`):
 
 - `clients/<client>.json`: brand, aliases, competitors, prompts, engines, judge, key sources.
-- `runs/<client>/<stamp>/raw/<engine>/<prompt>-r<n>.json`: each answer's raw response body plus the judge's verdict.
+- `runs/<client>/<stamp>/raw/<engine>/<prompt>-r<n>.json`: each answer's raw response body plus the judge's verdict. `<stamp>` is the UTC start time to the second plus a random suffix (`2026-10-30T123456Z-1a2b3c4d`); a new run always creates a fresh directory and fails rather than reuse one, and only `--resume` writes into an existing run.
 - `runs/<client>/<stamp>/summary.json`: every number, machine-readable; the next run's report diffs against the newest earlier one.
 - `runs/<client>/<stamp>/report.md`: the report, labelled "API panel, directional".
 - `spend/<day>.json`: the daily cost cap's ledger (UTC day, all runs and clients).
