@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node scripts/visuals-check.mjs && node scripts/palette-check.mjs && vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' && npm run copy:check:test",
+    "test": "node scripts/visuals-check.mjs && node scripts/palette-check.mjs && vitest run --reporter=dot --exclude '**/node_modules/**' --exclude 'scripts/**' --exclude 'tools/**' && npm run copy:check:test && npm run visibility:test",
     "copy:check": "node scripts/visuals-check.mjs && node scripts/copy-check.mjs",
-    "copy:check:test": "node --test 'scripts/**/*.test.mjs'"
+    "copy:check:test": "node --test 'scripts/**/*.test.mjs'",
+    "visibility": "node tools/visibility/run.mjs",
+    "visibility:test": "node --test 'tools/visibility/test/*.test.mjs'"
   },
   "dependencies": {
     "@vercel/analytics": "2.0.1",

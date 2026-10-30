@@ -1,0 +1,26 @@
+{
+  "client": "fixture",
+  "brand": {
+    "id": "us",
+    "name": "Nopal Digital",
+    "aliases": ["Nopál Digital", "nopaldigital"],
+    "ambiguous": [{ "text": "Nopal", "notFollowedBy": ["Media", "Studio"] }],
+    "domains": ["nopaldigital.test"],
+    "description": "a web and software studio in Ensenada"
+  },
+  "competitors": [
+    { "id": "ola", "name": "Ola Studio", "aliases": ["Ola Estudio"], "domains": ["olastudio.test"] },
+    { "id": "ttt", "name": "Treinta y Tres", "aliases": ["33 Agencia"], "domains": ["treintaytres.test"] }
+  ],
+  "prompts": [
+    { "id": "P0", "text": "agencia de paginas web en Ensenada", "intent": "category", "language": "es", "country": "MX", "region": "Baja California", "city": "Ensenada" },
+    { "id": "P1", "text": "Ola Studio o Nopal Digital", "intent": "comparison", "language": "es", "country": "MX", "city": "Ensenada" },
+    { "id": "P2", "text": "que es Nopal Digital", "intent": "branded", "language": "es", "country": "MX", "city": "Ensenada" }
+  ],
+  "engines": {
+    "openai": { "model": "gpt-5.4-mini", "concurrency": 2 },
+    "gemini": { "model": "gemini-2.5-flash", "concurrency": 1 }
+  },
+  "judge": { "model": "gpt-5.4-nano" },
+  "domainClasses": { "directory": ["directorio.test"] }
+}
