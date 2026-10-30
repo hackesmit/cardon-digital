@@ -70,7 +70,7 @@ Per engine and overall, from answers pooled over runs (brand lists rarely repeat
 - **Sentiment**: the judge's positive / neutral / negative for each answer naming us.
 - **Cited domains** classed own, competitor, directory, ugc or other, and a **gap list**: third-party domains cited in answers that name a competitor and never in an answer that names us.
 
-Detection is a string match, so the counts can be recomputed from the stored text. The judge (one cheap structured-output call per answer that names anyone tracked) only rules on unclear hits and gives sentiment; it never adds or removes a definite hit. Ideas for the matcher came from limelit-co/open (Apache-2.0: list rank of the enclosing item) and TheCraigHewitt/namedrop (MIT: `notFollowedBy`); no code was copied.
+Detection is a string match, so the counts can be recomputed from the stored text. If the judge call fails, the paid-for answer is stored with its error but not counted (it would otherwise read as a non-mention): `summary.json` gives `judgePending`, the report says how many await a verdict, the run is partial, and `--resume` re-runs only the judge for those answers, with no second engine call. The judge (one cheap structured-output call per answer that names anyone tracked) only rules on unclear hits and gives sentiment; it never adds or removes a definite hit. Ideas for the matcher came from limelit-co/open (Apache-2.0: list rank of the enclosing item) and TheCraigHewitt/namedrop (MIT: `notFollowedBy`); no code was copied.
 
 ## Engines
 
