@@ -37,7 +37,7 @@ import { detect, domainOf } from "./lib/detect.mjs";
 import { summarise } from "./lib/metrics.mjs";
 import { ENGINES, redact } from "./lib/engines.mjs";
 import { judge } from "./lib/judge.mjs";
-import { priceCall, SpendLedger } from "./lib/cost.mjs";
+import { priceCall, estimatePerCall, SpendLedger } from "./lib/cost.mjs";
 import { renderReport } from "./lib/report.mjs";
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
@@ -94,9 +94,11 @@ export function validateConfig(c) {
   for (const [name, e] of Object.entries(c.engines || {})) {
     if (!ENGINES[name]) fail(`unknown engine ${name}`);
     if (!PRICING.models[e.model]) fail(`engine ${name}: model ${e.model} has no price in pricing.json`);
+    estimatePerCall(e.model, PRICING);
   }
   if (!Object.keys(c.engines || {}).length) fail("at least one engine is required");
   if (!c.judge?.model || !PRICING.models[c.judge.model]) fail("judge.model is required and must be priced");
+  estimatePerCall(c.judge.model, PRICING);
   return c;
 }
 
@@ -282,7 +284,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   }
 
   const calls = plan.engines.length * plan.promptIds.length * plan.runs;
-  const worst = plan.engines.reduce((s, e) => s + plan.promptIds.length * plan.runs * (PRICING.models[config.engines[e].model].estimatePerCall + PRICING.models[config.judge.model].estimatePerCall), 0);
+  const worst = plan.engines.reduce((s, e) => s + plan.promptIds.length * plan.runs * (estimatePerCall(config.engines[e].model, PRICING) + estimatePerCall(config.judge.model, PRICING)), 0);
   log(`visibility: ${config.client}, ${plan.promptIds.length} prompts x ${plan.engines.join("+")} x ${plan.runs} runs = ${calls} answers; worst case $${worst.toFixed(2)}, cap $${opts.maxUsd}/day`);
   if (opts.dryRun) return 0;
 
@@ -325,23 +327,27 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   const doOne = async (job) => {
     if (stopReason) return;
     const model = config.engines[job.engine].model;
-    const estimate = PRICING.models[model].estimatePerCall + PRICING.models[config.judge.model].estimatePerCall;
+    const engineMax = estimatePerCall(model, PRICING);
+    const judgeMax = estimatePerCall(config.judge.model, PRICING);
+    const estimate = engineMax + judgeMax;
     if (!ledger.reserve(estimate)) {
       stopReason ||= `daily cap of $${opts.maxUsd} reached ($${ledger.spent.toFixed(2)} spent today)`;
       return;
     }
     const prompt = config.prompts.find((p) => p.id === job.promptId);
     try {
-      const response = await ENGINES[job.engine].call(prompt, { model }, keys[job.engine]);
+      const response = await ENGINES[job.engine].call(prompt, { model, limits: PRICING.models[model].limits }, keys[job.engine]);
       const parsed = ENGINES[job.engine].parse(response);
-      ledger.add(priceCall(parsed.usage, model, PRICING).usd);
+      const paid = priceCall(parsed.usage, model, PRICING).usd;
+      ledger.add(paid);
+      if (paid > engineMax) log(`  ${job.engine} ${job.promptId} r${job.run}: overrun: $${paid.toFixed(4)} passed the $${engineMax.toFixed(4)} estimate; raise limits.maxInputTokens in pricing.json`);
       const record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: new Date().toISOString(), prompt: prompt.text, response };
       const candidates = judgeCandidates(parsed.text, config);
       if (candidates.length) {
         // A judge failure keeps the paid-for answer: definite mentions still
         // count, sentiment reads "unknown" and unclear hits stay out.
         try {
-          const j = await judge(parsed.text, candidates, { model: config.judge.model, key: keys.judge });
+          const j = await judge(parsed.text, candidates, { model: config.judge.model, key: keys.judge, limits: PRICING.models[config.judge.model].limits });
           ledger.add(priceCall(j.usage, config.judge.model, PRICING).usd);
           record.judge = { model: config.judge.model, verdicts: j.verdicts, usage: j.usage };
         } catch (e) {

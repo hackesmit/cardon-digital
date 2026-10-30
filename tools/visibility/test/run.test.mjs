@@ -12,7 +12,7 @@ import { join } from "node:path";
 
 import { parseOpenAI, parseGemini, cleanUrl, redact, postJson } from "../lib/engines.mjs";
 import { judgePrompt } from "../lib/judge.mjs";
-import { priceCall, SpendLedger } from "../lib/cost.mjs";
+import { priceCall, estimatePerCall, SpendLedger } from "../lib/cost.mjs";
 import { validateConfig, analyse, judgeCandidates, parseArgs, main } from "../run.mjs";
 
 const fixtureText = readFileSync(new URL("./fixtures/client.json", import.meta.url), "utf8");
@@ -205,8 +205,8 @@ test("main stops at the daily cap, writes a partial report, and --resume finishe
   process.env.GEMINI_API_KEY = "test-gemini-key-123456";
   const log = [];
   try {
-    // gpt-5.4-mini reserves $0.055 per answer with its judge; $0.1 fits one.
-    const code = await main(["--client", "fixture", "--home", home, "--runs", "1", "--engines", "openai", "--max-usd", "0.1"], (l) => log.push(l));
+    // gpt-5.4-mini reserves about $0.12 per answer with its judge; $0.15 fits one in flight.
+    const code = await main(["--client", "fixture", "--home", home, "--runs", "1", "--engines", "openai", "--max-usd", "0.15"], (l) => log.push(l));
     assert.equal(code, 3);
     const dir = join(home, "runs", "fixture", readdirSync(join(home, "runs", "fixture"))[0]);
     const s = JSON.parse(readFileSync(join(dir, "summary.json"), "utf8"));
@@ -276,22 +276,61 @@ test("concurrent calls cannot push spend past the cap (reservations held in flig
   mkdirSync(join(home, "clients"));
   writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
   const realFetch = globalThis.fetch;
-  // Each answer costs about $0.058 (4 searches plus 4000 output tokens on gpt-5.4-mini) and
-  // takes 50 ms, so two workers in flight both see the old balance unless the ledger reserves.
+  // Each answer costs about $0.113 (gpt-5.4-mini at its limits: 48000 input, 6000 output,
+  // 5 searches) and takes 50 ms, so two workers in flight both see the old balance unless
+  // the ledger reserves; the $0.12 cap fits exactly one.
   globalThis.fetch = async () => {
     await new Promise((r) => setTimeout(r, 50));
     return { ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify({
-      output: [1, 2, 3, 4].map(() => ({ type: "web_search_call" })).concat([{ type: "message", content: [{ type: "output_text", text: "nada", annotations: [] }] }]),
-      usage: { input_tokens: 0, output_tokens: 4000 } }) };
+      status: "completed",
+      output: [1, 2, 3, 4, 5].map(() => ({ type: "web_search_call" })).concat([{ type: "message", content: [{ type: "output_text", text: "nada", annotations: [] }] }]),
+      usage: { input_tokens: 48000, output_tokens: 6000 } }) };
   };
   process.env.OPENAI_API_KEY = "test-openai-key-123456";
   process.env.GEMINI_API_KEY = "test-gemini-key-123456";
   try {
-    await main(["--client", "fixture", "--home", home, "--runs", "5", "--engines", "openai", "--max-usd", "0.06"], () => {});
+    await main(["--client", "fixture", "--home", home, "--runs", "5", "--engines", "openai", "--max-usd", "0.12"], () => {});
     const day = new Date().toISOString().slice(0, 10);
     const spent = JSON.parse(readFileSync(join(home, "spend", `${day}.json`), "utf8")).usd;
-    assert.ok(spent <= 0.06, `spent ${spent} past the 0.06 cap`);
+    assert.ok(spent <= 0.12, `spent ${spent} past the 0.12 cap`);
   } finally {
     globalThis.fetch = realFetch;
   }
+});
+
+test("every call carries its output and search limits, and the estimate is the price at those limits", async () => {
+  for (const [m, p] of Object.entries(pricing.models)) {
+    const l = p.limits;
+    assert.ok(l && l.maxInputTokens > 0 && l.maxOutputTokens > 0 && l.maxSearches >= 0, `${m} has limits`);
+    const atLimits = priceCall({ input: l.maxInputTokens, output: l.maxOutputTokens, searches: l.maxSearches }, m, pricing).usd;
+    assert.equal(estimatePerCall(m, pricing), atLimits, `${m} estimate is derived from its limits`);
+    // Any usage inside the limits prices at or below the estimate.
+    assert.ok(priceCall({ input: l.maxInputTokens, cachedInput: 1000, output: l.maxOutputTokens - 1, searches: Math.max(0, l.maxSearches - 1) }, m, pricing).usd <= atLimits);
+  }
+  const home = mkdtempSync(join(tmpdir(), "vis-limits-"));
+  mkdirSync(join(home, "clients"));
+  writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
+  const bodies = [];
+  const inner = stubFetch([]);
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    if (init.method !== "HEAD") bodies.push({ url, body: JSON.parse(init.body) });
+    return inner(url, init);
+  };
+  process.env.OPENAI_API_KEY = "test-openai-key-123456";
+  process.env.GEMINI_API_KEY = "test-gemini-key-123456";
+  try {
+    assert.equal(await main(["--client", "fixture", "--home", home, "--runs", "1", "--prompts", "P0", "--max-usd", "5"], () => {}), 0);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+  const c = config();
+  const lim = (m) => pricing.models[m].limits;
+  const engineCall = bodies.find((b) => b.url.includes("openai") && !b.body.text?.format);
+  assert.equal(engineCall.body.max_output_tokens, lim(c.engines.openai.model).maxOutputTokens);
+  assert.equal(engineCall.body.max_tool_calls, lim(c.engines.openai.model).maxSearches);
+  const gem = bodies.find((b) => b.url.includes("generativelanguage"));
+  assert.equal(gem.body.generationConfig?.maxOutputTokens, lim(c.engines.gemini.model).maxOutputTokens);
+  const judgeCall = bodies.find((b) => b.body.text?.format);
+  assert.equal(judgeCall.body.max_output_tokens, lim(c.judge.model).maxOutputTokens);
 });

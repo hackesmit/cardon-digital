@@ -10,7 +10,8 @@
  *
  * The cap is per UTC day across every run and client: spend/<day>.json in the
  * tracker home holds what was spent today, and a call starts only if today's
- * spend plus the model's worst-case estimate fits under --max-usd.
+ * spend plus the call's upper-bound estimate (estimatePerCall) fits under
+ * --max-usd.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
@@ -25,6 +26,19 @@ export function priceCall(usage, model, pricing) {
   const search = (usage.searches || 0) * (p.perSearch || 0) + (usage.searches ? p.perGroundedPrompt || 0 : 0);
   const listUsd = tokens + search;
   return { usd: listUsd, listUsd };
+}
+
+/**
+ * The most one call to `model` can cost: its price at the limits in
+ * pricing.json (the output and search caps sent with the request, and the
+ * input ceiling), so the cap's reservation is an upper bound, not a guess.
+ */
+export function estimatePerCall(model, pricing) {
+  const p = pricing.models[model];
+  if (!p) throw new Error(`no price for model ${model} in pricing.json`);
+  const l = p.limits;
+  if (!l || !(l.maxInputTokens > 0) || !(l.maxOutputTokens > 0) || !(l.maxSearches >= 0)) throw new Error(`model ${model} needs limits (maxInputTokens, maxOutputTokens, maxSearches) in pricing.json`);
+  return priceCall({ input: l.maxInputTokens, cachedInput: 0, output: l.maxOutputTokens, searches: l.maxSearches }, model, pricing).usd;
 }
 
 export function today() {
