@@ -128,6 +128,9 @@ export async function callOpenAI(prompt, opts, key) {
       type: "web_search",
       user_location: { type: "approximate", country: prompt.country || "MX", ...(prompt.region && { region: prompt.region }), ...(prompt.city && { city: prompt.city }) },
     }],
+    // Bound the call's cost: output (reasoning included) and the number of
+    // searches are capped, so pricing.json's estimate is an upper bound.
+    ...(opts.limits && { max_output_tokens: opts.limits.maxOutputTokens, max_tool_calls: opts.limits.maxSearches }),
     store: false,
   };
   const res = await postJson(OPENAI_URL, { Authorization: `Bearer ${key}` }, body, { keys: [key], fetchImpl: opts.fetchImpl });
@@ -147,7 +150,12 @@ async function resolveRedirect(uri, fetchImpl = fetch) {
 }
 
 export async function callGemini(prompt, opts, key) {
-  const body = { contents: [{ role: "user", parts: [{ text: prompt.text }] }], tools: [{ google_search: {} }] };
+  const body = {
+    contents: [{ role: "user", parts: [{ text: prompt.text }] }],
+    tools: [{ google_search: {} }],
+    // Caps output, thoughts included. Gemini has no search-count parameter.
+    ...(opts.limits && { generationConfig: { maxOutputTokens: opts.limits.maxOutputTokens } }),
+  };
   const res = await postJson(GEMINI_URL(opts.model), { "x-goog-api-key": key }, body, { keys: [key], fetchImpl: opts.fetchImpl });
   for (const c of res.candidates?.[0]?.groundingMetadata?.groundingChunks || []) {
     if (c.web?.uri && !c.web.resolved) c.web.resolved = await resolveRedirect(c.web.uri, opts.fetchImpl);

@@ -44,7 +44,13 @@ This repository is public, so client configs and outputs never go in it. The tra
 
 - `intent` is one of `branded`, `category`, `comparison`. Non-branded visibility leaves out `branded`.
 - Matching folds case and accents and treats spaces and hyphens alike. `aliases` and `domains` are definite; `ambiguous` hits go to the judge. Keep prompt and brand ids stable across runs, or the diffs mean nothing.
-- Every model must have a price in `pricing.json` (list prices, with the date they were read).
+- Every model must have a price and `limits` in `pricing.json` (list prices, with the date they were read).
+
+## Cost bounds
+
+Each call is bounded by its model's `limits` in `pricing.json`. `maxOutputTokens` goes to the API (OpenAI `max_output_tokens`, reasoning included; Gemini `generationConfig.maxOutputTokens`, thoughts included) and `maxSearches` goes to OpenAI as `max_tool_calls`. The daily cap reserves `estimatePerCall` before a call starts, and that estimate is computed, never typed: (maxInputTokens x input price + maxOutputTokens x output price) / 1M + maxSearches x perSearch + perGroundedPrompt. Two terms are ceilings rather than API limits: input (prompt plus search content, set with headroom from the 2026-10-27 run, whose largest answer used 33,697 input tokens and 5 searches) and Gemini's search count (the API has no parameter for it). A call whose real price passes its estimate is logged as an overrun; raise `maxInputTokens` if that happens. A call that hits the output cap comes back incomplete and is recorded as an error, not as an answer.
+
+Concurrent runs are unsupported: the spend ledger and run directories assume one tracker process at a time on this box.
 
 ## Keys
 

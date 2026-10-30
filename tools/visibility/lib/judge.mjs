@@ -60,11 +60,12 @@ export function judgePrompt(text, candidates) {
  * Calls the judge. candidates: [{ id, name, description?, unclear }]. Returns
  * { verdicts: { [id]: { refers, sentiment } }, usage }.
  */
-export async function judge(text, candidates, { model, key, fetchImpl }) {
+export async function judge(text, candidates, { model, key, fetchImpl, limits }) {
   const body = {
     model,
     input: judgePrompt(text, candidates),
     text: { format: { type: "json_schema", name: "brand_judgement", strict: true, schema: SCHEMA } },
+    ...(limits && { max_output_tokens: limits.maxOutputTokens }),
     store: false,
   };
   const res = await postJson("https://api.openai.com/v1/responses", { Authorization: `Bearer ${key}` }, body, { keys: [key], fetchImpl });
