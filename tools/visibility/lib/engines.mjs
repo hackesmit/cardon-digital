@@ -1,0 +1,217 @@
+/**
+ * engines: one call per engine, and pure parsers that turn a raw response body
+ * into { text, citations: [url], usage: { input, output, searches } }.
+ *
+ * The raw body is what gets stored per run, so the parsers can be re-run on
+ * old answers when they improve; they never see a key.
+ *
+ *   openai  Responses API with the web_search tool and an approximate user
+ *           location from the prompt (country, region, city).
+ *   gemini  generateContent with the google_search grounding tool. The API has
+ *           no location parameter, so the city in the prompt text is all the
+ *           locality signal it gets.
+ *
+ * Keys travel in headers only (never a query string), so no url that reaches a
+ * log or an error message carries one.
+ */
+
+const OPENAI_URL = "https://api.openai.com/v1/responses";
+const GEMINI_URL = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+
+/** Removes anything that looks like a key from a string bound for a log. */
+export function redact(s, keys = []) {
+  let out = String(s);
+  for (const k of keys) if (k && k.length > 8) out = out.split(k).join("[redacted]");
+  return out.replace(/\b(sk-[A-Za-z0-9_-]{6})[A-Za-z0-9_*-]+/g, "$1[redacted]").replace(/\bAIza[0-9A-Za-z_-]{10,}/g, "AIza[redacted]").replace(/\bAQ\.[0-9A-Za-z_.-]{10,}/g, "AQ.[redacted]");
+}
+
+/** Error codes that mean money or quota ran out, not a rate limit. */
+export const QUOTA = /credit_balance_exhausted|insufficient_quota|exceeded your current quota|RESOURCE_EXHAUSTED.*(billing|plan)/i;
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * POSTs JSON with retries on 429 and 5xx (exponential backoff, honouring
+ * Retry-After). Throws a redacted error on the last failure.
+ */
+export async function postJson(url, headers, body, { retries = 5, keys = [], fetchImpl = fetch, timeoutMs = 180000 } = {}) {
+  let last;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    let res, txt;
+    // The deadline covers the headers and the body, so a stalled response
+    // cannot hold a worker (and its cap reservation) forever.
+    const signal = AbortSignal.timeout(timeoutMs);
+    try {
+      res = await fetchImpl(url, { method: "POST", headers: { "Content-Type": "application/json", ...headers }, body: JSON.stringify(body), signal });
+      txt = await res.text();
+    } catch (e) {
+      last = new Error(redact(`network: ${e.message}`, keys));
+      await sleep(1000 * 2 ** attempt);
+      continue;
+    }
+    if (res.ok) return JSON.parse(txt);
+    last = new Error(redact(`HTTP ${res.status}: ${txt.slice(0, 400)}`, keys));
+    // An empty balance or a spent quota is a 429 that no wait will fix: fail
+    // at once and mark it, so the run stops instead of burning retries.
+    if (QUOTA.test(txt)) {
+      last.quota = true;
+      throw last;
+    }
+    if (res.status !== 429 && res.status < 500) throw last;
+    const ra = Number(res.headers.get("retry-after"));
+    await sleep(Number.isFinite(ra) && ra > 0 ? ra * 1000 : Math.min(60000, 2000 * 2 ** attempt));
+  }
+  throw last;
+}
+
+/** Strips tracking parameters that the engines append to cited urls. */
+export function cleanUrl(url) {
+  try {
+    const u = new URL(url);
+    for (const p of [...u.searchParams.keys()]) if (/^utm_/.test(p)) u.searchParams.delete(p);
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
+
+export function parseOpenAI(body) {
+  const out = body.output || [];
+  const msgs = out.filter((o) => o.type === "message");
+  const parts = msgs.flatMap((m) => m.content || []).filter((c) => c.type === "output_text");
+  const text = parts.map((p) => p.text).join("\n");
+  const citations = [...new Set(parts.flatMap((p) => p.annotations || []).filter((a) => a.type === "url_citation").map((a) => cleanUrl(a.url)))];
+  // Sources the search returned but the answer did not cite inline are not
+  // citations; only url_citation annotations count.
+  const u = body.usage || {};
+  return {
+    text,
+    citations,
+    usage: {
+      input: u.input_tokens || 0,
+      cachedInput: u.input_tokens_details?.cached_tokens || 0,
+      output: u.output_tokens || 0,
+      searches: out.filter((o) => o.type === "web_search_call").length,
+    },
+    model: body.model || null,
+  };
+}
+
+/**
+ * Why an OpenAI body is not a usable answer, or null when it is. Anything
+ * not "completed" (incomplete at the output cap, failed, cancelled), no
+ * output message, or empty text is an error the run retries, never an answer.
+ */
+export function failureOpenAI(body) {
+  if (body?.status !== "completed") return `status ${body?.status ?? "missing"}${body?.incomplete_details?.reason ? ` (${body.incomplete_details.reason})` : ""}`;
+  if (!(body.output || []).some((o) => o.type === "message")) return "no output message";
+  if (!parseOpenAI(body).text.trim()) return "empty text";
+  return null;
+}
+
+/**
+ * Why a Gemini body is not a usable answer, or null. An HTTP 200 can still
+ * carry a blocked prompt (promptFeedback.blockReason), no candidates, a
+ * candidate stopped for safety, recitation or the token cap, or no text.
+ */
+export function failureGemini(body) {
+  if (body?.promptFeedback?.blockReason) return `prompt blocked: ${body.promptFeedback.blockReason}`;
+  const cand = (body?.candidates || [])[0];
+  if (!cand) return "no candidates";
+  if (cand.finishReason && cand.finishReason !== "STOP") return `finishReason ${cand.finishReason}`;
+  if (!parseGemini(body).text.trim()) return "empty text";
+  return null;
+}
+
+export function parseGemini(body) {
+  const cand = (body.candidates || [])[0] || {};
+  const text = (cand.content?.parts || []).map((p) => p.text || "").join("");
+  const gm = cand.groundingMetadata || {};
+  // Each chunk's uri is a Google redirect; resolveGemini() stores the target in
+  // `resolved`. The chunk title is usually the bare domain, the fallback.
+  const citations = [...new Set((gm.groundingChunks || []).map((c) => c.web).filter(Boolean).map((w) => {
+    if (w.resolved) return cleanUrl(w.resolved);
+    if (w.domain) return `https://${w.domain}/`;
+    if (/^[a-z0-9.-]+\.[a-z]{2,}$/i.test(w.title || "")) return `https://${w.title.toLowerCase()}/`;
+    return w.uri;
+  }))];
+  const u = body.usageMetadata || {};
+  return {
+    text,
+    citations,
+    usage: {
+      input: u.promptTokenCount || 0,
+      cachedInput: u.cachedContentTokenCount || 0,
+      output: (u.candidatesTokenCount || 0) + (u.thoughtsTokenCount || 0),
+      searches: (gm.webSearchQueries || []).length,
+    },
+    model: body.modelVersion || null,
+  };
+}
+
+export async function callOpenAI(prompt, opts, key) {
+  const body = {
+    model: opts.model,
+    input: prompt.text,
+    tools: [{
+      type: "web_search",
+      user_location: { type: "approximate", country: prompt.country || "MX", ...(prompt.region && { region: prompt.region }), ...(prompt.city && { city: prompt.city }) },
+    }],
+    // Bound the call's cost: output (reasoning included) and the number of
+    // searches are capped, so pricing.json's estimate is an upper bound.
+    ...(opts.limits && { max_output_tokens: opts.limits.maxOutputTokens, max_tool_calls: opts.limits.maxSearches }),
+    store: false,
+  };
+  const res = await postJson(OPENAI_URL, { Authorization: `Bearer ${key}` }, body, { keys: [key], fetchImpl: opts.fetchImpl });
+  // Reasoning items carry encrypted content that is useless in an archive.
+  res.output = (res.output || []).filter((o) => o.type !== "reasoning");
+  return res;
+}
+
+/** The only hosts whose grounding redirects are followed. */
+export const REDIRECT_HOSTS = new Set(["vertexaisearch.cloud.google.com"]);
+
+/** True for a plain https url on a grounding-redirect host: no credentials, default port. */
+export function isGroundingRedirect(uri) {
+  let u;
+  try {
+    u = new URL(uri);
+  } catch {
+    return false;
+  }
+  return u.protocol === "https:" && REDIRECT_HOSTS.has(u.hostname) && !u.username && !u.password && u.port === "";
+}
+
+/**
+ * Follows one grounding redirect to learn the cited url, without fetching the
+ * page body. Anything that is not a Google grounding redirect is left alone,
+ * with no request, and the request gives up after `timeoutMs`.
+ */
+export async function resolveRedirect(uri, fetchImpl = fetch, timeoutMs = 5000) {
+  if (!isGroundingRedirect(uri)) return null;
+  try {
+    const r = await fetchImpl(uri, { method: "HEAD", redirect: "manual", signal: AbortSignal.timeout(timeoutMs) });
+    return r.headers.get("location") || null;
+  } catch {
+    return null;
+  }
+}
+
+export async function callGemini(prompt, opts, key) {
+  const body = {
+    contents: [{ role: "user", parts: [{ text: prompt.text }] }],
+    tools: [{ google_search: {} }],
+    // Caps output, thoughts included. Gemini has no search-count parameter.
+    ...(opts.limits && { generationConfig: { maxOutputTokens: opts.limits.maxOutputTokens } }),
+  };
+  const res = await postJson(GEMINI_URL(opts.model), { "x-goog-api-key": key }, body, { keys: [key], fetchImpl: opts.fetchImpl });
+  for (const c of res.candidates?.[0]?.groundingMetadata?.groundingChunks || []) {
+    if (c.web?.uri && !c.web.resolved) c.web.resolved = await resolveRedirect(c.web.uri, opts.fetchImpl);
+  }
+  return res;
+}
+
+export const ENGINES = {
+  openai: { call: callOpenAI, parse: parseOpenAI, failure: failureOpenAI, keyName: "OPENAI_API_KEY" },
+  gemini: { call: callGemini, parse: parseGemini, failure: failureGemini, keyName: "GEMINI_API_KEY" },
+};

@@ -1,0 +1,63 @@
+{
+  "checked": "2026-10-27",
+  "sources": [
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+  ],
+  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). perGroundedPrompt is per grounded request (Gemini 2.5: $35 per 1k). Gemini 3+ grounding bills per search query ($14 per 1k) after 5,000 free requests a month per project; the tracker models no free allowance and charges every call list price. Gemini 2.5 is closed to new keys since 2026-10.",
+  "models": {
+    "gpt-5.5": {
+      "input": 5.0,
+      "cachedInput": 0.5,
+      "output": 30.0,
+      "perSearch": 0.01,
+      "limits": {
+        "maxInputTokens": 48000,
+        "maxOutputTokens": 6000,
+        "maxSearches": 5
+      }
+    },
+    "gpt-5.4-mini": {
+      "input": 0.75,
+      "cachedInput": 0.075,
+      "output": 4.5,
+      "perSearch": 0.01,
+      "limits": {
+        "maxInputTokens": 48000,
+        "maxOutputTokens": 6000,
+        "maxSearches": 5
+      }
+    },
+    "gpt-5.4-nano": {
+      "input": 0.2,
+      "cachedInput": 0.02,
+      "output": 1.25,
+      "limits": {
+        "maxInputTokens": 10000,
+        "maxOutputTokens": 2000,
+        "maxSearches": 0
+      }
+    },
+    "gemini-2.5-flash": {
+      "input": 0.3,
+      "output": 2.5,
+      "perGroundedPrompt": 0.035,
+      "limits": {
+        "maxInputTokens": 4000,
+        "maxOutputTokens": 8000,
+        "maxSearches": 1
+      }
+    },
+    "gemini-3.8-flash": {
+      "input": 0.75,
+      "output": 3.75,
+      "perSearch": 0.014,
+      "limits": {
+        "maxInputTokens": 4000,
+        "maxOutputTokens": 8000,
+        "maxSearches": 6
+      }
+    }
+  },
+  "limits_note": "limits bound each call and the daily cap reserves their price before a call starts: estimatePerCall = (maxInputTokens x input + maxOutputTokens x output) / 1M + maxSearches x perSearch + perGroundedPrompt, computed in lib/cost.mjs, never typed by hand. maxOutputTokens is sent to the API (OpenAI max_output_tokens, which includes reasoning; Gemini generationConfig.maxOutputTokens, which includes thoughts), so output is enforced. maxSearches is sent as OpenAI max_tool_calls (enforced); Gemini has no such parameter, so for Gemini it is an assumed ceiling. maxInputTokens is not an API parameter: it is the prompt plus search content, set from the 2026-10-27 Cardon run (gpt-5.5, 50 answers: at most 33,697 input tokens, 5 searches and 2,385 output tokens per answer) with headroom, about 8,000 tokens base plus 8,000 per search. For the judge, input is its instruction plus one answer, which the engine's maxOutputTokens bounds. A call whose real price passes its estimate is logged as an overrun."
+}
