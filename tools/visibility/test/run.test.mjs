@@ -499,3 +499,15 @@ test("postJson gives up on a response that never finishes", async () => {
   await assert.rejects(postJson("https://example.invalid", {}, {}, { retries: 0, fetchImpl: stall, timeoutMs: 50 }), /network/);
   assert.ok(Date.now() - t0 < 5000);
 });
+
+test("the spend ledger rolls over to the new UTC day mid-run", () => {
+  const home = mkdtempSync(join(tmpdir(), "vis-roll-"));
+  let day = "2026-10-30";
+  const l = new SpendLedger(home, 1, day, () => day);
+  l.add(0.4);
+  day = "2026-10-31";
+  l.add(0.3);
+  assert.equal(JSON.parse(readFileSync(join(home, "spend", "2026-10-30.json"), "utf8")).usd, 0.4);
+  assert.equal(JSON.parse(readFileSync(join(home, "spend", "2026-10-31.json"), "utf8")).usd, 0.3);
+  assert.equal(new SpendLedger(home, 1, "2026-10-31").spent, 0.3);
+});
