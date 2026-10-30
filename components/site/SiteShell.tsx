@@ -10,11 +10,7 @@ import { fontVariables } from "@/lib/fonts";
 import TitlePaint from "@/components/site/TitlePaint";
 import LandingSource from "@/components/site/LandingSource";
 import VisitCount from "@/components/site/VisitCount";
-
-// Pre-paint script: apply the stored mode before first paint so there is no
-// flash, and flag the document as JS-enabled so reveal-on-scroll can hide.
-const modeScript =
-  '(function(){try{var m=localStorage.getItem("cardon-mode");if(m==="light"||m==="dark"){document.documentElement.setAttribute("data-mode",m);}}catch(e){}document.documentElement.classList.add("js");})();';
+import { modeScript } from "@/lib/site/modeScript";
 
 /**
  * The whole document: html with the locale lang attribute, the pre-paint mode
