@@ -46,11 +46,13 @@ export function today() {
 }
 
 export class SpendLedger {
-  constructor(home, capUsd, day = today(), clock = today) {
+  constructor(home, capUsd, day, clock) {
     this.dir = join(home, "spend");
     this.cap = capUsd;
-    this.clock = clock;
-    this.load(day);
+    // A day given without a clock stays fixed (tests, replays); the default
+    // follows the UTC date.
+    this.clock = clock || (day ? () => day : today);
+    this.load(day || today());
   }
 
   load(day) {
