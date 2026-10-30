@@ -73,7 +73,7 @@ Detection is a string match, so the counts can be recomputed from the stored tex
 ## Engines
 
 - **openai**: Responses API, `web_search` tool, approximate user location from the prompt's country, region and city.
-- **gemini**: `generateContent` with Google Search grounding. A free AI Studio key refuses grounding (every grounded call returns a quota error, and Gemini 2.5 is closed to new keys since 2026-10), so the project needs billing on before Gemini can run. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request to record the real domain.
+- **gemini**: `generateContent` with Google Search grounding. A free AI Studio key refuses grounding (every grounded call returns a quota error, and Gemini 2.5 is closed to new keys since 2026-10), so the project needs billing on before Gemini can run. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request (https on vertexaisearch.cloud.google.com only, no credentials or custom port, 5 s timeout; any other url is kept as-is with no request) to record the real domain.
 - **Perplexity Sonar** is not wired in: its API needs prepaid credits and none are funded.
 
 API answers are not consumer-app answers (published brand overlap between the two is 6 to 24%, and the ChatGPT app cites far more sources), so every report says "API panel, directional".
