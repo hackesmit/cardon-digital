@@ -38,9 +38,24 @@ export class SpendLedger {
     this.spent = existsSync(this.file) ? JSON.parse(readFileSync(this.file, "utf8")).usd : 0;
   }
 
-  /** True when a call estimated at `estimate` USD still fits under the cap. */
+  /** True when a call estimated at `estimate` USD still fits under the cap,
+   * counting what calls already in flight have reserved. */
   allows(estimate) {
-    return this.spent + estimate <= this.cap;
+    return this.spent + (this.reserved || 0) + estimate <= this.cap;
+  }
+
+  /** Holds `estimate` USD for a call about to start. Returns false, holding
+   * nothing, when it would not fit. Concurrent workers check against the
+   * reservations of calls still in flight, so the cap holds under load. */
+  reserve(estimate) {
+    if (!this.allows(estimate)) return false;
+    this.reserved = (this.reserved || 0) + estimate;
+    return true;
+  }
+
+  /** Gives back a reservation once its call has settled (spend goes through add). */
+  release(estimate) {
+    this.reserved = Math.max(0, (this.reserved || 0) - estimate);
   }
 
   add(usd) {
