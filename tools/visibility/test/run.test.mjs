@@ -267,3 +267,28 @@ test("main stops the whole run when an engine is out of credit", async () => {
   const dir = join(home, "runs", "fixture", readdirSync(join(home, "runs", "fixture"))[0]);
   assert.match(JSON.parse(readFileSync(join(dir, "summary.json"), "utf8")).partialReason, /out of credit/);
 });
+
+test("concurrent calls cannot push spend past the cap (reservations held in flight)", async () => {
+  const home = mkdtempSync(join(tmpdir(), "vis-cap-conc-"));
+  mkdirSync(join(home, "clients"));
+  writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
+  const realFetch = globalThis.fetch;
+  // Each answer costs about $0.058 (4 searches plus 4000 output tokens on gpt-5.4-mini) and
+  // takes 50 ms, so two workers in flight both see the old balance unless the ledger reserves.
+  globalThis.fetch = async () => {
+    await new Promise((r) => setTimeout(r, 50));
+    return { ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify({
+      output: [1, 2, 3, 4].map(() => ({ type: "web_search_call" })).concat([{ type: "message", content: [{ type: "output_text", text: "nada", annotations: [] }] }]),
+      usage: { input_tokens: 0, output_tokens: 4000 } }) };
+  };
+  process.env.OPENAI_API_KEY = "test-openai-key-123456";
+  process.env.GEMINI_API_KEY = "test-gemini-key-123456";
+  try {
+    await main(["--client", "fixture", "--home", home, "--runs", "5", "--engines", "openai", "--max-usd", "0.06"], () => {});
+    const day = new Date().toISOString().slice(0, 10);
+    const spent = JSON.parse(readFileSync(join(home, "spend", `${day}.json`), "utf8")).usd;
+    assert.ok(spent <= 0.06, `spent ${spent} past the 0.06 cap`);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+});

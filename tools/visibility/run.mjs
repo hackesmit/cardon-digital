@@ -326,7 +326,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     if (stopReason) return;
     const model = config.engines[job.engine].model;
     const estimate = PRICING.models[model].estimatePerCall + PRICING.models[config.judge.model].estimatePerCall;
-    if (!ledger.allows(estimate)) {
+    if (!ledger.reserve(estimate)) {
       stopReason ||= `daily cap of $${opts.maxUsd} reached ($${ledger.spent.toFixed(2)} spent today)`;
       return;
     }
@@ -354,6 +354,8 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       if (e.quota) stopReason ||= `${job.engine} is out of credit or quota (${redact(e.message, allKeys).slice(0, 120)})`;
       errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, message: redact(e.message, allKeys) });
       log(`  ${job.engine} ${job.promptId} r${job.run}: failed: ${redact(e.message, allKeys)}`);
+    } finally {
+      ledger.release(estimate);
     }
   };
 
