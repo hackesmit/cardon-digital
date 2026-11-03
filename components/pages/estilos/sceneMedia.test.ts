@@ -33,7 +33,7 @@ const PAGE = read("app/[locale]/estilos/page.tsx");
 const CSS = read("app/[locale]/estilos/estilos.css");
 const CREDITS = read("public/media/CREDITS.md");
 const COMPONENT = read("components/pages/estilos/SceneMedia.tsx");
-const HOME = read("app/[locale]/page.tsx");
+const HOME = read("components/pages/home-cardon.tsx");
 
 /** The DoD's ceiling for everything this bead adds under public/media. */
 const TOTAL_BUDGET_BYTES = 40 * 1024 * 1024;

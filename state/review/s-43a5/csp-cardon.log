@@ -1,0 +1,9 @@
+csp header: report-only
+google requests before consent: 0
+googletagmanager requests after consent: 1 www.googletagmanager.com/gtag/js
+other google hosts: www.googletagmanager.com, www.google-analytics.com
+pages visited with consent: 15
+total google requests: 16
+CSP violation events: 0
+CSP console messages: 0
+exit 0

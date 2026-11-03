@@ -1,3 +1,4 @@
+import type { Brand } from "@/lib/brand";
 import type { Locale } from "@/lib/i18n/config";
 import type { FaqItem } from "@/lib/seo/jsonld";
 
@@ -61,4 +62,7 @@ export type Guide = {
       quarter after dateModified (content-checklist.txt, freshness). */
   reviewBy: string;
   copy: Record<Locale, GuideCopy>;
+  /** The site that publishes it (lib/brand.ts). Unset is cardondigital.com;
+      a wine guide says "vino" and is served on the wine brand only. */
+  brand?: Brand;
 };

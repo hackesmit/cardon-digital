@@ -8,10 +8,11 @@ import {
   localePath,
   stripLocale,
 } from "@/lib/i18n/config";
-import { retiredRoute } from "@/lib/routes";
+import { BRAND, cleanPath, servesPath } from "@/lib/brand";
+import { movedRoute, retiredRoute } from "@/lib/routes";
 import { buildCsp, cspHeaderName, inlineHashes, newNonce } from "@/lib/security/csp";
 
-/* Three jobs in one pass.
+/* Four jobs in one pass.
    1. Locale routing. Every page lives under /es or /en. A cardon-locale cookie
       wins because it is a choice the visitor made; otherwise the Vercel geo
       header decides, with Mexico and any unresolved country reading Spanish.
@@ -25,6 +26,9 @@ import { buildCsp, cspHeaderName, inlineHashes, newNonce } from "@/lib/security/
       Next can read the nonce and stamp it on its own inline scripts
       (lib/security/csp.ts has the policy and why it is shaped this way). The
       static security headers live in next.config.mjs.
+   4. The brand switch (lib/brand.ts, docs/BRANDS.md). A route the build's
+      brand does not serve answers 404, and on cardondigital.com a wine route
+      301s to the wine domain once NEXT_PUBLIC_VINO_URL is set.
 
    The matcher keeps /api, Next internals, Vercel's own /_vercel endpoints (the
    visit count posts to /_vercel/insights/view, which has no extension and would
@@ -37,6 +41,11 @@ export const config = {
 };
 
 const NOINDEX = "noindex, nofollow";
+
+/** Where a route the brand does not serve is rewritten to. A segment starting
+    with an underscore is private in the app router, so no page can ever match
+    it, and Next answers with the site 404 (app/not-found.tsx) and a 404 status. */
+export const BRAND_NOT_FOUND = "/_brand-not-found";
 
 /** NextResponse.next or .rewrite, with the CSP on the request and response. */
 async function page(req: NextRequest, rewrite?: URL) {
@@ -57,10 +66,18 @@ async function page(req: NextRequest, rewrite?: URL) {
   return res;
 }
 
+/** The visitor's locale when the path carries none: a cardon-locale cookie is
+    a choice and wins, otherwise the Vercel geo header decides. */
+function chosenLocale(req: NextRequest) {
+  const cookie = req.cookies.get(LOCALE_COOKIE)?.value;
+  return isLocale(cookie) ? cookie : localeFromCountry(req.headers.get("x-vercel-ip-country"));
+}
+
 export async function middleware(req: NextRequest) {
   const gated = process.env.COMING_SOON === "1";
   const { pathname } = req.nextUrl;
   const pathLocale = localeFromPath(pathname);
+  const bare = stripLocale(pathname);
 
   /* A page the site no longer has (lib/routes.ts holds the table and the reason
      for each entry). The redirect is answered here, ahead of the locale rule
@@ -68,14 +85,9 @@ export async function middleware(req: NextRequest) {
      page in one hop rather than bouncing through a locale prefix first. The
      status is written out per entry because Next's own redirects() emits 308
      for everything and the industry routes shipped with a 301. */
-  const retired = retiredRoute(stripLocale(pathname));
+  const retired = retiredRoute(bare);
   if (retired) {
-    const cookie = req.cookies.get(LOCALE_COOKIE)?.value;
-    const locale =
-      pathLocale ??
-      (isLocale(cookie)
-        ? cookie
-        : localeFromCountry(req.headers.get("x-vercel-ip-country")));
+    const locale = pathLocale ?? chosenLocale(req);
     /* A plain URL rather than nextUrl.clone(): a NextURL keeps the trailing
        slash the request arrived with and would send /es/modulos/ on to
        /es/precios/, a second hop for Next's own normaliser to undo. The query
@@ -85,11 +97,18 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url, retired.status);
   }
 
+  /* A wine route on cardondigital.com once the wine domain exists: the same
+     path there, in one hop and in the visitor's language, query carried. */
+  const moved = movedRoute(BRAND, bare);
+  if (moved) {
+    const locale = pathLocale ?? chosenLocale(req);
+    const url = new URL(localePath(locale, cleanPath(bare)), moved);
+    url.search = req.nextUrl.search;
+    return NextResponse.redirect(url, 301);
+  }
+
   if (!pathLocale) {
-    const chosen = req.cookies.get(LOCALE_COOKIE)?.value;
-    const locale = isLocale(chosen)
-      ? chosen
-      : localeFromCountry(req.headers.get("x-vercel-ip-country"));
+    const locale = chosenLocale(req);
     const url = req.nextUrl.clone();
     url.pathname = localePath(locale, pathname);
     const res = NextResponse.redirect(url);
@@ -97,7 +116,17 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  if (!gated) return page(req);
+  if (!gated) {
+    /* A route this brand does not serve is a 404 here, whether or not its
+       page exists in the tree for the other brand. The pre-launch gate below
+       answers every path with the holding page instead, as it always has. */
+    if (!servesPath(BRAND, bare)) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/" + pathLocale + BRAND_NOT_FOUND;
+      return page(req, url);
+    }
+    return page(req);
+  }
 
   const soon = "/" + pathLocale + "/coming-soon";
   if (pathname === soon) {
