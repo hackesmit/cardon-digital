@@ -18,9 +18,9 @@
     { "id": "P2", "text": "que es Nopal Digital", "intent": "branded", "language": "es", "country": "MX", "city": "Ensenada" }
   ],
   "engines": {
-    "openai": { "model": "gpt-5.4-mini", "concurrency": 2 },
-    "gemini": { "model": "gemini-2.5-flash", "concurrency": 1 }
+    "openai": { "model": "gpt-6-sol", "concurrency": 2 },
+    "gemini": { "model": "gemini-3.8-flash", "concurrency": 1 }
   },
-  "judge": { "model": "gpt-5.4-nano" },
+  "judge": { "model": "gpt-6-luna" },
   "domainClasses": { "directory": ["directorio.test"] }
 }

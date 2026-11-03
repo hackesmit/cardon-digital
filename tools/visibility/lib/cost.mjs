@@ -12,33 +12,83 @@
  * tracker home holds what was spent today, and a call starts only if today's
  * spend plus the call's upper-bound estimate (estimatePerCall) fits under
  * --max-usd.
+ *
+ * Rates are effective-dated (see rateAt): a call is charged the rate in force
+ * when it was reserved, and the stored record keeps that rate, so a later
+ * price change never reprices a stored run.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
-/** USD for one call: { usd, listUsd }. */
-export function priceCall(usage, model, pricing) {
-  const p = pricing.models[model];
-  if (!p) throw new Error(`no price for model ${model} in pricing.json`);
-  const uncached = Math.max(0, usage.input - (usage.cachedInput || 0));
-  const tokens = (uncached * p.input + (usage.cachedInput || 0) * (p.cachedInput ?? p.input) + usage.output * p.output) / 1e6;
-  const search = (usage.searches || 0) * (p.perSearch || 0) + (usage.searches ? p.perGroundedPrompt || 0 : 0);
-  const listUsd = tokens + search;
-  return { usd: listUsd, listUsd };
+const RATE_KEYS = ["input", "cachedInput", "output", "perSearch", "perGroundedPrompt"];
+
+/** A UTC date (YYYY-MM-DD) for a Date, an ISO string or nothing (now). */
+function dayOf(at) {
+  if (at == null) return new Date().toISOString().slice(0, 10);
+  const d = at instanceof Date ? at : new Date(at);
+  if (Number.isNaN(d.getTime())) throw new Error(`bad timestamp ${at}`);
+  return d.toISOString().slice(0, 10);
 }
 
 /**
- * The most one call to `model` can cost: its price at the limits in
- * pricing.json (the output and search caps sent with the request, and the
- * input ceiling), so the cap's reservation is an upper bound, not a guess.
+ * The rate a call to `model` started at `at` is charged: the last entry of
+ * its `rates` whose `from` (a UTC date) is on or before that day; an entry
+ * with no `from` covers every earlier day. A model written as one flat rate
+ * (no `rates` list) is that rate at every date. The result carries the model
+ * and its `from`, so a stored record can keep exactly what it was charged.
  */
-export function estimatePerCall(model, pricing) {
+export function rateAt(model, pricing, at) {
+  const p = pricing.models[model];
+  if (!p) throw new Error(`no price for model ${model} in pricing.json`);
+  const rates = Array.isArray(p.rates) ? p.rates : [p];
+  if (!rates.length) throw new Error(`no price for model ${model} in pricing.json`);
+  const day = dayOf(at);
+  // By date, never by list position: the latest `from` on or before the day
+  // wins; an undated entry is the floor (covers days before every dated one).
+  // A day before every entry is refused rather than charged a future rate.
+  let pick = null;
+  for (const r of rates) {
+    if (r.from && r.from <= day && (!pick || !pick.from || r.from > pick.from)) pick = r;
+    else if (!r.from && !pick) pick = r;
+  }
+  if (!pick) throw new Error(`no price for model ${model} on ${day} in pricing.json`);
+  const out = { model, from: pick.from || null };
+  for (const k of RATE_KEYS) if (pick[k] != null) out[k] = pick[k];
+  return out;
+}
+
+/** True when `model` is marked retired: priced for stored runs, never called again. */
+export function isRetired(model, pricing) {
+  return Boolean(pricing.models[model]?.retired);
+}
+
+/** USD for one call's usage at a given rate: { usd, listUsd, rate }. */
+export function priceAtRate(usage, rate) {
+  const uncached = Math.max(0, usage.input - (usage.cachedInput || 0));
+  const tokens = (uncached * rate.input + (usage.cachedInput || 0) * (rate.cachedInput ?? rate.input) + usage.output * rate.output) / 1e6;
+  const search = (usage.searches || 0) * (rate.perSearch || 0) + (usage.searches ? rate.perGroundedPrompt || 0 : 0);
+  const listUsd = tokens + search;
+  return { usd: listUsd, listUsd, rate };
+}
+
+/** USD for one call to `model` started at `at` (default now): { usd, listUsd, rate }. */
+export function priceCall(usage, model, pricing, at) {
+  return priceAtRate(usage, rateAt(model, pricing, at));
+}
+
+/**
+ * The most one call to `model` started at `at` can cost: its price at the
+ * limits in pricing.json (the output and search caps sent with the request,
+ * and the input ceiling), so the cap's reservation is an upper bound, not a
+ * guess. The rate is the one in force at `at` (the reservation time).
+ */
+export function estimatePerCall(model, pricing, at) {
   const p = pricing.models[model];
   if (!p) throw new Error(`no price for model ${model} in pricing.json`);
   const l = p.limits;
   if (!l || !(l.maxInputTokens > 0) || !(l.maxOutputTokens > 0) || !(l.maxSearches >= 0)) throw new Error(`model ${model} needs limits (maxInputTokens, maxOutputTokens, maxSearches) in pricing.json`);
-  return priceCall({ input: l.maxInputTokens, cachedInput: 0, output: l.maxOutputTokens, searches: l.maxSearches }, model, pricing).usd;
+  return priceCall({ input: l.maxInputTokens, cachedInput: 0, output: l.maxOutputTokens, searches: l.maxSearches }, model, pricing, at).usd;
 }
 
 export function today() {
