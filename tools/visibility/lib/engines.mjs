@@ -24,8 +24,16 @@ const OPENAI_URL = "https://api.openai.com/v1/responses";
 const GEMINI_URL = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
 /** Removes anything that looks like a key from a string bound for a log. */
+/**
+ * Secrets an engine holds in memory for the run (gemini-web's browser
+ * password while it is signed in): every redact() also strips them, so no
+ * error text that reaches the console or errors.json can carry one.
+ */
+export const liveSecrets = new Set();
+
 export function redact(s, keys = []) {
   let out = String(s);
+  for (const k of liveSecrets) if (k && k.length >= 4) out = out.split(k).join("[redacted]");
   for (const k of keys) if (k && k.length > 8) out = out.split(k).join("[redacted]");
   return out.replace(/\b(sk-[A-Za-z0-9_-]{6})[A-Za-z0-9_*-]+/g, "$1[redacted]").replace(/\bAIza[0-9A-Za-z_-]{10,}/g, "AIza[redacted]").replace(/\bAQ\.[0-9A-Za-z_.-]{10,}/g, "AQ.[redacted]");
 }

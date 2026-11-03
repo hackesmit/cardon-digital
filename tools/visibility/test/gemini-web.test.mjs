@@ -10,12 +10,12 @@
 
 import { test, mock } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, readdirSync, statSync, chmodSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { parseGeminiWeb, failureGeminiWeb, classifyPage, htmlToMarkdown, chipCitations } from "../lib/gemini-web.mjs";
-import { ENGINES } from "../lib/engines.mjs";
+import { parseGeminiWeb, failureGeminiWeb, classifyPage, htmlToMarkdown, chipCitations, limitReply, signedInAs, checkIdentity, ensurePrivateDir, profileDir } from "../lib/gemini-web.mjs";
+import { ENGINES, liveSecrets, redact } from "../lib/engines.mjs";
 import { listItems } from "../lib/detect.mjs";
 import { validateConfig, analyse, main } from "../run.mjs";
 
@@ -75,13 +75,88 @@ test("unfinished, missing, empty and canned replies are failures, not answers", 
   assert.equal(failureGeminiWeb({ html: wrap("Ola Studio y Nopal Digital."), complete: true }), null);
 });
 
-test("classifyPage stops on a captcha, a usage limit or a sign-in challenge, and asks for a login when signed out", () => {
-  assert.match(classifyPage({ url: "https://www.google.com/sorry/index?continue=x", text: "" }).stop, /captcha/);
-  assert.match(classifyPage({ url: "https://gemini.google.com/app", text: "Our systems have detected unusual traffic from your computer network" }).stop, /captcha/);
-  assert.match(classifyPage({ url: "https://gemini.google.com/app/1", text: "Has alcanzado el límite de Gemini. Vuelve más tarde." }).stop, /usage limit/);
-  assert.match(classifyPage({ url: "https://accounts.google.com/v3/signin/challenge/pwd", text: "" }).stop, /challenge/);
-  assert.deepEqual(classifyPage({ url: "https://accounts.google.com/v3/signin/identifier?x", text: "Accede a tu cuenta" }), { login: true });
-  assert.equal(classifyPage({ url: "https://gemini.google.com/app", text: "Hola, Daniel" }), null);
+test("classifyPage stops on a captcha, a usage limit or a verification challenge, and tells the password step from a challenge", () => {
+  assert.match(classifyPage({ url: "https://www.google.com/sorry/index?continue=x" }).stop, /captcha/);
+  assert.match(classifyPage({ url: "https://gemini.google.com/app", captchaFrame: true }).stop, /captcha/);
+  assert.match(classifyPage({ url: "https://gemini.google.com/app", banners: "Our systems have detected unusual traffic from your computer network" }).stop, /captcha/);
+  assert.match(classifyPage({ url: "https://gemini.google.com/app/1", banners: "Has alcanzado el límite de Gemini. Vuelve más tarde." }).stop, /usage limit/);
+  // The ordinary password step is not a challenge, even when it says "Verify it's you".
+  assert.deepEqual(classifyPage({ url: "https://accounts.google.com/v3/signin/challenge/pwd?TL=abc", accountText: "Verify it's you" }), { password: true });
+  assert.deepEqual(classifyPage({ url: "https://accounts.google.com/signin/v2/challenge/pwd?flowName=x" }), { password: true });
+  assert.deepEqual(classifyPage({ url: "https://accounts.google.com/signin/v2/sl/pwd" }), { password: true });
+  for (const u of ["https://accounts.google.com/v3/signin/challenge/totp?TL=x", "https://accounts.google.com/v3/signin/challenge/ipp/collect", "https://accounts.google.com/v3/signin/challenge/dp?TL=x", "https://accounts.google.com/signin/v2/challenge/selection", "https://accounts.google.com/v3/signin/rejected"]) assert.match(classifyPage({ url: u }).stop, /challenge/, u);
+  assert.match(classifyPage({ url: "https://accounts.google.com/v3/signin/challenge/recaptcha" }).stop, /captcha/);
+  assert.match(classifyPage({ url: "https://accounts.google.com/v3/signin/confirmidentifier", accountText: "Verifica que eres tú" }).stop, /challenge/);
+  assert.deepEqual(classifyPage({ url: "https://accounts.google.com/v3/signin/identifier?x", accountText: "Accede a tu cuenta" }), { login: true });
+  assert.equal(classifyPage({ url: "https://gemini.google.com/app" }), null);
+  // Only trusted signals count: the old signature's body text is ignored.
+  assert.equal(classifyPage({ url: "https://gemini.google.com/app", text: "reCAPTCHA, verify it's you, has alcanzado el límite" }), null);
+});
+
+test("a limit notice in place of an answer is a limit; an answer that mentions limits is an answer", () => {
+  assert.equal(limitReply("Has alcanzado el límite de Gemini. Vuelve más tarde."), true);
+  assert.equal(limitReply("You've reached your limit for now. Try again later."), true);
+  assert.equal(limitReply("Las agencias ofrecen planes; el plan básico tiene un límite de uso de 5 páginas."), false);
+  assert.equal(limitReply(`Has alcanzado el límite ${"x".repeat(500)}`), false);
+  assert.equal(limitReply(""), false);
+});
+
+test("checkIdentity reads the account link labels and stops on another account", () => {
+  const labels = ["Google Account: Daniel Hack  \n(daniel@cardondigital.com)", "Cuenta de Google: Daniel Hack (Daniel@CardonDigital.com)"];
+  assert.deepEqual(signedInAs(labels), ["daniel@cardondigital.com"]);
+  assert.equal(checkIdentity(labels, "daniel@cardondigital.com"), "match");
+  assert.equal(checkIdentity([], "daniel@cardondigital.com"), "none");
+  assert.deepEqual(checkIdentity(["Google Account: X (otra@ejemplo.test)"], "daniel@cardondigital.com"), { mismatch: "otra@ejemplo.test" });
+  assert.deepEqual(checkIdentity([...labels, "Google Account: X (otra@ejemplo.test)"], "daniel@cardondigital.com"), { mismatch: "otra@ejemplo.test" });
+});
+
+test("the profile lives per account, every level mode 700; symlinks and other users' directories stop the engine", () => {
+  const h = mkdtempSync(join(tmpdir(), "vis-prof-"));
+  mkdirSync(join(h, "browser"), { mode: 0o755 });
+  chmodSync(join(h, "browser"), 0o755);
+  const dir = profileDir(h, "Daniel@CardonDigital.com");
+  assert.equal(dir, join(h, "browser", "gemini-web", "daniel-cardondigital-com"));
+  for (const p of [join(h, "browser"), join(h, "browser", "gemini-web"), dir]) assert.equal(statSync(p).mode & 0o777, 0o700, p);
+  chmodSync(dir, 0o755);
+  profileDir(h, "daniel@cardondigital.com");
+  assert.equal(statSync(dir).mode & 0o777, 0o700, "an existing directory is repaired");
+
+  const s = mkdtempSync(join(tmpdir(), "vis-prof-"));
+  mkdirSync(join(s, "elsewhere"));
+  symlinkSync(join(s, "elsewhere"), join(s, "browser"));
+  assert.throws(() => profileDir(s, "a@b.test"), (e) => /symlink/.test(e.stop));
+  const l = mkdtempSync(join(tmpdir(), "vis-prof-"));
+  mkdirSync(join(l, "browser", "gemini-web"), { recursive: true, mode: 0o700 });
+  mkdirSync(join(l, "real"));
+  symlinkSync(join(l, "real"), join(l, "browser", "gemini-web", "a-b-test"));
+  assert.throws(() => profileDir(l, "a@b.test"), (e) => /symlink/.test(e.stop), "a symlinked account directory");
+  const f = mkdtempSync(join(tmpdir(), "vis-prof-"));
+  assert.throws(() => ensurePrivateDir(f, process.getuid() + 1), (e) => /another user/.test(e.stop));
+});
+
+test("a profile from the first version moves into the account's directory once, sign-in data intact", () => {
+  const h = mkdtempSync(join(tmpdir(), "vis-mig-"));
+  const old = join(h, "browser", "gemini-web");
+  mkdirSync(join(old, "Default"), { recursive: true, mode: 0o755 });
+  writeFileSync(join(old, "Local State"), "{}");
+  writeFileSync(join(old, "Default", "Cookies"), "fixture");
+  const dir = profileDir(h, "daniel@cardondigital.com");
+  assert.equal(readFileSync(join(dir, "Default", "Cookies"), "utf8"), "fixture");
+  assert.deepEqual(readdirSync(old), ["daniel-cardondigital-com"]);
+  assert.deepEqual(readdirSync(join(h, "browser")), ["gemini-web"], "no leftover migration directory");
+  assert.equal(statSync(old).mode & 0o777, 0o700);
+  assert.equal(statSync(dir).mode & 0o777, 0o700);
+  assert.equal(profileDir(h, "daniel@cardondigital.com"), dir, "the second call leaves it in place");
+});
+
+test("a password held for the browser is redacted from any error text while it is in memory", () => {
+  liveSecrets.add("pw-short1");
+  try {
+    assert.equal(redact('locator.fill: Timeout\n  - fill("pw-short1")'), 'locator.fill: Timeout\n  - fill("[redacted]")');
+  } finally {
+    liveSecrets.clear();
+  }
+  assert.equal(redact('fill("pw-short1")'), 'fill("pw-short1")', "nothing is held after close");
 });
 
 test("a browser engine needs only a model label: no price, no key", () => {
