@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { formatDate } from "@/components/site/CredentialList";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import type { Credential } from "@/lib/credentials";

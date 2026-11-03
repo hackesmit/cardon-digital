@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { redirect } from "next/navigation";
 import { allModules, demoHref, demoIsLive } from "../../../lib/demo";
 import { demoPage } from "../../../lib/i18n/demo";

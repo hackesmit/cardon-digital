@@ -1020,3 +1020,119 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   .clients-track span::after{display:none;}
   .clients-track [aria-hidden="true"]{display:none;}
 }
+
+/* ============================ VIEW TRANSITIONS ============================
+   In-site navigation cross-fades through the View Transitions API (bead
+   hq-ik6v0.9; components/site/Link.tsx). The browser's own root cross-fade is
+   the whole effect; only its timing is set here. Under reduced motion the
+   transition still runs, so the page swaps at the same moment, but nothing in
+   it animates. */
+::view-transition-old(root),
+::view-transition-new(root){animation-duration:.22s;animation-timing-function:ease;}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*){animation:none !important;}
+}
+
+/* ============================ HIT AREAS ============================
+   Every control answers a touch across at least 44 by 44 CSS px at phone
+   width without changing its look (bead hq-ik6v0.9; WCAG 2.5.5). A control
+   short of 44px in an axis gets a transparent ::after centred on it that grows
+   to 44px in that axis: inset min(0px, 50% - 22px) is zero for a side that is
+   already long enough, and a percentage inset resolves against the control's
+   own box because the control is the positioned ancestor. The --hit-* hooks
+   bias the growth where a neighbour sits closer than 22px on one side. Links
+   inside a sentence are exempt (the WCAG inline exception): growing them would
+   take taps meant for the lines of text above and below. Where two controls
+   are stacked closer than 44px apart no invisible growth can give each one
+   44px, so those few lists open up by the few pixels they lack, at phone
+   width only. A one-off control outside these lists takes the .hit class.
+   lib/site/proof/ui-proof.mjs measures all of it. */
+.brand,
+.menu-toggle,
+.lang-switch,
+.mode-toggle,
+.nav-cta,
+.foot-nav a,
+.foot-legal a,
+.consent-link,
+.consent-actions > button,
+.pg-svc .more-link a,
+.pg-svc .proof-links a,
+.pg-svc .mod-demo,
+.web-packages .pk-more a,
+.ads-fee .fee-more a,
+.pg-home .gets-more a,
+.pg-home .case-read,
+.pg-sitios .faq-more a,
+.pg-sitios .ex-link,
+.pg-precios .combo-key,
+.pg-precios .floor-demo,
+.cred-card-verify,
+.crumbs a,
+.pg-guide .guide-toc a,
+.pg-guide .guide-sources a,
+.pg-guide .guide-bio-links a,
+.hit{position:relative;}
+.brand::after,
+.menu-toggle::after,
+.lang-switch::after,
+.mode-toggle::after,
+.nav-cta::after,
+.foot-nav a::after,
+.foot-legal a::after,
+.consent-link::after,
+.consent-actions > button::after,
+.pg-svc .more-link a::after,
+.pg-svc .proof-links a::after,
+.pg-svc .mod-demo::after,
+.web-packages .pk-more a::after,
+.ads-fee .fee-more a::after,
+.pg-home .gets-more a::after,
+.pg-home .case-read::after,
+.pg-sitios .faq-more a::after,
+.pg-sitios .ex-link::after,
+.pg-precios .combo-key::after,
+.pg-precios .floor-demo::after,
+.cred-card-verify::after,
+.crumbs a::after,
+.pg-guide .guide-toc a::after,
+.pg-guide .guide-sources a::after,
+.pg-guide .guide-bio-links a::after,
+.hit::after,
+.pg-estilos .sc-shot-play::after{
+  content:"";position:absolute;
+  top:var(--hit-t,min(0px,calc(50% - 22px)));
+  bottom:var(--hit-b,min(0px,calc(50% - 22px)));
+  left:min(0px,calc(50% - 22px));
+  right:min(0px,calc(50% - 22px));
+}
+/* The consent link sits 12px above the buttons, so the buttons grow down
+   into the bar's padding and the link takes most of its growth upward. */
+.consent-actions > button{--hit-t:0px;--hit-b:-9px;}
+.consent-link{--hit-t:-15px;--hit-b:-12px;}
+/* A contents entry that wraps is split into line boxes, and an absolutely
+   placed child of a split inline spans only part of it. Each entry is alone
+   in its list item, so as a block it wraps the same, keeps its number on the
+   first line and is one box. */
+.pg-guide .guide-toc a{display:block;}
+/* A range input draws no pseudo-elements, so the scrubber takes a 44px box
+   and gives the extra 22px back in negative margins. */
+.pg-case input.season-range{height:44px;margin-block:-11px;}
+/* At phone width the stage box of a style sample lies over the sample's
+   footage, so it took every touch meant for the play button. Only the stage's
+   contents take pointer events now; its empty area lets the touch through. */
+.pg-estilos .sc-stage{pointer-events:none;}
+.pg-estilos .sc-stage > *{pointer-events:auto;}
+@media (max-width:899px){
+  /* The services links in the open menu sat 41px apart. */
+  .nav-drop-panel a{min-height:44px;display:flex;align-items:center;}
+}
+@media (max-width:900px){
+  /* Rows of wrapped links sat 30 to 38px apart; these gaps put each row 44px
+     or more from the next, so each takes its own 44px band. */
+  .foot-nav{row-gap:22px;}
+  .pg-precios ul.combo-legend{row-gap:12px;}
+  .pg-guide p.guide-bio-links{row-gap:20px;}
+}

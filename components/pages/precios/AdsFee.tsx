@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import type { Locale } from "@/lib/i18n/config";
 import { anuncios } from "@/lib/i18n/anuncios";

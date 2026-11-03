@@ -1,6 +1,6 @@
 import type { JSX } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import Media from "@/components/site/Media";
 import SpotlightFrames from "@/components/pages/enkanto/SpotlightFrames";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import CredentialList, { formatDate } from "@/components/site/CredentialList";
 import Faq from "@/components/site/Faq";
 import JsonLd from "@/components/site/JsonLd";

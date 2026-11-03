@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { rich } from "@/lib/i18n/rich";
 import type { GuideBlock, GuideSection } from "@/lib/guides/types";
