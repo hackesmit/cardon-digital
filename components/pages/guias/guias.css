@@ -149,7 +149,9 @@
 .pg-guide .guide-sources > p { margin: 0 0 16px; color: var(--text-dim); line-height: 1.6; }
 .pg-guide .guide-sources ol { margin: 0; padding-left: 1.3em; }
 .pg-guide .guide-sources li { margin: 0 0 14px; line-height: 1.5; }
-.pg-guide .guide-sources a { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+/* Block, so a title that wraps to two lines keeps one hit area across both
+   lines; an inline link split over lines leaves a gap at its centre. */
+.pg-guide .guide-sources a { display: block; color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
 .pg-guide .guide-source-pub,
 .pg-guide .guide-source-note { display: block; font-size: 0.9rem; color: var(--muted); }
 .pg-guide .guide-source-note { color: var(--text-dim); }

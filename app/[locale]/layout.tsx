@@ -23,8 +23,8 @@ export const dynamicParams = false;
    The site follows its own mode toggle, not the system scheme, and opens in
    light, so the meta tags state light: color-scheme matches the
    :root[data-mode] rule in app/globals.css, and theme-color is the light
-   ground (--ground). Nav.tsx moves theme-color to the dark ground whenever the
-   page is in dark mode, so the browser bar follows the toggle. */
+   ground (--ground). Nav.tsx keeps theme-color on the current ground in every
+   mode and across soft navigations, so the browser bar follows the toggle. */
 export const viewport: Viewport = {
   viewportFit: "cover",
   colorScheme: "light",
