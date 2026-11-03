@@ -38,7 +38,7 @@ import { detect, domainOf } from "./lib/detect.mjs";
 import { summarise } from "./lib/metrics.mjs";
 import { ENGINES, redact } from "./lib/engines.mjs";
 import { judge } from "./lib/judge.mjs";
-import { priceCall, estimatePerCall, SpendLedger } from "./lib/cost.mjs";
+import { priceAtRate, rateAt, isRetired, estimatePerCall, SpendLedger } from "./lib/cost.mjs";
 import { renderReport } from "./lib/report.mjs";
 
 const TOOL_DIR = dirname(fileURLToPath(import.meta.url));
@@ -71,8 +71,12 @@ export function parseArgs(argv) {
   return opts;
 }
 
-/** Throws on a config the run cannot use; returns it with defaults filled. */
-export function validateConfig(c) {
+/**
+ * Throws on a config the run cannot use; returns it with defaults filled.
+ * With `newCalls` (a new run), a retired model fails too: its price stays
+ * only so stored runs can be analysed and resumed.
+ */
+export function validateConfig(c, { newCalls = false } = {}) {
   const fail = (m) => {
     throw new Error(`config: ${m}`);
   };
@@ -96,10 +100,12 @@ export function validateConfig(c) {
     if (!ENGINES[name]) fail(`unknown engine ${name}`);
     if (!PRICING.models[e.model]) fail(`engine ${name}: model ${e.model} has no price in pricing.json`);
     estimatePerCall(e.model, PRICING);
+    if (newCalls && isRetired(e.model, PRICING)) fail(`engine ${name}: model ${e.model} is retired (${PRICING.models[e.model].retired}); use a current id`);
   }
   if (!Object.keys(c.engines || {}).length) fail("at least one engine is required");
   if (!c.judge?.model || !PRICING.models[c.judge.model]) fail("judge.model is required and must be priced");
   estimatePerCall(c.judge.model, PRICING);
+  if (newCalls && isRetired(c.judge.model, PRICING)) fail(`judge: model ${c.judge.model} is retired (${PRICING.models[c.judge.model].retired}); use a current id`);
   return c;
 }
 
@@ -198,7 +204,7 @@ const writeJson = (f, o) => {
 function loadConfig(opts, home) {
   const file = opts.config ? resolve(opts.config) : join(home, "clients", `${opts.client}.json`);
   if (!existsSync(file)) throw new Error(`config not found: ${file}`);
-  return { config: validateConfig(readJson(file)), file };
+  return { config: validateConfig(readJson(file), { newCalls: true }), file };
 }
 
 /** The newest earlier summary of the same client (by start time), or null. */
@@ -217,8 +223,16 @@ function emptyPart(model) {
   return { model, calls: 0, input: 0, output: 0, searches: 0, usd: 0, listUsd: 0 };
 }
 
-function addUsage(part, usage, model) {
-  const p = priceCall(usage, model, PRICING);
+/**
+ * The rate a stored call was charged: the one saved with it, or for records
+ * written before rates were saved, the rate in force when it was made.
+ */
+function storedRate(saved, model, at) {
+  return saved || rateAt(model, PRICING, at);
+}
+
+function addUsage(part, usage, rate) {
+  const p = priceAtRate(usage, rate);
   part.calls += 1;
   part.input += usage.input;
   part.output += usage.output;
@@ -246,8 +260,8 @@ function writeOutputs(runDir, plan, config, home, extra) {
   const parts = {};
   for (const r of inPlan) {
     const model = r.model;
-    addUsage((parts[r.engine] ||= emptyPart(model)), ENGINES[r.engine].parse(r.response).usage, model);
-    if (r.judge) addUsage((parts.judge ||= emptyPart(r.judge.model)), r.judge.usage, r.judge.model);
+    addUsage((parts[r.engine] ||= emptyPart(model)), ENGINES[r.engine].parse(r.response).usage, storedRate(r.rate, model, r.at || plan.startedAt));
+    if (r.judge) addUsage((parts.judge ||= emptyPart(r.judge.model)), r.judge.usage, storedRate(r.judge.rate, r.judge.model, r.judge.at || r.at || plan.startedAt));
   }
   const sum = (k) => Object.values(parts).reduce((s, p) => s + p[k], 0);
   const expected = plan.engines.length * plan.promptIds.length * plan.runs;
@@ -336,19 +350,6 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     writeJson(join(runDir, "config.json"), config);
   }
 
-  let keys;
-  try {
-    keys = { judge: getKey("OPENAI_API_KEY", config) };
-    for (const e of plan.engines) keys[e] = getKey(ENGINES[e].keyName, config);
-  } catch (e) {
-    log(`visibility: ${e.message}`);
-    return 1;
-  }
-  const allKeys = Object.values(keys);
-
-  const ledger = new SpendLedger(home, opts.maxUsd);
-  const errors = [];
-  let stopReason = null;
   const work = {};
   for (const engine of plan.engines) {
     work[engine] = [];
@@ -368,21 +369,54 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     }
   }
 
-  const judgeMax = estimatePerCall(config.judge.model, PRICING);
+  // A retired model keeps its price for stored answers, but a resume never
+  // calls it again: fail loudly before any key is read or call is made.
+  const pending = Object.values(work).flat();
+  const retired = [];
+  for (const e of plan.engines) {
+    const n = work[e].filter((j) => !j.judgeOnly).length;
+    if (n && isRetired(config.engines[e].model, PRICING)) retired.push(`${e} model ${config.engines[e].model} (${n} calls)`);
+  }
+  if (pending.length && isRetired(config.judge.model, PRICING)) retired.push(`judge model ${config.judge.model}`);
+  if (retired.length) {
+    log(`visibility: this run still needs calls to retired models: ${retired.join(", ")}; --analyse reports what is stored, or start a new run on current ids`);
+    return 1;
+  }
+
+  let keys = {};
+  if (pending.length) {
+    try {
+      keys = { judge: getKey("OPENAI_API_KEY", config) };
+      for (const e of plan.engines) if (work[e].length) keys[e] = getKey(ENGINES[e].keyName, config);
+    } catch (e) {
+      log(`visibility: ${e.message}`);
+      return 1;
+    }
+  }
+  const allKeys = Object.values(keys);
+
+  const ledger = new SpendLedger(home, opts.maxUsd);
+  const errors = [];
+  let stopReason = null;
+  // An engine whose model id the provider does not know stops on its own;
+  // the other engines keep going.
+  const engineStop = {};
   const label = (job) => `${job.engine} ${job.promptId} r${job.run}`;
 
   /** Judges a stored or fresh record in place. False when the judge failed. */
-  const runJudge = async (record, text, candidates) => {
+  const runJudge = async (record, text, candidates, at) => {
+    const rate = rateAt(config.judge.model, PRICING, at);
     try {
       const j = await judge(text, candidates, { model: config.judge.model, key: keys.judge, limits: PRICING.models[config.judge.model].limits });
-      ledger.add(priceCall(j.usage, config.judge.model, PRICING).usd);
-      record.judge = { model: config.judge.model, verdicts: j.verdicts, usage: j.usage };
+      ledger.add(priceAtRate(j.usage, rate).usd);
+      record.judge = { model: config.judge.model, at: at.toISOString(), rate, verdicts: j.verdicts, usage: j.usage };
       delete record.judgeError;
       return true;
     } catch (e) {
-      if (e.usage) ledger.add(priceCall(e.usage, config.judge.model, PRICING).usd);
+      if (e.usage) ledger.add(priceAtRate(e.usage, rate).usd);
       const msg = redact(e.message, allKeys);
       if (e.quota) stopReason ||= `the judge is out of credit or quota (${msg.slice(0, 120)})`;
+      if (e.modelMissing) stopReason ||= `the judge model ${config.judge.model} does not exist at the provider (retired or wrong id; fix judge.model)`;
       // The paid-for answer is kept, but it is not counted until a verdict
       // exists: summary.json lists it as awaiting the judge and --resume
       // re-runs only the judge for it.
@@ -392,10 +426,14 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   };
 
   const doOne = async (job) => {
-    if (stopReason) return;
+    if (stopReason || engineStop[job.engine]) return;
     const model = config.engines[job.engine].model;
-    const engineMax = job.judgeOnly ? 0 : estimatePerCall(model, PRICING);
-    const estimate = engineMax + judgeMax;
+    // The whole job (engine call and judge) is reserved and charged at the
+    // rates in force now, and the record keeps them.
+    const at = new Date();
+    const rate = rateAt(model, PRICING, at);
+    const engineMax = job.judgeOnly ? 0 : estimatePerCall(model, PRICING, at);
+    const estimate = engineMax + estimatePerCall(config.judge.model, PRICING, at);
     if (!ledger.reserve(estimate)) {
       stopReason ||= `daily cap of $${opts.maxUsd} reached ($${ledger.spent.toFixed(2)} spent today)`;
       return;
@@ -407,18 +445,18 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
         record = readJson(job.file);
       } else {
         const response = await ENGINES[job.engine].call(prompt, { model, limits: PRICING.models[model].limits }, keys[job.engine]);
-        const paid = priceCall(ENGINES[job.engine].parse(response).usage, model, PRICING).usd;
+        const paid = priceAtRate(ENGINES[job.engine].parse(response).usage, rate).usd;
         ledger.add(paid);
         // A blocked, truncated or empty generation is paid for but is not an
         // answer: record it as an error (not stored, so --resume retries it).
         const why = ENGINES[job.engine].failure(response);
         if (why) throw new Error(`no usable answer: ${why}`);
         if (paid > engineMax) log(`  ${label(job)}: overrun: $${paid.toFixed(4)} passed the $${engineMax.toFixed(4)} estimate; raise limits.maxInputTokens in pricing.json`);
-        record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: new Date().toISOString(), prompt: prompt.text, response };
+        record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: at.toISOString(), rate, prompt: prompt.text, response };
       }
       const text = ENGINES[job.engine].parse(record.response).text;
       const candidates = judgeCandidates(text, config);
-      const judged = candidates.length ? await runJudge(record, text, candidates) : true;
+      const judged = candidates.length ? await runJudge(record, text, candidates, at) : true;
       writeJson(job.file, record);
       if (!judged) {
         errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, judge: true, message: `judge failed: ${record.judgeError}` });
@@ -428,6 +466,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       }
     } catch (e) {
       if (e.quota) stopReason ||= `${job.engine} is out of credit or quota (${redact(e.message, allKeys).slice(0, 120)})`;
+      if (e.modelMissing) engineStop[job.engine] ||= `${job.engine} model ${model} does not exist at the provider (retired or wrong id; fix engines.${job.engine}.model)`;
       errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, message: redact(e.message, allKeys) });
       log(`  ${label(job)}: failed: ${redact(e.message, allKeys)}`);
     } finally {
@@ -437,6 +476,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
 
   await Promise.all(plan.engines.map((e) => pool(work[e].map((j) => () => doOne(j)), config.engines[e].concurrency || 2)));
   writeJson(join(runDir, "errors.json"), errors);
+  stopReason = [stopReason, ...Object.values(engineStop)].filter(Boolean).join("; ") || null;
   const s = writeOutputs(runDir, plan, config, home, { errors, stopReason });
   const o = s.metrics.overall;
   log(`visibility: ${o.mentioned}/${o.answers} answers name ${config.brand.name} (${o.visibility.pct}%); cost $${s.cost.usd.toFixed(2)} (list $${s.cost.listUsd.toFixed(2)}), ${s.cost.calls} calls, ${s.cost.searches} searches`);
