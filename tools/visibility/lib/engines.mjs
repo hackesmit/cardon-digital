@@ -10,17 +10,30 @@
  *   gemini  generateContent with the google_search grounding tool. The API has
  *           no location parameter, so the city in the prompt text is all the
  *           locality signal it gets.
+ *   gemini-web  the Gemini consumer app driven through a logged-in account
+ *           with Playwright (lib/gemini-web.mjs). Browser-driven: no key, no
+ *           price, no per-token cost row.
  *
  * Keys travel in headers only (never a query string), so no url that reaches a
  * log or an error message carries one.
  */
 
+import { callGeminiWeb, parseGeminiWeb, failureGeminiWeb, closeGeminiWeb } from "./gemini-web.mjs";
+
 const OPENAI_URL = "https://api.openai.com/v1/responses";
 const GEMINI_URL = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
 /** Removes anything that looks like a key from a string bound for a log. */
+/**
+ * Secrets an engine holds in memory for the run (gemini-web's browser
+ * password while it is signed in): every redact() also strips them, so no
+ * error text that reaches the console or errors.json can carry one.
+ */
+export const liveSecrets = new Set();
+
 export function redact(s, keys = []) {
   let out = String(s);
+  for (const k of liveSecrets) if (k && k.length >= 4) out = out.split(k).join("[redacted]");
   for (const k of keys) if (k && k.length > 8) out = out.split(k).join("[redacted]");
   return out.replace(/\b(sk-[A-Za-z0-9_-]{6})[A-Za-z0-9_*-]+/g, "$1[redacted]").replace(/\bAIza[0-9A-Za-z_-]{10,}/g, "AIza[redacted]").replace(/\bAQ\.[0-9A-Za-z_.-]{10,}/g, "AQ.[redacted]");
 }
@@ -223,4 +236,6 @@ export async function callGemini(prompt, opts, key) {
 export const ENGINES = {
   openai: { call: callOpenAI, parse: parseOpenAI, failure: failureOpenAI, keyName: "OPENAI_API_KEY" },
   gemini: { call: callGemini, parse: parseGemini, failure: failureGemini, keyName: "GEMINI_API_KEY" },
+  // Browser-driven: one browser, one prompt at a time, nothing billed.
+  "gemini-web": { call: callGeminiWeb, parse: parseGeminiWeb, failure: failureGeminiWeb, close: closeGeminiWeb, keyName: null, browser: true },
 };
