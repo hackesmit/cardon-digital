@@ -232,3 +232,48 @@ marked to record where it does not. The licence is the same for all six files.
 - Credit: Aperta Media Co. (site by Cardon Digital)
 - License: used with permission of the owner
 - Slot: home/proof-aperta, sitios/aperta-desktop, sitios/aperta-phone
+
+## Filled pending slots (2026-11-03)
+
+Daniel asked for every pending slot to carry the best equivalent available
+until the real shoot. Two kinds: En'kanto's own photographs, taken from the
+property's website, and Pexels stock. Every stock frame on a client case page
+says so in its caption.
+
+### enkanto/front-desk.webp, enkanto/restaurant-pass.webp
+
+- Credit: Vinedo En'kanto, the property's own photographs (enkanto.mx media library)
+- License: used with permission of the owner, a client of Cardon Digital
+- Frames: the tasting bar; the deck at night with guests
+
+### home/service-sitios.webp
+
+- Photographer: Towfiqu barbhuiya
+- Source: https://www.pexels.com/photo/a-person-holding-a-smartphone-13682247/
+- License: Pexels License
+- Edit: a screenshot of the Aperta Media Co. site (site by Cardon Digital) placed on the blank screen
+
+### home/service-anuncios.webp
+
+- Photographer: ANTONI SHKRABA production
+- Source: https://www.pexels.com/photo/a-woman-talking-on-her-phone-while-boxing-pastry-8902305/
+- License: Pexels License
+
+### xanic/before-clipboard.webp
+
+- Photographer: cottonbro studio
+- Source: https://www.pexels.com/photo/a-man-in-brown-jacket-5537791/
+- License: Pexels License
+
+### winery/tasting-room.webp
+
+- Photographer: Rachel Claire
+- Source: https://www.pexels.com/photo/crop-person-pouring-wine-in-winery-5490196/
+- License: Pexels License
+
+### enkanto/room-charge.mp4, enkanto/room-charge-poster.webp
+
+- Videographer: Pavel Danilyuk
+- Source: https://www.pexels.com/video/woman-using-digital-tablet-6602068/
+- License: Pexels License
+- Edit: ten seconds cut, sound removed, re-encoded

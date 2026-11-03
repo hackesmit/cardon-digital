@@ -108,12 +108,14 @@ export default async function EnkantoCaseStudy(props: Params) {
           <div className="case-pair">
             <Media
               slot="enkanto/front-desk"
+              src="/media/enkanto/front-desk.webp"
               caption={d.media.deskCap}
               alt={d.media.deskAlt}
               tone="tint"
             />
             <Media
               slot="enkanto/restaurant-pass"
+              src="/media/enkanto/restaurant-pass.webp"
               caption={d.media.passCap}
               alt={d.media.passAlt}
               tone="full"
@@ -299,6 +301,8 @@ export default async function EnkantoCaseStudy(props: Params) {
           <Media
             className="case-media-wide"
             slot="enkanto/room-charge"
+            src="/media/enkanto/room-charge.mp4"
+            poster="/media/enkanto/room-charge-poster.webp"
             caption={d.media.videoCap}
             alt={d.media.videoAlt}
             labels={{ play: d.media.play, pause: d.media.pause }}
