@@ -36,8 +36,8 @@ This repository is public, so client configs and outputs never go in it. The tra
   "competitors": [{ "id": "marea", "name": "Marea Studio", "aliases": [], "domains": ["mareabaja.mx"] }],
   "prompts": [{ "id": "P0", "text": "agencia de paginas web en Ensenada", "intent": "category",
                 "language": "es", "country": "MX", "region": "Baja California", "city": "Ensenada" }],
-  "engines": { "openai": { "model": "gpt-5.5", "concurrency": 4 }, "gemini": { "model": "gemini-2.5-flash", "concurrency": 2 } },
-  "judge": { "model": "gpt-5.4-nano" },
+  "engines": { "openai": { "model": "gpt-6-sol", "concurrency": 4 }, "gemini": { "model": "gemini-3.8-flash", "concurrency": 2 } },
+  "judge": { "model": "gpt-6-luna" },
   "keys": { "OPENAI_API_KEY": { "vault": "...", "item": "...", "field": "Secret" } },
   "domainClasses": { "directory": ["extra-directory.mx"], "ugc": [] },
   "baseline": "optional prose shown in the report"
@@ -74,8 +74,8 @@ Detection is a string match, so the counts can be recomputed from the stored tex
 
 ## Engines
 
-- **openai**: Responses API, `web_search` tool, approximate user location from the prompt's country, region and city.
-- **gemini**: `generateContent` with Google Search grounding. A free AI Studio key refuses grounding (every grounded call returns a quota error, and Gemini 2.5 is closed to new keys since 2026-10), so the project needs billing on before Gemini can run. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request (https on vertexaisearch.cloud.google.com only, no credentials or custom port, 5 s timeout; any other url is kept as-is with no request) to record the real domain.
+- **openai**: Responses API, `web_search` tool, approximate user location from the prompt's country, region and city. The model should match what ChatGPT users get: since 2026-11-03 that is `gpt-6-sol` (the paid-tier ChatGPT model; free and Go users get a Luna model), with `gpt-6-luna` as the judge. Check the model ids against the provider lists (`GET /v1/models`, `GET /v1beta/models`) before switching.
+- **gemini**: `generateContent` with Google Search grounding. A free AI Studio key refuses grounding (every grounded call returns a quota error), so the project needs billing on before Gemini can run. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request (https on vertexaisearch.cloud.google.com only, no credentials or custom port, 5 s timeout; any other url is kept as-is with no request) to record the real domain.
 - **Perplexity Sonar** is not wired in: its API needs prepaid credits and none are funded.
 
 API answers are not consumer-app answers (published brand overlap between the two is 6 to 24%, and the ChatGPT app cites far more sources), so every report says "API panel, directional".

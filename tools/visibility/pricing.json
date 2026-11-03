@@ -1,15 +1,15 @@
 {
-  "checked": "2026-10-27",
+  "checked": "2026-11-03",
   "sources": [
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
   ],
-  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). perGroundedPrompt is per grounded request (Gemini 2.5: $35 per 1k). Gemini 3+ grounding bills per search query ($14 per 1k) after 5,000 free requests a month per project; the tracker models no free allowance and charges every call list price. Gemini 2.5 is closed to new keys since 2026-10.",
+  "note": "USD per 1M tokens. perSearch is per web search call (OpenAI reasoning models: $10 per 1k, search content tokens billed as input). Gemini 3+ grounding bills per search query ($14 per 1k) after 5,000 free requests a month per project; the tracker models no free allowance and charges every call list price. gemini-3.8-flash list price doubles on 2027-01-01 ($1.50 input, $7.50 output): update its row then. gpt-6-sol is the ChatGPT paid-tier model (the engine), gpt-6-luna the judge. gpt-5.5 and gpt-5.4-nano stay only to price runs stored before 2026-11-03 (--analyse, --resume); new configs use the current ids. gemini-2.5-flash and gpt-5.4-mini are removed, so a config that names them fails with no price.",
   "models": {
-    "gpt-5.5": {
-      "input": 5.0,
-      "cachedInput": 0.5,
-      "output": 30.0,
+    "gpt-6-sol": {
+      "input": 2.0,
+      "cachedInput": 0.2,
+      "output": 10.0,
       "perSearch": 0.01,
       "limits": {
         "maxInputTokens": 48000,
@@ -17,10 +17,20 @@
         "maxSearches": 5
       }
     },
-    "gpt-5.4-mini": {
-      "input": 0.75,
-      "cachedInput": 0.075,
-      "output": 4.5,
+    "gpt-6-luna": {
+      "input": 0.1,
+      "cachedInput": 0.01,
+      "output": 0.5,
+      "limits": {
+        "maxInputTokens": 10000,
+        "maxOutputTokens": 2000,
+        "maxSearches": 0
+      }
+    },
+    "gpt-5.5": {
+      "input": 5.0,
+      "cachedInput": 0.5,
+      "output": 30.0,
       "perSearch": 0.01,
       "limits": {
         "maxInputTokens": 48000,
@@ -36,16 +46,6 @@
         "maxInputTokens": 10000,
         "maxOutputTokens": 2000,
         "maxSearches": 0
-      }
-    },
-    "gemini-2.5-flash": {
-      "input": 0.3,
-      "output": 2.5,
-      "perGroundedPrompt": 0.035,
-      "limits": {
-        "maxInputTokens": 4000,
-        "maxOutputTokens": 8000,
-        "maxSearches": 1
       }
     },
     "gemini-3.8-flash": {
