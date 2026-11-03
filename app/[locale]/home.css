@@ -1294,6 +1294,12 @@
 .pg-home .proof-grid-3 {
   grid-template-columns: repeat(3, 1fr);
 }
+/* Two still proof cards on the Cardon home since hq-3f6ut.3: the case pages
+   moved to the wine brand, so neither card links anywhere. */
+.pg-home .proof-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+}
 .pg-home .proof-item-still {
   cursor: default;
 }
@@ -1308,6 +1314,18 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(14px, 1.8vw, 22px);
+}
+/* The AI answers card has no photograph, so it runs the full width under the
+   three that do, and its body keeps a readable measure. */
+.pg-home .svc-card-wide {
+  grid-column: 1 / -1;
+}
+.pg-home .svc-card-wide .svc-body {
+  max-width: 68ch;
+}
+/* The one line to the wine brand reads as a quiet aside under the arc line. */
+.pg-home .svc-wine {
+  margin-top: 6px;
 }
 .pg-home .svc-card {
   display: flex;
@@ -1458,7 +1476,8 @@
   }
 }
 @media (max-width: 640px) {
-  .pg-home .proof-grid-3 {
+  .pg-home .proof-grid-3,
+  .pg-home .proof-grid-2 {
     grid-template-columns: 1fr;
   }
   .pg-home .fam-grid-4 {

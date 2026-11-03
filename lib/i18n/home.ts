@@ -7,10 +7,14 @@ type HomePhoto = { cap: string; alt: string };
  * Home page copy.
  *
  * The architecture is the arc of 2026-09-28 (bunker research/2026-09/
- * site-arc-digital-onboarding.md section 4): hero, proof bar, the three
- * services, the objections, the Monte Xanic case, one system, how it works,
- * compare, pricing summary, diagnostic. Three results in one
- * order: you get found, you connect with your clients, the work runs itself.
+ * site-arc-digital-onboarding.md section 4), refocused by bead hq-3f6ut.3
+ * (Daniel, 2026-11-03) when the wine software left for its own brand: hero,
+ * proof bar, the services (websites, Google Ads, AI answers, custom software),
+ * the objections, one system, how it works, compare, pricing summary,
+ * diagnostic. Three results in one order: you get found, you connect with
+ * your clients, the work runs itself. No module or winery copy lives here;
+ * the one line that sends a winery to the wine brand is `wine.lead`, and the
+ * brand's name beside it is read from lib/brand.ts.
  *
  * Two rules this file is read against: every claim is the result the owner
  * ends up with rather than the deliverable, and the only figure published in
@@ -29,31 +33,25 @@ const en = {
   meta: {
     title: "Websites, ads and software in Ensenada | Cardon Digital",
     description:
-      "Cardon Digital builds websites, Google Ads and custom software for owner-run businesses in Ensenada and Baja California. Prices published, a free diagnostic that checks what ChatGPT and Google say about you, and everything we build stays in your name.",
+      "Cardon Digital builds websites, runs Google Ads and builds custom software for owner-run businesses in Ensenada and Baja California, with sites ready for ChatGPT and Google to cite. Prices published, a free diagnostic, and everything we build stays in your name.",
   },
   hero: {
     aria: "Introduction",
     eyebrow: "Ensenada, Baja California",
     title: "Websites, ads and software",
     titleAccent: "for businesses that want more clients and less work.",
-    sub: "A site that gets you found, ads that bring in new clients, and a system that does the repetitive work for your team. Each one bought on its own, and everything we build stays in your name.",
+    sub: "Cardon Digital builds sites people find on Google and ChatGPT can cite, Google Ads that bring new clients, and custom software that does your team's repetitive work. For owner-run businesses in Baja California, and everything we build stays in your name.",
     risk: "Start with a free diagnostic. The memo is yours whether we build or not.",
     proofLine: "Latest builds: Monte Xanic, Viñedo En'kanto and Aperta Media Co.",
   },
   clientsAria: "Businesses we have worked with",
   proof: {
     aria: "Some of the businesses we have built for",
-    read: "Read the case",
     items: [
       {
         name: "Monte Xanic",
-        place: "Valle de Guadalupe",
+        place: "Finance, automated",
         result: "An hour of finance work, now about two minutes",
-      },
-      {
-        name: "Vinedo En'kanto",
-        place: "San Antonio de las Minas",
-        result: "Production, restaurant and bookings on one system, and a store in front of it",
       },
       {
         name: "Aperta Media Co.",
@@ -64,9 +62,11 @@ const en = {
   },
   services: {
     kicker: "What we do",
-    title: "Three ways to grow, starting with the one that is urgent.",
+    title: "Four ways to grow, starting with the one that is urgent.",
     fromLabel: "from",
     adsLine: "a month plus {perContact} per contact, never more than {cap}",
+    softLine: "a fixed price, agreed after the diagnostic",
+    aiLine: "the check is part of the free diagnostic",
     items: [
       {
         id: "sitios",
@@ -84,22 +84,27 @@ const en = {
       },
       {
         id: "software",
-        name: "Software",
+        name: "Custom software",
         title: "The repetitive work runs itself.",
-        body: "A system built around how you already work: the record is written once, the reports build themselves, and the books are current every morning.",
-        cta: "See software",
+        body: "A system built around how your team already works, whatever you sell: the record is written once, the reports build themselves, and the books are current every morning.",
+        cta: "See custom software",
+      },
+      {
+        id: "ia",
+        name: "AI answers",
+        title: "Know what ChatGPT and Google say about your business.",
+        body: "We check whether your business comes up when customers ask ChatGPT, Perplexity, Gemini and Google, and how each answer describes it. Where something is missing, we fix your site so these engines can read it and cite it.",
+        cta: "See how the check works",
       },
     ],
     arcLine: "Each one works on its own. Together, your business is in the digital era end to end: you get found, you connect with your clients, and the work runs itself.",
-    /** A line under the cards, since each card is already a link to its page. */
-    aiLead: "Already have a site?",
-    aiLink: "See how the free diagnostic checks whether ChatGPT, Perplexity, Gemini and Google mention your business.",
   },
-  /** The six photographs at the top of the page: one per proof card, one per service card. */
+  /** The one line that sends a winery to the wine brand; the brand name is read from lib/brand.ts. */
+  wine: {
+    lead: "Software for wineries:",
+  },
+  /** The photographs on the service cards that carry one. */
   photos: {
-    "home/proof-xanic": { cap: "Monte Xanic opens the season in one live view.", alt: "Monte Xanic, the winery in one frame" },
-    "home/proof-enkanto": { cap: "En'kanto's cabin: every booking from every channel in one calendar.", alt: "En'kanto's cabin among succulents and vines" },
-    "home/proof-aperta": { cap: "Aperta Media Co.'s site: their packages and their work, and they edit it themselves.", alt: "Screenshot of the Aperta Media Co. home page" },
     "home/service-sitios": { cap: "A site that works on any screen and leads to a message.", alt: "A phone in hand outdoors, open on a site we built" },
     "home/service-anuncios": { cap: "The client who was searching calls or writes on WhatsApp, and gets counted.", alt: "A shop owner takes a call while she boxes an order at the counter" },
     "home/service-software": { cap: "The record is written once, where the work happens.", alt: "A tablet with the day's board, at work" },
@@ -126,39 +131,11 @@ const en = {
       },
     ],
   },
-  xanic: {
-    kicker: "Case study",
-    title: "Two jobs at Monte Xanic: the books and the harvest.",
-    body: "One system solved two different problems. One of time: a finance view somebody assembled by hand every week. One of memory: whole vintages of data piled in notebooks and spreadsheets nobody could consult.",
-    finance: {
-      kicker: "Finance",
-      title: "The finance view assembles itself.",
-      body: "Every week somebody spent about an hour putting it together by hand. Now it refreshes through the day and nobody touches it.",
-    },
-    stats: [
-      { n: "1 hour", k: "every week, by hand" },
-      { n: "2 minutes", k: "now, refreshed through the day" },
-      { n: "97% less", k: "time on that one view" },
-    ],
-    basis: "Timed by hand before the build, and the two minutes are the refresh the dashboard generates. No Monte Xanic production, sales or financial figures are published.",
-    production: {
-      kicker: "Production",
-      title: "Years of harvests, finally at hand.",
-      body: "Weights, samples, tanks and lab results piled up vintage after vintage in notebooks and spreadsheets. Now every reading sits in one record, comparable across vintages and ready for a decision the moment it is asked for.",
-      cap: "The vintages side by side, on the screen where the decision gets made.",
-      alt: "A laptop on the lab bench, samples beside it, the season's charts on screen",
-    },
-    read: "Read the Monte Xanic case",
-    tankCap: "The record, read at the barrel from the phone, with nothing to copy out again.",
-    tankAlt: "A hand scrolling the season's record on a phone, at the barrel.",
-    play: "Play the clip",
-    pause: "Pause the clip",
-  },
   system: {
     kicker: "One system",
     title: "Stop arguing about which spreadsheet is right.",
-    body: "Invoices, messages, bookings, harvest and the books go in once and come out as one board that keeps itself current. It is what we built for Monte Xanic and for En'kanto, and what the software service builds for you.",
-    more: "See the software",
+    body: "Sales, orders, appointments, invoices and messages go in once and come out as one board that keeps itself current. That is what custom software builds for your business.",
+    more: "See custom software",
   },
   how: {
     kicker: "How it works",
@@ -168,7 +145,7 @@ const en = {
       { k: "02", body: "The build. A fixed price, agreed before anyone starts." },
       { k: "03", body: "The handover. Your team trained, the accounts and the keys in your name." },
     ],
-    anywhere: "You can start with any of the three: a site, a campaign or a system. The diagnostic says which one first.",
+    anywhere: "You can start with any one: a site, a campaign or a system. The diagnostic says which one first.",
   },
   compare: {
     kicker: "Compare",
@@ -188,13 +165,14 @@ const en = {
   },
   pricing: {
     kicker: "What it costs",
-    title: "A site, a campaign or a software module, and what each costs to start.",
+    title: "A site, a campaign or custom software, and what each costs to start.",
     sub: "The final quote comes out of the diagnostic.",
     siteK: "Website",
     adsK: "Google Ads",
-    softK: "Software",
+    softK: "Custom software",
     fromLabel: "from",
     adsLine: "a month plus {perContact} per contact, never more than {cap}",
+    softLine: "a fixed price, agreed after the diagnostic",
     more: "See every price",
     foot: [
       {
@@ -220,7 +198,7 @@ const en = {
         { k: "02", label: "Connect with your clients" },
         { k: "03", label: "The work runs itself" },
       ],
-      query: "wine in ensenada",
+      query: "plumber in ensenada",
       siteName: "Your business",
       siteLine: "What you sell, for whom",
       siteCta: "Message us",
@@ -240,22 +218,22 @@ const en = {
       connecting: "connecting",
       oneSystem: "one system",
       fallback:
-        "Notebooks, spreadsheets, invoices and messages settle into clean rows around one panel the winery owns.",
+        "Notebooks, spreadsheets, invoices and messages settle into clean rows around one panel the business owns.",
       panelTitle: "One system",
       panelSummary: "SUMMARY",
       docs: [
-        { name: "harvest.xlsx", tag: "XLSX" },
-        { name: "lab.csv", tag: "CSV" },
-        { name: "tanks.xlsx", tag: "XLSX" },
+        { name: "sales.xlsx", tag: "XLSX" },
+        { name: "stock.csv", tag: "CSV" },
+        { name: "orders.xlsx", tag: "XLSX" },
         { name: "invoice.pdf", tag: "PDF" },
-        { name: "field book", tag: "NOTES" },
+        { name: "notebook", tag: "NOTES" },
         { name: "whatsapp", tag: "MSG" },
       ],
       rows: [
-        { k: "HARVEST", v: "live" },
-        { k: "LOTS", v: "dated" },
-        { k: "TANKS", v: "current" },
-        { k: "BOOKINGS", v: "synced" },
+        { k: "SALES", v: "live" },
+        { k: "ORDERS", v: "dated" },
+        { k: "STOCK", v: "current" },
+        { k: "CALENDAR", v: "synced" },
         { k: "SERVICE", v: "counted" },
         { k: "FINANCE", v: "current" },
       ],
@@ -298,31 +276,25 @@ const es: typeof en = {
   meta: {
     title: "Sitios web, anuncios y software en Ensenada | Cardon",
     description:
-      "Cardon Digital hace sitios web, anuncios en Google y software a la medida para negocios en Ensenada y Baja California. Precios publicados en pesos, un diagnóstico sin costo que revisa qué dicen ChatGPT y Google de su negocio, y todo lo que construimos queda a su nombre.",
+      "Cardon Digital hace sitios web, anuncios en Google y software a la medida para negocios en Ensenada y Baja California, con sitios listos para que ChatGPT y Google los citen. Precios publicados en pesos, un diagnóstico sin costo, y todo lo que construimos queda a su nombre.",
   },
   hero: {
     aria: "Presentación",
     eyebrow: "Ensenada, Baja California",
     title: "Sitios web, anuncios y software",
     titleAccent: "para negocios que quieren más clientes y menos trabajo.",
-    sub: "Un sitio web para que le escriban, anuncios que le traen clientes nuevos y un sistema que le quita a su equipo el trabajo repetitivo. Cada servicio se contrata por separado, y todo lo que construimos queda a su nombre.",
+    sub: "Cardon Digital hace sitios web que la gente encuentra en Google y que ChatGPT puede citar, anuncios en Google que le traen clientes nuevos y software a la medida que le quita a su equipo el trabajo repetitivo. Para negocios de Baja California con el dueño al frente, y todo queda a su nombre.",
     risk: "Empiece con un diagnóstico sin costo. El informe es suyo, nos contrate o no.",
     proofLine: "Proyectos recientes: Monte Xanic, Viñedo En'kanto y Aperta Media Co.",
   },
   clientsAria: "Empresas con las que hemos trabajado",
   proof: {
     aria: "Algunos de los negocios para los que trabajamos",
-    read: "Ver el caso",
     items: [
       {
         name: "Monte Xanic",
-        place: "Valle de Guadalupe",
+        place: "Finanzas automatizadas",
         result: "Una hora de trabajo en finanzas que hoy toma unos dos minutos",
-      },
-      {
-        name: "Viñedo En'kanto",
-        place: "San Antonio de las Minas",
-        result: "Producción, restaurante y reservaciones en un solo sistema, con su tienda en línea",
       },
       {
         name: "Aperta Media Co.",
@@ -333,9 +305,11 @@ const es: typeof en = {
   },
   services: {
     kicker: "Lo que hacemos",
-    title: "Tres formas de crecer, empezando por la que más le urge.",
+    title: "Cuatro formas de crecer, empezando por la que más le urge.",
     fromLabel: "desde",
     adsLine: "al mes más {perContact} por contacto, nunca más de {cap}",
+    softLine: "precio fijo, acordado después del diagnóstico",
+    aiLine: "la revisión va incluida en el diagnóstico sin costo",
     items: [
       {
         id: "sitios",
@@ -353,20 +327,25 @@ const es: typeof en = {
       },
       {
         id: "software",
-        name: "Software",
+        name: "Software a la medida",
         title: "El trabajo repetitivo se hace solo.",
-        body: "Un sistema hecho a la medida de cómo trabaja su equipo: todo se registra una sola vez, los reportes se arman solos y las cuentas amanecen al corriente.",
-        cta: "Ver software",
+        body: "Un sistema hecho a la medida de cómo trabaja su equipo, sea cual sea su giro: todo se registra una sola vez, los reportes se arman solos y las cuentas amanecen al corriente.",
+        cta: "Ver software a la medida",
+      },
+      {
+        id: "ia",
+        name: "Respuestas de IA",
+        title: "Sepa qué dicen ChatGPT y Google de su negocio.",
+        body: "Revisamos si su negocio sale cuando sus clientes le preguntan a ChatGPT, Perplexity, Gemini y Google, y cómo lo describe cada respuesta. Si falta algo, arreglamos su sitio para que estos motores lo puedan leer y citar.",
+        cta: "Ver cómo se revisa",
       },
     ],
-    arcLine: "Cada uno funciona por sí solo. Con los tres, su negocio entra a la era digital de principio a fin: lo encuentran, le escriben y el trabajo se hace solo.",
-    aiLead: "¿Ya tiene sitio?",
-    aiLink: "Vea cómo el diagnóstico sin costo revisa si ChatGPT, Perplexity, Gemini y Google mencionan su negocio.",
+    arcLine: "Cada uno funciona por sí solo. Juntos, su negocio entra a la era digital de principio a fin: lo encuentran, le escriben y el trabajo se hace solo.",
+  },
+  wine: {
+    lead: "Software para vinícolas:",
   },
   photos: {
-    "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
-    "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reservación, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
-    "home/proof-aperta": { cap: "El sitio de Aperta Media Co.: sus paquetes y su trabajo, y ellos mismos lo editan.", alt: "Captura de la página de inicio de Aperta Media Co." },
     "home/service-sitios": { cap: "Un sitio que se ve bien en cualquier pantalla y termina en un mensaje.", alt: "Un teléfono en la mano, al aire libre, con un sitio que construimos" },
     "home/service-anuncios": { cap: "El cliente que lo buscaba llama o escribe por WhatsApp y queda registrado.", alt: "Una dueña contesta una llamada mientras empaca un pedido en el mostrador" },
     "home/service-software": { cap: "Cada dato se registra una sola vez, ahí donde se hace el trabajo.", alt: "Una tableta en uso, con el tablero del día" },
@@ -393,39 +372,11 @@ const es: typeof en = {
       },
     ],
   },
-  xanic: {
-    kicker: "Caso de estudio",
-    title: "Dos trabajos en Monte Xanic: las cuentas y la cosecha.",
-    body: "Un mismo sistema resolvió dos problemas distintos. Uno era de tiempo: una vista financiera que alguien armaba a mano cada semana. El otro, de memoria: los datos de añadas enteras, amontonados en libretas y hojas de cálculo que nadie podía consultar.",
-    finance: {
-      kicker: "Finanzas",
-      title: "La vista financiera se arma sola.",
-      body: "Cada semana alguien se tardaba cerca de una hora en armarla a mano. Hoy se actualiza durante el día y nadie la toca.",
-    },
-    stats: [
-      { n: "1 hora", k: "cada semana, a mano" },
-      { n: "2 minutos", k: "hoy, y se actualiza durante el día" },
-      { n: "97% menos", k: "tiempo en esa vista" },
-    ],
-    basis: "La hora se cronometró a mano antes del desarrollo, y los dos minutos son la actualización que genera el tablero. Aquí no publicamos cifras de producción, de ventas ni financieras de Monte Xanic.",
-    production: {
-      kicker: "Producción",
-      title: "Años de cosechas, por fin a la mano.",
-      body: "Pesajes, muestras, tanques y resultados de laboratorio se acumulaban añada tras añada en libretas y hojas de cálculo. Hoy cada dato está en un solo registro, comparable entre añadas y listo en cuanto hay que tomar una decisión.",
-      cap: "Las añadas, una junto a la otra, en la pantalla donde se toma la decisión.",
-      alt: "Una laptop en la mesa del laboratorio, con muestras al lado y las gráficas de la temporada en pantalla",
-    },
-    read: "Ver el caso de Monte Xanic",
-    tankCap: "El registro se consulta desde el teléfono, al pie de la barrica, sin volver a capturar nada.",
-    tankAlt: "Una mano recorre el registro de la temporada en un teléfono, junto a la barrica.",
-    play: "Reproducir el video",
-    pause: "Pausar el video",
-  },
   system: {
     kicker: "Un solo sistema",
     title: "Deje de discutir cuál hoja de cálculo es la buena.",
-    body: "Facturas, mensajes, reservaciones, cosecha y cuentas se registran una sola vez y quedan en un tablero que se mantiene al corriente solo. Es lo que hicimos para Monte Xanic y para En'kanto, y lo que el servicio de software hace para usted.",
-    more: "Ver el software",
+    body: "Ventas, pedidos, citas, facturas y mensajes se registran una sola vez y quedan en un tablero que se mantiene al corriente solo. Eso es lo que el software a la medida hace por su negocio.",
+    more: "Ver software a la medida",
   },
   how: {
     kicker: "Cómo funciona",
@@ -435,7 +386,7 @@ const es: typeof en = {
       { k: "02", body: "El desarrollo. Precio fijo, acordado antes de empezar." },
       { k: "03", body: "La entrega. Su equipo capacitado, y las cuentas y los accesos a su nombre." },
     ],
-    anywhere: "Puede empezar por cualquiera de los tres: un sitio, una campaña o un sistema. El diagnóstico dice cuál le conviene primero.",
+    anywhere: "Puede empezar por el que usted quiera: un sitio, una campaña o un sistema. El diagnóstico dice cuál le conviene primero.",
   },
   compare: {
     kicker: "Comparación",
@@ -455,13 +406,14 @@ const es: typeof en = {
   },
   pricing: {
     kicker: "Lo que cuesta",
-    title: "Un sitio, una campaña o un módulo de software, y lo que cuesta cada uno para empezar.",
+    title: "Un sitio, una campaña o software a la medida, y lo que cuesta cada uno para empezar.",
     sub: "La cotización final sale del diagnóstico.",
     siteK: "Sitio web",
     adsK: "Anuncios en Google",
-    softK: "Software",
+    softK: "Software a la medida",
     fromLabel: "desde",
     adsLine: "al mes más {perContact} por contacto, nunca más de {cap}",
+    softLine: "precio fijo, acordado después del diagnóstico",
     more: "Ver todos los precios",
     foot: [
       {
@@ -487,7 +439,7 @@ const es: typeof en = {
         { k: "02", label: "Le escriben" },
         { k: "03", label: "El trabajo se hace solo" },
       ],
-      query: "vino en ensenada",
+      query: "plomero en ensenada",
       siteName: "Su negocio",
       siteLine: "Qué vende y para quién",
       siteCta: "Escríbanos",
@@ -507,22 +459,22 @@ const es: typeof en = {
       connecting: "conectando",
       oneSystem: "un solo sistema",
       fallback:
-        "Libretas, hojas de cálculo, facturas y mensajes se ordenan en renglones limpios alrededor de un tablero que le pertenece a la bodega.",
+        "Libretas, hojas de cálculo, facturas y mensajes se ordenan en renglones limpios alrededor de un tablero que le pertenece al negocio.",
       panelTitle: "Un solo sistema",
       panelSummary: "RESUMEN",
       docs: [
-        { name: "cosecha.xlsx", tag: "XLSX" },
-        { name: "lab.csv", tag: "CSV" },
-        { name: "tanques.xlsx", tag: "XLSX" },
+        { name: "ventas.xlsx", tag: "XLSX" },
+        { name: "inventario.csv", tag: "CSV" },
+        { name: "pedidos.xlsx", tag: "XLSX" },
         { name: "factura.pdf", tag: "PDF" },
         { name: "libreta", tag: "NOTAS" },
         { name: "whatsapp", tag: "MSG" },
       ],
       rows: [
-        { k: "COSECHA", v: "al día" },
-        { k: "LOTES", v: "fechados" },
-        { k: "TANQUES", v: "al corriente" },
-        { k: "RESERVAS", v: "juntas" },
+        { k: "VENTAS", v: "al día" },
+        { k: "PEDIDOS", v: "fechados" },
+        { k: "ALMACÉN", v: "al corriente" },
+        { k: "CITAS", v: "juntas" },
         { k: "SERVICIO", v: "medido" },
         { k: "FINANZAS", v: "al corriente" },
       ],
