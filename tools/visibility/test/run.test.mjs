@@ -22,7 +22,7 @@ const pricing = JSON.parse(readFileSync(new URL("../pricing.json", import.meta.u
 const ANSWER = "Opciones:\n\n1. **Ola Studio** ([olastudio.test](https://olastudio.test/?utm_source=openai))\n2. **Nopal Digital**, sitios y software.";
 
 const openaiBody = (text = ANSWER) => ({
-  model: "gpt-5.4-mini-2026-03-17",
+  model: "gpt-6-sol",
   status: "completed",
   output: [
     { type: "web_search_call", action: { type: "search", query: "q" } },
@@ -37,7 +37,7 @@ const openaiBody = (text = ANSWER) => ({
 });
 
 const geminiBody = (text = "Nopal es una opcion, igual que Ola Studio.") => ({
-  modelVersion: "gemini-2.5-flash",
+  modelVersion: "gemini-3.8-flash",
   candidates: [{
     content: { parts: [{ text }] },
     groundingMetadata: {
@@ -77,16 +77,22 @@ test("redact removes known keys and key-shaped strings", () => {
 });
 
 test("priceCall prices tokens and searches, and charges list price even for a model flagged free", () => {
-  const p = priceCall({ input: 9000, cachedInput: 1000, output: 300, searches: 2 }, "gpt-5.4-mini", pricing);
-  // 8000 * 0.75 + 1000 * 0.075 + 300 * 4.5 per 1M, plus 2 * $0.01
-  assert.ok(Math.abs(p.usd - (0.006 + 0.000075 + 0.00135 + 0.02)) < 1e-9);
-  const g = priceCall({ input: 12, output: 250, searches: 1 }, "gemini-2.5-flash", pricing);
-  assert.ok(g.usd > 0.035, "Gemini is billed: list price by default");
+  const p = priceCall({ input: 9000, cachedInput: 1000, output: 300, searches: 2 }, "gpt-6-sol", pricing);
+  // 8000 * 2 + 1000 * 0.2 + 300 * 10 per 1M, plus 2 * $0.01
+  assert.ok(Math.abs(p.usd - (0.016 + 0.0002 + 0.003 + 0.02)) < 1e-9);
+  const g = priceCall({ input: 12, output: 250, searches: 1 }, "gemini-3.8-flash", pricing);
+  // 12 * 0.75 + 250 * 3.75 per 1M, plus one $0.014 search query
+  assert.ok(Math.abs(g.usd - (0.000009 + 0.0009375 + 0.014)) < 1e-9, "Gemini is billed: list price by default");
   assert.equal(g.usd, g.listUsd);
   for (const [m, p] of Object.entries(pricing.models)) assert.ok(!p.free, `${m} must not be marked free`);
   const flagged = { models: { x: { input: 1, output: 1, free: true } } };
   assert.ok(priceCall({ input: 1e6, output: 0 }, "x", flagged).usd === 1, "a free flag never zeroes the charge");
   assert.throws(() => priceCall({ input: 1, output: 1 }, "nope", pricing), /no price/);
+});
+
+test("models of runs stored before the 2026-11-03 switch stay priced, so --analyse and --resume still work", () => {
+  // The 2026-10-27 Cardon run answered on gpt-5.5 and judged on gpt-5.4-nano.
+  for (const m of ["gpt-5.5", "gpt-5.4-nano"]) assert.ok(estimatePerCall(m, pricing) > 0, m);
 });
 
 test("the spend ledger stops a call that would cross the daily cap and persists", () => {
@@ -111,7 +117,10 @@ test("validateConfig rejects what a run cannot use", () => {
   bad((c) => (c.prompts[1].id = "P0"), /duplicate prompt/);
   bad((c) => (c.competitors[0].id = "us"), /duplicate brand/);
   bad((c) => (c.engines.openai.model = "gpt-unknown"), /no price/);
-  bad((c) => (c.engines = { bing: { model: "gpt-5.4-mini" } }), /unknown engine/);
+  bad((c) => (c.engines = { bing: { model: "gpt-6-sol" } }), /unknown engine/);
+  // Retired ids have no price, so a config still naming one fails before any call.
+  bad((c) => (c.engines.gemini.model = "gemini-2.5-flash"), /no price/);
+  bad((c) => (c.engines.openai.model = "gpt-5.4-mini"), /no price/);
 });
 
 test("parseArgs reads options and refuses bad ones", () => {
@@ -150,7 +159,7 @@ function stubFetch(calls) {
     if (url.includes("generativelanguage")) return json(geminiBody());
     const body = JSON.parse(init.body);
     if (body.text?.format) {
-      return json({ model: "gpt-5.4-nano", status: "completed", output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ brands: [
+      return json({ model: "gpt-6-luna", status: "completed", output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ brands: [
         { id: "us", refers: true, sentiment: "positive" }, { id: "ola", refers: true, sentiment: "neutral" },
       ] }) }] }], usage: { input_tokens: 500, output_tokens: 40 } });
     }
@@ -206,8 +215,8 @@ test("main stops at the daily cap, writes a partial report, and --resume finishe
   process.env.GEMINI_API_KEY = "test-gemini-key-123456";
   const log = [];
   try {
-    // gpt-5.4-mini reserves about $0.12 per answer with its judge; $0.15 fits one in flight.
-    const code = await main(["--client", "fixture", "--home", home, "--runs", "1", "--engines", "openai", "--max-usd", "0.15"], (l) => log.push(l));
+    // gpt-6-sol reserves about $0.21 per answer with its judge; $0.25 fits one in flight.
+    const code = await main(["--client", "fixture", "--home", home, "--runs", "1", "--engines", "openai", "--max-usd", "0.25"], (l) => log.push(l));
     assert.equal(code, 3);
     const dir = join(home, "runs", "fixture", readdirSync(join(home, "runs", "fixture"))[0]);
     const s = JSON.parse(readFileSync(join(dir, "summary.json"), "utf8"));
@@ -277,9 +286,9 @@ test("concurrent calls cannot push spend past the cap (reservations held in flig
   mkdirSync(join(home, "clients"));
   writeFileSync(join(home, "clients", "fixture.json"), fixtureText);
   const realFetch = globalThis.fetch;
-  // Each answer costs about $0.113 (gpt-5.4-mini at its limits: 48000 input, 6000 output,
+  // Each answer costs about $0.206 (gpt-6-sol at its limits: 48000 input, 6000 output,
   // 5 searches) and takes 50 ms, so two workers in flight both see the old balance unless
-  // the ledger reserves; the $0.12 cap fits exactly one.
+  // the ledger reserves; the $0.21 cap fits exactly one.
   globalThis.fetch = async () => {
     await new Promise((r) => setTimeout(r, 50));
     return { ok: true, status: 200, headers: new Headers(), text: async () => JSON.stringify({
@@ -290,10 +299,10 @@ test("concurrent calls cannot push spend past the cap (reservations held in flig
   process.env.OPENAI_API_KEY = "test-openai-key-123456";
   process.env.GEMINI_API_KEY = "test-gemini-key-123456";
   try {
-    await main(["--client", "fixture", "--home", home, "--runs", "5", "--engines", "openai", "--max-usd", "0.12"], () => {});
+    await main(["--client", "fixture", "--home", home, "--runs", "5", "--engines", "openai", "--max-usd", "0.21"], () => {});
     const day = new Date().toISOString().slice(0, 10);
     const spent = JSON.parse(readFileSync(join(home, "spend", `${day}.json`), "utf8")).usd;
-    assert.ok(spent <= 0.12, `spent ${spent} past the 0.12 cap`);
+    assert.ok(spent <= 0.21, `spent ${spent} past the 0.21 cap`);
   } finally {
     globalThis.fetch = realFetch;
   }
@@ -485,11 +494,11 @@ test("judge rejects a verdict set that does not match the candidates, and the fa
     status: "completed", usage: { input_tokens: 100, output_tokens: 20 },
     output: [{ type: "message", content: [{ type: "output_text", text: JSON.stringify({ brands }) }] }] }) });
   const cands = [{ id: "cardon", name: "Cardon Digital", unclear: true }];
-  await assert.rejects(judge("x", cands, { model: "gpt-5.4-nano", key: "k".repeat(20), fetchImpl: reply([]) }),
+  await assert.rejects(judge("x", cands, { model: "gpt-6-luna", key: "k".repeat(20), fetchImpl: reply([]) }),
     (e) => /do not match/.test(e.message) && e.usage.input === 100);
-  await assert.rejects(judge("x", cands, { model: "gpt-5.4-nano", key: "k".repeat(20),
+  await assert.rejects(judge("x", cands, { model: "gpt-6-luna", key: "k".repeat(20),
     fetchImpl: reply([{ id: "cardon", refers: true, sentiment: "neutral" }, { id: "cardon", refers: false, sentiment: "neutral" }]) }), /twice/);
-  const ok = await judge("x", cands, { model: "gpt-5.4-nano", key: "k".repeat(20), fetchImpl: reply([{ id: "cardon", refers: true, sentiment: "positive" }]) });
+  const ok = await judge("x", cands, { model: "gpt-6-luna", key: "k".repeat(20), fetchImpl: reply([{ id: "cardon", refers: true, sentiment: "positive" }]) });
   assert.equal(ok.verdicts.cardon.refers, true);
 });
 
