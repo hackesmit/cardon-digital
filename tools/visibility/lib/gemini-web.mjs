@@ -16,18 +16,27 @@
  * title when the title is a bare domain.
  *
  * Browser-driven: no tokens are billed, so there is no price, no key and no
- * per-token cost row. A captcha, a usage limit or a signed-out session stops
- * the engine (error.stop) with the reason, and the run records it; a canned
- * "I can't do that" reply is a failure that --resume retries.
+ * per-token cost row. A captcha, a usage limit, a sign-in challenge or a
+ * session signed in as another account stops the engine (error.stop) with the
+ * reason, and the run records it; a canned "I can't do that" reply is a
+ * failure that --resume retries.
  *
- * The browser profile lives in the tracker home (browser/gemini-web), outside
- * this public repository, so the session cookies never reach git.
+ * The browser profile lives in the tracker home, one per configured account
+ * (browser/gemini-web/<account-slug>, every level mode 700, never a symlink or
+ * another user's directory), outside this public repository, so the session
+ * cookies never reach git. The signed-in Google identity is checked against
+ * the configured account before any prompt is sent.
+ *
+ * The password is read from Proton Pass only when Google asks for it. It is
+ * added to the redaction set (engines.mjs liveSecrets) while the browser runs,
+ * and a failed sign-in step throws a fixed message with no Playwright error
+ * text or cause, since Playwright's call log repeats the filled value.
  */
 
 import { join } from "node:path";
-import { mkdirSync } from "node:fs";
+import { lstatSync, mkdirSync, chmodSync, readdirSync, renameSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { cleanUrl } from "./engines.mjs";
+import { cleanUrl, liveSecrets } from "./engines.mjs";
 
 const APP_URL = "https://gemini.google.com/app";
 
@@ -255,17 +264,57 @@ export function failureGeminiWeb(body) {
   return null;
 }
 
+
+/**
+ * A usage-limit notice that Gemini gave instead of an answer: short, and the
+ * limit wording opens it. An answer that only mentions limits is an answer.
+ */
+const LIMIT = /you'?ve reached your (usage )?limit|reached the limit|alcanzaste el l[ií]mite|has alcanzado el l[ií]mite|l[ií]mite de uso/i;
+export function limitReply(text) {
+  const t = String(text || "").trim();
+  return t.length > 0 && t.length < 400 && new RegExp(`^(\\W*)(${LIMIT.source})`, "i").test(t);
+}
+
+/** Google's ordinary password step, not a verification challenge. */
+const PASSWORD_STEP = /^https:\/\/accounts\.google\.com\/(v3\/)?signin\/(v2\/)?(challenge|sl)\/pwd(\/|\?|#|$)/;
+
 /**
  * What a page state means for the run: null when Gemini is usable, else
- * { stop } naming why the engine has to stop (no retry can fix it) or
- * { login } when the session is signed out and a login may fix it.
+ * { stop } naming why the engine has to stop (no retry can fix it),
+ * { password: true } on Google's ordinary password step, or { login: true }
+ * on any other Google sign-in page.
+ *
+ * Only trusted signals count, never the conversation: the url, a visible
+ * captcha frame, the text of the app's own status banners (pageState drops
+ * anything inside or around a prompt or an answer), and the body text of a
+ * Google accounts page.
  */
-export function classifyPage({ url = "", text = "" }) {
-  if (/google\.com\/sorry\//.test(url) || /unusual traffic|tr[aá]fico inusual|not a robot|no soy un robot|recaptcha/i.test(text)) return { stop: "Google shows a captcha (unusual traffic); try later or from a residential IP" };
-  if (/you'?ve reached your (usage )?limit|reached the limit|alcanzaste el l[ií]mite|has alcanzado el l[ií]mite|l[ií]mite de uso/i.test(text)) return { stop: "the free Gemini usage limit is reached; resume after it resets" };
-  if (/accounts\.google\.com\/.*(challenge|signin\/v2\/challenge)/.test(url) || /verify it'?s you|verifica que eres t[uú]|2-step verification|verificaci[oó]n en dos pasos/i.test(text)) return { stop: "Google asks for a sign-in challenge (2-step or verify it's you); sign in once by hand in the tracker browser profile" };
-  if (/accounts\.google\.com\//.test(url)) return { login: true };
+export function classifyPage({ url = "", captchaFrame = false, banners = "", accountText = "" }) {
+  const accounts = /^https:\/\/accounts\.google\.com\//.test(url);
+  if (/^https:\/\/(www\.)?google\.com\/sorry\//.test(url) || captchaFrame || (accounts && /\/challenge\/recaptcha/.test(url)) || /unusual traffic|tr[aá]fico inusual|not a robot|no soy un robot/i.test(banners)) return { stop: "Google shows a captcha (unusual traffic); try later or from a residential IP" };
+  if (LIMIT.test(banners)) return { stop: "the free Gemini usage limit is reached; resume after it resets" };
+  if (accounts) {
+    if (PASSWORD_STEP.test(url)) return { password: true };
+    if (/\/challenge\/|\/signin\/rejected|\/speedbump\//.test(url) || /verify it'?s you|verifica que eres t[uú]|2-step verification|verificaci[oó]n en dos pasos/i.test(accountText)) return { stop: "Google asks for a sign-in challenge (2-step or verify it's you); sign in once by hand in the tracker browser profile" };
+    return { login: true };
+  }
   return null;
+}
+
+/** The emails in the page's "Google Account: Name (email)" account links. */
+export function signedInAs(labels = []) {
+  const out = new Set();
+  for (const l of labels) for (const m of String(l).matchAll(/\(([^()\s@]+@[^()\s@]+\.[^()\s@]+)\)/g)) out.add(m[1].toLowerCase());
+  return [...out];
+}
+
+/** "match", "none" (signed out) or { mismatch } for the configured account. */
+export function checkIdentity(labels, expected) {
+  const seen = signedInAs(labels);
+  if (!seen.length) return "none";
+  const want = String(expected).toLowerCase();
+  const other = seen.find((e) => e !== want);
+  return other ? { mismatch: other } : "match";
 }
 
 const stopError = (reason) => Object.assign(new Error(`gemini-web stopped: ${reason}`), { stop: reason });
@@ -281,71 +330,208 @@ function ppField(account, field) {
   return v;
 }
 
+/** Where secrets come from; tests swap readSecret for a stub. */
+export const auth = { readSecret: ppField };
+/** Tests install request routes on the browser context here. */
+export const testHooks = { onContext: null };
+
+/** The profile directory name for an account email. */
+export function accountSlug(email) {
+  return String(email).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Makes `p` a private directory: created mode 700, or an existing one that is
+ * a real directory owned by this user, repaired to 700. A symlink or another
+ * user's directory stops the engine instead of holding Google cookies.
+ */
+export function ensurePrivateDir(p, uid = process.getuid?.()) {
+  let st;
+  try {
+    st = lstatSync(p);
+  } catch (e) {
+    if (e.code !== "ENOENT") throw e;
+    mkdirSync(p, { mode: 0o700 });
+    st = lstatSync(p);
+  }
+  if (st.isSymbolicLink()) throw stopError(`${p} is a symlink; the browser profile must be a real directory`);
+  if (!st.isDirectory()) throw stopError(`${p} is not a directory`);
+  if (uid !== undefined && st.uid !== uid) throw stopError(`${p} belongs to another user (uid ${st.uid})`);
+  if ((st.mode & 0o777) !== 0o700) chmodSync(p, 0o700);
+}
+
+/** A Chrome profile written straight into browser/gemini-web (before 2026-11-03). */
+const isProfile = (names) => names.includes("Local State") || names.includes("Default");
+
+/**
+ * browser/gemini-web/<account-slug>, each level private. A profile left at
+ * browser/gemini-web itself by the first version moves into the account's
+ * directory once, so its sign-in keeps working; the identity check then
+ * confirms whose session it is.
+ */
+export function profileDir(home, email, uid = process.getuid?.()) {
+  const browser = join(home, "browser");
+  ensurePrivateDir(browser, uid);
+  const engine = join(browser, "gemini-web");
+  ensurePrivateDir(engine, uid);
+  const slug = accountSlug(email);
+  if (!slug) throw stopError("engines.gemini-web.account has no usable email");
+  const dir = join(engine, slug);
+  if (isProfile(readdirSync(engine))) {
+    const tmp = join(browser, `gemini-web.migrating-${process.pid}`);
+    renameSync(engine, tmp);
+    mkdirSync(engine, { mode: 0o700 });
+    renameSync(tmp, dir);
+    ensurePrivateDir(engine, uid);
+  }
+  ensurePrivateDir(dir, uid);
+  return dir;
+}
+
+/** The account's email: engines.gemini-web.account.email, else the Proton Pass item's. */
+function accountEmail(account) {
+  if (!account?.vault || !account?.item) throw stopError("no engines.gemini-web.account (Proton Pass vault and item): the signed-in account cannot be checked");
+  return String(account.email || auth.readSecret(account, "email")).trim().toLowerCase();
+}
+
 /** The one browser the engine drives per process, launched on first use. */
 let session = null;
 
 async function launch(opts) {
-  if (!process.env.DISPLAY && !opts.config?.headless) throw stopError("no display: run the tracker under xvfb-run -a (Google refuses headless Chrome)");
+  const config = opts.config || {};
+  if (!process.env.DISPLAY && !config.headless) throw stopError("no display: run the tracker under xvfb-run -a (Google refuses headless Chrome)");
+  // Playwright's debug log and inspector print each action with its value,
+  // the password included.
+  if (process.env.PWDEBUG || /(^|,)\s*(\*|pw:[^,]*)/.test(process.env.DEBUG || "")) throw stopError("Playwright debug output is on (DEBUG=pw:* or PWDEBUG) and would log the password; unset it");
   let chromium;
   try {
     ({ chromium } = await import("playwright-core"));
   } catch {
     throw stopError("playwright-core is not installed (npm ci in the repo)");
   }
-  const dir = join(opts.home, "browser", "gemini-web");
-  mkdirSync(dir, { recursive: true });
+  const email = accountEmail(config.account);
+  const dir = profileDir(opts.home, email);
   const ctx = await chromium.launchPersistentContext(dir, {
-    executablePath: opts.config?.chrome || "/usr/bin/google-chrome",
-    headless: Boolean(opts.config?.headless),
+    executablePath: config.chrome || "/usr/bin/google-chrome",
+    headless: Boolean(config.headless),
     locale: "es-MX",
     viewport: { width: 1280, height: 900 },
     args: ["--disable-blink-features=AutomationControlled"],
   });
+  if (testHooks.onContext) await testHooks.onContext(ctx);
   const page = ctx.pages()[0] || (await ctx.newPage());
-  return { ctx, page, loggedIn: false };
+  return { ctx, page, email };
 }
 
-const pageState = async (page) => ({ url: page.url(), text: await page.locator("body").innerText({ timeout: 5000 }).catch(() => "") });
+/**
+ * What the page shows outside the conversation: the url, a visible captcha
+ * frame, the app's short status banners (none inside, or wrapping, a prompt
+ * or an answer), the account links' labels, and a Google accounts page's
+ * own text.
+ */
+async function pageState(page) {
+  const url = page.url();
+  const seen = await page
+    .evaluate(() => {
+      const CONVERSATION = "user-query, model-response, message-content, rich-textarea, chat-window-content, infinite-scroller, .conversation-container, [contenteditable]";
+      const visible = (e, w = 1, h = 1) => {
+        const r = e.getBoundingClientRect();
+        const cs = getComputedStyle(e);
+        return r.width >= w && r.height >= h && cs.visibility !== "hidden" && cs.display !== "none";
+      };
+      const captchaFrame = [...document.querySelectorAll('iframe[src*="recaptcha"], iframe[title*="captcha" i], iframe[src*="google.com/sorry"], img#captchaimg')].some((e) => !/size=invisible/.test(e.getAttribute("src") || "") && visible(e, 100, 40) && !e.closest(CONVERSATION));
+      const banners = [...document.querySelectorAll('[role="alert"], [role="status"], mat-snack-bar-container, simple-snack-bar, .mat-mdc-snack-bar-container')]
+        .filter((e) => !e.closest(CONVERSATION) && !e.querySelector(CONVERSATION))
+        .map((e) => (e.innerText || "").trim())
+        .filter((t) => t && t.length < 300)
+        .join("\n");
+      const identities = [...document.querySelectorAll('a[href*="accounts.google.com/SignOutOptions"][aria-label]')].map((a) => a.getAttribute("aria-label"));
+      const accountText = location.hostname === "accounts.google.com" ? (document.body?.innerText || "").slice(0, 4000) : "";
+      return { captchaFrame, banners, identities, accountText };
+    })
+    .catch(() => ({ captchaFrame: false, banners: "", identities: [], accountText: "" }));
+  return { url, ...seen };
+}
 
-async function signIn(page, account) {
+/**
+ * Runs one sign-in step that handles a credential. Playwright's error text
+ * repeats the value it filled, so a failure throws only `reason`: no
+ * original message, no cause.
+ */
+async function credentialStep(fn, reason) {
+  let ok = false;
+  try {
+    await fn();
+    ok = true;
+  } catch {
+    // The original error is dropped on purpose (it may hold the value).
+  }
+  if (!ok) throw stopError(reason);
+}
+
+async function signIn(page, account, email, t) {
   if (!account) throw stopError("signed out and no engines.gemini-web.account (Proton Pass vault and item) to sign in with");
-  if (!/accounts\.google\.com/.test(page.url())) {
+  if (!/^https:\/\/accounts\.google\.com\//.test(page.url())) {
     const btn = page.locator("a,button").filter({ hasText: /^\s*(Acceder|Sign in|Iniciar sesi[oó]n)\s*$/ }).first();
     if (await btn.count()) await btn.click();
-    await page.waitForURL(/accounts\.google\.com/, { timeout: 20000 }).catch(() => {});
+    await page.waitForURL(/^https:\/\/accounts\.google\.com\//, { timeout: t }).catch(() => {});
   }
+  const first = classifyPage(await pageState(page));
+  if (first?.stop) throw stopError(first.stop);
   const id = page.locator('input#identifierId, input[name="identifier"]').first();
-  await id.waitFor({ timeout: 20000 });
-  await id.fill(ppField(account, "email"));
-  await page.keyboard.press("Enter");
   const pw = page.locator('input[name="Passwd"], input[type="password"]').first();
-  await pw.waitFor({ timeout: 20000 }).catch(() => {});
-  const s = classifyPage(await pageState(page));
-  if (s?.stop) throw stopError(s.stop);
-  await pw.fill(ppField(account, "password"));
-  await page.keyboard.press("Enter");
-  await page.waitForURL(/gemini\.google\.com/, { timeout: 30000 }).catch(() => {});
+  if (!first?.password) {
+    await id.waitFor({ timeout: t }).catch(() => {});
+    await credentialStep(async () => {
+      await id.fill(email, { timeout: t });
+      await id.press("Enter", { timeout: t });
+    }, "could not enter the account email on Google's sign-in page; sign in once by hand in the tracker browser profile");
+    // The identifier step leads to the password step, or to a challenge.
+    await Promise.race([pw.waitFor({ state: "visible", timeout: t }), page.waitForURL((u) => !/\/identifier/.test(String(u)), { timeout: t })]).catch(() => {});
+  }
+  const atPassword = classifyPage(await pageState(page));
+  if (atPassword?.stop) throw stopError(atPassword.stop);
+  if (!atPassword?.password && !(await pw.isVisible().catch(() => false))) throw stopError("Google did not show the password step; sign in once by hand in the tracker browser profile");
+  const password = auth.readSecret(account, "password");
+  liveSecrets.add(password);
+  await credentialStep(async () => {
+    await pw.fill(password, { timeout: t });
+    await pw.press("Enter", { timeout: t });
+  }, "could not enter the password on Google's sign-in page; sign in once by hand in the tracker browser profile");
+  // Back in Gemini, or on a page that stops the engine (a challenge).
+  await page.waitForURL((u) => /^https:\/\/gemini\.google\.com\//.test(String(u)) || Boolean(classifyPage({ url: String(u) })?.stop), { timeout: t + 10000 }).catch(() => {});
   const after = classifyPage(await pageState(page));
   if (after?.stop) throw stopError(after.stop);
-  if (after?.login) throw stopError("Google did not accept the sign-in; sign in once by hand in the tracker browser profile");
+  if (after?.login || after?.password) throw stopError("Google did not accept the sign-in; sign in once by hand in the tracker browser profile");
 }
 
-/** Opens a fresh chat and returns its prompt box, signing in when needed. */
+/** Stops unless the page is signed in as the configured account; true when it is. */
+function identityOk(state, email) {
+  const id = checkIdentity(state.identities, email);
+  if (id.mismatch) throw stopError(`the browser is signed in as ${id.mismatch}, not ${email}; sign out of it in the tracker browser profile`);
+  return id === "match";
+}
+
+/**
+ * Opens a fresh chat and returns its prompt box once the page is signed in
+ * as the configured account, signing in when needed.
+ */
 async function freshChat(s, opts) {
-  const { page } = s;
+  const { page, email } = s;
+  const t = opts.config?.authTimeoutMs || 20000;
   for (let attempt = 0; attempt < 2; attempt++) {
     await page.goto(APP_URL, { waitUntil: "domcontentloaded", timeout: 60000 });
     const box = page.locator('rich-textarea [contenteditable="true"]').first();
     // The signed-out app also has a prompt box, so a session counts as
-    // signed in only when the account menu shows; a Workspace account's
-    // first visit shows the landing page and a terms dialog instead.
-    await Promise.race([box.waitFor({ timeout: 20000 }), page.waitForURL(/accounts\.google\.com/, { timeout: 20000 })]).catch(() => {});
-    const state = await pageState(page);
+    // signed in only when the account link names the configured account; a
+    // Workspace account's first visit shows the landing page and a terms
+    // dialog instead.
+    await Promise.race([box.waitFor({ timeout: t }), page.waitForURL(/^https:\/\/accounts\.google\.com\//, { timeout: t })]).catch(() => {});
+    let state = await pageState(page);
     const c = classifyPage(state);
     if (c?.stop) throw stopError(c.stop);
-    const signedOut = c?.login || /\b(Acceder|Sign in)\b/.test(state.text.split("\n").slice(0, 40).join("\n")) || !(await box.count());
-    if (!signedOut) return box;
-    if (!(await box.count())) {
+    if (!c && identityOk(state, email) && (await box.count())) return box;
+    if (!c && !(await box.count())) {
       // Landing page or first-use dialogs: walk through them once.
       for (const name of [/Chat with Gemini|Chatear con Gemini/, /Use Gemini|Usar Gemini/, /^Continue$|^Continuar$/]) {
         const b = page.getByRole("button", { name }).or(page.getByRole("link", { name })).first();
@@ -354,32 +540,36 @@ async function freshChat(s, opts) {
           await page.waitForTimeout(3000);
         }
       }
-      if (await box.count()) return box;
+      state = await pageState(page);
+      if (identityOk(state, email) && (await box.count())) return box;
     }
     if (attempt) break;
-    await signIn(page, opts.config?.account);
+    await signIn(page, opts.config?.account, email, t);
   }
   throw stopError("still signed out after signing in; sign in once by hand in the tracker browser profile");
 }
 
 /**
- * Asks one prompt in a fresh chat and returns the stored body. Waits until
- * the reply stops changing and the stop button is gone (up to timeoutMs).
+ * Asks one prompt in a fresh chat and returns the stored body. The whole
+ * prompt goes into the box as text (a typed newline is an Enter, which would
+ * send the prompt early), then it is sent once. Waits until the reply stops
+ * changing and the stop button is gone (up to timeoutMs).
  */
 export async function callGeminiWeb(prompt, opts) {
   session ||= await launch(opts);
   const { page } = session;
   const box = await freshChat(session, opts);
   await box.click();
-  await page.keyboard.type(prompt.text, { delay: 10 });
-  await page.keyboard.press("Enter");
+  await box.fill(prompt.text);
+  await box.press("Enter");
   const t0 = Date.now();
   const timeoutMs = opts.config?.timeoutMs || 180000;
+  const pollMs = opts.config?.pollMs || 2000;
   let last = "";
   let stable = 0;
   let complete = false;
   while (Date.now() - t0 < timeoutMs) {
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(pollMs);
     const s = await page.evaluate(() => {
       const r = [...document.querySelectorAll("model-response")].at(-1);
       const busy = !!document.querySelector('button[aria-label*="Stop" i], button[aria-label*="Detener" i]');
@@ -395,18 +585,18 @@ export async function callGeminiWeb(prompt, opts) {
     const c = classifyPage(await pageState(page));
     if (c?.stop) throw stopError(c.stop);
   }
-  const state = await pageState(page);
-  const c = classifyPage(state);
+  const c = classifyPage(await pageState(page));
   if (c?.stop) throw stopError(c.stop);
   const html = await page.evaluate(() => [...document.querySelectorAll("model-response")].at(-1)?.outerHTML || "");
-  if (!html && /\b(limit|l[ií]mite)\b/i.test(state.text)) throw stopError("Gemini refused the prompt with a limit message");
+  if (html && limitReply(parseGeminiWeb({ html }).text)) throw stopError("the free Gemini usage limit is reached; resume after it resets");
   const mode = await page.locator("bard-mode-switcher button, [data-test-id='bard-mode-menu-button']").first().innerText({ timeout: 2000 }).catch(() => null);
   return { html, url: page.url(), mode: mode ? mode.trim() : null, complete, elapsedMs: Date.now() - t0 };
 }
 
-/** Closes the browser, if one was launched. */
+/** Closes the browser, if one was launched, and forgets the password. */
 export async function closeGeminiWeb() {
   const s = session;
   session = null;
   if (s) await s.ctx.close().catch(() => {});
+  liveSecrets.clear();
 }
