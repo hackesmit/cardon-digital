@@ -1,6 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+
+// This file tests cardondigital.com, whose /software is custom software for
+// any business (bead hq-3f6ut.3). The brand is pinned before any import reads
+// it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+});
 
 // Same test-only shim as winery-page.test.ts: vitest compiles this app's JSX
 // with the classic runtime, so each page is loaded with a dynamic import after
@@ -12,7 +19,7 @@ import { locales, localePath, type Locale } from "../../lib/i18n/config";
 import { SITE_URL } from "../../lib/i18n/metadata";
 import { site } from "../../lib/i18n/site";
 import { anuncios } from "../../lib/i18n/anuncios";
-import { software } from "../../lib/i18n/software";
+import { softwareCardon } from "../../lib/i18n/software-cardon";
 import { adsFill } from "../../lib/adsCopy";
 import { ORGANIZATION_ID } from "../../lib/seo/jsonld";
 
@@ -33,7 +40,7 @@ type PageModule = {
 
 const PAGES = [
   { path: "/anuncios", load: () => import("./anuncios/page"), dict: anuncios, fill: adsFill },
-  { path: "/software", load: () => import("./software/page"), dict: software, fill: (_l: Locale, t: string) => t },
+  { path: "/software", load: () => import("./software/page"), dict: softwareCardon, fill: (_l: Locale, t: string) => t },
 ] as const;
 
 async function serve(load: () => Promise<unknown>, locale: Locale): Promise<string> {

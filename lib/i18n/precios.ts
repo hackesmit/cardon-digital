@@ -56,6 +56,28 @@ const en = {
     notDo: { kicker: "What we do not do", title: "Four things we never do.", items: ["We never charge a percentage of what you spend on ads.", "We never charge per user, per seat, or per month forever.", "We never keep your domain, your accounts or your data in our name.", "We never manage social media on its own."] },
   },
 
+
+  /**
+   * What cardondigital.com's /precios says in place of the module copy (bead
+   * hq-3f6ut.3): the wine brand carries the modules, so the cardon build
+   * prices websites and ads and says how custom software is priced, with no
+   * figure. The page reads these keys only on the cardon build.
+   */
+  cardon: {
+    meta: {
+      title: "Pricing",
+      description:
+        "What a website and Google Ads management on a base plus a fee per contact cost, in the open, with the terms, and how custom software is priced. Every entry price is published.",
+    },
+    sub: "Websites priced by their features, ad management on a base plus a fee per contact, and custom software at a fixed price agreed after the diagnostic. In your name means the domain, the accounts, the code and the data.",
+    handoverCap: "Handover day: the accounts are in your name and your team runs the system.",
+    software: {
+      kicker: "Custom software",
+      title: "Custom software: a fixed price, agreed before the build.",
+      sub: "There is no list price, because no two systems are the same. The diagnostic, at no cost, says what to build first. The quote that comes out of it is fixed, and the build is paid half to start and half on delivery. The code, the data and the accounts are yours.",
+      more: "The custom software page",
+    },
+  },
   media: {
     handoverCap:
       "Handover day: the accounts are in the winery's name and the team runs it.",
@@ -294,6 +316,22 @@ const es: typeof en = {
     notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por asiento ni mensualidades de por vida.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales como único servicio."] },
   },
 
+
+  cardon: {
+    meta: {
+      title: "Precios",
+      description:
+        "Cuánto cuesta un sitio web y el manejo de anuncios en Google con una base más un pago por contacto, a la vista y con sus condiciones, y cómo se cotiza el software a la medida. Todos los precios de entrada están publicados.",
+    },
+    sub: "Sitios web con precios por funciones, manejo de anuncios con una base más un pago por contacto, y software a la medida con precio fijo, acordado después del diagnóstico. A su nombre quedan el dominio, las cuentas, el código y los datos.",
+    handoverCap: "Día de entrega: las cuentas quedan a su nombre y su equipo opera el sistema.",
+    software: {
+      kicker: "Software a la medida",
+      title: "Software a la medida: precio fijo, acordado antes del desarrollo.",
+      sub: "No hay precio de lista, porque no hay dos sistemas iguales. El diagnóstico, sin costo, dice qué conviene construir primero. La cotización que sale de ahí es fija, y el desarrollo se paga la mitad al empezar y la mitad contra entrega. El código, los datos y las cuentas son suyos.",
+      more: "La página de software a la medida",
+    },
+  },
   media: {
     handoverCap:
       "Día de entrega: las cuentas quedan a nombre de la bodega y el equipo opera el sistema.",
