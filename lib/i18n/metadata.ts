@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import { locales, localePath, ogLocale, type Locale } from "./config";
 import { site } from "./site";
+import { BRAND } from "../brand";
 
-export const SITE_URL = "https://cardondigital.com";
+/** This build's origin: cardondigital.com, or the wine brand's (lib/brand.ts). */
+export const SITE_URL = BRAND.siteUrl;
+
+/** The robots metadata every page inherits from the locale layout: noindex
+    across the board while the brand may not be indexed (lib/brand-env.mjs). */
+export const ROBOTS: Metadata["robots"] = BRAND.indexable
+  ? { index: true, follow: true }
+  : { index: false, follow: false };
 
 /**
  * hreflang alternates for one page. Spanish is x-default: an unresolved
@@ -34,7 +42,7 @@ export function pageMetadata(
     alternates: alternatesFor(locale, path),
     openGraph: {
       type: "website",
-      siteName: "Cardon Digital",
+      siteName: BRAND.name,
       title: meta.title,
       description: meta.description,
       url: SITE_URL + localePath(locale, path),

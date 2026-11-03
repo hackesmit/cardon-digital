@@ -1,9 +1,15 @@
 import type { Dict } from "./rich";
+import { BRAND } from "../brand";
 
 /**
  * Site chrome: the strings that appear on every page (nav, footer, shared
  * brand lines) plus the root metadata. Page copy lives in the per-page
  * dictionary next to this file.
+ *
+ * The chrome follows the build's brand (lib/brand.ts). cardondigital.com
+ * reads en and es below as they were; the wine brand overrides only the lines
+ * that name the business, built from BRAND so its working name is never
+ * typed here. Its own copy (hq-3f6ut.2) replaces these placeholders.
  */
 
 const en = {
@@ -141,4 +147,35 @@ const es: typeof en = {
 };
 
 export type SiteDict = typeof en;
-export const site: Dict<SiteDict> = { en, es };
+
+const name = BRAND.name;
+
+/** The wine brand's chrome: Cardon's, with its own name, line and meta. */
+const vino: Dict<SiteDict> = {
+  en: {
+    ...en,
+    brandHome: name + " home",
+    brandline: "Software for wineries, by Cardon",
+    meta: {
+      title: name + " | Software for wineries, by Cardon",
+      titleTemplate: "%s | " + name,
+      description:
+        "Software for a winery's production, hospitality and restaurant, built in Baja California by Cardon Digital, with prices published.",
+      ogAlt: name + ": software for wineries, by Cardon",
+    },
+  },
+  es: {
+    ...es,
+    brandHome: name + ", inicio",
+    brandline: "Software para bodegas, por Cardon",
+    meta: {
+      title: name + " | Software para bodegas, por Cardon",
+      titleTemplate: "%s | " + name,
+      description:
+        "Software para la producción, la hospitalidad y el restaurante de una bodega, hecho en Baja California por Cardon Digital, con precios publicados.",
+      ogAlt: name + ": software para bodegas, por Cardon",
+    },
+  },
+};
+
+export const site: Dict<SiteDict> = BRAND.id === "vino" ? vino : { en, es };

@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/site/JsonLd";
 import SiteShell from "@/components/site/SiteShell";
-import { alternatesFor, SITE_URL } from "@/lib/i18n/metadata";
+import { alternatesFor, ROBOTS, SITE_URL } from "@/lib/i18n/metadata";
+import { BRAND } from "@/lib/brand";
 import { site } from "@/lib/i18n/site";
 import { isLocale, locales, ogLocale, type Locale } from "@/lib/i18n/config";
 import { siteGraph } from "@/lib/seo/jsonld";
@@ -23,12 +24,12 @@ export const dynamicParams = false;
    The site follows its own mode toggle, not the system scheme, and opens in
    light, so the meta tags state light: color-scheme matches the
    :root[data-mode] rule in app/globals.css, and theme-color is the light
-   ground (--ground). Nav.tsx keeps theme-color on the current ground in every
+   ground (--ground), the brand theme's (lib/brand.ts). Nav.tsx keeps theme-color on the current ground in every
    mode and across soft navigations, so the browser bar follows the toggle. */
 export const viewport: Viewport = {
   viewportFit: "cover",
   colorScheme: "light",
-  themeColor: "#F4EDEA",
+  themeColor: BRAND.theme.ground,
 };
 
 export async function generateMetadata(props: {
@@ -44,7 +45,7 @@ export async function generateMetadata(props: {
     openGraph: {
       type: "website",
       url: SITE_URL + "/" + locale,
-      siteName: "Cardon Digital",
+      siteName: BRAND.name,
       title: s.title,
       description: s.description,
       images: [{ url: "/og.png", width: 1200, height: 630, alt: s.ogAlt }],
@@ -59,7 +60,7 @@ export async function generateMetadata(props: {
       description: s.description,
       images: ["/og.png"],
     },
-    robots: { index: true, follow: true },
+    robots: ROBOTS,
     alternates: alternatesFor(locale, "/"),
     verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   };
