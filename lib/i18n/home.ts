@@ -251,7 +251,7 @@ const en = {
       },
     },
     board: {
-      tag: "three parts, one board",
+      tag: "separate parts, one board",
       aria: "Separate parts are placed and wired into one working board.",
     },
     memo: {
@@ -492,7 +492,7 @@ const es: typeof en = {
       },
     },
     board: {
-      tag: "tres partes, un solo tablero",
+      tag: "piezas sueltas, un solo tablero",
       aria: "Piezas sueltas se acomodan y se conectan en un solo tablero que funciona.",
     },
     memo: {

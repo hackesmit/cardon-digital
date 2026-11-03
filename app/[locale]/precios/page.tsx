@@ -218,7 +218,7 @@ export default async function PreciosPage(props: Params) {
               <div className="diag-lead">
                 <span className="kicker clay">{s.diag.kicker}</span>
                 <h2 id="diag-title">{s.diag.title}</h2>
-                <p className="diag-desc">{d.close.desc}</p>
+                <p className="diag-desc">{cardon ? d.cardon.closeDesc : d.close.desc}</p>
                 <div className="diag-actions">
                   <Link className="cta cta-lg" href={href("/contacto")}>
                     {s.diag.cta}

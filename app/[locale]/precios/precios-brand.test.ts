@@ -51,6 +51,7 @@ describe.each(locales)("/precios (%s) by brand", (locale) => {
     expect(html).toContain(d.hero.adsHead.kicker);
     expect(html).toContain(d.cardon.software.title);
     expect(html).not.toMatch(MODULE_NAMES);
+    expect(html).not.toMatch(/\b(modules?|módulos?)\b/i);
     expect(html).not.toContain(d.floors.title);
     expect(html).not.toContain(d.mix.title);
     expect(html).not.toContain(d.hero.softwareHead.founding.kicker);

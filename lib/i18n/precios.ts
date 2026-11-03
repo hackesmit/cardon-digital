@@ -77,6 +77,7 @@ const en = {
       sub: "There is no list price, because no two systems are the same. The diagnostic, at no cost, says what to build first. The quote that comes out of it is fixed, and the build is paid half to start and half on delivery. The code, the data and the accounts are yours.",
       more: "The custom software page",
     },
+    closeDesc: "Ten business days on your site, your ads and your operation, and a written memo that is yours either way: what is true, what is broken, and what to build first.",
   },
   media: {
     handoverCap:
@@ -331,6 +332,7 @@ const es: typeof en = {
       sub: "No hay precio de lista, porque no hay dos sistemas iguales. El diagnóstico, sin costo, dice qué conviene construir primero. La cotización que sale de ahí es fija, y el desarrollo se paga la mitad al empezar y la mitad contra entrega. El código, los datos y las cuentas son suyos.",
       more: "La página de software a la medida",
     },
+    closeDesc: "Diez días hábiles para revisar su sitio, sus anuncios y la operación de su negocio, y un informe escrito que es suyo, nos contrate o no: qué funciona, qué falla y por dónde empezar.",
   },
   media: {
     handoverCap:

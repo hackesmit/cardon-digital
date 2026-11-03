@@ -116,7 +116,7 @@ export default async function SoftwareCardonPage(props: Params) {
             </div>
           </Reveal>
           <Reveal>
-            <div className="mod-grid">
+            <div className="mod-grid mod-grid-2">
               {d.examples.items.map((item) => (
                 <article className="mod" key={item.h}>
                   <h3>{item.h}</h3>
