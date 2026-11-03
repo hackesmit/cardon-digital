@@ -147,13 +147,13 @@ const en: AboutDict = {
   meta: {
     title: "About Cardon Digital",
     description:
-      "Cardon Digital builds websites, runs Google Ads, checks what AI answers say about a business and builds custom software for owner-run businesses in Baja California. On WhatsApp, with a call every week, and everything stays in your name.",
+      "Cardon Digital builds websites, Google Ads paid per contact and custom software for owner-run businesses in Baja California, and checks what AI answers say about them. On WhatsApp, with a call every week, and everything stays in your name.",
   },
   hero: {
     eyebrow: "About",
     title: "We build for anyone who runs a business by hand.",
     titleAccent: "More clients, less repetitive work.",
-    sub: "Cardon Digital builds websites, runs Google Ads, checks what AI answers say about your business and builds the software an owner-run business operates on. We come from years of watching the number somebody needed go missing and the client somebody needed never find the door.",
+    sub: "Cardon Digital builds websites, Google Ads paid per contact and custom software for owner-run businesses, and checks what AI answers say about yours. We come from years of watching the number somebody needed go missing and the client somebody needed never find the door.",
   },
   media: {
     bandCap: "Years inside a cellar taught us the problem every business has: the record goes missing.",
@@ -203,13 +203,13 @@ const es: AboutDict = {
   meta: {
     title: "Quiénes somos",
     description:
-      "Cardon Digital hace sitios web, maneja anuncios en Google, revisa qué dicen de un negocio las respuestas de IA y hace software a la medida para negocios de Baja California. Por WhatsApp, con una llamada cada semana, y todo queda a su nombre.",
+      "Cardon Digital hace sitios web, anuncios en Google con pago por contacto y software a la medida para negocios de Baja California, y revisa qué dicen de ellos las respuestas de IA. Por WhatsApp, con una llamada cada semana, y todo queda a su nombre.",
   },
   hero: {
     eyebrow: "Quiénes somos",
     title: "Construimos para quien lleva su negocio a mano.",
     titleAccent: "Más clientes y menos trabajo repetitivo.",
-    sub: "Cardon Digital hace sitios web, maneja anuncios en Google, revisa qué dicen de su negocio las respuestas de IA y construye el software con el que opera un negocio. Venimos de años de ver cómo se perdía el dato que alguien necesitaba y cómo el cliente que hacía falta nunca daba con la puerta.",
+    sub: "Cardon Digital hace sitios web, anuncios en Google con pago por contacto y el software con el que opera un negocio, y revisa qué dicen de su negocio las respuestas de IA. Venimos de años de ver cómo se perdía el dato que alguien necesitaba y cómo el cliente que hacía falta nunca daba con la puerta.",
   },
   media: {
     bandCap: "Años dentro de una cava nos enseñaron el problema que tiene todo negocio: el registro se pierde.",

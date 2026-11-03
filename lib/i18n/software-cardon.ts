@@ -72,7 +72,7 @@ const en = {
       },
       {
         h: "One calendar.",
-        body: "Appointments from WhatsApp, the phone and the site land in one calendar, and the client gets a reminder.",
+        body: "Appointments from WhatsApp, the phone and the site go into one calendar, and the client gets a reminder.",
       },
     ],
     note: "These are examples. The diagnostic says which part of your operation can run by itself, and what it costs.",

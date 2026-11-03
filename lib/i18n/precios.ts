@@ -69,7 +69,7 @@ const en = {
       description:
         "What a website and Google Ads management on a base plus a fee per contact cost, in the open, with the terms, and how custom software is priced. Every entry price is published.",
     },
-    sub: "Websites priced by their features, ad management on a base plus a fee per contact, and custom software at a fixed price agreed after the diagnostic. In your name means the domain, the accounts, the code and the data.",
+    sub: "Websites priced by their features, ad management on a base plus a fee per contact, and custom software quoted after the diagnostic. In your name means the domain, the accounts, the code and the data.",
     handoverCap: "Handover day: the accounts are in your name and your team runs the system.",
     software: {
       kicker: "Custom software",
@@ -323,7 +323,7 @@ const es: typeof en = {
       description:
         "Cuánto cuesta un sitio web y el manejo de anuncios en Google con una base más un pago por contacto, a la vista y con sus condiciones, y cómo se cotiza el software a la medida. Todos los precios de entrada están publicados.",
     },
-    sub: "Sitios web con precios por funciones, manejo de anuncios con una base más un pago por contacto, y software a la medida con precio fijo, acordado después del diagnóstico. A su nombre quedan el dominio, las cuentas, el código y los datos.",
+    sub: "Sitios web con precios por funciones, manejo de anuncios con una base más un pago por contacto, y software a la medida, cotizado después del diagnóstico. A su nombre quedan el dominio, las cuentas, el código y los datos.",
     handoverCap: "Día de entrega: las cuentas quedan a su nombre y su equipo opera el sistema.",
     software: {
       kicker: "Software a la medida",

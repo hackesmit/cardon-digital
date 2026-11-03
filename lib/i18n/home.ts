@@ -33,7 +33,7 @@ const en = {
   meta: {
     title: "Websites, ads and software in Ensenada | Cardon Digital",
     description:
-      "Cardon Digital builds websites, runs Google Ads and builds custom software for owner-run businesses in Ensenada and Baja California, with sites ready for ChatGPT and Google to cite. Prices published, a free diagnostic, and everything we build stays in your name.",
+      "Cardon Digital builds websites, Google Ads and custom software for owner-run businesses in Ensenada and Baja California, with sites ready for ChatGPT and Google to cite. Prices published, a free diagnostic, and everything we build stays in your name.",
   },
   hero: {
     aria: "Introduction",
