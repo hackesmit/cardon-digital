@@ -656,6 +656,9 @@ test("a live call just after 2027-01-01 reserves, charges and stores the new gem
   const spent = JSON.parse(readFileSync(join(home, "spend", "2026-12-31.json"), "utf8")).usd;
   assert.ok(Math.abs(spent - priceCall({ input: 12, output: 250, searches: 1 }, "gemini-3.8-flash", pricing, "2026-12-31T00:00:00Z").usd - priceCall({ input: 500, output: 40 }, "gpt-6-luna", pricing).usd) < 1e-6);
   // After the change, with room in the cap, the stored rate is the new one.
+  // This run starts in the same (mocked) second as the capped one, so their
+  // directories differ only by the random suffix: find it by what is new.
+  const before = new Set(readdirSync(join(home, "runs", "fixture")));
   mock.timers.enable({ apis: ["Date"], now: new Date("2027-01-01T00:00:01Z") });
   globalThis.fetch = stubFetch([]);
   try {
@@ -664,7 +667,7 @@ test("a live call just after 2027-01-01 reserves, charges and stores the new gem
     mock.timers.reset();
     globalThis.fetch = realFetch;
   }
-  const latest = readdirSync(join(home, "runs", "fixture")).sort().at(-1);
+  const latest = readdirSync(join(home, "runs", "fixture")).find((d) => !before.has(d));
   const rec2 = JSON.parse(readFileSync(join(home, "runs", "fixture", latest, "raw", "gemini", "P0-r1.json"), "utf8"));
   assert.deepEqual([rec2.rate.input, rec2.rate.output, rec2.rate.from], [1.5, 7.5, "2027-01-01"]);
 });
