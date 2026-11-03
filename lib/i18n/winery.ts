@@ -1,4 +1,6 @@
 import type { Dict } from "./rich";
+import { BRAND } from "../brand";
+import { branded, vinoOnly, withVariant, type FaqBlock, type Variant } from "./variant";
 
 /**
  * Winery page copy, rewritten under docs/copy-doctrine.md (bead hq-4pu0q.6).
@@ -420,4 +422,156 @@ const es: typeof en = {
 };
 
 export type WineryDict = typeof en;
-export const winery: Dict<WineryDict> = { en, es };
+
+/*
+ * The wine brand's winery page (bead hq-3f6ut.2): the brand named in the
+ * eyebrow, and the website and Google Ads card gone, because those stay
+ * Cardon's services on cardondigital.com; the diagnostic lines lose the ads
+ * with it. Only the strings that differ (lib/i18n/variant.ts); the card list
+ * is written out whole because a list in a variant replaces the base.
+ */
+const enVino: Variant<WineryDict> = {
+  hero: {
+    eyebrow: "{brand} for wineries",
+    sub: "{brand} keeps a winery's season in one record: weights, samples, tank moves and lab results, each tied to its block and row, from the vine to the bottle. Read the harvest at a glance instead of rebuilding it from memory, and own the record. It already runs at Monte Xanic.",
+  },
+  meta: { title: "Winery software, block to bottle" },
+  caps: {
+    cards: [
+      {
+        num: "01",
+        h: "The season reads at a glance.",
+        body: "Weights, samples, tank moves and cellar notes in one self-updating view.",
+      },
+      {
+        num: "02",
+        h: "Every number gets a place on the map.",
+        body: "Each reading is tied to its block and row, so the whole team sees the same vineyard.",
+      },
+      {
+        num: "03",
+        h: "The pick gets planned.",
+        body: "Readiness is built on your winemaker's own quality bar, and the team hears early.",
+      },
+      {
+        num: "04",
+        h: "Berry to bottle, one thread.",
+        body: "Which rows, which pick, which tank, which barrel. A distributor's question is one lookup.",
+      },
+    ],
+  },
+  diagDesc: "Ten business days on your harvest data, your cellar and your books, and a memo.",
+  diagSpecs: [
+    "Day 1. A working session on your vineyard, cellar and books.",
+    "Days 2 to 9. We dig: the data, the measurement, the manual routines.",
+    "Day 10. You get the memo: what is true, what is broken, what to build first. It is yours.",
+  ],
+};
+
+const esVino: Variant<WineryDict> = {
+  hero: {
+    eyebrow: "{brand} para bodegas",
+    sub: "{brand} lleva la temporada de una bodega en un solo registro: pesos, muestreos, movimientos de tanque y resultados de laboratorio, cada uno ligado a su cuadro y su hilera, de la uva a la botella. Vea la vendimia de un vistazo en vez de reconstruirla de memoria, con un registro que es suyo. Ya funciona en Monte Xanic.",
+  },
+  meta: { title: "Software para bodegas, de la uva a la botella" },
+  caps: {
+    cards: [
+      {
+        num: "01",
+        h: "La temporada se ve de un vistazo.",
+        body: "Pesajes, muestreos, movimientos de tanque y notas de bodega en una vista que se actualiza sola.",
+      },
+      {
+        num: "02",
+        h: "Cada número tiene su lugar en el mapa.",
+        body: "Cada lectura queda en su cuadro y su hilera, y todo el equipo ve el mismo viñedo.",
+      },
+      {
+        num: "03",
+        h: "El corte se planea.",
+        body: "El aviso de madurez se basa en el criterio de calidad de su enólogo, y le llega al equipo con tiempo.",
+      },
+      {
+        num: "04",
+        h: "De la uva a la botella, sin perder el hilo.",
+        body: "Qué hileras, qué corte, qué tanque, qué barrica. La pregunta de un distribuidor se responde con una consulta.",
+      },
+    ],
+  },
+  diagDesc: "Diez días hábiles con los datos de su vendimia, su bodega y sus cuentas, y al final un informe escrito.",
+  diagSpecs: [
+    "Día 1. Una sesión de trabajo para revisar viñedo, bodega y cuentas.",
+    "Días 2 a 9. Revisamos a fondo los datos, la medición y las tareas manuales.",
+    "Día 10. Le entregamos el informe: qué funciona, qué falla y por dónde empezar. Es suyo.",
+  ],
+};
+
+export const winery: Dict<WineryDict> =
+  BRAND.id === "vino"
+    ? branded({ en: withVariant(en, enVino), es: withVariant(es, esVino) })
+    : { en, es };
+
+/* The page's questions, on the wine brand only (bead hq-3f6ut.2): the AEO
+   checklist asks every moved page for an FAQ, and cardondigital.com keeps the
+   page as it was. Every answer restates a fact this page already carries. */
+const enFaq: FaqBlock = {
+  title: "Questions a winery asks about {brand}",
+  items: [
+    {
+      question: "What does {brand} do for a winery?",
+      answer:
+        "It keeps the season in one record: weights, samples, tank moves, lab results and cellar notes, each tied to its block and row, with one thread from the berry to the bottle and an assistant that answers from that record.",
+    },
+    {
+      question: "How does it help plan the pick?",
+      answer:
+        "Readiness is scored against your winemaker's own quality bar, so the team sees a block coming due and hears early.",
+    },
+    {
+      question: "What does it cost?",
+      answer:
+        "Two fees and no license. The setup pays for the build, and the monthly fee runs it: hosting, care, corrections, the report and the assistant. Every module's entry price is on the pricing page.",
+    },
+    {
+      question: "Can I stop the service?",
+      answer:
+        "The fee is paid in advance, month to month, with 30 days notice either way. If you paid the build in full, you stop whenever you like and owe nothing for it.",
+    },
+    {
+      question: "Who owns the record?",
+      answer: "The winery does. The build is yours, and the code, the data and the accounts are in your name.",
+    },
+  ],
+};
+
+const esFaq: FaqBlock = {
+  title: "Lo que una bodega pregunta sobre {brand}",
+  items: [
+    {
+      question: "¿Qué hace {brand} por una bodega?",
+      answer:
+        "Lleva la temporada en un solo registro: pesos, muestreos, movimientos de tanque, resultados de laboratorio y notas de bodega, cada uno ligado a su cuadro y su hilera, con un solo hilo de la uva a la botella y un asistente que contesta a partir de ese registro.",
+    },
+    {
+      question: "¿Cómo ayuda a planear el corte?",
+      answer:
+        "La madurez se califica con el criterio de calidad de su propio enólogo, así que el equipo ve venir un cuadro y se entera a tiempo.",
+    },
+    {
+      question: "¿Cuánto cuesta?",
+      answer:
+        "Dos cuotas y ninguna licencia. La instalación paga la construcción y la mensualidad la mantiene: hospedaje, cuidado, correcciones, el reporte y el asistente. El precio de entrada de cada módulo está en la página de precios.",
+    },
+    {
+      question: "¿Puedo dejar el servicio?",
+      answer:
+        "La mensualidad se paga por adelantado, mes a mes, con 30 días de aviso de cualquiera de las dos partes. Si pagó la construcción completa, deja el servicio cuando quiera sin deber nada por ella.",
+    },
+    {
+      question: "¿De quién es el registro?",
+      answer: "De la bodega. La construcción es suya, y el código, los datos y las cuentas están a su nombre.",
+    },
+  ],
+};
+
+export const wineryFaq = vinoOnly({ en: enFaq, es: esFaq });

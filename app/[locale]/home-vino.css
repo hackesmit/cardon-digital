@@ -1,0 +1,89 @@
+/* The wine brand's home page (components/pages/home-vino.tsx, bead
+   hq-3f6ut.2). It renders inside the service-page styles (services.css,
+   .pg-svc); this file adds only the hero with its photograph and the two
+   proof cards. Tinto y Laton tokens only (app/globals.css). */
+
+/* ---- hero: the copy, and the photograph beside it on a wide screen ---- */
+.pg-vino .vino-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(26px, 4vw, 56px);
+  align-items: center;
+}
+.pg-vino .hero-risk {
+  margin-top: 16px;
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  max-width: 56ch;
+}
+.pg-vino .vino-hero-photo { min-width: 0; }
+@media (max-width: 900px) {
+  .pg-vino .vino-hero { grid-template-columns: 1fr; }
+}
+
+/* ---- proof: the two wineries, each card a link to its case ---- */
+.pg-vino .vino-proof { padding-top: 0; }
+.pg-vino .vino-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(14px, 2vw, 26px);
+}
+.pg-vino .vino-proof-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding: clamp(14px, 1.6vw, 18px);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease;
+}
+.pg-vino .vino-proof-item:hover { border-color: var(--primary-dim); }
+.pg-vino .vino-proof-photo { margin-bottom: 8px; }
+.pg-vino .vino-proof-name {
+  font-size: 1.08rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.pg-vino .vino-proof-place {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pg-vino .vino-proof-result { color: var(--text-dim); line-height: 1.55; }
+.pg-vino .vino-proof-read {
+  margin-top: auto;
+  padding-top: 8px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-text);
+}
+.pg-vino .vino-basis {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-width: 70ch;
+}
+@media (max-width: 640px) {
+  .pg-vino .vino-proof-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- the module cards' price line, and the two links under the row ---- */
+.pg-vino .vino-mod-price {
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.pg-vino .vino-more { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+
+/* Three objections in one row on a wide screen, not two plus an orphan. */
+@media (min-width: 901px) {
+  .pg-vino .fam-grid { grid-template-columns: repeat(3, 1fr); }
+}

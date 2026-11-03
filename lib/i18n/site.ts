@@ -163,6 +163,13 @@ const vino: Dict<SiteDict> = {
         "Software for a winery's production, hospitality and restaurant, built in Baja California by Cardon Digital, with prices published.",
       ogAlt: name + ": software for wineries, by Cardon",
     },
+    // The diagnostic on this brand looks at the winery's operation, so its
+    // line drops the AI-answers check, which is Cardon's service (hq-3f6ut.2).
+    diag: {
+      ...en.diag,
+      price:
+        "**Free.** No retainer, no obligation. If the memo shows work worth doing, we propose the build and you decide.",
+    },
   },
   es: {
     ...es,
@@ -174,6 +181,11 @@ const vino: Dict<SiteDict> = {
       description:
         "Software para la producción, la hospitalidad y el restaurante de una bodega, hecho en Baja California por Cardon Digital, con precios publicados.",
       ogAlt: name + ": software para bodegas, por Cardon",
+    },
+    diag: {
+      ...es.diag,
+      price:
+        "**Sin costo.** Sin anticipo y sin compromiso. Si el informe muestra trabajo que vale la pena hacer, le presentamos una propuesta y usted decide.",
     },
   },
 };

@@ -60,7 +60,32 @@ A route both brands serve (about, contact, pricing, legal, `/software`)
 renders the same page file for both; the page reads `BRAND` or a per-brand
 dictionary where its content differs. The home page dispatches:
 `app/[locale]/page.tsx` renders `components/pages/home-cardon.tsx` or
-`components/pages/home-vino.tsx`.
+`components/pages/home-vino.tsx` (copy in `lib/i18n/home-vino.ts`).
+
+### Wine copy on a shared dictionary
+
+The wine pages keep one dictionary each. Where the wine brand's page says
+something else (its name, no website or ads offer, a diagnostic line about the
+operation), the file declares only those strings as `enVino` and `esVino`
+beside `en` and `es`, and exports `withVariant(en, enVino)` on vino and the
+plain `en` on cardon (`lib/i18n/variant.ts`). A list in a variant replaces the
+base list whole. A block only the wine brand carries (the FAQs of the winery
+page, the two cases and the demos) is its own `enFaq`/`esFaq` declaration,
+exported through `vinoOnly`, which is null on cardon.
+
+Copy names the wine brand as `{brand}`; `branded` fills it from `BRAND.name`
+when the module loads, so the name is typed nowhere and the copy checker
+reads whole sentences. `scripts/copy-check.mjs` reads `enVino`, `esVino`,
+`enFaq` and `esFaq` as their locale, so variants meet the same rules.
+
+`app/vino-pages.test.tsx` renders every wine page on the vino build, with
+the brand's name mocked to a sentinel, and fails on a link to a route vino
+does not serve, a link to cardondigital.com in a page body, a page that types
+the brand's name, a Cardon service offered on a wine page, or a moved page
+missing the AEO checklist (title in 60 characters with the template, a 40 to
+60 word answer first, an FAQ with FAQPage markup, descriptive alt text). A
+shared page another bead still has to split sits in its `PENDING` list, which
+fails once that page is clean so the entry cannot outlive the work.
 
 ## Indexing
 

@@ -1,4 +1,6 @@
 import type { Dict } from "./rich";
+import { BRAND } from "../brand";
+import { branded, withVariant, type Variant } from "./variant";
 
 /**
  * Software and automation service page copy (/software). Spanish authoritative.
@@ -329,4 +331,122 @@ const es: typeof en = {
 };
 
 export type SoftwareDict = typeof en;
-export const software: Dict<SoftwareDict> = { en, es };
+
+/*
+ * The wine brand's /software is its modules page (bead hq-3f6ut.2): the same
+ * page, sold as the brand's three modules for a winery. Only the strings that
+ * differ are here (lib/i18n/variant.ts); "{brand}" is the brand's name from
+ * lib/brand.ts. The diagnostic lines drop the site and the ads, which are
+ * Cardon's services, and the "any other line of business" lines go, because
+ * custom software for any business stays on cardondigital.com.
+ */
+const enVino: Variant<SoftwareDict> = {
+  meta: {
+    title: "Three software modules for wineries",
+    description:
+      "{brand} builds the three modules a winery runs on: Produccion for the vineyard and cellar, Hospitalidad for the rooms and tasting room, Restaurante for the dining room. A fixed price per module, and the code and data are yours.",
+  },
+  hero: {
+    eyebrow: "The {brand} modules",
+    sub: "{brand} builds the software a winery runs on, in three modules: the vineyard and the cellar, the rooms and the tasting room, the dining room. Each record is written once, where the work happens, the reports build themselves and the books are current every morning. It already runs in wineries in the Valle de Guadalupe.",
+  },
+  modules: {
+    title: "Start with the part of the winery that hurts most.",
+    other: "Not sure where to start? The diagnostic says which module comes first, and what it costs.",
+  },
+  faq: {
+    title: "Questions about the modules, answered",
+    items: [
+      {
+        question: "How much does each module cost?",
+        answer:
+          "Each module has a fixed price, agreed before the build starts, and its entry price is published on the pricing page. The diagnostic that says which module to start with costs nothing.",
+      },
+      {
+        question: "What does the free diagnostic include?",
+        answer:
+          "Ten business days on your harvest records, your bookings and your dining room, and a written memo that is yours: what is true, what is broken, which module to build first.",
+      },
+      {
+        question: "Does it work for a winery with no rooms or restaurant?",
+        answer:
+          "Yes. Each module is bought on its own, so a winery that only makes wine starts with Produccion and adds the others if it ever needs them.",
+      },
+      {
+        question: "Can I ask the system questions about my own numbers?",
+        answer:
+          "Yes. An assistant answers in plain words from your record and shows where each figure came from. When there is no record, it says so.",
+      },
+      {
+        question: "What support is there after the handover?",
+        answer:
+          "Your team is trained at the handover, the accounts are in your name, and there is a call every week while the service runs.",
+      },
+      {
+        question: "Has it worked for a real winery?",
+        answer:
+          "At Monte Xanic, about an hour of finance work now takes about two minutes. For Vinedo En'kanto, one system runs production, the restaurant and the bookings, with an online store that already takes orders.",
+      },
+    ],
+  },
+  diagDesc:
+    "Ten business days on your harvest records, your bookings and your dining room, and a written memo that is yours: what is true, what is broken, which module to build first.",
+};
+
+const esVino: Variant<SoftwareDict> = {
+  meta: {
+    title: "Los tres módulos de software para bodegas",
+    description:
+      "{brand} construye los tres módulos con los que opera una bodega: Producción para el viñedo y la cava, Hospitalidad para las cabañas y la sala de degustación, Restaurante para el comedor. Precio fijo por módulo, y el código y los datos son suyos.",
+  },
+  hero: {
+    eyebrow: "Los módulos de {brand}",
+    sub: "{brand} construye el software con el que opera una bodega, en tres módulos: el viñedo y la cava, las cabañas y la sala de degustación, el comedor. Todo se registra una sola vez, ahí donde se hace el trabajo, los reportes se arman solos y las cuentas amanecen al corriente. Ya funciona en bodegas del Valle de Guadalupe.",
+  },
+  modules: {
+    title: "Empiece por la parte de la bodega que más le duele.",
+    other: "¿No sabe por dónde empezar? El diagnóstico le dice qué módulo va primero y cuánto cuesta.",
+  },
+  faq: {
+    title: "Preguntas frecuentes sobre los módulos",
+    items: [
+      {
+        question: "¿Cuánto cuesta cada módulo?",
+        answer:
+          "Cada módulo tiene un precio fijo, acordado antes de empezar el desarrollo, y su precio de entrada está publicado en la página de precios. El diagnóstico que le dice por cuál módulo empezar no tiene costo.",
+      },
+      {
+        question: "¿Qué incluye el diagnóstico sin costo?",
+        answer:
+          "Diez días hábiles con los registros de su vendimia, sus reservas y su comedor, y un informe por escrito que es suyo: qué funciona, qué falla y qué módulo construir primero.",
+      },
+      {
+        question: "¿Sirve para una bodega sin cabañas ni restaurante?",
+        answer:
+          "Sí. Cada módulo se contrata por separado, así que una bodega que solo hace vino empieza con Producción y suma los otros si algún día los necesita.",
+      },
+      {
+        question: "¿Puedo preguntarle al sistema por mis propios números?",
+        answer:
+          "Sí. Un asistente contesta en palabras sencillas a partir de su registro y le muestra de dónde salió cada cifra. Cuando no hay dato, lo dice.",
+      },
+      {
+        question: "¿Qué apoyo hay después de la entrega?",
+        answer:
+          "Su equipo queda capacitado en la entrega, las cuentas están a su nombre y hay una llamada cada semana mientras dure el servicio.",
+      },
+      {
+        question: "¿Ya funciona en una bodega real?",
+        answer:
+          "En Monte Xanic, una hora de trabajo financiero hoy toma unos dos minutos. Para Viñedo En'kanto construimos un solo sistema para la producción, el restaurante y las reservaciones, con una tienda en línea que ya toma pedidos.",
+      },
+    ],
+  },
+  diagDesc:
+    "Diez días hábiles con los registros de su vendimia, sus reservas y su comedor, y un informe por escrito que es suyo: qué funciona, qué falla y qué módulo construir primero.",
+};
+
+export const software: Dict<SoftwareDict> =
+  BRAND.id === "vino"
+    ? branded({ en: withVariant(en, enVino), es: withVariant(es, esVino) })
+    : { en, es };

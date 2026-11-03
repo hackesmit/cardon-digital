@@ -1,5 +1,7 @@
 import type { ModuleId } from "../pricing";
 import type { Dict } from "./rich";
+import { BRAND } from "../brand";
+import { branded, vinoOnly, withVariant, type FaqBlock, type Variant } from "./variant";
 
 /**
  * The Demos page: the index of the live demo, one card per module.
@@ -224,4 +226,100 @@ const es: typeof en = {
 };
 
 export type DemosIndexDict = typeof en;
-export const demosIndex: Dict<DemosIndexDict> = { en, es };
+
+/*
+ * On the wine brand (bead hq-3f6ut.2): a title that fits the brand's title
+ * template inside sixty characters, the brand in the eyebrow, and the
+ * diagnostic line without the advertising, which stays Cardon's service.
+ */
+const enVino: Variant<DemosIndexDict> = {
+  hero: {
+    eyebrow: "{brand} demos",
+    sub: "Each {brand} demo opens the system with the data of Finca Tierra Lenta, an invented winery with a restaurant and ten rooms. The data is illustrative; the system is the one we install. Nothing to fill in, nothing to install, it opens in a new tab, one module or all three together.",
+  },
+  meta: { title: "Demos with an invented winery's data" },
+  close: {
+    diagDesc:
+      "Ten working days in which we review your records and your operation as one system. You get a written report: what works, what fails and what to build first.",
+  },
+};
+
+const esVino: Variant<DemosIndexDict> = {
+  hero: {
+    eyebrow: "Demos de {brand}",
+    sub: "Cada demo de {brand} abre el sistema con los datos de Finca Tierra Lenta, una finca inventada con restaurante y diez unidades de hospedaje. Los datos son ilustrativos; el sistema es el que instalamos. Nada que llenar, nada que instalar, abre en una pestaña nueva, un módulo o los tres juntos.",
+  },
+  meta: { title: "Demos con los datos de una finca inventada" },
+  close: {
+    diagDesc:
+      "Diez días hábiles en los que revisamos sus registros y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
+  },
+};
+
+export const demosIndex: Dict<DemosIndexDict> =
+  BRAND.id === "vino"
+    ? branded({ en: withVariant(en, enVino), es: withVariant(es, esVino) })
+    : { en, es };
+
+/* The page's questions, on the wine brand only (bead hq-3f6ut.2): the AEO
+   checklist asks every moved page for an FAQ, and cardondigital.com keeps the
+   page as it was. Every answer restates a fact this page already carries. */
+const enFaq: FaqBlock = {
+  title: "Questions about the demos",
+  items: [
+    {
+      question: "Is the data in the demo real?",
+      answer:
+        "No. Finca Tierra Lenta is an invented winery with a restaurant and ten rooms. The data is illustrative; the system is the one we install.",
+    },
+    {
+      question: "Do I have to sign up or install anything?",
+      answer: "No. There is nothing to fill in and nothing to install, and each demo opens in a new tab.",
+    },
+    {
+      question: "Can I open one module on its own?",
+      answer: "Yes. Each card opens the demo with its own module switched on, and one opens all three together.",
+    },
+    {
+      question: "Would my winery get the same screens?",
+      answer:
+        "The screens are the system that gets installed, and yours is built on your own records, at a fixed price per module agreed before the build.",
+    },
+    {
+      question: "What does it cost after the demo?",
+      answer:
+        "Every module has a published entry price on the pricing page, and the diagnostic that says where to start costs nothing.",
+    },
+  ],
+};
+
+const esFaq: FaqBlock = {
+  title: "Preguntas sobre las demos",
+  items: [
+    {
+      question: "¿Los datos de la demo son reales?",
+      answer:
+        "No. Finca Tierra Lenta es una finca inventada con restaurante y diez unidades de hospedaje. Los datos son ilustrativos; el sistema es el que instalamos.",
+    },
+    {
+      question: "¿Tengo que registrarme o instalar algo?",
+      answer: "No. No hay nada que llenar ni nada que instalar, y cada demo abre en una pestaña nueva.",
+    },
+    {
+      question: "¿Puedo abrir un solo módulo?",
+      answer: "Sí. Cada tarjeta abre la demo con su propio módulo encendido, y una abre los tres juntos.",
+    },
+    {
+      question: "¿Mi bodega recibiría las mismas pantallas?",
+      answer:
+        "Las pantallas son el sistema que se instala, y el suyo se construye sobre sus propios registros, con un precio fijo por módulo acordado antes de empezar.",
+    },
+    {
+      question: "¿Cuánto cuesta después de la demo?",
+      answer:
+        "Cada módulo tiene su precio de entrada publicado en la página de precios, y el diagnóstico que le dice por dónde empezar no tiene costo.",
+    },
+  ],
+};
+
+export const demosIndexFaq = vinoOnly({ en: enFaq, es: esFaq });

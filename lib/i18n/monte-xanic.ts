@@ -1,4 +1,6 @@
 import type { Dict } from "./rich";
+import { BRAND } from "../brand";
+import { branded, vinoOnly, withVariant, type FaqBlock, type Variant } from "./variant";
 
 /** Monte Xanic case history. The SVG and canvas labels live here too, so the
  *  visuals in a Spanish page are Spanish all the way through.
@@ -424,4 +426,94 @@ const es: typeof en = {
 };
 
 export type MonteXanicDict = typeof en;
-export const monteXanic: Dict<MonteXanicDict> = { en, es };
+
+/*
+ * On the wine brand (bead hq-3f6ut.2) the case is the brand's own: the
+ * eyebrow names it, and the diagnostic line drops the ads and the site, which
+ * stay Cardon's services. The figure and its basis are untouched.
+ */
+const enVino: Variant<MonteXanicDict> = {
+  hero: {
+    eyebrow: "A {brand} case",
+    sub: "At Monte Xanic, a finance view somebody assembled by hand every week, in about an hour, now refreshes itself in about two minutes, through the day. {brand} built it on one record of the harvest, where the production system, the spreadsheets and the field notebooks read as one live view.",
+  },
+  diagDesc: "Ten business days on your harvest records, your cellar and your books, and a written memo at the end.",
+};
+
+const esVino: Variant<MonteXanicDict> = {
+  hero: {
+    eyebrow: "Un caso de {brand}",
+    sub: "En Monte Xanic, una vista financiera que alguien armaba a mano cada semana, en cerca de una hora, hoy se actualiza sola en unos dos minutos, durante todo el día. {brand} la construyó sobre un solo registro de la vendimia, donde el sistema de producción, las hojas de cálculo y las libretas de campo se ven en una sola vista.",
+  },
+  diagDesc: "Diez días hábiles dedicados a los registros de su vendimia, su bodega y sus cuentas, y al final un informe escrito.",
+};
+
+export const monteXanic: Dict<MonteXanicDict> =
+  BRAND.id === "vino"
+    ? branded({ en: withVariant(en, enVino), es: withVariant(es, esVino) })
+    : { en, es };
+
+/* The page's questions, on the wine brand only (bead hq-3f6ut.2): the AEO
+   checklist asks every moved page for an FAQ, and cardondigital.com keeps the
+   page as it was. Every answer restates a fact this page already carries. */
+const enFaq: FaqBlock = {
+  title: "Questions about the Monte Xanic case",
+  items: [
+    {
+      question: "What changed at Monte Xanic?",
+      answer:
+        "A finance view somebody assembled by hand every week, in about an hour, now refreshes itself in about two minutes through the day, and the harvest behind it reads in one live view.",
+    },
+    {
+      question: "How was the time measured?",
+      answer:
+        "The hour was timed by hand before the build, and the two minutes are the dashboard's refresh. No Monte Xanic production, sales or financial figure is published.",
+    },
+    {
+      question: "Where did the harvest data live before?",
+      answer: "In three places that agreed in none: a production system, spreadsheets and field notebooks.",
+    },
+    {
+      question: "How does the view see a section coming due?",
+      answer:
+        "Every reading stands on its own section of the vineyard, and ripeness is scored against the winery's own standard.",
+    },
+    {
+      question: "Can I see the same thing for my winery?",
+      answer:
+        "The Produccion demo shows the same kind of view with an invented winery's data, and the free diagnostic says which module to start with.",
+    },
+  ],
+};
+
+const esFaq: FaqBlock = {
+  title: "Preguntas sobre el caso Monte Xanic",
+  items: [
+    {
+      question: "¿Qué cambió en Monte Xanic?",
+      answer:
+        "Una vista financiera que alguien armaba a mano cada semana, en cerca de una hora, hoy se actualiza sola en unos dos minutos durante el día, y la vendimia que hay detrás se ve en una sola vista.",
+    },
+    {
+      question: "¿Cómo se midió el tiempo?",
+      answer:
+        "La hora se cronometró a mano antes del desarrollo, y los dos minutos son la actualización del tablero. No se publica ninguna cifra de producción, de ventas ni financiera de Monte Xanic.",
+    },
+    {
+      question: "¿Dónde vivían antes los datos de la vendimia?",
+      answer: "En tres lugares que no coincidían: un sistema de producción, hojas de cálculo y libretas de campo.",
+    },
+    {
+      question: "¿Cómo ve venir un cuadro?",
+      answer:
+        "Cada lectura queda en su propio cuadro del viñedo, y la madurez se califica con el criterio de la propia bodega.",
+    },
+    {
+      question: "¿Puedo ver lo mismo para mi bodega?",
+      answer:
+        "La demo de Producción muestra el mismo tipo de vista con los datos de una finca inventada, y el diagnóstico sin costo le dice por qué módulo empezar.",
+    },
+  ],
+};
+
+export const monteXanicFaq = vinoOnly({ en: enFaq, es: esFaq });

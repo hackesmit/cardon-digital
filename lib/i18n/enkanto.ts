@@ -1,4 +1,6 @@
 import type { Dict } from "./rich";
+import { BRAND } from "../brand";
+import { branded, vinoOnly, withVariant, type FaqBlock, type Variant } from "./variant";
 
 /** Vinedo En'kanto case history, the companion to lib/i18n/monte-xanic.ts.
  *
@@ -489,4 +491,94 @@ const es: typeof en = {
 };
 
 export type EnkantoDict = typeof en;
-export const enkanto: Dict<EnkantoDict> = { en, es };
+
+/*
+ * On the wine brand (bead hq-3f6ut.2) the case is the brand's own: the
+ * eyebrow names it, and the diagnostic line looks at the operation the
+ * modules run, with the site left to Cardon.
+ */
+const enVino: Variant<EnkantoDict> = {
+  hero: {
+    eyebrow: "A {brand} case",
+    sub: "At Vinedo En'kanto the checkout now completes, and the wine reaches a door inside Mexico. Behind the winery, the rooms and the dining room, {brand} built one system that is in daily use, with production, bookings and the restaurant on one record, and a demo of it is open to walk through.",
+  },
+  diagDesc: "Ten business days on your cellar, your rooms and your dining room, and a written memo at the end.",
+};
+
+const esVino: Variant<EnkantoDict> = {
+  hero: {
+    eyebrow: "Un caso de {brand}",
+    sub: "En Viñedo En'kanto el pago ya se completa y el vino llega a domicilio dentro de México. Detrás de la vinícola, los cuartos y el comedor, {brand} construyó un sistema que ya se usa a diario, con la producción, las reservas y el restaurante en un solo registro, y un demo abierto para recorrerlo.",
+  },
+  diagDesc: "Diez días hábiles dedicados a su bodega, sus cabañas y su comedor, y al final un informe escrito.",
+};
+
+export const enkanto: Dict<EnkantoDict> =
+  BRAND.id === "vino"
+    ? branded({ en: withVariant(en, enVino), es: withVariant(es, esVino) })
+    : { en, es };
+
+/* The page's questions, on the wine brand only (bead hq-3f6ut.2): the AEO
+   checklist asks every moved page for an FAQ, and cardondigital.com keeps the
+   page as it was. Every answer restates a fact this page already carries. */
+const enFaq: FaqBlock = {
+  title: "Questions about the En'kanto case",
+  items: [
+    {
+      question: "What runs at En'kanto?",
+      answer:
+        "One system for the winery, the rooms and the dining room, in daily use, and an online store whose checkout completes and ships wine inside Mexico.",
+    },
+    {
+      question: "Does the calendar write to Airbnb?",
+      answer:
+        "No. Airbnb publishes no open interface for a host, so the calendar reads the iCal feeds, which refresh in hours. A date blocked here stays open there, and the screen says so.",
+    },
+    {
+      question: "How do table bookings from OpenTable come in?",
+      answer:
+        "Through the partner access only. Until that account is connected, a booking is taken by hand and reconciled against the export on guest and time.",
+    },
+    {
+      question: "How do restaurant charges reach a room bill?",
+      answer:
+        "The front desk only reads them; creating or changing a charge belongs to the restaurant. A charge with no amount shows as pending and stays out of the total.",
+    },
+    {
+      question: "Is there a figure from En'kanto?",
+      answer: "Not yet. The system is in daily use, and no figure from it is published.",
+    },
+  ],
+};
+
+const esFaq: FaqBlock = {
+  title: "Preguntas sobre el caso En'kanto",
+  items: [
+    {
+      question: "¿Qué funciona en En'kanto?",
+      answer:
+        "Un solo sistema para la vinícola, los cuartos y el comedor, que ya se usa a diario, y una tienda en línea donde el pago se completa y el vino se envía dentro de México.",
+    },
+    {
+      question: "¿El calendario escribe en Airbnb?",
+      answer:
+        "No. Airbnb no ofrece una interfaz abierta para anfitriones, así que el calendario lee los feeds iCal, que tardan horas en actualizarse. Una fecha bloqueada aquí sigue abierta allá, y la pantalla lo dice.",
+    },
+    {
+      question: "¿Cómo entran las reservaciones de mesa de OpenTable?",
+      answer:
+        "Solo por el acceso de socio. Mientras esa cuenta no esté conectada, la reservación se captura a mano y se concilia con la exportación por comensal y hora.",
+    },
+    {
+      question: "¿Cómo llegan los cargos del restaurante a la cuenta del cuarto?",
+      answer:
+        "La recepción solo los lee; crear o cambiar un cargo le toca al restaurante. Un cargo sin importe se muestra como pendiente y queda fuera del total.",
+    },
+    {
+      question: "¿Hay alguna cifra de En'kanto?",
+      answer: "Todavía no. El sistema ya se usa a diario, y no se publica ninguna cifra que salga de él.",
+    },
+  ],
+};
+
+export const enkantoFaq = vinoOnly({ en: enFaq, es: esFaq });

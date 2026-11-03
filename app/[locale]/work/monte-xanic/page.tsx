@@ -11,7 +11,8 @@ import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import { monteXanic } from "@/lib/i18n/monte-xanic";
+import { monteXanic, monteXanicFaq } from "@/lib/i18n/monte-xanic";
+import Faq from "@/components/site/Faq";
 import "./case.css";
 
 type Params = { params: Promise<{ locale: string }> };
@@ -463,6 +464,14 @@ export default async function MonteXanicCaseStudy(props: Params) {
           </Reveal>
         </div>
       </section>
+
+      {/* The questions, on the wine brand only (bead hq-3f6ut.2): null on
+          cardondigital.com, which renders this page as it was. */}
+      {monteXanicFaq ? (
+        <div className="section">
+          <Faq title={monteXanicFaq[locale].title} items={monteXanicFaq[locale].items} />
+        </div>
+      ) : null}
 
       {/* ============================ DIAGNOSTIC ============================ */}
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">

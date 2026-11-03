@@ -10,7 +10,8 @@ import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import { winery } from "@/lib/i18n/winery";
+import { winery, wineryFaq } from "@/lib/i18n/winery";
+import Faq from "@/components/site/Faq";
 import Field from "@/components/site/field/Field";
 import "./winery.css";
 import Mark from "@/components/site/Mark";
@@ -272,7 +273,7 @@ export default async function WineryPage(props: Params) {
           </Reveal>
 
           <Reveal>
-            <div className="cap-grid">
+            <div className={"cap-grid" + (d.caps.cards.length === 4 ? " cap-grid-4" : "")}>
               {d.caps.cards.map((card, i) => (
                 <article className={"cap-card spot" + capAccent[i]} key={card.num}>
                   <div className="cap-top">
@@ -342,6 +343,14 @@ export default async function WineryPage(props: Params) {
 
       {/* The vineyard, loose on the page, before the closing call. */}
       <Field kind="vinedo" layout="band" />
+
+      {/* The questions, on the wine brand only (bead hq-3f6ut.2): null on
+          cardondigital.com, which renders this page as it was. */}
+      {wineryFaq ? (
+        <div className="section">
+          <Faq title={wineryFaq[locale].title} items={wineryFaq[locale].items} />
+        </div>
+      ) : null}
 
       {/* ============================ DIAGNOSTIC ============================ */}
       <section
