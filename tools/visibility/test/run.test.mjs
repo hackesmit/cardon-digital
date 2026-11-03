@@ -80,7 +80,7 @@ test("priceCall prices tokens and searches, and charges list price even for a mo
   const p = priceCall({ input: 9000, cachedInput: 1000, output: 300, searches: 2 }, "gpt-6-sol", pricing);
   // 8000 * 2 + 1000 * 0.2 + 300 * 10 per 1M, plus 2 * $0.01
   assert.ok(Math.abs(p.usd - (0.016 + 0.0002 + 0.003 + 0.02)) < 1e-9);
-  const g = priceCall({ input: 12, output: 250, searches: 1 }, "gemini-3.8-flash", pricing);
+  const g = priceCall({ input: 12, output: 250, searches: 1 }, "gemini-3.8-flash", pricing, "2026-11-03T12:00:00Z");
   // 12 * 0.75 + 250 * 3.75 per 1M, plus one $0.014 search query
   assert.ok(Math.abs(g.usd - (0.000009 + 0.0009375 + 0.014)) < 1e-9, "Gemini is billed: list price by default");
   assert.equal(g.usd, g.listUsd);
@@ -697,4 +697,14 @@ test("an engine whose model id does not exist stops on its own and names the cau
   assert.equal(s.metrics.engines.openai.answers, 9, "openai answers every job");
   assert.match(s.partialReason, /gemini model gemini-3\.8-flash does not exist at the provider/);
   assert.match(log.join("\n"), /stopped early: .*does not exist/);
+});
+
+
+test("rateAt picks by date, not list position, and refuses a day before every rate", () => {
+  const pr = { models: { m: { rates: [{ from: "2027-01-01", input: 2, output: 2 }, { input: 1, output: 1 }] },
+                         f: { rates: [{ from: "2027-01-01", input: 5, output: 5 }] } } };
+  assert.equal(rateAt("m", pr, "2027-01-02T00:00:00Z").input, 2);
+  assert.equal(rateAt("m", pr, "2026-12-31T23:59:59Z").input, 1);
+  assert.throws(() => rateAt("f", pr, "2026-12-31T00:00:00Z"), /no price/);
+  assert.equal(rateAt("f", pr, "2027-01-01T00:00:00Z").input, 5);
 });
