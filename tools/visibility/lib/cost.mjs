@@ -44,8 +44,15 @@ export function rateAt(model, pricing, at) {
   const rates = Array.isArray(p.rates) ? p.rates : [p];
   if (!rates.length) throw new Error(`no price for model ${model} in pricing.json`);
   const day = dayOf(at);
-  let pick = rates[0];
-  for (const r of rates) if (!r.from || r.from <= day) pick = r;
+  // By date, never by list position: the latest `from` on or before the day
+  // wins; an undated entry is the floor (covers days before every dated one).
+  // A day before every entry is refused rather than charged a future rate.
+  let pick = null;
+  for (const r of rates) {
+    if (r.from && r.from <= day && (!pick || !pick.from || r.from > pick.from)) pick = r;
+    else if (!r.from && !pick) pick = r;
+  }
+  if (!pick) throw new Error(`no price for model ${model} on ${day} in pricing.json`);
   const out = { model, from: pick.from || null };
   for (const k of RATE_KEYS) if (pick[k] != null) out[k] = pick[k];
   return out;
