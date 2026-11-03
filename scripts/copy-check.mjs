@@ -97,6 +97,12 @@ export const PAGES = {
    * named by `file`. New pages, measured when they were written.
    */
   guias: { en: { budget: 84, measured: 168 }, es: { budget: 94, measured: 188 } },
+  /**
+   * cardondigital.com's custom software page (2026-11-03, bead hq-3f6ut.3),
+   * served at /software on the cardon build while lib/i18n/software.ts serves
+   * the wine brand's modules there. A new page, measured when it was written.
+   */
+  "software-cardon": { en: { budget: 385, measured: 769 }, es: { budget: 408, measured: 815 } },
   "guia-aparecer-en-chatgpt": {
     file: "lib/guides/aparecer-en-chatgpt.ts",
     en: { budget: 808, measured: 1615 },

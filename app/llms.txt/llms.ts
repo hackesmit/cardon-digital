@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/i18n/metadata";
 import { site } from "@/lib/i18n/site";
 import { BRAND } from "@/lib/brand";
 import { advertisesPath } from "@/lib/routes";
-import { about } from "@/lib/i18n/about";
+import { about, aboutVino } from "@/lib/i18n/about";
 import { anuncios } from "@/lib/i18n/anuncios";
 import { contact } from "@/lib/i18n/contact";
 import { demosIndex } from "@/lib/i18n/demos-index";
@@ -18,6 +18,7 @@ import { precios } from "@/lib/i18n/precios";
 import { privacy } from "@/lib/i18n/privacy";
 import { sitios } from "@/lib/i18n/sitios";
 import { software } from "@/lib/i18n/software";
+import { softwareCardon } from "@/lib/i18n/software-cardon";
 import { terms } from "@/lib/i18n/terms";
 import { visibilidad } from "@/lib/i18n/visibilidad-ia";
 import { winery } from "@/lib/i18n/winery";
@@ -43,10 +44,11 @@ const page = (path: string, meta: (l: Locale) => Meta): Page => ({ path, meta })
 const SERVICES = [
   page("/sitios-web", (l) => sitios[l].meta),
   page("/anuncios", (l) => anuncios[l].meta),
-  page("/software", (l) => software[l].meta),
+  // /software is custom software on cardon and the modules on the wine brand.
+  page("/software", (l) => (BRAND.id === "cardon" ? softwareCardon : software)[l].meta),
   page("/visibilidad-ia", (l) => visibilidad[l].meta),
 ];
-const PRICES = [page("/precios", (l) => precios[l].meta)];
+const PRICES = [page("/precios", (l) => (BRAND.id === "cardon" ? precios[l].cardon.meta : precios[l].meta))];
 /** The guides index, then every guide in lib/guides, newest first. */
 const GUIDE_PAGES = [
   page("/guias", (l) => guias[l].meta),
@@ -65,7 +67,7 @@ function keyPages(doors: DoorVariant): Page[] {
     page("/industries/winery", (l) => winery[l].meta),
     page("/demos", (l) => demosIndex[l].meta),
     page("/estilos", (l) => estilos[l].meta),
-    page("/about", (l) => about[l].meta),
+    page("/about", (l) => (BRAND.id === "cardon" ? about : aboutVino)[l].meta),
     // The contact description names the doors this build has, as the page does.
     page("/contacto", (l) => ({
       title: contact[l].meta.title,
