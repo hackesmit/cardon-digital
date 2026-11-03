@@ -100,6 +100,13 @@ function cost(summary) {
   return table(rows);
 }
 
+/** Method notes for engines driven through a browser instead of an API. */
+function browserNotes(summary) {
+  return Object.entries(summary.engines)
+    .filter(([, o]) => o.browser)
+    .map(([e]) => `- ${e} is the consumer app driven through a logged-in account in a browser, not an API: it bills no tokens, so it has no cost row (its judge calls still count), and its answers are what that account sees, location and history included.`);
+}
+
 export function renderReport(summary, config, previous) {
   const engines = Object.entries(summary.engines).map(([e, o]) => `${e} (${o.model})`).join(", ");
   const lines = [
@@ -152,6 +159,7 @@ export function renderReport(summary, config, previous) {
     "- Each prompt runs several times per engine because brand lists rarely repeat between runs; mention rate pooled over runs is the stable number, position is not.",
     "- OpenAI gets the prompt's country, region and city as an approximate user location. The Gemini API has no location setting, so only the city named in the prompt localises it.",
     "- Google AI Overviews and AI Mode have no API; they stay a manual check (tools/visibility/README.md in the cardon-digital repo).",
+    ...browserNotes(summary),
     "",
   ];
   if (summary.errors.length) {

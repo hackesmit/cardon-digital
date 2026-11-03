@@ -6,6 +6,7 @@ Measures how often AI answer engines name a business when asked the questions it
 npm run visibility -- --client cardon --dry-run      # plan and worst-case cost, no calls
 npm run visibility -- --client cardon --max-usd 15   # full run: every prompt x every engine x 5 runs
 npm run visibility -- --client cardon --runs 1 --prompts P0,P9 --engines openai
+xvfb-run -a npm run visibility -- --client cardon --engines gemini-web --runs 1   # the Gemini app, through a browser
 npm run visibility -- --resume <run dir>             # finish a run the cap or an error stopped
 npm run visibility -- --analyse <run dir>            # rebuild report and summary from stored answers
 npm run visibility:test                              # unit tests (also part of npm test)
@@ -24,6 +25,7 @@ This repository is public, so client configs and outputs never go in it. The tra
 - `runs/<client>/<stamp>/summary.json`: every number, machine-readable; the next run's report diffs against the newest earlier one.
 - `runs/<client>/<stamp>/report.md`: the report, labelled "API panel, directional".
 - `spend/<day>.json`: the daily cost cap's ledger (UTC day, all runs and clients).
+- `browser/gemini-web/`: the Chrome profile the `gemini-web` engine signs in with. It holds Google session cookies: hq's `.gitignore` keeps `bunkers/**/tracker/browser/` out of git, and the directory is mode 700.
 
 ## Client config
 
@@ -78,6 +80,11 @@ Detection is a string match, so the counts can be recomputed from the stored tex
 
 - **openai**: Responses API, `web_search` tool, approximate user location from the prompt's country, region and city. The model should match what ChatGPT users get: since 2026-11-03 that is `gpt-6-sol` (the paid-tier ChatGPT model; free and Go users get a Luna model), with `gpt-6-luna` as the judge. Check the model ids against the provider lists (`GET /v1/models`, `GET /v1beta/models`) before switching.
 - **gemini**: `generateContent` with Google Search grounding. A free AI Studio key refuses grounding (every grounded call returns a quota error), so the project needs billing on before Gemini can run. The API has no location setting, so only the city in the prompt localises it. Cited urls are Google redirects; the tool follows each with one HEAD request (https on vertexaisearch.cloud.google.com only, no credentials or custom port, 5 s timeout; any other url is kept as-is with no request) to record the real domain.
+- **gemini-web**: the Gemini consumer app (gemini.google.com) driven with Playwright (`playwright-core`, the repo's devDependency, and the system Chrome at `/usr/bin/google-chrome`), so Gemini runs with no API billing (Daniel, 2026-11-03). Config: `"gemini-web": { "model": "gemini-app", "account": { "vault": "Personal", "item": "admin.google.com" } }`; `model` is only a label, and `account` names the Proton Pass login used when the profile is signed out (a Cardon identity, never an agency one). Optional: `timeoutMs` (default 180000 per answer), `headless`, `chrome`.
+  - It runs one prompt at a time in a fresh chat and stores the answer's HTML (`{ html, url, mode, complete, elapsedMs }`); `parseGeminiWeb` turns `<message-content>` into the same markdown shape the API engines return, and reads cited urls from the source chips' `jslog` metadata (base64 JSON), so old pages re-parse offline.
+  - Browser-driven means no tokens and no key: no price in `pricing.json`, no cost row in the report (its judge calls still count), and the record carries `browser: true` and `rate: null`.
+  - Headless Chrome never reached a prompt box in testing (2026-11-03), so it runs a real window: use `xvfb-run -a` on a box with no display. A captcha, a usage limit, a sign-in challenge or a missing display stops the engine with the reason in the summary (exit 3; `--resume` carries on). A reply that never finishes, an empty one or Gemini's canned "Soy un modelo de lenguaje, así que no tengo esa capacidad" is an error `--resume` retries.
+  - The Cardon login is a Google Workspace account, so these are Workspace Gemini answers (mode Flash, signed in, no history), not a consumer free-tier account's. The first sign-in walked through Workspace's terms and welcome dialogs; the engine clicks through them if they reappear.
 - **Perplexity Sonar** is not wired in: its API needs prepaid credits and none are funded.
 
 API answers are not consumer-app answers (published brand overlap between the two is 6 to 24%, and the ChatGPT app cites far more sources), so every report says "API panel, directional".

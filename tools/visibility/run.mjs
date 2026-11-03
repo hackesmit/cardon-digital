@@ -6,6 +6,7 @@
  *   npm run visibility -- --client cardon                 full run (5 runs per prompt per engine)
  *   npm run visibility -- --client cardon --dry-run       plan and worst-case cost, no calls
  *   npm run visibility -- --client cardon --runs 1 --prompts P0,P9 --engines openai
+ *   xvfb-run -a npm run visibility -- --client cardon --engines gemini-web   the Gemini app, via a browser
  *   npm run visibility -- --resume <run dir>              finish a run the cap or an error stopped
  *   npm run visibility -- --analyse <run dir>             rebuild report and summary from stored answers
  *
@@ -98,6 +99,11 @@ export function validateConfig(c, { newCalls = false } = {}) {
   }
   for (const [name, e] of Object.entries(c.engines || {})) {
     if (!ENGINES[name]) fail(`unknown engine ${name}`);
+    // A browser-driven engine bills nothing: its model is a label, not a price.
+    if (ENGINES[name].browser) {
+      if (!e.model) fail(`engine ${name}: model (a label for the app, e.g. gemini-app) is required`);
+      continue;
+    }
     if (!PRICING.models[e.model]) fail(`engine ${name}: model ${e.model} has no price in pricing.json`);
     estimatePerCall(e.model, PRICING);
     if (newCalls && isRetired(e.model, PRICING)) fail(`engine ${name}: model ${e.model} is retired (${PRICING.models[e.model].retired}); use a current id`);
@@ -260,7 +266,8 @@ function writeOutputs(runDir, plan, config, home, extra) {
   const parts = {};
   for (const r of inPlan) {
     const model = r.model;
-    addUsage((parts[r.engine] ||= emptyPart(model)), ENGINES[r.engine].parse(r.response).usage, storedRate(r.rate, model, r.at || plan.startedAt));
+    // A browser-driven answer bills no tokens: no cost row, only its judge.
+    if (!ENGINES[r.engine].browser) addUsage((parts[r.engine] ||= emptyPart(model)), ENGINES[r.engine].parse(r.response).usage, storedRate(r.rate, model, r.at || plan.startedAt));
     if (r.judge) addUsage((parts.judge ||= emptyPart(r.judge.model)), r.judge.usage, storedRate(r.judge.rate, r.judge.model, r.judge.at || r.at || plan.startedAt));
   }
   const sum = (k) => Object.values(parts).reduce((s, p) => s + p[k], 0);
@@ -274,7 +281,7 @@ function writeOutputs(runDir, plan, config, home, extra) {
     finishedAt: new Date().toISOString(),
     runs: plan.runs,
     promptIds: plan.promptIds,
-    engines: Object.fromEntries(plan.engines.map((e) => [e, { model: config.engines[e].model }])),
+    engines: Object.fromEntries(plan.engines.map((e) => [e, { model: config.engines[e].model, ...(ENGINES[e].browser && { browser: true }) }])),
     judge: { model: config.judge.model },
     expectedAnswers: expected,
     partial: answers.length < expected,
@@ -329,7 +336,8 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   }
 
   const calls = plan.engines.length * plan.promptIds.length * plan.runs;
-  const worst = plan.engines.reduce((s, e) => s + plan.promptIds.length * plan.runs * (estimatePerCall(config.engines[e].model, PRICING) + estimatePerCall(config.judge.model, PRICING)), 0);
+  const engineEstimate = (e, at) => (ENGINES[e].browser ? 0 : estimatePerCall(config.engines[e].model, PRICING, at));
+  const worst = plan.engines.reduce((s, e) => s + plan.promptIds.length * plan.runs * (engineEstimate(e) + estimatePerCall(config.judge.model, PRICING)), 0);
   log(`visibility: ${config.client}, ${plan.promptIds.length} prompts x ${plan.engines.join("+")} x ${plan.runs} runs = ${calls} answers; worst case $${worst.toFixed(2)}, cap $${opts.maxUsd}/day`);
   if (opts.dryRun) return 0;
 
@@ -375,7 +383,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   const retired = [];
   for (const e of plan.engines) {
     const n = work[e].filter((j) => !j.judgeOnly).length;
-    if (n && isRetired(config.engines[e].model, PRICING)) retired.push(`${e} model ${config.engines[e].model} (${n} calls)`);
+    if (n && !ENGINES[e].browser && isRetired(config.engines[e].model, PRICING)) retired.push(`${e} model ${config.engines[e].model} (${n} calls)`);
   }
   if (pending.length && isRetired(config.judge.model, PRICING)) retired.push(`judge model ${config.judge.model}`);
   if (retired.length) {
@@ -387,7 +395,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
   if (pending.length) {
     try {
       keys = { judge: getKey("OPENAI_API_KEY", config) };
-      for (const e of plan.engines) if (work[e].length) keys[e] = getKey(ENGINES[e].keyName, config);
+      for (const e of plan.engines) if (work[e].length && ENGINES[e].keyName) keys[e] = getKey(ENGINES[e].keyName, config);
     } catch (e) {
       log(`visibility: ${e.message}`);
       return 1;
@@ -431,8 +439,9 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     // The whole job (engine call and judge) is reserved and charged at the
     // rates in force now, and the record keeps them.
     const at = new Date();
-    const rate = rateAt(model, PRICING, at);
-    const engineMax = job.judgeOnly ? 0 : estimatePerCall(model, PRICING, at);
+    const browser = Boolean(ENGINES[job.engine].browser);
+    const rate = browser ? null : rateAt(model, PRICING, at);
+    const engineMax = job.judgeOnly ? 0 : engineEstimate(job.engine, at);
     const estimate = engineMax + estimatePerCall(config.judge.model, PRICING, at);
     if (!ledger.reserve(estimate)) {
       stopReason ||= `daily cap of $${opts.maxUsd} reached ($${ledger.spent.toFixed(2)} spent today)`;
@@ -444,15 +453,15 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       if (job.judgeOnly) {
         record = readJson(job.file);
       } else {
-        const response = await ENGINES[job.engine].call(prompt, { model, limits: PRICING.models[model].limits }, keys[job.engine]);
-        const paid = priceAtRate(ENGINES[job.engine].parse(response).usage, rate).usd;
-        ledger.add(paid);
+        const response = await ENGINES[job.engine].call(prompt, { model, limits: PRICING.models[model]?.limits, home, config: config.engines[job.engine] }, keys[job.engine]);
+        const paid = browser ? 0 : priceAtRate(ENGINES[job.engine].parse(response).usage, rate).usd;
+        if (!browser) ledger.add(paid);
         // A blocked, truncated or empty generation is paid for but is not an
         // answer: record it as an error (not stored, so --resume retries it).
         const why = ENGINES[job.engine].failure(response);
         if (why) throw new Error(`no usable answer: ${why}`);
         if (paid > engineMax) log(`  ${label(job)}: overrun: $${paid.toFixed(4)} passed the $${engineMax.toFixed(4)} estimate; raise limits.maxInputTokens in pricing.json`);
-        record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: at.toISOString(), rate, prompt: prompt.text, response };
+        record = { engine: job.engine, model, promptId: job.promptId, run: job.run, at: at.toISOString(), rate, ...(browser && { browser: true }), prompt: prompt.text, response };
       }
       const text = ENGINES[job.engine].parse(record.response).text;
       const candidates = judgeCandidates(text, config);
@@ -466,6 +475,9 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
       }
     } catch (e) {
       if (e.quota) stopReason ||= `${job.engine} is out of credit or quota (${redact(e.message, allKeys).slice(0, 120)})`;
+      // A captcha, a usage limit or a lost sign-in stops a browser engine;
+      // the reason goes into the summary and --resume carries on later.
+      if (e.stop) engineStop[job.engine] ||= `${job.engine} stopped: ${e.stop}`;
       if (e.modelMissing) engineStop[job.engine] ||= `${job.engine} model ${model} does not exist at the provider (retired or wrong id; fix engines.${job.engine}.model)`;
       errors.push({ engine: job.engine, promptId: job.promptId, run: job.run, message: redact(e.message, allKeys) });
       log(`  ${label(job)}: failed: ${redact(e.message, allKeys)}`);
@@ -474,7 +486,12 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
     }
   };
 
-  await Promise.all(plan.engines.map((e) => pool(work[e].map((j) => () => doOne(j)), config.engines[e].concurrency || 2)));
+  try {
+    // A browser engine drives one page, so it runs one prompt at a time.
+    await Promise.all(plan.engines.map((e) => pool(work[e].map((j) => () => doOne(j)), ENGINES[e].browser ? 1 : config.engines[e].concurrency || 2)));
+  } finally {
+    for (const e of plan.engines) await ENGINES[e].close?.();
+  }
   writeJson(join(runDir, "errors.json"), errors);
   stopReason = [stopReason, ...Object.values(engineStop)].filter(Boolean).join("; ") || null;
   const s = writeOutputs(runDir, plan, config, home, { errors, stopReason });

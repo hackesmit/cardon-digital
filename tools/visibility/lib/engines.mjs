@@ -10,10 +10,15 @@
  *   gemini  generateContent with the google_search grounding tool. The API has
  *           no location parameter, so the city in the prompt text is all the
  *           locality signal it gets.
+ *   gemini-web  the Gemini consumer app driven through a logged-in account
+ *           with Playwright (lib/gemini-web.mjs). Browser-driven: no key, no
+ *           price, no per-token cost row.
  *
  * Keys travel in headers only (never a query string), so no url that reaches a
  * log or an error message carries one.
  */
+
+import { callGeminiWeb, parseGeminiWeb, failureGeminiWeb, closeGeminiWeb } from "./gemini-web.mjs";
 
 const OPENAI_URL = "https://api.openai.com/v1/responses";
 const GEMINI_URL = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
@@ -223,4 +228,6 @@ export async function callGemini(prompt, opts, key) {
 export const ENGINES = {
   openai: { call: callOpenAI, parse: parseOpenAI, failure: failureOpenAI, keyName: "OPENAI_API_KEY" },
   gemini: { call: callGemini, parse: parseGemini, failure: failureGemini, keyName: "GEMINI_API_KEY" },
+  // Browser-driven: one browser, one prompt at a time, nothing billed.
+  "gemini-web": { call: callGeminiWeb, parse: parseGeminiWeb, failure: failureGeminiWeb, close: closeGeminiWeb, keyName: null, browser: true },
 };
