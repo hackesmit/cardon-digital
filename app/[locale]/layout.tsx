@@ -19,8 +19,17 @@ export function generateStaticParams() {
 export const dynamicParams = false;
 
 /* viewport-fit=cover lets the page reach the screen edges so the consent bar
-   can pad itself clear of the home indicator with env(safe-area-inset-bottom). */
-export const viewport: Viewport = { viewportFit: "cover" };
+   can pad itself clear of the home indicator with env(safe-area-inset-bottom).
+   The site follows its own mode toggle, not the system scheme, and opens in
+   light, so the meta tags state light: color-scheme matches the
+   :root[data-mode] rule in app/globals.css, and theme-color is the light
+   ground (--ground). Nav.tsx keeps theme-color on the current ground in every
+   mode and across soft navigations, so the browser bar follows the toggle. */
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  colorScheme: "light",
+  themeColor: "#F4EDEA",
+};
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;

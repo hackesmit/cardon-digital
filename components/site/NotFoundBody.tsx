@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/i18n/site";
 
@@ -14,7 +14,9 @@ export default function NotFoundBody({ locale }: { locale: Locale }) {
         <h1>{t.title}</h1>
         <p>{t.body}</p>
         <p>
-          <Link href={localePath(locale, "/")}>{t.home}</Link>
+          <Link className="hit" href={localePath(locale, "/")}>
+            {t.home}
+          </Link>
         </p>
       </div>
     </main>

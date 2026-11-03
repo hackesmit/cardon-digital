@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import ModuleScreen from "@/components/pages/modulos/ModuleScreen";
 import Reveal from "@/components/site/Reveal";
 import { demoIsLive } from "@/lib/demo";

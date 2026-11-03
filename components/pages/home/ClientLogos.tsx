@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { home } from "@/lib/i18n/home";
 import { CLIENT_MARKS, CLIENT_ORDER, type ClientId } from "./clientMarks";

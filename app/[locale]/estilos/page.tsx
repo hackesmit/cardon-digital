@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import Field, { type FieldPalette } from "@/components/site/field/Field";
 import SceneMedia from "@/components/pages/estilos/SceneMedia";

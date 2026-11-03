@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { estilos } from "@/lib/i18n/estilos";

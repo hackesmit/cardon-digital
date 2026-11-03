@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/site/Link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -89,6 +89,37 @@ export default function Nav() {
         : "dark";
     setMode(cur);
   }, []);
+
+  // The browser bar takes the page ground: the theme-color meta from the
+  // layout's viewport states the light one, so it follows the mode here.
+  // A soft navigation lets Next write the viewport meta again (back to the
+  // light value, or as a new element), so a head observer puts the ground
+  // back each time. Observer callbacks run before the next paint, so the bar
+  // never shows the wrong colour. The pathname dependency is a second net.
+  useEffect(() => {
+    const root = document.documentElement;
+    function sync() {
+      const ground = getComputedStyle(root).getPropertyValue("--ground").trim();
+      if (!ground) return;
+      document
+        .querySelectorAll('meta[name="theme-color"]')
+        .forEach((meta) => {
+          if (meta.getAttribute("content") !== ground) {
+            meta.setAttribute("content", ground);
+          }
+        });
+    }
+    sync();
+    const obs = new MutationObserver(sync);
+    obs.observe(document.head, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["content", "name"],
+    });
+    obs.observe(root, { attributes: true, attributeFilter: ["data-mode"] });
+    return () => obs.disconnect();
+  }, [mode, pathname]);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
