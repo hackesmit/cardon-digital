@@ -12,7 +12,9 @@ import { existsSync, mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdi
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { callGeminiWeb, closeGeminiWeb, failureGeminiWeb, parseGeminiWeb, auth, testHooks } from "../lib/gemini-web.mjs";
+import { spawnSync } from "node:child_process";
+
+import { callGeminiWeb, closeGeminiWeb, failureGeminiWeb, parseGeminiWeb, accountSlug, auth, testHooks } from "../lib/gemini-web.mjs";
 import { ENGINES, liveSecrets } from "../lib/engines.mjs";
 import { main } from "../run.mjs";
 
@@ -34,12 +36,14 @@ const html = (body) => `<!doctype html><html><head><meta charset="utf-8"></head>
 /**
  * A fake Google. `sc` drives it: signedIn, as (the email the account link
  * shows), afterPassword ("gemini" or "totp"), pwdDisabled, answer (inner HTML
- * of the reply), bannerAfterSubmit; it records identifier, password and
- * submissions.
+ * of the reply), bannerAfterSubmit, signInAt (where the app's Sign in link
+ * goes), afterIdentifier (where the identifier step goes); it records
+ * identifier, password and submissions on any host. https://sso.example is
+ * a non-Google identity provider serving the same forms.
  */
 function fakeGoogle(sc) {
   sc.submissions = [];
-  const signedOut = html(`<a href="https://accounts.google.com/v3/signin/identifier?continue=gemini">Sign in</a><rich-textarea><div contenteditable="true" style="min-height:40px"></div></rich-textarea>`);
+  const signedOut = html(`<a href="${sc.signInAt || "https://accounts.google.com/v3/signin/identifier?continue=gemini"}">Sign in</a><rich-textarea><div contenteditable="true" style="min-height:40px"></div></rich-textarea>`);
   const app = () =>
     html(`<a href="https://accounts.google.com/SignOutOptions?continue=x" aria-label="Google Account: Test User (${sc.as || EMAIL})">T</a>
 <div id="chat"></div><div id="banner"></div>
@@ -61,7 +65,7 @@ box.addEventListener('keydown', async (e) => {
 <script>document.querySelector('input').addEventListener('keydown', async (e) => {
   if (e.key !== 'Enter') return;
   await fetch('/_fake/id', { method: 'POST', body: e.target.value });
-  location.href = '/v3/signin/challenge/pwd?TL=fixture';
+  location.href = ${JSON.stringify(sc.afterIdentifier || "/v3/signin/challenge/pwd?TL=fixture")};
 });</script>`);
   const pwd = html(`<h1>Verify it's you</h1><p>${EMAIL}</p><input name="Passwd" type="password" ${sc.pwdDisabled ? "disabled" : ""}>
 <script>document.querySelector('input').addEventListener('keydown', async (e) => {
@@ -79,12 +83,20 @@ box.addEventListener('keydown', async (e) => {
       return send("{}", "application/json");
     }
     if (u.host === "gemini.google.com" && u.pathname.startsWith("/app")) return send(sc.signedIn ? app() : signedOut);
+    if (u.pathname === "/_fake/id") {
+      sc.identifier = req.postData();
+      return send("{}", "application/json");
+    }
+    if (u.host === "sso.example") {
+      if (u.pathname === "/_fake/pw") {
+        sc.password = req.postData();
+        return send(JSON.stringify({ next: "/login" }), "application/json");
+      }
+      if (u.pathname === "/signin") return send(identifier);
+      if (u.pathname === "/login") return send(pwd);
+    }
     if (u.host === "accounts.google.com") {
       if (u.pathname === "/v3/signin/identifier") return send(identifier);
-      if (u.pathname === "/_fake/id") {
-        sc.identifier = req.postData();
-        return send("{}", "application/json");
-      }
       if (u.pathname === "/v3/signin/challenge/pwd") return send(pwd);
       if (u.pathname === "/_fake/pw") {
         sc.password = req.postData();
@@ -128,7 +140,7 @@ test("a fresh profile signs in (identifier, password, Gemini), checks the identi
   assert.equal(sc.submissions[0].replace(/\n+/g, "\n").trim(), text);
   assert.equal(failureGeminiWeb(body), null);
   assert.match(parseGeminiWeb(body).text, /Ola Studio/);
-  const dir = join(h, "browser", "gemini-web", "daniel-cardondigital-com");
+  const dir = join(h, "browser", "gemini-web", accountSlug(EMAIL));
   for (const p of [join(h, "browser"), join(h, "browser", "gemini-web"), dir]) assert.equal(statSync(p).mode & 0o777, 0o700, p);
   assert.equal(liveSecrets.size, 0, "the password is forgotten when the browser closes");
 });
@@ -167,16 +179,81 @@ test("a limit banner from the app itself stops the engine", { skip }, async () =
   await assert.rejects(withFake(sc, () => callGeminiWeb({ id: "P0", text: "hola" }, opts(tmpHome()))), (e) => /usage limit/.test(e.stop));
 });
 
-test("Playwright debug output stops the engine before the browser starts", async () => {
-  const before = process.env.DEBUG;
-  process.env.DEBUG = "pw:api";
-  try {
-    await assert.rejects(callGeminiWeb({ id: "P0", text: "hola" }, opts(tmpHome())), (e) => /debug output/.test(e.stop));
-  } finally {
-    if (before === undefined) delete process.env.DEBUG;
-    else process.env.DEBUG = before;
+/**
+ * Runs the engine in a child process whose environment has `env` from the
+ * start, before Playwright could load, with a secret reader that records
+ * every read. The account has no email in the config, so even the email is a
+ * Proton Pass read. Returns { stop, reads }.
+ */
+function childEnv(extra) {
+  const e = { ...process.env };
+  delete e.DEBUG;
+  delete e.PWDEBUG;
+  return { ...e, ...extra };
+}
+
+function childRun(env) {
+  const lib = new URL("../lib/gemini-web.mjs", import.meta.url).href;
+  const script = `
+    const { callGeminiWeb, closeGeminiWeb, auth } = await import(${JSON.stringify(lib)});
+    const reads = [];
+    auth.readSecret = (a, field) => { reads.push(field); return field === "password" ? "SENTINEL-child-pw" : "daniel@cardondigital.com"; };
+    let stop = null;
+    try {
+      await callGeminiWeb({ id: "P0", text: "hola" }, { home: ${JSON.stringify(tmpHome())}, config: { headless: true, chrome: "/nonexistent/chrome", account: { vault: "V", item: "I" }, authTimeoutMs: 500 } });
+    } catch (e) { stop = e.stop || String(e.message).slice(0, 200); }
     await closeGeminiWeb();
+    console.log(JSON.stringify({ stop, reads }));`;
+  const r = spawnSync(process.execPath, ["--input-type=module", "-e", script], { encoding: "utf8", env: childEnv(env), timeout: 60000 });
+  const line = (r.stdout || "").trim().split("\n").filter((l) => l.startsWith("{")).at(-1);
+  assert.ok(line, `child printed a result (status ${r.status})`);
+  return JSON.parse(line);
+}
+
+for (const debug of ["pw*", "other pw:api", "pw:api", "*", " x "]) {
+  test(`DEBUG=${JSON.stringify(debug)} stops the engine before any credential is read`, () => {
+    const { stop, reads } = childRun({ DEBUG: debug });
+    assert.match(String(stop), /debug output/);
+    assert.deepEqual(reads, [], "no Proton Pass read happened");
+  });
+}
+
+test("PWDEBUG stops the engine before any credential is read, even when empty", () => {
+  for (const v of ["1", ""]) {
+    const { stop, reads } = childRun({ PWDEBUG: v });
+    assert.match(String(stop), /debug output/, `PWDEBUG=${JSON.stringify(v)}`);
+    assert.deepEqual(reads, []);
   }
+});
+
+test("a non-Google page after the identifier step gets no password: none is read or filled", { skip }, async () => {
+  const sc = { signedIn: false, afterIdentifier: "https://sso.example/login" };
+  await assert.rejects(
+    withFake(sc, (read) => callGeminiWeb({ id: "P0", text: "hola" }, opts(tmpHome())).finally(() => assert.equal(read.mock.calls.filter((c) => c.arguments[1] === "password").length, 0, "the password was never read"))),
+    (e) => /external identity provider is not configured/.test(e.stop),
+  );
+  assert.equal(sc.identifier, EMAIL, "the identifier went to Google's own page");
+  assert.equal(sc.password, undefined, "nothing was filled into the other site's password form");
+  assert.equal(sc.submissions.length, 0);
+});
+
+test("a Sign in link to a non-Google site gets neither the email nor the password", { skip }, async () => {
+  const sc = { signedIn: false, signInAt: "https://sso.example/signin" };
+  await assert.rejects(
+    withFake(sc, (read) => callGeminiWeb({ id: "P0", text: "hola" }, opts(tmpHome())).finally(() => assert.equal(read.mock.calls.filter((c) => c.arguments[1] === "password").length, 0))),
+    (e) => /external identity provider is not configured/.test(e.stop),
+  );
+  assert.equal(sc.identifier, undefined, "the email was not entered on the other site");
+  assert.equal(sc.password, undefined);
+});
+
+test("an answer that is a limit sentence, because the prompt asked for it, is stored as a normal answer", { skip }, async () => {
+  const answer = `<message-content><div class="markdown"><p>You've reached your usage limit.</p></div></message-content>`;
+  const sc = { signedIn: true, answer };
+  const body = await withFake(sc, () => callGeminiWeb({ id: "P0", text: "Reply with exactly: You've reached your usage limit." }, opts(tmpHome())));
+  assert.equal(sc.submissions.length, 1);
+  assert.equal(failureGeminiWeb(body), null);
+  assert.equal(parseGeminiWeb(body).text.trim(), "You've reached your usage limit.");
 });
 
 test("a password fill that times out never puts the password on the console or in errors.json", { skip }, async () => {

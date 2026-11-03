@@ -14,7 +14,7 @@ import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, readdirSync, statS
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { parseGeminiWeb, failureGeminiWeb, classifyPage, htmlToMarkdown, chipCitations, limitReply, signedInAs, checkIdentity, ensurePrivateDir, profileDir } from "../lib/gemini-web.mjs";
+import { parseGeminiWeb, failureGeminiWeb, classifyPage, htmlToMarkdown, chipCitations, signedInAs, checkIdentity, ensurePrivateDir, profileDir, accountSlug } from "../lib/gemini-web.mjs";
 import { ENGINES, liveSecrets, redact } from "../lib/engines.mjs";
 import { listItems } from "../lib/detect.mjs";
 import { validateConfig, analyse, main } from "../run.mjs";
@@ -93,12 +93,27 @@ test("classifyPage stops on a captcha, a usage limit or a verification challenge
   assert.equal(classifyPage({ url: "https://gemini.google.com/app", text: "reCAPTCHA, verify it's you, has alcanzado el límite" }), null);
 });
 
-test("a limit notice in place of an answer is a limit; an answer that mentions limits is an answer", () => {
-  assert.equal(limitReply("Has alcanzado el límite de Gemini. Vuelve más tarde."), true);
-  assert.equal(limitReply("You've reached your limit for now. Try again later."), true);
-  assert.equal(limitReply("Las agencias ofrecen planes; el plan básico tiene un límite de uso de 5 páginas."), false);
-  assert.equal(limitReply(`Has alcanzado el límite ${"x".repeat(500)}`), false);
-  assert.equal(limitReply(""), false);
+test("two emails that the old slug merged get different profile directories", () => {
+  const a = accountSlug("alex.smith@example.com");
+  const b = accountSlug("alex-smith@example.com");
+  assert.notEqual(a, b);
+  assert.match(a, /^alex-smith-example-com-[0-9a-f]{12}$/);
+  assert.equal(accountSlug(" Alex.Smith@Example.com "), a, "normalized: case and spaces do not matter");
+  const h = mkdtempSync(join(tmpdir(), "vis-slug-"));
+  assert.notEqual(profileDir(h, "alex.smith@example.com"), profileDir(h, "alex-smith@example.com"));
+});
+
+test("a profile under the old colliding name moves to the new name once, mode 700, sign-in data intact", () => {
+  const h = mkdtempSync(join(tmpdir(), "vis-legacy-"));
+  const old = join(h, "browser", "gemini-web", "daniel-cardondigital-com");
+  mkdirSync(join(old, "Default"), { recursive: true, mode: 0o700 });
+  writeFileSync(join(old, "Default", "Cookies"), "fixture");
+  const dir = profileDir(h, "daniel@cardondigital.com");
+  assert.equal(dir, join(h, "browser", "gemini-web", accountSlug("daniel@cardondigital.com")));
+  assert.equal(readFileSync(join(dir, "Default", "Cookies"), "utf8"), "fixture");
+  assert.deepEqual(readdirSync(join(h, "browser", "gemini-web")), [accountSlug("daniel@cardondigital.com")]);
+  assert.equal(statSync(dir).mode & 0o777, 0o700);
+  assert.equal(profileDir(h, "daniel@cardondigital.com"), dir, "the second call leaves it in place");
 });
 
 test("checkIdentity reads the account link labels and stops on another account", () => {
@@ -115,7 +130,7 @@ test("the profile lives per account, every level mode 700; symlinks and other us
   mkdirSync(join(h, "browser"), { mode: 0o755 });
   chmodSync(join(h, "browser"), 0o755);
   const dir = profileDir(h, "Daniel@CardonDigital.com");
-  assert.equal(dir, join(h, "browser", "gemini-web", "daniel-cardondigital-com"));
+  assert.equal(dir, join(h, "browser", "gemini-web", accountSlug("daniel@cardondigital.com")));
   for (const p of [join(h, "browser"), join(h, "browser", "gemini-web"), dir]) assert.equal(statSync(p).mode & 0o777, 0o700, p);
   chmodSync(dir, 0o755);
   profileDir(h, "daniel@cardondigital.com");
@@ -128,7 +143,7 @@ test("the profile lives per account, every level mode 700; symlinks and other us
   const l = mkdtempSync(join(tmpdir(), "vis-prof-"));
   mkdirSync(join(l, "browser", "gemini-web"), { recursive: true, mode: 0o700 });
   mkdirSync(join(l, "real"));
-  symlinkSync(join(l, "real"), join(l, "browser", "gemini-web", "a-b-test"));
+  symlinkSync(join(l, "real"), join(l, "browser", "gemini-web", accountSlug("a@b.test")));
   assert.throws(() => profileDir(l, "a@b.test"), (e) => /symlink/.test(e.stop), "a symlinked account directory");
   const f = mkdtempSync(join(tmpdir(), "vis-prof-"));
   assert.throws(() => ensurePrivateDir(f, process.getuid() + 1), (e) => /another user/.test(e.stop));
@@ -142,7 +157,7 @@ test("a profile from the first version moves into the account's directory once, 
   writeFileSync(join(old, "Default", "Cookies"), "fixture");
   const dir = profileDir(h, "daniel@cardondigital.com");
   assert.equal(readFileSync(join(dir, "Default", "Cookies"), "utf8"), "fixture");
-  assert.deepEqual(readdirSync(old), ["daniel-cardondigital-com"]);
+  assert.deepEqual(readdirSync(old), [accountSlug("daniel@cardondigital.com")]);
   assert.deepEqual(readdirSync(join(h, "browser")), ["gemini-web"], "no leftover migration directory");
   assert.equal(statSync(old).mode & 0o777, 0o700);
   assert.equal(statSync(dir).mode & 0o777, 0o700);
