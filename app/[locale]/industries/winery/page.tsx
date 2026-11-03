@@ -304,6 +304,7 @@ export default async function WineryPage(props: Params) {
             />
             <Media
               slot="winery/tasting-room"
+              src="/media/winery/tasting-room.webp"
               caption={d.media.tasting.cap}
               alt={d.media.tasting.alt}
             />

@@ -51,14 +51,14 @@ const en = {
    *  in words what the footage shows, so the clip never carries a claim alone. */
   media: {
     deskCap:
-      "The front desk at En'kanto. The calendar we built puts every channel on one screen, with the day already counted.",
-    deskAlt: "Check in at the front desk, guest side of the counter.",
+      "The tasting bar at En'kanto. The calendar we built puts every channel on one screen, with the day already counted.",
+    deskAlt: "The tasting bar at En'kanto: the bottles, the glasses and the day's chalkboard.",
     passCap:
-      "The pass at service. The screen we built takes the order as the waiter wrote it, once, with its own clock.",
-    passAlt: "A ticket going out at the pass, the screen in its working position.",
+      "The deck at En'kanto, at night. The screen we built takes the order as the waiter wrote it, once, with its own clock.",
+    passAlt: "Guests at the tables on the deck, under string lights.",
     videoCap:
-      "A restaurant charge posted to a room, in the system we built. The desk reads that total and never writes one.",
-    videoAlt: "A tablet at the table, then the guest folio at the desk.",
+      "Stock footage, until we film at En'kanto. In the system we built, a restaurant charge posts to the guest's room, and the desk reads that total and never writes one.",
+    videoAlt: "A server enters an order on a tablet at a counter.",
     honest:
       "Photographs of En'kanto. The system described in these captions is built and in daily use there.",
     play: "Play",
@@ -283,14 +283,14 @@ const es: typeof en = {
   },
   media: {
     deskCap:
-      "La recepción de En'kanto. El calendario que construimos junta todos los canales en una sola pantalla, con el conteo del día ya hecho.",
-    deskAlt: "Registro de llegada en la recepción, del lado del huésped.",
+      "La barra de cata de En'kanto. El calendario que construimos junta todos los canales en una sola pantalla, con el conteo del día ya hecho.",
+    deskAlt: "La barra de cata de En'kanto: las botellas, las copas y el pizarrón del día.",
     passCap:
-      "El pase en pleno servicio. La pantalla que construimos recibe cada comanda tal como la escribió el mesero, una sola vez y con su propio reloj.",
-    passAlt: "Una comanda que sale por el pase, con la pantalla instalada en su lugar.",
+      "La terraza de En'kanto, de noche. La pantalla que construimos recibe cada comanda tal como la escribió el mesero, una sola vez y con su propio reloj.",
+    passAlt: "Comensales en las mesas de la terraza, bajo una guirnalda de focos.",
     videoCap:
-      "Un cargo del restaurante que pasa a la cuenta de una habitación, en el sistema que construimos. La recepción lee ese total y nunca escribe uno.",
-    videoAlt: "Una tableta en la mesa y luego la cuenta del huésped en recepción.",
+      "Video de archivo, hasta que grabemos en En'kanto. En el sistema que construimos, un cargo del restaurante pasa a la cuenta de la habitación, y la recepción lee ese total y nunca escribe uno.",
+    videoAlt: "Una mesera captura una orden en una tableta, en el mostrador.",
     honest:
       "Fotos de En'kanto. El sistema que describen estos pies de foto está construido y ya se usa a diario ahí.",
     play: "Reproducir",
