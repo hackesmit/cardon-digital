@@ -17,6 +17,7 @@ import { locales, localePath, type Locale } from "../../../lib/i18n/config";
 import { demoCardKeys, demosIndex } from "../../../lib/i18n/demos-index";
 import { moduleIds } from "../../../lib/pricing";
 import { site } from "../../../lib/i18n/site";
+import { BRAND } from "@/lib/brand";
 
 /**
  * The Demos page (bead hq-lgjo.2).
@@ -166,11 +167,9 @@ describe.each(locales)("the %s page", (locale: Locale) => {
 });
 
 describe("the nav carries the page", () => {
-  const nav = readFileSync(join(ROOT, "components", "site", "Nav.tsx"), "utf8");
-
+  // The nav's entries are the brand's (lib/brand.ts); Nav.tsx renders them.
   it("has a Demos item in the row", () => {
-    expect(nav).toContain('href("/demos")');
-    expect(nav).toContain("t.demos");
+    expect(BRAND.nav.after).toContainEqual({ path: "/demos", label: "demos" });
   });
 
   it.each(locales)("labels it in %s", (locale: Locale) => {

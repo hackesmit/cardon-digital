@@ -1,11 +1,28 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sitemap from "./sitemap";
 import { locales, stripLocale } from "@/lib/i18n/config";
 import { RETIRED_ROUTES, retiredPaths, retiredRoute } from "@/lib/routes";
-import { GUIDES, guidePath } from "@/lib/guides";
+import { ALL_GUIDES, GUIDES, guidePath } from "@/lib/guides";
+import { NextRequest } from "next/server";
+import {
+  MOVED_ROUTES,
+  brandConfig,
+  matchesRoute,
+  servedRoutes,
+  type BrandConfig,
+  type BrandEnv,
+} from "@/lib/brand";
+
+// This file tests cardondigital.com. The brand is pinned before any import
+// reads it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino;
+// the wine brand's own cases are in lib/brand.test.ts.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+  process.env.NEXT_PUBLIC_VINO_URL = "";
+});
 
 /**
  * Nothing on this site links to a page it no longer has (bead hq-4pu0q.8).
@@ -31,15 +48,30 @@ const ROUTE_ROOT = join(ROOT, "app", "[locale]");
 /** A link target read from a registry module rather than a source array. */
 type FromRegistry = { paths: () => string[] };
 
-/** Every guide's path, from the registry the guide pages render. */
-const guidePaths = () => GUIDES.map((g) => guidePath(g.slug));
+/** Every guide's path, from the registry the guide pages render. All brands'
+    guides, because the pages behind the one template serve every brand. */
+const guidePaths = () => ALL_GUIDES.map((g) => guidePath(g.slug));
+
+/** The two brands, in the environments that change what they serve. */
+const CARDON: BrandEnv = {};
+const CARDON_SPLIT: BrandEnv = { vinoUrl: "https://vino.example" };
+const VINO: BrandEnv = { site: "vino" };
+
+/** Every nav and footer path of every brand (lib/brand.ts), the links that
+    components/site/Nav.tsx and Footer.tsx build from l.path. */
+const brandNavPaths = () =>
+  [CARDON, CARDON_SPLIT, VINO].flatMap((env) => {
+    const b = brandConfig(env);
+    return [...b.nav.services, ...b.nav.after, ...b.footer].map((l) => l.path);
+  });
 
 /** Every href() argument that is not a string literal, and where it reads from. */
 const DYNAMIC_HREFS: Record<string, { file: string; constant: string } | FromRegistry> = {
   "guidePath(guide.slug)": { paths: guidePaths },
-  "CASE_ROUTES[0]": { file: "app/[locale]/page.tsx", constant: "CASE_ROUTES" },
-  "CASE_ROUTES[i]": { file: "app/[locale]/page.tsx", constant: "CASE_ROUTES" },
-  "SERVICE_ROUTES[i]": { file: "app/[locale]/page.tsx", constant: "SERVICE_ROUTES" },
+  "CASE_ROUTES[0]": { file: "components/pages/home-cardon.tsx", constant: "CASE_ROUTES" },
+  "CASE_ROUTES[i]": { file: "components/pages/home-cardon.tsx", constant: "CASE_ROUTES" },
+  "SERVICE_ROUTES[i]": { file: "components/pages/home-cardon.tsx", constant: "SERVICE_ROUTES" },
+  "l.path": { paths: brandNavPaths },
   route: { file: "components/pages/home/ClientLogos.tsx", constant: "CASE_ROUTES" },
   "STYLE_ROUTES[i]": {
     file: "components/pages/home/StylesPromo.tsx",
@@ -211,5 +243,152 @@ describe("sitemap", () => {
       expect(retiredRoute(path), `${entry.url} is a retired path`).toBeUndefined();
       expect(existingRoutes.has(path), `${entry.url} has no page`).toBe(true);
     }
+  });
+});
+
+/**
+ * The brand switch (bead hq-3f6ut.1, lib/brand.ts). One tree of pages serves
+ * two sites, so each brand's list is checked against the tree, and the
+ * middleware is run per brand over every route the tree has: a route the
+ * brand lists is passed through to its page, any other answers 404, and
+ * cardon moves the wine routes to the wine domain only once it is set.
+ */
+describe("brand routes", () => {
+  const brands: Array<[string, BrandEnv]> = [
+    ["cardon", CARDON],
+    ["cardon with the wine domain set", CARDON_SPLIT],
+    ["vino", VINO],
+  ];
+
+  /** Every page in the tree, dynamic segments expanded, as locale-free paths. */
+  const tree = Array.from(existingRoutes);
+
+  it("gives every page in the tree to at least one brand", () => {
+    const listed = [...brandConfig(CARDON).routes, ...brandConfig(VINO).routes];
+    const orphans = pageDirs.filter((d) => !listed.includes(d));
+    expect(orphans, "a page no brand serves").toEqual([]);
+  });
+
+  it.each(brands)("%s lists only routes that have a page", (_, env) => {
+    for (const r of servedRoutes(brandConfig(env))) {
+      expect(pageDirs, r).toContain(r);
+    }
+  });
+
+  it.each(brands)("%s links its nav and footer only to routes it serves", (_, env) => {
+    const b = brandConfig(env);
+    const served = servedRoutes(b);
+    for (const l of [...b.nav.services, ...b.nav.after, ...b.footer]) {
+      expect(served.some((r) => matchesRoute(r, l.path)), l.path).toBe(true);
+    }
+  });
+
+  it("keeps cardon's routes as they were until the wine domain is set", () => {
+    // Every page the tree had before the split, on cardon, unset domain.
+    const before = servedRoutes(brandConfig(CARDON));
+    for (const d of pageDirs) expect(before, d).toContain(d);
+    expect(brandConfig(CARDON).crossLink).toBeNull();
+  });
+
+  it("moves exactly the wine routes off cardon once the domain is set", () => {
+    expect([...MOVED_ROUTES].sort()).toEqual(
+      ["/demo", "/demos", "/industries/winery", "/work/enkanto", "/work/monte-xanic"].sort(),
+    );
+    const split = servedRoutes(brandConfig(CARDON_SPLIT));
+    for (const r of MOVED_ROUTES) expect(split).not.toContain(r);
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.resetModules();
+  });
+
+  /** The middleware as a build with this environment would run it. */
+  async function middlewareFor(env: BrandEnv) {
+    vi.resetModules();
+    vi.stubEnv("NEXT_PUBLIC_SITE", env.site ?? "");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", env.siteUrl ?? "");
+    vi.stubEnv("NEXT_PUBLIC_VINO_URL", env.vinoUrl ?? "");
+    vi.stubEnv("COMING_SOON", "");
+    const mod = await import("../middleware");
+    const brand = await import("@/lib/brand");
+    return { middleware: mod.middleware, NOT_FOUND: mod.BRAND_NOT_FOUND, BRAND: brand.BRAND };
+  }
+
+  type Outcome = { kind: "page" } | { kind: "404" } | { kind: "redirect"; status: number; to: string };
+
+  async function outcome(
+    mw: (req: NextRequest) => Promise<Response>,
+    notFoundPath: string,
+    path: string,
+  ): Promise<Outcome> {
+    const res = await mw(new NextRequest("https://site.example" + path + "?utm_source=x"));
+    const rewrite = res.headers.get("x-middleware-rewrite");
+    if (rewrite) {
+      expect(new URL(rewrite).pathname.endsWith(notFoundPath), rewrite).toBe(true);
+      return { kind: "404" };
+    }
+    if (res.headers.get("x-middleware-next")) return { kind: "page" };
+    return { kind: "redirect", status: res.status, to: res.headers.get("location") ?? "" };
+  }
+
+  it.each(brands)(
+    "%s passes every route it serves to its page and answers 404 for the rest",
+    async (_, env) => {
+      const { middleware, NOT_FOUND, BRAND } = await middlewareFor(env);
+      const config: BrandConfig = brandConfig(env);
+      expect(BRAND.id).toBe(config.id);
+      const served = servedRoutes(config);
+      const moved = config.id === "cardon" && config.crossLink !== null;
+      for (const locale of locales) {
+        for (const path of tree) {
+          const got = await outcome(middleware, NOT_FOUND, "/" + locale + (path === "/" ? "" : path));
+          const want = served.some((r) => matchesRoute(r, path))
+            ? "page"
+            : moved && MOVED_ROUTES.some((r) => matchesRoute(r, path))
+              ? "redirect"
+              : "404";
+          expect(got.kind, `${config.id} /${locale}${path}`).toBe(want);
+        }
+      }
+    },
+  );
+
+  it("redirects cardon's wine routes with a 301 to the same page on the wine domain", async () => {
+    const { middleware, NOT_FOUND } = await middlewareFor(CARDON_SPLIT);
+    for (const path of ["/es/demos", "/en/work/monte-xanic", "/es/industries/winery/"]) {
+      const got = await outcome(middleware, NOT_FOUND, path);
+      const clean = path.replace(/\/$/, "");
+      expect(got, path).toEqual({
+        kind: "redirect",
+        status: 301,
+        to: "https://vino.example" + clean + "?utm_source=x",
+      });
+    }
+    // No locale: one hop, straight to the visitor's language on the wine domain.
+    expect(await outcome(middleware, NOT_FOUND, "/demos")).toEqual({
+      kind: "redirect",
+      status: 301,
+      to: "https://vino.example/es/demos?utm_source=x",
+    });
+  });
+
+  it("keeps cardon's wine routes on cardon while the wine domain is unset", async () => {
+    const { middleware, NOT_FOUND } = await middlewareFor(CARDON);
+    for (const r of MOVED_ROUTES) {
+      expect(await outcome(middleware, NOT_FOUND, "/es" + r), r).toEqual({ kind: "page" });
+    }
+  });
+
+  it("answers 404 on vino for a cardon-only route and never redirects it", async () => {
+    const { middleware, NOT_FOUND } = await middlewareFor({ ...VINO, vinoUrl: "https://vino.example" });
+    for (const path of ["/es/sitios-web", "/en/anuncios", "/es/visibilidad-ia", "/es/estilos"]) {
+      expect(await outcome(middleware, NOT_FOUND, path), path).toEqual({ kind: "404" });
+    }
+  });
+
+  it("serves the cardon guides on cardon only", () => {
+    expect(GUIDES.length).toBeGreaterThan(0);
+    expect(GUIDES.every((g) => (g.brand ?? "cardon") === "cardon")).toBe(true);
   });
 });

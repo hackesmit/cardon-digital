@@ -1,0 +1,7 @@
+/* The wine brand's wordmark (lib/brand.ts): its name set in the text face at
+   the cap height the Cardon lettering takes (.brand-logo, 19px), with the
+   endorsement beside it, quieter. Cardon's own logo is the drawn lettering
+   and never reaches these rules. */
+.brand-text{display:inline-flex;align-items:baseline;gap:.5em;height:auto;line-height:19px;white-space:nowrap;}
+.brand-name{font-size:1.15rem;font-weight:650;letter-spacing:.01em;}
+.brand-endorse{font-size:.78rem;color:var(--muted);}

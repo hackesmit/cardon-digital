@@ -2,6 +2,9 @@ import type { DoorVariant } from "@/lib/contact/doors";
 import { GUIDES, guidePath } from "@/lib/guides";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/i18n/metadata";
+import { site } from "@/lib/i18n/site";
+import { BRAND } from "@/lib/brand";
+import { advertisesPath } from "@/lib/routes";
 import { about } from "@/lib/i18n/about";
 import { anuncios } from "@/lib/i18n/anuncios";
 import { contact } from "@/lib/i18n/contact";
@@ -26,6 +29,10 @@ import { winery } from "@/lib/i18n/winery";
  * the site does not, and it changes when the pages do. Spanish leads, as on
  * the site; the legal pages sit under Optional, the section the format marks
  * as skippable.
+ *
+ * It describes the build's brand (lib/brand.ts): a page that brand does not
+ * serve is left out, as the sitemap leaves it out. The wine brand's home has
+ * no dictionary of its own yet, so its line is the brand's site meta.
  */
 
 type Meta = { title: string; description: string };
@@ -47,9 +54,12 @@ const GUIDE_PAGES = [
 ];
 const LEGAL = [page("/privacy", (l) => privacy[l].meta), page("/terms", (l) => terms[l].meta)];
 
+/** The home page's title and description for the build's brand. */
+const homeMeta = (l: Locale): Meta => (BRAND.id === "cardon" ? home[l].meta : site[l].meta);
+
 function keyPages(doors: DoorVariant): Page[] {
   return [
-    page("/", (l) => home[l].meta),
+    page("/", homeMeta),
     page("/work/monte-xanic", (l) => monteXanic[l].meta),
     page("/work/enkanto", (l) => enkanto[l].meta),
     page("/industries/winery", (l) => winery[l].meta),
@@ -74,8 +84,10 @@ const HEADINGS: Record<Locale, { services: string; prices: string; guides: strin
   },
 };
 
+const SLUGS = GUIDES.map((g) => g.slug);
+
 function list(locale: Locale, pages: Page[]): string[] {
-  return pages.map((p) => {
+  return pages.filter((p) => advertisesPath(BRAND, SLUGS, p.path)).map((p) => {
     const { title, description } = p.meta(locale);
     return `- [${title}](${SITE_URL + localePath(locale, p.path)}): ${description}`;
   });
@@ -83,13 +95,17 @@ function list(locale: Locale, pages: Page[]): string[] {
 
 export function llmsTxt(doors: DoorVariant): string {
   const key = keyPages(doors);
-  const lines = ["# Cardon Digital", "", "> " + home.es.meta.description, "", home.en.meta.description];
+  const lines = ["# " + BRAND.name, "", "> " + homeMeta("es").description, "", homeMeta("en").description];
+  // A section the brand has no page for is left out whole, heading and all.
+  const section = (heading: string, items: string[]) => {
+    if (items.length > 0) lines.push("", "## " + heading, "", ...items);
+  };
   for (const l of ["es", "en"] as const) {
     const h = HEADINGS[l];
-    lines.push("", "## " + h.services, "", ...list(l, SERVICES));
-    lines.push("", "## " + h.prices, "", ...list(l, PRICES));
-    lines.push("", "## " + h.guides, "", ...list(l, GUIDE_PAGES));
-    lines.push("", "## " + h.key, "", ...list(l, key));
+    section(h.services, list(l, SERVICES));
+    section(h.prices, list(l, PRICES));
+    section(h.guides, list(l, GUIDE_PAGES));
+    section(h.key, list(l, key));
   }
   lines.push("", "## Optional", "", ...list("es", LEGAL), ...list("en", LEGAL));
   return lines.join("\n") + "\n";

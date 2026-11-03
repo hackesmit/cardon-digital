@@ -1,9 +1,9 @@
 import Link from "@/components/site/Link";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/i18n/site";
-import { estilos } from "@/lib/i18n/estilos";
-import { guias } from "@/lib/i18n/guias";
 import { Logo } from "@/components/site/Mark";
+import { navLabel } from "@/components/site/navLabel";
+import { BRAND } from "@/lib/brand";
 import FooterScene from "@/components/site/FooterScene";
 import { CredentialRow } from "@/components/site/CredentialList";
 import { CREDENTIALS } from "@/lib/credentials";
@@ -14,21 +14,15 @@ export default function Footer({ locale }: { locale: Locale }) {
   const href = (path: string) => localePath(locale, path);
   // The arc of 2026-09-28: the footer carries the same flat list as the nav,
   // the three services and the winery page first, then pricing, the cases,
-  // about and contact.
-  const links = [
-    { href: href("/sitios-web"), label: s.nav.sitios },
-    // The gallery of style samples, named by its own dictionary (see Nav.tsx).
-    { href: href("/estilos"), label: estilos[locale].navLabel },
-    { href: href("/anuncios"), label: s.nav.anuncios },
-    { href: href("/software"), label: s.nav.software },
-    { href: href("/industries/winery"), label: s.nav.wineries },
-    { href: href("/precios"), label: s.nav.pricing },
-    { href: href("/work/monte-xanic"), label: t.work },
-    // The guides (bead hq-i4b5.11), named by their own dictionary.
-    { href: href("/guias"), label: guias[locale].navLabel },
-    { href: href("/about"), label: t.about },
-    { href: href("/contacto"), label: t.contact },
-  ];
+  // the guides, about and contact. The list is the build brand's
+  // (lib/brand.ts); the styles and guides entries are named by their own
+  // dictionaries (see navLabel.ts).
+  const links = BRAND.footer.map((l) => ({
+    href: href(l.path),
+    label: navLabel(l.label, locale),
+  }));
+  // The wine brand names its parent under its line, linked to Cardon's site.
+  const parent = BRAND.id !== "cardon" ? BRAND.crossLink : null;
 
   return (
     <footer className="site-footer">
@@ -36,10 +30,21 @@ export default function Footer({ locale }: { locale: Locale }) {
         <div className="footer-grid">
           <div className="foot-brand">
             <Link className="brand" href={href("/")} aria-label={s.brandHome}>
-              <Logo variant="wordmark" className="brand-logo" />
+              <Logo
+                variant="wordmark"
+                className="brand-logo"
+                endorsement={BRAND.endorsement?.[locale]}
+              />
             </Link>
             <p className="foot-line">{t.line}</p>
             <p className="foot-tag">{s.brandline}</p>
+            {parent ? (
+              <p className="foot-tag">
+                <a href={parent + localePath(locale, "/")} hrefLang={locale}>
+                  Cardon Digital
+                </a>
+              </p>
+            ) : null}
           </div>
           <div>
             <nav className="foot-nav" aria-label={t.label}>
