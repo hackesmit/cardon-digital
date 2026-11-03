@@ -40,7 +40,17 @@ const nextConfig = {
     if (process.env.VERCEL_ENV === "preview" || !INDEXABLE) {
       headers.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
     }
-    return [{ source: "/:path*", headers }];
+    return [
+      { source: "/:path*", headers },
+      // A vercel.app address is never the canonical site, whatever the
+      // environment and the configured domain say, files included
+      // (cross-vendor review round 1).
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(?:.+\\.)?vercel\\.app" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
   },
   async redirects() {
     // RFC 9116 section 3: the legacy top-level location points at the real one.
