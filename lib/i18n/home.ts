@@ -100,8 +100,8 @@ const en = {
     "home/proof-xanic": { cap: "Monte Xanic opens the season in one live view.", alt: "Monte Xanic, the winery in one frame" },
     "home/proof-enkanto": { cap: "En'kanto's cabin: every booking from every channel in one calendar.", alt: "En'kanto's cabin among succulents and vines" },
     "home/proof-aperta": { cap: "Aperta Media Co.'s site: their packages and their work, and they edit it themselves.", alt: "Screenshot of the Aperta Media Co. home page" },
-    "home/service-sitios": { cap: "A site that works on any screen and leads to a message.", alt: "A phone in hand with a website open" },
-    "home/service-anuncios": { cap: "The client who was searching arrives on WhatsApp, and gets counted.", alt: "A message being answered at a counter" },
+    "home/service-sitios": { cap: "A site that works on any screen and leads to a message.", alt: "A phone in hand outdoors, open on a site we built" },
+    "home/service-anuncios": { cap: "The client who was searching calls or writes on WhatsApp, and gets counted.", alt: "A shop owner takes a call while she boxes an order at the counter" },
     "home/service-software": { cap: "The record is written once, where the work happens.", alt: "A tablet with the day's board, at work" },
   } as Record<string, HomePhoto>,
   familiar: {
@@ -367,8 +367,8 @@ const es: typeof en = {
     "home/proof-xanic": { cap: "Monte Xanic ve la temporada al día en una sola pantalla.", alt: "Monte Xanic, la bodega en una toma" },
     "home/proof-enkanto": { cap: "La cabaña de En'kanto: cada reservación, de cualquier canal, en un solo calendario.", alt: "La cabaña de En'kanto entre suculentas y viñas" },
     "home/proof-aperta": { cap: "El sitio de Aperta Media Co.: sus paquetes y su trabajo, y ellos mismos lo editan.", alt: "Captura de la página de inicio de Aperta Media Co." },
-    "home/service-sitios": { cap: "Un sitio que se ve bien en cualquier pantalla y termina en un mensaje.", alt: "Un teléfono en la mano con un sitio abierto" },
-    "home/service-anuncios": { cap: "El cliente que lo buscaba llega por WhatsApp y queda registrado.", alt: "Un mensaje que se contesta en el mostrador" },
+    "home/service-sitios": { cap: "Un sitio que se ve bien en cualquier pantalla y termina en un mensaje.", alt: "Un teléfono en la mano, al aire libre, con un sitio que construimos" },
+    "home/service-anuncios": { cap: "El cliente que lo buscaba llama o escribe por WhatsApp y queda registrado.", alt: "Una dueña contesta una llamada mientras empaca un pedido en el mostrador" },
     "home/service-software": { cap: "Cada dato se registra una sola vez, ahí donde se hace el trabajo.", alt: "Una tableta en uso, con el tablero del día" },
   } as Record<string, HomePhoto>,
   familiar: {
