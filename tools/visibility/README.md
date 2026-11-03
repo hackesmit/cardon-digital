@@ -47,6 +47,8 @@ This repository is public, so client configs and outputs never go in it. The tra
 - `intent` is one of `branded`, `category`, `comparison`. Non-branded visibility leaves out `branded`.
 - Matching folds case and accents and treats spaces and hyphens alike. `aliases` and `domains` are definite; `ambiguous` hits go to the judge. Keep prompt and brand ids stable across runs, or the diffs mean nothing.
 - Every model must have a price and `limits` in `pricing.json` (list prices, with the date they were read).
+- Prices are effective-dated: each model has a `rates` list, and a call is charged the rate in force (by UTC date) when it is reserved. The cap reserves at that rate, and every stored answer and judge verdict keeps the rate it was charged, so a later price change (gemini-3.8-flash doubles on 2027-01-01) never reprices a stored run.
+- A model marked `retired` keeps its rates so stored runs still analyse and resume, but no new call may use it: a new run config naming it fails at validation, and `--resume` refuses to call it. When a provider answers that a model id does not exist, that engine stops and the report names the cause; the other engines carry on.
 
 ## Cost bounds
 
