@@ -42,8 +42,8 @@ const en = {
    *  result the photograph is evidence for. */
   media: {
     beforeCap:
-      "The old way: the reading goes on paper, and the picture gets assembled later.",
-    beforeAlt: "A paper record sheet at the work station.",
+      "The old way, in a stock photo: the reading goes on paper, and the picture gets assembled later.",
+    beforeAlt: "A man takes notes on a paper sheet among the barrels of a cellar.",
     afterCap:
       "The lab bench today. The reading is taken once and the view is current from that moment.",
     afterAlt: "The lab bench, with the record open on a laptop.",
@@ -247,8 +247,8 @@ const es: typeof en = {
   },
   media: {
     beforeCap:
-      "Así era antes: la lectura se anotaba en papel y el panorama se armaba después.",
-    beforeAlt: "Una hoja de registro en papel en la estación de trabajo.",
+      "Así era antes, en una foto de archivo: la lectura se anotaba en papel y el panorama se armaba después.",
+    beforeAlt: "Un hombre anota en una hoja de papel entre las barricas de una cava.",
     afterCap:
       "La mesa del laboratorio hoy. La lectura se toma una sola vez y la vista queda al día desde ese momento.",
     afterAlt: "La mesa del laboratorio, con el registro abierto en la laptop.",

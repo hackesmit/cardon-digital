@@ -52,8 +52,8 @@ const PROOF_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
   { slot: "home/proof-aperta", src: "/media/home/proof-aperta.webp" },
 ];
 const SERVICE_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
-  { slot: "home/service-sitios", src: null },
-  { slot: "home/service-anuncios", src: null },
+  { slot: "home/service-sitios", src: "/media/home/service-sitios.webp" },
+  { slot: "home/service-anuncios", src: "/media/home/service-anuncios.webp" },
   { slot: "home/service-software", src: "/media/home/service-software.webp" },
 ];
 

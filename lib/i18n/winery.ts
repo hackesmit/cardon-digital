@@ -67,7 +67,7 @@ const en = {
     },
     tasting: {
       cap: "The guest who signed up here still hears from you after the visit.",
-      alt: "A tasting room in use, a pour in progress",
+      alt: "A pour at a tasting table set among the barrels",
     },
   },
   proof: {
@@ -259,7 +259,7 @@ const es: typeof en = {
     },
     tasting: {
       cap: "Quien se registró aquí sigue sabiendo de usted después de la visita.",
-      alt: "Una sala de degustación en uso, con una copa servida",
+      alt: "Una copa que se sirve en una mesa de cata entre las barricas",
     },
   },
   proof: {

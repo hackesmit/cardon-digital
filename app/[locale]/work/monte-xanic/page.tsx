@@ -113,6 +113,7 @@ export default async function MonteXanicCaseStudy(props: Params) {
           <div className="case-pair">
             <Media
               slot="xanic/before-clipboard"
+              src="/media/xanic/before-clipboard.webp"
               caption={d.media.beforeCap}
               alt={d.media.beforeAlt}
               tone="tint"

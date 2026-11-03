@@ -164,3 +164,31 @@ Captured with headless Chrome from https://aperta-media.vercel.app/ on
   Aperta later withdraws, the three files and this entry come out.
 - Real numbers on screen: no (the packages section with prices is not in frame)
 - Slot: home/proof-aperta, sitios/aperta-desktop, sitios/aperta-phone
+
+## Filled pending slots, 2026-11-03 (bead hq-piw5k)
+
+Seven files: `home/service-sitios.webp`, `home/service-anuncios.webp`,
+`xanic/before-clipboard.webp`, `winery/tasting-room.webp`,
+`enkanto/front-desk.webp`, `enkanto/restaurant-pass.webp`,
+`enkanto/room-charge.mp4` with its poster. Daniel asked on 2026-11-03 for every
+pending slot to carry the best equivalent found online until the shoot.
+
+- Shot by: the two En'kanto frames are the property's own photographs, taken
+  from the media library of enkanto.mx, the client's own site. The rest is
+  Pexels stock (credits in public/media/CREDITS.md).
+- Location: the En'kanto frames are En'kanto. The stock frames are not any
+  client's premises, and the two on case pages (`xanic/before-clipboard`,
+  `enkanto/room-charge`) say "stock" in their visible caption.
+- People in frame: stock under the Pexels License, which carries the
+  contributor's own model release. The En'kanto deck shows guests at night,
+  a few metres away, in a frame the owner published on its own site. No one
+  is named or presented as a customer.
+- Release: not held; not needed for stock. For the En'kanto deck, the owner
+  published the frame on their own site.
+- Client clearance: En'kanto published both frames itself. Open item for
+  Daniel: confirm with the owner that the case page may use them, as was done
+  for `enkanto/cabana.webp` on 2026-09-28.
+- Real numbers on screen: no. The only screen is the Aperta home page, a
+  public page of a client site we built (same footing as `sitios/aperta-phone`).
+- Replace each file when the real shoot lands, and delete its entry here and
+  in CREDITS.md.
