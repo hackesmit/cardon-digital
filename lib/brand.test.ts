@@ -92,6 +92,21 @@ describe("indexing", () => {
     expect(rule.headers).toContainEqual({ key: "X-Robots-Tag", value: "noindex, nofollow" });
   });
 
+  it("sends noindex on every vercel.app response, even a production wine build with its own domain", async () => {
+    await under({ site: "vino", siteUrl: "https://vino.example" });
+    vi.stubEnv("VERCEL_ENV", "production");
+    const config = (await import("../next.config.mjs")).default;
+    const rules = await config.headers!();
+    const host = rules.find((r) => r.has?.some((h) => h.type === "host"));
+    expect(host?.source).toBe("/:path*");
+    expect(host?.headers).toEqual([{ key: "X-Robots-Tag", value: "noindex, nofollow" }]);
+    const re = new RegExp(`^${host!.has![0].value}$`);
+    expect(re.test("cardon-vino.vercel.app")).toBe(true);
+    expect(re.test("cardon-vino-git-main-x.vercel.app")).toBe(true);
+    expect(re.test("vino.example")).toBe(false);
+    expect(re.test("cardondigital.com")).toBe(false);
+  });
+
   it("sends no noindex header on cardon production", async () => {
     await under({});
     const config = (await import("../next.config.mjs")).default;
@@ -109,6 +124,13 @@ describe("brand config", () => {
     const vino = brandConfig({ site: "vino" });
     expect(vino.endorsement).toEqual({ es: "por Cardon", en: "by Cardon" });
     expect(vino.crossLink).toBe(CARDON_URL);
+  });
+
+  it("refuses cardondigital.com as the wine domain, which would loop every 301", () => {
+    for (const url of [CARDON_URL, "https://www.cardondigital.com"]) {
+      expect(() => brandConfig({ vinoUrl: url })).toThrow(/NEXT_PUBLIC_VINO_URL/);
+      expect(() => brandConfig({ site: "vino", siteUrl: url })).toThrow(/NEXT_PUBLIC_SITE_URL/);
+    }
   });
 
   it("gives cardon a cross link only once the wine domain is set", () => {

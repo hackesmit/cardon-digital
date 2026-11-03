@@ -206,9 +206,21 @@ export function brandOf(env: BrandEnv): Brand {
   return parseBrand(env.site);
 }
 
+/** True when an origin is cardondigital.com itself, with or without www. */
+function isCardonOrigin(origin: string): boolean {
+  if (origin === "") return false;
+  const host = new URL(origin).hostname.replace(/^www\./, "");
+  return host === new URL(CARDON_URL).hostname;
+}
+
 export function brandConfig(env: BrandEnv): BrandConfig {
   const id = brandOf(env);
   const vinoOrigin = parseOrigin(env.vinoUrl);
+  /* The wine domain set to Cardon's own would 301 every moved route to itself,
+     a loop (cross-vendor review round 1). The build fails instead. */
+  if (isCardonOrigin(vinoOrigin)) {
+    throw new Error("NEXT_PUBLIC_VINO_URL names cardondigital.com; it must be the wine brand's own domain");
+  }
   if (id === "cardon") {
     /* Once the wine domain is set the moved routes redirect away, so the nav
        and footer stop linking them rather than sending a reader through a
@@ -230,6 +242,9 @@ export function brandConfig(env: BrandEnv): BrandConfig {
     };
   }
   const siteOrigin = parseOrigin(env.siteUrl);
+  if (isCardonOrigin(siteOrigin)) {
+    throw new Error("NEXT_PUBLIC_SITE_URL names cardondigital.com; the wine brand needs its own domain");
+  }
   return {
     id,
     // Working placeholder name; see the note at the top of this file.
