@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { llmsTxt } from "./llms";
 import { GET } from "./route";
 import sitemap from "../sitemap";
@@ -6,6 +6,14 @@ import { home } from "@/lib/i18n/home";
 import { sitios } from "@/lib/i18n/sitios";
 import { precios } from "@/lib/i18n/precios";
 import { SITE_URL } from "@/lib/i18n/metadata";
+
+// This file tests cardondigital.com. The brand is pinned before any import
+// reads it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino;
+// the wine brand's own cases are in lib/brand.test.ts.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+  process.env.NEXT_PUBLIC_VINO_URL = "";
+});
 
 /**
  * /llms.txt (bead hq-i4b5.2): the llmstxt.org shape, a page list that is the

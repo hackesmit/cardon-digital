@@ -1,7 +1,15 @@
 import { readFileSync } from "node:fs";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+
+// This file tests cardondigital.com. The brand is pinned before any import
+// reads it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino;
+// the wine brand's own cases are in lib/brand.test.ts.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+  process.env.NEXT_PUBLIC_VINO_URL = "";
+});
 
 // vitest transforms this app's JSX with the classic runtime, so the
 // components' createElement calls resolve a global React. Test-only shim.

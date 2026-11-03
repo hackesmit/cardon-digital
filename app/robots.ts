@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { BRAND } from "@/lib/brand";
+import { SITE_URL } from "@/lib/i18n/metadata";
 
 /**
  * The answer engines, by the user agents their owners publish: the search
@@ -28,9 +30,15 @@ export const AI_CRAWLERS = [
    from ever reading that header. */
 const ALL = { allow: "/" };
 
+/* A brand that may not be indexed yet (the wine brand before its domain,
+   lib/brand-env.mjs) keeps the door open for the same reason: every page and
+   this file itself carry noindex (next.config.mjs, the locale layout), and a
+   crawler has to read a page to see that. It names no crawler as welcome and
+   points at no sitemap, since there is nothing to advertise. */
 export default function robots(): MetadataRoute.Robots {
+  if (!BRAND.indexable) return { rules: [{ userAgent: "*", ...ALL }] };
   return {
     rules: [{ userAgent: "*", ...ALL }, ...AI_CRAWLERS.map((userAgent) => ({ userAgent, ...ALL }))],
-    sitemap: "https://cardondigital.com/sitemap.xml",
+    sitemap: SITE_URL + "/sitemap.xml",
   };
 }

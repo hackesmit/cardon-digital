@@ -1,9 +1,17 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
+
+// This file tests cardondigital.com. The brand is pinned before any import
+// reads it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino;
+// the wine brand's own cases are in lib/brand.test.ts.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+  process.env.NEXT_PUBLIC_VINO_URL = "";
+});
 
 // Same test-only shim as winery-page.test.ts: vitest compiles this app's JSX
 // with the classic runtime, and pages build glyphs at module scope, so every

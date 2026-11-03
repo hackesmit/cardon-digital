@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -7,6 +7,14 @@ import sitemap from "./sitemap";
 import { SITE_URL } from "@/lib/i18n/metadata";
 import { stripLocale } from "@/lib/i18n/config";
 import { GUIDES } from "@/lib/guides";
+
+// This file tests cardondigital.com. The brand is pinned before any import
+// reads it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino;
+// the wine brand's own cases are in lib/brand.test.ts.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+  process.env.NEXT_PUBLIC_VINO_URL = "";
+});
 
 /**
  * The sitemap's lastModified is a date table in app/sitemap.ts, and this test
@@ -33,6 +41,8 @@ const ROUTE_ROOT = join(ROOT, "app", "[locale]");
 const CHROME = [
   /^lib\/i18n\/(config|metadata|rich|site|LocaleProvider)\.tsx?$/,
   /^lib\/(onscreen|fonts)\.ts$/,
+  // The brand switch is site configuration, read by the chrome on every page.
+  /^lib\/brand(-env)?\.(ts|mjs)$/,
   /^lib\/analytics\//,
   /^components\/(site|consent)\//,
 ];

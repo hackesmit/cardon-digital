@@ -14,7 +14,7 @@ import CredentialFloat, { BADGE_PX, VERIFY, credentialLabel } from "./Credential
 
 const ROOT = process.cwd();
 const CSS = readFileSync(join(ROOT, "components/site/credential-float.css"), "utf8");
-const PAGE = readFileSync(join(ROOT, "app/[locale]/page.tsx"), "utf8");
+const PAGE = readFileSync(join(ROOT, "components/pages/home-cardon.tsx"), "utf8");
 
 /** The body of the first rule whose selector list is exactly `selector`. */
 function rule(selector: string): string {

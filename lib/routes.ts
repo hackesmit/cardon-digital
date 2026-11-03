@@ -14,6 +14,8 @@
  * written out here because Next's own redirects() emits 308 for everything.
  */
 
+import { MOVED_ROUTES, cleanPath, matchesRoute, servesPath, type BrandConfig } from "./brand";
+
 export type RetiredRoute = {
   /** A live, locale-free path. Never another entry in this table. */
   to: string;
@@ -53,4 +55,35 @@ export function retiredRoute(path: string): RetiredRoute | undefined {
   return Object.prototype.hasOwnProperty.call(RETIRED_ROUTES, clean)
     ? RETIRED_ROUTES[clean]
     : undefined;
+}
+
+/**
+ * Where cardondigital.com sends a wine route that moved to the wine brand
+ * (bead hq-3f6ut.1): the same path on the wine domain, with a 301. Only once
+ * NEXT_PUBLIC_VINO_URL is set (the config's crossLink), and only for a path
+ * on MOVED_ROUTES; unset, cardon keeps serving the page and this answers
+ * null. The wine brand never redirects anything this way.
+ */
+export function movedRoute(config: BrandConfig, path: string): string | null {
+  if (config.id !== "cardon" || config.crossLink === null) return null;
+  const p = cleanPath(path);
+  return MOVED_ROUTES.some((r) => matchesRoute(r, p)) ? config.crossLink : null;
+}
+
+/**
+ * Whether the sitemap and llms.txt list a path for a brand: one the brand
+ * serves, a guide only when it is one of the brand's own guides, and the
+ * guides index only when there is at least one. The slugs come in as an
+ * argument so this module, which the middleware imports, carries no guide
+ * text into the edge bundle.
+ */
+export function advertisesPath(
+  config: BrandConfig,
+  guideSlugs: readonly string[],
+  path: string,
+): boolean {
+  if (!servesPath(config, path)) return false;
+  if (path === "/guias") return guideSlugs.length > 0;
+  const guide = /^\/guias\/([^/]+)$/.exec(path);
+  return guide ? guideSlugs.includes(guide[1]) : true;
 }
