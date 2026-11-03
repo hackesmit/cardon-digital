@@ -27,13 +27,16 @@
  * cookies never reach git. The signed-in Google identity is checked against
  * the configured account before any prompt is sent.
  *
- * The password is read from Proton Pass only when Google asks for it. It is
+ * The account email is entered only on https://accounts.google.com, and the
+ * password is read from Proton Pass and filled only on Google's own password
+ * route there; any other site during sign-in stops the engine. The password is
  * added to the redaction set (engines.mjs liveSecrets) while the browser runs,
  * and a failed sign-in step throws a fixed message with no Playwright error
  * text or cause, since Playwright's call log repeats the filled value.
  */
 
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { lstatSync, mkdirSync, chmodSync, readdirSync, renameSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { cleanUrl, liveSecrets } from "./engines.mjs";
@@ -264,16 +267,12 @@ export function failureGeminiWeb(body) {
   return null;
 }
 
-
 /**
- * A usage-limit notice that Gemini gave instead of an answer: short, and the
- * limit wording opens it. An answer that only mentions limits is an answer.
+ * Usage-limit wording. It counts only in the app's own status banners outside
+ * the conversation (classifyPage), never in an answer: an answer is whatever
+ * the prompt asked for, a limit sentence included.
  */
 const LIMIT = /you'?ve reached your (usage )?limit|reached the limit|alcanzaste el l[ií]mite|has alcanzado el l[ií]mite|l[ií]mite de uso/i;
-export function limitReply(text) {
-  const t = String(text || "").trim();
-  return t.length > 0 && t.length < 400 && new RegExp(`^(\\W*)(${LIMIT.source})`, "i").test(t);
-}
 
 /** Google's ordinary password step, not a verification challenge. */
 const PASSWORD_STEP = /^https:\/\/accounts\.google\.com\/(v3\/)?signin\/(v2\/)?(challenge|sl)\/pwd(\/|\?|#|$)/;
@@ -319,6 +318,26 @@ export function checkIdentity(labels, expected) {
 
 const stopError = (reason) => Object.assign(new Error(`gemini-web stopped: ${reason}`), { stop: reason });
 
+/**
+ * Playwright's debug log and inspector print each action with its value, the
+ * password included, and DEBUG's pattern syntax (pw*, lists, negations) is
+ * too wide to vet, so any DEBUG value or PWDEBUG at all stops the engine
+ * before a credential is read.
+ */
+function debugGuard() {
+  if (process.env.PWDEBUG !== undefined || String(process.env.DEBUG || "").trim()) throw stopError("debug output is on (DEBUG or PWDEBUG is set) and Playwright would log the password; unset both");
+}
+
+const GOOGLE_SIGNIN = "https://accounts.google.com";
+const SIGNIN_ELSEWHERE = "sign-in left accounts.google.com for another site (an external identity provider is not configured); sign in once by hand in the tracker browser profile";
+const originOf = (u) => {
+  try {
+    return new URL(String(u)).origin;
+  } catch {
+    return "";
+  }
+};
+
 /** One field of a Proton Pass item; never printed. */
 function ppField(account, field) {
   const r = spawnSync("pp", ["item", "view", "--vault-name", account.vault, "--item-title", account.item, "--field", field], {
@@ -335,9 +354,21 @@ export const auth = { readSecret: ppField };
 /** Tests install request routes on the browser context here. */
 export const testHooks = { onContext: null };
 
-/** The profile directory name for an account email. */
+/** The first version's profile directory name; it collides (a.b@ and a-b@). */
+export function legacyAccountSlug(email) {
+  return String(email).trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
+/**
+ * The profile directory name for an account email: a readable prefix plus
+ * the first 12 hex digits of the SHA-256 of the whole normalized email, so
+ * two emails never share a profile.
+ */
 export function accountSlug(email) {
-  return String(email).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+  const norm = String(email).trim().toLowerCase();
+  const prefix = legacyAccountSlug(norm).slice(0, 40).replace(/-+$/, "");
+  if (!prefix) return "";
+  return `${prefix}-${createHash("sha256").update(norm).digest("hex").slice(0, 12)}`;
 }
 
 /**
@@ -360,14 +391,24 @@ export function ensurePrivateDir(p, uid = process.getuid?.()) {
   if ((st.mode & 0o777) !== 0o700) chmodSync(p, 0o700);
 }
 
+const exists = (p) => {
+  try {
+    lstatSync(p);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 /** A Chrome profile written straight into browser/gemini-web (before 2026-11-03). */
 const isProfile = (names) => names.includes("Local State") || names.includes("Default");
 
 /**
  * browser/gemini-web/<account-slug>, each level private. A profile left at
- * browser/gemini-web itself by the first version moves into the account's
- * directory once, so its sign-in keeps working; the identity check then
- * confirms whose session it is.
+ * browser/gemini-web itself by the first version, or under the account's
+ * old colliding name, moves into the account's directory once, so its
+ * sign-in keeps working; the identity check then confirms whose session it
+ * is.
  */
 export function profileDir(home, email, uid = process.getuid?.()) {
   const browser = join(home, "browser");
@@ -383,6 +424,11 @@ export function profileDir(home, email, uid = process.getuid?.()) {
     mkdirSync(engine, { mode: 0o700 });
     renameSync(tmp, dir);
     ensurePrivateDir(engine, uid);
+  }
+  const legacy = join(engine, legacyAccountSlug(email));
+  if (legacy !== dir && !exists(dir) && exists(legacy)) {
+    ensurePrivateDir(legacy, uid);
+    renameSync(legacy, dir);
   }
   ensurePrivateDir(dir, uid);
   return dir;
@@ -400,9 +446,7 @@ let session = null;
 async function launch(opts) {
   const config = opts.config || {};
   if (!process.env.DISPLAY && !config.headless) throw stopError("no display: run the tracker under xvfb-run -a (Google refuses headless Chrome)");
-  // Playwright's debug log and inspector print each action with its value,
-  // the password included.
-  if (process.env.PWDEBUG || /(^|,)\s*(\*|pw:[^,]*)/.test(process.env.DEBUG || "")) throw stopError("Playwright debug output is on (DEBUG=pw:* or PWDEBUG) and would log the password; unset it");
+  debugGuard();
   let chromium;
   try {
     ({ chromium } = await import("playwright-core"));
@@ -470,6 +514,7 @@ async function credentialStep(fn, reason) {
 }
 
 async function signIn(page, account, email, t) {
+  debugGuard();
   if (!account) throw stopError("signed out and no engines.gemini-web.account (Proton Pass vault and item) to sign in with");
   if (!/^https:\/\/accounts\.google\.com\//.test(page.url())) {
     const btn = page.locator("a,button").filter({ hasText: /^\s*(Acceder|Sign in|Iniciar sesi[oó]n)\s*$/ }).first();
@@ -481,7 +526,10 @@ async function signIn(page, account, email, t) {
   const id = page.locator('input#identifierId, input[name="identifier"]').first();
   const pw = page.locator('input[name="Passwd"], input[type="password"]').first();
   if (!first?.password) {
+    // The account email goes only to Google's own sign-in page.
+    if (originOf(page.url()) !== GOOGLE_SIGNIN) throw stopError(SIGNIN_ELSEWHERE);
     await id.waitFor({ timeout: t }).catch(() => {});
+    if (originOf(page.url()) !== GOOGLE_SIGNIN) throw stopError(SIGNIN_ELSEWHERE);
     await credentialStep(async () => {
       await id.fill(email, { timeout: t });
       await id.press("Enter", { timeout: t });
@@ -491,10 +539,21 @@ async function signIn(page, account, email, t) {
   }
   const atPassword = classifyPage(await pageState(page));
   if (atPassword?.stop) throw stopError(atPassword.stop);
-  if (!atPassword?.password && !(await pw.isVisible().catch(() => false))) throw stopError("Google did not show the password step; sign in once by hand in the tracker browser profile");
+  // The password is read and filled only on Google's own password route
+  // (PASSWORD_STEP pins the origin and the path), checked again right
+  // before the fill.
+  const atGooglePassword = () => {
+    if (originOf(page.url()) !== GOOGLE_SIGNIN) throw stopError(SIGNIN_ELSEWHERE);
+    if (!PASSWORD_STEP.test(page.url())) throw stopError("Google did not show the password step; sign in once by hand in the tracker browser profile");
+  };
+  atGooglePassword();
+  if (!atPassword?.password) throw stopError("Google did not show the password step; sign in once by hand in the tracker browser profile");
+  await pw.waitFor({ state: "visible", timeout: t }).catch(() => {});
+  atGooglePassword();
   const password = auth.readSecret(account, "password");
   liveSecrets.add(password);
   await credentialStep(async () => {
+    atGooglePassword();
     await pw.fill(password, { timeout: t });
     await pw.press("Enter", { timeout: t });
   }, "could not enter the password on Google's sign-in page; sign in once by hand in the tracker browser profile");
@@ -588,7 +647,6 @@ export async function callGeminiWeb(prompt, opts) {
   const c = classifyPage(await pageState(page));
   if (c?.stop) throw stopError(c.stop);
   const html = await page.evaluate(() => [...document.querySelectorAll("model-response")].at(-1)?.outerHTML || "");
-  if (html && limitReply(parseGeminiWeb({ html }).text)) throw stopError("the free Gemini usage limit is reached; resume after it resets");
   const mode = await page.locator("bard-mode-switcher button, [data-test-id='bard-mode-menu-button']").first().innerText({ timeout: 2000 }).catch(() => null);
   return { html, url: page.url(), mode: mode ? mode.trim() : null, complete, elapsedMs: Date.now() - t0 };
 }
