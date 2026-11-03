@@ -28,6 +28,9 @@ export function redact(s, keys = []) {
 /** Error codes that mean money or quota ran out, not a rate limit. */
 export const QUOTA = /credit_balance_exhausted|insufficient_quota|exceeded your current quota|RESOURCE_EXHAUSTED.*(billing|plan)/i;
 
+/** An error body that means the model id does not exist (retired or mistyped). */
+export const MODEL_MISSING = /model_not_found|model\b[^"]{0,80}does not exist|is not found for API version|not supported for generateContent/i;
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
@@ -55,6 +58,12 @@ export async function postJson(url, headers, body, { retries = 5, keys = [], fet
     // at once and mark it, so the run stops instead of burning retries.
     if (QUOTA.test(txt)) {
       last.quota = true;
+      throw last;
+    }
+    // A model id the provider does not know fails every call the same way:
+    // mark it so the run stops calling that model and names the cause.
+    if ((res.status === 404 || res.status === 400) && MODEL_MISSING.test(txt)) {
+      last.modelMissing = true;
       throw last;
     }
     if (res.status !== 429 && res.status < 500) throw last;
