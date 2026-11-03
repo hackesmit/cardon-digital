@@ -1,5 +1,13 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import robots, { AI_CRAWLERS } from "./robots";
+
+// This file tests cardondigital.com. The brand is pinned before any import
+// reads it (lib/brand.ts), so the suite says the same under NEXT_PUBLIC_SITE=vino;
+// the wine brand's own cases are in lib/brand.test.ts.
+vi.hoisted(() => {
+  process.env.NEXT_PUBLIC_SITE = "cardon";
+  process.env.NEXT_PUBLIC_VINO_URL = "";
+});
 
 /**
  * Answer engines are let in by name (bead hq-i4b5.2). A crawler that finds a

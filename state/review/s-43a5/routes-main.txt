@@ -1,0 +1,51 @@
+es/ 200 
+es/sitios-web 200 
+es/anuncios 200 
+es/software 200 
+es/visibilidad-ia 200 
+es/demos 200 
+es/demo 307 location: https://demo.cardondigital.com/?modulos=produccion,hospitalidad,restaurante
+es/estilos 200 
+es/precios 200 
+es/work/monte-xanic 200 
+es/work/enkanto 200 
+es/industries/winery 200 
+es/guias 200 
+es/guias/cuanto-cuesta-pagina-web 200 
+es/guias/aparecer-en-chatgpt 200 
+es/about 200 
+es/contacto 200 
+es/privacy 200 
+es/terms 200 
+es/coming-soon 200 
+es/no-existe 404 
+es/modulos 308 location: /es/precios
+en/ 200 
+en/sitios-web 200 
+en/anuncios 200 
+en/software 200 
+en/visibilidad-ia 200 
+en/demos 200 
+en/demo 307 location: https://demo.cardondigital.com/?modulos=produccion,hospitalidad,restaurante
+en/estilos 200 
+en/precios 200 
+en/work/monte-xanic 200 
+en/work/enkanto 200 
+en/industries/winery 200 
+en/guias 200 
+en/guias/cuanto-cuesta-pagina-web 200 
+en/guias/aparecer-en-chatgpt 200 
+en/about 200 
+en/contacto 200 
+en/privacy 200 
+en/terms 200 
+en/coming-soon 200 
+en/no-existe 404 
+en/modulos 308 location: /en/precios
+/robots.txt 200
+/sitemap.xml 200
+/llms.txt 200
+/manifest.webmanifest 200
+/.well-known/security.txt 200
+/es/no-existe 404
+/nothing.txt 404

@@ -1,4 +1,4 @@
-import { MAIL_ADDRESS } from "@/lib/contact/links";
+import { BRAND } from "@/lib/brand";
 import { SITE_URL } from "@/lib/i18n/metadata";
 
 /**
@@ -8,10 +8,11 @@ import { SITE_URL } from "@/lib/i18n/metadata";
  */
 export const EXPIRES = "2027-10-01T00:00:00.000Z";
 
-/** /.well-known/security.txt (RFC 9116): where to report a vulnerability. */
+/** /.well-known/security.txt (RFC 9116): where to report a vulnerability, on
+    the build's own origin and to the brand's address (lib/brand.ts). */
 export function securityTxt(): string {
   return [
-    "Contact: mailto:" + MAIL_ADDRESS,
+    "Contact: mailto:" + BRAND.email,
     "Expires: " + EXPIRES,
     "Preferred-Languages: es, en",
     "Canonical: " + SITE_URL + "/.well-known/security.txt",

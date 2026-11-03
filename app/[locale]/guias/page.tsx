@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/site/Link";
+import { notFound } from "next/navigation";
 import { formatDate } from "@/components/site/CredentialList";
 import JsonLd from "@/components/site/JsonLd";
 import { GUIDES, guidePath } from "@/lib/guides";
@@ -32,6 +33,9 @@ export default async function GuiasPage(props: Params) {
   const locale = localeOf(params);
   const t = guias[locale];
   const href = (path: string) => localePath(locale, path);
+  // A brand with no guides of its own yet (the wine brand, lib/brand.ts) has
+  // no index to show: an empty list is not a page.
+  if (GUIDES.length === 0) notFound();
 
   return (
     <main id="main" className="pg-guide pg-guias">

@@ -6,8 +6,9 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { site } from "@/lib/i18n/site";
-import { estilos } from "@/lib/i18n/estilos";
 import { Logo } from "@/components/site/Mark";
+import { navLabel } from "@/components/site/navLabel";
+import { BRAND } from "@/lib/brand";
 import {
   LOCALE_COOKIE,
   LOCALE_COOKIE_MAX_AGE,
@@ -41,27 +42,16 @@ export default function Nav() {
   // cases, about and contact. The dropdown reuses the Industries dropdown
   // markup and CSS the site shipped before (has-drop, nav-drop, drop-trigger);
   // on a phone the four links sit indented under the label, always visible.
-  const serviceLinks = [
-    { href: href("/sitios-web"), label: t.sitios },
-    // The gallery of style samples sits under the websites page it belongs to.
-    // Its label comes from the styles dictionary rather than from the nav
-    // block: the page owns the word that names it (lib/i18n/estilos.ts).
-    { href: href("/estilos"), label: estilos[locale].navLabel },
-    { href: href("/anuncios"), label: t.anuncios },
-    { href: href("/software"), label: t.software },
-    { href: href("/industries/winery"), label: t.wineries },
-  ];
-  const linksAfter = [
-    /* Demos leads the row after the dropdown (bead hq-lgjo.2, Daniel
-       2026-10-16): the demo was reachable only from a small link inside three
-       pages, so it was missed. It is the first thing a reader can check for
-       themselves, and it goes before the price. */
-    { href: href("/demos"), label: t.demos },
-    { href: href("/precios"), label: t.pricing },
-    { href: href("/work/monte-xanic"), label: t.work },
-    { href: href("/about"), label: t.about },
-    { href: href("/contacto"), label: t.contact },
-  ];
+  // The entries are the build brand's (lib/brand.ts, where the reasons for
+  // the order are kept); a brand with no services list has no dropdown.
+  const serviceLinks = BRAND.nav.services.map((l) => ({
+    href: href(l.path),
+    label: navLabel(l.label, locale),
+  }));
+  const linksAfter = BRAND.nav.after.map((l) => ({
+    href: href(l.path),
+    label: navLabel(l.label, locale),
+  }));
 
   // The switch keeps the page you are on and remembers the choice, so the
   // geo default never overrides it again.
@@ -203,7 +193,11 @@ export default function Nav() {
     <header className="site-header">
       <div className="container bar">
         <Link className="brand" href={href("/")} aria-label={brandHome}>
-          <Logo variant="wordmark" className="brand-logo" />
+          <Logo
+            variant="wordmark"
+            className="brand-logo"
+            endorsement={BRAND.endorsement?.[locale]}
+          />
         </Link>
 
         <nav className="primary-nav" aria-label={t.label}>
@@ -230,58 +224,60 @@ export default function Nav() {
             )}
           <div className={"nav-menu" + (open ? " open" : "")} id="nav-menu">
             <ul className="nav-list">
-              <li
-                className={"has-drop" + (svcOpen ? " drop-open" : "")}
-                ref={dropRef}
-                onMouseEnter={() => setSvcOpen(true)}
-                onMouseLeave={() => setSvcOpen(false)}
-              >
-                <button
-                  className="drop-trigger"
-                  ref={dropBtn}
-                  type="button"
-                  aria-expanded={svcOpen ? "true" : "false"}
-                  aria-controls="services-menu"
-                  onClick={() => setSvcOpen((v) => !v)}
+              {serviceLinks.length > 0 && (
+                <li
+                  className={"has-drop" + (svcOpen ? " drop-open" : "")}
+                  ref={dropRef}
+                  onMouseEnter={() => setSvcOpen(true)}
+                  onMouseLeave={() => setSvcOpen(false)}
                 >
-                  {t.services}
-                  <svg
-                    className="drop-caret"
-                    viewBox="0 0 10 6"
-                    aria-hidden="true"
-                    focusable="false"
+                  <button
+                    className="drop-trigger"
+                    ref={dropBtn}
+                    type="button"
+                    aria-expanded={svcOpen ? "true" : "false"}
+                    aria-controls="services-menu"
+                    onClick={() => setSvcOpen((v) => !v)}
                   >
-                    <path
-                      d="M1 1 L5 5 L9 1"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-                {/* On a phone the trigger is hidden and this label heads the
-                    indented list; it links to the services block on the home. */}
-                <Link
-                  className="drop-mobile-label"
-                  href={href("/#servicios")}
-                  onClick={closeAll}
-                >
-                  {t.services}
-                </Link>
-                <div className="nav-drop" id="services-menu">
-                  <ul className="nav-drop-panel" aria-label={t.servicesMenu}>
-                    {serviceLinks.map((l) => (
-                      <li key={l.href}>
-                        <Link href={l.href} onClick={closeAll}>
-                          {l.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
+                    {t.services}
+                    <svg
+                      className="drop-caret"
+                      viewBox="0 0 10 6"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path
+                        d="M1 1 L5 5 L9 1"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  {/* On a phone the trigger is hidden and this label heads the
+                      indented list; it links to the services block on the home. */}
+                  <Link
+                    className="drop-mobile-label"
+                    href={href("/#servicios")}
+                    onClick={closeAll}
+                  >
+                    {t.services}
+                  </Link>
+                  <div className="nav-drop" id="services-menu">
+                    <ul className="nav-drop-panel" aria-label={t.servicesMenu}>
+                      {serviceLinks.map((l) => (
+                        <li key={l.href}>
+                          <Link href={l.href} onClick={closeAll}>
+                            {l.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              )}
               {linksAfter.map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} onClick={() => setOpen(false)}>
