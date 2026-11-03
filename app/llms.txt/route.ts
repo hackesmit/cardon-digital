@@ -1,5 +1,6 @@
 import { readDoors } from "@/lib/contact/doors";
 import { deliveryConfigured } from "@/lib/contact/mail";
+import { BRAND } from "@/lib/brand";
 import { llmsTxt } from "./llms";
 
 /* /llms.txt for answer engines (llmstxt.org). Static: it is rebuilt with the
@@ -11,6 +12,9 @@ export function GET() {
   // Pre-launch the pages serve the holding page, so like the sitemap there is
   // nothing to describe yet.
   if (process.env.COMING_SOON === "1") return new Response("Not found\n", { status: 404 });
+  // Nor while the brand may not be indexed (the wine brand before its own
+  // domain, lib/brand.ts): its working name is not for answer engines yet.
+  if (!BRAND.indexable) return new Response("Not found\n", { status: 404 });
   const body = llmsTxt(readDoors(deliveryConfigured()).variant);
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 }

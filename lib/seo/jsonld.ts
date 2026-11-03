@@ -11,11 +11,18 @@
  * markup states only what the site states. A field the repo has no fact for
  * (street address, phone, legal name) is left out, never filled in. sameAs is
  * empty until the profiles exist; an empty list is dropped rather than shipped.
+ *
+ * The build's brand (lib/brand.ts) names the organization. On
+ * cardondigital.com it is the practice itself. On the wine brand's site it is
+ * the brand, typed Organization and Brand so it can carry parentOrganization:
+ * Cardon Digital, by the @id the parent's own site gives it. The brand has no
+ * address or phone of its own, so it states none.
  */
 import { CREDENTIALS, type Credential } from "@/lib/credentials";
 import { htmlLang, localePath, type Locale } from "@/lib/i18n/config";
 import { plain } from "@/lib/i18n/rich";
 import { SITE_URL } from "@/lib/i18n/metadata";
+import { BRAND, CARDON_URL } from "@/lib/brand";
 
 export type LdNode = { "@type": string | string[]; "@id"?: string; [key: string]: unknown };
 export type LdGraph = { "@context": "https://schema.org"; "@graph": LdNode[] };
@@ -23,6 +30,9 @@ export type LdRef = { "@id": string };
 
 export const ORGANIZATION_ID = SITE_URL + "/#organization";
 export const FOUNDER_ID = SITE_URL + "/#founder";
+/** Cardon Digital's own node, as cardondigital.com defines it. On cardon this
+    is ORGANIZATION_ID; on the wine brand it is the parent organization. */
+export const CARDON_ORGANIZATION_ID = CARDON_URL + "/#organization";
 export const websiteId = (locale: Locale) => SITE_URL + localePath(locale, "/") + "#website";
 export const credentialId = (c: Credential) => SITE_URL + "/#credential-" + c.id;
 
@@ -51,10 +61,29 @@ export function organizationLd(
   opts: { sameAs?: readonly string[] } = {},
 ): LdNode {
   const sameAs = (opts.sameAs ?? SAME_AS).filter((u) => u.trim() !== "");
+  if (BRAND.id !== "cardon") {
+    return {
+      "@type": ["Organization", "Brand"],
+      "@id": ORGANIZATION_ID,
+      name: BRAND.name,
+      url: SITE_URL + localePath(locale, "/"),
+      logo: absoluteUrl("/apple-icon.png"),
+      image: absoluteUrl("/og.png"),
+      areaServed: AREA_SERVED,
+      founder: ref(FOUNDER_ID),
+      parentOrganization: {
+        "@type": "ProfessionalService",
+        "@id": CARDON_ORGANIZATION_ID,
+        name: "Cardon Digital",
+        url: CARDON_URL,
+      },
+      ...(sameAs.length > 0 ? { sameAs } : {}),
+    };
+  }
   return {
     "@type": "ProfessionalService",
     "@id": ORGANIZATION_ID,
-    name: "Cardon Digital",
+    name: BRAND.name,
     url: SITE_URL + localePath(locale, "/"),
     logo: absoluteUrl("/apple-icon.png"),
     image: absoluteUrl("/og.png"),
@@ -68,7 +97,7 @@ export function websiteLd(locale: Locale): LdNode {
   return {
     "@type": "WebSite",
     "@id": websiteId(locale),
-    name: "Cardon Digital",
+    name: BRAND.name,
     url: SITE_URL + localePath(locale, "/"),
     inLanguage: htmlLang[locale],
     publisher: ref(ORGANIZATION_ID),
@@ -103,7 +132,8 @@ export function founderLd(
     name: "Daniel Hack",
     jobTitle: FOUNDER_TITLE[locale],
     url: SITE_URL + localePath(locale, "/about"),
-    worksFor: ref(ORGANIZATION_ID),
+    // He works for Cardon Digital on either site; the wine brand is its brand.
+    worksFor: ref(CARDON_ORGANIZATION_ID),
     ...(held.length > 0 ? { hasCredential: held.map((c) => credentialLd(c, locale)) } : {}),
   };
 }

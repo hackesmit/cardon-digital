@@ -1,3 +1,12 @@
+import { brandIndexable, parseBrand, parseOrigin } from "./lib/brand-env.mjs";
+
+/* The brand switch (lib/brand.ts, docs/BRANDS.md). parseBrand throws on any
+   value other than cardon, vino or unset, so the build fails before a page is
+   compiled. A wine-brand build with no domain of its own yet is noindex on
+   every response, files included (robots.txt, sitemap.xml, llms.txt). */
+const BRAND = parseBrand(process.env.NEXT_PUBLIC_SITE);
+const INDEXABLE = brandIndexable(BRAND, parseOrigin(process.env.NEXT_PUBLIC_SITE_URL));
+
 /**
  * Static security headers for every response (bead hq-fnhrj.6, site-baseline
  * checklist T6, T8, T21). The Content-Security-Policy is not here: it needs a
@@ -26,11 +35,22 @@ const nextConfig = {
   reactStrictMode: true,
   async headers() {
     const headers = [...securityHeaders];
-    // A preview deployment must never be indexed in place of the real domain.
-    if (process.env.VERCEL_ENV === "preview") {
+    // A preview deployment must never be indexed in place of the real domain,
+    // and neither may the wine brand before it has one.
+    if (process.env.VERCEL_ENV === "preview" || !INDEXABLE) {
       headers.push({ key: "X-Robots-Tag", value: "noindex, nofollow" });
     }
-    return [{ source: "/:path*", headers }];
+    return [
+      { source: "/:path*", headers },
+      // A vercel.app address is never the canonical site, whatever the
+      // environment and the configured domain say, files included
+      // (cross-vendor review round 1).
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(?:.+\\.)?vercel\\.app" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
   },
   async redirects() {
     // RFC 9116 section 3: the legacy top-level location points at the real one.
