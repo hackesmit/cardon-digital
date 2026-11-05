@@ -272,10 +272,6 @@ const en = {
         rlog: { name: "RLogistics", kind: "Logistics" },
       },
     },
-    board: {
-      tag: "three parts, one board",
-      aria: "Separate parts are placed and wired into one working board.",
-    },
     memo: {
       tag: "read before it is trusted",
       aria:
@@ -538,10 +534,6 @@ const es: typeof en = {
         brighter: { name: "BrighterHire", kind: "Reclutamiento" },
         rlog: { name: "RLogistics", kind: "Logística" },
       },
-    },
-    board: {
-      tag: "tres partes, un solo tablero",
-      aria: "Piezas sueltas se acomodan y se conectan en un solo tablero que funciona.",
     },
     memo: {
       tag: "primero se revisa, luego se confía",

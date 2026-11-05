@@ -21,7 +21,7 @@ import { advertisesPath } from "@/lib/routes";
  * here in the same commit.
  */
 const routes = [
-  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-11-03" },
+  { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-11-05" },
   { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
