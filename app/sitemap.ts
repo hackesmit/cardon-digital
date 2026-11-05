@@ -28,7 +28,7 @@ const routes = [
   { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
-  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
+  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-05" },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },

@@ -277,3 +277,20 @@ says so in its caption.
 - Source: https://www.pexels.com/video/woman-using-digital-tablet-6602068/
 - License: Pexels License
 - Edit: ten seconds cut, sound removed, re-encoded
+
+## Easter eggs (2026-10-19)
+
+The art for the small hidden animations, under `eggs/`. These are not slots:
+see the last section of README.md for why.
+
+### eggs/lizard-peek.webp
+
+- Credit: supplied by Daniel Hack (owner-supplied, 2026-11-05)
+- Licence: owner-supplied
+- Original: a lizard on a transparent ground, three-quarter view, facing
+  right, 360 x 360 RGBA (Daniel's own asset, dropped in the console, request
+  r-2c30). It replaces the 2026-10-19 stock frame.
+- Use: the lizard that peeks over the founding-winery card on /precios
+  (components/site/LizardPeek.tsx). What ships is not the supplied frame: it
+  is cropped to the head, throat and front legs (the tail is outside the
+  crop) and exported at 2x the size it draws at
