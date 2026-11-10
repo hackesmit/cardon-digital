@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import "./halftone.css";
 import { clearsThreshold } from "@/lib/onscreen";
 import type { BuilderSelection } from "@/lib/builder";
-import { moduleIds } from "@/lib/pricing";
+import { moduleIds, webPackagePrice, webPackages } from "@/lib/pricing";
 
 /**
  * The builder's halftone sunset (bead hq-lgjo.10, Daniel 2026-10-19 picked
@@ -46,7 +46,12 @@ export const LEVEL_SLOTS = 3 + moduleIds.length;
 /** The builder's level: ticked boxes over every box there is, 0 to 1. */
 export function builderLevel(s: BuilderSelection): number {
   let n = 0;
-  if (s.web !== null) n += 1;
+  /* The website slot fills by the share of the package still ticked
+     (hq-lgjo.6): unticking features lowers the sunset with the price. */
+  if (s.web !== null) {
+    const pkg = webPackages.find((p) => p.id === s.web);
+    n += pkg && pkg.from.MXN > 0 ? webPackagePrice(pkg.id, s.webOff ?? []).MXN / pkg.from.MXN : 1;
+  }
   /* Care is only offered with a package, and PackageBuilder clears it when the
      package goes away; this does not trust that, so an inconsistent selection
      cannot read above 1. */
