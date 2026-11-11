@@ -1525,6 +1525,121 @@ export function webPackageById(id: WebPackageId): WebPackage {
   return found;
 }
 
+/* ======================== WEBSITE FEATURE PRICES ========================
+   The builder lets a client untick the features of a package they do not
+   need (Daniel, 2026-10-16, bead hq-lgjo.6). Each feature's price is its share
+   of the package's published `from` figure, weighted by the Daniel build hours
+   the feature takes inside that package (decided 2026-11-10, request
+   r-304722ce, option 1: split each package price by build hours; Daniel checks
+   the split at review). So every package keeps the price it publishes today:
+   with every feature ticked the features add up to `from` exactly, in both
+   currencies.
+
+   The hours below are an estimate of where each package's build hours go, to
+   be checked against the first builds, like the package hours themselves. A
+   feature that carries the same id in two packages can weigh differently in
+   each (design on a one-page site is less work than on six pages).
+
+   Two features cannot be unticked: custom-design, because it is the site, and
+   aeo-ready, which every site ships with and which has no price of its own
+   (Daniel, 2026-10-20: "the price does not move"). */
+
+/** Features a client cannot untick, whatever the package. */
+export const webRequiredFeatures: readonly string[] = ["custom-design", "aeo-ready"];
+
+/** Daniel build hours per feature, per package; each row sums to the package's buildHours. */
+const presenciaHours: Record<string, number> = {
+  "custom-design": 1.25,
+  "copy-written": 0.5,
+  "contact-button-and-form": 0.5,
+  "ga4-with-conversion-events": 0.25,
+  "local-seo-basics": 0.25,
+  "aeo-ready": 0,
+};
+const negocioHours: Record<string, number> = {
+  "custom-design": 1.75,
+  "copy-written": 0.75,
+  "contact-button-and-form": 0.5,
+  "ga4-with-conversion-events": 0.25,
+  "local-seo-basics": 0.25,
+  "aeo-ready": 0,
+  "services-and-about-pages": 1,
+  "work-portfolio": 0.5,
+  "automatic-follow-up": 0.25,
+  "lead-capture": 0.25,
+};
+export const webFeatureHours: Record<WebPackageId, Record<string, number>> = {
+  presencia: presenciaHours,
+  negocio: negocioHours,
+  reservas: {
+    ...negocioHours,
+    "bilingual-pages": 1.5,
+    "booking-path": 1.25,
+    "extra-form": 0.25,
+    "booking-confirmation": 0.5,
+    training: 0.5,
+  },
+  tienda: {
+    ...negocioHours,
+    "product-catalogue": 2.5,
+    checkout: 2.5,
+    "payment-provider-connector": 1.5,
+    "shipping-and-pickup-rules": 1,
+    "order-notifications": 1,
+  },
+};
+
+export type WebFeaturePrice = {
+  id: string;
+  hours: number;
+  price: Record<CurrencyCode, number>;
+  /** True when the client cannot untick it. */
+  required: boolean;
+};
+
+/**
+ * Splits `total` over `weights` in whole `step`s, largest remainder first, so
+ * the parts add up to `total` exactly. Ties go to the earlier weight.
+ */
+function splitBy(total: number, weights: readonly number[], step: number): number[] {
+  const sum = weights.reduce((a, b) => a + b, 0);
+  const units = Math.round(total / step);
+  if (sum <= 0) return weights.map(() => 0);
+  const exact = weights.map((w) => (units * w) / sum);
+  const parts = exact.map((x) => Math.floor(x + 1e-9));
+  let left = units - parts.reduce((a, b) => a + b, 0);
+  const order = exact
+    .map((x, i) => ({ i, frac: x - parts[i] }))
+    .filter((o) => weights[o.i] > 0)
+    .sort((a, b) => b.frac - a.frac || a.i - b.i);
+  for (let k = 0; left > 0 && order.length > 0; k = (k + 1) % order.length, left--) parts[order[k].i] += 1;
+  return parts.map((u) => u * step);
+}
+
+/** Each feature of a package with its hours and price, in the package's own order. */
+export function webFeaturePrices(id: WebPackageId): WebFeaturePrice[] {
+  const pkg = webPackageById(id);
+  const hours = pkg.features.map((f) => webFeatureHours[id][f] ?? 0);
+  const mxn = splitBy(pkg.from.MXN, hours, 50);
+  const usd = splitBy(pkg.from.USD, hours, 1);
+  return pkg.features.map((f, i) => ({
+    id: f,
+    hours: hours[i],
+    price: { MXN: mxn[i], USD: usd[i] },
+    required: webRequiredFeatures.includes(f),
+  }));
+}
+
+/** The package with these features left out: the sum of what stays. Required features never leave. */
+export function webPackagePrice(id: WebPackageId, omitted: readonly string[] = []): Record<CurrencyCode, number> {
+  const off = new Set(omitted);
+  const kept = webFeaturePrices(id).filter((f) => f.required || !off.has(f.id));
+  return {
+    MXN: kept.reduce((a, f) => a + f.price.MXN, 0),
+    USD: kept.reduce((a, f) => a + f.price.USD, 0),
+  };
+}
+
 /** What a package is published from, in both currencies. */
 export function webPackageFrom(id: WebPackageId): Record<CurrencyCode, number> {
   return webPackageById(id).from;
