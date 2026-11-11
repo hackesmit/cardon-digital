@@ -106,8 +106,17 @@ llms.txt, security.txt and JSON-LD comes from `SITE_URL` (`lib/i18n/metadata.ts`
 which is `BRAND.siteUrl`. On vino the JSON-LD organization is the brand,
 typed `Organization` and `Brand`, with `parentOrganization` Cardon Digital by
 the `@id` cardondigital.com gives it, and no address. The manifest takes the
-brand's name. Not yet per brand: the icons and the Open Graph image, which the
-wine brand shares with Cardon until it has its own artwork.
+brand's name. The share card and icons are per brand too (`lib/brand-art.ts`,
+bead hq-3f6ut.8): cardon keeps its static files (`public/og.png`,
+`public/icon.svg`, `public/favicon.ico`, `public/apple-icon.png`,
+`public/brand/cardon-icon-*.png`); vino's are drawn at build time from
+`BRAND.name` by `app/brand-art/[file]/route.tsx` (next/og), so a new name
+redraws them, and its icons are the name's initial on the wine ground until
+the brand has a mark. The icons are declared in `app/layout.tsx`, never as
+`app/icon.*`, `app/favicon.ico` or `app/opengraph-image.*` file conventions,
+which Next links on both brands (a test fails on one). A vino build also
+rewrites Cardon's root paths (`/og.png`, `/icon.svg`, `/favicon.ico`,
+`/apple-icon.png`) to its own art (`VINO_ART_REWRITES`, `next.config.mjs`).
 
 ## Security headers and CSP
 

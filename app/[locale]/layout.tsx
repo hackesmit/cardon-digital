@@ -4,6 +4,7 @@ import JsonLd from "@/components/site/JsonLd";
 import SiteShell from "@/components/site/SiteShell";
 import { alternatesFor, ROBOTS, SITE_URL } from "@/lib/i18n/metadata";
 import { BRAND } from "@/lib/brand";
+import { brandArt } from "@/lib/brand-art";
 import { site } from "@/lib/i18n/site";
 import { isLocale, locales, ogLocale, type Locale } from "@/lib/i18n/config";
 import { siteGraph } from "@/lib/seo/jsonld";
@@ -38,6 +39,7 @@ export async function generateMetadata(props: {
   const params = await props.params;
   const locale: Locale = isLocale(params.locale) ? params.locale : "es";
   const s = site[locale].meta;
+  const art = brandArt(BRAND.id);
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: s.title, template: s.titleTemplate },
@@ -48,7 +50,7 @@ export async function generateMetadata(props: {
       siteName: BRAND.name,
       title: s.title,
       description: s.description,
-      images: [{ url: "/og.png", width: 1200, height: 630, alt: s.ogAlt }],
+      images: [{ ...art.og, alt: s.ogAlt }],
       locale: ogLocale[locale],
       alternateLocale: locales
         .filter((l) => l !== locale)
@@ -58,7 +60,7 @@ export async function generateMetadata(props: {
       card: "summary_large_image",
       title: s.title,
       description: s.description,
-      images: ["/og.png"],
+      images: [art.og.url],
     },
     robots: ROBOTS,
     alternates: alternatesFor(locale, "/"),
