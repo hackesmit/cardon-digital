@@ -77,10 +77,7 @@ const PAGES: Record<string, () => Promise<unknown>> = {
  * is checked to still fail, so the list empties itself: the day the owning
  * bead lands, its entry fails this suite until it is removed.
  */
-const PENDING: Record<string, string> = {
-  // hq-3f6ut.3 splits /precios: the web and ads packages leave vino.
-  "/precios": "hq-3f6ut.3",
-};
+const PENDING: Record<string, string> = {};
 
 /** The wine pages this bead owns: they say the brand's name in the body. */
 const MOVED = ["/", "/software", "/demos", "/industries/winery", "/work/monte-xanic", "/work/enkanto"];
