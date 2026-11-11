@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
+import { BRAND } from "@/lib/brand";
 import { terms } from "@/lib/i18n/terms";
+import { termsVino } from "@/lib/i18n/terms-vino";
+import { branded } from "@/lib/i18n/variant";
 import "../legal.css";
+
+const dict = () => (BRAND.id === "vino" ? branded(termsVino) : terms);
 
 type Params = { params: Promise<{ locale: string }> };
 
@@ -13,12 +18,12 @@ function localeOf(params: { locale: string }): Locale {
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
   const locale = localeOf(params);
-  return pageMetadata(locale, "/terms", terms[locale].meta);
+  return pageMetadata(locale, "/terms", dict()[locale].meta);
 }
 
 export default async function TermsPage(props: Params) {
   const params = await props.params;
-  const d = terms[localeOf(params)];
+  const d = dict()[localeOf(params)];
 
   return (
     <main id="main" className="pg-legal">
@@ -39,7 +44,7 @@ export default async function TermsPage(props: Params) {
         <h2>{d.changesH}</h2>
         <p>
           {d.changesBody}{" "}
-          <a href="mailto:daniel@cardondigital.com">daniel@cardondigital.com</a>.
+          <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>.
         </p>
       </div>
     </main>
