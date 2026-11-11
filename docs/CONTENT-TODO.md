@@ -19,6 +19,7 @@ or what unblocks it. Remove a line when it lands.
   hq-3f6ut.3's.
 - The wine brand's own Open Graph image and icons: it shares Cardon's until it
   has artwork (docs/BRANDS.md).
+- The responsable's razon social, RFC and domicilio for the wine brand's aviso (LFPDPPP art. 15 I). None is in the repo or the bunker; the notice names "Cardon Digital" and the brand email only, like Cardon's own. Whether the Ensenada address in daniel-facts may serve as domicilio is unanswered (hq-3f6ut.4, console ask).
 - A mailbox on the brand's domain: contact goes to the Cardon address until the
   domain exists (`lib/brand.ts`).
 - A published figure from En'kanto: the system is in daily use and no figure is
