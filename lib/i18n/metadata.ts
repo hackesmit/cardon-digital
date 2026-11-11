@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { locales, localePath, ogLocale, type Locale } from "./config";
 import { site } from "./site";
 import { BRAND } from "../brand";
+import { brandArt } from "../brand-art";
 
 /** This build's origin: cardondigital.com, or the wine brand's (lib/brand.ts). */
 export const SITE_URL = BRAND.siteUrl;
@@ -26,7 +27,7 @@ export function alternatesFor(locale: Locale, path: string): Metadata["alternate
 /** The share image. Next replaces a parent's openGraph and twitter blocks
  *  whole when a page sets its own, so every page has to carry it again or
  *  link previews show no picture. */
-const OG_IMAGE = { url: "/og.png", width: 1200, height: 630 };
+const OG_IMAGE = brandArt(BRAND.id).og;
 
 /** Per-page metadata: localized title and description plus the alternates. */
 export function pageMetadata(

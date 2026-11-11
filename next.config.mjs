@@ -30,6 +30,19 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
 ];
 
+/**
+ * A wine build answers Cardon's root art paths with its own art (bead
+ * hq-3f6ut.8, lib/brand-art.ts), so an old link or a browser's default
+ * /favicon.ico request never shows Cardon's card or saguaro there. Pages link
+ * the wine art by its own path; these only catch the root defaults.
+ */
+export const VINO_ART_REWRITES = [
+  { source: "/og.png", destination: "/brand-art/og.png" },
+  { source: "/icon.svg", destination: "/brand-art/icon-192.png" },
+  { source: "/favicon.ico", destination: "/brand-art/icon-48.png" },
+  { source: "/apple-icon.png", destination: "/brand-art/apple-icon.png" },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -51,6 +64,10 @@ const nextConfig = {
         headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
     ];
+  },
+  async rewrites() {
+    // beforeFiles: checked ahead of public/, which still holds Cardon's files.
+    return { beforeFiles: BRAND === "vino" ? VINO_ART_REWRITES : [] };
   },
   async redirects() {
     // RFC 9116 section 3: the legacy top-level location points at the real one.
