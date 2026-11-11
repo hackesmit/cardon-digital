@@ -39,7 +39,7 @@ const en = {
   meta: {
     title: "Pricing",
     description:
-      "What a website, Google Ads management on a base plus a fee per contact, and each software module cost, in the open, with the terms. Every entry price is published.",
+      "What each software module costs, in the open, with the terms. Every entry price is published.",
   },
 
   hero: {
@@ -300,7 +300,7 @@ const es: typeof en = {
   meta: {
     title: "Precios",
     description:
-      "Cuánto cuesta un sitio web, el manejo de anuncios en Google con una base más un pago por contacto, y cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
+      "Cuánto cuesta cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
   },
 
   hero: {
