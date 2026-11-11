@@ -3,7 +3,8 @@ import Link from "@/components/site/Link";
 import Reveal from "@/components/site/Reveal";
 import { demoHref, demoIsLive } from "@/lib/demo";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
-import { demoCardKeys, demosIndex } from "@/lib/i18n/demos-index";
+import { demoCardKeys, demosIndex, demosIndexFaq } from "@/lib/i18n/demos-index";
+import Faq from "@/components/site/Faq";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
@@ -149,6 +150,14 @@ export default async function DemosPage(props: Params) {
           </Reveal>
         </div>
       </section>
+
+      {/* The questions, on the wine brand only (bead hq-3f6ut.2): null on
+          cardondigital.com, which renders this page as it was. */}
+      {demosIndexFaq ? (
+        <div className="section">
+          <Faq title={demosIndexFaq[locale].title} items={demosIndexFaq[locale].items} />
+        </div>
+      ) : null}
 
       {/* ============================ DIAGNOSTIC ============================ */}
       <section

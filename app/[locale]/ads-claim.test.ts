@@ -352,12 +352,12 @@ const pages = walk(here, (f) => f === "page.tsx")
   .sort();
 
 /**
- * Every module under lib/i18n, found by walking. The four below are the
+ * Every module under lib/i18n, found by walking. The five below are the
  * machinery and hold no copy. Every other file must export at least one
  * dictionary, an object keyed by every locale, or the suite fails: a file
  * that holds copy in some other shape is a surface this guard cannot read.
  */
-const I18N_MACHINERY = ["LocaleProvider.tsx", "config.ts", "metadata.ts", "rich.tsx"];
+const I18N_MACHINERY = ["LocaleProvider.tsx", "config.ts", "metadata.ts", "rich.tsx", "variant.ts"];
 /**
  * Dictionaries no route serves. modulos.ts belongs to the retired /modulos
  * page: its route is a 308 to /precios and no page renders it, so its module-

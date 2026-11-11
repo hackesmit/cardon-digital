@@ -49,6 +49,9 @@
 .pg-winery .cap-grid{
   display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px);
 }
+/* Four cards (the wine brand's list, which has no website and ads card) sit
+   two by two rather than three and an orphan. */
+.pg-winery .cap-grid-4{grid-template-columns:repeat(2,1fr);}
 .pg-winery .cap-card{
   position:relative;min-width:0;overflow:hidden;
   border:1px solid var(--line);border-radius:2px;

@@ -102,6 +102,13 @@ export const PAGES = {
     en: { budget: 808, measured: 1615 },
     es: { budget: 855, measured: 1710 },
   },
+  /**
+   * The wine brand's home (2026-11-03, bead hq-3f6ut.2), a new page measured
+   * when it was written, and the demos index, which the same bead brought
+   * under the checker when it gave the page its wine-brand variant.
+   */
+  "home-vino": { en: { budget: 376, measured: 752 }, es: { budget: 397, measured: 793 } },
+  "demos-index": { en: { budget: 397, measured: 793 }, es: { budget: 402, measured: 803 } },
   "guia-cuanto-cuesta-pagina-web": {
     file: "lib/guides/cuanto-cuesta-pagina-web.ts",
     en: { budget: 605, measured: 1210 },

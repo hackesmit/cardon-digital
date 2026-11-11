@@ -6,6 +6,7 @@ import { demoPage } from "../../../lib/i18n/demo";
 import { isLocale, localePath, type Locale } from "../../../lib/i18n/config";
 import { pageMetadata } from "../../../lib/i18n/metadata";
 import { site } from "../../../lib/i18n/site";
+import { BRAND } from "@/lib/brand";
 import "./demo.css";
 
 // An absolute external target, so this must run per request rather than be
@@ -44,7 +45,9 @@ export default async function DemoPage(props: Params) {
   const s = site[locale];
   const href = (path: string) => localePath(locale, path);
   const mailto =
-    "mailto:daniel@cardondigital.com?subject=" +
+    "mailto:" +
+    BRAND.email +
+    "?subject=" +
     encodeURIComponent(s.diag.mailSubject);
 
   return (

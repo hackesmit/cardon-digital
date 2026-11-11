@@ -2,7 +2,6 @@ import type { DoorVariant } from "@/lib/contact/doors";
 import { GUIDES, guidePath } from "@/lib/guides";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/i18n/metadata";
-import { site } from "@/lib/i18n/site";
 import { BRAND } from "@/lib/brand";
 import { advertisesPath } from "@/lib/routes";
 import { about } from "@/lib/i18n/about";
@@ -13,6 +12,7 @@ import { enkanto } from "@/lib/i18n/enkanto";
 import { estilos } from "@/lib/i18n/estilos";
 import { guias } from "@/lib/i18n/guias";
 import { home } from "@/lib/i18n/home";
+import { homeVino } from "@/lib/i18n/home-vino";
 import { monteXanic } from "@/lib/i18n/monte-xanic";
 import { precios } from "@/lib/i18n/precios";
 import { privacy } from "@/lib/i18n/privacy";
@@ -31,8 +31,8 @@ import { winery } from "@/lib/i18n/winery";
  * as skippable.
  *
  * It describes the build's brand (lib/brand.ts): a page that brand does not
- * serve is left out, as the sitemap leaves it out. The wine brand's home has
- * no dictionary of its own yet, so its line is the brand's site meta.
+ * serve is left out, as the sitemap leaves it out. The wine brand's home line
+ * is its own home page's (lib/i18n/home-vino.ts).
  */
 
 type Meta = { title: string; description: string };
@@ -55,7 +55,7 @@ const GUIDE_PAGES = [
 const LEGAL = [page("/privacy", (l) => privacy[l].meta), page("/terms", (l) => terms[l].meta)];
 
 /** The home page's title and description for the build's brand. */
-const homeMeta = (l: Locale): Meta => (BRAND.id === "cardon" ? home[l].meta : site[l].meta);
+const homeMeta = (l: Locale): Meta => (BRAND.id === "cardon" ? home[l].meta : homeVino[l].meta);
 
 function keyPages(doors: DoorVariant): Page[] {
   return [

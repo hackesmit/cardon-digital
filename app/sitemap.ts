@@ -26,7 +26,7 @@ const routes = [
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
-  { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
+  { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },

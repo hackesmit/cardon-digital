@@ -9,7 +9,8 @@ import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
-import { enkanto, type EnkantoDict } from "@/lib/i18n/enkanto";
+import { enkanto, enkantoFaq, type EnkantoDict } from "@/lib/i18n/enkanto";
+import Faq from "@/components/site/Faq";
 import { allModules, demoHref, demoIsLive } from "@/lib/demo";
 import { showsPending } from "./pending";
 import "./enkanto-case.css";
@@ -406,6 +407,14 @@ export default async function EnkantoCaseStudy(props: Params) {
           </Reveal>
         </div>
       </section>
+
+      {/* The questions, on the wine brand only (bead hq-3f6ut.2): null on
+          cardondigital.com, which renders this page as it was. */}
+      {enkantoFaq ? (
+        <div className="section">
+          <Faq title={enkantoFaq[locale].title} items={enkantoFaq[locale].items} />
+        </div>
+      ) : null}
 
       {/* ============================ DIAGNOSTIC ============================ */}
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
