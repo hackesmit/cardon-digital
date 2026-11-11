@@ -12,9 +12,13 @@ import type { Dict } from "./rich";
  * The credentials block right after the mission names him once more as the
  * holder of each certificate; that name, like every fact in the block, is read
  * from lib/credentials.ts (bead hq-i4b5.8), so this file carries only its labels.
+ *
+ * Two versions since bead hq-3f6ut.3: `aboutVino` is the brief as written, a
+ * winery mission, and serves the wine brand; `about`, at the bottom, serves
+ * cardondigital.com. app/[locale]/about/page.tsx picks one by brand.
  */
 
-const en = {
+const vinoEn = {
   meta: {
     title: "About Cardon Digital",
     description:
@@ -71,7 +75,7 @@ const en = {
     "Ten business days looking at your records, your ads and your operations as one system. You get a written memo: what is true, what is broken, and what to build first.",
 };
 
-const es: typeof en = {
+const vinoEs: typeof vinoEn = {
   meta: {
     title: "Quiénes somos",
     description:
@@ -128,5 +132,131 @@ const es: typeof en = {
     "Diez días hábiles en los que revisamos sus registros, sus anuncios y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
 };
 
-export type AboutDict = typeof en;
+export type AboutDict = typeof vinoEn;
+
+/**
+ * cardondigital.com's about page since bead hq-3f6ut.3 (Daniel, 2026-11-03):
+ * the wine software has its own brand, so Cardon's story is the one it tells
+ * every owner-run business. Same facts as the brief, read wider: the founder's
+ * years in wine are where the problem was learned, stated once, and the
+ * mission is the four services. The beliefs keep the brief's point (a person
+ * does the work that takes judgment, the record is kept in order) without the
+ * winemaking. How we work and the credentials are the brief's, unchanged.
+ */
+const en: AboutDict = {
+  meta: {
+    title: "About Cardon Digital",
+    description:
+      "Cardon Digital builds websites, Google Ads paid per contact and custom software for owner-run businesses in Baja California, and checks what AI answers say about them. On WhatsApp, with a call every week, and everything stays in your name.",
+  },
+  hero: {
+    eyebrow: "About",
+    title: "We build for anyone who runs a business by hand.",
+    titleAccent: "More clients, less repetitive work.",
+    sub: "Cardon Digital builds websites, Google Ads paid per contact and custom software for owner-run businesses, and checks what AI answers say about yours. We come from years of watching the number somebody needed go missing and the client somebody needed never find the door.",
+  },
+  media: {
+    bandCap: "Years inside a cellar taught us the problem every business has: the record goes missing.",
+    bandAlt: "A barrel room under warm light",
+  },
+  mission: {
+    kicker: "Why we exist",
+    title: "Most businesses run on notebooks, spreadsheets and memory.",
+    body: [
+      "Our founder, Daniel Hack, worked in wine for years, and what he saw there repeats in most owner-run businesses: records in paper notebooks, last year's data that nobody can find, a report somebody rebuilds by hand every week, and a website nobody writes to.",
+      "Cardon exists to close that distance. We give an owner-run business a site people find, ads that bring the right people, a check of what AI answers say about it, and a system that keeps the record so the team does not have to.",
+    ],
+  },
+  beliefs: {
+    kicker: "What we believe",
+    title: "The judgment stays with you. The repetitive work does not.",
+    body: [
+      "Running a business takes judgment, and nobody automates that; we do not try. What can run by itself is the work around it: copying data from one place to another, building the same report, chasing the same quote.",
+      "Keeping the record in order is one of the most important parts of that, because seeing what was done and how it turned out is the only way to repeat what worked.",
+    ],
+  },
+  how: {
+    kicker: "How we work",
+    title: "Before we build anything, we learn how you work today.",
+    body: [
+      "Before we propose anything we go through how you work now: where the information is kept, how it is analyzed, what gets measured and what it is compared against. What to build, and in what order, comes out of that.",
+      "During the build and after it we are on WhatsApp, and there is a call every week. The question goes to whoever built the system, with no help desk and no ticket number in between.",
+    ],
+    credK: "What we work in",
+    cred: "Google Ads, websites, program development, process automation, and AI systems. In wine, WSET Level 2.",
+  },
+  credentials: {
+    kicker: "Certificates",
+    title: "Every certificate can be checked on the issuer's own page.",
+    holder: "Holder",
+    issuer: "Issued by",
+    valid: "Valid",
+    validRange: "{from} to {until}",
+    code: "Code",
+    newTab: "(opens in a new tab)",
+  },
+  diagDesc:
+    "Ten business days looking at your records, your ads and your operations as one system. You get a written memo: what is true, what is broken, and what to build first.",
+};
+
+const es: AboutDict = {
+  meta: {
+    title: "Quiénes somos",
+    description:
+      "Cardon Digital hace sitios web, anuncios en Google con pago por contacto y software a la medida para negocios de Baja California, y revisa qué dicen de ellos las respuestas de IA. Por WhatsApp, con una llamada cada semana, y todo queda a su nombre.",
+  },
+  hero: {
+    eyebrow: "Quiénes somos",
+    title: "Construimos para quien lleva su negocio a mano.",
+    titleAccent: "Más clientes y menos trabajo repetitivo.",
+    sub: "Cardon Digital hace sitios web, anuncios en Google con pago por contacto y el software con el que opera un negocio, y revisa qué dicen de su negocio las respuestas de IA. Venimos de años de ver cómo se perdía el dato que alguien necesitaba y cómo el cliente que hacía falta nunca daba con la puerta.",
+  },
+  media: {
+    bandCap: "Años dentro de una cava nos enseñaron el problema que tiene todo negocio: el registro se pierde.",
+    bandAlt: "Una cava de barricas con luz cálida",
+  },
+  mission: {
+    kicker: "Por qué existimos",
+    title: "Casi todos los negocios funcionan con libretas, hojas de cálculo y memoria.",
+    body: [
+      "Nuestro fundador, Daniel Hack, trabajó años en el vino, y lo que vio ahí se repite en casi cualquier negocio con el dueño al frente: registros en libretas de papel, datos del año pasado que ya nadie encuentra, un reporte que alguien rehace a mano cada semana y un sitio web que no le trae ni un mensaje.",
+      "Cardon existe para cerrar esa brecha. A un negocio le damos un sitio que la gente encuentra, anuncios que traen a la gente indicada, una revisión de qué dicen de él las respuestas de IA y un sistema que guarda el registro para que su equipo no tenga que hacerlo.",
+    ],
+  },
+  beliefs: {
+    kicker: "En qué creemos",
+    title: "El criterio se queda con usted. El trabajo repetitivo, no.",
+    body: [
+      "Llevar un negocio requiere criterio, y eso nadie lo automatiza; nosotros no lo intentamos. Lo que sí puede hacerse solo es el trabajo de alrededor: pasar datos de un lugar a otro, armar el mismo reporte, darle seguimiento a la misma cotización.",
+      "Llevar el registro en orden es una de las partes más importantes de ese trabajo, porque ver qué se hizo y qué resultado dio es la única forma de repetir lo que funcionó.",
+    ],
+  },
+  how: {
+    kicker: "Cómo trabajamos",
+    title: "Antes de construir nada, entendemos cómo trabaja usted hoy.",
+    body: [
+      "Antes de proponer cualquier cosa revisamos cómo trabaja hoy: dónde guarda la información, cómo la analiza, qué mide y contra qué lo compara. De ahí sale qué hay que construir y en qué orden.",
+      "Mientras construimos, y también después, nos encuentra en WhatsApp y hay una llamada cada semana. Su pregunta le llega a quien construyó el sistema, sin mesa de ayuda ni número de folio de por medio.",
+    ],
+    credK: "En qué trabajamos",
+    cred: "Google Ads, sitios web, desarrollo de software, automatización de procesos y sistemas de inteligencia artificial. En vino, WSET Nivel 2.",
+  },
+  credentials: {
+    kicker: "Certificaciones",
+    title: "Cada certificación se puede comprobar en la página de quien la emite.",
+    holder: "Titular",
+    issuer: "Emitida por",
+    valid: "Vigencia",
+    validRange: "del {from} al {until}",
+    code: "Código",
+    newTab: "(se abre en una pestaña nueva)",
+  },
+  diagDesc:
+    "Diez días hábiles en los que revisamos sus registros, sus anuncios y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
+};
+
+/** cardondigital.com's about page. */
 export const about: Dict<AboutDict> = { en, es };
+
+/** The wine brand's about page: the brief's winery mission, unchanged. */
+export const aboutVino: Dict<AboutDict> = { en: vinoEn, es: vinoEs };

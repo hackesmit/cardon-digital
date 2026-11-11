@@ -17,7 +17,7 @@ import { locales, localePath, type Locale } from "../../../lib/i18n/config";
 import { demoCardKeys, demosIndex } from "../../../lib/i18n/demos-index";
 import { moduleIds } from "../../../lib/pricing";
 import { site } from "../../../lib/i18n/site";
-import { BRAND } from "@/lib/brand";
+import { brandConfig } from "@/lib/brand";
 
 /**
  * The Demos page (bead hq-lgjo.2).
@@ -168,8 +168,10 @@ describe.each(locales)("the %s page", (locale: Locale) => {
 
 describe("the nav carries the page", () => {
   // The nav's entries are the brand's (lib/brand.ts); Nav.tsx renders them.
-  it("has a Demos item in the row", () => {
-    expect(BRAND.nav.after).toContainEqual({ path: "/demos", label: "demos" });
+  // The demos belong to the wine brand since bead hq-3f6ut.3.
+  it("has a Demos item in the wine brand's row, and none on cardon's", () => {
+    expect(brandConfig({ site: "vino" }).nav.after).toContainEqual({ path: "/demos", label: "demos" });
+    expect(brandConfig({}).nav.after).not.toContainEqual({ path: "/demos", label: "demos" });
   });
 
   it.each(locales)("labels it in %s", (locale: Locale) => {

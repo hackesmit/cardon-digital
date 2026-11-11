@@ -19,6 +19,7 @@ import { LocaleProvider } from "../../lib/i18n/LocaleProvider";
 import { locales, localePath, type Locale } from "../../lib/i18n/config";
 import { site } from "../../lib/i18n/site";
 import { home } from "../../lib/i18n/home";
+import { VINO_NAME } from "../../lib/brand";
 
 /**
  * The home page and the diagnostic block in the AEO program (bead hq-i4b5.10,
@@ -115,7 +116,7 @@ describe.each(locales)("home (%s) in the AEO program", (locale) => {
     expect(text(services)).toContain(text(sitios.body));
   });
 
-  it("links /visibilidad-ia from the services block, outside any other link", async () => {
+  it("links /visibilidad-ia from its own service card, which names the engines", async () => {
     const html = await serve(locale);
     const services = block(html, /<section[^>]*id="servicios"[^>]*>/, "section");
     const target = localePath(locale, "/visibilidad-ia");
@@ -123,8 +124,9 @@ describe.each(locales)("home (%s) in the AEO program", (locale) => {
     const ai = links.find((m) => m[1] === target);
     expect(ai, `no link to ${target}`).toBeDefined();
     expect(ai![2]).not.toMatch(/<a\b/);
-    expect(text(ai![2])).toBe(text(d.services.aiLink));
-    expect(text(ai![2])).toMatch(AI_ENGINES);
+    const card = d.services.items.find((i) => i.id === "ia")!;
+    expect(text(ai![2])).toContain(text(card.body));
+    expect(card.body).toMatch(AI_ENGINES);
   });
 
   it("states the AI answers check in the diagnostic block, with the one CTA unchanged", async () => {
@@ -139,9 +141,46 @@ describe.each(locales)("home (%s) in the AEO program", (locale) => {
     const html = await serve(locale);
     const visible = text(html);
     expect(visible.match(PROMISE), visible.match(PROMISE)?.[0]).toBeNull();
-    for (const line of [d.meta.title, d.meta.description, d.services.aiLead, d.services.aiLink, s.diag.price]) {
+    const ai = d.services.items.find((i) => i.id === "ia")!;
+    for (const line of [d.meta.title, d.meta.description, ai.title, ai.body, s.diag.price]) {
       expect(line).not.toContain("\u2014");
       expect(line).not.toMatch(PROMISE);
     }
+  });
+});
+
+/**
+ * The refocus of bead hq-3f6ut.3 (Daniel, 2026-11-03): the wine software left
+ * for its own brand, so the Cardon home says what Cardon does and for whom
+ * before the reader scrolls, and keeps exactly one plain link to the wine
+ * brand, its name read from lib/brand.ts.
+ */
+const words = (s: string) => s.split(/\s+/).filter(Boolean);
+
+describe.each(locales)("home (%s) after the wine brand left", (locale) => {
+  const d = home[locale];
+
+  it("says what Cardon does and for whom in its first 60 words", async () => {
+    const html = await serve(locale);
+    const hero = block(html, /<section class="hero"[^>]*>/, "section");
+    const first = words(text(hero)).slice(0, 60).join(" ");
+    const want =
+      locale === "es"
+        ? [/sitios web/i, /anuncios en Google/, /ChatGPT/, /software a la medida/, /negocios/, /Baja California/]
+        : [/sites/i, /Google Ads/, /ChatGPT/, /custom software/, /businesses/, /Baja California/];
+    for (const re of want) expect(first, String(re)).toMatch(re);
+  });
+
+  it("carries no module, demo or case content and links the wine brand once", async () => {
+    const html = await serve(locale);
+    const visible = text(html);
+    // The module names as the wine brand writes them, and its harvest words.
+    expect(visible).not.toMatch(/\b(Produccion|Producción|Hospitalidad|Restaurante)\b/);
+    expect(visible).not.toMatch(/\b(vendimia|añadas?|harvest|vintages?)\b/i);
+    const hrefs = Array.from(html.matchAll(/<a\b[^>]*href="([^"]*)"/g)).map((m) => m[1]);
+    for (const h of hrefs) expect(h, h).not.toMatch(/\/(work|demos?)(\/|$|\?)/);
+    const wine = hrefs.filter((h) => h === localePath(locale, "/industries/winery"));
+    expect(wine).toHaveLength(1);
+    expect(visible).toContain(`${d.wine.lead} ${VINO_NAME}`);
   });
 });
