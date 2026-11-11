@@ -22,6 +22,15 @@ describe("wine brand legal pages (hq-3f6ut.4)", () => {
     expect(all.privacy.en.rightsBody).toContain("ARCO");
   });
 
+  // LFPDPPP art. 15 I: identity and domicilio of the responsable, from
+  // daniel-facts r-35d411e1. A notice that loses either one fails here.
+  it.each(["en", "es"] as const)("%s: names the responsable and the domicilio", (l) => {
+    const intro = all.privacy[l].intro;
+    expect(intro).toContain("Daniel Hack");
+    expect(intro).toContain("persona física con actividad empresarial");
+    expect(intro).toContain("Final de Calle Plata S/N, Ensenada, Baja California, 22766");
+  });
+
   it("does not carry Cardon's own page identity or Cardon-only services", () => {
     const s = flat(all);
     expect(s).not.toContain("cardondigital.com");
