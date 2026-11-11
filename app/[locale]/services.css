@@ -129,6 +129,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(14px, 1.8vw, 22px);
 }
+/* Four example cards on cardon's /software (hq-3f6ut.3) sit two by two. */
+.pg-svc .mod-grid-2 { grid-template-columns: repeat(2, 1fr); }
 .pg-svc .mod {
   display: flex;
   flex-direction: column;

@@ -14,10 +14,15 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { precios } from "@/lib/i18n/precios";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
+import { BRAND } from "@/lib/brand";
 import "../services.css";
 import "./precios.css";
 
 type Params = { params: Promise<{ locale: string }> };
+
+/** The cardon build prices websites, ads and custom software; the wine brand
+    prices the modules (bead hq-3f6ut.3). Chosen at build time. */
+const cardon = BRAND.id === "cardon";
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
@@ -26,7 +31,7 @@ function localeOf(params: { locale: string }): Locale {
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
   const locale = localeOf(params);
-  return pageMetadata(locale, "/precios", precios[locale].meta);
+  return pageMetadata(locale, "/precios", cardon ? precios[locale].cardon.meta : precios[locale].meta);
 }
 
 /**
@@ -42,6 +47,12 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
  * price per module next to the build that produced it, worked examples at the
  * entry size, the combination and annual rules as policy, the terms, and the
  * line that says the Diagnostico sets the quote. Never the per-size table.
+ *
+ * Since bead hq-3f6ut.3 the page is split by brand. cardondigital.com shows
+ * the websites, the ads and custom software, which has no published price and
+ * gets the line that says how it is quoted; no module, no builder (its
+ * software group sells the modules) and no founding winery. The wine brand
+ * shows the builder and the modules, without the website and ads sections.
  */
 export default async function PreciosPage(props: Params) {
   const params = await props.params;
@@ -67,12 +78,13 @@ export default async function PreciosPage(props: Params) {
                 <br />
                 <span className="accent">{d.hero.accent}</span>
               </h1>
-              <p className="hero-sub">{rich(d.hero.sub)}</p>
+              <p className="hero-sub">{rich(cardon ? d.cardon.sub : d.hero.sub)}</p>
               <div className="hero-actions">
                 <Link className="cta" href={href("/contacto")}>
                   {s.diag.cta}
                 </Link>
-                <a className="btn-ghost" href="#paquetes">
+                {/* The first price list: the website packages on cardon, the modules on the wine brand. */}
+                <a className="btn-ghost" href={cardon ? "#paquetes" : "#software"}>
                   {d.hero.ctaFloors}
                 </a>
               </div>
@@ -85,7 +97,7 @@ export default async function PreciosPage(props: Params) {
               src="/media/precios/handover.webp"
               tone="full"
               priority
-              caption={d.media.handoverCap}
+              caption={cardon ? d.cardon.handoverCap : d.media.handoverCap}
               alt={d.media.handoverAlt}
             />
             </div>
@@ -96,6 +108,7 @@ export default async function PreciosPage(props: Params) {
       {/* ============================ BUILD YOUR PACKAGE ============================
           The package builder (Daniel, 2026-10-16), folded away so the price
           list below still reads first; it sends its package to /contacto. */}
+      {!cardon && (
       <section className="section pr-builder" id="arme" aria-labelledby="pb-title">
         <div className="container">
           <div className="section-head">
@@ -105,21 +118,45 @@ export default async function PreciosPage(props: Params) {
           <StandaloneBuilder />
         </div>
       </section>
+      )}
 
-      {/* ============================ WEBSITES ============================ */}
-      <WebPackages
-        locale={locale}
-        kicker={d.hero.web.kicker}
-        more={{ href: href("/sitios-web"), label: d.hero.web.more }}
-      />
+      {cardon && (
+        <>
+          {/* ============================ WEBSITES ============================ */}
+          <WebPackages
+            locale={locale}
+            kicker={d.hero.web.kicker}
+            more={{ href: href("/sitios-web"), label: d.hero.web.more }}
+          />
 
-      {/* ============================ ADS ============================ */}
-      <AdsFee
-        locale={locale}
-        kicker={d.hero.adsHead.kicker}
-        more={{ href: href("/anuncios"), label: d.hero.adsHead.more }}
-      />
+          {/* ============================ ADS ============================ */}
+          <AdsFee
+            locale={locale}
+            kicker={d.hero.adsHead.kicker}
+            more={{ href: href("/anuncios"), label: d.hero.adsHead.more }}
+          />
 
+          {/* ======================= CUSTOM SOFTWARE =======================
+              No figure: custom software is quoted after the diagnostic. */}
+          <section className="section pr-software-head" id="software" aria-labelledby="sw-title">
+            <div className="container">
+              <Reveal>
+                <div className="section-head">
+                  <span className="kicker">{d.cardon.software.kicker}</span>
+                  <h2 id="sw-title">{d.cardon.software.title}</h2>
+                  <p className="section-sub">{d.cardon.software.sub}</p>
+                </div>
+                <p className="more-link">
+                  <Link href={href("/software")}>{d.cardon.software.more}</Link>
+                </p>
+              </Reveal>
+            </div>
+          </section>
+        </>
+      )}
+
+      {!cardon && (
+        <>
       {/* ============================ SOFTWARE ============================ */}
       <section className="section pr-software-head" id="software" aria-labelledby="sw-title">
         <div className="container">
@@ -153,6 +190,9 @@ export default async function PreciosPage(props: Params) {
         </div>
       </section>
 
+        </>
+      )}
+
       {/* ============================ WHAT WE DO NOT DO ============================ */}
       <section className="section pr-notdo" aria-labelledby="notdo-title">
         <div className="container">
@@ -174,11 +214,11 @@ export default async function PreciosPage(props: Params) {
       <section className="section diagnostic" id="diagnostic" aria-labelledby="diag-title">
         <div className="container">
           <Reveal>
-            <div className="diag-inner diag-inner-photo">
+            <div className={cardon ? "diag-inner" : "diag-inner diag-inner-photo"}>
               <div className="diag-lead">
                 <span className="kicker clay">{s.diag.kicker}</span>
                 <h2 id="diag-title">{s.diag.title}</h2>
-                <p className="diag-desc">{d.close.desc}</p>
+                <p className="diag-desc">{cardon ? d.cardon.closeDesc : d.close.desc}</p>
                 <div className="diag-actions">
                   <Link className="cta cta-lg" href={href("/contacto")}>
                     {s.diag.cta}
@@ -186,6 +226,8 @@ export default async function PreciosPage(props: Params) {
                 </div>
                 <p className="diag-price">{rich(s.diag.price)}</p>
               </div>
+              {/* The session photo is a barrel cellar: the wine brand's. */}
+              {!cardon && (
               <Media
                 className="diag-photo"
                 slot="precios/diagnostic-session"
@@ -193,6 +235,7 @@ export default async function PreciosPage(props: Params) {
                 caption={d.media.diagCap}
                 alt={d.media.diagAlt}
               />
+              )}
             </div>
           </Reveal>
         </div>

@@ -68,11 +68,9 @@ const brandNavPaths = () =>
 /** Every href() argument that is not a string literal, and where it reads from. */
 const DYNAMIC_HREFS: Record<string, { file: string; constant: string } | FromRegistry> = {
   "guidePath(guide.slug)": { paths: guidePaths },
-  "CASE_ROUTES[0]": { file: "components/pages/home-cardon.tsx", constant: "CASE_ROUTES" },
-  "CASE_ROUTES[i]": { file: "components/pages/home-cardon.tsx", constant: "CASE_ROUTES" },
-  "SERVICE_ROUTES[i]": { file: "components/pages/home-cardon.tsx", constant: "SERVICE_ROUTES" },
+  "serviceRoute(item.id)": { file: "components/pages/home-cardon.tsx", constant: "SERVICE_ROUTES" },
   "l.path": { paths: brandNavPaths },
-  route: { file: "components/pages/home/ClientLogos.tsx", constant: "CASE_ROUTES" },
+  "CASE_ROUTES[i]": { file: "components/pages/home-vino.tsx", constant: "CASE_ROUTES" },
   "STYLE_ROUTES[i]": {
     file: "components/pages/home/StylesPromo.tsx",
     constant: "STYLE_ROUTES",
