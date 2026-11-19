@@ -116,6 +116,11 @@ export const PAGES = {
   "home-vino": { en: { budget: 376, measured: 752 }, es: { budget: 397, measured: 793 } },
   "demos-index": { en: { budget: 397, measured: 793 }, es: { budget: 402, measured: 803 } },
   /**
+   * The wine brand's websites-for-wineries page (2026-11-19, bead hq-60dkt),
+   * a new page measured when it was written.
+   */
+  "sitios-vino": { en: { budget: 230, measured: 460 }, es: { budget: 238, measured: 476 } },
+  /**
    * The page for a business with no website yet (2026-11-19, bead hq-4l9oj),
    * a new page measured when it was written.
    */

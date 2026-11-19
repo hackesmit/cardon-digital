@@ -28,7 +28,7 @@ const vinoEn = {
     eyebrow: "About",
     title: "We come from wine.",
     titleAccent: "We build for anyone who runs a business by hand.",
-    sub: "Cardon Digital builds websites, runs Google Ads and builds the software an owner-run business operates on. We come out of years inside a Valle winery, watching the number somebody needed go missing and the client somebody needed never find the door.",
+    sub: "We build the software and the website a winery runs on, from Ensenada. We come out of years inside a Valle winery, watching the number somebody needed go missing and the client somebody needed never find the door.",
   },
   media: {
     bandCap: "Years inside a cellar like this one are where the record problem was learned.",
@@ -72,7 +72,7 @@ const vinoEn = {
     newTab: "(opens in a new tab)",
   },
   diagDesc:
-    "Ten business days looking at your records, your ads and your operations as one system. You get a written memo: what is true, what is broken, and what to build first.",
+    "Ten business days looking at your records, your website and your operations as one system. You get a written memo: what is true, what is broken, and what to build first.",
 };
 
 const vinoEs: typeof vinoEn = {
@@ -85,7 +85,7 @@ const vinoEs: typeof vinoEn = {
     eyebrow: "Quiénes somos",
     title: "Venimos del vino.",
     titleAccent: "Construimos para quien lleva su negocio a mano.",
-    sub: "Cardon Digital hace sitios web, maneja anuncios en Google y construye el software con el que opera un negocio. Venimos de pasar años dentro de una bodega del Valle, viendo cómo se perdía el dato que alguien necesitaba y cómo el cliente que hacía falta nunca daba con la puerta.",
+    sub: "Construimos el software y el sitio web con los que opera una bodega, desde Ensenada. Venimos de pasar años dentro de una bodega del Valle, viendo cómo se perdía el dato que alguien necesitaba y cómo el cliente que hacía falta nunca daba con la puerta.",
   },
   media: {
     bandCap: "El problema del registro lo aprendimos en años de trabajo dentro de una cava como esta.",
@@ -129,7 +129,7 @@ const vinoEs: typeof vinoEn = {
     newTab: "(se abre en una pestaña nueva)",
   },
   diagDesc:
-    "Diez días hábiles en los que revisamos sus registros, sus anuncios y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
+    "Diez días hábiles en los que revisamos sus registros, su sitio web y su operación como un solo sistema. Usted recibe un informe escrito: qué funciona, qué falla y qué conviene construir primero.",
 };
 
 export type AboutDict = typeof vinoEn;

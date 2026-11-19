@@ -78,7 +78,7 @@ export default async function PreciosPage(props: Params) {
                 <br />
                 <span className="accent">{d.hero.accent}</span>
               </h1>
-              <p className="hero-sub">{rich(cardon ? d.cardon.sub : d.hero.sub)}</p>
+              <p className="hero-sub">{rich(cardon ? d.cardon.sub : d.vino.sub)}</p>
               <div className="hero-actions">
                 <Link className="cta" href={href("/contacto")}>
                   {s.diag.cta}
@@ -88,7 +88,7 @@ export default async function PreciosPage(props: Params) {
                   {d.hero.ctaFloors}
                 </a>
               </div>
-              <p className="hero-proof">{d.hero.proof}</p>
+              <p className="hero-proof">{cardon ? d.hero.proof : d.vino.proof}</p>
             </div>
             {/* The day the ownership promise is kept, beside the sentence that makes it. */}
             <Media
@@ -177,6 +177,24 @@ export default async function PreciosPage(props: Params) {
       <MixExample locale={locale} />
       <PricingDetails locale={locale} />
 
+      {/* ============================ WEBSITES ============================
+          The winery's website (bead hq-60dkt): one line and the link to its
+          page, where the packages and their prices are. */}
+      <section className="section pr-software-head" id="sitios" aria-labelledby="web-title">
+        <div className="container">
+          <Reveal>
+            <div className="section-head">
+              <span className="kicker">{d.vino.web.kicker}</span>
+              <h2 id="web-title">{d.vino.web.title}</h2>
+              <p className="section-sub">{d.vino.web.sub}</p>
+            </div>
+            <p className="more-link">
+              <Link href={href("/sitios-web")}>{d.vino.web.more}</Link>
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
       {/* The founding-client slot (BUSINESS-PLAN.md 5.4), one winery, through 31 December 2026. */}
       <section className="section pr-founding" aria-label={d.hero.softwareHead.founding.kicker}>
         <div className="container">
@@ -199,10 +217,10 @@ export default async function PreciosPage(props: Params) {
           <Reveal>
             <div className="section-head">
               <span className="kicker gold">{d.hero.notDo.kicker}</span>
-              <h2 id="notdo-title">{d.hero.notDo.title}</h2>
+              <h2 id="notdo-title">{cardon ? d.hero.notDo.title : d.vino.notDo.title}</h2>
             </div>
             <ul className="notdo-list">
-              {d.hero.notDo.items.map((item) => (
+              {(cardon ? d.hero.notDo.items : d.vino.notDo.items).map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>

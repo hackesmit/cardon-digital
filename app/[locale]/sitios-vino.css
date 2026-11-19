@@ -1,0 +1,34 @@
+/* The wine brand's website page (components/pages/sitios-vino.tsx, bead
+   hq-60dkt). Everything else comes from services.css; these are the problem
+   and fix rows, the proof line and the opt-out line. */
+.pg-sitios-vino .wf-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(18px, 2.6vw, 34px);
+}
+.pg-sitios-vino .wf-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.pg-sitios-vino .wf-problem {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.7vw, 1.28rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--text);
+}
+.pg-sitios-vino .wf-fix { margin: 0; color: var(--text-dim); font-size: 0.97rem; line-height: 1.6; }
+.pg-sitios-vino .wf-note { margin-top: 22px; color: var(--text-dim); font-size: 0.92rem; }
+.pg-sitios-vino .wf-proof { max-width: 30ch; }
+.pg-sitios-vino .wf-optout { margin-top: 18px; color: var(--text-dim); font-size: 0.85rem; }
+@media (max-width: 720px) {
+  .pg-sitios-vino .wf-list { grid-template-columns: 1fr; }
+}
