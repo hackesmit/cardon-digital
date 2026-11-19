@@ -81,6 +81,9 @@ describe.each(locales)("/precios (%s) on the wine brand, hero and websites", (lo
     expect(hero).toContain(d.vino.sub);
     expect(hero).not.toMatch(/Aperta|anuncios|\bads?\b|ad management|pago por contacto|fee per contact/i);
     expect(html).not.toMatch(/Aperta/);
+    // The proof line names no client without Daniel's word (hq-60dkt DoD, hq-rbdwt N3).
+    expect(hero).toContain(d.vino.proof);
+    expect(d.vino.proof).not.toMatch(/Xanic/i);
     expect(html).toContain(`href="/${locale}/sitios-web"`);
     expect(html).toContain(d.vino.web.title);
   });

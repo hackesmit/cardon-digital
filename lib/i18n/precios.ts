@@ -295,7 +295,7 @@ const en = {
       prices the modules and, since the website page, the winery's website. */
   vino: {
     sub: "Each software module from its entry price, and the winery's website priced by its features. In your name means the domain, the accounts, the code and the data.",
-    proof: "Latest builds: Monte Xanic and Viñedo En'kanto.",
+    proof: "Latest build: Viñedo En'kanto.",
     web: {
       kicker: "Websites",
       title: "The winery's website, priced by its features.",
@@ -530,7 +530,7 @@ const es: typeof en = {
 
   vino: {
     sub: "Cada módulo de software desde su precio de entrada, y el sitio web de la bodega con precio por funciones. A su nombre quedan el dominio, las cuentas, el código y los datos.",
-    proof: "Proyectos recientes: Monte Xanic y Viñedo En'kanto.",
+    proof: "Proyecto reciente: Viñedo En'kanto.",
     web: {
       kicker: "Sitios web",
       title: "El sitio web de la bodega, con precio por funciones.",
