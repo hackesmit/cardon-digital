@@ -214,6 +214,8 @@ for (const mode of ["light", "dark"]) {
 const DISPLAY_PRIMARY = new Set([
   /* display text, 3:1 */
   "h1 .accent",
+  /* The 404's code, which is display text at 4rem and up (not-found.css). */
+  ".pg-404 .nf-code",
   ".pg-showcase .accent",
   ".pg-modulos .accent",
   ".pg-enkanto h2 .accent",

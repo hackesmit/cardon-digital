@@ -19,9 +19,10 @@ const en = {
   /** The 404 page. Shown for any address that does not resolve to a route. */
   notFound: {
     metaTitle: "Page not found",
-    eyebrow: "404",
-    title: "That page is not here.",
-    body: "The link may be old, or the address may carry a typo. The services, the cases and the diagnostic are all one step away from the home page.",
+    /** The code itself: it stands on the ground line in NotFoundBody. */
+    code: "404",
+    title: "This page got lost in the desert.",
+    body: "The link may be old, or the address may carry a typo. From the home page everything is one step away.",
     home: "Back to the home page",
   },
   meta: {
@@ -88,9 +89,9 @@ const es: typeof en = {
   /** The 404 page. Shown for any address that does not resolve to a route. */
   notFound: {
     metaTitle: "Página no encontrada",
-    eyebrow: "404",
-    title: "No encontramos esa página.",
-    body: "Puede que el enlace sea viejo o que la dirección traiga un error de dedo. Los servicios, los casos y el diagnóstico están a un paso de la página de inicio.",
+    code: "404",
+    title: "Esta página se perdió en el desierto.",
+    body: "El enlace puede ser viejo, o la dirección puede traer un error de dedo. Desde el inicio tiene todo a un paso.",
     home: "Volver al inicio",
   },
   meta: {
