@@ -511,6 +511,7 @@ const en: GuideCopy = {
 
 export const aparecerEnChatgpt: Guide = {
   slug: "aparecer-en-chatgpt",
+  brand: "cardon",
   datePublished: "2026-10-21",
   dateModified: "2026-10-21",
   reviewBy: "2027-01-21",

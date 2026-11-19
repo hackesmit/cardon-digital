@@ -1,11 +1,12 @@
-import { brandIndexable, parseBrand, parseOrigin } from "./lib/brand-env.mjs";
+import { brandIndexable, parseBrand, parseOrigin, vinoHostRedirects } from "./lib/brand-env.mjs";
 
 /* The brand switch (lib/brand.ts, docs/BRANDS.md). parseBrand throws on any
    value other than cardon, vino or unset, so the build fails before a page is
    compiled. A wine-brand build with no domain of its own yet is noindex on
    every response, files included (robots.txt, sitemap.xml, llms.txt). */
 const BRAND = parseBrand(process.env.NEXT_PUBLIC_SITE);
-const INDEXABLE = brandIndexable(BRAND, parseOrigin(process.env.NEXT_PUBLIC_SITE_URL));
+const SITE_ORIGIN = parseOrigin(process.env.NEXT_PUBLIC_SITE_URL);
+const INDEXABLE = brandIndexable(BRAND, SITE_ORIGIN);
 
 /**
  * Static security headers for every response (bead hq-fnhrj.6, site-baseline
@@ -30,6 +31,19 @@ const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
 ];
 
+/**
+ * A wine build answers Cardon's root art paths with its own art (bead
+ * hq-3f6ut.8, lib/brand-art.ts), so an old link or a browser's default
+ * /favicon.ico request never shows Cardon's card or saguaro there. Pages link
+ * the wine art by its own path; these only catch the root defaults.
+ */
+export const VINO_ART_REWRITES = [
+  { source: "/og.png", destination: "/brand-art/og.png" },
+  { source: "/icon.svg", destination: "/brand-art/icon-192.png" },
+  { source: "/favicon.ico", destination: "/brand-art/icon-48.png" },
+  { source: "/apple-icon.png", destination: "/brand-art/apple-icon.png" },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -52,9 +66,18 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    // beforeFiles: checked ahead of public/, which still holds Cardon's files.
+    return { beforeFiles: BRAND === "vino" ? VINO_ART_REWRITES : [] };
+  },
   async redirects() {
     // RFC 9116 section 3: the legacy top-level location points at the real one.
-    return [{ source: "/security.txt", destination: "/.well-known/security.txt", permanent: true }];
+    return [
+      { source: "/security.txt", destination: "/.well-known/security.txt", permanent: true },
+      // Once the wine brand has its domain, its Vercel address sends every
+      // path there (bead hq-60dkt); lib/brand-env.mjs says which host.
+      ...vinoHostRedirects(BRAND, SITE_ORIGIN),
+    ];
   },
 };
 

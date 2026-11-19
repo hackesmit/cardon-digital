@@ -23,6 +23,7 @@ import { htmlLang, localePath, type Locale } from "@/lib/i18n/config";
 import { plain } from "@/lib/i18n/rich";
 import { SITE_URL } from "@/lib/i18n/metadata";
 import { BRAND, CARDON_URL } from "@/lib/brand";
+import { brandArt } from "@/lib/brand-art";
 
 export type LdNode = { "@type": string | string[]; "@id"?: string; [key: string]: unknown };
 export type LdGraph = { "@context": "https://schema.org"; "@graph": LdNode[] };
@@ -67,8 +68,8 @@ export function organizationLd(
       "@id": ORGANIZATION_ID,
       name: BRAND.name,
       url: SITE_URL + localePath(locale, "/"),
-      logo: absoluteUrl("/apple-icon.png"),
-      image: absoluteUrl("/og.png"),
+      logo: absoluteUrl(brandArt(BRAND.id).apple),
+      image: absoluteUrl(brandArt(BRAND.id).og.url),
       areaServed: AREA_SERVED,
       founder: ref(FOUNDER_ID),
       parentOrganization: {
@@ -85,8 +86,8 @@ export function organizationLd(
     "@id": ORGANIZATION_ID,
     name: BRAND.name,
     url: SITE_URL + localePath(locale, "/"),
-    logo: absoluteUrl("/apple-icon.png"),
-    image: absoluteUrl("/og.png"),
+    logo: absoluteUrl(brandArt(BRAND.id).apple),
+    image: absoluteUrl(brandArt(BRAND.id).og.url),
     areaServed: AREA_SERVED,
     founder: ref(FOUNDER_ID),
     ...(sameAs.length > 0 ? { sameAs } : {}),

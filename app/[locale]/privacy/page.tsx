@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
+import { BRAND } from "@/lib/brand";
 import { privacy } from "@/lib/i18n/privacy";
+import { privacyVino } from "@/lib/i18n/privacy-vino";
+import { branded } from "@/lib/i18n/variant";
 import "../legal.css";
+
+const dict = () => (BRAND.id === "vino" ? branded(privacyVino) : privacy);
 
 type Params = { params: Promise<{ locale: string }> };
 
@@ -13,12 +18,12 @@ function localeOf(params: { locale: string }): Locale {
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
   const locale = localeOf(params);
-  return pageMetadata(locale, "/privacy", privacy[locale].meta);
+  return pageMetadata(locale, "/privacy", dict()[locale].meta);
 }
 
 export default async function PrivacyPage(props: Params) {
   const params = await props.params;
-  const d = privacy[localeOf(params)];
+  const d = dict()[localeOf(params)];
 
   return (
     <main id="main" className="pg-legal">
@@ -62,8 +67,8 @@ export default async function PrivacyPage(props: Params) {
 
         <h2>{d.contactHeading}</h2>
         <p>
-          <a className="hit" href="mailto:daniel@cardondigital.com">
-            daniel@cardondigital.com
+          <a className="hit" href={`mailto:${BRAND.email}`}>
+            {BRAND.email}
           </a>
         </p>
 

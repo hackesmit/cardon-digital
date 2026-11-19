@@ -13,12 +13,8 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
 import { site } from "@/lib/i18n/site";
 import { adsFill } from "@/lib/adsCopy";
-import {
-  formatPrice,
-  moduleFloors,
-  webPackageFrom,
-  currencyByLocale,
-} from "@/lib/pricing";
+import { formatPrice, webPackageFrom, currencyByLocale } from "@/lib/pricing";
+import { BRAND, VINO_NAME, wineLink } from "@/lib/brand";
 import Field from "@/components/site/field/Field";
 import CredentialFloat from "@/components/site/CredentialFloat";
 import { CREDENTIALS } from "@/lib/credentials";
@@ -31,34 +27,21 @@ function localeOf(params: { locale: string }): Locale {
 }
 
 /**
- * The routes behind the proof-bar cards, in the order the dictionary lists
- * them. A route is not copy, so it stays out of lib/i18n: the copy checker
- * reads that file as prose and a path would be counted as a word. The third
- * card (a website client with no case page yet) carries no route and renders
- * as a plain card.
+ * The photographs on the service cards, by card id. The AI answers card has
+ * none and is the wide card under the row, so the three that do carry one
+ * still make an even row. Add the file and its path here.
  */
-const CASE_ROUTES = ["/work/monte-xanic", "/work/enkanto"];
+const SERVICE_PHOTOS: Record<string, { slot: MediaPhotoSlot; src: string | null }> = {
+  sitios: { slot: "home/service-sitios", src: "/media/home/service-sitios.webp" },
+  anuncios: { slot: "home/service-anuncios", src: "/media/home/service-anuncios.webp" },
+  software: { slot: "home/service-software", src: "/media/home/service-software.webp" },
+};
 
-/**
- * The photographs at the top of the page, by slot, in the order of the proof
- * cards and then the service cards. A slot with no file yet renders no frame
- * at all here (the card stands as it did), because a hatched placeholder on
- * the first screen reads as unfinished; the shot list in public/media/README.md
- * carries the brief. Add the file and its path here.
- */
-const PROOF_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
-  { slot: "home/proof-xanic", src: "/media/home/proof-xanic.webp" },
-  { slot: "home/proof-enkanto", src: "/media/enkanto/cabana.webp" },
-  { slot: "home/proof-aperta", src: "/media/home/proof-aperta.webp" },
-];
-const SERVICE_PHOTOS: Array<{ slot: MediaPhotoSlot; src: string | null }> = [
-  { slot: "home/service-sitios", src: "/media/home/service-sitios.webp" },
-  { slot: "home/service-anuncios", src: "/media/home/service-anuncios.webp" },
-  { slot: "home/service-software", src: "/media/home/service-software.webp" },
-];
-
-/** The service page behind each of the three service cards, in dictionary order. */
-const SERVICE_ROUTES = ["/sitios-web", "/anuncios", "/software"];
+/** The service page behind each service card: parallel arrays, so
+    app/routes.test.ts can read the paths it audits. */
+const SERVICE_IDS = ["sitios", "anuncios", "software", "ia"];
+const SERVICE_ROUTES = ["/sitios-web", "/anuncios", "/software", "/visibilidad-ia"];
+const serviceRoute = (id: string) => SERVICE_ROUTES[SERVICE_IDS.indexOf(id)];
 
 /** The businesses we have worked with (Daniel, 2026-10-01). Names, so not copy. */
 const CLIENTS = ["Monte Xanic", "Viñedo En'kanto", "BrighterHire", "RLogistics", "Aperta Media"];
@@ -72,8 +55,12 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
 /**
  * The home page, in the order the arc of 2026-09-28 sets out (bunker
  * research/2026-09/site-arc-digital-onboarding.md section 4): hero, proof
- * bar, the three services, the objections, the Monte Xanic case, one system,
- * how it works, compare, pricing summary, diagnostic.
+ * bar, the services, the objections, one system, how it works, compare,
+ * pricing summary, diagnostic. Since bead hq-3f6ut.3 (Daniel, 2026-11-03) it
+ * sells what Cardon keeps once the wine software has its own brand: websites,
+ * Google Ads, AI answers and custom software for any business. The Monte
+ * Xanic case and the modules moved with the wine brand; one plain line in the
+ * services block (wineLink) is all that points there.
  *
  * Three things about it are deliberate and easy to undo by accident.
  *
@@ -99,16 +86,15 @@ export default async function Home(props: Params) {
   const cur = currencyByLocale[locale];
   const price = (amount: number) => formatPrice(locale, amount);
   const siteFrom = price(webPackageFrom("presencia")[cur]);
-  const softFrom = price(
-    Math.min(...Object.values(moduleFloors).map((f) => f.setup[cur])),
-  );
   const serviceLine: Record<string, string> = {
     sitios: d.services.fromLabel + " " + siteFrom,
     anuncios: adsFill(locale, "{base} " + d.services.adsLine),
-    software: d.services.fromLabel + " " + softFrom,
+    software: d.services.softLine,
+    ia: d.services.aiLine,
   };
-  const photo = (entry: { slot: MediaPhotoSlot; src: string | null }, className: string) =>
-    entry.src ? (
+  const wine = wineLink(BRAND, locale);
+  const photo = (entry: { slot: MediaPhotoSlot; src: string | null } | undefined, className: string) =>
+    entry?.src ? (
       <Media
         className={className}
         slot={entry.slot}
@@ -119,7 +105,9 @@ export default async function Home(props: Params) {
     ) : null;
   // The three service cards carry their photographs together or not at all:
   // one card with a picture and two without reads as an unfinished row.
-  const servicePhotosReady = SERVICE_PHOTOS.every((entry) => entry.src);
+  const servicePhotosReady = Object.values(SERVICE_PHOTOS).every((entry) => entry.src);
+  const rowCards = d.services.items.filter((item) => item.id in SERVICE_PHOTOS);
+  const wideCards = d.services.items.filter((item) => !(item.id in SERVICE_PHOTOS));
   const callToAction = (
     <div className="cta-row">
       <Link className="cta" href={href("/contacto")}>
@@ -190,30 +178,20 @@ export default async function Home(props: Params) {
       </section>
 
       {/* ============================ 2. PROOF BAR ============================
-          Three named clients with what we actually have: Monte Xanic's real
-          number, what was built for En'kanto, and Aperta Media Co.'s site
-          (a screenshot of the live page). ClientLogos, under them, shows every
-          client's own mark in a plain row (Daniel, 2026-10-23). */}
+          Two named clients with what we actually have: Monte Xanic's one
+          measured figure, a finance process automated, and Aperta Media Co.'s
+          site. Plain cards: the case pages belong to the wine brand now.
+          ClientLogos, under them, shows every client's own mark in a plain
+          row (Daniel, 2026-10-23). */}
       <section className="proof" aria-label={d.proof.aria}>
-        <div className="container proof-grid proof-grid-3">
-          {d.proof.items.map((item, i) =>
-            CASE_ROUTES[i] ? (
-              <Link className="proof-item" key={item.name} href={href(CASE_ROUTES[i])}>
-                {photo(PROOF_PHOTOS[i], "proof-photo")}
-                <span className="proof-name">{item.name}</span>
-                <span className="proof-place mono">{item.place}</span>
-                <p className="proof-result">{item.result}</p>
-                <span className="proof-read">{d.proof.read}</span>
-              </Link>
-            ) : (
-              <div className="proof-item proof-item-still" key={item.name}>
-                {photo(PROOF_PHOTOS[i], "proof-photo")}
-                <span className="proof-name">{item.name}</span>
-                <span className="proof-place mono">{item.place}</span>
-                <p className="proof-result">{item.result}</p>
-              </div>
-            ),
-          )}
+        <div className="container proof-grid proof-grid-2">
+          {d.proof.items.map((item) => (
+            <div className="proof-item proof-item-still" key={item.name}>
+              <span className="proof-name">{item.name}</span>
+              <span className="proof-place mono">{item.place}</span>
+              <p className="proof-result">{item.result}</p>
+            </div>
+          ))}
         </div>
 
         <div className="container proof-map">
@@ -221,11 +199,13 @@ export default async function Home(props: Params) {
         </div>
       </section>
 
-      {/* ============================ 3. THE THREE SERVICES ============================
+      {/* ============================ 3. THE SERVICES ============================
           Each card is a result headline, one sentence, the entry price read
-          out of lib/pricing.ts, and the link to its page. The board under the
-          cards (PlayOnceVis) draws the line beneath them: three parts, one
-          board. Its strings are `home.vis.board`. */}
+          out of lib/pricing.ts (or how it is priced), and the link to its
+          page. Three cards with photographs make the row; the AI answers card
+          runs wide under it. Then the one line to the wine brand. The board
+          under them (PlayOnceVis) draws the line beneath them: separate parts,
+          one board. Its strings are `home.vis.board`. */}
       <section className="section services" id="servicios" aria-labelledby="svc-title">
         <div className="container">
           <div className="section-head">
@@ -234,9 +214,13 @@ export default async function Home(props: Params) {
           </div>
 
           <div className="svc-grid">
-            {d.services.items.map((item, i) => (
-              <Link className="svc-card" key={item.id} href={href(SERVICE_ROUTES[i])}>
-                {servicePhotosReady ? photo(SERVICE_PHOTOS[i], "svc-photo") : null}
+            {[...rowCards, ...wideCards].map((item, i) => (
+              <Link
+                className={i < rowCards.length ? "svc-card" : "svc-card svc-card-wide"}
+                key={item.id}
+                href={href(serviceRoute(item.id))}
+              >
+                {servicePhotosReady ? photo(SERVICE_PHOTOS[item.id], "svc-photo") : null}
                 <span className="svc-n mono">{"0" + (i + 1)}</span>
                 <span className="svc-name mono">{item.name}</span>
                 <h3 className="svc-title">{item.title}</h3>
@@ -249,13 +233,15 @@ export default async function Home(props: Params) {
 
           <p className="svc-arc">{d.services.arcLine}</p>
 
-          {/* Each card is already a link to its service page, so the link to
-              /visibilidad-ia sits under the row rather than inside a card.
+          {/* The one link to the wine brand (bead hq-3f6ut.3): its name read
+              from lib/brand.ts, its own domain once that is set.
               pricing-more lends it the site's underlined inline link. */}
-          <p className="svc-arc pricing-more">
-            {d.services.aiLead}{" "}
-            <Link href={href("/visibilidad-ia")}>{d.services.aiLink}</Link>
-          </p>
+          {wine && (
+            <p className="svc-arc svc-wine pricing-more">
+              {d.wine.lead}{" "}
+              {wine.startsWith("http") ? <a href={wine}>{VINO_NAME}</a> : <Link href={wine}>{VINO_NAME}</Link>}
+            </p>
+          )}
 
           <PlayOnceVis className="tools-vis" tag={d.vis.board.tag}>
             <svg
@@ -370,64 +356,6 @@ export default async function Home(props: Params) {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ============================ 5. THE CASE ============================
-          Two jobs at one winery, side by side, because they are two different
-          results (Daniel, 2026-09-30): the finance view that assembles itself,
-          with the one measured figure, and the production record that years of
-          notebooks became. The clip runs alone under them. */}
-      <section className="section case" id="case" aria-labelledby="case-title">
-        <div className="container">
-          <div className="section-head">
-            <span className="kicker">{d.xanic.kicker}</span>
-            <h2 id="case-title">{d.xanic.title}</h2>
-            <p className="section-sub">{d.xanic.body}</p>
-          </div>
-
-          <div className="case-two">
-            <div className="case-job case-finance">
-              <span className="kicker gold">{d.xanic.finance.kicker}</span>
-              <h3 className="case-job-title">{d.xanic.finance.title}</h3>
-              <p className="case-job-body">{d.xanic.finance.body}</p>
-              <dl className="case-stats">
-                {d.xanic.stats.map((stat) => (
-                  <div className="case-stat" key={stat.k}>
-                    <dt className="case-n">{stat.n}</dt>
-                    <dd className="case-k mono">{stat.k}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="case-basis">{d.xanic.basis}</p>
-            </div>
-            <div className="case-job case-production">
-              <span className="kicker gold">{d.xanic.production.kicker}</span>
-              <h3 className="case-job-title">{d.xanic.production.title}</h3>
-              <p className="case-job-body">{d.xanic.production.body}</p>
-              <Media
-                slot="home/xanic-cellar"
-                src="/media/home/service-software.webp"
-                tone="full"
-                caption={d.xanic.production.cap}
-                alt={d.xanic.production.alt}
-              />
-            </div>
-          </div>
-
-          <Link className="case-read" href={href(CASE_ROUTES[0])}>
-            {d.xanic.read}
-          </Link>
-
-          <Media
-            className="case-clip"
-            slot="home/xanic-tank-log"
-            src="/media/home/xanic-tank-log.mp4"
-            poster="/media/home/xanic-tank-log-poster.webp"
-            caption={d.xanic.tankCap}
-            alt={d.xanic.tankAlt}
-            labels={{ play: d.xanic.play, pause: d.xanic.pause }}
-          />
         </div>
       </section>
 
@@ -629,10 +557,10 @@ export default async function Home(props: Params) {
       </section>
 
       {/* ============================ 9. PRICING ============================
-          Three entry prices, read out of lib/pricing.ts: the smallest website
-          package, the local ads scope's base and fee per contact, and the Produccion
-          floor. The full card, with the feature lists that produced each
-          figure, is /precios. */}
+          Two entry prices, read out of lib/pricing.ts: the smallest website
+          package, and the local ads scope's base and fee per contact. Custom
+          software has no published entry price; its line says how it is
+          priced. The full card is /precios. */}
       <section className="section pricing" id="pricing" aria-labelledby="pricing-title">
         <div className="container">
           <div className="section-head">
@@ -657,7 +585,7 @@ export default async function Home(props: Params) {
             <div className="price-line">
               <dt>{d.pricing.softK}</dt>
               <dd>
-                <span className="price-from mono">{d.pricing.fromLabel}</span> <b>{softFrom}</b>
+                <span className="price-from mono">{d.pricing.softLine}</span>
               </dd>
             </div>
           </dl>

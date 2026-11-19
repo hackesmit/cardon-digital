@@ -38,7 +38,8 @@ describe("llms.txt", () => {
 
   it("describes pages in their own words", () => {
     expect(text).toContain(`[${sitios.es.meta.title}](${SITE_URL}/es/sitios-web): ${sitios.es.meta.description}`);
-    expect(text).toContain(`(${SITE_URL}/en/precios): ${precios.en.meta.description}`);
+    // cardon's /precios describes itself with the cardon copy (bead hq-3f6ut.3).
+    expect(text).toContain(`(${SITE_URL}/en/precios): ${precios.en.cardon.meta.description}`);
   });
 
   it("is plain prose: no em dashes, no unfilled values", () => {

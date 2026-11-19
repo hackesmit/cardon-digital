@@ -481,6 +481,7 @@ const en: GuideCopy = {
 
 export const cuantoCuestaPaginaWeb: Guide = {
   slug: "cuanto-cuesta-pagina-web",
+  brand: "cardon",
   datePublished: "2026-10-21",
   dateModified: "2026-10-21",
   reviewBy: "2027-01-21",

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { brandIndexable, parseBrand, parseOrigin } from "./brand-env.mjs";
-import { CARDON_URL, VINO_FALLBACK_URL, brandConfig, servesPath } from "./brand";
+import { CARDON_URL, VINO_FALLBACK_URL, VINO_NAME, brandConfig, servesPath, wineLink } from "./brand";
 
 /**
  * The brand switch (bead hq-3f6ut.1). The fail-closed rules each have a case
@@ -138,6 +138,26 @@ describe("brand config", () => {
     expect(brandConfig({ vinoUrl: "https://vino.example" }).crossLink).toBe("https://vino.example");
   });
 
+  it("keeps the wine pages out of cardon's nav and footer, domain set or not (hq-3f6ut.3)", () => {
+    for (const env of [{}, { vinoUrl: "https://vino.example" }]) {
+      const b = brandConfig(env);
+      const links = [...b.nav.services, ...b.nav.after, ...b.footer];
+      for (const bad of ["wineries", "modules", "demos", "work", "footerWork"]) {
+        expect(links.some((l) => l.label === bad), bad).toBe(false);
+      }
+      for (const l of links) {
+        expect(["/industries/winery", "/demos", "/demo", "/work/monte-xanic", "/work/enkanto"]).not.toContain(l.path);
+      }
+    }
+  });
+
+  it("points cardon's one wine link at the winery page, then at the wine domain once set", () => {
+    expect(brandConfig({ site: "vino" }).name).toBe(VINO_NAME);
+    expect(wineLink(brandConfig({}), "es")).toBe("/es/industries/winery");
+    expect(wineLink(brandConfig({ vinoUrl: "https://vino.example" }), "en")).toBe("https://vino.example/en");
+    expect(wineLink(brandConfig({ site: "vino" }), "es")).toBeNull();
+  });
+
   it("matches a guide slug as one segment and nothing deeper", () => {
     const b = brandConfig({});
     expect(servesPath(b, "/guias/cualquiera")).toBe(true);
@@ -190,7 +210,9 @@ describe("per-brand site files", () => {
     expect(paths).toContain("/");
     expect(paths).toContain("/software");
     expect(paths).toContain("/work/monte-xanic");
-    for (const p of ["/sitios-web", "/anuncios", "/visibilidad-ia", "/estilos"]) expect(paths).not.toContain(p);
+    // /sitios-web is the wine brand's websites-for-wineries page (bead hq-60dkt).
+    expect(paths).toContain("/sitios-web");
+    for (const p of ["/anuncios", "/visibilidad-ia", "/estilos"]) expect(paths).not.toContain(p);
     // No wine guide exists yet, so neither the index nor a Cardon guide is listed.
     for (const p of Array.from(paths)) expect(p.startsWith("/guias"), p).toBe(false);
 
@@ -199,7 +221,8 @@ describe("per-brand site files", () => {
 
     const llms = await (await import("../app/llms.txt/route")).GET().text();
     expect(llms.startsWith("# " + BRAND.name + "\n")).toBe(true);
-    expect(llms).not.toContain("/sitios-web");
+    expect(llms).toContain("https://vino.example/es/sitios-web");
+    expect(llms).not.toContain("/anuncios");
     expect(llms).not.toContain("/guias");
     expect(llms).not.toContain("cardondigital.com/");
     expect(llms).toContain("https://vino.example/es/software");

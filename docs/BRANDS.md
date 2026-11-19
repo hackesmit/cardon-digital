@@ -106,8 +106,17 @@ llms.txt, security.txt and JSON-LD comes from `SITE_URL` (`lib/i18n/metadata.ts`
 which is `BRAND.siteUrl`. On vino the JSON-LD organization is the brand,
 typed `Organization` and `Brand`, with `parentOrganization` Cardon Digital by
 the `@id` cardondigital.com gives it, and no address. The manifest takes the
-brand's name. Not yet per brand: the icons and the Open Graph image, which the
-wine brand shares with Cardon until it has its own artwork.
+brand's name. The share card and icons are per brand too (`lib/brand-art.ts`,
+bead hq-3f6ut.8): cardon keeps its static files (`public/og.png`,
+`public/icon.svg`, `public/favicon.ico`, `public/apple-icon.png`,
+`public/brand/cardon-icon-*.png`); vino's are drawn at build time from
+`BRAND.name` by `app/brand-art/[file]/route.tsx` (next/og), so a new name
+redraws them, and its icons are the name's initial on the wine ground until
+the brand has a mark. The icons are declared in `app/layout.tsx`, never as
+`app/icon.*`, `app/favicon.ico` or `app/opengraph-image.*` file conventions,
+which Next links on both brands (a test fails on one). A vino build also
+rewrites Cardon's root paths (`/og.png`, `/icon.svg`, `/favicon.ico`,
+`/apple-icon.png`) to its own art (`VINO_ART_REWRITES`, `next.config.mjs`).
 
 ## Security headers and CSP
 
@@ -131,6 +140,33 @@ Both build from github.com/hackesmit/cardon-digital, branch `main`.
 When the wine domain is attached: set `NEXT_PUBLIC_SITE_URL` on cardon-vino
 (the brand becomes indexable) and `NEXT_PUBLIC_VINO_URL` on cardon-digital
 (the wine routes start redirecting), then redeploy both.
+
+`scripts/vino-go-public.sh <domain> "<Name>"` does all of it (bead hq-60dkt):
+with no flag it prints the plan, `--apply` adds the domain and www to
+cardon-vino, stops with the DNS records to set if they do not point at Vercel
+yet, then sets both variables, redeploys both projects and verifies,
+`--verify` runs only the checks. It refuses an unregistered domain and a name
+that `VINO_NAME` in lib/brand.ts on main does not carry yet: the rename is a
+one-line commit merged first, so the name stays in git. It never buys a domain
+or edits DNS at the registrar. Once `NEXT_PUBLIC_SITE_URL` is set,
+cardon-vino.vercel.app answers 308 to the same path on the domain
+(`vinoHostRedirects`, lib/brand-env.mjs); preview addresses stay reachable.
+
+The wine build has had a contact form, WhatsApp and the booking link since
+2026-11-19: cardon-vino carries `RESEND_API_KEY`, `CONTACT_FROM`, `CONTACT_TO`,
+`NEXT_PUBLIC_WHATSAPP` and `NEXT_PUBLIC_BOOKING_URL` with cardon-digital's
+values. It has no `NEXT_PUBLIC_GA4_ID`: give it its own GA4 property, never
+Cardon's.
+
+## Websites on the wine brand
+
+`/sitios-web` is on both lists (bead hq-60dkt, Daniel 2026-11-18): cardon
+serves websites for any business there, the wine brand serves websites for
+wineries (`components/pages/sitios-vino.tsx`, `lib/i18n/sitios-vino.ts`), the
+page the winery outreach links to. Being on both lists, it never redirects. Its
+prices are the shared website packages in lib/pricing.ts; a fix is sold as the
+package it needs. It is in the wine footer and on the wine /precios, not in
+the header, which wraps at 1366 px with an eighth entry.
 
 To build both locally into separate output directories, use two copies of the
 tree (Next reads `distDir` from the config, not the environment), or build one

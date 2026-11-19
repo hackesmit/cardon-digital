@@ -5,7 +5,8 @@ import CredentialList from "@/components/site/CredentialList";
 import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
 import { CREDENTIALS } from "@/lib/credentials";
-import { about } from "@/lib/i18n/about";
+import { about as aboutCardon, aboutVino } from "@/lib/i18n/about";
+import { BRAND } from "@/lib/brand";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { rich } from "@/lib/i18n/rich";
@@ -13,6 +14,9 @@ import { site } from "@/lib/i18n/site";
 import "./about.css";
 
 type Params = { params: Promise<{ locale: string }> };
+
+/** Cardon's story for any business, or the wine brand's (bead hq-3f6ut.3). */
+const about = BRAND.id === "vino" ? aboutVino : aboutCardon;
 
 function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";

@@ -1,4 +1,20 @@
+import type { Metadata } from "next";
+import { BRAND } from "@/lib/brand";
+import { brandArt } from "@/lib/brand-art";
 import "./globals.css";
+
+/* The tab and home-screen icons of the build's brand (lib/brand-art.ts, bead
+   hq-3f6ut.8). They are declared here, not as app/icon.svg, app/favicon.ico
+   and app/apple-icon.png, because Next links those file conventions on every
+   build, which put Cardon's saguaro on the wine brand's pages. Declared at the
+   root, they reach the 404 outside the locale tree too. */
+const art = brandArt(BRAND.id);
+export const metadata: Metadata = {
+  icons: {
+    icon: art.icons.map((i) => ({ url: i.url, sizes: i.sizes, type: i.type })),
+    apple: [{ url: art.apple, sizes: "180x180", type: "image/png" }],
+  },
+};
 
 /* Every page renders per request so Next can stamp the CSP nonce the middleware
    sends (lib/security/csp.ts) on its inline scripts; a prerendered page would

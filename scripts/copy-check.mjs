@@ -97,6 +97,12 @@ export const PAGES = {
    * named by `file`. New pages, measured when they were written.
    */
   guias: { en: { budget: 84, measured: 168 }, es: { budget: 94, measured: 188 } },
+  /**
+   * cardondigital.com's custom software page (2026-11-03, bead hq-3f6ut.3),
+   * served at /software on the cardon build while lib/i18n/software.ts serves
+   * the wine brand's modules there. A new page, measured when it was written.
+   */
+  "software-cardon": { en: { budget: 385, measured: 769 }, es: { budget: 408, measured: 815 } },
   "guia-aparecer-en-chatgpt": {
     file: "lib/guides/aparecer-en-chatgpt.ts",
     en: { budget: 808, measured: 1615 },
@@ -109,6 +115,16 @@ export const PAGES = {
    */
   "home-vino": { en: { budget: 376, measured: 752 }, es: { budget: 397, measured: 793 } },
   "demos-index": { en: { budget: 397, measured: 793 }, es: { budget: 402, measured: 803 } },
+  /**
+   * The wine brand's websites-for-wineries page (2026-11-19, bead hq-60dkt),
+   * a new page measured when it was written.
+   */
+  "sitios-vino": { en: { budget: 230, measured: 460 }, es: { budget: 238, measured: 476 } },
+  /**
+   * The page for a business with no website yet (2026-11-19, bead hq-4l9oj),
+   * a new page measured when it was written.
+   */
+  "negocio-local": { en: { budget: 89, measured: 178 }, es: { budget: 89, measured: 177 } },
   "guia-cuanto-cuesta-pagina-web": {
     file: "lib/guides/cuanto-cuesta-pagina-web.ts",
     en: { budget: 605, measured: 1210 },

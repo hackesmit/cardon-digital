@@ -5,16 +5,15 @@
  * give a brand a route.
  *
  * Every string that names a brand (name, short name, domain, email) is read
- * from here, never typed in copy. The wine brand's name is not chosen yet:
- * "Cosecha" is a working placeholder, and it ships only behind noindex
- * (brandIndexable in lib/brand-env.mjs) until NEXT_PUBLIC_SITE_URL names the
- * brand's own domain.
+ * from here, never typed in copy. The wine brand is Racimo (Daniel 2026-11-19,
+ * r-34c8374d, on racimo.mx); it stays noindex (brandIndexable in
+ * lib/brand-env.mjs) until NEXT_PUBLIC_SITE_URL names the brand's own domain.
  *
  * This module imports no dictionary and no page data, so the middleware can
  * read the route lists without pulling page copy into the edge bundle.
  */
-import { brandIndexable, parseBrand, parseOrigin } from "./brand-env.mjs";
-import type { Locale } from "./i18n/config";
+import { VINO_FALLBACK_URL, brandIndexable, parseBrand, parseOrigin } from "./brand-env.mjs";
+import { localePath, type Locale } from "./i18n/config";
 
 export type Brand = "cardon" | "vino";
 
@@ -22,8 +21,9 @@ export type Brand = "cardon" | "vino";
 export const CARDON_URL = "https://cardondigital.com";
 
 /** Where the wine brand answers before its domain exists (Vercel project
-    cardon-vino). Always noindex: it ends in .vercel.app. */
-export const VINO_FALLBACK_URL = "https://cardon-vino.vercel.app";
+    cardon-vino), defined in lib/brand-env.mjs so next.config.mjs can redirect
+    it once the domain is set. Always noindex: it ends in .vercel.app. */
+export { VINO_FALLBACK_URL };
 
 /**
  * A nav or footer entry: a locale-free path and the key of its label. The
@@ -79,6 +79,7 @@ export type BrandConfig = {
 const CARDON_ROUTES = [
   "/",
   "/sitios-web",
+  "/negocio-local",
   "/anuncios",
   "/visibilidad-ia",
   "/guias",
@@ -98,6 +99,7 @@ const CARDON_ROUTES = [
 const VINO_ROUTES = [
   "/",
   "/software",
+  "/sitios-web",
   "/demos",
   "/demo",
   "/industries/winery",
@@ -122,21 +124,20 @@ export const MOVED_ROUTES: readonly string[] = VINO_ROUTES.filter(
   (r) => !(CARDON_ROUTES as readonly string[]).includes(r),
 );
 
-/* The nav and footer of cardondigital.com, exactly as they were before the
-   split (the arc of 2026-09-28; the reasons per entry are in Nav.tsx). The
-   wine entries leave in bead hq-3f6ut.3, not here. */
+/* The nav and footer of cardondigital.com since bead hq-3f6ut.3: what Cardon
+   sells (websites, the styles, ads, custom software) and the pages around it.
+   The wine entries (Wineries, Demos, the Monte Xanic case) belong to the wine
+   brand now; Cardon reaches it through one plain link (WINE_LINK below). */
 const CARDON_NAV = {
   services: [
     { path: "/sitios-web", label: "sitios" },
     { path: "/estilos", label: "estilos" },
     { path: "/anuncios", label: "anuncios" },
     { path: "/software", label: "software" },
-    { path: "/industries/winery", label: "wineries" },
   ],
   after: [
-    { path: "/demos", label: "demos" },
     { path: "/precios", label: "pricing" },
-    { path: "/work/monte-xanic", label: "work" },
+    { path: "/guias", label: "guias" },
     { path: "/about", label: "about" },
     { path: "/contacto", label: "contact" },
   ],
@@ -147,9 +148,7 @@ const CARDON_FOOTER = [
   { path: "/estilos", label: "estilos" },
   { path: "/anuncios", label: "anuncios" },
   { path: "/software", label: "software" },
-  { path: "/industries/winery", label: "wineries" },
   { path: "/precios", label: "pricing" },
-  { path: "/work/monte-xanic", label: "footerWork" },
   { path: "/guias", label: "guias" },
   { path: "/about", label: "footerAbout" },
   { path: "/contacto", label: "footerContact" },
@@ -157,7 +156,9 @@ const CARDON_FOOTER = [
 
 /* The wine brand sells one thing, so it has no services dropdown: the
    modules, the demos, the winery page, the price, the case, about, contact.
-   The guides join the footer once a wine guide exists. */
+   The guides join the footer once a wine guide exists. The website page for
+   wineries (bead hq-60dkt) is in the footer and on /precios only: an eighth
+   header entry wraps the bar at 1366 px. */
 const VINO_NAV = {
   services: [],
   after: [
@@ -175,11 +176,15 @@ const VINO_FOOTER = [
   { path: "/software", label: "modules" },
   { path: "/demos", label: "demos" },
   { path: "/industries/winery", label: "wineries" },
+  { path: "/sitios-web", label: "sitios" },
   { path: "/precios", label: "pricing" },
   { path: "/work/monte-xanic", label: "footerWork" },
   { path: "/about", label: "footerAbout" },
   { path: "/contacto", label: "footerContact" },
 ] satisfies readonly NavItem[];
+
+/** The wine brand's name (Daniel 2026-11-19, r-34c8374d); see the note at the top. */
+export const VINO_NAME = "Racimo";
 
 /** The Tinto y Laton ground and ink (app/globals.css), shared by both. */
 const THEME = { ground: "#F4EDEA", ink: "#161A1B" };
@@ -222,10 +227,6 @@ export function brandConfig(env: BrandEnv): BrandConfig {
     throw new Error("NEXT_PUBLIC_VINO_URL names cardondigital.com; it must be the wine brand's own domain");
   }
   if (id === "cardon") {
-    /* Once the wine domain is set the moved routes redirect away, so the nav
-       and footer stop linking them rather than sending a reader through a
-       301. Unset, both lists are exactly as they were. */
-    const here = (l: NavItem) => vinoOrigin === "" || !MOVED_ROUTES.includes(l.path);
     return {
       id,
       name: "Cardon Digital",
@@ -235,8 +236,8 @@ export function brandConfig(env: BrandEnv): BrandConfig {
       email: "daniel@cardondigital.com",
       theme: THEME,
       routes: CARDON_ROUTES,
-      nav: { services: CARDON_NAV.services.filter(here), after: CARDON_NAV.after.filter(here) },
-      footer: CARDON_FOOTER.filter(here),
+      nav: CARDON_NAV,
+      footer: CARDON_FOOTER,
       crossLink: vinoOrigin === "" ? null : vinoOrigin,
       indexable: true,
     };
@@ -247,9 +248,8 @@ export function brandConfig(env: BrandEnv): BrandConfig {
   }
   return {
     id,
-    // Working placeholder name; see the note at the top of this file.
-    name: "Cosecha",
-    shortName: "Cosecha",
+    name: VINO_NAME,
+    shortName: VINO_NAME,
     endorsement: { es: "por Cardon", en: "by Cardon" },
     siteUrl: siteOrigin === "" ? VINO_FALLBACK_URL : siteOrigin,
     // The brand has no mailbox of its own until its domain exists.
@@ -302,3 +302,15 @@ export function servesPath(config: BrandConfig, path: string): boolean {
   return servedRoutes(config).some((r) => matchesRoute(r, p));
 }
 
+
+/**
+ * The one link cardondigital.com keeps to the wine brand (bead hq-3f6ut.3):
+ * its home on its own domain once NEXT_PUBLIC_VINO_URL is set, and until then
+ * the winery page cardon still serves, so the link never passes through a 301.
+ * Null on the wine brand, which links back through its footer instead.
+ */
+export function wineLink(config: BrandConfig, locale: Locale): string | null {
+  if (config.id !== "cardon") return null;
+  if (config.crossLink === null) return localePath(locale, "/industries/winery");
+  return config.crossLink + localePath(locale, "/");
+}

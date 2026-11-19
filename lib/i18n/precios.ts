@@ -39,7 +39,7 @@ const en = {
   meta: {
     title: "Pricing",
     description:
-      "What a website, Google Ads management on a base plus a fee per contact, and each software module cost, in the open, with the terms. Every entry price is published.",
+      "What each software module costs, in the open, with the terms. Every entry price is published.",
   },
 
   hero: {
@@ -56,6 +56,29 @@ const en = {
     notDo: { kicker: "What we do not do", title: "Four things we never do.", items: ["We never charge a percentage of what you spend on ads.", "We never charge per user, per seat, or per month forever.", "We never keep your domain, your accounts or your data in our name.", "We never manage social media on its own."] },
   },
 
+
+  /**
+   * What cardondigital.com's /precios says in place of the module copy (bead
+   * hq-3f6ut.3): the wine brand carries the modules, so the cardon build
+   * prices websites and ads and says how custom software is priced, with no
+   * figure. The page reads these keys only on the cardon build.
+   */
+  cardon: {
+    meta: {
+      title: "Pricing",
+      description:
+        "What a website and Google Ads management on a base plus a fee per contact cost, in the open, with the terms, and how custom software is priced. Every entry price is published.",
+    },
+    sub: "Websites priced by their features, ad management on a base plus a fee per contact, and custom software quoted after the diagnostic. In your name means the domain, the accounts, the code and the data.",
+    handoverCap: "Handover day: the accounts are in your name and your team runs the system.",
+    software: {
+      kicker: "Custom software",
+      title: "Custom software: a fixed price, agreed before the build.",
+      sub: "There is no list price, because no two systems are the same. The diagnostic, at no cost, says what to build first. The quote that comes out of it is fixed, and the build is paid half to start and half on delivery. The code, the data and the accounts are yours.",
+      more: "The custom software page",
+    },
+    closeDesc: "Ten business days on your site, your ads and your operation, and a written memo that is yours either way: what is true, what is broken, and what to build first.",
+  },
   media: {
     handoverCap:
       "Handover day: the accounts are in the winery's name and the team runs it.",
@@ -268,6 +291,27 @@ const en = {
     ],
   },
 
+  /** The wine brand's hero line and its website section (bead hq-60dkt): it
+      prices the modules and, since the website page, the winery's website. */
+  vino: {
+    sub: "Each software module from its entry price, and the winery's website priced by its features. In your name means the domain, the accounts, the code and the data.",
+    proof: "Latest build: Viñedo En'kanto.",
+    web: {
+      kicker: "Websites",
+      title: "The winery's website, priced by its features.",
+      sub: "From one page to an online store, each package with its price.",
+      more: "Websites for wineries",
+    },
+    notDo: {
+      title: "Three things we never do.",
+      items: [
+        "We never charge per user, per seat, or per month forever.",
+        "We never keep your domain, your accounts or your data in our name.",
+        "We never decide anything about your wine: the blend, the picking date and the maceration stay yours.",
+      ],
+    },
+  },
+
   close: {
     desc: "Ten business days over your sources, your channels and your floor, and a written memo that is yours either way: what is true, what is broken, and which modules to build first, at what size.",
   },
@@ -277,7 +321,7 @@ const es: typeof en = {
   meta: {
     title: "Precios",
     description:
-      "Cuánto cuesta un sitio web, el manejo de anuncios en Google con una base más un pago por contacto, y cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
+      "Cuánto cuesta cada módulo de software, a la vista y con sus condiciones. Todos los precios de entrada están publicados.",
   },
 
   hero: {
@@ -294,6 +338,23 @@ const es: typeof en = {
     notDo: { kicker: "Lo que no hacemos", title: "Cuatro cosas que nunca hacemos.", items: ["Nunca cobramos un porcentaje de lo que invierte en anuncios.", "Nunca cobramos por usuario, por asiento ni mensualidades de por vida.", "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.", "Nunca manejamos redes sociales como único servicio."] },
   },
 
+
+  cardon: {
+    meta: {
+      title: "Precios",
+      description:
+        "Cuánto cuesta un sitio web y el manejo de anuncios en Google con una base más un pago por contacto, a la vista y con sus condiciones, y cómo se cotiza el software a la medida. Todos los precios de entrada están publicados.",
+    },
+    sub: "Sitios web con precios por funciones, manejo de anuncios con una base más un pago por contacto, y software a la medida, cotizado después del diagnóstico. A su nombre quedan el dominio, las cuentas, el código y los datos.",
+    handoverCap: "Día de entrega: las cuentas quedan a su nombre y su equipo opera el sistema.",
+    software: {
+      kicker: "Software a la medida",
+      title: "Software a la medida: precio fijo, acordado antes del desarrollo.",
+      sub: "No hay precio de lista, porque no hay dos sistemas iguales. El diagnóstico, sin costo, dice qué conviene construir primero. La cotización que sale de ahí es fija, y el desarrollo se paga la mitad al empezar y la mitad contra entrega. El código, los datos y las cuentas son suyos.",
+      more: "La página de software a la medida",
+    },
+    closeDesc: "Diez días hábiles para revisar su sitio, sus anuncios y la operación de su negocio, y un informe escrito que es suyo, nos contrate o no: qué funciona, qué falla y por dónde empezar.",
+  },
   media: {
     handoverCap:
       "Día de entrega: las cuentas quedan a nombre de la bodega y el equipo opera el sistema.",
@@ -465,6 +526,25 @@ const es: typeof en = {
       "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede suspender el servicio cuando quiera, sin deber nada del desarrollo. O puede pagar la implementación más baja, que se financia con doce mensualidades de servicio: si deja el servicio antes de completarlas, le cobramos la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes y llega a cero al pagar las doce. En cualquier caso el sistema es suyo, y su cotización trae el monto exacto de cada mes.",
       "Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
     ],
+  },
+
+  vino: {
+    sub: "Cada módulo de software desde su precio de entrada, y el sitio web de la bodega con precio por funciones. A su nombre quedan el dominio, las cuentas, el código y los datos.",
+    proof: "Proyecto reciente: Viñedo En'kanto.",
+    web: {
+      kicker: "Sitios web",
+      title: "El sitio web de la bodega, con precio por funciones.",
+      sub: "De una página a una tienda en línea, cada paquete con su precio.",
+      more: "Sitios web para bodegas",
+    },
+    notDo: {
+      title: "Tres cosas que nunca hacemos.",
+      items: [
+        "Nunca cobramos por usuario, por asiento ni mensualidades de por vida.",
+        "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.",
+        "Nunca decidimos nada sobre su vino: la mezcla, la fecha de corte y la maceración son suyas.",
+      ],
+    },
   },
 
   close: {

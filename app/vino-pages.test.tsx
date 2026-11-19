@@ -11,7 +11,7 @@ vi.hoisted(() => {
   process.env.NEXT_PUBLIC_VINO_URL = "";
 });
 
-// The working name is also a common word ("cosecha" is harvest), so a page
+// The name is also a common word ("racimo" is a grape bunch), so a page
 // could carry it without naming the brand. A sentinel no copy can contain
 // proves each page reads the name from lib/brand.ts and types none.
 const SENTINEL = vi.hoisted(() => "Zentinelvo");
@@ -57,6 +57,7 @@ type Loaded = {
 const PAGES: Record<string, () => Promise<unknown>> = {
   "/": () => import("./[locale]/page"),
   "/software": () => import("./[locale]/software/page"),
+  "/sitios-web": () => import("./[locale]/sitios-web/page"),
   "/demos": () => import("./[locale]/demos/page"),
   "/demo": () => import("./[locale]/demo/page"),
   "/industries/winery": () => import("./[locale]/industries/winery/page"),
@@ -77,13 +78,10 @@ const PAGES: Record<string, () => Promise<unknown>> = {
  * is checked to still fail, so the list empties itself: the day the owning
  * bead lands, its entry fails this suite until it is removed.
  */
-const PENDING: Record<string, string> = {
-  // hq-3f6ut.3 splits /precios: the web and ads packages leave vino.
-  "/precios": "hq-3f6ut.3",
-};
+const PENDING: Record<string, string> = {};
 
 /** The wine pages this bead owns: they say the brand's name in the body. */
-const MOVED = ["/", "/software", "/demos", "/industries/winery", "/work/monte-xanic", "/work/enkanto"];
+const MOVED = ["/", "/software", "/sitios-web", "/demos", "/industries/winery", "/work/monte-xanic", "/work/enkanto"];
 
 /** The paths a pattern stands for: a slug pattern takes every wine guide. */
 function concrete(route: string): Array<{ path: string; params: Record<string, string> }> {
@@ -211,8 +209,13 @@ describe("the wine brand's pages", () => {
 
       it(`${locale}${route}: sells nothing that stays on cardondigital.com`, async () => {
         const text = visible(await serve(route, {}, locale));
-        // Websites, Google Ads and the AI answers check are Cardon's services.
-        expect(text).not.toMatch(/google ads|anuncios en google|sitio bilingüe|bilingual site|chatgpt|perplexity/i);
+        // Google Ads and the AI answers check are Cardon's services. Websites
+        // were too, until the wine brand got its own website page for
+        // wineries (bead hq-60dkt, Daniel 2026-11-18): /sitios-web may sell a
+        // site, with the shared package list that names the AI answers.
+        expect(text).not.toMatch(/google ads|anuncios en google/i);
+        if (route === "/sitios-web") return;
+        expect(text).not.toMatch(/sitio bilingüe|bilingual site|chatgpt|perplexity/i);
       });
 
       it(`${locale}${route}: carries an FAQ with its FAQPage markup`, async () => {
@@ -267,7 +270,9 @@ describe("the wine brand's pages", () => {
     const cardonish = /sitios?[ -]web|websites?\b|anuncios|google ads|visibilidad-ia|estilos/i;
     const lines = body.split("\n");
     const isPending = (l: string) => Object.keys(PENDING).some((r) => l.includes(r + ")"));
-    expect(lines.filter((l) => !isPending(l) && cardonish.test(l))).toEqual([]);
+    // The wine brand's own website page (bead hq-60dkt) is about websites for wineries.
+    const isWineSites = (l: string) => l.includes("/sitios-web)");
+    expect(lines.filter((l) => !isPending(l) && !isWineSites(l) && cardonish.test(l))).toEqual([]);
     for (const route of Object.keys(PENDING)) {
       const own = lines.filter((l) => l.includes(route + ")"));
       expect(own.some((l) => cardonish.test(l)), `${route} meta is clean now; remove its PENDING entry`).toBe(true);
