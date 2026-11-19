@@ -5,10 +5,9 @@
  * give a brand a route.
  *
  * Every string that names a brand (name, short name, domain, email) is read
- * from here, never typed in copy. The wine brand's name is not chosen yet:
- * "Cosecha" is a working placeholder, and it ships only behind noindex
- * (brandIndexable in lib/brand-env.mjs) until NEXT_PUBLIC_SITE_URL names the
- * brand's own domain.
+ * from here, never typed in copy. The wine brand is Racimo (Daniel 2026-11-19,
+ * r-34c8374d, on racimo.mx); it stays noindex (brandIndexable in
+ * lib/brand-env.mjs) until NEXT_PUBLIC_SITE_URL names the brand's own domain.
  *
  * This module imports no dictionary and no page data, so the middleware can
  * read the route lists without pulling page copy into the edge bundle.
@@ -184,8 +183,8 @@ const VINO_FOOTER = [
   { path: "/contacto", label: "footerContact" },
 ] satisfies readonly NavItem[];
 
-/** The wine brand's name. A working placeholder; see the note at the top. */
-export const VINO_NAME = "Cosecha";
+/** The wine brand's name (Daniel 2026-11-19, r-34c8374d); see the note at the top. */
+export const VINO_NAME = "Racimo";
 
 /** The Tinto y Laton ground and ink (app/globals.css), shared by both. */
 const THEME = { ground: "#F4EDEA", ink: "#161A1B" };

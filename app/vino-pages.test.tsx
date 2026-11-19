@@ -11,7 +11,7 @@ vi.hoisted(() => {
   process.env.NEXT_PUBLIC_VINO_URL = "";
 });
 
-// The working name is also a common word ("cosecha" is harvest), so a page
+// The name is also a common word ("racimo" is a grape bunch), so a page
 // could carry it without naming the brand. A sentinel no copy can contain
 // proves each page reads the name from lib/brand.ts and types none.
 const SENTINEL = vi.hoisted(() => "Zentinelvo");
