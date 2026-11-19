@@ -1,11 +1,12 @@
-import { brandIndexable, parseBrand, parseOrigin } from "./lib/brand-env.mjs";
+import { brandIndexable, parseBrand, parseOrigin, vinoHostRedirects } from "./lib/brand-env.mjs";
 
 /* The brand switch (lib/brand.ts, docs/BRANDS.md). parseBrand throws on any
    value other than cardon, vino or unset, so the build fails before a page is
    compiled. A wine-brand build with no domain of its own yet is noindex on
    every response, files included (robots.txt, sitemap.xml, llms.txt). */
 const BRAND = parseBrand(process.env.NEXT_PUBLIC_SITE);
-const INDEXABLE = brandIndexable(BRAND, parseOrigin(process.env.NEXT_PUBLIC_SITE_URL));
+const SITE_ORIGIN = parseOrigin(process.env.NEXT_PUBLIC_SITE_URL);
+const INDEXABLE = brandIndexable(BRAND, SITE_ORIGIN);
 
 /**
  * Static security headers for every response (bead hq-fnhrj.6, site-baseline
@@ -71,7 +72,12 @@ const nextConfig = {
   },
   async redirects() {
     // RFC 9116 section 3: the legacy top-level location points at the real one.
-    return [{ source: "/security.txt", destination: "/.well-known/security.txt", permanent: true }];
+    return [
+      { source: "/security.txt", destination: "/.well-known/security.txt", permanent: true },
+      // Once the wine brand has its domain, its Vercel address sends every
+      // path there (bead hq-60dkt); lib/brand-env.mjs says which host.
+      ...vinoHostRedirects(BRAND, SITE_ORIGIN),
+    ];
   },
 };
 

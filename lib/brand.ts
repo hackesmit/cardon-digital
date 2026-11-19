@@ -13,7 +13,7 @@
  * This module imports no dictionary and no page data, so the middleware can
  * read the route lists without pulling page copy into the edge bundle.
  */
-import { brandIndexable, parseBrand, parseOrigin } from "./brand-env.mjs";
+import { VINO_FALLBACK_URL, brandIndexable, parseBrand, parseOrigin } from "./brand-env.mjs";
 import { localePath, type Locale } from "./i18n/config";
 
 export type Brand = "cardon" | "vino";
@@ -22,8 +22,9 @@ export type Brand = "cardon" | "vino";
 export const CARDON_URL = "https://cardondigital.com";
 
 /** Where the wine brand answers before its domain exists (Vercel project
-    cardon-vino). Always noindex: it ends in .vercel.app. */
-export const VINO_FALLBACK_URL = "https://cardon-vino.vercel.app";
+    cardon-vino), defined in lib/brand-env.mjs so next.config.mjs can redirect
+    it once the domain is set. Always noindex: it ends in .vercel.app. */
+export { VINO_FALLBACK_URL };
 
 /**
  * A nav or footer entry: a locale-free path and the key of its label. The
@@ -155,14 +156,15 @@ const CARDON_FOOTER = [
 
 /* The wine brand sells one thing, so it has no services dropdown: the
    modules, the demos, the winery page, the price, the case, about, contact.
-   The guides join the footer once a wine guide exists. */
+   The guides join the footer once a wine guide exists. The website page for
+   wineries (bead hq-60dkt) is in the footer and on /precios only: an eighth
+   header entry wraps the bar at 1366 px. */
 const VINO_NAV = {
   services: [],
   after: [
     { path: "/software", label: "modules" },
     { path: "/demos", label: "demos" },
     { path: "/industries/winery", label: "wineries" },
-    { path: "/sitios-web", label: "sitios" },
     { path: "/precios", label: "pricing" },
     { path: "/work/monte-xanic", label: "work" },
     { path: "/about", label: "about" },
