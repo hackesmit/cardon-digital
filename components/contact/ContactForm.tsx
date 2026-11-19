@@ -13,6 +13,7 @@ import { CLICK_DOORS } from "@/lib/contact/doors";
 import { trackContactSubmit } from "@/lib/analytics/events";
 import PackageBuilder from "@/components/contact/PackageBuilder";
 import HawkDelivery, { type LaunchBox } from "@/components/contact/HawkDelivery";
+import MarkLoader from "@/components/site/MarkLoader";
 import { builder } from "@/lib/i18n/builder";
 import {
   EMPTY_SELECTION,
@@ -342,7 +343,18 @@ export default function ContactForm() {
 
       <div className="form-foot">
         <button className="cta" type="submit" disabled={status === "sending"}>
-          {status === "sending" ? d.sending : d.submit}
+          {/* The wait is a real one: the request is out and the answer decides
+              what the form says next. The mark draws itself beside the label
+              the button already changes to, so the state is in words for a
+              screen reader and in the drawing for everybody else. */}
+          {status === "sending" ? (
+            <>
+              <MarkLoader className="ml-cta" />
+              {d.sending}
+            </>
+          ) : (
+            d.submit
+          )}
         </button>
         {/* The short notice, and the way to the long one: a visitor deciding
             whether to type their address should not have to hunt the footer

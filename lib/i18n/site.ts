@@ -14,6 +14,9 @@ import { BRAND } from "../brand";
 
 const en = {
   skipToContent: "Skip to content",
+  /** Said while a page is still on its way, for a reader that cannot see the
+      mark drawing itself. */
+  loading: "Loading",
   brandHome: "Cardon Digital home",
   brandline: "Websites, Google Ads and software",
   /** The 404 page. Shown for any address that does not resolve to a route. */
@@ -84,6 +87,9 @@ const en = {
 
 const es: typeof en = {
   skipToContent: "Saltar al contenido",
+  /** Said while a page is still on its way, for a reader that cannot see the
+      mark drawing itself. */
+  loading: "Cargando",
   brandHome: "Cardon Digital, inicio",
   brandline: "Sitios web, anuncios y software",
   /** The 404 page. Shown for any address that does not resolve to a route. */
