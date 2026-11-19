@@ -1,0 +1,53 @@
+/* /negocio-local only: the feature list, the price line, the care line and
+   the opt-out line. Theme tokens only, so light and dark follow the same rules. */
+
+.pg-local .local-feats {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 0 clamp(18px, 2.6vw, 30px);
+  border-top: 2px solid var(--text);
+}
+.pg-local .local-feats li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1.45;
+}
+.pg-local .local-price {
+  color: var(--primary-text);
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  letter-spacing: -0.03em;
+}
+.pg-local .local-from {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  vertical-align: middle;
+}
+.pg-local .local-care {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: baseline;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+.pg-local .local-care .mono:first-child {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+.pg-local .local-care b { color: var(--text); font-weight: 600; }
+.pg-local .local-care-body { flex-basis: 100%; max-width: 60ch; }
+.pg-local .local-optout {
+  margin-top: clamp(20px, 2.6vw, 28px);
+  color: var(--muted);
+  font-size: 0.88rem;
+  max-width: 60ch;
+}

@@ -79,6 +79,7 @@ export type BrandConfig = {
 const CARDON_ROUTES = [
   "/",
   "/sitios-web",
+  "/negocio-local",
   "/anuncios",
   "/visibilidad-ia",
   "/guias",

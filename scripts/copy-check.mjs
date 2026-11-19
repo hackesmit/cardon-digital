@@ -115,6 +115,11 @@ export const PAGES = {
    */
   "home-vino": { en: { budget: 376, measured: 752 }, es: { budget: 397, measured: 793 } },
   "demos-index": { en: { budget: 397, measured: 793 }, es: { budget: 402, measured: 803 } },
+  /**
+   * The page for a business with no website yet (2026-11-19, bead hq-4l9oj),
+   * a new page measured when it was written.
+   */
+  "negocio-local": { en: { budget: 89, measured: 178 }, es: { budget: 89, measured: 177 } },
   "guia-cuanto-cuesta-pagina-web": {
     file: "lib/guides/cuanto-cuesta-pagina-web.ts",
     en: { budget: 605, measured: 1210 },
