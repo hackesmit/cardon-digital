@@ -37,7 +37,7 @@ const routes = [
   { path: "/guias/aparecer-en-chatgpt", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
   { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
-  { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-11-11" },
+  { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-11-19" },
   { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-11-11" },
 ];
 
