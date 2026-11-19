@@ -769,7 +769,7 @@ h2{font-size:clamp(1.7rem,3.6vw,2.7rem);letter-spacing:-0.02em;}
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
 }
 .scene-tw{
-  position:absolute;left:0;bottom:calc(var(--sh) * 0.3);
+  position:absolute;left:0;bottom:calc(var(--sh) * 0.318);
   width:var(--tw);height:var(--tw);
   transform:translateX(calc(-1 * var(--tw) - 4px));visibility:hidden;
 }
