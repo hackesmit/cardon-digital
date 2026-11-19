@@ -98,6 +98,7 @@ const CARDON_ROUTES = [
 const VINO_ROUTES = [
   "/",
   "/software",
+  "/sitios-web",
   "/demos",
   "/demo",
   "/industries/winery",
@@ -161,6 +162,7 @@ const VINO_NAV = {
     { path: "/software", label: "modules" },
     { path: "/demos", label: "demos" },
     { path: "/industries/winery", label: "wineries" },
+    { path: "/sitios-web", label: "sitios" },
     { path: "/precios", label: "pricing" },
     { path: "/work/monte-xanic", label: "work" },
     { path: "/about", label: "about" },
@@ -172,6 +174,7 @@ const VINO_FOOTER = [
   { path: "/software", label: "modules" },
   { path: "/demos", label: "demos" },
   { path: "/industries/winery", label: "wineries" },
+  { path: "/sitios-web", label: "sitios" },
   { path: "/precios", label: "pricing" },
   { path: "/work/monte-xanic", label: "footerWork" },
   { path: "/about", label: "footerAbout" },

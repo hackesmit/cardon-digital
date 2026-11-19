@@ -68,3 +68,26 @@ describe.each(locales)("/precios (%s) by brand", (locale) => {
     expect(html).not.toContain(d.cardon.software.title);
   });
 });
+
+describe.each(locales)("/precios (%s) on the wine brand, hero and websites", (locale) => {
+  const d = precios[locale];
+
+  it("vino: the hero names no ads and no non-wine client; the page links the winery website page", async () => {
+    const html = (await serve("vino", locale)).replace(/&#x27;/g, "'");
+    expect(html).toContain(d.vino.sub);
+    expect(html).not.toContain(d.cardon.sub);
+    // The hero only: the builder and the terms below price the ads add-on to a module.
+    const hero = html.slice(html.indexOf('class="hero"'), html.indexOf("</section>", html.indexOf('class="hero"')));
+    expect(hero).toContain(d.vino.sub);
+    expect(hero).not.toMatch(/Aperta|anuncios|\bads?\b|ad management|pago por contacto|fee per contact/i);
+    expect(html).not.toMatch(/Aperta/);
+    expect(html).toContain(`href="/${locale}/sitios-web"`);
+    expect(html).toContain(d.vino.web.title);
+  });
+
+  it("cardon: keeps its hero and shows no wine website line", async () => {
+    const html = await serve("cardon", locale);
+    expect(html).not.toContain(d.vino.web.title);
+    expect(html).not.toContain(d.vino.sub);
+  });
+});

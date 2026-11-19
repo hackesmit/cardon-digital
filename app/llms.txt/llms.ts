@@ -13,6 +13,7 @@ import { estilos } from "@/lib/i18n/estilos";
 import { guias } from "@/lib/i18n/guias";
 import { home } from "@/lib/i18n/home";
 import { homeVino } from "@/lib/i18n/home-vino";
+import { sitiosVinoMeta } from "@/lib/i18n/sitios-vino";
 import { monteXanic } from "@/lib/i18n/monte-xanic";
 import { precios } from "@/lib/i18n/precios";
 import { privacy } from "@/lib/i18n/privacy";
@@ -42,7 +43,8 @@ type Page = { path: string; meta: (l: Locale) => Meta };
 const page = (path: string, meta: (l: Locale) => Meta): Page => ({ path, meta });
 
 const SERVICES = [
-  page("/sitios-web", (l) => sitios[l].meta),
+  // /sitios-web is websites for any business on cardon and for wineries on the wine brand.
+  page("/sitios-web", (l) => (BRAND.id === "cardon" ? sitios[l].meta : sitiosVinoMeta(l, BRAND.name))),
   page("/anuncios", (l) => anuncios[l].meta),
   // /software is custom software on cardon and the modules on the wine brand.
   page("/software", (l) => (BRAND.id === "cardon" ? softwareCardon : software)[l].meta),

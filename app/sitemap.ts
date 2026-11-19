@@ -22,13 +22,13 @@ import { advertisesPath } from "@/lib/routes";
  */
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-11-03" },
-  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
+  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
   { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
   { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
   { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
   { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
-  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
+  { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
   { path: "/work/monte-xanic", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/work/enkanto", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
   { path: "/industries/winery", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
@@ -36,7 +36,7 @@ const routes = [
   { path: "/guias/cuanto-cuesta-pagina-web", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
   { path: "/guias/aparecer-en-chatgpt", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
   { path: "/about", priority: 0.5, changeFrequency: "monthly" as const, lastModified: "2026-11-03" },
-  { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
+  { path: "/contacto", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
   { path: "/privacy", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-11-11" },
   { path: "/terms", priority: 0.2, changeFrequency: "yearly" as const, lastModified: "2026-11-11" },
 ];

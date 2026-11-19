@@ -210,7 +210,9 @@ describe("per-brand site files", () => {
     expect(paths).toContain("/");
     expect(paths).toContain("/software");
     expect(paths).toContain("/work/monte-xanic");
-    for (const p of ["/sitios-web", "/anuncios", "/visibilidad-ia", "/estilos"]) expect(paths).not.toContain(p);
+    // /sitios-web is the wine brand's websites-for-wineries page (bead hq-60dkt).
+    expect(paths).toContain("/sitios-web");
+    for (const p of ["/anuncios", "/visibilidad-ia", "/estilos"]) expect(paths).not.toContain(p);
     // No wine guide exists yet, so neither the index nor a Cardon guide is listed.
     for (const p of Array.from(paths)) expect(p.startsWith("/guias"), p).toBe(false);
 
@@ -219,7 +221,8 @@ describe("per-brand site files", () => {
 
     const llms = await (await import("../app/llms.txt/route")).GET().text();
     expect(llms.startsWith("# " + BRAND.name + "\n")).toBe(true);
-    expect(llms).not.toContain("/sitios-web");
+    expect(llms).toContain("https://vino.example/es/sitios-web");
+    expect(llms).not.toContain("/anuncios");
     expect(llms).not.toContain("/guias");
     expect(llms).not.toContain("cardondigital.com/");
     expect(llms).toContain("https://vino.example/es/software");

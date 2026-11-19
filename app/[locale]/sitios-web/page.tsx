@@ -13,6 +13,8 @@ import { site } from "@/lib/i18n/site";
 import { sitios } from "@/lib/i18n/sitios";
 import { webPackages } from "@/lib/pricing";
 import { ldGraph, serviceLd } from "@/lib/seo/jsonld";
+import { BRAND } from "@/lib/brand";
+import SitiosVino, { generateMetadata as vinoMetadata } from "@/components/pages/sitios-vino";
 import "../services.css";
 import "./sitios.css";
 
@@ -22,7 +24,12 @@ function localeOf(params: { locale: string }): Locale {
   return isLocale(params.locale) ? params.locale : "es";
 }
 
+/* The wine brand serves its own website page here (bead hq-60dkt): websites
+   for wineries, on components/pages/sitios-vino.tsx. Chosen at build time. */
+const vino = BRAND.id === "vino";
+
 export async function generateMetadata(props: Params): Promise<Metadata> {
+  if (vino) return vinoMetadata(props);
   const params = await props.params;
   const locale = localeOf(params);
   return pageMetadata(locale, "/sitios-web", sitios[locale].meta);
@@ -38,6 +45,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
  * close. One action, site.diag.cta, repeated verbatim.
  */
 export default async function SitiosPage(props: Params) {
+  if (vino) return SitiosVino(props);
   const params = await props.params;
   const locale = localeOf(params);
   const d = sitios[locale];

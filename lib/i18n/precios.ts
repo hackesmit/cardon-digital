@@ -291,6 +291,27 @@ const en = {
     ],
   },
 
+  /** The wine brand's hero line and its website section (bead hq-60dkt): it
+      prices the modules and, since the website page, the winery's website. */
+  vino: {
+    sub: "Each software module from its entry price, and the winery's website priced by its features. In your name means the domain, the accounts, the code and the data.",
+    proof: "Latest builds: Monte Xanic and Viñedo En'kanto.",
+    web: {
+      kicker: "Websites",
+      title: "The winery's website, priced by its features.",
+      sub: "From one page to an online store, each package with its price.",
+      more: "Websites for wineries",
+    },
+    notDo: {
+      title: "Three things we never do.",
+      items: [
+        "We never charge per user, per seat, or per month forever.",
+        "We never keep your domain, your accounts or your data in our name.",
+        "We never decide anything about your wine: the blend, the picking date and the maceration stay yours.",
+      ],
+    },
+  },
+
   close: {
     desc: "Ten business days over your sources, your channels and your floor, and a written memo that is yours either way: what is true, what is broken, and which modules to build first, at what size.",
   },
@@ -505,6 +526,25 @@ const es: typeof en = {
       "Al firmar, usted elige cómo pagar el desarrollo. Si lo paga completo, puede suspender el servicio cuando quiera, sin deber nada del desarrollo. O puede pagar la implementación más baja, que se financia con doce mensualidades de servicio: si deja el servicio antes de completarlas, le cobramos la parte del desarrollo que la cuota todavía no había cubierto. Esa parte baja cada mes y llega a cero al pagar las doce. En cualquier caso el sistema es suyo, y su cotización trae el monto exacto de cada mes.",
       "Su presupuesto de anuncios lo paga usted directo a Google, nunca a través de nosotros.",
     ],
+  },
+
+  vino: {
+    sub: "Cada módulo de software desde su precio de entrada, y el sitio web de la bodega con precio por funciones. A su nombre quedan el dominio, las cuentas, el código y los datos.",
+    proof: "Proyectos recientes: Monte Xanic y Viñedo En'kanto.",
+    web: {
+      kicker: "Sitios web",
+      title: "El sitio web de la bodega, con precio por funciones.",
+      sub: "De una página a una tienda en línea, cada paquete con su precio.",
+      more: "Sitios web para bodegas",
+    },
+    notDo: {
+      title: "Tres cosas que nunca hacemos.",
+      items: [
+        "Nunca cobramos por usuario, por asiento ni mensualidades de por vida.",
+        "Nunca nos quedamos con su dominio, sus cuentas ni sus datos.",
+        "Nunca decidimos nada sobre su vino: la mezcla, la fecha de corte y la maceración son suyas.",
+      ],
+    },
   },
 
   close: {

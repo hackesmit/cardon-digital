@@ -380,7 +380,7 @@ describe("brand routes", () => {
 
   it("answers 404 on vino for a cardon-only route and never redirects it", async () => {
     const { middleware, NOT_FOUND } = await middlewareFor({ ...VINO, vinoUrl: "https://vino.example" });
-    for (const path of ["/es/sitios-web", "/en/anuncios", "/es/visibilidad-ia", "/es/estilos"]) {
+    for (const path of ["/en/anuncios", "/es/visibilidad-ia", "/en/visibilidad-ia", "/es/estilos"]) {
       expect(await outcome(middleware, NOT_FOUND, path), path).toEqual({ kind: "404" });
     }
   });
