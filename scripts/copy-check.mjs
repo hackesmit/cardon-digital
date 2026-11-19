@@ -120,6 +120,11 @@ export const PAGES = {
    * a new page measured when it was written.
    */
   "sitios-vino": { en: { budget: 230, measured: 460 }, es: { budget: 238, measured: 476 } },
+  /**
+   * The page for a business with no website yet (2026-11-19, bead hq-4l9oj),
+   * a new page measured when it was written.
+   */
+  "negocio-local": { en: { budget: 89, measured: 178 }, es: { budget: 89, measured: 177 } },
   "guia-cuanto-cuesta-pagina-web": {
     file: "lib/guides/cuanto-cuesta-pagina-web.ts",
     en: { budget: 605, measured: 1210 },

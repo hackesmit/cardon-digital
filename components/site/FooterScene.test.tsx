@@ -309,4 +309,13 @@ describe("the band renders the sky on the server", async () => {
   it("stays hidden from assistive tech, like the rest of the band", () => {
     expect(html).toContain('aria-hidden="true"');
   });
+  // hq-o5ny1: the ground line is 0.3 of the band high at its centre. A tumbleweed
+  // whose bottom sat on that centre had its lower half cut by the mask hole where
+  // the saguaro's arm and the mountain's foot meet, so it rests on the line's top.
+  it("keeps the tumbleweed above the centre of the ground line", () => {
+    const css = read("app/globals.css");
+    const hit = css.match(/\.scene-tw\{[^}]*bottom:calc\(var\(--sh\) \* ([\d.]+)\)/);
+    expect(hit).not.toBeNull();
+    expect(Number(hit![1])).toBeGreaterThan(0.3);
+  });
 });
