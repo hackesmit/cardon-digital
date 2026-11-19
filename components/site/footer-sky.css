@@ -1,0 +1,162 @@
+/* The night half of the footer band (bead hq-0xca.2, Daniel 2026-10-19).
+
+   Switch the site to dark and the band becomes a sunset: the logo's own sun,
+   the open ring the artwork draws, falls behind the ground line, the sky takes
+   a wine tint with the last warm light where the sun went down, and three
+   dozen stars come out. Switch back and the sun rises.
+
+   Three rules shape everything below.
+
+   It is the mark's sun, not a new one. The ring is lifted out of the drawing
+   into a layer of its own (SCENE_SUN_D), given the same box, viewBox and
+   transform as the drawing, and therefore lands pixel for pixel where it was.
+   Nothing new is drawn, and the one-ink mark keeps its one ink: the warmth of
+   the sunset is in the sky behind it, never in the logo's own line.
+
+   Only transform and opacity move. The sun's fall is a transform on a box of
+   its own; the sky, the glow and every star are opacity. Nothing here reads or
+   writes layout while it runs.
+
+   The state is the document's own data-mode, so there is no JavaScript in this
+   effect at all. The pre-paint script in SiteShell sets data-mode in the head,
+   so on a first load in dark the band is BUILT in the end state and a CSS
+   transition, which only runs on a change, correctly does not run.
+
+   The three literal geometry numbers (68.172%, 50.753%, 85.329%) are derived
+   in components/site/footer-sky.ts, which a stylesheet cannot import;
+   FooterScene.test.ts reads both files and fails when they drift apart. */
+
+/* Behind the drawing: the saguaro, the mountain and the ground line always
+   paint over the sky. Decorative, and the band holds no controls, so nothing
+   here ever takes a pointer. */
+.scene-sky,
+.scene-stars,
+.scene-sun-clip {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* The sky. Two layers: a tight afterglow just above the horizon at the sun's
+   own set point (85.329% across the art box), and a wine dusk that swells
+   toward the horizon. Both reach zero well before the top of the band and
+   again before the ground: the band is a strip 120px tall inside a much taller
+   footer, so any tint still alive at its top edge draws a seam across the
+   page, and any tint below the line puts haze behind the lettering. */
+.scene-sky {
+  inset: 0;
+  opacity: 0;
+  background:
+    radial-gradient(
+      22% 26% at calc(var(--ax) + var(--aw) * 0.85329) 61%,
+      color-mix(in srgb, var(--energy) 38%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 16%,
+      color-mix(in srgb, var(--primary) 14%, transparent) 60%,
+      transparent 72%
+    );
+  transition: opacity 1.8s ease;
+}
+:root[data-mode="dark"] .scene-sky {
+  opacity: 1;
+}
+
+/* The stars. The layer fades as one; each star keeps its own slow beat.
+
+   The stars come out AFTER the sun is down and leave BEFORE it comes back up,
+   which is the order of a real evening and a real morning. A transition reads
+   the properties of the state it is going TO, so the delay lives in the dark
+   rule alone: going dark waits 0.7s and then takes 1.1s, landing with the sun;
+   going light starts at once and is gone in 0.9s, ahead of the sunrise. */
+.scene-stars {
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+:root[data-mode="dark"] .scene-stars {
+  opacity: 1;
+  transition: opacity 1.1s ease 0.7s;
+}
+.scene-star {
+  --star-d: max(1.4px, calc(var(--sh) * var(--star-size)));
+  position: absolute;
+  width: var(--star-d);
+  height: var(--star-d);
+  border-radius: 50%;
+  background: currentColor;
+  /* Static, so the point sits on its coordinate rather than beside it. */
+  transform: translate(-50%, -50%);
+  opacity: var(--star-glow);
+}
+/* The beat belongs to the night. In light mode the layer is invisible, so an
+   animation there would be three dozen compositor animations running under
+   every page for nobody. */
+:root[data-mode="dark"] .scene-star {
+  animation: star-twinkle var(--star-beat) ease-in-out var(--star-wait) infinite
+    alternate;
+}
+@keyframes star-twinkle {
+  from {
+    opacity: calc(var(--star-glow) * 0.28);
+  }
+  to {
+    opacity: var(--star-glow);
+  }
+}
+/* A phone shows the same band at half the height, where three dozen points
+   read as grain. Every other star leaves. */
+@container (max-width: 640px) {
+  .scene-star:nth-child(2n) {
+    display: none;
+  }
+}
+
+/* The sun. The clip is the ground: the layer ends at row 347 of the viewBox,
+   which is inside the drawn line across the whole width of the ring, so the
+   sun meets the horizon under its own ink rather than beside it. */
+.scene-sun-clip {
+  top: 0;
+  left: var(--ax);
+  width: var(--aw);
+  /* (347 - 30) / 465 of the band. */
+  height: calc(var(--sh) * 0.68172);
+  overflow: hidden;
+}
+.scene-sun {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: var(--aw);
+  height: var(--sh);
+  /* Slow at both ends, steady through the middle: a body falling along an arc
+     rather than a panel sliding into place. */
+  transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
+}
+:root[data-mode="dark"] .scene-sun {
+  /* Down (347 - 124 + 13) / 465 of its own height, which puts the whole ring
+     under the cut, and a little west, because a sun does not fall straight. */
+  transform: translate(1.2%, 50.753%);
+}
+
+/* Reduced motion: the same sunset, arrived at rather than played.
+
+   The dark rule for the stars carries its own transition, and a selector with
+   two more classes in it beats a bare one wherever it is written, media query
+   or not. So the override repeats that selector; dropping it leaves the stars
+   waiting 0.7s and fading in for a reader who asked for no motion. */
+@media (prefers-reduced-motion: reduce) {
+  .scene-sky,
+  .scene-stars,
+  :root[data-mode="dark"] .scene-stars,
+  .scene-sun,
+  :root[data-mode="dark"] .scene-sun {
+    transition: none;
+  }
+  .scene-star,
+  :root[data-mode="dark"] .scene-star {
+    animation: none;
+  }
+}
