@@ -1,4 +1,5 @@
 import { aparecerEnChatgpt } from "./aparecer-en-chatgpt";
+import { automatizarReportesBodega } from "./automatizar-reportes-bodega";
 import { cuantoCuestaPaginaWeb } from "./cuanto-cuesta-pagina-web";
 import { currentBrand, type Brand } from "@/lib/brand";
 import type { Guide } from "./types";
@@ -9,7 +10,11 @@ import type { Guide } from "./types";
  * read this list, so a new guide is one file in lib/guides, one entry here and
  * its line in app/sitemap.ts.
  */
-export const ALL_GUIDES: readonly Guide[] = [cuantoCuestaPaginaWeb, aparecerEnChatgpt];
+export const ALL_GUIDES: readonly Guide[] = [
+  automatizarReportesBodega,
+  cuantoCuestaPaginaWeb,
+  aparecerEnChatgpt,
+];
 
 /** The guides one brand publishes (Guide.brand, unset meaning cardon). */
 export function guidesFor(brand: Brand): readonly Guide[] {

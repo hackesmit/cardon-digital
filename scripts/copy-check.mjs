@@ -103,6 +103,11 @@ export const PAGES = {
    * the wine brand's modules there. A new page, measured when it was written.
    */
   "software-cardon": { en: { budget: 385, measured: 769 }, es: { budget: 408, measured: 815 } },
+  "guia-automatizar-reportes-bodega": {
+    file: "lib/guides/automatizar-reportes-bodega.ts",
+    en: { budget: 527, measured: 1053 },
+    es: { budget: 569, measured: 1137 },
+  },
   "guia-aparecer-en-chatgpt": {
     file: "lib/guides/aparecer-en-chatgpt.ts",
     en: { budget: 808, measured: 1615 },

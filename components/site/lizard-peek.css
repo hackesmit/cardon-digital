@@ -1,0 +1,165 @@
+/* The lizard peek (bead hq-0xca.4).
+
+   A cachora rises over the top edge of the founding-winery card on /precios,
+   looks left and right, and ducks back down. It plays once per page view.
+
+   WHY THIS CARD. It is the only card on the two candidate pages with clear
+   air above it at every width (251px at 1440, 139px at 390, measured), it is
+   one card rather than a grid, so no stacking case ever puts the peek on top
+   of the card above it, and its right half is empty at every width, so the
+   animal covers no copy and no figure.
+
+   HOW THE MASK WORKS. The window below is a box whose BOTTOM edge sits on the
+   card's top border, with overflow hidden. Everything the art would draw below
+   that line is clipped, so the card's own edge is the mask and nothing has to
+   fight the card's background or its z-index. At rest the art is pushed down
+   by its own height and is entirely outside the window; the animation slides
+   it up into view.
+
+   GEOMETRY, and why these numbers are not free. The art is
+   public/media/eggs/lizard-peek.webp: 460 x 340 device pixels, which is a 2x
+   export of a 230 x 170 crop of the source frame, so the three numbers in the
+   calc() expressions below are all in source-crop rows and columns.
+
+     230   the art's width, the denominator of every ratio here
+      40   rows that sit BELOW the card's edge at rest. They are the lizard's
+           chest and forelegs carrying on behind the card, and they are there
+           so the small rotation of the look-around can never swing the clipped
+           bottom edge off the card's line and open a wedge of daylight under
+           it. The 130 rows above the edge are the head, the throat and the
+           front legs.
+     140   the window's height: the 130 visible rows plus 10 rows of headroom,
+           which is what the same rotation needs at the top.
+
+   A re-export that changes the crop has to change these numbers with it, which
+   is what the geometry test in LizardPeek.test.tsx checks against the file on
+   disk.
+
+   MOTION. transform only, on one element, so the whole effect is one
+   composited layer: rise with a long deceleration (a cautious animal), a tilt
+   each way with a hold between them, then a fast duck. The art itself never
+   changes, so its sepia tint is rasterised once and not re-run per frame.
+
+   The tint is the site's treatment B, the same filter every photograph that is
+   not the page's one full-colour hero wears (globals.css, PHOTOGRAPHY), so the
+   animal reads as the same material as the line work around it. */
+
+/* The card the peek hangs from. Its own rules live in globals.css and are not
+   this bead's to edit, so the one thing the effect needs from it, a containing
+   block, is added here under a class of our own. */
+.lizard-peek-host {
+  position: relative;
+}
+
+.lizard-peek {
+  /* Viewport units, not a percentage of the card: --liz-w is read by a
+     height and a bottom as well as by a width, and a percentage there
+     would resolve against the card's HEIGHT and collapse the window.
+     Measured live: 26% gave a 290px wide animal in a 69px tall window. */
+  --liz-w: clamp(140px, 16vw, 230px);
+
+  position: absolute;
+  right: clamp(8px, 4%, 64px);
+  /* The card's border is one pixel outside its padding box, which is what
+     bottom:100% would measure to, so the clip line would cross the border and
+     the animal would read as being in FRONT of the edge it is hiding behind. */
+  bottom: calc(100% + 1px);
+  width: var(--liz-w);
+  height: calc(var(--liz-w) * 140 / 230);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.lizard-peek-art {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--liz-w) * -40 / 230);
+  /* Near the base of the neck, so the tilt swings the head and not the body. */
+  transform-origin: 48% 70%;
+  will-change: transform;
+}
+
+.lizard-peek-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: sepia(0.26) saturate(0.82) contrast(1.02);
+}
+
+/* In light mode the animal sits a little darker than the ground, which is
+   where treatment B puts every other photograph on the site. The same filter
+   on the dark ground makes a near-white creature the loudest thing on the
+   page, and the rest of the page is hairlines, so it is dimmed to roughly the
+   same relationship it has in light: present, not shouting. */
+:root[data-mode="dark"] .lizard-peek-img {
+  filter: sepia(0.26) saturate(0.78) contrast(1.02) brightness(0.55);
+}
+
+/* Without JS the art simply rests at the top of its rise, so the egg is still
+   there to be found. That is why the hidden start state is gated on .js. */
+.js .lizard-peek[data-peek="pre"] .lizard-peek-art {
+  transform: translateY(100%);
+}
+
+.js .lizard-peek[data-peek="play"] .lizard-peek-art {
+  transform: translateY(100%);
+  /* linear in the shorthand because every segment names its own curve. */
+  animation: lizard-peek-cycle 3600ms linear;
+}
+
+/* The reduced-motion rest state: the same calm frame the animation holds in
+   the middle, and no movement to arrive at it. The attribute selector carries
+   the weight of the play rule above and sits after it, so this wins even if
+   something ever set data-peek="play" on a visitor who asked for stillness. */
+.js .lizard-peek[data-peek="still"] .lizard-peek-art {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .lizard-peek[data-peek] .lizard-peek-art {
+    transform: none;
+  }
+}
+
+@keyframes lizard-peek-cycle {
+  /* up, and slow at the top */
+  0% {
+    transform: translateY(100%) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.17, 0.84, 0.28, 1);
+  }
+  19% {
+    transform: translateY(-2.4%) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.33, 0, 0.25, 1);
+  }
+  25% {
+    transform: translateY(0) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  /* a look to one side, held */
+  39% {
+    transform: translateY(0) rotate(3.6deg);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: translateY(0) rotate(3.6deg);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  /* and to the other */
+  64% {
+    transform: translateY(0) rotate(-2.6deg);
+    animation-timing-function: linear;
+  }
+  75% {
+    transform: translateY(0) rotate(-2.6deg);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.3, 1);
+  }
+  84% {
+    transform: translateY(0) rotate(0deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45);
+  }
+  /* gone */
+  100% {
+    transform: translateY(100%) rotate(0deg);
+  }
+}

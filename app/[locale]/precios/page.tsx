@@ -7,6 +7,7 @@ import ModuleFloors from "@/components/pages/precios/ModuleFloors";
 import MixExample from "@/components/pages/precios/MixExample";
 import PricingDetails from "@/components/pages/precios/PricingDetails";
 import WebPackages from "@/components/pages/precios/WebPackages";
+import LizardPeek from "@/components/site/LizardPeek";
 import Media from "@/components/site/Media";
 import Reveal from "@/components/site/Reveal";
 import { isLocale, localePath, type Locale } from "@/lib/i18n/config";
@@ -17,6 +18,7 @@ import { site } from "@/lib/i18n/site";
 import { BRAND } from "@/lib/brand";
 import "../services.css";
 import "./precios.css";
+import "@/components/site/lizard-peek.css";
 
 type Params = { params: Promise<{ locale: string }> };
 
@@ -199,10 +201,12 @@ export default async function PreciosPage(props: Params) {
       <section className="section pr-founding" aria-label={d.hero.softwareHead.founding.kicker}>
         <div className="container">
           <Reveal>
-            <div className="founding">
+            <div className="founding lizard-peek-host">
               <span className="kicker clay">{d.hero.softwareHead.founding.kicker}</span>
               <p className="founding-lead">{rich(d.hero.softwareHead.founding.lead)}</p>
               <p className="founding-body">{d.hero.softwareHead.founding.body}</p>
+              {/* The one easter egg on this page, over the card's top edge. */}
+              <LizardPeek />
             </div>
           </Reveal>
         </div>
