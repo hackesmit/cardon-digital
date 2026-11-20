@@ -2,7 +2,8 @@ import type { DoorVariant } from "@/lib/contact/doors";
 import { GUIDES, guidePath } from "@/lib/guides";
 import { localePath, type Locale } from "@/lib/i18n/config";
 import { SITE_URL } from "@/lib/i18n/metadata";
-import { BRAND } from "@/lib/brand";
+import { BRAND, DIVISIONS, DIVISION_NAME, divisionHref } from "@/lib/brand";
+import { site } from "@/lib/i18n/site";
 import { advertisesPath } from "@/lib/routes";
 import { about, aboutVino } from "@/lib/i18n/about";
 import { anuncios } from "@/lib/i18n/anuncios";
@@ -112,6 +113,19 @@ export function llmsTxt(doors: DoorVariant): string {
     section(h.prices, list(l, PRICES));
     section(h.guides, list(l, GUIDE_PAGES));
     section(h.key, list(l, key));
+  }
+  // The two divisions of Cardon Digital (bead hq-yj0hq), each on its own
+  // address, so an answer engine reading one finds the other. Only once the
+  // other division has an address: before that, cardon still serves its pages.
+  if (BRAND.crossLink !== null) {
+    const divisions = (["es", "en"] as const).flatMap((l) =>
+      DIVISIONS.map((d) => {
+        const href = divisionHref(BRAND, d, l, "/");
+        const url = href.startsWith("/") ? SITE_URL + href : href;
+        return `- [${DIVISION_NAME[d]}](${url}): ${site[l].division[d]}`;
+      }),
+    );
+    section(site.es.division.label + " / " + site.en.division.label, divisions);
   }
   lines.push("", "## Optional", "", ...list("es", LEGAL), ...list("en", LEGAL));
   return lines.join("\n") + "\n";

@@ -224,7 +224,12 @@ describe("per-brand site files", () => {
     expect(llms).toContain("https://vino.example/es/sitios-web");
     expect(llms).not.toContain("/anuncios");
     expect(llms).not.toContain("/guias");
-    expect(llms).not.toContain("cardondigital.com/");
+    // Cardon's pages are not listed; only its division home is (bead hq-yj0hq).
+    const cardonLinks = llms.split("\n").filter((l) => l.includes("cardondigital.com/"));
+    expect(cardonLinks).toEqual([
+      expect.stringMatching(/^- \[Cardon Digital\]\(https:\/\/cardondigital\.com\/es\): /),
+      expect.stringMatching(/^- \[Cardon Digital\]\(https:\/\/cardondigital\.com\/en\): /),
+    ]);
     expect(llms).toContain("https://vino.example/es/software");
 
     const { securityTxt } = await import("../app/.well-known/security.txt/security");
@@ -275,6 +280,21 @@ describe("per-brand site files", () => {
     await under({ site: "cardon" });
     const again = await import("./seo/jsonld");
     expect(again.organizationLd("es")).not.toHaveProperty("department");
+  });
+
+  it("llms.txt of each division links both division homes once the wine one has an address", async () => {
+    await under({ site: "cardon", vinoUrl: "https://vino.cardondigital.com" });
+    const c = (await import("../app/llms.txt/llms")).llmsTxt("formOnly");
+    expect(c).toContain("](https://cardondigital.com/es)");
+    expect(c).toContain("](https://vino.cardondigital.com/es)");
+    expect(c).toContain("](https://vino.cardondigital.com/en)");
+    await under({ site: "vino", siteUrl: "https://vino.cardondigital.com" });
+    const v = (await import("../app/llms.txt/llms")).llmsTxt("formOnly");
+    expect(v).toContain("](https://cardondigital.com/en)");
+    expect(v).toContain("](https://vino.cardondigital.com/en)");
+    await under({ site: "cardon" });
+    const none = (await import("../app/llms.txt/llms")).llmsTxt("formOnly");
+    expect(none).not.toContain("vino.cardondigital.com");
   });
 
   it("vino: the guides registry holds only wine guides", async () => {
