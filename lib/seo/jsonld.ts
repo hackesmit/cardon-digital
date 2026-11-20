@@ -22,7 +22,7 @@ import { CREDENTIALS, type Credential } from "@/lib/credentials";
 import { htmlLang, localePath, type Locale } from "@/lib/i18n/config";
 import { plain } from "@/lib/i18n/rich";
 import { SITE_URL } from "@/lib/i18n/metadata";
-import { BRAND, CARDON_URL } from "@/lib/brand";
+import { BRAND, CARDON_URL, DIVISION_NAME } from "@/lib/brand";
 import { brandArt } from "@/lib/brand-art";
 
 export type LdNode = { "@type": string | string[]; "@id"?: string; [key: string]: unknown };
@@ -90,6 +90,18 @@ export function organizationLd(
     image: absoluteUrl(brandArt(BRAND.id).og.url),
     areaServed: AREA_SERVED,
     founder: ref(FOUNDER_ID),
+    // The wine division (bead hq-yj0hq), by the @id its own site gives it,
+    // once it has its address (NEXT_PUBLIC_VINO_URL).
+    ...(BRAND.crossLink
+      ? {
+          department: {
+            "@type": ["Organization", "Brand"],
+            "@id": BRAND.crossLink + "/#organization",
+            name: DIVISION_NAME.vino,
+            url: BRAND.crossLink,
+          },
+        }
+      : {}),
     ...(sameAs.length > 0 ? { sameAs } : {}),
   };
 }

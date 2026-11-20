@@ -314,3 +314,62 @@ export function wineLink(config: BrandConfig, locale: Locale): string | null {
   if (config.crossLink === null) return localePath(locale, "/industries/winery");
   return config.crossLink + localePath(locale, "/");
 }
+
+/* ---------------------------------------------------------------------------
+ * The two divisions (bead hq-yj0hq, Daniel 2026-11-20): one brand, Cardon
+ * Digital, with a general division on cardondigital.com and the wine division
+ * on vino.cardondigital.com, a free name under the same domain. Each division
+ * is still its own build (the brand switch above), so each keeps its own nav,
+ * home, offer pages, contact path, sitemap and search presence; the top bar
+ * of both carries a switch between them (components/site/DivisionSwitch.tsx).
+ * The address says "vino", not the wine label, so renaming the label is one
+ * word (VINO_NAME) and no new address.
+ * ------------------------------------------------------------------------- */
+
+/** The divisions in the order the switch shows them. */
+export const DIVISIONS: readonly Brand[] = ["cardon", "vino"];
+
+/** The name each division goes by in the switch. */
+export const DIVISION_NAME: Readonly<Record<Brand, string>> = {
+  cardon: "Cardon Digital",
+  vino: VINO_NAME,
+};
+
+/** The routes a division owns, as its own build lists them. Cardon's list
+    leaves out the moved wine routes: they belong to the wine division. */
+function divisionRoutes(target: Brand): readonly string[] {
+  return target === "cardon" ? CARDON_ROUTES : VINO_ROUTES;
+}
+
+/**
+ * The page of the other division that matches a path: the same page when the
+ * division has it (about, contact, pricing, websites, legal), its guides index
+ * for a guide (each division publishes its own guides), and its home for
+ * anything else.
+ */
+export function matchingPath(target: Brand, path: string): string {
+  const p = cleanPath(path);
+  if (/^\/guias\/[^/]+$/.test(p)) return "/guias";
+  return divisionRoutes(target).some((r) => matchesRoute(r, p)) ? p : "/";
+}
+
+/**
+ * Where the switch on this build sends a reader for a division. The current
+ * division is its own home, a relative link. The other division is an
+ * absolute link to its matching page: cardondigital.com from the wine build,
+ * and the wine origin (NEXT_PUBLIC_VINO_URL) from cardon. Before that origin
+ * is set (a preview, a local build), cardon still serves the wine routes, so
+ * the wine side points at the winery page cardon serves, as wineLink does.
+ */
+export function divisionHref(
+  config: BrandConfig,
+  target: Brand,
+  locale: Locale,
+  pathname: string,
+): string {
+  if (target === config.id) return localePath(locale, "/");
+  const path = matchingPath(target, pathname);
+  if (target === "cardon") return CARDON_URL + localePath(locale, path);
+  if (config.crossLink === null) return localePath(locale, "/industries/winery");
+  return config.crossLink + localePath(locale, path);
+}

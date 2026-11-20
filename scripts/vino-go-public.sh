@@ -22,6 +22,11 @@
 #      lists the domain, the title naming <Name>, the vercel.app 308, and the
 #      cardondigital.com winery route 301.
 #
+# A name under cardondigital.com (vino.cardondigital.com, bead hq-yj0hq: the
+# wine division on the domain Cardon already owns) is accepted too: no www
+# name is added for it, the registration check reads cardondigital.com, and
+# the DNS record to set is a CNAME.
+#
 # It never buys a domain and never edits DNS at the registrar: buying is
 # Daniel's pick (asked on hq-60dkt), and the registrar step runs in a browser
 # (ops/reference/credentials-map.md, Namecheap note of 2026-11-12). Run step 1
@@ -37,9 +42,14 @@ DOMAIN="${1:-}"; NAME="${2:-}"; MODE="${3:-plan}"
 if [ -z "$DOMAIN" ] || [ -z "$NAME" ] || [[ ! "$MODE" =~ ^(plan|--apply|--verify)$ ]]; then
   sed -n '2,6p' "$0" >&2; exit 2
 fi
-if [[ ! "$DOMAIN" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$ ]] || [[ "$DOMAIN" == *vercel.app ]] || [[ "$DOMAIN" == *cardondigital.com ]]; then
+# SUB=1: a single label under cardondigital.com, never the apex or www.
+SUB=0
+if [[ "$DOMAIN" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?\.cardondigital\.com$ ]] && [ "$DOMAIN" != www.cardondigital.com ]; then SUB=1; fi
+if [[ ! "$DOMAIN" =~ ^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$ ]] || [[ "$DOMAIN" == *vercel.app ]] \
+   || { [ "$SUB" = 0 ] && [[ "$DOMAIN" == *cardondigital.com ]]; }; then
   echo "vino-go-public: '$DOMAIN' is not the wine brand's own domain" >&2; exit 2
 fi
+REG="$DOMAIN"; [ "$SUB" = 1 ] && REG=cardondigital.com
 ORIGIN="https://$DOMAIN"
 TEAM="team_GviTdEw902mIYP94kxVOSAiV"   # hackesmits-projects (personal)
 REPO_ID=1342475969                     # github.com/hackesmit/cardon-digital
@@ -68,22 +78,22 @@ say "0. vercel whoami: $who (team hackesmits-projects)"
 # answer, an unreachable RDAP) is unknown, and unknown stops the script.
 registered() {
   local out code
-  case "$DOMAIN" in
+  case "$REG" in
     *.mx)
       command -v whois >/dev/null 2>&1 || { echo unknown; return; }
-      out="$(whois -h whois.mx "$DOMAIN" 2>/dev/null)" || { echo unknown; return; }
+      out="$(whois -h whois.mx "$REG" 2>/dev/null)" || { echo unknown; return; }
       if grep -q "No_Se_Encontro" <<<"$out"; then echo no
-      elif grep -qi "^Domain Name:[[:space:]]*$DOMAIN[[:space:]]*$" <<<"$out"; then echo yes
+      elif grep -qi "^Domain Name:[[:space:]]*$REG[[:space:]]*$" <<<"$out"; then echo yes
       else echo unknown; fi ;;
     *)
-      local url="https://rdap.org/domain/$DOMAIN"
-      [[ "$DOMAIN" == *.com ]] && url="https://rdap.verisign.com/com/v1/domain/$DOMAIN"
+      local url="https://rdap.org/domain/$REG"
+      [[ "$REG" == *.com ]] && url="https://rdap.verisign.com/com/v1/domain/$REG"
       code="$(curl -sL --max-time 30 -o /dev/null -w '%{http_code}' "$url" 2>/dev/null)" || code="${code:-000}"
       case "$code" in 200) echo yes ;; 404) echo no ;; *) echo unknown ;; esac ;;
   esac
 }
 case "$(registered)" in
-  yes) say "   $DOMAIN is registered" ;;
+  yes) say "   $REG is registered" ;;
   no) [ "$MODE" = plan ] && say "   $DOMAIN is NOT registered yet: buy it first (Daniel's pick, hq-60dkt)" || fail "$DOMAIN is not registered: buy it first" ;;
   *) fail "cannot tell whether $DOMAIN is registered (whois or RDAP gave no clear answer): check by hand, then rerun" ;;
 esac
@@ -97,7 +107,8 @@ fi
 
 if [ "$MODE" = plan ]; then
   say "plan (nothing changed):"
-  say "  1. add $DOMAIN and www.$DOMAIN (308 to apex) to $VINO; print the DNS records to set"
+  if [ "$SUB" = 1 ]; then say "  1. add $DOMAIN to $VINO; print the DNS record to set"
+  else say "  1. add $DOMAIN and www.$DOMAIN (308 to apex) to $VINO; print the DNS records to set"; fi
   say "  2. $VINO production NEXT_PUBLIC_SITE_URL=$ORIGIN"
   say "  3. $CARDON production NEXT_PUBLIC_VINO_URL=$ORIGIN"
   say "  4. redeploy $VINO and $CARDON from main, wait for READY"
@@ -118,14 +129,15 @@ add_domain() { # name [redirect]
 if [ "$MODE" = --apply ]; then
   say "1. domains"
   add_domain "$DOMAIN"
-  add_domain "www.$DOMAIN" "$DOMAIN"
+  NAMES=("$DOMAIN")
+  if [ "$SUB" = 0 ]; then add_domain "www.$DOMAIN" "$DOMAIN"; NAMES+=("www.$DOMAIN"); fi
   bad=0
-  for d in "$DOMAIN" "www.$DOMAIN"; do
+  for d in "${NAMES[@]}"; do
     cfg="$(api "https://api.vercel.com/v6/domains/$d/config?teamId=$TEAM")" || fail "reading the DNS config of $d"
     misc="$(jq -r '.misconfigured' <<<"$cfg" 2>/dev/null)" || fail "reading the DNS config of $d: not JSON"
     if [ "$misc" = "true" ]; then
       bad=1
-      if [ "$d" = "$DOMAIN" ]; then say "   DNS to set: $d  A  $(jq -r '[.recommendedIPv4[]?.value[]?] | first // "76.76.21.21"' <<<"$cfg")"
+      if [ "$d" = "$DOMAIN" ] && [ "$SUB" = 0 ]; then say "   DNS to set: $d  A  $(jq -r '[.recommendedIPv4[]?.value[]?] | first // "76.76.21.21"' <<<"$cfg")"
       else say "   DNS to set: $d  CNAME  $(jq -r '[.recommendedCNAME[]?.value] | first // "cname.vercel-dns.com"' <<<"$cfg")"; fi
     else say "   $d: DNS points at Vercel"; fi
   done
@@ -186,7 +198,7 @@ check "title names $NAME" 'grep -q "<title>$NAME" /tmp/vino-go-public.$$'
 check "canonical is $ORIGIN/es" 'grep -q "rel=\"canonical\" href=\"$ORIGIN/es\"" /tmp/vino-go-public.$$'
 check "sitemap lists $ORIGIN/es/sitios-web" 'curl -sS "$ORIGIN/sitemap.xml" | grep -q "$ORIGIN/es/sitios-web"'
 check "robots.txt points at the sitemap" 'curl -sS "$ORIGIN/robots.txt" | grep -qi "sitemap: $ORIGIN/sitemap.xml"'
-check "www.$DOMAIN redirects to the apex" '[[ "$(curl -sS -o /dev/null -w "%{redirect_url}" "https://www.$DOMAIN/es")" == "$ORIGIN/es"* ]]'
+[ "$SUB" = 1 ] || check "www.$DOMAIN redirects to the apex" '[[ "$(curl -sS -o /dev/null -w "%{redirect_url}" "https://www.$DOMAIN/es")" == "$ORIGIN/es"* ]]'
 check "$FALLBACK/es/sitios-web?x=1 answers 308 to the domain" '[[ "$(curl -sS -o /dev/null -w "%{http_code} %{redirect_url}" "https://$FALLBACK/es/sitios-web?x=1")" == "308 $ORIGIN/es/sitios-web?x=1" ]]'
 check "cardondigital.com/es/industries/winery answers 301 to the domain" '[[ "$(curl -sS -o /dev/null -w "%{http_code} %{redirect_url}" "https://cardondigital.com/es/industries/winery")" == 30[18]" $ORIGIN/es/industries/winery" ]]'
 rm -f /tmp/vino-go-public.$$

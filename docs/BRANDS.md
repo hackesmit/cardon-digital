@@ -10,6 +10,38 @@ Since 2026-11-03 (Daniel, epic hq-3f6ut) this repo builds two sites:
 
 The brand is chosen at build time. Nothing switches at request time.
 
+## Two divisions, one domain (since 2026-11-20)
+
+Daniel, 2026-11-20 (bead hq-yj0hq): no separate domain. The two builds are
+two divisions of Cardon Digital on cardondigital.com:
+
+| Division | Address | Build |
+| --- | --- | --- |
+| Cardon Digital (general) | https://cardondigital.com | Vercel project cardon-digital |
+| Racimo por Cardon (wine) | https://vino.cardondigital.com | Vercel project cardon-vino, `NEXT_PUBLIC_SITE=vino`, `NEXT_PUBLIC_SITE_URL=https://vino.cardondigital.com` |
+
+Why a subdomain and not a path (cardondigital.com/vino): the brand is read at
+module load in about 37 files and in the dictionaries, so a path would need a
+request-time rewrite of every page on a public money surface. The subdomain
+costs one CNAME on the domain Cardon owns (no purchase) and reuses the switch
+as built: its own canonical, sitemap, robots.txt, llms.txt, OG art and JSON-LD,
+indexable because `NEXT_PUBLIC_SITE_URL` is not a vercel.app address. Each
+division is its own search property. The cost is two deploys from one repo:
+a new env var on cardon usually needs copying to cardon-vino (never GA4).
+The address says "vino", not the label, so a rename (`VINO_NAME`) needs no
+new address.
+
+The top bar of both carries the division switch
+(`components/site/DivisionSwitch.tsx`, `divisionHref` in `lib/brand.ts`):
+two links, the current one marked by `aria-current` and its accent (gold for
+Cardon Digital, wine for Racimo), the other going to the matching page of the
+other division (the same page when it has it, its guides index for a guide,
+its home otherwise). cardon-vino.vercel.app answers 308 to the subdomain
+(`vinoHostRedirects`) and cardondigital.com 301s the wine routes there
+(`NEXT_PUBLIC_VINO_URL`). `scripts/vino-go-public.sh vino.cardondigital.com
+Racimo --apply` sets and verifies all of it; the DNS record (CNAME vino to
+Vercel) is set at Namecheap.
+
 ## The switch
 
 | Variable | Values | Effect |

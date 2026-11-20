@@ -262,6 +262,21 @@ describe("per-brand site files", () => {
     expect(founder?.worksFor).toEqual({ "@id": CARDON_ORGANIZATION_ID });
   });
 
+  it("cardon: the organization names the wine division as its department once it has an address", async () => {
+    await under({ site: "cardon", vinoUrl: "https://vino.cardondigital.com" });
+    const { organizationLd } = await import("./seo/jsonld");
+    const { VINO_NAME } = await import("./brand");
+    expect(organizationLd("es").department).toEqual({
+      "@type": ["Organization", "Brand"],
+      "@id": "https://vino.cardondigital.com/#organization",
+      name: VINO_NAME,
+      url: "https://vino.cardondigital.com",
+    });
+    await under({ site: "cardon" });
+    const again = await import("./seo/jsonld");
+    expect(again.organizationLd("es")).not.toHaveProperty("department");
+  });
+
   it("vino: the guides registry holds only wine guides", async () => {
     await under({ site: "vino" });
     const { GUIDES, ALL_GUIDES } = await import("./guides");

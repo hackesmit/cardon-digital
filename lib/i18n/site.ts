@@ -64,6 +64,13 @@ const en = {
     switchAria: "Ver esta página en español",
     switchShort: "ES",
   },
+  /** The division switch in the top bar (bead hq-yj0hq): what each division
+      is for, under its name, and the switch's own label. */
+  division: {
+    label: "Divisions",
+    cardon: "Business",
+    vino: "Wineries",
+  },
   /** The diagnostic block closes every page; only its body copy changes. */
   diag: {
     kicker: "Start here",
@@ -132,6 +139,11 @@ const es: typeof en = {
     switchLabel: "English",
     switchAria: "View this page in English",
     switchShort: "EN",
+  },
+  division: {
+    label: "Divisiones",
+    cardon: "Negocios",
+    vino: "Bodegas",
   },
   diag: {
     kicker: "Empiece aquí",
