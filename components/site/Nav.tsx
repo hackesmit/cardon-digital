@@ -7,6 +7,7 @@ import { createPortal } from "react-dom";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { site } from "@/lib/i18n/site";
 import { Logo } from "@/components/site/Mark";
+import DivisionSwitch from "@/components/site/DivisionSwitch";
 import { navLabel } from "@/components/site/navLabel";
 import { BRAND } from "@/lib/brand";
 import {
@@ -190,7 +191,8 @@ export default function Nav() {
   };
 
   return (
-    <header className="site-header">
+    <header className="site-header" data-division={BRAND.id}>
+      <DivisionSwitch />
       <div className="container bar">
         <Link className="brand" href={href("/")} aria-label={brandHome}>
           <Logo

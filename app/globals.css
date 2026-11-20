@@ -141,6 +141,25 @@ a:focus-visible,button:focus-visible,.cta:focus-visible,.map-marker:focus-visibl
   border-bottom:1px solid var(--line);
 }
 .bar{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px;}
+/* The division switch (bead hq-yj0hq): a slim row above the bar on every page.
+   Each division has its accent, which marks the one you are in: wine for the
+   wine division, the gold for Cardon Digital (the clay stays the one action). */
+.site-header{--division:var(--secondary);}
+.site-header[data-division="vino"]{--division:var(--primary);}
+.site-header{border-top:3px solid var(--division);}
+.division-bar{border-bottom:1px solid var(--line-soft);}
+.division-list{display:flex;gap:4px;list-style:none;margin:0 auto;padding-top:4px;padding-bottom:4px;}
+.division-link{display:inline-flex;align-items:baseline;gap:8px;min-height:32px;padding:6px 12px;border-radius:999px;
+  color:var(--text-dim);text-decoration:none;font-size:13px;line-height:1.2;border:1px solid transparent;}
+.division-link:hover{color:var(--text);border-color:var(--line);}
+.division-link:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
+.division-name{font-weight:600;}
+.division-link[aria-current="true"]{color:var(--text);border-color:var(--division);
+  background:color-mix(in srgb, var(--division) 14%, transparent);}
+.division-link.division-vino{--division:var(--primary);}
+.division-link.division-cardon{--division:var(--secondary);}
+@media (max-width:420px){.division-link{gap:6px;padding:6px 10px;font-size:12px;}}
+
 /* Logo (2026-10-16): the lettering alone in the text ink, no scene; it is paths, so it needs
    no font. The colour artwork is for the icons, the share image and print. */
 .brand{display:inline-flex;align-items:center;flex-shrink:0;color:var(--text);}

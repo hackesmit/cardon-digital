@@ -259,7 +259,12 @@ describe("the wine brand's pages", () => {
 
   it("llms.txt, once the brand is indexable, lists only wine routes and the wine home", () => {
     const body = llmsTxt("all");
-    const links = Array.from(body.matchAll(/\]\((https?:[^)]+)\)/g), (m) => m[1]);
+    // The divisions section (bead hq-yj0hq) links Cardon Digital's home and
+    // nothing else of Cardon's; every other link is a wine page.
+    const division = (url: string) => /^https:\/\/cardondigital\.com\/(es|en)$/.test(url);
+    const all = Array.from(body.matchAll(/\]\((https?:[^)]+)\)/g), (m) => m[1]);
+    expect(all.filter(division)).toEqual(["https://cardondigital.com/es", "https://cardondigital.com/en"]);
+    const links = all.filter((u) => !division(u));
     expect(links.length).toBeGreaterThan(0);
     for (const url of links) {
       expect(url.startsWith(SITE_URL + "/"), url).toBe(true);

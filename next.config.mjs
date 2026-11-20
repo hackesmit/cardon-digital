@@ -13,9 +13,11 @@ const INDEXABLE = brandIndexable(BRAND, SITE_ORIGIN);
  * checklist T6, T8, T21). The Content-Security-Policy is not here: it needs a
  * fresh nonce per request, so middleware.ts sets it on the pages.
  *
- * HSTS adds includeSubDomains to the two years Vercel already sends. The only
- * names under cardondigital.com are the apex and www (certificate transparency
- * and DNS, 2026-10-29), both served over https by Vercel. Add "; preload" only
+ * HSTS adds includeSubDomains to the two years Vercel already sends. The names
+ * under cardondigital.com are the apex, www, demo and, since 2026-11-20, vino
+ * (the wine division, bead hq-yj0hq), all on Vercel over https (Namecheap
+ * Advanced DNS, 2026-11-20). A new name must serve https before it
+ * goes into DNS. Add "; preload" only
  * after submitting the domain at hstspreload.org.
  */
 const securityHeaders = [

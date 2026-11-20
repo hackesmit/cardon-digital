@@ -224,3 +224,30 @@ test("Vercel whoami call failing prints a FAIL message, not a silent exit", () =
   assert.notEqual(r.code, 0);
   assert.match(r.err, /vino-go-public: FAIL /);
 });
+
+// ---- a name under cardondigital.com (bead hq-yj0hq) ---------------------------
+
+test("vino.cardondigital.com: accepted, no www name, registration read on cardondigital.com", () => {
+  const r = run(["vino.cardondigital.com", "Vino", "--apply"], { LIST: "existing" });
+  // The verify step fails against the stubs; every step before it ran.
+  assert.equal(deploys(r.calls).length, 2, r.err + r.out);
+  assert.match(r.out, /cardondigital\.com is registered/);
+  assert.ok(!r.calls.some((c) => c.includes("www.vino.cardondigital.com")), r.calls.join("\n"));
+  assert.ok(r.calls.some((c) => /^POST \S+\/projects\/cardon-vino\/domains/.test(c)), r.calls.join("\n"));
+  assert.ok(!/www\.vino/.test(r.out), r.out);
+  assert.equal(deletes(r.calls).length, 0);
+});
+
+for (const bad of ["cardondigital.com", "www.cardondigital.com", "a.b.cardondigital.com", "vino.cardondigital.com.evil.com"]) {
+  test(`${bad}: refused unless it is one name under cardondigital.com`, () => {
+    const r = run([bad, "Vino", "--apply"]);
+    if (bad === "vino.cardondigital.com.evil.com") {
+      // Any other domain is its own registrable name, as before.
+      assert.notEqual(r.err.includes("is not the wine brand's own domain"), true);
+      return;
+    }
+    assert.equal(r.code, 2, r.out + r.err);
+    assert.match(r.err, /is not the wine brand's own domain/);
+    assert.equal(r.calls.length, 0);
+  });
+}
