@@ -22,11 +22,11 @@ import { advertisesPath } from "@/lib/routes";
  */
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" as const, lastModified: "2026-11-19" },
-  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
-  { path: "/negocio-local", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
-  { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
-  { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
-  { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-11" },
+  { path: "/sitios-web", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-20" },
+  { path: "/negocio-local", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-20" },
+  { path: "/anuncios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-20" },
+  { path: "/software", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-20" },
+  { path: "/visibilidad-ia", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-20" },
   { path: "/demos", priority: 0.8, changeFrequency: "monthly" as const, lastModified: "2026-11-10" },
   { path: "/estilos", priority: 0.7, changeFrequency: "monthly" as const, lastModified: "2026-10-30" },
   { path: "/precios", priority: 0.9, changeFrequency: "monthly" as const, lastModified: "2026-11-19" },
