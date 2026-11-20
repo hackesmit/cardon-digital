@@ -25,6 +25,7 @@ import {
   moduleFloors,
   moduleIds,
   webCareMonthly,
+  webFeaturePrices,
   webPackages,
   type ModuleId,
 } from "@/lib/pricing";
@@ -59,8 +60,23 @@ export default function PackageBuilder({
   const ads = anuncios[locale].pricing;
   const pr = precios[locale];
 
-  const setWeb = (id: BuilderSelection["web"]) =>
-    onChange({ ...value, web: id, care: id === null ? false : value.care });
+  /* A new package starts with every feature ticked: what was unticked in
+     another package does not carry over. */
+  const setWeb = (id: BuilderSelection["web"]) => {
+    const { webOff: _dropped, ...rest } = value;
+    void _dropped;
+    onChange({ ...rest, web: id, care: id === null ? false : value.care });
+  };
+  const off = value.webOff ?? [];
+  const toggleFeature = (f: string) => {
+    if (value.web === null) return;
+    const next = off.includes(f) ? off.filter((x) => x !== f) : [...off, f];
+    const order = webFeaturePrices(value.web).map((x) => x.id);
+    const sorted = order.filter((x) => next.includes(x));
+    const { webOff: _old, ...rest } = value;
+    void _old;
+    onChange(sorted.length > 0 ? { ...rest, webOff: sorted } : rest);
+  };
   const setAds = (id: BuilderSelection["ads"]) => onChange({ ...value, ads: id });
   const toggleModule = (id: ModuleId) => {
     const on = value.modules.includes(id);
@@ -108,15 +124,41 @@ export default function PackageBuilder({
                   <span className="pb-from mono">{d.from}</span> {price(p.from)}
                 </span>
               </label>
-              <details className="pb-more">
-                <summary>{d.includes}</summary>
-                <p className="pb-meta mono">{p.pages === 1 ? d.page : d.pages.replace("{n}", String(p.pages))}</p>
-                <ul>
-                  {p.features.map((f) => (
-                    <li key={f}>{name(web.features[f], "feature " + f)}</li>
-                  ))}
-                </ul>
-              </details>
+              {value.web === p.id ? (
+                /* The picked package opens to its features, all ticked by
+                   default; unticking one takes its price off (hq-lgjo.6). */
+                <fieldset className="pb-feats">
+                  <legend className="pb-meta">
+                    <span className="mono">{p.pages === 1 ? d.page : d.pages.replace("{n}", String(p.pages))}</span>{" "}
+                    {d.featuresHint}
+                  </legend>
+                  {webFeaturePrices(p.id).map((f) => {
+                    const on = f.required || !off.includes(f.id);
+                    return (
+                      <label className={"pb-feat" + (on ? " is-on" : "")} key={f.id} data-feature={f.id}>
+                        <input
+                          type="checkbox"
+                          checked={on}
+                          disabled={f.required}
+                          onChange={() => toggleFeature(f.id)}
+                        />
+                        <span className="pb-fname">{name(web.features[f.id], "feature " + f.id)}</span>
+                        <span className="pb-fprice">{f.required && f.price.MXN === 0 ? d.included : price(f.price)}</span>
+                      </label>
+                    );
+                  })}
+                </fieldset>
+              ) : (
+                <details className="pb-more">
+                  <summary>{d.includes}</summary>
+                  <p className="pb-meta mono">{p.pages === 1 ? d.page : d.pages.replace("{n}", String(p.pages))}</p>
+                  <ul>
+                    {p.features.map((f) => (
+                      <li key={f}>{name(web.features[f], "feature " + f)}</li>
+                    ))}
+                  </ul>
+                </details>
+              )}
             </div>
           ))}
           {value.web !== null ? (
@@ -288,7 +330,14 @@ function SummaryLine({
   if (line.kind === "web") {
     return (
       <li>
-        <span>{d.groups.web.title}: {sitios[locale].packages.names[line.id]}</span>
+        <span>
+          {d.groups.web.title}: {sitios[locale].packages.names[line.id]}
+          {line.omitted.length > 0 ? (
+            <small className="pb-disc">
+              {d.without.replace("{list}", line.omitted.map((f) => sitios[locale].packages.features[f] ?? f).join(", "))}
+            </small>
+          ) : null}
+        </span>
         <b>
           <span className="mono">{d.from} </span>
           {price(line.setup)}

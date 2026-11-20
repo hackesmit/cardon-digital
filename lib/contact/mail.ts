@@ -134,7 +134,15 @@ function packageRows(s: ContactSubmission): { rows: [string, string][]; totals: 
   const rows: [string, string][] = [];
   const notes: string[] = [];
   for (const l of est.lines) {
-    if (l.kind === "web") rows.push(["Website: " + sitios.en.packages.names[l.id], "from " + money(s, l.setup)]);
+    if (l.kind === "web") {
+      rows.push(["Website: " + sitios.en.packages.names[l.id], "from " + money(s, l.setup)]);
+      if (l.omitted.length > 0) {
+        notes.push(
+          "Website without: " + l.omitted.map((f) => sitios.en.packages.features[f] ?? f).join("; ") +
+            ". Full package from " + money(s, l.full) + ".",
+        );
+      }
+    }
     else if (l.kind === "care") rows.push(["Website care", money(s, l.monthly) + " a month"]);
     else if (l.kind === "ads") {
       rows.push([

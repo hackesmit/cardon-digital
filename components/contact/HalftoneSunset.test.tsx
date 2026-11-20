@@ -75,6 +75,14 @@ describe("builderLevel", () => {
     ).toBeCloseTo(1 / LEVEL_SLOTS, 12);
   });
 
+  it("fills the website slot by the share of the package still ticked (hq-lgjo.6)", () => {
+    const whole = builderLevel({ ...EMPTY_SELECTION, web: "negocio" });
+    const less = builderLevel({ ...EMPTY_SELECTION, web: "negocio", webOff: ["work-portfolio", "lead-capture"] });
+    expect(whole).toBeCloseTo(1 / LEVEL_SLOTS, 12);
+    expect(less).toBeLessThan(whole);
+    expect(less).toBeGreaterThan(0);
+  });
+
   it("is 0 with nothing picked and 1 with everything", () => {
     expect(builderLevel(EMPTY_SELECTION)).toBe(0);
     expect(builderLevel(FULL)).toBe(1);
