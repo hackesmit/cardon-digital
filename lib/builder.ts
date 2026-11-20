@@ -23,7 +23,9 @@ import {
   quote,
   sumPriced,
   webCareMonthly,
+  webFeaturePrices,
   webPackageById,
+  webPackagePrice,
   webPackages,
   type AdsScopeId,
   type CurrencyCode,
@@ -36,6 +38,12 @@ export type Priced = Record<CurrencyCode, number>;
 export type BuilderSelection = {
   /** One website package, or none. */
   web: WebPackageId | null;
+  /**
+   * Features of the website package the client unticked (hq-lgjo.6), in the
+   * package's own order. Absent or empty means every feature, which is the
+   * published package. Never a required feature.
+   */
+  webOff?: string[];
   /** Monthly website care; only meaningful with a website package. */
   care: boolean;
   /** One ads scope, or none. */
@@ -66,6 +74,15 @@ function cleanModules(list: readonly string[]): ModuleId[] {
   return moduleIds.filter((m) => picked.has(m));
 }
 
+/** The optional features of a package that are in `list`, in package order, each once. */
+export function cleanWebOff(web: WebPackageId | null, list: readonly unknown[]): string[] {
+  if (web === null) return [];
+  const asked = new Set(list.filter((f): f is string => typeof f === "string"));
+  return webFeaturePrices(web)
+    .filter((f) => !f.required && asked.has(f.id))
+    .map((f) => f.id);
+}
+
 /**
  * Reads a selection from untrusted input: the JSON body of the contact form.
  * Anything that is not exactly a known id is dropped. Returns null when the
@@ -80,16 +97,20 @@ export function parseSelection(raw: unknown): BuilderSelection | null {
     ? cleanModules(r.modules.filter((m): m is string => typeof m === "string"))
     : [];
   const sel: BuilderSelection = { web, care: web !== null && r.care === true, ads, modules };
+  const off = Array.isArray(r.webOff) ? cleanWebOff(web, r.webOff.slice(0, 50)) : [];
+  if (off.length > 0) sel.webOff = off;
   return isEmptySelection(sel) ? null : sel;
 }
 
 /**
  * The selection as one short query value, so /precios can hand a package to
- * /contacto in a link: "w:negocio,c,a:local,m:hospitalidad+restaurante".
+ * /contacto in a link: "w:negocio,x:work-portfolio,c,a:local,m:hospitalidad+restaurante",
+ * where x: lists the website features the client unticked.
  */
 export function encodeSelection(s: BuilderSelection): string {
   const parts: string[] = [];
   if (s.web) parts.push("w:" + s.web);
+  if (s.web && s.webOff && s.webOff.length > 0) parts.push("x:" + s.webOff.join("+"));
   if (s.web && s.care) parts.push("c");
   if (s.ads) parts.push("a:" + s.ads);
   if (s.modules.length > 0) parts.push("m:" + s.modules.join("+"));
@@ -100,17 +121,27 @@ export function encodeSelection(s: BuilderSelection): string {
 export function decodeSelection(value: string | null | undefined): BuilderSelection | null {
   if (!value) return null;
   const raw: Record<string, unknown> = {};
-  for (const part of value.slice(0, 200).split(",")) {
+  for (const part of value.slice(0, 600).split(",")) {
     if (part === "c") raw.care = true;
     else if (part.startsWith("w:")) raw.web = part.slice(2);
     else if (part.startsWith("a:")) raw.ads = part.slice(2);
+    else if (part.startsWith("x:")) raw.webOff = part.slice(2).split(/[+ ]/);
     else if (part.startsWith("m:")) raw.modules = part.slice(2).split(/[+ ]/); // a typed "+" reads as a space
   }
   return parseSelection(raw);
 }
 
 export type EstimateLine =
-  | { kind: "web"; id: WebPackageId; setup: Priced }
+  | {
+      kind: "web";
+      id: WebPackageId;
+      /** The ticked features added up; equals `full` when nothing is unticked. */
+      setup: Priced;
+      /** The published package price, every feature ticked. */
+      full: Priced;
+      /** The features left out, in package order. */
+      omitted: string[];
+    }
   | { kind: "care"; monthly: Priced }
   | {
       kind: "ads";
@@ -160,8 +191,9 @@ export function estimate(s: BuilderSelection): Estimate | null {
   const monthlies: Priced[] = [];
 
   if (s.web) {
-    const setup = webPackageById(s.web).from;
-    lines.push({ kind: "web", id: s.web, setup });
+    const omitted = cleanWebOff(s.web, s.webOff ?? []);
+    const setup = webPackagePrice(s.web, omitted);
+    lines.push({ kind: "web", id: s.web, setup, full: webPackageById(s.web).from, omitted });
     setups.push(setup);
     if (s.care) {
       const monthly = webCareMonthly();
